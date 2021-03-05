@@ -4,12 +4,11 @@
             include "Include.inc"
 
             ORG EntryPointer
-Main:       JR $
+Main:
             DI
-            LD SP, StackTop
+            ; LD SP, StackTop
 
-            XOR A
-            LD (HL), A
             JR $
-MainEnd:
+MainLength: EQU $-EntryPointer
+
             include "Builder.asm"

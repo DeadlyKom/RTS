@@ -1,16 +1,19 @@
 
-            ;PAGE 0
             ORG #4000
-
             module Boot
 Basic:
 
-            DB #00, #0A                                     ; номер строки 10                             
+            DB #00, #0A                                     ; номер строки 10
             DW EndBoot - StartBoot + 2                      ; длина строки
             DB #EA                                          ; команда REM
 StartBoot:
-            LD SP, #5FFE
-            JP #3D13                                        ; переход в TR-Dos
+            LD SP, StackTop
+            LD HL, #6000                                    ; загружаем по адресу #6000
+            LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
+            LD B, ((MainLength >> 8) + 1)                   ; регистр B содержит кол-во секторов
+            LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
+            CALL #3D13                                      ; переход в TR-DOS
+            JP EntryPointer
 EndBoot:
             DB #0D                                          ; конец строки
 
@@ -43,4 +46,7 @@ EndBasic:
 
             emptytrd TRD_FILENAME
 	        savetrd  TRD_FILENAME, "boot.B", Boot.Basic, Boot.EndBasic - Boot.Basic
+
+            savetrd  TRD_FILENAME, "main.C", EntryPointer, MainLength
+            
 
