@@ -1,0 +1,58 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "dezog",
+            "request": "launch",
+            "name": "Internal Simulator",
+            "remoteType": "zsim",
+            "zsim": {
+                "visualMemory": "ZX128",
+                "memoryModel": "ZX128",
+                "ulaScreen": true,
+                "zxBorderWidth": 20,
+                "vsyncInterrupt": true,
+                "zxKeyboard": true,
+                "zxBeeper": true,
+
+                "Z80N": false,
+    	        "loadZxRom": true,
+	            "memoryPagingControl": true,
+                "tbblueMemoryManagementSlots": true,
+                "cpuLoadInterruptRange": 1
+            },
+            "sjasmplus": [
+                {
+                    "path": "RTS.sld",
+                    "asm": "sjasmplus",
+                    "mainFile": "Game/Main.asm"
+                },
+            ],
+            "history": {
+                "reverseDebugInstructionCount": 1000000,
+                "spotCount": 10,
+                "codeCoverageEnabled": true
+            },
+            "startAutomatically": false, // true
+            //"skipInterrupt": true,
+            "commandsAfterLaunch": [
+                "-logpoint enable",
+                "-assertion enable",
+                "-wpmem enable",
+                "-rmv"
+            ],
+            "disassemblerArgs": {
+                "numberOfLines": 100,
+                "esxdosRst": true
+            },
+            "rootFolder": "${workspaceFolder}",
+            "topOfStack": "StackTop",
+            "load": "RTS.trd",
+            "smallValuesMaximum": 513,
+            "tmpDir": ".tmp"
+        }
+    ]
+}
