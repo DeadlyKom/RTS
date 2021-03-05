@@ -2,3 +2,6 @@
 .tmp/
 *.labels
 *.list
+*.sld
+*.trd
+*.sna
