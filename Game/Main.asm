@@ -1,17 +1,19 @@
     
-            ifndef _GAME_MAIN_
-            define _GAME_MAIN_
+                ifndef _GAME_MAIN_
+                define _GAME_MAIN_
 
-            include "Include.inc"
+                DEVICE ZXSPECTRUM128
 
-            module Main
+                include "Include.inc"
 
-            ORG EntryPointer
-Main:       
+                ORG EntryPointer           
+Main:           CALL Draw
 
-            JR $
-MainLength: EQU $-EntryPointer
+                JR $
 
-            endmodule
+                include "Core.asm"
+MainLength:     EQU $-EntryPointer
 
-            endif ; ~_GAME_MAIN_
+                include "Builder.asm"
+
+                endif ; ~_GAME_MAIN_
