@@ -1,14 +1,17 @@
     
-            DEVICE ZXSPECTRUM128
+            ifndef _GAME_MAIN_
+            define _GAME_MAIN_
 
             include "Include.inc"
 
+            module Main
+
             ORG EntryPointer
-Main:
-            DI
-            ; LD SP, StackTop
+Main:       
 
             JR $
 MainLength: EQU $-EntryPointer
 
-            include "Builder.asm"
+            endmodule
+
+            endif ; ~_GAME_MAIN_

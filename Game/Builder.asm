@@ -1,4 +1,8 @@
 
+            DEVICE ZXSPECTRUM128
+
+            include "Include.inc"
+
             ORG #4000
             module Boot
 Basic:
@@ -48,5 +52,3 @@ EndBasic:
 	        savetrd  TRD_FILENAME, "boot.B", Boot.Basic, Boot.EndBasic - Boot.Basic
 
             savetrd  TRD_FILENAME, "main.C", EntryPointer, MainLength
-            
-
