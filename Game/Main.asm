@@ -7,9 +7,9 @@
                 include "Include.inc"
 
                 ORG EntryPointer           
-Main:           CALL Draw
+Main:           CALL Draw_1
 
-                JR $
+                JR Main
 
                 include "Core.asm"
 MainLength:     EQU $-EntryPointer
