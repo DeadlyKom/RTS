@@ -53,10 +53,10 @@ UpdateStatesMouse:  CALL GetMouseX                          ; получить �
                     RET
 
 MousePosition:              EQU $
-MousePositionX:             DB #00
-MousePositionY:             DB #00
-LastValueFromMousePortX:    DB #00
-LastValueFromMousePortY:    DB #00
-MousePositionFlag:          DB #00
+MousePositionX:             DB #80
+MousePositionY:             DB #60
+LastValueFromMousePortX:    DB #80
+LastValueFromMousePortY:    DB #60
+MousePositionFlag:          DB #FF
 
                     endif ; ~_MOUSE_UPDATE_STATES_

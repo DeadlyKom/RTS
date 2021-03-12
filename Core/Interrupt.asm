@@ -3,7 +3,7 @@
                     define _CORE_INTERRUPT_
 
 InterruptStackSize  EQU 16 * 2
-InitInterrupt:      DI
+InitInterrupt:      ;DI
                     ;
                     LD HL, InterruptHandler
                     LD (InterruptVectorAddressFrame), HL
@@ -36,7 +36,7 @@ InterruptHandler:   ; preservation registers
                     ; keyboard handling
 
                     ; mouse handling
-                    CALL UpdateStatesMouse         
+                    CALL MemoryPage_5.UpdateStatesMouse         
                     ; restore all registers
                     POP BC
                     POP DE
