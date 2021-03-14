@@ -41,35 +41,17 @@ CopyScreenCont:
                 EI
                 RET
 GameEntry:      CALL GameInitialize
-                XOR A
-                DEC A
-                LD (MousePositionFlag), A
-
-                CALL Draw
-
-
-.MainLoop       ;HALT
-; .Loop           LD A, VK_ENTER
-;                 CALL CheckKeyState
-;                 JR NZ, .Loop
-
-                LD A, (MousePositionFlag)
-                OR A
-                JR Z, .MainLoop
-                XOR A
-                LD (MousePositionFlag), A
-                CALL DrawCursor
-
-                JR .MainLoop
-
-GameInitialize: CALL InitMouse
+                CALL MemoryPage_2.DisplayTileMap
+                JR $
+GameInitialize: CALL MemoryPage_2.InitMouse
                 CALL MemoryPage_2.InitInterrupt
                 RET
-
-                include "../../Input/Include.inc"
-                include "../../Utils/Include.inc"
-                include "../Display/Draw.asm"
-                include "../Display/DrawCursor.asm"
+                align 256
+TileMap:        DB #00, #01, #00, #01 : DS 60, 0
+                DB #01, #00, #01, #00 : DS 60, 0
+                DB #01, #01, #01, #00 : DS 60, 0
+                DB #01, #01, #01, #01 : DS 60, 0
+                DS 4096 - 256, 0
 End:
                 endmodule
 SizePage_5:     EQU MemoryPage_5.End - MemoryPage_5.Start

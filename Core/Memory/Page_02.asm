@@ -6,7 +6,7 @@
                 ORG Page_2
                 
                 module MemoryPage_2
-Start:          RET
+Start:
 ;                 LD HL, Page_5                                   ; загружаем по адресу Page_5
 ; .Count          LD BC, Exit
 ;                 PUSH HL
@@ -31,10 +31,13 @@ Start:          RET
 ; DOS:            PUSH IX
 ;                 JP #3D2F
 
-
                 include "../Interrupt.asm"
+                include "../../Input/Include.inc"
+                include "../Display/TileMap.asm"
 End:
                 endmodule
+
+                
 SizePage_2:     EQU MemoryPage_2.End - MemoryPage_2.Start
 
                 endif ; ~_CORE_MEMORY_PAGE_02_

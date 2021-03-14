@@ -5,8 +5,9 @@
                             include "../Config.inc"
                     
                             define TRD_FILENAME "RTS.trd"       ; имя образа TRD
-StackTop                    EQU #BFFE                           ; расположение стека
-InterruptVectorAddress      EQU #BF00                           ; адрес вектора прерывания
+StackTop                    EQU #5BFE                           ; расположение стека
+InterruptVectorAddress      EQU #5B00                           ; адрес вектора прерывания
 InterruptVectorAddressFrame EQU InterruptVectorAddress + #FF    ; 
+TileMap:                    EQU #B000                           ; адрес тайловой карты
 
                             endif ; ~_GAME_INCLUDE_
