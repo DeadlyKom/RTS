@@ -3,7 +3,7 @@
                 define _CORE_DISPLAY_TILE_MAP_
 
 DisplayTile:    
-                LD A, (DE)
+                LD A, (BC)
                 ;JR C, .SpiritLevel
                 EXX
                 ; расчёт адрес спрайта
@@ -69,7 +69,7 @@ DisplayTile:
                 INC C
                 ; переход к следующей ячейке тайла
                 EXX
-                INC E
+                INC C
                 INC HL
                 INC HL
                 JP (HL)
@@ -80,43 +80,52 @@ DisplayTileMap: DI
                 LD A, %00010000
                 OUT (C), A
                 ; инициализация отрисовки
-                LD DE, MemoryPage_5.TileMap
+                LD DE, #0000
+                LD BC, MemoryPage_5.TileMap 
                 LD IX, DisplayTile
-                LD IY, TileAddressTable
-                LD B, 12                            ; количество линий
-.Loop           EXX
-                LD B, (IY + 1)
-                LD C, (IY + 0)
+                defarray Table #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080;, #50C0
+.Line           defl 0
+                dup Table[#]
+                EXX
+                LD BC, Table[.Line]
                 EXX
                 LD HL, $+3
                 rept 16                             ; количество колонок
                 JP (IX)
                 endr
-                INC IY
-                INC IY
                 ; перейти к следующей строке тайловой карыт
                 LD HL, #0030                        ; -16 + 64 = 48
-                ADD HL, DE
-                EX DE, HL
-                ;
-                DJNZ .Loop
+                ADD HL, BC
+                LD B, H
+                LD C, L
+.Line = .Line + 1
+                edup
+                ;endr
+                EXX
+                LD BC, #50C0
+                EXX
+                LD HL, $+3
+                rept 16                             ; количество колонок
+                JP (IX)
+                endr
+
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 EI
                 RET
-
-TileAddressTable:
-                DW #4000 + #0000 + #00
-                DW #4000 + #0000 + #40
-                DW #4000 + #0000 + #80
-                DW #4000 + #0000 + #C0
-                DW #4000 + #0800 + #00
-                DW #4000 + #0800 + #40
-                DW #4000 + #0800 + #80
-                DW #4000 + #0800 + #C0
-                DW #4000 + #1000 + #00
-                DW #4000 + #1000 + #40
-                DW #4000 + #1000 + #80
-                DW #4000 + #1000 + #C0
+  
+; TileAddressTable:
+;                 DW #4000 + #0000 + #00
+;                 DW #4000 + #0000 + #40
+;                 DW #4000 + #0000 + #80
+;                 DW #4000 + #0000 + #C0
+;                 DW #4000 + #0800 + #00
+;                 DW #4000 + #0800 + #40
+;                 DW #4000 + #0800 + #80
+;                 DW #4000 + #0800 + #C0
+;                 DW #4000 + #1000 + #00
+;                 DW #4000 + #1000 + #40
+;                 DW #4000 + #1000 + #80
+;                 DW #4000 + #1000 + #C0
 
                 endif ; ~_CORE_DISPLAY_TILE_MAP_
