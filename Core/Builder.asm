@@ -112,17 +112,19 @@ EndBoot:
 EndBasic:
                 endmodule
 
-                display "-------------------------------------------------------------------------"
+Persent         EQU (SizePage_0 * 100 / #4000)
+                display "--------------------------------------------------------------------------------------------------------"
+                display "Building the TRD-image of the \'", TRD_FILENAME, "\' project ..."
                 display "Boot  :  ", /A, Boot.Basic, " = [ ", /D, Boot.EndBasic - Boot.Basic, " bytes ]"
-                display "Page 0:  ", /A, Page_0, " = busy [ ", /D, SizePage_0, " bytes ]", "\t /    free [ ", /D, 0x4000 - SizePage_0 - Page_0 & 0x3FFF, " bytes ]"
-                display "Page 1:  ", /A, Page_1, " = busy [ ", /D, SizePage_1, " bytes ]", "\t /    free [ ", /D, 0x4000 - SizePage_1 - Page_1 & 0x3FFF, " bytes ]"
-                display "Page 2:  ", /A, Page_2, " = busy [ ", /D, SizePage_2, " bytes ]", "\t /    free [ ", /D, 0x4000 - SizePage_2 - Page_2 & 0x3FFF, " bytes ]"
-                display "Page 3:  ", /A, Page_3, " = busy [ ", /D, SizePage_3, " bytes ]", "\t /    free [ ", /D, 0x4000 - SizePage_3 - Page_3 & 0x3FFF, " bytes ]"
-                display "Page 4:  ", /A, Page_4, " = busy [ ", /D, SizePage_4, " bytes ]", "\t /    free [ ", /D, 0x4000 - SizePage_4 - Page_4 & 0x3FFF, " bytes ]"
-                display "Page 5:  ", /A, Page_5, " = busy [ ", /D, SizePage_5, " bytes ]", "\t /    free [ ", /D, 0x4000 - SizePage_5 - Page_5 & 0x3FFF, " bytes ]"
-                display "Page 6:  ", /A, Page_6, " = busy [ ", /D, SizePage_6, " bytes ]", "\t /    free [ ", /D, 0x4000 - SizePage_6 - Page_6 & 0x3FFF, " bytes ]"
-                display "Page 7:  ", /A, Page_7, " = busy [ ", /D, SizePage_7, " bytes ]", "\t /    free [ ", /D, 0x4000 - SizePage_7 - Page_7 & 0x3FFF, " bytes ]"
-                display "-------------------------------------------------------------------------"
+                display "Page 0:  ", /A, Page_0, " = busy [ ", /D, SizePage_0, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_0 - Page_0 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_0 * 100 / #4000, " % occupied"
+                display "Page 1:  ", /A, Page_1, " = busy [ ", /D, SizePage_1, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_1 - Page_1 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_1 * 100 / #4000, " % occupied"
+                display "Page 2:  ", /A, Page_2, " = busy [ ", /D, SizePage_2, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_2 - Page_2 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_2 * 100 / #4000, " % occupied"
+                display "Page 3:  ", /A, Page_3, " = busy [ ", /D, SizePage_3, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_3 - Page_3 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_3 * 100 / #4000, " % occupied"
+                display "Page 4:  ", /A, Page_4, " = busy [ ", /D, SizePage_4, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_4 - Page_4 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_4 * 100 / #4000, " % occupied"
+                display "Page 5:  ", /A, Page_5, " = busy [ ", /D, SizePage_5, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_5 - Page_5 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_5 * 100 / #4000, " % occupied"
+                display "Page 6:  ", /A, Page_6, " = busy [ ", /D, SizePage_6, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_6 - Page_6 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_6 * 100 / #4000, " % occupied"
+                display "Page 7:  ", /A, Page_7, " = busy [ ", /D, SizePage_7, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_7 - Page_7 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_7 * 100 / #4000, " % occupied"
+                display "--------------------------------------------------------------------------------------------------------"
 
                 emptytrd TRD_FILENAME
                 savetrd  TRD_FILENAME, "boot.B", Boot.Basic, Boot.EndBasic - Boot.Basic

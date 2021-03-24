@@ -41,17 +41,84 @@ CopyScreenCont:
                 EI
                 RET
 GameEntry:      CALL GameInitialize
-                CALL MemoryPage_2.DisplayTileMap
+
+                LD HL, BufferCMD
+                LD DE, MemoryPage_2.DisplayTileMap
+                
+                LD (HL), E
+                INC HL
+                LD (HL), D
+                INC HL
+
+                LD (HL), E
+                INC HL
+                LD (HL), D
+                INC HL
+
+                LD (HL), E
+                INC HL
+                LD (HL), D
+                INC HL
+
+                LD (HL), E
+                INC HL
+                LD (HL), D
+                INC HL
+
+                ; main loop
+                HALT
+                CALL PlayMusic               
+                LD DE, #0000
+.HandlerCMD     LD HL, (CounterTime)
+                ADD HL, DE
+                LD (CounterTime), HL
+                LD BC, #FE00                            ; the frame time is modified in the interrupt
+                ADD HL, BC
+                JR C, .IsEnd
+                ; execute block code
+                LD HL, .HandlerCMD
+                PUSH HL
+                LD HL, (PointerCMD)
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                INC HL
+                LD (PointerCMD), HL
+                LD A, D
+                OR E
+                JR Z, .BufferIsEmpty
+                ifdef _DEBUG_CHECK
+                LD BC, -(SizeBufferCMD + BufferCMD)
+                ADD HL, BC
+                JR Z, .BufferIsEmpty
+                endif
+                EX DE, HL
+                JP (HL)                                 ; block code must return delta time in DE
+
+.IsEnd          ; some code to the end of the frame
+
                 JR $
+
+.BufferIsEmpty  ; copy from buffer screen to shadow screen
+
+                JR $
+
+SizeBufferCMD:  EQU 8 * 2
+PointerCMD:     DW BufferCMD
+CounterTime:    DW #0000
+BufferCMD:      DS SizeBufferCMD, 0
+
 GameInitialize: CALL MemoryPage_2.InitMouse
                 CALL MemoryPage_2.InitInterrupt
                 RET
+PlayMusic:      RET
+
                 align 256
-TileMap:        DB #00, #01, #00, #01 : DS 60, 0
-                DB #01, #00, #01, #00 : DS 60, 0
-                DB #01, #01, #01, #00 : DS 60, 0
-                DB #01, #01, #01, #01 : DS 60, 0
-                DS 4096 - 256, 0
+TileMap:        DB #80, #81, #00, #01 : DS 60, #00
+                DB #01, #80, #01, #00 : DS 60, #00
+                DB #81, #81, #01, #00 : DS 60, #00
+                DB #01, #81, #01, #01 : DS 60, #00
+                DS 4096 - 256, #00
 End:
                 endmodule
 SizePage_5:     EQU MemoryPage_5.End - MemoryPage_5.Start

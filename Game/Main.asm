@@ -4,6 +4,8 @@
 
                 DEVICE ZXSPECTRUM128
 
+                define _DEBUG_CHECK
+
                 include "Include.inc"
                 include "../Core/Memory/Include.inc"
                 include "../Core/Builder.asm"

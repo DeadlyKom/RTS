@@ -7,10 +7,16 @@
                 
                 module MemoryPage_0
 Start:
-                
-TileSprites:    align 256
-                DW Sprite1, Sprite2
+                align 256
+TableSprites:   DW Sprite1, Sprite2
 
+                align 256
+TableMask:      DW FulltMask
+
+
+FulltMask:      ;
+                DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
+                DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
 Sprite1:        ; 1
                 DW #0000, #FE7F, #0240, #0240, #0241, #0243, #0245, #0241
                 DW #0000, #FE7F, #0240, #0240, #C247, #0241, #0241, #0241

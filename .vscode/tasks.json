@@ -11,6 +11,7 @@
                 "--sym=RTS.labels",
                 "--fullpath",
                 "--sld=RTS.sld",
+                "--syntax=F",
                 "Game/Main.asm"
             ],
             "problemMatcher": {
