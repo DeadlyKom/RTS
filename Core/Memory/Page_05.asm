@@ -23,7 +23,7 @@ CopyScreenCont:
                 POP DE
                 POP BC
                 ; сохранение 16 байт
-                LD SP, #C000 + .Offset
+                LD SP, #C010 + .Offset
                 PUSH BC
                 PUSH DE
                 PUSH HL
@@ -66,9 +66,16 @@ GameEntry:      CALL GameInitialize
                 INC HL
 
                 ; main loop
-                HALT
-                CALL PlayMusic               
-                LD DE, #0000
+.MainLoop       HALT
+                LD HL, BufferCMD
+                LD (PointerCMD), HL
+                CALL PlayMusic
+
+.ResetFrame     LD HL, #0000
+                LD D, H
+                LD E, L
+                LD (CounterTime), HL
+
 .HandlerCMD     LD HL, (CounterTime)
                 ADD HL, DE
                 LD (CounterTime), HL
@@ -97,11 +104,29 @@ GameEntry:      CALL GameInitialize
 
 .IsEnd          ; some code to the end of the frame
 
-                JR $
+                LD HL, MemoryPage_2.InterruptCounter
+                LD A, (HL)
+                
+.WaitInterrupt  CP (HL)
+                JR Z, .WaitInterrupt
+
+                JR .ResetFrame
 
 .BufferIsEmpty  ; copy from buffer screen to shadow screen
 
-                JR $
+                POP HL
+                LD HL, 650
+                LD BC, 1
+.L1             SBC HL, BC
+                JR NZ, .L1
+
+                ; toggle to memory page with shadow screen
+                LD BC, PORT_7FFD
+                LD A, MemoryPage_ShadowScreen
+                OUT (C), A
+                CALL MemoryPage_7.CopyScreen
+
+                JR .MainLoop
 
 SizeBufferCMD:  EQU 8 * 2
 PointerCMD:     DW BufferCMD

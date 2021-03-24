@@ -7,7 +7,7 @@
                 
                 module MemoryPage_7
 Start:
-CopyScreen:     EI
+CopyScreen:     DI
                 LD (MemoryPage_5.CopyScreenCont.ContainerSP), SP
 .Offset         defl 0
                 dup 364
@@ -24,7 +24,7 @@ CopyScreen:     EI
                 POP DE
                 POP BC
                 ; сохранение 16 байт
-                LD SP, #C000 + .Offset
+                LD SP, #C010 + .Offset
                 PUSH BC
                 PUSH DE
                 PUSH HL

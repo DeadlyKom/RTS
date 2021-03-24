@@ -81,10 +81,10 @@ DisplayTileMap: ; initialize execute blocks
                 LD (.ContainerSP), SP
                 ; toggle to memory page with tile sprites
                 LD BC, PORT_7FFD
-                LD A, %00010000 | Page_TitleMapSprites
+                LD A, MemoryPage_TilemapSprite
                 OUT (C), A
                 ; initialize display row of tile
-                LD A, #03
+                LD A, #03                           ; number of code blocks executed
                 LD (.CountExecute), A
 .TileMapRow     EQU $+1
                 LD BC, MemoryPage_5.TileMap 
@@ -97,16 +97,16 @@ DisplayTileMap: ; initialize execute blocks
                 ;
 .FirstBlock     EQU $
                 defarray Table #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080;, #50C0
-.Line           defl 0
+.Row            defl 0
                 dup Table[#]
                 EXX
-                LD BC, Table[.Line]
+                LD BC, Table[.Row]
                 EXX
                 LD HL, $+3
                 rept 16                             ; number of columns per row
                 JP (IX)
                 endr
-                ; calculate next line of the tilemap
+                ; calculate next row of the tilemap
                 LD HL, #0030                        ; -16 + 64 = 48
                 ADD HL, BC
                 LD B, H
@@ -114,7 +114,7 @@ DisplayTileMap: ; initialize execute blocks
                 ;
                 LD HL, $+5
                 JP (IY)               
-.Line = .Line + 1
+.Row = .Row + 1
                 edup
                 EXX
                 LD BC, #50C0
@@ -139,7 +139,7 @@ DisplayTileMap: ; initialize execute blocks
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 EI
-                LD DE, #0131
+                LD DE, #0131                        ; the time wasted to execute this block of code
                 RET
 DisplayTileFOW: ;
                 LD A, (BC)

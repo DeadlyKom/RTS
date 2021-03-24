@@ -21,6 +21,8 @@ Page_7:                 EQU #C000 + #1B00           ; Bank 03 (Screen 1) (про
                         include "Page_06.asm"
                         include "Page_07.asm"
 
-Page_TitleMapSprites    EQU 0
+MemoryPage_TilemapSprite EQU CONST_7FFD | 0
+
+MemoryPage_ShadowScreen EQU CONST_7FFD | 7
 
                         endif ; ~_CORE_MEMORY_INCLUDE_

@@ -36,7 +36,9 @@ InterruptHandler:   ; preservation registers
                     ; keyboard handling
 
                     ; mouse handling
-                    CALL MemoryPage_2.UpdateStatesMouse         
+                    CALL MemoryPage_2.UpdateStatesMouse
+                    ;
+                    
                     ; restore all registers
                     POP BC
                     POP DE
