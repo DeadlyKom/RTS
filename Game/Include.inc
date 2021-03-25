@@ -8,6 +8,6 @@
 StackTop                    EQU #5BFE                           ; расположение стека
 InterruptVectorAddress      EQU #5B00                           ; адрес вектора прерывания
 InterruptVectorAddressFrame EQU InterruptVectorAddress + #FF    ; 
-TileMap:                    EQU #B000                           ; адрес тайловой карты
+TileMap:                    EQU #7000                           ; адрес тайловой карты
 
                             endif ; ~_GAME_INCLUDE_

@@ -38,7 +38,62 @@ InterruptHandler:   ; preservation registers
                     ; mouse handling
                     CALL MemoryPage_2.UpdateStatesMouse
                     ;
-                    
+                    LD HL, MemoryPage_5.Flags
+                    LD A, (HL)
+                    RLA
+                    JR C, .NextKey4
+                    ;
+                    LD A, VK_A
+                    CALL CheckKeyState
+                    JR NZ, .NextKey1
+                    LD HL, (MemoryPage_5.TileMapPtr)
+                    LD A, L
+                    AND %00111111
+                    JR Z, .NextKey1
+                    DEC L
+                    LD (MemoryPage_5.TileMapPtr), HL
+.NextKey1           LD A, VK_D
+                    CALL CheckKeyState
+                    JR NZ, .NextKey2
+                    LD HL, (MemoryPage_5.TileMapPtr)
+                    LD A, L
+                    AND %00111111
+                    ADD A, #D0
+                    JR C, .NextKey2
+                    INC L
+                    LD (MemoryPage_5.TileMapPtr), HL
+.NextKey2           LD A, VK_W
+                    CALL CheckKeyState
+                    JR NZ, .NextKey3
+                    LD HL, (MemoryPage_5.TileMapPtr)  
+                    LD A, H
+                    LD E, L
+                    RL E
+                    RLA
+                    RL E
+                    RLA
+                    AND %00111111
+                    JR Z, .NextKey3
+                    LD DE, #FFC0
+                    ADD HL, DE
+                    LD (MemoryPage_5.TileMapPtr), HL
+.NextKey3           LD A, VK_S
+                    CALL CheckKeyState
+                    JR NZ, .NextKey4
+                    LD HL, (MemoryPage_5.TileMapPtr)  
+                    LD A, H
+                    LD E, L
+                    RL E
+                    RLA
+                    RL E
+                    RLA
+                    AND %00111111
+                    ADD A, #CC
+                    JR C, .NextKey4
+                    LD DE, #0040
+                    ADD HL, DE
+                    LD (MemoryPage_5.TileMapPtr), HL
+.NextKey4
                     ; restore all registers
                     POP BC
                     POP DE

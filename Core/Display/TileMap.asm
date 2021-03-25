@@ -2,7 +2,21 @@
                 ifndef _CORE_DISPLAY_TILE_MAP_
                 define _CORE_DISPLAY_TILE_MAP_
 
-DisplayTile:    ;
+                defarray TileAddressTable #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080;, #50C0
+; TileAddressTable:
+;                 DW #4000 + #0000 + #00
+;                 DW #4000 + #0000 + #40
+;                 DW #4000 + #0000 + #80
+;                 DW #4000 + #0000 + #C0
+;                 DW #4000 + #0800 + #00
+;                 DW #4000 + #0800 + #40
+;                 DW #4000 + #0800 + #80
+;                 DW #4000 + #0800 + #C0
+;                 DW #4000 + #1000 + #00
+;                 DW #4000 + #1000 + #40
+;                 DW #4000 + #1000 + #80
+;                 DW #4000 + #1000 + #C0
+DisplayTileRow: ;
                 LD A, (BC)
                 ;JR C, .SpiritLevel
                 EXX
@@ -84,11 +98,11 @@ DisplayTileMap: ; initialize execute blocks
                 LD A, MemoryPage_TilemapSprite
                 OUT (C), A
                 ; initialize display row of tile
-                LD A, #03                           ; number of code blocks executed
+                LD A, #03                                               ; number of code blocks executed
                 LD (.CountExecute), A
 .TileMapRow     EQU $+1
-                LD BC, MemoryPage_5.TileMap 
-                LD IX, DisplayTile
+                LD BC, TileMap 
+                LD IX, DisplayTileRow
                 LD IY, .CheckExecuted
                 ; 
 .ExecuteBlocks  EQU $+1
@@ -96,18 +110,17 @@ DisplayTileMap: ; initialize execute blocks
                 JP (HL)
                 ;
 .FirstBlock     EQU $
-                defarray Table #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080;, #50C0
 .Row            defl 0
-                dup Table[#]
+                dup TileAddressTable[#]
                 EXX
-                LD BC, Table[.Row]
+                LD BC, TileAddressTable[.Row]
                 EXX
                 LD HL, $+3
-                rept 16                             ; number of columns per row
+                rept 16                                                 ; number of columns per row
                 JP (IX)
                 endr
                 ; calculate next row of the tilemap
-                LD HL, #0030                        ; -16 + 64 = 48
+                LD HL, #0030                                            ; -16 + 64 = 48
                 ADD HL, BC
                 LD B, H
                 LD C, L
@@ -120,11 +133,11 @@ DisplayTileMap: ; initialize execute blocks
                 LD BC, #50C0
                 EXX
                 LD HL, $+3
-                rept 16                             ; number of columns per row
+                rept 16                                                 ; number of columns per row
                 JP (IX)
                 endr
                 LD HL, .FirstBlock
-                LD BC, MemoryPage_5.TileMap
+                LD BC, (MemoryPage_5.TileMapPtr)
                 JR .Exit
 .CheckExecuted
 .CountExecute   EQU $+1
@@ -139,69 +152,140 @@ DisplayTileMap: ; initialize execute blocks
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 EI
-                LD DE, #0131                        ; the time wasted to execute this block of code
+                LD DE, #0131                                            ; the time wasted to execute this block of code
                 RET
 DisplayTileFOW: ;
+                DI
+                ;LD (.ContainerSP), SP
+                ; переключить на страницу памяти со спрайтами тайлов
+                LD BC, PORT_7FFD
+                LD A, MemoryPage_TilemapSprite
+                OUT (C), A
+                ; инициализация отрисовки
+                LD BC, (MemoryPage_5.TileMapPtr) 
+                LD IX, DisplayRowFOW               
+.Row            defl 0
+                dup TileAddressTable[#]
+                EXX
+                LD BC, TileAddressTable[.Row]
+                LD HL, $+3
+                rept 16                             ; количество колонок
+                JP (IX)
+                endr
+                ; перейти к следующей строке тайловой карыт
+                EXX
+                LD HL, #0030                        ; -16 + 64 = 48
+                ADD HL, BC
+                LD B, H
+                LD C, L
+.Row = .Row + 1
+                edup
+                EXX
+                LD BC, #50C0
+                LD HL, $+3
+                rept 16                             ; количество колонок
+                JP (IX)
+                endr
+
+;.ContainerSP    EQU $+1
+                ;LD SP, #0000
+                EI
+                LD DE, #0300
+                RET
+
+DisplayRowFOW:  ;
+                EXX
                 LD A, (BC)
-                RRA
+                RLA
                 JP C, .NextTile                                         ; текущий тайл невидим (переходим к следующему)
+                LD D, B
+                LD E, C
 .CheckLeft      ; проверим на достижение левого края тайловой карты
-                LD A, D
+                LD A, C
+                AND %00111111
                 SUB #01
                 JP C, .LeftEdge                                         ; достигли левый край карты
                 ; прочитаем значение слева от текущей
-                DEC BC
+                DEC C
                 LD A, (BC)
-                RRA
+                RLA
                 RL L                                                    ; запись первого бита (находящийся слева)
-.ChecRight      ; проверим на достижение правого края тайловой карты
-                LD A, D
-                INC A
-                CP 64
-                CCF
+.CheckRight     ; проверим на достижение правого края тайловой карты
+                INC C
+                LD A, C
+                AND %00111111
+                ADD A, %11000001                                        ; -63
                 JR C, .RightEdge                                        ; достигли правый край карты
                 ; прочитаем значение справа от текущей
-                INC BC
-                INC BC
+                INC C
                 LD A, (BC)
-                RRA
+                RLA
 .RightEdge      RL L                                                    ; запись второго бита (находящийся справа)
                 JP .CheckTop
 
 .LeftEdge       ; т.к. мы находимся у левого края, проверять на превышение справа, не нужно!
                 RL L                                                    ; запись первого бита (находящийся слева)
                 ; прочитаем значение слева от текущей
-                INC BC
+                INC C
                 LD A, (BC)
-                RRA
+                RLA
                 RL L                                                    ; запись второго бита (находящийся справа)
 .CheckTop       ; проверим на достижение верхнего края тайловой карты
-                LD A, E
-                SUB #01
+                LD A, B
+                AND %00001111
+                JP NZ, .Top
+                LD A, C
+                AND %11000000
+                SUB %01000000
                 JP C, .TopEdge
-                ; прочитаем значение сверху от текущей
+.Top            ; прочитаем значение сверху от текущей
                 LD A, C
                 SUB #41                                                 ; 65
                 LD C, A
-                JR C, $+3
+                JR NC, $+3
                 DEC B
                 LD A, (BC)
-                RRA
+                RLA
                 RL L                                                    ; запись третьего бита (находящийся сверху)
+                LD B, D
 .CheckBottom    ; проверим на достижение нижнего края тайловой карты
+
+                ; LD A, D
+                ; RL C
+                ; RLA
+                ; RL C
+                ; RLA
+                ; AND %00111111
+                ; ADD A, %11000001                                        ; -63
+                ; JR C, .BottomEdge                                       ; достигли нижний край карты
+                ; LD A, E
+                ; ADD A, %01000000
+                ; LD C, A
+                ; JR NC, $+3
+                ; ;LD B, D
+                ; INC B
+                
+
+
                 LD A, E
-                INC A
-                CP 64
-                CCF
-                JR C, .BottomEdge                                       ; достигли нижний край карты
-                ; прочитаем значение снизу от текущей
-                LD A, C
-                ADD A, #80
+                AND %11000000
+                ADD A, %01000000
                 LD C, A
-                JR C, $+3
+                EX AF, AF'
+                LD A, E
+                AND %00111111
+                OR C
+                LD C, A
+                EX AF, AF'
+                JR NC, .Bottom               
+                LD A, B
+                AND %00001111
+                ADD A, %11110001                                        ;
+                JR C, .BottomEdge                                       ; достигли нижний край карты
                 INC B
+.Bottom         ; прочитаем значение снизу от текущей
                 LD A, (BC)
-                RRA
+                RLA
 .BottomEdge     RL L                                                    ; запись четвёртого бита (находящийся снизу)
                 JP .CheckDrawFOW
 
@@ -211,12 +295,16 @@ DisplayTileFOW: ;
                 LD A, C
                 ADD A, #3F                                              ; 63
                 LD C, A
-                JR C, $+3
+                JR NC, $+3
                 INC B
+                ;INC D
                 LD A, (BC)
-                RRA
+                RLA
                 RL L                                                    ; запись четвёртого бита (находящийся снизу)
-.CheckDrawFOW   ; проверим что получили вокруг текущей позиции
+.CheckDrawFOW   ;
+                LD B, D
+                LD C, E
+                ; проверим что получили вокруг текущей позиции
                 LD A, %00001111
                 AND L
                 JP Z, .NextTile                                         ; вокруг текущего тайла нет заполненых тайлов (переходим к следующему)
@@ -224,10 +312,10 @@ DisplayTileFOW: ;
                 EX DE, HL
                 DEC A
                 ADD A, A
-                LD HL, MemoryPage_0.TableSprites
+                LD HL, MemoryPage_0.TableFOW
                 ADD A, L
                 LD L, A
-                JR C, $+3
+                JR NC, $+3
                 INC H
                 ; получим адрес спрайта
                 LD A, (HL)
@@ -275,6 +363,7 @@ DisplayTileFOW: ;
                 LD A, (BC)
                 OR (HL)
                 LD (BC), A
+                INC HL
                 ; переход к нижней части
                 LD A, #20
                 ADD A, C
@@ -289,7 +378,7 @@ DisplayTileFOW: ;
                 LD A, (BC)
                 OR (HL)
                 LD (BC), A
-                INC B
+                DEC B
                 INC HL
                 LD A, (BC)
                 OR (HL)
@@ -299,7 +388,7 @@ DisplayTileFOW: ;
                 LD A, (BC)
                 OR (HL)
                 LD (BC), A
-                INC B
+                DEC B
                 INC HL
                 endr
                 LD A, (BC)
@@ -310,7 +399,7 @@ DisplayTileFOW: ;
                 LD A, (BC)
                 OR (HL)
                 LD (BC), A
-                INC B
+                DEC B
                 INC HL
                 LD A, (BC)
                 OR (HL)
@@ -321,39 +410,22 @@ DisplayTileFOW: ;
                 OR (HL)
                 LD (BC), A
                 ; переход к следующей колонке
-                INC C
-                INC C
-
-
-
-
-
-
-
-
-
-                
-.NextTile       ; переход к следующему тайлу
+                LD A, #E2
+                ADD A, C
+                LD C, A
+                EX DE, HL
+                DEC C
+                DEC C
+                EXX             
+                ; переход к следующему тайлу               
+.NextTile       INC C
                 EXX
-                ;INC D
+                INC C
+                INC C
                 INC HL
                 INC HL
                 JP (HL)
 
                 RET
-  
-; TileAddressTable:
-;                 DW #4000 + #0000 + #00
-;                 DW #4000 + #0000 + #40
-;                 DW #4000 + #0000 + #80
-;                 DW #4000 + #0000 + #C0
-;                 DW #4000 + #0800 + #00
-;                 DW #4000 + #0800 + #40
-;                 DW #4000 + #0800 + #80
-;                 DW #4000 + #0800 + #C0
-;                 DW #4000 + #1000 + #00
-;                 DW #4000 + #1000 + #40
-;                 DW #4000 + #1000 + #80
-;                 DW #4000 + #1000 + #C0
 
                 endif ; ~_CORE_DISPLAY_TILE_MAP_

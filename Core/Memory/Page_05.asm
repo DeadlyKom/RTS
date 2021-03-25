@@ -43,6 +43,7 @@ CopyScreenCont:
 GameEntry:      CALL GameInitialize
 
                 LD HL, BufferCMD
+                
                 LD DE, MemoryPage_2.DisplayTileMap
                 
                 LD (HL), E
@@ -65,10 +66,25 @@ GameEntry:      CALL GameInitialize
                 LD (HL), D
                 INC HL
 
+                LD DE, MemoryPage_2.DisplayTileFOW
+
+                LD (HL), E
+                INC HL
+                LD (HL), D
+                INC HL
+
                 ; main loop
-.MainLoop       HALT
+.MainLoop       LD A, #00
+                LD (Flags), A
+                HALT
+                LD A, #FF
+                LD (Flags), A
+                
                 LD HL, BufferCMD
                 LD (PointerCMD), HL
+                LD HL, (MemoryPage_5.TileMapPtr)
+                LD (MemoryPage_2.DisplayTileMap.TileMapRow), HL
+
                 CALL PlayMusic
 
 .ResetFrame     LD HL, #0000
@@ -115,7 +131,7 @@ GameEntry:      CALL GameInitialize
 .BufferIsEmpty  ; copy from buffer screen to shadow screen
 
                 POP HL
-                LD HL, 650
+                LD HL, 1650
                 LD BC, 1
 .L1             SBC HL, BC
                 JR NZ, .L1
@@ -125,9 +141,8 @@ GameEntry:      CALL GameInitialize
                 LD A, MemoryPage_ShadowScreen
                 OUT (C), A
                 CALL MemoryPage_7.CopyScreen
-
                 JR .MainLoop
-
+Flags           DB #00
 SizeBufferCMD:  EQU 8 * 2
 PointerCMD:     DW BufferCMD
 CounterTime:    DW #0000
@@ -138,14 +153,30 @@ GameInitialize: CALL MemoryPage_2.InitMouse
                 RET
 PlayMusic:      RET
 
-                align 256
-TileMap:        DB #80, #81, #00, #01 : DS 60, #00
-                DB #01, #80, #01, #00 : DS 60, #00
-                DB #81, #81, #01, #00 : DS 60, #00
-                DB #01, #81, #01, #01 : DS 60, #00
-                DS 4096 - 256, #00
+TileMapPtr:     DW TileMap
+                
 End:
                 endmodule
-SizePage_5:     EQU MemoryPage_5.End - MemoryPage_5.Start
+
+                ;align 256                              ; адрес карты должен быть #7000
+                MMU 1, 5
+                ORG TileMap
+
+                DB #00, #80, #80, #80, #80, #80, #00, #80, #80 : DS 55, #00
+                DB #00, #00, #80, #80, #80, #00, #00, #80, #80 : DS 55, #00
+                DB #00, #00, #00, #00, #80, #00, #00, #80, #80 : DS 55, #00
+                DB #00, #80, #00, #00, #00, #00, #80, #80, #80 : DS 55, #00
+                DB #80, #80, #80, #00, #00, #80, #80, #00, #80 : DS 55, #00
+                DB #80, #80, #80, #80, #80, #80, #80, #80, #80 : DS 55, #00
+                
+                DS 4096 - (64 * 12), #80
+
+                DB #00, #80, #80, #80, #80, #80, #00, #80, #80 : DS 55, #00
+                DB #00, #00, #80, #80, #80, #00, #00, #80, #80 : DS 55, #00
+                DB #00, #00, #80, #00, #80, #80, #80, #80, #80 : DS 55, #00
+                DB #00, #80, #00, #00, #80, #00, #80, #80, #80 : DS 55, #00
+                DB #80, #80, #00, #00, #00, #80, #80, #00, #80 : DS 55, #00
+                DB #00, #00, #00, #80, #80, #80, #80, #80, #80 : DS 55, #00
+SizePage_5:     EQU #22DB - #100 ; MemoryPage_5.End - MemoryPage_5.Start
 
                 endif ; ~_CORE_MEMORY_PAGE_05_
