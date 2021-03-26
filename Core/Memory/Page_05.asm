@@ -40,7 +40,7 @@ CopyScreenCont:
                 LD SP, #0000
                 EI
                 RET
-GameEntry:      CALL GameInitialize
+GameEntry:      CALL GameInitialize                                     ; #6412
 
                 LD HL, BufferCMD
                 
@@ -95,7 +95,7 @@ GameEntry:      CALL GameInitialize
 .HandlerCMD     LD HL, (CounterTime)
                 ADD HL, DE
                 LD (CounterTime), HL
-                LD BC, #FE00                            ; the frame time is modified in the interrupt
+                LD BC, #FE00                            ; the frame time is modified in the interrupt (3.5 - #FE00, 14 - #FA67)
                 ADD HL, BC
                 JR C, .IsEnd
                 ; execute block code
@@ -157,26 +157,6 @@ TileMapPtr:     DW TileMap
                 
 End:
                 endmodule
-
-                ;align 256                              ; адрес карты должен быть #7000
-                MMU 1, 5
-                ORG TileMap
-
-                DB #00, #80, #80, #80, #80, #80, #00, #80, #80 : DS 55, #00
-                DB #00, #00, #80, #80, #80, #00, #00, #80, #80 : DS 55, #00
-                DB #00, #00, #00, #00, #80, #00, #00, #80, #80 : DS 55, #00
-                DB #00, #80, #00, #00, #00, #00, #80, #80, #80 : DS 55, #00
-                DB #80, #80, #80, #00, #00, #80, #80, #00, #80 : DS 55, #00
-                DB #80, #80, #80, #80, #80, #80, #80, #80, #80 : DS 55, #00
-                
-                DS 4096 - (64 * 12), #80
-
-                DB #00, #80, #80, #80, #80, #80, #00, #80, #80 : DS 55, #00
-                DB #00, #00, #80, #80, #80, #00, #00, #80, #80 : DS 55, #00
-                DB #00, #00, #80, #00, #80, #80, #80, #80, #80 : DS 55, #00
-                DB #00, #80, #00, #00, #80, #00, #80, #80, #80 : DS 55, #00
-                DB #80, #80, #00, #00, #00, #80, #80, #00, #80 : DS 55, #00
-                DB #00, #00, #00, #80, #80, #80, #80, #80, #80 : DS 55, #00
-SizePage_5:     EQU #22DB - #100 ; MemoryPage_5.End - MemoryPage_5.Start
+SizePage_5:     EQU MemoryPage_5.End - MemoryPage_5.Start
 
                 endif ; ~_CORE_MEMORY_PAGE_05_

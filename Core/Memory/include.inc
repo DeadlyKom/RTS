@@ -18,6 +18,7 @@ Page_7:                 EQU #C000 + #1B00           ; Bank 03 (Screen 1) (про
                         include "Page_03.asm"
                         include "Page_04.asm"
                         include "Page_05.asm"
+                        include "Page_05_Map.asm"
                         include "Page_06.asm"
                         include "Page_07.asm"
 

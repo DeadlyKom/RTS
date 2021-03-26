@@ -33,15 +33,34 @@ InterruptHandler:   ; preservation registers
                     ; interrupt counter increment
                     LD HL, InterruptCounter
                     INC (HL)
-                    ; keyboard handling
-
+                    JP NZ, $+15
+                    ; calculate frame per second
+                    LD A, #CE
+                    LD (HL), A
+                    LD HL, FPS_Counter
+                    LD A, (HL)
+                    INC HL
+                    LD (HL), A
+                    DEC HL
+                    XOR A
+                    LD (HL), A
                     ; mouse handling
                     CALL MemoryPage_2.UpdateStatesMouse
-                    ;
+                    ; keyboard handling
+                    
                     LD HL, MemoryPage_5.Flags
                     LD A, (HL)
                     RLA
                     JR C, .NextKey4
+                    ; LD HL, InterruptCounter
+                    ; LD A, (HL)
+                    ; LD HL, MemoryPage_5.Flags
+                    ; OR (HL)
+                    ; RRA
+                    ; JR C, .NextKey4
+                    ;
+                    LD HL, FPS_Counter
+                    INC (HL)
                     ;
                     LD A, VK_A
                     CALL CheckKeyState
@@ -111,7 +130,9 @@ InterruptHandler:   ; preservation registers
                     LD SP, #0000
                     EI
                     RET
-InterruptCounter:	DB	#00
+InterruptCounter:	DB #CE
+FPS_Counter:        DB #00
+FPS:                DB #00
 InterruptStack:     DS InterruptStackSize, 0
 
                     endif ; ~_CORE_INTERRUPT_

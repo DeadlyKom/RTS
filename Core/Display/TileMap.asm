@@ -86,7 +86,7 @@ DisplayTileRow: ;
                 INC C
                 ; move to the next cell in a tile
                 EXX
-                INC C
+                INC BC
                 INC HL
                 INC HL
                 JP (HL)
@@ -249,24 +249,6 @@ DisplayRowFOW:  ;
                 RL L                                                    ; запись третьего бита (находящийся сверху)
                 LD B, D
 .CheckBottom    ; проверим на достижение нижнего края тайловой карты
-
-                ; LD A, D
-                ; RL C
-                ; RLA
-                ; RL C
-                ; RLA
-                ; AND %00111111
-                ; ADD A, %11000001                                        ; -63
-                ; JR C, .BottomEdge                                       ; достигли нижний край карты
-                ; LD A, E
-                ; ADD A, %01000000
-                ; LD C, A
-                ; JR NC, $+3
-                ; ;LD B, D
-                ; INC B
-                
-
-
                 LD A, E
                 AND %11000000
                 ADD A, %01000000
@@ -277,7 +259,7 @@ DisplayRowFOW:  ;
                 OR C
                 LD C, A
                 EX AF, AF'
-                JR NC, .Bottom               
+                JR NC, .Bottom
                 LD A, B
                 AND %00001111
                 ADD A, %11110001                                        ;
@@ -418,7 +400,7 @@ DisplayRowFOW:  ;
                 DEC C
                 EXX             
                 ; переход к следующему тайлу               
-.NextTile       INC C
+.NextTile       INC BC
                 EXX
                 INC C
                 INC C

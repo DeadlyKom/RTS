@@ -2,7 +2,7 @@
                 page 0
                 ORG #4000
 
-                module Boot
+                module Boot                                     ; #5D40
 Basic:          DB #00, #0A                                     ; номер строки 10
                 DW EndBoot - StartBoot + 2                      ; длина строки
                 DB #EA                                          ; команда REM
@@ -71,6 +71,12 @@ StartBoot:      DI
                 LD B, (SizePage_7 >> 8) + 0                     ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL #3D13                                      ; переход в TR-DOS
+                ; Чтение данных в 5 страницу (карты)
+                LD HL, TileMap                                  ; загружаем по адресу TileMap
+                LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
+                LD B, (#1000 >> 8)                              ; регистр B содержит кол-во секторов
+                LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
+                CALL #3D13                                      ; переход в TR-DOS
                 ; Чтение данных в 5 страницу
                 ;LD BC, PORT_7FFD
                 ;LD A, %00010101
@@ -125,6 +131,9 @@ Persent         EQU (SizePage_0 * 100 / #4000)
                 display "Page 6:  ", /A, Page_6, " = busy [ ", /D, SizePage_6, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_6 - Page_6 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_6 * 100 / #4000, " % occupied"
                 display "Page 7:  ", /A, Page_7, " = busy [ ", /D, SizePage_7, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_7 - Page_7 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_7 * 100 / #4000, " % occupied"
                 display "--------------------------------------------------------------------------------------------------------"
+                display "Building the TRD-image of the \'", TRD_FILENAME, "\' maps ..."
+                display "Map 1 :  ", /A, TileMap, " = busy [ ", /D, SizePage_5_Map, " bytes ]", "\t /    RAM space [ ", /D, #1000 - SizePage_5_Map, " bytes ]     \t |  ", /D, SizePage_5_Map * 100 / #1000, " % occupied"
+                display "--------------------------------------------------------------------------------------------------------"
 
                 emptytrd TRD_FILENAME
                 savetrd  TRD_FILENAME, "boot.B", Boot.Basic, Boot.EndBasic - Boot.Basic
@@ -142,6 +151,8 @@ Persent         EQU (SizePage_0 * 100 / #4000)
                 savetrd  TRD_FILENAME, "Page6.C", Page_6, SizePage_6        ; bank 03
                 page 7
                 savetrd  TRD_FILENAME, "Page7.C", Page_7, SizePage_7        ; bank 03
+                page 5
+                savetrd  TRD_FILENAME, "Map 1.C", TileMap, SizePage_5_Map   ; bank 01
                 page 5
                 savetrd  TRD_FILENAME, "Page5.C", Page_5, SizePage_5        ; bank 01
 
