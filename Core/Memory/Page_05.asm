@@ -41,7 +41,7 @@ CopyScreenCont:
                 EI
                 RET
 GameEntry:      CALL GameInitialize                                     ; #6412
-
+                jp MemoryPage_2.Editor
                 LD HL, BufferCMD
                 
                 ; display tilemap
