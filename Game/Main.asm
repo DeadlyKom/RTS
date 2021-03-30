@@ -9,5 +9,6 @@
                 include "Include.inc"
                 include "../Core/Memory/Include.inc"
                 include "../Core/Builder.asm"
+                ваыдалылд
 
                 endif ; ~_GAME_MAIN_
