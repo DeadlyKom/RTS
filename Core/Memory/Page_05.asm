@@ -44,30 +44,34 @@ GameEntry:      CALL GameInitialize                                     ; #6412
 
                 LD HL, BufferCMD
                 
-                LD DE, MemoryPage_2.DisplayTileMap
-                
+                ; display tilemap
+                LD DE, MemoryPage_2.DisplayTileMap             
+                LD (HL), E
+                INC HL
+                LD (HL), D
+                INC HL
+                LD (HL), E
+                INC HL
+                LD (HL), D
+                INC HL
+                LD (HL), E
+                INC HL
+                LD (HL), D
+                INC HL
                 LD (HL), E
                 INC HL
                 LD (HL), D
                 INC HL
 
+                ; display sprite by pixel
+                LD DE, MemoryPage_2.DisplaySBP               
                 LD (HL), E
                 INC HL
                 LD (HL), D
                 INC HL
 
-                LD (HL), E
-                INC HL
-                LD (HL), D
-                INC HL
-
-                LD (HL), E
-                INC HL
-                LD (HL), D
-                INC HL
-
+                ; display Fog of War
                 LD DE, MemoryPage_2.DisplayTileFOW
-
                 LD (HL), E
                 INC HL
                 LD (HL), D

@@ -34,6 +34,7 @@ Start:
                 include "../Interrupt.asm"
                 include "../../Input/Include.inc"
                 include "../Display/TileMap.asm"
+                include "../Display/SpriteByPixel.asm"
 End:
                 endmodule
 
