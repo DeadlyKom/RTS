@@ -142,7 +142,7 @@ GameEntry:      CALL GameInitialize                                     ; #6412
 
                 ; toggle to memory page with shadow screen
                 LD BC, PORT_7FFD
-                LD A, MemoryPage_ShadowScreen
+                LD A, MemoryPage_ShadowScreen   
                 OUT (C), A
                 CALL MemoryPage_7.CopyScreen
                 JR .MainLoop
