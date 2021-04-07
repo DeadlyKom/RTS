@@ -3,7 +3,7 @@
 
                 include "../Core/Memory/Include.inc"
 Editor:         LD HL, MemoryPage_0.MenuSprites + 10
-
+                nop
                 CALL MemoryPage_2.DisplayTileMap;  печать экрана
 
                 JP Editor
