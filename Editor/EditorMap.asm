@@ -5,7 +5,7 @@
 Editor:         LD HL, MemoryPage_0.MenuSprites + 10
                 
                 CALL MemoryPage_2.DisplayTileMap;  печать экрана
-
+                nop
                 JP Editor
 
                 endif ; ~_INPUT_KEYBOARD_INCLUDE_
