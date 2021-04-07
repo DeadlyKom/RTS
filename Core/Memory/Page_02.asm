@@ -35,7 +35,8 @@ Start:
                 include "../../Input/Include.inc"
                 include "../Display/TileMap.asm"
                 include "../Display/SpriteByPixel.asm"
-                include "../../Editor/EditorMap.asm"    
+                include "../../Editor/EditorMap.asm"  
+                include "../../Trash/DrawCursor.asm"      
 End:
                 endmodule
 

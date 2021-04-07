@@ -98,7 +98,7 @@ DisplayTileMap: ; initialize execute blocks
                 LD A, MemoryPage_TilemapSprite
                 OUT (C), A
                 ; initialize display row of tile
-                LD A, #03                                               ; number of code blocks executed
+                LD A, #0B                                               ; number of code blocks executed
                 LD (.CountExecute), A
 .TileMapRow     EQU $+1
                 LD BC, TileMap 
