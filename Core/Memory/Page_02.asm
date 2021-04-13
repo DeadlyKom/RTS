@@ -35,6 +35,7 @@ Start:
                 include "../../Input/Include.inc"
                 include "../Display/TileMap.asm"
                 include "../Display/SpriteByPixel.asm"
+                include "../Display/BackgroundFill.asm"
 End:
                 endmodule
 

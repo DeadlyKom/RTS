@@ -3,19 +3,6 @@
                 define _CORE_DISPLAY_TILE_MAP_
 
                 defarray TileAddressTable #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080;, #50C0
-; TileAddressTable:
-;                 DW #4000 + #0000 + #00
-;                 DW #4000 + #0000 + #40
-;                 DW #4000 + #0000 + #80
-;                 DW #4000 + #0000 + #C0
-;                 DW #4000 + #0800 + #00
-;                 DW #4000 + #0800 + #40
-;                 DW #4000 + #0800 + #80
-;                 DW #4000 + #0800 + #C0
-;                 DW #4000 + #1000 + #00
-;                 DW #4000 + #1000 + #40
-;                 DW #4000 + #1000 + #80
-;                 DW #4000 + #1000 + #C0
 DisplayTileRow: ;
                 LD A, (BC)
                 ;JR C, .SpiritLevel
@@ -90,18 +77,97 @@ DisplayTileRow: ;
                 INC HL
                 INC HL
                 JP (HL)
-DisplayTileMap: ; initialize execute blocks
+
+InitTilemap:    LD HL, MemoryPage_5.TileMapSize
+                ;
+                LD A, (HL)
+                LD (Tilemap_Down.Increment), A
+                NEG                                         ; X = -X
+                LD (Tilemap_Up.Decrement), A
+                ADD A, #10                                  ; -X += 16
+                LD (Tilemap_Right.Clamp), A
+                ;
+                INC HL                                      ; move to Y
+                ; -(Y - 12)
+                LD A, (HL)
+                ADD A, #F4
+                NEG
+                LD (Tilemap_Down.Clamp), A
+                RET
+
+Tilemap_Up:     ;
+                LD HL, MemoryPage_5.TileMapOffset.Y
+                XOR A
+                OR (HL)
+                RET Z
+                DEC (HL)
+                LD HL, (MemoryPage_5.TileMapPtr)
+.Decrement      EQU $+1
+                LD DE, #FF00
+                ADD HL, DE
+                LD (MemoryPage_5.TileMapPtr), HL
+                RET
+Tilemap_Down:   ;
+                LD HL, MemoryPage_5.TileMapOffset.Y
+.Clamp          EQU $+1
+                LD A, #00
+                ADD A, (HL)
+                RET C
+                INC (HL)
+                LD HL, (MemoryPage_5.TileMapPtr)
+.Increment      EQU $+1
+                LD DE, #0000
+                ADD HL, DE
+                LD (MemoryPage_5.TileMapPtr), HL
+                RET
+Tilemap_Left:   ;
+                LD HL, MemoryPage_5.TileMapOffset.X
+                XOR A
+                OR (HL)
+                RET Z
+                DEC (HL)
+                LD HL, (MemoryPage_5.TileMapPtr)
+                DEC HL
+                LD (MemoryPage_5.TileMapPtr), HL
+                RET
+Tilemap_Right:  ;
+                LD HL, MemoryPage_5.TileMapOffset.X
+.Clamp          EQU $+1
+                LD A, #00
+                ADD A, (HL)
+                RET C
+                INC (HL)
+                LD HL, (MemoryPage_5.TileMapPtr)
+                INC HL
+                LD (MemoryPage_5.TileMapPtr), HL
+                RET
+
+PrepareTilemap: LD HL, (MemoryPage_5.TileMapPtr)
+                ; toggle to memory page with tile sprites
+                SeMemoryPage MemoryPage_Tilemap
+                ; copy the visible block of the tilemap
+                LD DE, MemoryPage_5.TileMapBuffer
+                rept 11
+                rept 16
+                LDI
+                endr
+                LD BC, #0030
+                ADD HL, BC
+                endr
+                rept 16
+                LDI
+                endr
+                RET
+DisplayTilemap: ; initialize execute blocks
                 DI
                 LD (.ContainerSP), SP
                 ; toggle to memory page with tile sprites
-                LD BC, PORT_7FFD
-                LD A, MemoryPage_TilemapSprite
-                OUT (C), A
+                SeMemoryPage MemoryPage_TilemapSprite
                 ; initialize display row of tile
                 LD A, #03                                               ; number of code blocks executed
                 LD (.CountExecute), A
 .TileMapRow     EQU $+1
-                LD BC, TileMap 
+                LD BC, MemoryPage_5.TileMapBuffer 
                 LD IX, DisplayTileRow
                 LD IY, .CheckExecuted
                 ; 
@@ -119,11 +185,6 @@ DisplayTileMap: ; initialize execute blocks
                 rept 16                                                 ; number of columns per row
                 JP (IX)
                 endr
-                ; calculate next row of the tilemap
-                LD HL, #0030                                            ; -16 + 64 = 48
-                ADD HL, BC
-                LD B, H
-                LD C, L
                 ;
                 LD HL, $+5
                 JP (IY)               
@@ -137,7 +198,7 @@ DisplayTileMap: ; initialize execute blocks
                 JP (IX)
                 endr
                 LD HL, .FirstBlock
-                LD BC, (MemoryPage_5.TileMapPtr)
+                LD BC, MemoryPage_5.TileMapBuffer
                 JR .Exit
 .CheckExecuted
 .CountExecute   EQU $+1
@@ -155,12 +216,10 @@ DisplayTileMap: ; initialize execute blocks
                 LD DE, #0131                                            ; the time wasted to execute this block of code
                 RET
 DisplayTileFOW: ;
-                DI
+                ;DI
                 ;LD (.ContainerSP), SP
                 ; переключить на страницу памяти со спрайтами тайлов
-                LD BC, PORT_7FFD
-                LD A, MemoryPage_TilemapSprite
-                OUT (C), A
+                SeMemoryPage MemoryPage_Tilemap
                 ; инициализация отрисовки
                 LD BC, (MemoryPage_5.TileMapPtr) 
                 LD IX, DisplayRowFOW               
@@ -189,8 +248,8 @@ DisplayTileFOW: ;
 
 ;.ContainerSP    EQU $+1
                 ;LD SP, #0000
-                EI
-                LD DE, #0300
+                ;EI
+                LD DE, #0200
                 RET
 
 DisplayRowFOW:  ;
@@ -294,7 +353,7 @@ DisplayRowFOW:  ;
                 EX DE, HL
                 DEC A
                 ADD A, A
-                LD HL, MemoryPage_0.TableFOW
+                LD HL, MemoryPage_1.TableFOW
                 ADD A, L
                 LD L, A
                 JR NC, $+3

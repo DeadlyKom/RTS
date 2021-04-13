@@ -7,7 +7,9 @@
                 
                 module MemoryPage_3
 Start:
-                RET
+                inchob "../../AY/1.$c"      ; #C86E, #08AD (с проигрывателем)
+                inchob "../../AY/2.$m"      ; #D11B, #06C9
+                inchob "../../AY/3.$m"      ; #D7E4, #02CF - не хотит!
 End:
                 endmodule
 SizePage_3:     EQU MemoryPage_3.End - MemoryPage_3.Start

@@ -7,9 +7,20 @@
                 
                 module MemoryPage_5
 Start:
-CopyScreenCont:
+CopyScreenCont: ;
+; .ContainerSP    EQU $+1
+;                 LD SP, #0000
+;                 LD A, R
+;                 JP M, .Play
+;                 EI
+;                 HALT
+;                 DI
+;                 JR .SkipPlay
+; .Play           CALL PlayMusic
+; .SkipPlay       LD (.ContainerSP_), SP
+                ;
 .Offset         defl 364 * 16
-                dup 68
+                dup 68 - 48
                 ; получение 16 байт
                 LD SP, #4000 + .Offset
                 POP HL
@@ -41,10 +52,16 @@ CopyScreenCont:
                 EI
                 RET
 GameEntry:      CALL GameInitialize                                     ; #6412
+
+                CALL MemoryPage_2.InitTilemap
+
+                LD HL, #C000
+                CALL MemoryPage_2.PrepareTilemap
+
                 LD HL, BufferCMD
                 
                 ; display tilemap
-                LD DE, MemoryPage_2.DisplayTileMap             
+                LD DE, MemoryPage_2.DisplayTilemap             
                 LD (HL), E
                 INC HL
                 LD (HL), D
@@ -85,10 +102,10 @@ GameEntry:      CALL GameInitialize                                     ; #6412
                 
                 LD HL, BufferCMD
                 LD (PointerCMD), HL
-                LD HL, (MemoryPage_5.TileMapPtr)
-                LD (MemoryPage_2.DisplayTileMap.TileMapRow), HL
+                ; LD HL, (MemoryPage_5.TileMapPtr)
+                ; LD (MemoryPage_2.DisplayTileMap.TileMapRow), HL
 
-                CALL PlayMusic
+                ;CALL PlayMusic
 
 .ResetFrame     LD HL, #0000
                 LD D, H
@@ -134,15 +151,13 @@ GameEntry:      CALL GameInitialize                                     ; #6412
 .BufferIsEmpty  ; copy from buffer screen to shadow screen
 
                 POP HL
-                LD HL, 1650
+                LD HL, 1000;1650
                 LD BC, 1
 .L1             SBC HL, BC
                 JR NZ, .L1
 
                 ; toggle to memory page with shadow screen
-                LD BC, PORT_7FFD
-                LD A, MemoryPage_ShadowScreen   
-                OUT (C), A
+                SeMemoryPage MemoryPage_ShadowScreen
                 CALL MemoryPage_7.CopyScreen
                 JR .MainLoop
 Flags           DB #00
@@ -153,11 +168,30 @@ BufferCMD:      DS SizeBufferCMD, 0
 
 GameInitialize: CALL MemoryPage_2.InitMouse
                 CALL MemoryPage_2.InitInterrupt
+                ; initialize music
+                ; toggle to memory page with tile sprites
+                SeMemoryPage MemoryPage_Music
+                LD A, R
+                RRA
+                LD HL, #D11B
+                JR C, $+5
+                LD HL, #C86E
+                CALL #C003
+                EI
+                ; initialize background
+                CALL MemoryPage_2.BackgroundFill
+
                 RET
-PlayMusic:      RET
+PlayMusic:      ;
+                ; toggle to memory page with tile sprites
+                SeMemoryPage MemoryPage_Music
+                CALL #C005
+                RET
 
 TileMapPtr:     DW TileMap
-               
+TileMapOffset:  FLocation 0, 0
+TileMapSize:    FMapSize 64, 64
+TileMapBuffer:  DS 192, 0
 End:
                 endmodule
 SizePage_5:     EQU MemoryPage_5.End - MemoryPage_5.Start

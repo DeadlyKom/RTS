@@ -2,6 +2,14 @@
                     ifndef _STRUCTURE_BASE_
                     define _STRUCTURE_BASE_
 
+; -------------------- size map --------------------
+
+                    struct FMapSize
+X                   DB #00
+Y                   DB #00
+
+                    ends
+
 ; -------------------- location coordinates on the tilemap --------------------
 
                     struct FLocation

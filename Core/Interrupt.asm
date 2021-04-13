@@ -2,7 +2,7 @@
                     ifndef _CORE_INTERRUPT_
                     define _CORE_INTERRUPT_
 
-InterruptStackSize  EQU 16 * 2
+InterruptStackSize  EQU 24 * 2
 InitInterrupt:      ;DI
                     ;
                     LD HL, InterruptHandler
@@ -43,15 +43,34 @@ InterruptHandler:   ; preservation registers
                     LD (HL), A
                     DEC HL
                     XOR A
-                    LD (HL), A
+                    LD (HL), A 
+                    ; play music
+                    LD A, (MemoryPagePtr)
+                    LD (.RestoreMemoryPage), A
+                    CALL MemoryPage_5.PlayMusic
+                    ;
+                    LD HL, (TimeOfDay)
+                    DEC HL
+                    LD (TimeOfDay), HL
+                    LD A, H
+                    OR L
+                    JR NZ, .SkipTimeOfDay
+                    ;
+                    LD HL, TimeOfDayChangeRate
+                    LD (TimeOfDay), HL
+                    CALL MemoryPage_2.BackgroundFill
+.SkipTimeOfDay
+                    ;
+.RestoreMemoryPage  EQU $+1
+                    LD A, #00
+                    SeMemoryPage_A
                     ; mouse handling
                     CALL MemoryPage_2.UpdateStatesMouse
                     ; keyboard handling
-                    
                     LD HL, MemoryPage_5.Flags
                     LD A, (HL)
                     RLA
-                    JR C, .NextKey4
+                    JR C, .SkipInput
                     ; LD HL, InterruptCounter
                     ; LD A, (HL)
                     ; LD HL, MemoryPage_5.Flags
@@ -62,57 +81,30 @@ InterruptHandler:   ; preservation registers
                     LD HL, FPS_Counter
                     INC (HL)
                     ;
+                    LD HL, (MemoryPage_5.TileMapPtr)
+                    PUSH HL
+                    ;
                     LD A, VK_A
                     CALL CheckKeyState
-                    JR NZ, .NextKey1
+                    CALL Z, MemoryPage_2.Tilemap_Left
+                    LD A, VK_D
+                    CALL CheckKeyState
+                    CALL Z, MemoryPage_2.Tilemap_Right
+                    LD A, VK_W
+                    CALL CheckKeyState
+                    CALL Z, MemoryPage_2.Tilemap_Up
+                    LD A, VK_S
+                    CALL CheckKeyState
+                    CALL Z, MemoryPage_2.Tilemap_Down
+                    ;
                     LD HL, (MemoryPage_5.TileMapPtr)
-                    LD A, L
-                    AND %00111111
-                    JR Z, .NextKey1
-                    DEC L
-                    LD (MemoryPage_5.TileMapPtr), HL
-.NextKey1           LD A, VK_D
-                    CALL CheckKeyState
-                    JR NZ, .NextKey2
+                    POP DE                    
+                    OR A
+                    SBC HL, DE
+                    JR Z, $+8
                     LD HL, (MemoryPage_5.TileMapPtr)
-                    LD A, L
-                    AND %00111111
-                    ADD A, #D0
-                    JR C, .NextKey2
-                    INC L
-                    LD (MemoryPage_5.TileMapPtr), HL
-.NextKey2           LD A, VK_W
-                    CALL CheckKeyState
-                    JR NZ, .NextKey3
-                    LD HL, (MemoryPage_5.TileMapPtr)  
-                    LD A, H
-                    LD E, L
-                    RL E
-                    RLA
-                    RL E
-                    RLA
-                    AND %00111111
-                    JR Z, .NextKey3
-                    LD DE, #FFC0
-                    ADD HL, DE
-                    LD (MemoryPage_5.TileMapPtr), HL
-.NextKey3           LD A, VK_S
-                    CALL CheckKeyState
-                    JR NZ, .NextKey4
-                    LD HL, (MemoryPage_5.TileMapPtr)  
-                    LD A, H
-                    LD E, L
-                    RL E
-                    RLA
-                    RL E
-                    RLA
-                    AND %00111111
-                    ADD A, #CC
-                    JR C, .NextKey4
-                    LD DE, #0040
-                    ADD HL, DE
-                    LD (MemoryPage_5.TileMapPtr), HL
-.NextKey4
+                    CALL MemoryPage_2.PrepareTilemap
+.SkipInput          
                     ; restore all registers
                     POP BC
                     POP DE
@@ -133,6 +125,7 @@ InterruptHandler:   ; preservation registers
 InterruptCounter:	DB #CE
 FPS_Counter:        DB #00
 FPS:                DB #00
+TimeOfDay:          DW TimeOfDayChangeRate
 InterruptStack:     DS InterruptStackSize, 0
 
                     endif ; ~_CORE_INTERRUPT_

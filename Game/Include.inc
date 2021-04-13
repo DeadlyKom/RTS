@@ -3,11 +3,15 @@
                             define _GAME_INCLUDE_
 
                             include "../Config.inc"
+                            include "Color.inc"
+                            include "../Core/Macro.inc"
                     
                             define TRD_FILENAME "RTS.trd"       ; имя образа TRD
-StackTop                    EQU #5BFE                           ; расположение стека
+StackTop                    EQU #5BFD                           ; расположение стека
+MemoryPagePtr               EQU #5BFE                           ; адрес хранения номера странички
 InterruptVectorAddress      EQU #5B00                           ; адрес вектора прерывания
 InterruptVectorAddressFrame EQU InterruptVectorAddress + #FF    ; 
-TileMap:                    EQU #7000                           ; адрес тайловой карты
+TileMap                     EQU #D000                           ; адрес тайловой карты
+TimeOfDayChangeRate         EQU 50 * 60                         ; скорость смены времени дня
 
                             endif ; ~_GAME_INCLUDE_
