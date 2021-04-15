@@ -53,6 +53,33 @@ CopyScreenCont: ;
                 RET
 GameEntry:      CALL GameInitialize                                     ; #6412
 
+                ; ---- test ----
+                LD HL, #4000
+                rept 4
+                LD (HL), #FF
+                INC L
+                LD (HL), #FF
+                INC L
+                LD (HL), #FF
+                INC L
+                LD (HL), #FF
+                INC H
+                LD (HL), #FF
+                DEC L
+                LD (HL), #FF
+                DEC L
+                LD (HL), #FF
+                DEC L
+                LD (HL), #FF
+                INC H
+                endr
+
+                SeMemoryPage MemoryPage_TilemapSprite
+                LD HL, MemoryPage_0.Sprite_Bot_0
+                LD DE, #05F1
+                CALL MemoryPage_2.DisplaySBP
+                ; ~~~~ test ~~~~
+
                 CALL MemoryPage_2.InitTilemap
 
                 LD HL, #C000
