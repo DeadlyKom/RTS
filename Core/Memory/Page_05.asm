@@ -55,28 +55,14 @@ GameEntry:      CALL GameInitialize                                     ; #6412
 
                 ; ---- test ----
                 LD HL, #4000
-                rept 4
+                LD DE, #4001
+                LD BC, #1800 - 1
                 LD (HL), #FF
-                INC L
-                LD (HL), #FF
-                INC L
-                LD (HL), #FF
-                INC L
-                LD (HL), #FF
-                INC H
-                LD (HL), #FF
-                DEC L
-                LD (HL), #FF
-                DEC L
-                LD (HL), #FF
-                DEC L
-                LD (HL), #FF
-                INC H
-                endr
+                LDIR
 
                 SeMemoryPage MemoryPage_TilemapSprite
                 LD HL, MemoryPage_0.Sprite_Bot_0
-                LD DE, #05F1
+                LD DE, #0501
                 CALL MemoryPage_2.DisplaySBP
                 ; ~~~~ test ~~~~
 

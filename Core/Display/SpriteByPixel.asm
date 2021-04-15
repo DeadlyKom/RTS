@@ -24,8 +24,42 @@ DisplaySBP:             CALL CalcAddrByPixel_BC                 ; A - storage th
 
                         rept 12
 
-                        rept 2
+                        ; rept 2
 
+                        ; LD A, (BC)
+                        ; LD E, (HL)
+                        ; EX DE, HL
+                        ; OR (HL)
+                        ; EX DE, HL
+                        ; INC HL
+                        ; LD E, (HL)
+                        ; EX DE, HL
+                        ; XOR (HL)
+                        ; LD (BC), A
+                        ; EX DE, HL
+
+                        ; INC C                               ; next screen character cell
+                        ; DEC HL                              ; previous sprite address
+                        ; INC D                               ; calculate right shift address
+                        
+                        ; LD A, (BC)
+                        ; LD E, (HL)
+                        ; EX DE, HL
+                        ; OR (HL)
+                        ; EX DE, HL
+                        ; INC HL
+                        ; LD E, (HL)
+                        ; EX DE, HL
+                        ; XOR (HL)
+                        ; LD (BC), A
+                        ; EX DE, HL
+
+                        ; INC HL                              ; next sprite address
+                        ; DEC D                               ; calculate left shift address
+
+                        ; endr
+
+                        ;- 1 byte
                         LD A, (BC)
                         LD E, (HL)
                         EX DE, HL
@@ -51,16 +85,48 @@ DisplaySBP:             CALL CalcAddrByPixel_BC                 ; A - storage th
                         LD E, (HL)
                         EX DE, HL
                         XOR (HL)
-                        LD (BC), A
+                        ;LD (BC), A
                         EX DE, HL
 
                         INC HL                              ; next sprite address
                         DEC D                               ; calculate left shift address
+                        ;~ 1 byte
 
-                        endr
+                        ;- 2 byte
+                        ;LD A, (BC)
+                        LD E, (HL)
+                        EX DE, HL
+                        OR (HL)
+                        EX DE, HL
+                        INC HL
+                        LD E, (HL)
+                        EX DE, HL
+                        XOR (HL)
+                        LD (BC), A
+                        EX DE, HL
+
+                        INC C                               ; next screen character cell
+                        DEC HL                              ; previous sprite address
+                        INC D                               ; calculate right shift address
+                        
+                        LD A, (BC)
+                        LD E, (HL)
+                        EX DE, HL
+                        OR (HL)
+                        EX DE, HL
+                        INC HL
+                        LD E, (HL)
+                        EX DE, HL
+                        XOR (HL)
+                        ;LD (BC), A
+                        EX DE, HL
+
+                        INC HL                              ; next sprite address
+                        DEC D                               ; calculate left shift address
+                        ;~ 2 byte
 
                         ;- 3 byte
-                        LD A, (BC)
+                        ;LD A, (BC)
                         LD E, (HL)
                         EX DE, HL
                         OR (HL)
@@ -106,8 +172,42 @@ DisplaySBP:             CALL CalcAddrByPixel_BC                 ; A - storage th
                         
 ;`.NextLine             
 
-                        rept 2
+                        ; rept 2
 
+                        ; LD A, (BC)
+                        ; LD E, (HL)
+                        ; EX DE, HL
+                        ; OR (HL)
+                        ; EX DE, HL
+                        ; INC HL
+                        ; LD E, (HL)
+                        ; EX DE, HL
+                        ; XOR (HL)
+                        ; LD (BC), A
+                        ; EX DE, HL
+
+                        ; DEC C                               ; next screen character cell !
+                        ; DEC HL                              ; previous sprite address
+                        ; DEC D                               ; calculate right shift address
+                        
+                        ; LD A, (BC)
+                        ; LD E, (HL)
+                        ; EX DE, HL
+                        ; OR (HL)
+                        ; EX DE, HL
+                        ; INC HL
+                        ; LD E, (HL)
+                        ; EX DE, HL
+                        ; XOR (HL)
+                        ; LD (BC), A
+                        ; EX DE, HL
+
+                        ; INC HL                              ; next sprite address
+                        ; INC D                               ; calculate left shift address
+
+                        ; endr
+                        
+                        ;- 1 byte
                         LD A, (BC)
                         LD E, (HL)
                         EX DE, HL
@@ -133,16 +233,48 @@ DisplaySBP:             CALL CalcAddrByPixel_BC                 ; A - storage th
                         LD E, (HL)
                         EX DE, HL
                         XOR (HL)
-                        LD (BC), A
+                        ;LD (BC), A
                         EX DE, HL
 
                         INC HL                              ; next sprite address
                         INC D                               ; calculate left shift address
+                        ;~ 1 byte
 
-                        endr
+                        ;- 2 byte
+                        ;LD A, (BC)
+                        LD E, (HL)
+                        EX DE, HL
+                        OR (HL)
+                        EX DE, HL
+                        INC HL
+                        LD E, (HL)
+                        EX DE, HL
+                        XOR (HL)
+                        LD (BC), A
+                        EX DE, HL
+
+                        DEC C                               ; next screen character cell !
+                        DEC HL                              ; previous sprite address
+                        DEC D                               ; calculate right shift address
+                        
+                        LD A, (BC)
+                        LD E, (HL)
+                        EX DE, HL
+                        OR (HL)
+                        EX DE, HL
+                        INC HL
+                        LD E, (HL)
+                        EX DE, HL
+                        XOR (HL)
+                        ;LD (BC), A
+                        EX DE, HL
+
+                        INC HL                              ; next sprite address
+                        INC D                               ; calculate left shift address
+                        ;~ 2 byte
 
                         ;- 3 byte
-                        LD A, (BC)
+                        ;LD A, (BC)
                         LD E, (HL)
                         EX DE, HL
                         OR (HL)
