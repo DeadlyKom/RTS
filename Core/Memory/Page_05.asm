@@ -62,8 +62,8 @@ GameEntry:      CALL GameInitialize                                     ; #6412
 
                 SeMemoryPage MemoryPage_TilemapSprite
                 LD HL, MemoryPage_0.Sprite_Bot_0
-                LD DE, #5585
-                CALL MemoryPage_2.DisplaySBP
+                LD DE, #0201
+                CALL MemoryPage_2.DisplaySBP_Ex
                 ; ~~~~ test ~~~~
 
                 CALL MemoryPage_2.InitTilemap
