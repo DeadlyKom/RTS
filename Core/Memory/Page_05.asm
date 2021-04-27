@@ -54,16 +54,26 @@ CopyScreenCont: ;
 GameEntry:      CALL GameInitialize                                     ; #6412
 
                 ; ---- test ----
-                LD HL, #4000
-                LD DE, #4001
-                LD BC, #1800 - 1
-                LD (HL), #FF
-                LDIR
+                ; LD HL, #4000
+                ; LD DE, #4001
+                ; LD BC, #1800 - 1
+                ; LD (HL), #FF
+                ; LDIR
 
-                SeMemoryPage MemoryPage_TilemapSprite
-                LD HL, MemoryPage_0.Sprite_Bot_0
-                LD DE, #0201
-                CALL MemoryPage_2.DisplaySBP_Ex
+                ; SeMemoryPage MemoryPage_TilemapSprite
+                ; LD HL, MemoryPage_0.Sprite_Bot_0
+                ; LD DE, #0201
+                ; CALL MemoryPage_2.DisplaySBP
+
+                LD IY, .ArrayUnits
+                CALL MemoryPage_2.HandlerUnits
+                JR .SkipArray
+
+.ArrayUnits     FUnit 0, 0, 0, 0, 0, 0,  0, 0
+                FUnit 0, 0, 0, 0, 0, 2,  0, 0
+.CountUnits     DB #02
+
+.SkipArray
                 ; ~~~~ test ~~~~
 
                 CALL MemoryPage_2.InitTilemap
@@ -87,13 +97,6 @@ GameEntry:      CALL GameInitialize                                     ; #6412
                 INC HL
                 LD (HL), D
                 INC HL
-                LD (HL), E
-                INC HL
-                LD (HL), D
-                INC HL
-
-                ; display sprite by pixel
-                LD DE, MemoryPage_2.DisplaySBP               
                 LD (HL), E
                 INC HL
                 LD (HL), D
@@ -201,10 +204,17 @@ PlayMusic:      ;
                 CALL #C005
                 RET
 
-TileMapPtr:     DW TileMap
-TileMapOffset:  FLocation 0, 0
+TileMapPtr:     DW TileMap + 1
+TileMapOffset:  FLocation 1, 0
 TileMapSize:    FMapSize 64, 64
 TileMapBuffer:  DS 192, 0
+
+TableSprites:   DW TableSprites_Infantry
+TableSprites_Infantry:
+                FSprite 24, -2, 24, -(24 - 20), MemoryPage_TilemapSprite, MemoryPage_0.Sprite_Bot_0     ; 0
+
+                include "../Display/ShiftTable.inc"
+                include "../Display/OffsetTableByAnimIndex.inc"
 End:
                 endmodule
 SizePage_5:     EQU MemoryPage_5.End - MemoryPage_5.Start

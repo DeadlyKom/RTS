@@ -12,6 +12,7 @@ Page_6:                 EQU #C000                   ; Bank 03
 Page_7:                 EQU #C000 + #1B00           ; Bank 03 (Screen 1) (пропуск экрана)
 
                         include "../Structure/Base.inc"
+                        include "../Structure/Sprite.inc"
                         include "../Structure/UnitInfo.inc"
 
                         include "Page_00.asm"

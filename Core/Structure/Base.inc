@@ -2,6 +2,32 @@
                     ifndef _STRUCTURE_BASE_
                     define _STRUCTURE_BASE_
 
+; -------------------- size --------------------
+
+                    struct FSize
+Width               DB #00
+Height              DB #00            
+
+                    ends
+
+; -------------------- offset --------------------
+
+                    struct FOffset
+X                   DB #00
+Y                   DB #00            
+
+                    ends
+
+; -------------------- sprite info --------------------
+
+                    struct FSpriteInfo
+Width               DB #00
+Offset_X            DB #00
+Height              DB #00
+Offset_Y            DB #00
+
+                    ends
+                    
 ; -------------------- size map --------------------
 
                     struct FMapSize

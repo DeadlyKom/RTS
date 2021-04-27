@@ -19,7 +19,7 @@ Tank                EQU #07
 Type                DB #00                          ; 1 byte
 Health              DB #00                          ; 1 byte
 Status              DB #00                          ; 1 byte
-AnimationIndex      DB #00                          ; 1 byte
+AnimationIndex      DB #00                          ; 1 byte (макс 128 индексов)
 Location            FLocation                       ; 2 bytes
 PixelOffset         FLocation                       ; 2 bytes
 PathFinding         FPathFindingStack               ; 8 bytes

@@ -75,4 +75,5 @@ CalcAddrByPixel_BC: LD A, D                 ; Calculate Y2,Y1,Y0
                     LD A, E
                     AND %00000111
                     RET
+                    
                     endif ; ~_UTILS_CALCULATE_ADDRESS_BY_PIXELS_

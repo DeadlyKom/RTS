@@ -28,7 +28,6 @@ SeMemoryPage_A          macro
                         LD BC, PORT_7FFD
                         OUT (C), A
                         endm
-
 ZX_COLOR_IPBF           macro Inc?, Paper?, Bright?, Flash?
                         DB ((Flash? << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)
                         endm
@@ -37,6 +36,21 @@ ZX_COLOR_IPB            macro Inc?, Paper?, Bright?
                         endm
 ZX_COLOR_IP             macro Inc?, Paper?
                         DB ((0 << 7) | (0 << 6) | (Paper? << 3) | Inc?)
-                        endm  
+                        endm
+
+DOWN_BC                 macro
+                        ; classic method "DOWN_BC" 25/59
+                        INC B
+                        LD A, B
+                        AND #07
+                        JP NZ, $+12
+                        LD A, C
+                        SUB #E0
+                        LD C, A
+                        SBC A
+                        AND #F8
+                        ADD A, B
+                        LD B, A
+                        endm
                                              
                         endif ; ~_MACRO_INCLUDE_

@@ -14,4 +14,7 @@ InterruptVectorAddressFrame EQU InterruptVectorAddress + #FF    ;
 TileMap                     EQU #D000                           ; адрес тайловой карты
 TimeOfDayChangeRate         EQU 50 * 60                         ; скорость смены времени дня
 
+TilesOnScreenX              EQU 16                              ; количество тайлов на экране по горизонтали
+TileOnScreenY               EQU 12                              ; количество тайлов на экране по вертикали
+
                             endif ; ~_GAME_INCLUDE_

@@ -35,8 +35,10 @@ Start:
                 include "../../Input/Include.inc"
                 include "../Display/TileMap.asm"
                 include "../../Utils/CalculateAddressByPixel.asm"
-                include "../Display/SpriteByPixel.asm"
+                ; include "../Display/SpriteByPixel.asm"
+                include "../Display/DrawSpriteByPixel.asm"
                 include "../Display/BackgroundFill.asm"
+                include "../Handler/Unit.asm"
 End:
                 endmodule
 
