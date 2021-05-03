@@ -21,10 +21,10 @@ Y                   DB #00
 ; -------------------- sprite info --------------------
 
                     struct FSpriteInfo
-Width               DB #00
-Offset_X            DB #00
 Height              DB #00
 Offset_Y            DB #00
+Width               DB #00
+Offset_X            DB #00
 
                     ends
                     

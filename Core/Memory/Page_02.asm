@@ -36,9 +36,16 @@ Start:
                 include "../Display/TileMap.asm"
                 include "../../Utils/CalculateAddressByPixel.asm"
                 ; include "../Display/SpriteByPixel.asm"
-                include "../Display/DrawSpriteByPixel.asm"
+                ; include "../Display/DrawSpriteByPixel.asm"
                 include "../Display/BackgroundFill.asm"
                 include "../Handler/Unit.asm"
+                include "../Display/Metods/24_0.asm"
+                include "../Display/Metods/24_0_Shift.asm"
+                include "../Display/Metods/24_0_LeftShift.asm"
+                include "../Display/Metods/24_1_Left.asm"
+                include "../Display/Metods/24_2_Left.asm"
+                include "../Display/Metods/24_1_LeftShift.asm"
+                include "../Display/Metods/24_2_LeftShift.asm"
 End:
                 endmodule
 

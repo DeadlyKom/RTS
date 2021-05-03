@@ -64,13 +64,14 @@ GameEntry:      CALL GameInitialize                                     ; #6412
                 ; LD HL, MemoryPage_0.Sprite_Bot_0
                 ; LD DE, #0201
                 ; CALL MemoryPage_2.DisplaySBP
-
+                LD A, #01
+                OUT (#FE), A
                 LD IY, .ArrayUnits
                 CALL MemoryPage_2.HandlerUnits
                 JR .SkipArray
 
-.ArrayUnits     FUnit 0, 0, 0, 0, 0, 0,  0, 0
-                FUnit 0, 0, 0, 0, 0, 2,  0, 0
+.ArrayUnits     FUnit 0, 0, 0, 0,  0, 0,  0, -8
+                FUnit 0, 0, 0, 0,  0, 2,  0, 0
 .CountUnits     DB #02
 
 .SkipArray
@@ -205,15 +206,15 @@ PlayMusic:      ;
                 RET
 
 TileMapPtr:     DW TileMap + 1
-TileMapOffset:  FLocation 1, 0
+TileMapOffset:  FLocation 0, 0
 TileMapSize:    FMapSize 64, 64
 TileMapBuffer:  DS 192, 0
 
 TableSprites:   DW TableSprites_Infantry
 TableSprites_Infantry:
-                FSprite 24, -2, 24, -(24 - 20), MemoryPage_TilemapSprite, MemoryPage_0.Sprite_Bot_0     ; 0
+                FSprite 24, 0, 24, 9, 0, MemoryPage_TilemapSprite, MemoryPage_0.Sprite_Bot_0     ; 0
 
-                include "../Display/ShiftTable.inc"
+                include "../Display/ShiftTable.inc"                     ; удалить!
                 include "../Display/OffsetTableByAnimIndex.inc"
 End:
                 endmodule

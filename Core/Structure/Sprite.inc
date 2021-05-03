@@ -6,6 +6,7 @@
 
                     struct FSprite
 Info                FSpriteInfo
+Dummy               DB #00
 Page                DB #00
 Data                DW #0000
 
