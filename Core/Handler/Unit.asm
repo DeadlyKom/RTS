@@ -297,13 +297,37 @@ HandlerUnits:           ; initialize
                         JP M, .NextUnit                             ; offset_x - значение отрицательное
                         JP Z, .NextUnit                             ; offset_x - значение нулевое
                         ; offset_x -= SOx
-                        LD A, L                                     ; L - хранит смещение от правого края спрайта
-                        SUB E
+                        XOR A
+                        LD B, A
+                        LD C, E
+                        SBC HL, BC
                         JP C, .CroppedAtLeft                        ; урезан левой частью экрана
-                        ; ADD A, #40
-                        ; JP C, .NextUnit                             ; если переполнение, то верхняя линия спрайта больше или равно 192
-                                                                    ; спрайт ниже экрана
-.CroppedAtLeft          ;
+                        OR H
+                        JP NZ, .NextUnit                            ; левая часть спрайта за правой частью экрана
+                        LD A, L
+                        NEG
+                        SUB E
+                        JP C, .CroppedAtRight                       ; урезан правой частью экрана
+                        ; рисуется полностью ёё
+                        
+                        JP .Draw                       
+                        ; ; offset_x -= SOx
+                        ; LD A, L                                     ; L - хранит смещение от правого края спрайта
+                        ; SUB E
+                        ; JP C, .CroppedAtLeft                        ; урезан левой частью экрана
+                        ; ; ADD A, #40
+                        ; ; JP C, .NextUnit                             ; если переполнение, то верхняя линия спрайта больше или равно 192
+                        ;                                             ; спрайт ниже экрана
+                        ; NEG
+                        ; SUB E
+                        ; JP C, .CroppedAtRight                       ; урезан правой частью экрана
+                        ; ; рисуется полностью ёё
+                        
+                        ; JP .Draw
+
+.CroppedAtLeft          ; урезан левой частью экрана
+                        LD A, L
+                        ;
                         NEG
                         RRA
                         RRA
@@ -350,9 +374,15 @@ HandlerUnits:           ; initialize
                         INC H       ; временно (т.к. для текущей функции 24_2)
                         EXX
                         ; ~ лишний если байт выравнен
+
+                        JR .Draw
+                        
+.CroppedAtRight         ; урезан правой частью экрана
+
+
                         ; ------------------------ горизонталь ------------------------ 
 
-                        ; установим страницу спрайта
+.Draw                   ; установим страницу спрайта
                         POP AF                                      ; A - номер странички спрайта (F - dummy)
                         SeMemoryPage_A
 
