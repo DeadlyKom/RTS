@@ -52,7 +52,7 @@ SBP_24_0:               EXX
                         LD A, C
                         SUB #E0
                         LD C, A
-                        SBC A
+                        SBC A, A
                         AND #F8
                         ADD A, B
                         LD B, A
@@ -93,13 +93,13 @@ SBP_24_0:               EXX
                         LD A, C
                         SUB #E0
                         LD C, A
-                        SBC A
+                        SBC A, A
                         AND #F8
                         ADD A, B
                         LD B, A
 
                         ; move to the next two row
-                        EXX
+.NextRow                EXX
                         INC HL
                         INC HL
                         JP (HL)

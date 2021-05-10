@@ -24,150 +24,12 @@ HandlerUnits:           ;
                         ; Ox - смещение относительно тайла в которых расположен юнет (в пикселах, знаковое)
                         ; Sx - ширина спрайта (в пикселах)
                         ; SOx - смещение спрайта (в пикселах)
-                        JP .New
-.Loop                   LD HL, MemoryPage_5.TileMapOffset.X
-                        LD A, (IY + FUnit.Location.X)               ; A = Lx
-                        SUB (HL)                                    ; A = Lx - Vx
-                        ; A <<= 4
-                        ADD A, A
-                        ADD A, A
-                        ADD A, A
-                        ADD A, A
-                        LD B, A                                     ; сохраним для вертикали
-                        ; добавить смещение относительно тайла (можно объеденить с константным значением 8)
-                        ADD A, (IY + FUnit.PixelOffset.X)           ; A += Ox
-                        ADD A, #08                                  ; A += 8
-                        EX AF, AF'
-                        LD A, B
-                        ADD A, (IY + FUnit.PixelOffset.Y)           ; A += Oy
-                        ADD A, #08                                  ; A += 8
-                        LD B, A
-                        ; расчёт адреса данных о спрайте
-                        LD HL, MemoryPage_5.TableSprites
-                        LD A, (IY + FUnit.Type)
-                        ADD A, L
-                        LD L, A
-                        JR NC, $+3
-                        INC H
-                        ; начальный адрес данных о текущем типе юнита
-                        LD E, (HL)
-                        INC HL
-                        LD D, (HL)
-                        ; получим смещение (AnimationIndex * FSprite) - если выравнить FSprite таблица не нужна
-                        LD H, HIGH MemoryPage_5.OffsetTableByAnimIndex
-                        LD A, (IY + FUnit.AnimationIndex)           ; номер анимации (индекс спрайта)
-                        ADD A, A                                    ; A *= 2 (т.к. адрес)
-                        LD L, A
-                        LD A, (HL)
-                        INC L
-                        LD H, (HL)
-                        LD L, A
-                        ADD HL, DE                                  ; HL - адрес информации о текущем спрайте
-                        EX AF, AF'
-                        ; корректируем положение спрайта из информации о спрайте (горизонталь)
-                        LD E, (HL)                                  ; E - ширина спрайта (в пикселах)
-                        INC HL
-                        ADD A, E
-                        SUB (HL)                                    ; (HL) - смещение в спрайте (в пикселах)
-                        JP M, .NextUnit                             ; если отрицательный, значит спрайт не видим
-                        ; 
-                        LD D, A                                     ; сохрание рисуемых пикселей (оставшихся)
-
-                        LD A, E
-                        SUB D
-                        RRA
-                        RRA
-                        RRA
-                        AND %00011111
-                        ;LD B, A                                     ; сохраним количество пропускаемых байт
-                        ADD A, A    ; x2
-                        ;ADD A, B    ; x3
-                        ADD A, A    ; x4
-
-                        ; смещение в таблице, если байт выравнен
-                        LD C, A
-                        LD A, D
-                        AND %00000111
-                        LD A, C
-                        JR NZ, $+4
-                        ADD A, 12
-
-                        SRL E
-                        SRL E
-                        SRL E
-                        DEC E
-                        ADD A, E    ; + смещение (байтовое)
-                        ADD A, A    ; x2 (адрес)
-                        ; расчёт адреса обработчика
-                        EXX
-                        LD HL, .TableLSJumpDraw
-                        ADD A, L
-                        LD L, A
-                        JR NC, $+3
-                        INC H
-                        LD SP, HL
-                        POP IX
-                        EXX
-
-                        ; корректируем положение спрайта из информации о спрайте (вертикаль)
-                        LD A, B
-                        INC HL ; height
-                        LD C, (HL)                                  ; C - высота спрайта (в пикселах)
-                        INC HL ; offset_y
-                        ADD A, C
-                        SUB (HL)                                    ; (HL) - смещение в спрайте (в пикселах)
-                        JP M, .NextUnit                             ; если отрицательный, значит спрайт не видим
-                        LD B, A
-                        LD A, C
-                        SUB B
-                        LD B, A
-
-                        INC HL ; page
-
-                        ; set page sprite
-                        LD A, (HL)
-                        SeMemoryPage_A
-                        ;
-                        LD A, D
-                        AND %00000111
-                        ;
-                        INC HL  ; pointer sprite
-                        LD E, (HL)
-                        INC HL
-                        LD D, (HL)
-
-                        EX DE, HL
-                        LD SP, HL
-
-                        LD BC, #0000                            ; буфер
-
-                        EXX
-                        LD BC, #4000                            ; экран
-                        EXX
-
-                        ; - лишний если байт выравнен
-                        EXX
-                        ; calculate address of shift table
-                        DEC A
-                        ADD A, A
-                        ADD A, HIGH MemoryPage_5.ShiftTable
-                        LD H, A
-                        INC H       ; временно (т.к. для текущей функции 24_2)
-                        EXX
-                        ; ~ лишний если байт выравнен
-
-                        LD HL, $+3
-                        rept 12
-                        JP (IX)
-                        endr
-
-                        JR .Exit
-
+.Loop                   JP .New
 .Exit
 .ContainerSP            EQU $+1
                         LD SP, #0000
                         EI
-                        LD DE, #0000
+                        LD DE, #0320
                         LD A, #00
                         OUT (#FE), A
                         RET
@@ -238,6 +100,7 @@ HandlerUnits:           ;
                         LD A, L                                     ; L - хранит номер нижней линии спрайта
                         SUB E
                         JP C, .CroppedAtTop                         ; урезан верхней частью экрана
+                        LD L, A                                     ; L - хранит номер верхней линии спрайта
                         ADD A, #40
                         JP C, .NextUnit                             ; если переполнение, то верхняя линия спрайта больше или равно 192
                                                                     ; спрайт ниже экрана
@@ -247,6 +110,13 @@ HandlerUnits:           ;
                         ; рисуется полностью ёё
                         LD A, E
                         LD (.OffsetRow), A
+.CalcRowScreenAddress   LD H, (HIGH MemoryPage_5.SCR_ADR_ROWS_TABLE) >> 1
+                        ADD HL, HL
+                        LD A, (HL)
+                        INC HL
+                        LD H, (HL)
+                        LD L, A
+                        LD (.ScreenAddress), HL
                         JP .Row
 
 .CroppedAtTop           ; урезан верхней частью экрана
@@ -262,14 +132,22 @@ HandlerUnits:           ;
                         ADD A, A                                    ; x2 т.к. OR & XOR
                         LD (.OffsetSprite), A                       ; сохраним количество пропускаемых строк
                         LD A, L                                     ; L - хранит номер нижней линии спрайта == количество рисуемых строк
-                        ; DEC A       ; ? т.к. первый JP (HL) выполняется!
                         LD (.OffsetRow), A                          ; сохраним количество рисуемых строк
+                        ;
+                        LD HL, #4000
+                        LD (.ScreenAddress), HL
                         JP .Row
 
 .CroppedAtBottom        ; урезан нижней частью экрана
+                        ; - модификация
+                        ; если не чётное увеличим в большую сторону (портит 32 байта после экранной области!)
                         ADD A, E                                    ; А - хранит количество пропускаемых строк
+                        RRA
+                        ADC A, #00
+                        RLA
+                        ; ~ модификация
                         LD (.OffsetRow), A
-
+                        JR .CalcRowScreenAddress
 .Row                    ; ------------------------ горизонталь ------------------------
                         POP DE                                      ; D - горизонтальное смещение (SOx), E - ширина спрайта (Sx)
                         ; добавить смещение относительно тайла (можно объеденить с константным значением 8)
@@ -398,8 +276,65 @@ HandlerUnits:           ;
                         JR .Draw
                         
 .CroppedAtRight         ; урезан правой частью экрана
+                        ; L - номер правой части спрайта (в пикселах)
+                        ; A - количество пропускаемых пикселей спрайта
+                        ; LD A, L
+                        ;
+                        NEG
+                        RRA
+                        RRA
+                        RRA
+                        AND %00011111
+                        ADD A, A    ; x2
+                        ADD A, A    ; x4
+                        ; смещение в таблице, если байт выравнен
+                        LD C, A
+                        LD A, L
+                        AND %00000111
+                        LD B, A
+                        LD A, C
+                        JR NZ, $+4
+                        ADD A, 12
+                        SRL E
+                        SRL E
+                        SRL E
+                        DEC E
+                        ADD A, E    ; + смещение (байтовое)
+                        ADD A, A    ; x2 (адрес)
+                        ; расчёт адреса обработчика
+                        EXX
+                        LD HL, .TableRSJumpDraw
+                        ADD A, L
+                        LD L, A
+                        JR NC, $+3
+                        INC H
+                        LD A, (HL)
+                        LD IXL, A
+                        INC HL
+                        LD A, (HL)
+                        LD IXH, A
+                        EXX
 
+                        LD A, B
+                        ; - лишний если байт выравнен
+                        EXX
+                        ; calculate address of shift table
+                        DEC A
+                        ADD A, A
+                        ADD A, HIGH MemoryPage_5.ShiftTable
+                        LD H, A
+                        ; INC H       ; временно (т.к. для текущей функции 24_2)
+                        EXX
+                        ; ~ лишний если байт выравнен
 
+                        ; расчёт знакоместа
+                        LD A, L
+                        RRA
+                        RRA
+                        RRA
+                        AND %00011111
+                        LD (.OffsetX), A
+                        
                         ; ------------------------ горизонталь ------------------------ 
 
 .Draw                   ; установим страницу спрайта
@@ -416,7 +351,8 @@ HandlerUnits:           ;
                         LD BC, #0000    ; буфер
 
                         EXX
-                        LD BC, #4000    ; экран
+.ScreenAddress          EQU $+1                        
+                        LD BC, #0000    ; экран
                         LD A, C
 .OffsetX                EQU $+1
                         ADD A, #00
@@ -481,13 +417,23 @@ HandlerUnits:           ;
                         ;   |          |          |          |          |
                         ;   +----------+----------+----------+----------+
                         
-                        ; left shift
-.TableLSJumpDraw        DW #0000, #0000, SBP_24_0_LS, #0000
+                        
+.TableLSJumpDraw        ; left shift
+                        DW #0000, #0000, SBP_24_0_LS, #0000
                         DW #0000, #0000, SBP_24_1_LS, #0000
                         DW #0000, #0000, SBP_24_2_LS, #0000
                         ; left, not shift
                         DW #0000, #0000, SBP_24_0,    #0000
                         DW #0000, #0000, SBP_24_1_L,  #0000
                         DW #0000, #0000, SBP_24_2_L,  #0000
+
+.TableRSJumpDraw        ; right shift
+                        DW #0000, #0000, SBP_24_0_RS, #0000
+                        DW #0000, #0000, SBP_24_1_RS, #0000
+                        DW #0000, #0000, SBP_24_2_RS, #0000
+                        ; right, not shift
+                        DW #0000, #0000, SBP_24_0,    #0000
+                        DW #0000, #0000, SBP_24_1_R,  #0000
+                        DW #0000, #0000, SBP_24_2_R,  #0000
 
                         endif ; ~_CORE_HANDLER_UNIT_

@@ -1,6 +1,6 @@
 
 ; -----------------------------------------
-; display two rows (пропускает левый байт, выровненый по знакоместу)
+; display two rows (пропускает два правых байта и правый сдвиг)
 ; In:
 ;   SP  - sprite address
 ;   HL  - return addres
@@ -11,31 +11,28 @@
 ;   BC' - row screen address
 ; Out:
 ; Corrupt:
-;   SP, HL, BC, DE', BC'
+;   SP, HL, BC, L', DE', BC'
 ; -----------------------------------------
-                        DW SBP_24_1_L_Backward
-SBP_24_1_L:             EXX
+                        DW SBP_24_2_RS_Backward
+SBP_24_2_RS:            EXX
 
                         ;- 1 byte -
-                        POP DE                              ; skip 1 byte
+                        ; modify the left side of a byte
+                        LD A, (BC)
+                        POP DE
+                        LD L, E     ; OR
+                        OR (HL)
+                        LD L, D     ; XOR
+                        XOR (HL)
+                        LD (BC), A
                         ;~ 1 byte ~
 
                         ;- 2 byte -
-                        LD A, (BC)
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP DE                              ; skip 2 byte
                         ;~ 2 byte ~
 
-                        INC C                               ; next screen character cell (2)
-
                         ;- 3 byte -
-                        LD A, (BC)
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP DE                              ; skip 3 byte
                         ;~ 3 byte ~
 
                         ; classic method "DOWN_BC" 25/59
@@ -52,25 +49,22 @@ SBP_24_1_L:             EXX
                         LD B, A
 .Backward
                         ;- 1 byte -
-                        LD A, (BC)
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP DE                              ; skip 1 byte
                         ;~ 1 byte ~
 
-                        DEC C                               ; next screen character cell (1)
-
                         ;- 2 byte -
-                        LD A, (BC)
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP DE                              ; skip 2 byte
                         ;~ 2 byte ~
 
                         ;- 3 byte -
-                        POP DE                              ; skip 3 byte
+                        ; modify the left side of a byte
+                        LD A, (BC)
+                        POP DE
+                        LD L, E     ; OR
+                        OR (HL)
+                        LD L, D     ; XOR
+                        XOR (HL)
+                        LD (BC), A
                         ;~ 3 byte ~
 
                         ; classic method "DOWN_BC" 25/59
@@ -91,8 +85,7 @@ SBP_24_1_L:             EXX
                         INC HL
                         INC HL
                         JP (HL)
-SBP_24_1_L_Backward:    ;
+SBP_24_2_RS_Backward:   ;
                         EX DE, HL
                         EXX
-                        INC C
-                        JP SBP_24_1_L.Backward
+                        JP SBP_24_2_RS.Backward

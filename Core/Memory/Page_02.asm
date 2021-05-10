@@ -42,10 +42,15 @@ Start:
                 include "../Display/Metods/24_0.asm"
                 include "../Display/Metods/24_0_Shift.asm"
                 include "../Display/Metods/24_0_LeftShift.asm"
+                include "../Display/Metods/24_0_RightShift.asm"
                 include "../Display/Metods/24_1_Left.asm"
+                include "../Display/Metods/24_1_Right.asm"
                 include "../Display/Metods/24_2_Left.asm"
+                include "../Display/Metods/24_2_Right.asm"
                 include "../Display/Metods/24_1_LeftShift.asm"
+                include "../Display/Metods/24_1_RightShift.asm"
                 include "../Display/Metods/24_2_LeftShift.asm"
+                include "../Display/Metods/24_2_RightShift.asm"
 End:
                 endmodule
 

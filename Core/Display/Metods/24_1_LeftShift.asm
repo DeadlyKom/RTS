@@ -62,7 +62,7 @@ SBP_24_1_LS:            EXX
                         LD A, C
                         SUB #E0
                         LD C, A
-                        SBC A
+                        SBC A, A
                         AND #F8
                         ADD A, B
                         LD B, A
@@ -112,7 +112,7 @@ SBP_24_1_LS:            EXX
                         LD A, C
                         SUB #E0
                         LD C, A
-                        SBC A
+                        SBC A, A
                         AND #F8
                         ADD A, B
                         LD B, A

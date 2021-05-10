@@ -1,6 +1,6 @@
 
 ; -----------------------------------------
-; display two rows (пропускает левые два байта и левый сдвиг)
+; display two rows (пропускает два левых байта и левый сдвиг)
 ; In:
 ;   SP  - sprite address
 ;   HL  - return addres
@@ -44,7 +44,7 @@ SBP_24_2_LS:            EXX
                         LD A, C
                         SUB #E0
                         LD C, A
-                        SBC A
+                        SBC A, A
                         AND #F8
                         ADD A, B
                         LD B, A
@@ -76,7 +76,7 @@ SBP_24_2_LS:            EXX
                         LD A, C
                         SUB #E0
                         LD C, A
-                        SBC A
+                        SBC A, A
                         AND #F8
                         ADD A, B
                         LD B, A

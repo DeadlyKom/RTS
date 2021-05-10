@@ -1,6 +1,6 @@
 
 ; -----------------------------------------
-; display two rows (пропускает левый сдвиг)
+; display two rows (пропускает правый сдвиг)
 ; In:
 ;   SP  - sprite address
 ;   HL  - return addres
@@ -13,14 +13,24 @@
 ; Corrupt:
 ;   SP, HL, BC, L', DE', BC'
 ; -----------------------------------------
-                        DW SBP_24_0_LS_Backward
-SBP_24_0_LS:            EXX
+                        DW SBP_24_0_RS_Backward
+SBP_24_0_RS:            EXX
 
                         ;- 1 byte -
-                        ; modify the right side of a byte
+                        ; modify the left side of a byte
                         LD A, (BC)
                         POP DE
-                        ; INC H                               ; calculate right shift address
+                        LD L, E     ; OR
+                        OR (HL)
+                        LD L, D     ; XOR
+                        XOR (HL)
+                        LD (BC), A
+
+                        INC C                               ; next screen character cell (1)
+
+                        ; modify the right side of a byte
+                        LD A, (BC)
+                        INC H                               ; calculate right shift address
                         LD L, E     ; OR
                         OR (HL)
                         LD L, D     ; XOR
@@ -59,17 +69,6 @@ SBP_24_0_LS:            EXX
                         LD L, D     ; XOR
                         XOR (HL)
                         LD (BC), A
-
-                        INC C                               ; next screen character cell (3)
-                        
-                        ; modify the right side of a byte
-                        LD A, (BC)
-                        INC H                               ; calculate right shift address
-                        LD L, E     ; OR
-                        OR (HL)
-                        LD L, D     ; XOR
-                        XOR (HL)
-                        LD (BC), A
                         ;~ 3 byte ~
 
                         ; classic method "DOWN_BC" 25/59
@@ -86,20 +85,10 @@ SBP_24_0_LS:            EXX
                         LD B, A
 .Backward
                         ;- 1 byte -
-                        ; modify the right side of a byte
-                        LD A, (BC)
-                        POP DE
-                        LD L, E     ; OR
-                        OR (HL)
-                        LD L, D     ; XOR
-                        XOR (HL)
-                        LD (BC), A
-
-                        DEC C                               ; next screen character cell (2)
-
                         ; modify the left side of a byte
                         LD A, (BC)
-                        DEC H                               ; calculate left shift address
+                        POP DE
+                        ; DEC H                               ; calculate left shift address
                         LD L, E     ; OR
                         OR (HL)
                         LD L, D     ; XOR
@@ -138,6 +127,17 @@ SBP_24_0_LS:            EXX
                         LD L, D     ; XOR
                         XOR (HL)
                         LD (BC), A
+
+                        DEC C                               ; next screen character cell (0)
+                        
+                        ; modify the left side of a byte
+                        LD A, (BC)
+                        DEC H                               ; calculate left shift address
+                        LD L, E     ; OR
+                        OR (HL)
+                        LD L, D     ; XOR
+                        XOR (HL)
+                        LD (BC), A
                         ;~ 3 byte ~
 
                         ; classic method "DOWN_BC" 25/59
@@ -158,9 +158,7 @@ SBP_24_0_LS:            EXX
                         INC HL
                         INC HL
                         JP (HL)
-SBP_24_0_LS_Backward:   ;
+SBP_24_0_RS_Backward:   ;
                         EX DE, HL
                         EXX
-                        INC C
-                        INC C
-                        JP SBP_24_0_LS.Backward
+                        JP SBP_24_0_RS.Backward

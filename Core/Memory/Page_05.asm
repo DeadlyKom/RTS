@@ -68,11 +68,19 @@ GameEntry:      CALL GameInitialize                                     ; #6412
                 OUT (#FE), A
                 ; LD IY, .ArrayUnits
                 ; CALL MemoryPage_2.HandlerUnits
-                JR .SkipArray
+                JP .SkipArray
 
-.ArrayUnits     FUnit 0, 0, 0, 0,  0, 0,  0, 0
+.ArrayUnits     FUnit 0, 0, 0, 0,  8, 6,  0, 0
                 FUnit 0, 0, 0, 0,  0, 2,  0, 0
-.CountUnits     DB #01
+                FUnit 0, 0, 0, 0,  4, 2,  0, 0
+                FUnit 0, 0, 0, 0,  6, 3,  0, 0
+                FUnit 0, 0, 0, 0,  0, 6,  0, 0
+                FUnit 0, 0, 0, 0,  12, 6,  0, 0
+                FUnit 0, 0, 0, 0,  10, 2,  0, 0
+                FUnit 0, 0, 0, 0,  13, 8,  0, 0
+                FUnit 0, 0, 0, 0,  8, 8,  0, 0
+                FUnit 0, 0, 0, 0,  10, 6,  0, 0
+.CountUnits     DB #0A
 
 .SkipArray
                 ; ~~~~ test ~~~~
@@ -111,11 +119,11 @@ GameEntry:      CALL GameInitialize                                     ; #6412
                 INC HL
 
                 ; display Fog of War
-                ; LD DE, MemoryPage_2.DisplayTileFOW
-                ; LD (HL), E
-                ; INC HL
-                ; LD (HL), D
-                ; INC HL
+                LD DE, MemoryPage_2.DisplayTileFOW
+                LD (HL), E
+                INC HL
+                LD (HL), D
+                INC HL
 
                 ; main loop
 .MainLoop       LD A, #00
@@ -237,8 +245,8 @@ TableSprites:   DW TableSprites_Infantry
 TableSprites_Infantry:
                 FSprite 24, 0, 24, 8, 0, MemoryPage_TilemapSprite, MemoryPage_0.Sprite_Bot_0     ; 0
 
-                include "../Display/ShiftTable.inc"                     ; удалить!
-                include "../Display/OffsetTableByAnimIndex.inc"
+                include "../Display/ShiftTable.inc"
+                include "../Display/ScreenAddressRowsTable.inc"
 End:
                 endmodule
 SizePage_5:     EQU MemoryPage_5.End - MemoryPage_5.Start
