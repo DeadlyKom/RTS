@@ -40,7 +40,8 @@ SpriteFOW_E     DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF       
                 DW #0180, #8001, #03C0, #E007, #1FF8, #FFFF, #FFFF, #FFFF
 SpriteFOW_F     DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000       ; !
                 DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000
-
+FulltMask:      DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
+                DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
 End:
                 endmodule
 SizePage_1:     EQU MemoryPage_1.End - MemoryPage_1.Start

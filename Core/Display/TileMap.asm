@@ -9,9 +9,10 @@ DisplayTileRow: ;
                 EXX
                 ; calculation sprite address
                 ADD A, A
-                JR NC, .SkipMask
-                LD HL, MemoryPage_0.FulltMask
-                JR .Fill
+                JP C, .NextTile
+                ;JR NC, .SkipMask
+                ;LD HL, MemoryPage_0.FulltMask
+                ;JR .Fill
 .SkipMask       LD H, HIGH MemoryPage_0.TableSprites
                 LD L, A
                 LD SP, HL
@@ -69,7 +70,7 @@ DisplayTileRow: ;
                 DEC L
                 LD (HL), E
                 ; move to next column
-                INC C
+.NextTile       INC C
                 INC C
                 ; move to the next cell in a tile
                 EXX
@@ -256,7 +257,13 @@ DisplayRowFOW:  ;
                 EXX
                 LD A, (BC)
                 RLA
-                JP C, .NextTile                                         ; текущий тайл невидим (переходим к следующему)
+                ;JP C, .NextTile                                         ; текущий тайл невидим (переходим к следующему)
+                JP NC, .SkipFill
+                EXX
+                EX DE, HL
+                LD HL, MemoryPage_1.FulltMask
+                JP .DrawTileFOW
+.SkipFill       ;
                 LD D, B
                 LD E, C
 .CheckLeft      ; проверим на достижение левого края тайловой карты
@@ -363,7 +370,7 @@ DisplayRowFOW:  ;
                 INC HL
                 LD H, (HL)
                 LD L, A
-                ; рисуем верхнюю часть
+.DrawTileFOW    ; рисуем верхнюю часть
                 rept 3
                 LD A, (BC)
                 OR (HL)

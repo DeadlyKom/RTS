@@ -13,10 +13,10 @@ TableSprites:
                 DW Sprite_B1_0, Sprite_B1_1, Sprite_B1_2, Sprite_B1_3, Sprite_B1_4, Sprite_B1_5, Sprite_B1_6, Sprite_B1_7, Sprite_B1_8
                 DW Sprite_B2_0, Sprite_B2_1, Sprite_B2_2, Sprite_B2_3
 
-TableMask:      DW FulltMask
-FulltMask:      ;
-                DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
-                DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
+; TableMask:      DW FulltMask
+; FulltMask:      ;
+;                 DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
+;                 DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
 Sprite_Bot_0:
                 incbin "Sprite/Units/Test/Bot_0.spr"                            ; 3x3
 
