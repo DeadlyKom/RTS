@@ -89,6 +89,6 @@ SBP_24_2_LS:            EXX
 SBP_24_2_LS_Backward:   ;
                         EX DE, HL
                         EXX
-                        INC C
-                        INC C
+                        ; INC C
+                        ; INC C
                         JP SBP_24_2_LS.Backward

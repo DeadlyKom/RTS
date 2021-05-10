@@ -185,4 +185,5 @@ SBP_24_0_S_Backward:    ;
                         INC C
                         INC C
                         INC C
+                        INC H                               ; calculate right shift address
                         JP SBP_24_0_S.Backward

@@ -10,8 +10,12 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-HandlerUnits:           ; initialize
+HandlerUnits:           ;
+                        LD A, #02
+                        OUT (#FE), A
+                        ; initialize
                         DI
+                        LD IY, MemoryPage_5.GameEntry.ArrayUnits
                         LD (.ContainerSP), SP
                         LD A, (MemoryPage_5.GameEntry.CountUnits)
                         LD (.ProcessedUnits), A
@@ -163,12 +167,15 @@ HandlerUnits:           ; initialize
 .ContainerSP            EQU $+1
                         LD SP, #0000
                         EI
+                        LD DE, #0000
+                        LD A, #00
+                        OUT (#FE), A
                         RET
 
 .NextUnit               LD HL, MemoryPage_5.GameEntry.CountUnits
                         LD HL, .ProcessedUnits
                         DEC (HL)
-                        RET Z
+                        JR Z, .Exit
                         LD BC, FUnit
                         ADD IY, BC
                         JP .Loop
@@ -176,6 +183,7 @@ HandlerUnits:           ; initialize
 .New                    ; инициализация
                         XOR A
                         LD (.OffsetSprite), A                       ; отсутствует пропуск байт в спрайте
+                        LD (.OffsetX), A
 
                         ; расчёт адреса данных о спрайте
                         LD HL, MemoryPage_5.TableSprites
@@ -301,6 +309,7 @@ HandlerUnits:           ; initialize
                         LD B, A
                         LD C, E
                         SBC HL, BC
+                        JP Z, .IsFullNotShift                       ; на краю экрана ???????????????
                         JP C, .CroppedAtLeft                        ; урезан левой частью экрана
                         OR H
                         JP NZ, .NextUnit                            ; левая часть спрайта за правой частью экрана
@@ -309,21 +318,32 @@ HandlerUnits:           ; initialize
                         SUB E
                         JP C, .CroppedAtRight                       ; урезан правой частью экрана
                         ; рисуется полностью ёё
+
+                        ; расчёт знакоместа
+                        LD A, L
+                        RRA
+                        RRA
+                        RRA
+                        AND %00011111
+                        LD (.OffsetX), A
+
+                        ; расчёт смещения в знакоместе
+                        LD A, L
+                        AND %00000111
+                        JR NZ, .IsFullShift
+.IsFullNotShift         LD IX, SBP_24_0         ; выровнен по знакоместу
+                        JP .Draw
+.IsFullShift            ; спрайт виден полность, но со смещением
+                        LD IX, SBP_24_0_S
+                        EXX
+                        ; calculate address of shift table
+                        DEC A
+                        ADD A, A
+                        ADD A, HIGH MemoryPage_5.ShiftTable
+                        LD H, A
+                        EXX
                         
-                        JP .Draw                       
-                        ; ; offset_x -= SOx
-                        ; LD A, L                                     ; L - хранит смещение от правого края спрайта
-                        ; SUB E
-                        ; JP C, .CroppedAtLeft                        ; урезан левой частью экрана
-                        ; ; ADD A, #40
-                        ; ; JP C, .NextUnit                             ; если переполнение, то верхняя линия спрайта больше или равно 192
-                        ;                                             ; спрайт ниже экрана
-                        ; NEG
-                        ; SUB E
-                        ; JP C, .CroppedAtRight                       ; урезан правой частью экрана
-                        ; ; рисуется полностью ёё
-                        
-                        ; JP .Draw
+                        JP .Draw
 
 .CroppedAtLeft          ; урезан левой частью экрана
                         LD A, L
@@ -393,10 +413,14 @@ HandlerUnits:           ; initialize
                         ADD HL, DE
                         LD SP, HL
 
-                        LD BC, #0000  ; буфер
+                        LD BC, #0000    ; буфер
 
                         EXX
-                        LD BC, #4000 ; экран
+                        LD BC, #4000    ; экран
+                        LD A, C
+.OffsetX                EQU $+1
+                        ADD A, #00
+                        LD C, A
                         EXX
 
                         ; двухпроходные вызовы

@@ -66,13 +66,13 @@ GameEntry:      CALL GameInitialize                                     ; #6412
                 ; CALL MemoryPage_2.DisplaySBP
                 LD A, #01
                 OUT (#FE), A
-                LD IY, .ArrayUnits
-                CALL MemoryPage_2.HandlerUnits
+                ; LD IY, .ArrayUnits
+                ; CALL MemoryPage_2.HandlerUnits
                 JR .SkipArray
 
-.ArrayUnits     FUnit 0, 0, 0, 0,  0, 0,  0, -8
+.ArrayUnits     FUnit 0, 0, 0, 0,  0, 0,  0, 0
                 FUnit 0, 0, 0, 0,  0, 2,  0, 0
-.CountUnits     DB #02
+.CountUnits     DB #01
 
 .SkipArray
                 ; ~~~~ test ~~~~
@@ -103,12 +103,19 @@ GameEntry:      CALL GameInitialize                                     ; #6412
                 LD (HL), D
                 INC HL
 
-                ; display Fog of War
-                LD DE, MemoryPage_2.DisplayTileFOW
+                ; display all units
+                LD DE, MemoryPage_2.HandlerUnits
                 LD (HL), E
                 INC HL
                 LD (HL), D
                 INC HL
+
+                ; display Fog of War
+                ; LD DE, MemoryPage_2.DisplayTileFOW
+                ; LD (HL), E
+                ; INC HL
+                ; LD (HL), D
+                ; INC HL
 
                 ; main loop
 .MainLoop       LD A, #00
@@ -205,6 +212,22 @@ PlayMusic:      ;
                 CALL #C005
                 RET
 
+Unit_Left:      ;
+                LD IY, GameEntry.ArrayUnits
+                DEC (IY + FUnit.PixelOffset.X)
+                RET
+Unit_Right:     ;
+                LD IY, GameEntry.ArrayUnits
+                INC (IY + FUnit.PixelOffset.X)
+                RET
+Unit_Up:       ;
+                LD IY, GameEntry.ArrayUnits
+                DEC (IY + FUnit.PixelOffset.Y)
+                RET
+Unit_Down:      ;
+                LD IY, GameEntry.ArrayUnits
+                INC (IY + FUnit.PixelOffset.Y)
+                RET
 TileMapPtr:     DW TileMap + 1
 TileMapOffset:  FLocation 0, 0
 TileMapSize:    FMapSize 64, 64
@@ -212,7 +235,7 @@ TileMapBuffer:  DS 192, 0
 
 TableSprites:   DW TableSprites_Infantry
 TableSprites_Infantry:
-                FSprite 24, 0, 24, 9, 0, MemoryPage_TilemapSprite, MemoryPage_0.Sprite_Bot_0     ; 0
+                FSprite 24, 0, 24, 8, 0, MemoryPage_TilemapSprite, MemoryPage_0.Sprite_Bot_0     ; 0
 
                 include "../Display/ShiftTable.inc"                     ; удалить!
                 include "../Display/OffsetTableByAnimIndex.inc"

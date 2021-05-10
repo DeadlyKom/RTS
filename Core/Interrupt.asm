@@ -96,6 +96,20 @@ InterruptHandler:   ; preservation registers
                     LD A, VK_S
                     CALL CheckKeyState
                     CALL Z, MemoryPage_2.Tilemap_Down
+                    ; ------ Test unit ------
+                    LD A, VK_H
+                    CALL CheckKeyState
+                    CALL Z, MemoryPage_5.Unit_Right
+                    LD A, VK_F
+                    CALL CheckKeyState
+                    CALL Z, MemoryPage_5.Unit_Left
+                    LD A, VK_T
+                    CALL CheckKeyState
+                    CALL Z, MemoryPage_5.Unit_Up
+                    LD A, VK_G
+                    CALL CheckKeyState
+                    CALL Z, MemoryPage_5.Unit_Down
+                    ; ~~~~~~ Test unit ~~~~~~
                     ;
                     LD HL, (MemoryPage_5.TileMapPtr)
                     POP DE                    
