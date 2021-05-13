@@ -223,7 +223,7 @@ DisplayTileFOW: ;
                 SeMemoryPage MemoryPage_Tilemap
                 ; инициализация отрисовки
                 LD BC, (MemoryPage_5.TileMapPtr) 
-                LD IX, DisplayRowFOW               
+                LD IX, DisplayRowFOW
 .Row            defl 0
                 dup TileAddressTable[#]
                 EXX

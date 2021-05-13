@@ -39,18 +39,37 @@ Start:
                 ; include "../Display/DrawSpriteByPixel.asm"
                 include "../Display/BackgroundFill.asm"
                 include "../Handler/Unit.asm"
+MetodsDisplayBegin:
+                ; ---------- 8 ----------
+                include "../Display/Metods/8_0.asm"
+                include "../Display/Metods/8_0_Shift.asm"
+                include "../Display/Metods/8_0_LeftShift.asm"
+                include "../Display/Metods/8_0_RightShift.asm"
+                ; ---------- 16 ----------
+                include "../Display/Metods/16_0.asm"
+                include "../Display/Metods/16_0_Shift.asm"
+                include "../Display/Metods/16_0_LeftShift.asm"
+                include "../Display/Metods/16_0_RightShift.asm"
+                include "../Display/Metods/16_1_Left.asm"
+                include "../Display/Metods/16_1_Right.asm"
+                include "../Display/Metods/16_1_LeftShift.asm"
+                include "../Display/Metods/16_1_RightShift.asm"
+                ; ---------- 24 ----------
                 include "../Display/Metods/24_0.asm"
                 include "../Display/Metods/24_0_Shift.asm"
                 include "../Display/Metods/24_0_LeftShift.asm"
                 include "../Display/Metods/24_0_RightShift.asm"
                 include "../Display/Metods/24_1_Left.asm"
                 include "../Display/Metods/24_1_Right.asm"
-                include "../Display/Metods/24_2_Left.asm"
-                include "../Display/Metods/24_2_Right.asm"
                 include "../Display/Metods/24_1_LeftShift.asm"
                 include "../Display/Metods/24_1_RightShift.asm"
+                include "../Display/Metods/24_2_Left.asm"
+                include "../Display/Metods/24_2_Right.asm"
                 include "../Display/Metods/24_2_LeftShift.asm"
                 include "../Display/Metods/24_2_RightShift.asm"
+                ; ---------- 32 ----------                          ?
+MetodsDisplayEnd:
+                display "Metods Display :  ", /A, MetodsDisplayEnd - MetodsDisplayBegin
 End:
                 endmodule
 

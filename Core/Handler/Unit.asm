@@ -94,7 +94,7 @@ HandlerUnits:           ;
                         ; - если отрицательное или равно нулю, спрайт выше экрана (не видим)
                         ; - если больше или равно 192, спрайт ниже экрана (не видим)
                         JP M, .NextUnit                             ; offset_y - значение отрицательное
-                        JP Z, .NextUnit                             ; offset_x - значение нулевое
+                        JP Z, .NextUnit                             ; offset_y - значение нулевое
                         ; расчитаем верхнюю часть спрайта
                         ; offset_y -= SOy
                         LD A, L                                     ; L - хранит номер нижней линии спрайта
@@ -121,15 +121,21 @@ HandlerUnits:           ;
 
 .CroppedAtTop           ; урезан верхней частью экрана
                         NEG                                         ; А - хранит количество пропускаемых строк
+                        ; - костыль получить ширину спрайта!
+                        POP DE
+                        PUSH DE
+                        ; ~ костыль получить ширину спрайта!
                         SRL E
                         SRL E
                         SRL E
                         DEC E
+                        JR Z, .SkipMultiply_Y_Width
+                        ; A *= Sx (количество пропускаемых строк * ширину спрайта)
                         LD D, A
-.Multiply_Sy__Skip_y    ADD A, D
+.Multiply_Sx__Skip_y    ADD A, D
                         DEC E
-                        JR NZ, .Multiply_Sy__Skip_y
-                        ADD A, A                                    ; x2 т.к. OR & XOR
+                        JR NZ, .Multiply_Sx__Skip_y
+.SkipMultiply_Y_Width   ADD A, A                                    ; x2 т.к. OR & XOR
                         LD (.OffsetSprite), A                       ; сохраним количество пропускаемых строк
                         LD A, L                                     ; L - хранит номер нижней линии спрайта == количество рисуемых строк
                         LD (.OffsetRow), A                          ; сохраним количество рисуемых строк
@@ -209,10 +215,27 @@ HandlerUnits:           ;
                         LD A, L
                         AND %00000111
                         JR NZ, .IsFullShift
-.IsFullNotShift         LD IX, SBP_24_0         ; выровнен по знакоместу
+.IsFullNotShift         ; выровнен по знакоместу
+
+                        ; расчёт адреса в таблице по длине спрайта
+                        LD A, E
+                        RRA
+                        RRA
+                        RRA
+                        DEC A
+                        ADD A, A
+                        LD HL, .TableJumpDraw
+                        ADD A, L
+                        LD L, A
+                        JR NC, $+3
+                        INC H
+                        LD A, (HL)
+                        LD IXL, A
+                        INC HL
+                        LD A, (HL)
+                        LD IXH, A
                         JP .Draw
 .IsFullShift            ; спрайт виден полность, но со смещением
-                        LD IX, SBP_24_0_S
                         EXX
                         ; calculate address of shift table
                         DEC A
@@ -220,7 +243,23 @@ HandlerUnits:           ;
                         ADD A, HIGH MemoryPage_5.ShiftTable
                         LD H, A
                         EXX
-                        
+                        ; расчёт адреса в таблице по длине спрайта
+                        LD A, E
+                        RRA
+                        RRA
+                        RRA
+                        DEC A
+                        ADD A, A
+                        LD HL, .TableShiftJumpDraw
+                        ADD A, L
+                        LD L, A
+                        JR NC, $+3
+                        INC H
+                        LD A, (HL)
+                        LD IXL, A
+                        INC HL
+                        LD A, (HL)
+                        LD IXH, A
                         JP .Draw
 
 .CroppedAtLeft          ; урезан левой частью экрана
@@ -419,21 +458,27 @@ HandlerUnits:           ;
                         
                         
 .TableLSJumpDraw        ; left shift
-                        DW #0000, #0000, SBP_24_0_LS, #0000
-                        DW #0000, #0000, SBP_24_1_LS, #0000
-                        DW #0000, #0000, SBP_24_2_LS, #0000
+                        DW SBP_8_0_LS, SBP_16_0_LS, SBP_24_0_LS, #0000
+                        DW #0000,      SBP_16_1_LS, SBP_24_1_LS, #0000
+                        DW #0000,      #0000,       SBP_24_2_LS, #0000
                         ; left, not shift
-                        DW #0000, #0000, SBP_24_0,    #0000
-                        DW #0000, #0000, SBP_24_1_L,  #0000
-                        DW #0000, #0000, SBP_24_2_L,  #0000
+                        DW SBP_8_0,    SBP_16_0,    SBP_24_0,    #0000
+                        DW #0000,      SBP_16_1_L,  SBP_24_1_L,  #0000
+                        DW #0000,      #0000,       SBP_24_2_L,  #0000
 
 .TableRSJumpDraw        ; right shift
-                        DW #0000, #0000, SBP_24_0_RS, #0000
-                        DW #0000, #0000, SBP_24_1_RS, #0000
-                        DW #0000, #0000, SBP_24_2_RS, #0000
+                        DW SBP_8_0_RS, SBP_16_0_RS, SBP_24_0_RS, #0000
+                        DW #0000,      SBP_16_1_RS, SBP_24_1_RS, #0000
+                        DW #0000,      #0000,       SBP_24_2_RS, #0000
                         ; right, not shift
-                        DW #0000, #0000, SBP_24_0,    #0000
-                        DW #0000, #0000, SBP_24_1_R,  #0000
-                        DW #0000, #0000, SBP_24_2_R,  #0000
+                        DW SBP_8_0,    SBP_16_0,    SBP_24_0,    #0000
+                        DW #0000,      SBP_16_1_R,  SBP_24_1_R,  #0000
+                        DW #0000,      #0000,       SBP_24_2_R,  #0000
+
+.TableJumpDraw          ; method table by sprite width
+                        DW SBP_8_0,    SBP_16_0,    SBP_24_0,    #0000
+                        
+.TableShiftJumpDraw     ; shift method table by sprite width 
+                        DW SBP_8_0_S,  SBP_16_0_S,  SBP_24_0_S,  #0000
 
                         endif ; ~_CORE_HANDLER_UNIT_
