@@ -34,6 +34,7 @@ Start:
                 include "../Interrupt.asm"
                 include "../../Input/Include.inc"
                 include "../Display/TileMap.asm"
+                include "../Display/TileMapEX.asm"
                 include "../../Utils/CalculateAddressByPixel.asm"
                 ; include "../Display/SpriteByPixel.asm"
                 ; include "../Display/DrawSpriteByPixel.asm"

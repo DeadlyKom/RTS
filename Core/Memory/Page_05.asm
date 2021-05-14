@@ -90,119 +90,135 @@ GameEntry:      CALL GameInitialize                                     ; #6412
                 LD HL, #C000
                 CALL MemoryPage_2.PrepareTilemap
 
-                LD HL, BufferCMD
-                
-                ; display tilemap
-                LD DE, MemoryPage_2.DisplayTilemap             
-                LD (HL), E
-                INC HL
-                LD (HL), D
-                INC HL
-                LD (HL), E
-                INC HL
-                LD (HL), D
-                INC HL
-                LD (HL), E
-                INC HL
-                LD (HL), D
-                INC HL
-                LD (HL), E
-                INC HL
-                LD (HL), D
-                INC HL
-
-                ; display all units
-                LD DE, MemoryPage_2.HandlerUnits
-                LD (HL), E
-                INC HL
-                LD (HL), D
-                INC HL
-
-                ; display Fog of War
-                LD DE, MemoryPage_2.DisplayTileFOW
-                LD (HL), E
-                INC HL
-                LD (HL), D
-                INC HL
-
-                ; main loop
-.MainLoop       LD A, #00
+                ; ====== NEW MAIN LOOP ======
+                ;
+                XOR A
                 LD (Flags), A
-                HALT
+.MainLoop       ;
+                LD A, (Flags)
+                OR A
+                JR NZ, .SomeWork
+                ;
+                CALL MemoryPage_2.DisplayTileMapEx
+                ;
                 LD A, #FF
                 LD (Flags), A
-                
-                LD HL, BufferCMD
-                LD (PointerCMD), HL
-                ; LD HL, (MemoryPage_5.TileMapPtr)
-                ; LD (MemoryPage_2.DisplayTileMap.TileMapRow), HL
-
-                ;CALL PlayMusic
-
-.ResetFrame     LD HL, #0000
-                LD D, H
-                LD E, L
-                LD (CounterTime), HL
-
-.HandlerCMD     LD HL, (CounterTime)
-                ADD HL, DE
-                LD (CounterTime), HL
-                LD BC, #FE00                            ; the frame time is modified in the interrupt (3.5 - #FE00, 14 - #FA67)
-                ADD HL, BC
-                JR C, .IsEnd
-                ; execute block code
-                LD HL, .HandlerCMD
-                PUSH HL
-                LD HL, (PointerCMD)
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                INC HL
-                LD (PointerCMD), HL
-                LD A, D
-                OR E
-                JR Z, .BufferIsEmpty
-                ifdef _DEBUG_CHECK
-                LD BC, -(SizeBufferCMD + BufferCMD)
-                ADD HL, BC
-                JR Z, .BufferIsEmpty
-                endif
-                EX DE, HL
-                JP (HL)                                 ; block code must return delta time in DE
-
-.IsEnd          ; some code to the end of the frame
-
-                LD HL, MemoryPage_2.InterruptCounter
-                LD A, (HL)
-                
-.WaitInterrupt  CP (HL)
-                JR Z, .WaitInterrupt
-
-                JR .ResetFrame
-
-.BufferIsEmpty  ; copy from buffer screen to shadow screen
-
-                POP HL
-                LD HL, 1000;1650
-                LD BC, 1
-.L1             SBC HL, BC
-                JR NZ, .L1
-
-                ; toggle to memory page with shadow screen
-                SeMemoryPage MemoryPage_ShadowScreen
-                CALL MemoryPage_7.CopyScreen
-
-
-                ; animate
-                LD IY, GameEntry.ArrayUnits
-                INC (IY + FUnit.AnimationIndex)
-                LD A, (IY + FUnit.AnimationIndex)
-                CP #06
-                JR NZ, $+6
-                XOR A
-                LD (IY + FUnit.AnimationIndex), A
-
+.SomeWork
                 JR .MainLoop
+
+                ; LD HL, BufferCMD
+                
+                ; display tilemap
+                ; LD DE, MemoryPage_2.DisplayTilemap             
+                ; LD (HL), E
+                ; INC HL
+                ; LD (HL), D
+                ; INC HL
+                ; LD (HL), E
+                ; INC HL
+                ; LD (HL), D
+                ; INC HL
+                ; LD (HL), E
+                ; INC HL
+                ; LD (HL), D
+                ; INC HL
+                ; LD (HL), E
+                ; INC HL
+                ; LD (HL), D
+                ; INC HL
+
+                ; display all units
+                ; LD DE, MemoryPage_2.HandlerUnits
+                ; LD (HL), E
+                ; INC HL
+                ; LD (HL), D
+                ; INC HL
+
+                ; display Fog of War
+                ; LD DE, MemoryPage_2.DisplayTileFOW
+                ; LD (HL), E
+                ; INC HL
+                ; LD (HL), D
+                ; INC HL
+
+                ; main loop
+; .MainLoop       LD A, #00
+;                 LD (Flags), A
+;                 HALT
+;                 LD A, #FF
+;                 LD (Flags), A
+                
+;                 LD HL, BufferCMD
+;                 LD (PointerCMD), HL
+;                 ; LD HL, (MemoryPage_5.TileMapPtr)
+;                 ; LD (MemoryPage_2.DisplayTileMap.TileMapRow), HL
+
+;                 ;CALL PlayMusic
+
+; .ResetFrame     LD HL, #0000
+;                 LD D, H
+;                 LD E, L
+;                 LD (CounterTime), HL
+
+; .HandlerCMD     LD HL, (CounterTime)
+;                 ADD HL, DE
+;                 LD (CounterTime), HL
+;                 LD BC, #FE00                            ; the frame time is modified in the interrupt (3.5 - #FE00, 14 - #FA67)
+;                 ADD HL, BC
+;                 JR C, .IsEnd
+;                 ; execute block code
+;                 LD HL, .HandlerCMD
+;                 PUSH HL
+;                 LD HL, (PointerCMD)
+;                 LD E, (HL)
+;                 INC HL
+;                 LD D, (HL)
+;                 INC HL
+;                 LD (PointerCMD), HL
+;                 LD A, D
+;                 OR E
+;                 JR Z, .BufferIsEmpty
+;                 ifdef _DEBUG_CHECK
+;                 LD BC, -(SizeBufferCMD + BufferCMD)
+;                 ADD HL, BC
+;                 JR Z, .BufferIsEmpty
+;                 endif
+;                 EX DE, HL
+;                 JP (HL)                                 ; block code must return delta time in DE
+
+; .IsEnd          ; some code to the end of the frame
+
+;                 LD HL, MemoryPage_2.InterruptCounter
+;                 LD A, (HL)
+                
+; .WaitInterrupt  CP (HL)
+;                 JR Z, .WaitInterrupt
+
+;                 JR .ResetFrame
+
+; .BufferIsEmpty  ; copy from buffer screen to shadow screen
+
+;                 POP HL
+;                 LD HL, 1000;1650
+;                 LD BC, 1
+; .L1             SBC HL, BC
+;                 JR NZ, .L1
+
+;                 ; toggle to memory page with shadow screen
+;                 SeMemoryPage MemoryPage_ShadowScreen
+;                 CALL MemoryPage_7.CopyScreen
+
+
+;                 ; animate
+;                 LD IY, GameEntry.ArrayUnits
+;                 INC (IY + FUnit.AnimationIndex)
+;                 LD A, (IY + FUnit.AnimationIndex)
+;                 CP #06
+;                 JR NZ, $+6
+;                 XOR A
+;                 LD (IY + FUnit.AnimationIndex), A
+
+;                 JR .MainLoop
 Flags           DB #00
 SizeBufferCMD:  EQU 8 * 2
 PointerCMD:     DW BufferCMD

@@ -7,7 +7,7 @@
 ;   DE  - 
 ;   BC  - buffer address
 ;   H'  - high byte of the shift table
-;   DE' -
+;   DE' - interim values
 ;   BC' - row screen address
 ; Out:
 ; Corrupt:
