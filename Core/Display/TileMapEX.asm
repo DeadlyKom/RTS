@@ -102,6 +102,8 @@ DisplayTileRowEx: ;
                 DEC L
                 LD (HL), E
 
+                LD SP, (DisplayTileMapEx.ContainerSP)
+
                 ; move to next column
 .NextTile       INC C
                 INC C

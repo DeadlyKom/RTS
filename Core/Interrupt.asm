@@ -20,7 +20,30 @@ InterruptHandler:   ;
                     LD (.ReturnAddress), HL
                     POP HL                                          ; restore HL value
                     LD (.Container_SP), SP                          ; save original SP pointer
+
+                    PUSH AF
+                    LD A, #A7
+                    ADD A, B
+                    JR C, .RestoreDE_
+                    LD A, (.Container_SP + 1)
+                    ADD A, #41
+                    JR NC, .L2
+
+
+                    POP AF
                     PUSH DE                                         ; restore corrupted bytes below SP
+                    JR .L1
+.L2                 POP AF
+                    JR .L1
+
+.RestoreDE_         LD A, (.Container_SP + 1)
+                    ADD A, #41
+                    JR NC, .L2
+                    POP AF
+                    EXX
+                    PUSH DE
+                    EXX
+.L1                    
                     LD SP, InterruptStack + InterruptStackSize      ; use custom stack for IM2
 
                     ; preservation registers
