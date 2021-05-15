@@ -7,37 +7,79 @@
                 
                 module MemoryPage_7
 Start:
-CopyScreen:     DI
-                LD (MemoryPage_5.CopyScreenCont.ContainerSP), SP
-.Offset         defl 0
-                dup 364
-                ; получение 16 байт
-                LD SP, #4000 + .Offset
-                POP HL
-                POP DE
-                POP BC
-                POP AF
-                EX AF, AF'
-                POP AF
-                EXX
-                POP HL
-                POP DE
-                POP BC
-                ; сохранение 16 байт
-                LD SP, #C010 + .Offset
-                PUSH BC
-                PUSH DE
-                PUSH HL
-                EXX
-                PUSH AF
-                EX AF, AF'
-                PUSH AF
-                PUSH BC
-                PUSH DE
-                PUSH HL
-.Offset = .Offset + 16
-                edup
-                JP MemoryPage_5.CopyScreenCont
+
+                ORG Page_7_TileTable
+TableSprites:   DW Sprite_Sand_1, Sprite_Sand_2, Sprite_Sand_3, Sprite_Sand_4               ; 0  - 3
+                DW #0000, #0000, #0000, #0000                                               ; 4  - 7
+                DW #0000, #0000, #0000, #0000                                               ; 8  - 11
+                DW #0000, #0000, #0000, #0000                                               ; 12 - 15
+                DW #0000, #0000, #0000, #0000                                               ; 16 - 19
+                DW #0000, #0000, #0000, #0000                                               ; 20 - 23
+                DW #0000, Sprite1, Sprite2, #0000                                           ; 24 - 27
+                DW #0000, #0000, #0000, #0000                                               ; 28 - 31
+                DW Sprite_Canyon_1, Sprite_Canyon_2, Sprite_Canyon_3, Sprite_Canyon_4       ; 32 - 35
+                DW Sprite_Canyon_5, Sprite_Canyon_6, Sprite_Canyon_7, Sprite_Canyon_8       ; 36 - 39
+                DW Sprite_Canyon_9, Sprite_Canyon_10, Sprite_Canyon_11, Sprite_Canyon_12    ; 40 - 43
+                DW Sprite_Canyon_13, Sprite_Canyon_14, Sprite_Canyon_15, Sprite_Canyon_16   ; 44 - 47
+                DW #0000, #0000, #0000, #0000                                               ; 48 - 51
+                DW #0000, #0000, #0000, #0000                                               ; 52 - 55
+                DW #0000, #0000, #0000, #0000                                               ; 56 - 59
+                DW #0000, #0000, #0000, #0000                                               ; 60 - 63
+
+                ORG Page_7_TileSprites
+                
+                ; спрайты драфтовых значков 1 и 2
+Sprite1:        ; 1
+                DW #0000, #FE7F, #0240, #0240, #0241, #0243, #0245, #0241
+                DW #0000, #FE7F, #0240, #0240, #C247, #0241, #0241, #0241
+Sprite2:        ; 2
+                DW #0000, #FE7F, #0240, #0240, #8243, #4244, #4240, #8240
+                DW #0000, #FE7F, #0240, #0240, #C247, #0244, #0242, #0241
+
+                ; спрайты песка
+Sprite_Sand_1:        
+                incbin "Sprites/Terrain/Sand_1.spr"
+Sprite_Sand_2:        
+                incbin "Sprites/Terrain/Sand_2.spr"
+Sprite_Sand_3:        
+                incbin "Sprites/Terrain/Sand_3.spr"
+Sprite_Sand_4:        
+                incbin "Sprites/Terrain/Sand_4.spr"
+
+                ; спрайты каньёна
+Sprite_Canyon_1:        
+                incbin "Sprites/Terrain/Canyon_1.spr"
+Sprite_Canyon_2:        
+                incbin "Sprites/Terrain/Canyon_2.spr"
+Sprite_Canyon_3:        
+                incbin "Sprites/Terrain/Canyon_3.spr"
+Sprite_Canyon_4:        
+                incbin "Sprites/Terrain/Canyon_4.spr"
+Sprite_Canyon_5:        
+                incbin "Sprites/Terrain/Canyon_5.spr"
+Sprite_Canyon_6:        
+                incbin "Sprites/Terrain/Canyon_6.spr"
+Sprite_Canyon_7:        
+                incbin "Sprites/Terrain/Canyon_7.spr"
+Sprite_Canyon_8:        
+                incbin "Sprites/Terrain/Canyon_8.spr"
+Sprite_Canyon_9:        
+                incbin "Sprites/Terrain/Canyon_9.spr"
+Sprite_Canyon_10:        
+                incbin "Sprites/Terrain/Canyon_10.spr"
+Sprite_Canyon_11:        
+                incbin "Sprites/Terrain/Canyon_11.spr"
+Sprite_Canyon_12:        
+                incbin "Sprites/Terrain/Canyon_12.spr"
+Sprite_Canyon_13:        
+                incbin "Sprites/Terrain/Canyon_13.spr"
+Sprite_Canyon_14:        
+                incbin "Sprites/Terrain/Canyon_14.spr"
+Sprite_Canyon_15:        
+                incbin "Sprites/Terrain/Canyon_15.spr"
+Sprite_Canyon_16:        
+                incbin "Sprites/Terrain/Canyon_16.spr"
+
 End:
                 endmodule
 SizePage_7:     EQU MemoryPage_7.End - MemoryPage_7.Start

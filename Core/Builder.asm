@@ -60,7 +60,7 @@ StartBoot:      DI
                 SeMemoryPage %00010111
                 LD HL, Page_7                                   ; загружаем по адресу Page_7
                 LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (SizePage_7 >> 8) + 0                     ; регистр B содержит кол-во секторов
+                LD B, (SizePage_7 >> 8) + 1                     ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL #3D13                                      ; переход в TR-DOS
                 ; Чтение данных в 5 страницу
@@ -113,7 +113,7 @@ Persent         EQU (SizePage_0 * 100 / #4000)
                 display "Page 4:  ", /A, Page_4, " = busy [ ", /D, SizePage_4, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_4 - Page_4 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_4 * 100 / #4000, " % occupied"
                 display "Page 5:  ", /A, Page_5, " = busy [ ", /D, SizePage_5, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_5 - Page_5 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_5 * 100 / #4000, " % occupied"
                 display "Page 6:  ", /A, Page_6, " = busy [ ", /D, SizePage_6, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_6 - Page_6 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_6 * 100 / #4000, " % occupied"
-                display "Page 7:  ", /A, Page_7, " = busy [ ", /D, SizePage_7, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_7 - Page_7 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_7 * 100 / #4000, " % occupied"
+                display "Page 7:  ", /A, Page_7 - #1B00, " = busy [ ", /D, SizePage_7 + #1B00, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_7 - Page_7 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_7 + #1B00) * 100 / #4000, " % occupied"
                 display "--------------------------------------------------------------------------------------------------------"
                 display "Building the TRD-image of the \'", TRD_FILENAME, "\' maps ..."
                 display "Map 1 :  ", /A, TileMap, " = busy [ ", /D, SizePage_1_Map, " bytes ]", "\t /    RAM space [ ", /D, #1000 - SizePage_1_Map, " bytes ]     \t |  ", /D, SizePage_1_Map * 100 / #1000, " % occupied"

@@ -2,8 +2,9 @@
                 ifndef _CORE_DISPLAY_TILE_MAP_EX_
                 define _CORE_DISPLAY_TILE_MAP_EX_
 
-                defarray TileAddressTableEx #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080, #50C0
-
+                defarray TileAddressTable4000 #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080, #50C0
+                defarray TileAddressTableC000 #C000, #C040, #C080, #C0C0, #C800, #C840, #C880, #C8C0, #D000, #D040, #D080, #D0C0
+                
 ; -----------------------------------------
 ; display row tiles
 ; In:
@@ -25,7 +26,7 @@ DisplayTileRowEx: ;
                 ; calculation sprite address
                 ADD A, A                                ; shift left (7 bit - fog of war)
                 JP C, .NextTile                         ; move to next column (if 7 bit is set)
-                LD H, HIGH MemoryPage_0.TableSprites
+                LD H, HIGH MemoryPage_7.TableSprites
                 LD L, A
                 LD E, (HL)
                 INC L
@@ -75,9 +76,10 @@ DisplayTileRowEx: ;
                 LD (HL), E
 
                 ; calculation to the sprite bottom part
-                LD A, #20
-                ADD A, L
-                LD L, A
+                ; LD A, #20
+                ; ADD A, L
+                ; LD L, A
+                SET 5, L
 
                 ; draw the sprite bottom part
                 rept 3
@@ -102,7 +104,9 @@ DisplayTileRowEx: ;
                 DEC L
                 LD (HL), E
 
-                LD SP, (DisplayTileMapEx.ContainerSP)
+                ;
+.ContainerSP    EQU $+1
+                LD SP, #0000
 
                 ; move to next column
 .NextTile       INC C
@@ -115,28 +119,46 @@ DisplayTileRowEx: ;
                 INC HL
                 JP (HL)
 DisplayTileMapEx:; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_TilemapSprite
+                SeMemoryPage MemoryPage_TilSprites
 
                 ; initialize execute blocks
                 LD IX, DisplayTileRowEx
                 LD BC, MemoryPage_5.TileMapBuffer
                 LD (.ContainerSP), SP
+                LD (DisplayTileRowEx.ContainerSP), SP
+                RestoreDE
+                GetCurrentScreen
+                JP Z, .Display_C000
                 ;
 .Row            defl 0
-                dup TileAddressTableEx[#]
+                dup TileAddressTable4000[#]
                 EXX
-                LD BC, TileAddressTableEx[.Row]
+                LD BC, TileAddressTable4000[.Row]
                 EXX
                 LD HL, $+3
                 rept 16                                                 ; number of columns per row
                 JP (IX)
                 endr
-.Row = .Row + 1
+.Row            = .Row + 1
                 edup
 
-                ; exit
+.Exit           ; exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
+
+.Display_C000   ;
+.Row            = 0
+                dup TileAddressTableC000[#]
+                EXX
+                LD BC, TileAddressTableC000[.Row]
+                EXX
+                LD HL, $+3
+                rept 16                                                 ; number of columns per row
+                JP (IX)
+                endr
+.Row            = .Row + 1
+                edup
+                JP .Exit
 
                 endif ; ~_CORE_DISPLAY_TILE_MAP_EX_

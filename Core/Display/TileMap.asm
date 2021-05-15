@@ -13,7 +13,7 @@ DisplayTileRow: ;
                 ;JR NC, .SkipMask
                 ;LD HL, MemoryPage_0.FulltMask
                 ;JR .Fill
-.SkipMask       LD H, HIGH MemoryPage_0.TableSprites
+.SkipMask       LD H, HIGH MemoryPage_7.TableSprites
                 LD L, A
                 LD SP, HL
                 POP HL
@@ -163,7 +163,7 @@ DisplayTilemap: ; initialize execute blocks
                 DI
                 LD (.ContainerSP), SP
                 ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_TilemapSprite
+                SeMemoryPage MemoryPage_TilSprites
                 ; initialize display row of tile
                 LD A, #03                                               ; number of code blocks executed
                 LD (.CountExecute), A

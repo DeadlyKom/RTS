@@ -32,6 +32,11 @@ Start:
 ;                 JP #3D2F
 
                 include "../Interrupt.asm"
+
+                ifdef SHOW_FPS
+	            include "../../Utils/FPS_Counter.asm"
+                endif
+
                 include "../../Input/Include.inc"
                 include "../Display/TileMap.asm"
                 include "../Display/TileMapEX.asm"
@@ -40,6 +45,7 @@ Start:
                 ; include "../Display/DrawSpriteByPixel.asm"
                 include "../Display/BackgroundFill.asm"
                 include "../Handler/Unit.asm"
+                
 MetodsDisplayBegin:
                 ; ---------- 8 ----------
                 include "../Display/Metods/8_0.asm"

@@ -5,6 +5,8 @@
                 DEVICE ZXSPECTRUM128
 
                 define _DEBUG_CHECK
+                ; define ENABLE_MUSIC
+                define SHOW_FPS
 
                 include "Include.inc"
                 include "../Core/Memory/Include.inc"

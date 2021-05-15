@@ -271,12 +271,12 @@ TileMapBuffer:  DS 192, 0
 TableSprites:   DW TableSprites_Infantry
 TableSprites_Infantry:
                 ; FSprite 24, 0, 24, 8, 0, MemoryPage_TilemapSprite, MemoryPage_0.Sprite_Bot_0     ; 0
-                FSprite 16,     0,      8,      0,      0, MemoryPage_TilemapSprite, MemoryPage_0.SolderA_Move_0_0     ; напровление 0, индекс анимации 0
-                FSprite 16,     0,      16,     8,      0, MemoryPage_TilemapSprite, MemoryPage_0.SolderA_Move_0_1     ; напровление 0, индекс анимации 1
-                FSprite 16,     0,      16,     8,      0, MemoryPage_TilemapSprite, MemoryPage_0.SolderA_Move_0_1     ; напровление 0, индекс анимации 1
-                FSprite 16,     0,      8,      0,      0, MemoryPage_TilemapSprite, MemoryPage_0.SolderA_Move_0_2     ; напровление 0, индекс анимации 2
-                FSprite 16,     0,      8,      0,      0, MemoryPage_TilemapSprite, MemoryPage_0.SolderA_Move_0_3     ; напровление 0, индекс анимации 3
-                FSprite 16,     0,      8,      0,      0, MemoryPage_TilemapSprite, MemoryPage_0.SolderA_Move_0_3     ; напровление 0, индекс анимации 3
+                FSprite 16,     0,      8,      0,      0, MemoryPage_Sprites_0, MemoryPage_0.SolderA_Move_0_0     ; напровление 0, индекс анимации 0
+                FSprite 16,     0,      16,     8,      0, MemoryPage_Sprites_0, MemoryPage_0.SolderA_Move_0_1     ; напровление 0, индекс анимации 1
+                FSprite 16,     0,      16,     8,      0, MemoryPage_Sprites_0, MemoryPage_0.SolderA_Move_0_1     ; напровление 0, индекс анимации 1
+                FSprite 16,     0,      8,      0,      0, MemoryPage_Sprites_0, MemoryPage_0.SolderA_Move_0_2     ; напровление 0, индекс анимации 2
+                FSprite 16,     0,      8,      0,      0, MemoryPage_Sprites_0, MemoryPage_0.SolderA_Move_0_3     ; напровление 0, индекс анимации 3
+                FSprite 16,     0,      8,      0,      0, MemoryPage_Sprites_0, MemoryPage_0.SolderA_Move_0_3     ; напровление 0, индекс анимации 3
 
                 include "../Display/ShiftTable.inc"
                 include "../Display/ScreenAddressRowsTable.inc"
