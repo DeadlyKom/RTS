@@ -1,7 +1,7 @@
 
                 ifndef _MOUSE_INIT_
                 define _MOUSE_INIT_
-InitMouse:      CALL GetMouseXY
+Initialzie:     CALL GetMouseXY
                 INC E
                 JR Z, .Error
                 INC D

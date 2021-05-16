@@ -4,33 +4,14 @@
 
                 MMU 2, 2
                 ORG Page_2
-                
-                module MemoryPage_2
-Start:
-;                 LD HL, Page_5                                   ; загружаем по адресу Page_5
-; .Count          LD BC, Exit
-;                 PUSH HL
-;                 PUSH BC
-;                 LD BC, .Count
-;                 PUSH BC
-;                 XOR A
-;                 LD (#5CD6), A
-;                 LD C, #5F
-;                 LD BC, #2090
-;                 PUSH BC
-;                 LD BC, #17F
-;                 JP #3D2F
-; Exit:           DI
-;                 POP HL
-;                 LD A, (#5CD6)
-;                 INC H
-;                 JR Start.Count
-;                 RET
-; OUT1:           LD C, #1F
-; OUTC:           LD IX, #2A53
-; DOS:            PUSH IX
-;                 JP #3D2F
 
+MemoryPage_2_Start:
+                ; interrupt table 257 bytes (not move)
+                dup 257
+                DB HIGH InterruptVectorAddress
+                edup
+
+                ; include interrupt handler (not move)
                 include "../Interrupt.asm"
 
                 ifdef SHOW_FPS
@@ -38,9 +19,9 @@ Start:
                 endif
 
                 include "../../Input/Include.inc"
-                include "../Display/TileMap.asm"
-                include "../Display/TileMapEX.asm"
-                include "../../Utils/CalculateAddressByPixel.asm"
+                include "../Display/MemCopy.asm"
+                include "../Display/TileMap/Include.inc"
+                ; include "../../Utils/CalculateAddressByPixel.asm"
                 ; include "../Display/SpriteByPixel.asm"
                 ; include "../Display/DrawSpriteByPixel.asm"
                 include "../Display/BackgroundFill.asm"
@@ -77,10 +58,8 @@ MetodsDisplayBegin:
                 ; ---------- 32 ----------                          ?
 MetodsDisplayEnd:
                 display "Metods Display :  ", /A, MetodsDisplayEnd - MetodsDisplayBegin
-End:
-                endmodule
+MemoryPage_2_End:
 
-                
-SizePage_2:     EQU MemoryPage_2.End - MemoryPage_2.Start
+SizePage_2:     EQU MemoryPage_2_End - MemoryPage_2_Start
 
                 endif ; ~_CORE_MEMORY_PAGE_02_

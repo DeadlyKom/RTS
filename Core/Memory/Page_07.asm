@@ -25,9 +25,11 @@ TableSprites:   DW Sprite_Sand_1, Sprite_Sand_2, Sprite_Sand_3, Sprite_Sand_4   
                 DW #0000, #0000, #0000, #0000                                               ; 52 - 55
                 DW #0000, #0000, #0000, #0000                                               ; 56 - 59
                 DW #0000, #0000, #0000, #0000                                               ; 60 - 63
+.End            EQU $
+TableSprites_S: EQU TableSprites.End - TableSprites
 
                 ORG Page_7_TileSprites
-                
+
                 ; спрайты драфтовых значков 1 и 2
 Sprite1:        ; 1
                 DW #0000, #FE7F, #0240, #0240, #0241, #0243, #0245, #0241
@@ -79,9 +81,12 @@ Sprite_Canyon_15:
                 incbin "Sprites/Terrain/Canyon_15.spr"
 Sprite_Canyon_16:        
                 incbin "Sprites/Terrain/Canyon_16.spr"
-
 End:
+Sprites_S:      EQU End - Page_7_TileSprites
+SizePage_7_S:   EQU #1B00 + TableSprites_S + Sprites_S
+
                 endmodule
+SizePage_7_Real: EQU MemoryPage_7.SizePage_7_S
 SizePage_7:     EQU MemoryPage_7.End - MemoryPage_7.Start
 
                 endif ; ~_CORE_MEMORY_PAGE_07_

@@ -2,20 +2,10 @@
                     ifndef _CORE_INTERRUPT_
                     define _CORE_INTERRUPT_
 
-InterruptStackSize  EQU 32 * 2
-InitInterrupt:      ;DI
-                    ;
-                    LD HL, InterruptHandler
-                    LD (InterruptVectorAddressFrame), HL
-                    ;
-                    LD A, HIGH InterruptVectorAddress
-                    LD I, A
-                    IM 2
-
-                    EI
-                    HALT
-                    RET
-InterruptHandler:   ;
+                    module Interrupt
+InterruptStackSize  EQU 64 * 2                                      ; not change
+InterruptStack:     DS InterruptStackSize, 0                        ; not change
+Handler:            ;
                     EX (SP), HL
                     LD (.ReturnAddress), HL
                     POP HL                                          ; restore HL value
@@ -37,7 +27,8 @@ InterruptHandler:   ;
                     PUSH HL
                     PUSH DE
                     PUSH BC
-                    ;
+
+                    ; save current memory page
                     LD A, (MemoryPagePtr)
                     LD (.RestoreMemoryPage), A
 
@@ -45,23 +36,24 @@ InterruptHandler:   ;
                     LD HL, InterruptCounter
                     INC (HL)
 
+                    ; FPS
                     ifdef SHOW_FPS
 	                CALL FPS_Counter.IntTick
+                    CALL FPS_Counter.Render_FPS
 	                endif
 
-                    CALL FPS_Counter.Render_FPS
-
                     ; swap screens if it's ready
-                    LD A, (MemoryPage_5.Flags)
+                    LD A, (CoreStateRef)
                     INC A
                     JR NZ, .SkipSwapScreens
                     SwapScreens
                     XOR A
-                    LD (MemoryPage_5.Flags), A
+                    LD (CoreStateRef), A
 
+                    ; FPS
+                    ifdef SHOW_FPS
                     CALL FPS_Counter.FrameRendered
-
-
+                    endif
 
                     ; JP NZ, $+15
                     ; ; calculate frame per second
@@ -108,22 +100,27 @@ InterruptHandler:   ;
 
                     ; LD HL, FPS_Counter
                     ; INC (HL)
-                    ; ;
-                    LD HL, (MemoryPage_5.TileMapPtr)
+
+                    ; keyboard handling
+                    LD A, (InterruptCounter)
+                    RRA
+                    JR C, .SkipKeyboardInput
+                    ;
+                    LD HL, (TilemapRef)
                     PUSH HL
                     ;
                     LD A, VK_A
                     CALL CheckKeyState
-                    CALL Z, MemoryPage_2.Tilemap_Left
+                    CALL Z, Tilemap.MoveLeft
                     LD A, VK_D
                     CALL CheckKeyState
-                    CALL Z, MemoryPage_2.Tilemap_Right
+                    CALL Z, Tilemap.MoveRight
                     LD A, VK_W
                     CALL CheckKeyState
-                    CALL Z, MemoryPage_2.Tilemap_Up
+                    CALL Z, Tilemap.MoveUp
                     LD A, VK_S
                     CALL CheckKeyState
-                    CALL Z, MemoryPage_2.Tilemap_Down
+                    CALL Z, Tilemap.MoveDown
                     ; ; ------ Test unit ------
                     ; LD A, VK_H
                     ; CALL CheckKeyState
@@ -139,23 +136,23 @@ InterruptHandler:   ;
                     ; CALL Z, MemoryPage_5.Unit_Down
                     ; ; ~~~~~~ Test unit ~~~~~~
                     ;
-                    LD HL, (MemoryPage_5.TileMapPtr)
+                    LD HL, (TilemapRef)
                     POP DE                    
                     OR A
                     SBC HL, DE
-                    JR Z, $+8
-                    LD HL, (MemoryPage_5.TileMapPtr)
-                    CALL MemoryPage_2.PrepareTilemap
+                    CALL NZ, Tilemap.Prepare
+.SkipKeyboardInput
 .SkipSwapScreens
                     ; play music
                     ifdef ENABLE_MUSIC
-                    CALL MemoryPage_5.PlayMusic
+                    CALL Game.PlayMusic
                     endif
 
 .ExitIntertupt      ;
 .RestoreMemoryPage  EQU $+1
                     LD A, #00
                     SeMemoryPage_A
+
                     ; restore all registers
                     POP BC
                     POP DE
@@ -174,10 +171,18 @@ InterruptHandler:   ;
                     EI
 .ReturnAddress      EQU $+1
                     JP #0000
+
+Initialize:         ;
+                    LD A, HIGH InterruptVectorAddress - 1
+                    LD I, A
+                    IM 2
+
+                    EI
+                    HALT
+                    RET
 InterruptCounter:	DB #CE
-; FPS_Counter:        DB #00
-FPS:                DB #00
 TimeOfDay:          DW TimeOfDayChangeRate
-InterruptStack:     DS InterruptStackSize, 0
+
+                    endmodule
 
                     endif ; ~_CORE_INTERRUPT_

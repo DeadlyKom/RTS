@@ -79,75 +79,75 @@ DisplayTileRow: ;
                 INC HL
                 JP (HL)
 
-InitTilemap:    LD HL, MemoryPage_5.TileMapSize
-                ;
-                LD A, (HL)
-                LD (Tilemap_Down.Increment), A
-                NEG                                         ; X = -X
-                LD (Tilemap_Up.Decrement), A
-                ADD A, #10                                  ; -X += 16
-                LD (Tilemap_Right.Clamp), A
-                ;
-                INC HL                                      ; move to Y
-                ; -(Y - 12)
-                LD A, (HL)
-                ADD A, #F4
-                NEG
-                LD (Tilemap_Down.Clamp), A
-                RET
+; InitTilemap:    LD HL, MemoryPage_5.TileMapSize
+;                 ;
+;                 LD A, (HL)
+;                 LD (Tilemap_Down.Increment), A
+;                 NEG                                         ; X = -X
+;                 LD (Tilemap_Up.Decrement), A
+;                 ADD A, #10                                  ; -X += 16
+;                 LD (Tilemap_Right.Clamp), A
+;                 ;
+;                 INC HL                                      ; move to Y
+;                 ; -(Y - 12)
+;                 LD A, (HL)
+;                 ADD A, #F4
+;                 NEG
+;                 LD (Tilemap_Down.Clamp), A
+;                 RET
 
-Tilemap_Up:     ;
-                LD HL, MemoryPage_5.TileMapOffset.Y
-                XOR A
-                OR (HL)
-                RET Z
-                DEC (HL)
-                LD HL, (MemoryPage_5.TileMapPtr)
-.Decrement      EQU $+1
-                LD DE, #FF00
-                ADD HL, DE
-                LD (MemoryPage_5.TileMapPtr), HL
-                RET
-Tilemap_Down:   ;
-                LD HL, MemoryPage_5.TileMapOffset.Y
-.Clamp          EQU $+1
-                LD A, #00
-                ADD A, (HL)
-                RET C
-                INC (HL)
-                LD HL, (MemoryPage_5.TileMapPtr)
-.Increment      EQU $+1
-                LD DE, #0000
-                ADD HL, DE
-                LD (MemoryPage_5.TileMapPtr), HL
-                RET
-Tilemap_Left:   ;
-                LD HL, MemoryPage_5.TileMapOffset.X
-                XOR A
-                OR (HL)
-                RET Z
-                DEC (HL)
-                LD HL, (MemoryPage_5.TileMapPtr)
-                DEC HL
-                LD (MemoryPage_5.TileMapPtr), HL
-                RET
-Tilemap_Right:  ;
-                LD HL, MemoryPage_5.TileMapOffset.X
-.Clamp          EQU $+1
-                LD A, #00
-                ADD A, (HL)
-                RET C
-                INC (HL)
-                LD HL, (MemoryPage_5.TileMapPtr)
-                INC HL
-                LD (MemoryPage_5.TileMapPtr), HL
-                RET
+; Tilemap_Up:     ;
+;                 LD HL, MemoryPage_5.TileMapOffset.Y
+;                 XOR A
+;                 OR (HL)
+;                 RET Z
+;                 DEC (HL)
+;                 LD HL, (MemoryPage_5.TileMapPtr)
+; .Decrement      EQU $+1
+;                 LD DE, #FF00
+;                 ADD HL, DE
+;                 LD (MemoryPage_5.TileMapPtr), HL
+;                 RET
+; Tilemap_Down:   ;
+;                 LD HL, MemoryPage_5.TileMapOffset.Y
+; .Clamp          EQU $+1
+;                 LD A, #00
+;                 ADD A, (HL)
+;                 RET C
+;                 INC (HL)
+;                 LD HL, (MemoryPage_5.TileMapPtr)
+; .Increment      EQU $+1
+;                 LD DE, #0000
+;                 ADD HL, DE
+;                 LD (MemoryPage_5.TileMapPtr), HL
+;                 RET
+; Tilemap_Left:   ;
+;                 LD HL, MemoryPage_5.TileMapOffset.X
+;                 XOR A
+;                 OR (HL)
+;                 RET Z
+;                 DEC (HL)
+;                 LD HL, (MemoryPage_5.TileMapPtr)
+;                 DEC HL
+;                 LD (MemoryPage_5.TileMapPtr), HL
+;                 RET
+; Tilemap_Right:  ;
+;                 LD HL, MemoryPage_5.TileMapOffset.X
+; .Clamp          EQU $+1
+;                 LD A, #00
+;                 ADD A, (HL)
+;                 RET C
+;                 INC (HL)
+;                 LD HL, (MemoryPage_5.TileMapPtr)
+;                 INC HL
+;                 LD (MemoryPage_5.TileMapPtr), HL
+;                 RET
 
 PrepareTilemap: LD HL, (MemoryPage_5.TileMapPtr)
                 ; toggle to memory page with tile sprites
                 SeMemoryPage MemoryPage_Tilemap
                 ; copy the visible block of the tilemap
-                LD DE, MemoryPage_5.TileMapBuffer
+                LD DE, SharedBuffer                         ; MemoryPage_5.TileMapBuffer
                 rept 11
                 rept 16
                 LDI

@@ -15,9 +15,9 @@ HandlerUnits:           ;
                         OUT (#FE), A
                         ; initialize
                         DI
-                        LD IY, MemoryPage_5.GameEntry.ArrayUnits
+                        LD IY, ArrayUnits
                         LD (.ContainerSP), SP
-                        LD A, (MemoryPage_5.GameEntry.CountUnits)
+                        LD A, (CountUnits)
                         LD (.ProcessedUnits), A
                         ; Lx, Ly   - позиция юнита (в тайлах)
                         ; Vx, Vy   - позиция видимой области карты (в тайлах)
@@ -34,7 +34,7 @@ HandlerUnits:           ;
                         OUT (#FE), A
                         RET
 
-.NextUnit               LD HL, MemoryPage_5.GameEntry.CountUnits
+.NextUnit               LD HL, CountUnits
                         LD HL, .ProcessedUnits
                         DEC (HL)
                         JR Z, .Exit
@@ -48,7 +48,7 @@ HandlerUnits:           ;
                         LD (.OffsetX), A
 
                         ; расчёт адреса данных о спрайте
-                        LD HL, MemoryPage_5.TableSprites
+                        LD HL, TableSprites
                         LD D, #00
                         LD E, (IY + FUnit.Type)
                         ADD HL, DE
@@ -77,7 +77,7 @@ HandlerUnits:           ;
                         SBC A, A                                    ; если было переполнение (отрицательное число), корректируем
                         LD B, A
                         ; (Ly - Vy)
-                        LD HL, MemoryPage_5.TileMapOffset.Y
+                        LD HL, TilemapOffsetHeight
                         LD A, (IY + FUnit.Location.Y)               ; A = Ly
                         SUB (HL)                                    ; A = Ly - Vy
                         ; ToDo значение для вертикали должно лежать в пределах от -1 до 12 (12 тайлов + 2 выше и ниже)
@@ -110,7 +110,7 @@ HandlerUnits:           ;
                         ; рисуется полностью ёё
                         LD A, E
                         LD (.OffsetRow), A
-.CalcRowScreenAddress   LD H, (HIGH MemoryPage_5.SCR_ADR_ROWS_TABLE) >> 1
+.CalcRowScreenAddress   LD H, (HIGH SCR_ADR_ROWS_TABLE) >> 1
                         ADD HL, HL
                         LD A, (HL)
                         INC HL
@@ -168,7 +168,7 @@ HandlerUnits:           ;
                         SBC A, A                                    ; если было переполнение (отрицательное число), корректируем
                         LD B, A
                         ; (Lx - Vx)
-                        LD HL, MemoryPage_5.TileMapOffset.X
+                        LD HL, TilemapOffsetWidth
                         LD A, (IY + FUnit.Location.X)               ; A = Lx
                         SUB (HL)                                    ; A = Lx - Vx
                         ; ToDo значение для вертикали должно лежать в пределах от -1 до 16 (16 тайлов + 2 левее и правее)
@@ -240,7 +240,7 @@ HandlerUnits:           ;
                         ; calculate address of shift table
                         DEC A
                         ADD A, A
-                        ADD A, HIGH MemoryPage_5.ShiftTable
+                        ADD A, HIGH ShiftTable
                         LD H, A
                         EXX
                         ; расчёт адреса в таблице по длине спрайта
@@ -306,7 +306,7 @@ HandlerUnits:           ;
                         ; calculate address of shift table
                         DEC A
                         ADD A, A
-                        ADD A, HIGH MemoryPage_5.ShiftTable
+                        ADD A, HIGH ShiftTable
                         LD H, A
                         INC H       ; временно (т.к. для текущей функции 24_2)
                         EXX
@@ -360,7 +360,7 @@ HandlerUnits:           ;
                         ; calculate address of shift table
                         DEC A
                         ADD A, A
-                        ADD A, HIGH MemoryPage_5.ShiftTable
+                        ADD A, HIGH ShiftTable
                         LD H, A
                         ; INC H       ; временно (т.к. для текущей функции 24_2)
                         EXX

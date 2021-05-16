@@ -57,15 +57,15 @@ ZX_COLOR_IP             macro Inc?, Paper?
                         endm
 RestoreHL:              macro
                         LD A, #E5
-                        LD (InterruptHandler.RestoreRegister), A
+                        LD (Interrupt.Handler.RestoreRegister), A
                         endm
 RestoreDE:              macro
                         LD A, #D5
-                        LD (InterruptHandler.RestoreRegister), A
+                        LD (Interrupt.Handler.RestoreRegister), A
                         endm
 RestoreBC:              macro
                         LD A, #C5
-                        LD (InterruptHandler.RestoreRegister), A
+                        LD (Interrupt.Handler.RestoreRegister), A
                         endm
 DOWN_BC                 macro
                         ; classic method "DOWN_BC" 25/59

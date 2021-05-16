@@ -1,10 +1,16 @@
-  
-                ifndef _CORE_DISPLAY_TILE_MAP_EX_
-                define _CORE_DISPLAY_TILE_MAP_EX_
+
+                ifndef _CORE_DISPLAY_TILEMAP_BACKGROUND_
+                define _CORE_DISPLAY_TILEMAP_BACKGROUND_
 
                 defarray TileAddressTable4000 #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080, #50C0
                 defarray TileAddressTableC000 #C000, #C040, #C080, #C0C0, #C800, #C840, #C880, #C8C0, #D000, #D040, #D080, #D0C0
-                
+Prepare:        ; toggle to memory page with tilemap
+                SeMemoryPage MemoryPage_Tilemap
+                ; copy the visible block of the tilemap
+                LD HL, (TilemapRef)
+                CALL MEMCPY.Tilemap
+                RET
+
 ; -----------------------------------------
 ; display row tiles
 ; In:
@@ -19,7 +25,7 @@
 ; Corrupt:
 ;   SP, HL, DE, BC, HL', DE', BC'
 ; -----------------------------------------
-DisplayTileRowEx: ;
+DisplayTileRow: ;
                 LD A, (BC)                              ; read tile index
                 EXX
 
@@ -118,14 +124,14 @@ DisplayTileRowEx: ;
                 INC HL
                 INC HL
                 JP (HL)
-DisplayTileMapEx:; toggle to memory page with tile sprites
+Display:        ; toggle to memory page with tile sprites
                 SeMemoryPage MemoryPage_TilSprites
 
                 ; initialize execute blocks
-                LD IX, DisplayTileRowEx
-                LD BC, MemoryPage_5.TileMapBuffer
+                LD IX, DisplayTileRow
+                LD BC, SharedBuffer ; MemoryPage_5.TileMapBuffer
                 LD (.ContainerSP), SP
-                LD (DisplayTileRowEx.ContainerSP), SP
+                LD (DisplayTileRow.ContainerSP), SP
                 RestoreDE
                 GetCurrentScreen
                 JP Z, .Display_C000
@@ -161,4 +167,4 @@ DisplayTileMapEx:; toggle to memory page with tile sprites
                 edup
                 JP .Exit
 
-                endif ; ~_CORE_DISPLAY_TILE_MAP_EX_
+                endif ; ~_CORE_DISPLAY_TILEMAP_BACKGROUND_
