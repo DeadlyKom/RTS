@@ -5,7 +5,9 @@
                 DEVICE ZXSPECTRUM128
 
                 define _DEBUG_CHECK
-                define ENABLE_MUSIC
+                define ENABLE_TOGGLE_SCREENS_DEBUG
+                define SHOW_DEBUG
+                ; define ENABLE_MUSIC
                 define SHOW_FPS
 
                 include "Include.inc"

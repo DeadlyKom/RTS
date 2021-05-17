@@ -3,81 +3,81 @@
                 define _CORE_DISPLAY_TILE_MAP_
 
                 defarray TileAddressTable #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080;, #50C0
-DisplayTileRow: ;
-                LD A, (BC)
-                ;JR C, .SpiritLevel
-                EXX
-                ; calculation sprite address
-                ADD A, A
-                JP C, .NextTile
-                ;JR NC, .SkipMask
-                ;LD HL, MemoryPage_0.FulltMask
-                ;JR .Fill
-.SkipMask       LD H, HIGH MemoryPage_7.TableSprites
-                LD L, A
-                LD SP, HL
-                POP HL
-.Fill           LD SP, HL
-                ; HL - the address of the start of the screen line
-                LD H, B
-                LD L, C
-                ; draw the sprite top part
-                rept 3
-                POP DE
-                LD (HL), E
-                INC L
-                LD (HL), D
-                INC H
-                POP DE
-                LD (HL), D
-                DEC L
-                LD (HL), E
-                INC H
-                endr
-                POP DE
-                LD (HL), E
-                INC L
-                LD (HL), D
-                INC H
-                POP DE
-                LD (HL), D
-                DEC L
-                LD (HL), E
-                ; calculation to the sprite bottom part
-                LD A, #20
-                ADD A, L
-                LD L, A
-                ; draw the sprite bottom part
-                rept 3
-                POP DE
-                LD (HL), E
-                INC L
-                LD (HL), D
-                DEC H
-                POP DE
-                LD (HL), D
-                DEC L
-                LD (HL), E
-                DEC H
-                endr
-                POP DE
-                LD (HL), E
-                INC L
-                LD (HL), D
-                DEC H
-                POP DE
-                LD (HL), D
-                DEC L
-                LD (HL), E
-                ; move to next column
-.NextTile       INC C
-                INC C
-                ; move to the next cell in a tile
-                EXX
-                INC BC
-                INC HL
-                INC HL
-                JP (HL)
+; DisplayTileRow: ;
+;                 LD A, (BC)
+;                 ;JR C, .SpiritLevel
+;                 EXX
+;                 ; calculation sprite address
+;                 ADD A, A
+;                 JP C, .NextTile
+;                 ;JR NC, .SkipMask
+;                 ;LD HL, MemoryPage_0.FulltMask
+;                 ;JR .Fill
+; .SkipMask       LD H, HIGH MemoryPage_7.TableSprites
+;                 LD L, A
+;                 LD SP, HL
+;                 POP HL
+; .Fill           LD SP, HL
+;                 ; HL - the address of the start of the screen line
+;                 LD H, B
+;                 LD L, C
+;                 ; draw the sprite top part
+;                 rept 3
+;                 POP DE
+;                 LD (HL), E
+;                 INC L
+;                 LD (HL), D
+;                 INC H
+;                 POP DE
+;                 LD (HL), D
+;                 DEC L
+;                 LD (HL), E
+;                 INC H
+;                 endr
+;                 POP DE
+;                 LD (HL), E
+;                 INC L
+;                 LD (HL), D
+;                 INC H
+;                 POP DE
+;                 LD (HL), D
+;                 DEC L
+;                 LD (HL), E
+;                 ; calculation to the sprite bottom part
+;                 LD A, #20
+;                 ADD A, L
+;                 LD L, A
+;                 ; draw the sprite bottom part
+;                 rept 3
+;                 POP DE
+;                 LD (HL), E
+;                 INC L
+;                 LD (HL), D
+;                 DEC H
+;                 POP DE
+;                 LD (HL), D
+;                 DEC L
+;                 LD (HL), E
+;                 DEC H
+;                 endr
+;                 POP DE
+;                 LD (HL), E
+;                 INC L
+;                 LD (HL), D
+;                 DEC H
+;                 POP DE
+;                 LD (HL), D
+;                 DEC L
+;                 LD (HL), E
+;                 ; move to next column
+; .NextTile       INC C
+;                 INC C
+;                 ; move to the next cell in a tile
+;                 EXX
+;                 INC BC
+;                 INC HL
+;                 INC HL
+;                 JP (HL)
 
 ; InitTilemap:    LD HL, MemoryPage_5.TileMapSize
 ;                 ;
@@ -143,79 +143,79 @@ DisplayTileRow: ;
 ;                 LD (MemoryPage_5.TileMapPtr), HL
 ;                 RET
 
-PrepareTilemap: LD HL, (MemoryPage_5.TileMapPtr)
-                ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_Tilemap
-                ; copy the visible block of the tilemap
-                LD DE, SharedBuffer                         ; MemoryPage_5.TileMapBuffer
-                rept 11
-                rept 16
-                LDI
-                endr
-                LD BC, #0030
-                ADD HL, BC
-                endr
-                rept 16
-                LDI
-                endr
-                RET
-DisplayTilemap: ; initialize execute blocks
-                DI
-                LD (.ContainerSP), SP
-                ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_TilSprites
-                ; initialize display row of tile
-                LD A, #03                                               ; number of code blocks executed
-                LD (.CountExecute), A
-.TileMapRow     EQU $+1
-                LD BC, MemoryPage_5.TileMapBuffer 
-                LD IX, DisplayTileRow
-                LD IY, .CheckExecuted
-                ; 
-.ExecuteBlocks  EQU $+1
-                LD HL, .FirstBlock
-                JP (HL)
-                ;
-.FirstBlock     EQU $
-.Row            defl 0
-                dup TileAddressTable[#]
-                EXX
-                LD BC, TileAddressTable[.Row]
-                EXX
-                LD HL, $+3
-                rept 16                                                 ; number of columns per row
-                JP (IX)
-                endr
-                ;
-                LD HL, $+5
-                JP (IY)               
-.Row = .Row + 1
-                edup
-                EXX
-                LD BC, #50C0
-                EXX
-                LD HL, $+3
-                rept 16                                                 ; number of columns per row
-                JP (IX)
-                endr
-                LD HL, .FirstBlock
-                LD BC, MemoryPage_5.TileMapBuffer
-                JR .Exit
-.CheckExecuted
-.CountExecute   EQU $+1
-                LD A, #00
-                DEC A
-                LD (.CountExecute), A
-                JR Z, .Exit
-                JP (HL)
+; PrepareTilemap: LD HL, (MemoryPage_5.TileMapPtr)
+;                 ; toggle to memory page with tile sprites
+;                 SeMemoryPage MemoryPage_Tilemap
+;                 ; copy the visible block of the tilemap
+;                 LD DE, SharedBuffer                         ; MemoryPage_5.TileMapBuffer
+;                 rept 11
+;                 rept 16
+;                 LDI
+;                 endr
+;                 LD BC, #0030
+;                 ADD HL, BC
+;                 endr
+;                 rept 16
+;                 LDI
+;                 endr
+;                 RET
+; DisplayTilemap: ; initialize execute blocks
+;                 DI
+;                 LD (.ContainerSP), SP
+;                 ; toggle to memory page with tile sprites
+;                 SeMemoryPage MemoryPage_TilSprites
+;                 ; initialize display row of tile
+;                 LD A, #03                                               ; number of code blocks executed
+;                 LD (.CountExecute), A
+; .TileMapRow     EQU $+1
+;                 LD BC, MemoryPage_5.TileMapBuffer 
+;                 LD IX, DisplayTileRow
+;                 LD IY, .CheckExecuted
+;                 ; 
+; .ExecuteBlocks  EQU $+1
+;                 LD HL, .FirstBlock
+;                 JP (HL)
+;                 ;
+; .FirstBlock     EQU $
+; .Row            defl 0
+;                 dup TileAddressTable[#]
+;                 EXX
+;                 LD BC, TileAddressTable[.Row]
+;                 EXX
+;                 LD HL, $+3
+;                 rept 16                                                 ; number of columns per row
+;                 JP (IX)
+;                 endr
+;                 ;
+;                 LD HL, $+5
+;                 JP (IY)               
+; .Row = .Row + 1
+;                 edup
+;                 EXX
+;                 LD BC, #50C0
+;                 EXX
+;                 LD HL, $+3
+;                 rept 16                                                 ; number of columns per row
+;                 JP (IX)
+;                 endr
+;                 LD HL, .FirstBlock
+;                 LD BC, MemoryPage_5.TileMapBuffer
+;                 JR .Exit
+; .CheckExecuted
+; .CountExecute   EQU $+1
+;                 LD A, #00
+;                 DEC A
+;                 LD (.CountExecute), A
+;                 JR Z, .Exit
+;                 JP (HL)
                 
-.Exit           LD (.ExecuteBlocks), HL
-                LD (.TileMapRow), BC
-.ContainerSP    EQU $+1
-                LD SP, #0000
-                EI
-                LD DE, #0131                                            ; the time wasted to execute this block of code
-                RET
+; .Exit           LD (.ExecuteBlocks), HL
+;                 LD (.TileMapRow), BC
+; .ContainerSP    EQU $+1
+;                 LD SP, #0000
+;                 EI
+;                 LD DE, #0131                                            ; the time wasted to execute this block of code
+;                 RET
 DisplayTileFOW: ;
                 ;DI
                 ;LD (.ContainerSP), SP

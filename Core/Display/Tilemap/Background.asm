@@ -11,6 +11,23 @@ Prepare:        ; toggle to memory page with tilemap
                 CALL MEMCPY.Tilemap
                 RET
 
+; Prepare:        LD HL, (TilemapRef)
+;                 ; toggle to memory page with tile sprites
+;                 SeMemoryPage MemoryPage_Tilemap
+;                 ; copy the visible block of the tilemap
+;                 LD DE, SharedBuffer                         ; MemoryPage_5.TileMapBuffer
+;                 rept 11
+;                 rept 16
+;                 LDI
+;                 endr
+;                 LD BC, #0030
+;                 ADD HL, BC
+;                 endr
+;                 rept 16
+;                 LDI
+;                 endr
+;                 RET
+
 ; -----------------------------------------
 ; display row tiles
 ; In:
@@ -124,12 +141,17 @@ DisplayTileRow: ;
                 INC HL
                 INC HL
                 JP (HL)
-Display:        ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_TilSprites
 
-                ; initialize execute blocks
+; -----------------------------------------
+; display fog of war
+; Corrupt:
+;   HL, DE, BC, AF, HL', DE', BC', AF', IX
+; Note:
+;   requires included memory page 7 (MemoryPage_TilSprites)
+; -----------------------------------------
+Display:        ; initialize execute blocks
                 LD IX, DisplayTileRow
-                LD BC, SharedBuffer ; MemoryPage_5.TileMapBuffer
+                LD BC, SharedBuffer
                 LD (.ContainerSP), SP
                 LD (DisplayTileRow.ContainerSP), SP
                 RestoreDE

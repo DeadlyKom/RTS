@@ -9,7 +9,18 @@ GameLoop:       ;
                 OR A
                 JR NZ, .SomeWork
                 ;
+                ; toggle to memory page with tile sprites
+                SeMemoryPage MemoryPage_TilSprites
+
+                ;
+                ; LD A, #02
+                ; OUT (#FE), A
+                ;
                 CALL Tilemap.Display
+                CALL Tilemap.FOW
+
+                ; LD A, #01
+                ; OUT (#FE), A
                 ;
                 LD A, #FF
                 LD (CoreStateRef), A

@@ -56,7 +56,7 @@ Tilemap:            ;
                     POP DE
                     POP BC
                     ; сохранение 16 байт
-                    LD SP, SharedBuffer + .Offset
+                    LD SP, SharedBuffer + 16 + .Offset
                     PUSH BC
                     PUSH DE
                     PUSH HL

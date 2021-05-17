@@ -8,7 +8,7 @@
                 include "Initialize.asm"
                 include "Loop.asm"
                 include "Music.asm"
-TilemapPtr:     DW TileMap + 0
+TilemapPtr:     DW TileMap
 TilemapOffset:  FLocation 0, 0
 TilemapSize:    FMapSize 64, 64
 StatusFlag      DB #00

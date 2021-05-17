@@ -1,8 +1,9 @@
+; // Copyright 2021 Sergei Smirnov. All Rights Reserved.
 
-	ifndef	__CONSOLE
-	define	__CONSOLE
+ 	ifndef	_UTILS_CONSOLE_
+	define	_UTILS_CONSOLE_
 	
-	module	Console
+	module Console
 	
 	
 font_addr: 
@@ -78,7 +79,7 @@ log:
 	rlca
 	rlca
 	add #40
-noflic_console_screen_addr: equ $+1
+NoflicConsoleScreenAddr: equ $+1
 	or 0
 	ld d, a
 	ld a, (cursorPos)
@@ -130,7 +131,7 @@ address_to_attrs:
 	rrca
 	or #58	
 	ld d, a
-	ld a, (noflic_console_screen_addr)
+	ld a, (NoflicConsoleScreenAddr)
 	or d
 	ld d, a
 	ret
@@ -249,5 +250,5 @@ color:	db #47
 	
 	endmodule
 	
-	endif
+	endif	; ~_UTILS_CONSOLE_
 	

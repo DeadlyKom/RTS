@@ -6,6 +6,7 @@
 
                 include "Controll.asm"
                 include "Background.asm"
+                include "FogOfWar.asm"
 
                 endmodule
 

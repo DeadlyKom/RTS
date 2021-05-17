@@ -36,6 +36,89 @@ Handler:            ;
                     LD HL, InterruptCounter
                     INC (HL)
 
+                    ; keyboard handling
+                    CALL Handlers.Input.ScanKeyboard
+
+                    ; mouse handling
+                    CALL Handlers.Input.ScanMouse
+
+                    ; swith
+                    ifdef ENABLE_TOGGLE_SCREENS_DEBUG
+                    GetCurrentScreen
+                    LD A, #C0
+                    JR Z, $+4
+                    LD A, #40
+                    LD (Console.NoflicConsoleScreenAddr), A
+                    endif
+
+                    ifdef SHOW_DEBUG
+                    LD A, #00
+                    CALL Console.At
+                    LD HL, Handlers.Input.KeyStack
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    LD A, #02
+                    CALL Console.At
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    INC HL
+                    INC HL
+
+                    LD A, #05
+                    CALL Console.At
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    LD A, #07
+                    CALL Console.At
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    INC HL
+                    INC HL
+
+                    LD A, #0A
+                    CALL Console.At
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    LD A, #0C
+                    CALL Console.At
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    INC HL
+                    INC HL
+
+                    LD A, #0F
+                    CALL Console.At
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    LD A, #11
+                    CALL Console.At
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    INC HL
+                    INC HL
+
+                    LD A, #14
+                    CALL Console.At
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    LD A, #16
+                    CALL Console.At
+                    LD B, (HL)
+                    INC HL
+                    CALL Console.Logb
+                    INC HL
+                    INC HL
+                    endif
+
                     ; FPS
                     ifdef SHOW_FPS
 	                CALL FPS_Counter.IntTick
@@ -54,6 +137,9 @@ Handler:            ;
                     ifdef SHOW_FPS
                     CALL FPS_Counter.FrameRendered
                     endif
+
+                    ; handling key states in a circular buffer
+                    ; CALL Handlers.Input.KeyStates
 
                     ; JP NZ, $+15
                     ; ; calculate frame per second
@@ -102,40 +188,40 @@ Handler:            ;
                     ; INC (HL)
 
                     ; keyboard handling
-                    LD A, (InterruptCounter)
-                    RRA
-                    JR C, .SkipKeyboardInput
+                    ; LD A, (InterruptCounter)
+                    ; RRA
+                    ; JR C, .SkipKeyboardInput
                     ;
                     LD HL, (TilemapRef)
                     PUSH HL
-                    ;
+                    
                     LD A, VK_A
-                    CALL CheckKeyState
+                    CALL Keyboard.CheckKeyState_
                     CALL Z, Tilemap.MoveLeft
                     LD A, VK_D
-                    CALL CheckKeyState
+                    CALL Keyboard.CheckKeyState_
                     CALL Z, Tilemap.MoveRight
                     LD A, VK_W
-                    CALL CheckKeyState
+                    CALL Keyboard.CheckKeyState_
                     CALL Z, Tilemap.MoveUp
                     LD A, VK_S
-                    CALL CheckKeyState
+                    CALL Keyboard.CheckKeyState_
                     CALL Z, Tilemap.MoveDown
-                    ; ; ------ Test unit ------
-                    ; LD A, VK_H
-                    ; CALL CheckKeyState
-                    ; CALL Z, MemoryPage_5.Unit_Right
-                    ; LD A, VK_F
-                    ; CALL CheckKeyState
-                    ; CALL Z, MemoryPage_5.Unit_Left
-                    ; LD A, VK_T
-                    ; CALL CheckKeyState
-                    ; CALL Z, MemoryPage_5.Unit_Up
-                    ; LD A, VK_G
-                    ; CALL CheckKeyState
-                    ; CALL Z, MemoryPage_5.Unit_Down
-                    ; ; ~~~~~~ Test unit ~~~~~~
-                    ;
+                    ; ; ; ------ Test unit ------
+                    ; ; LD A, VK_H
+                    ; ; CALL CheckKeyState
+                    ; ; CALL Z, MemoryPage_5.Unit_Right
+                    ; ; LD A, VK_F
+                    ; ; CALL CheckKeyState
+                    ; ; CALL Z, MemoryPage_5.Unit_Left
+                    ; ; LD A, VK_T
+                    ; ; CALL CheckKeyState
+                    ; ; CALL Z, MemoryPage_5.Unit_Up
+                    ; ; LD A, VK_G
+                    ; ; CALL CheckKeyState
+                    ; ; CALL Z, MemoryPage_5.Unit_Down
+                    ; ; ; ~~~~~~ Test unit ~~~~~~
+                    ; ;
                     LD HL, (TilemapRef)
                     POP DE                    
                     OR A

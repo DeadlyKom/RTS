@@ -3,9 +3,11 @@
                 define _CORE_GAME_INITIALIZE_
 
 Initialize:     CALL Tilemap.Initialize
-                CALL Mouse.Initialzie
+                CALL Handlers.Input.Initialize
                 CALL Interrupt.Initialize
+                
                 ; initialize music
+                ifdef ENABLE_MUSIC
                 ; toggle to memory page with tile sprites
                 SeMemoryPage MemoryPage_Music
                 LD A, R
@@ -14,11 +16,13 @@ Initialize:     CALL Tilemap.Initialize
                 JR C, $+5
                 LD HL, #C86E
                 CALL #C003
-                EI
+                endif
 
                 ; initialize background
-                ; CALL MemoryPage_2.BackgroundFill
+                CALL BackgroundFill
 
+                ; EI
+                ; HALT
                 RET
 
                 endif ; ~_CORE_GAME_INITIALIZE_

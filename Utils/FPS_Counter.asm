@@ -1,11 +1,9 @@
+; // Copyright 2021 Sergei Smirnov. All Rights Reserved.
 
                     ifndef _FPS_COUNTER_
                     define _FPS_COUNTER_
 
                     module FPS_Counter
-
-                    include "Console.asm"
-
 IntTick:            LD A, (TicksCount)
                     INC A
                     CP 50

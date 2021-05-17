@@ -11,7 +11,7 @@ StackTop                    EQU #5BFD                           ; располо
 MemoryPagePtr               EQU #5BFE                           ; адрес хранения номера странички
 InterruptVectorAddress      EQU #8181                           ; адрес вектора прерывания
 TileMap                     EQU #C000                           ; адрес тайловой карты
-SharedBuffer                EQU #7F00                           ; адрес общего буфера (256 байт)
+SharedBuffer                EQU #BF00                           ; адрес общего буфера (256 байт)
 TimeOfDayChangeRate         EQU 50 * 60                         ; скорость смены времени дня
 
 TilesOnScreenX              EQU 16                              ; количество тайлов на экране по горизонтали

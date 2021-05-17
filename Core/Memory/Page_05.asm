@@ -7,6 +7,12 @@
 MemoryPage_5_Start:
 
                 include "../../Core/Game/Include.inc"
+
+                ifdef SHOW_FPS
+                include "../../Utils/Console.asm"
+	            include "../../Utils/FPS_Counter.asm"
+                endif
+
 ArrayUnits      FUnit 0, 0, 0, 1,  8, 6,  0, 0
                 FUnit 0, 0, 0, 1,  21, 1,  0, 0
                 FUnit 0, 0, 0, 2,  32, 13,  0, 0

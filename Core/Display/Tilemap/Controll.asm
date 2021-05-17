@@ -17,7 +17,7 @@ Initialize:     LD HL, TilemapSizeRef
                 NEG
                 LD (MoveDown.Clamp), A
                 RET
-MoveUp:     ;
+MoveUp:         ;
                 LD HL, TilemapOffsetHeight
                 XOR A
                 OR (HL)
@@ -28,8 +28,8 @@ MoveUp:     ;
                 LD DE, #FF00
                 ADD HL, DE
                 LD (TilemapRef), HL
-                RET
-MoveDown:   ;
+                RET;JP (IX)
+MoveDown:       ;
                 LD HL, TilemapOffsetHeight
 .Clamp          EQU $+1
                 LD A, #00
@@ -41,8 +41,8 @@ MoveDown:   ;
                 LD DE, #0000
                 ADD HL, DE
                 LD (TilemapRef), HL
-                RET
-MoveLeft:   ;
+                RET;JP (IX)
+MoveLeft:       ;
                 LD HL, TilemapOffsetWidth
                 XOR A
                 OR (HL)
@@ -51,8 +51,8 @@ MoveLeft:   ;
                 LD HL, (TilemapRef)
                 DEC HL
                 LD (TilemapRef), HL
-                RET
-MoveRight:  ;
+                RET;JP (IX)
+MoveRight:      ;
                 LD HL, TilemapOffsetWidth
 .Clamp          EQU $+1
                 LD A, #00
@@ -62,6 +62,6 @@ MoveRight:  ;
                 LD HL, (TilemapRef)
                 INC HL
                 LD (TilemapRef), HL
-                RET
+                RET;JP (IX)
 
                 endif ; ~_CORE_DISPLAY_TILEMAP_CONTROLL_
