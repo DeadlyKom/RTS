@@ -21,47 +21,47 @@ MoveUp:         ;
                 LD HL, TilemapOffsetHeight
                 XOR A
                 OR (HL)
-                RET Z
+                JR Z, .Exit
                 DEC (HL)
                 LD HL, (TilemapRef)
 .Decrement      EQU $+1
                 LD DE, #FF00
                 ADD HL, DE
                 LD (TilemapRef), HL
-                RET;JP (IX)
+.Exit           JP (IX)
 MoveDown:       ;
                 LD HL, TilemapOffsetHeight
 .Clamp          EQU $+1
                 LD A, #00
                 ADD A, (HL)
-                RET C
+                JR C, .Exit
                 INC (HL)
                 LD HL, (TilemapRef)
 .Increment      EQU $+1
                 LD DE, #0000
                 ADD HL, DE
                 LD (TilemapRef), HL
-                RET;JP (IX)
+.Exit           JP (IX)
 MoveLeft:       ;
                 LD HL, TilemapOffsetWidth
                 XOR A
                 OR (HL)
-                RET Z
+                JR Z, .Exit
                 DEC (HL)
                 LD HL, (TilemapRef)
                 DEC HL
                 LD (TilemapRef), HL
-                RET;JP (IX)
+.Exit           JP (IX)
 MoveRight:      ;
                 LD HL, TilemapOffsetWidth
 .Clamp          EQU $+1
                 LD A, #00
                 ADD A, (HL)
-                RET C
+                JR C, .Exit
                 INC (HL)
                 LD HL, (TilemapRef)
                 INC HL
                 LD (TilemapRef), HL
-                RET;JP (IX)
+.Exit           JP (IX)
 
                 endif ; ~_CORE_DISPLAY_TILEMAP_CONTROLL_

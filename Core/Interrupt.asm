@@ -139,7 +139,7 @@ Handler:            ;
                     endif
 
                     ; handling key states in a circular buffer
-                    ; CALL Handlers.Input.KeyStates
+                    CALL Handlers.Input.KeyStates
 
                     ; JP NZ, $+15
                     ; ; calculate frame per second
@@ -192,21 +192,21 @@ Handler:            ;
                     ; RRA
                     ; JR C, .SkipKeyboardInput
                     ;
-                    LD HL, (TilemapRef)
-                    PUSH HL
+                    ; LD HL, (TilemapRef)
+                    ; PUSH HL
                     
-                    LD A, VK_A
-                    CALL Keyboard.CheckKeyState_
-                    CALL Z, Tilemap.MoveLeft
-                    LD A, VK_D
-                    CALL Keyboard.CheckKeyState_
-                    CALL Z, Tilemap.MoveRight
-                    LD A, VK_W
-                    CALL Keyboard.CheckKeyState_
-                    CALL Z, Tilemap.MoveUp
-                    LD A, VK_S
-                    CALL Keyboard.CheckKeyState_
-                    CALL Z, Tilemap.MoveDown
+                    ; LD A, VK_A
+                    ; CALL Keyboard.CheckKeyState_
+                    ; CALL Z, Tilemap.MoveLeft
+                    ; LD A, VK_D
+                    ; CALL Keyboard.CheckKeyState_
+                    ; CALL Z, Tilemap.MoveRight
+                    ; LD A, VK_W
+                    ; CALL Keyboard.CheckKeyState_
+                    ; CALL Z, Tilemap.MoveUp
+                    ; LD A, VK_S
+                    ; CALL Keyboard.CheckKeyState_
+                    ; CALL Z, Tilemap.MoveDown
                     ; ; ; ------ Test unit ------
                     ; ; LD A, VK_H
                     ; ; CALL CheckKeyState
@@ -222,11 +222,11 @@ Handler:            ;
                     ; ; CALL Z, MemoryPage_5.Unit_Down
                     ; ; ; ~~~~~~ Test unit ~~~~~~
                     ; ;
-                    LD HL, (TilemapRef)
-                    POP DE                    
-                    OR A
-                    SBC HL, DE
-                    CALL NZ, Tilemap.Prepare
+                    ; LD HL, (TilemapRef)
+                    ; POP DE                    
+                    ; OR A
+                    ; SBC HL, DE
+                    ; CALL NZ, Tilemap.Prepare
 .SkipKeyboardInput
 .SkipSwapScreens
                     ; play music

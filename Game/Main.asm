@@ -6,7 +6,7 @@
 
                 define _DEBUG_CHECK
                 define ENABLE_TOGGLE_SCREENS_DEBUG
-                define SHOW_DEBUG
+                ; define SHOW_DEBUG
                 ; define ENABLE_MUSIC
                 define SHOW_FPS
 

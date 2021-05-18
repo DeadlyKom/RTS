@@ -4,13 +4,14 @@
 
                 module Input
 
-KeyStackSize    EQU 5
+KeyStackSize    EQU 32
 
                 include "../Structure/Input.inc"
 
 Initialize:     ;
                 LD HL, KeyStack
                 LD (ReadState), HL
+                LD (WriteState), HL
                 ;
                 CALL Mouse.Initialize
                 RET
@@ -118,7 +119,18 @@ KeyStates:      ;
                 ;
 .Loop           CALL ReadCellStack
                 CP VK_NONE
+                JR NZ, .NotLast
+
+                LD A, (HL)
+                CP VK_NONE
                 JR Z, .Exit
+                
+                LD (HL), VK_NONE
+
+                LD IX, .Exit
+                
+                
+.NotLast
 
                 ;
                 CP VK_A
@@ -147,7 +159,7 @@ KeyStates:      ;
                 RET
 
 ReadState:      DW #0000
-WriteState:     DW -(KeyStackSize * FKeyState)
+WriteState:     DW #0000;-(KeyStackSize * FKeyState)
 KeyStack:       FKeyState = $
                 DS KeyStackSize * FKeyState, VK_NONE
 
