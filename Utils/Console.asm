@@ -27,7 +27,7 @@ At:
 // Arguments:
 //	BC - position of cursor (#0000-02ff)
 // Affects: none
-at2:
+At2:
 	ld (cursorPos), bc
 	ret
 

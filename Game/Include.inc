@@ -4,6 +4,8 @@
 
                             include "../Config.inc"
                             include "Color.inc"
+                            include "Debug.inc"
+                            include "Frame.inc"
                             include "../Core/Macro.inc"
                     
                             define TRD_FILENAME "RTS.trd"       ; имя образа TRD
@@ -19,10 +21,15 @@ TileOnScreenY               EQU 12                              ; количес
 
 TilemapRef                  EQU Game.TilemapPtr                 ; указатель на адрес тайловой карты
 TilemapSizeRef              EQU Game.TilemapSize                ; указатель на адрес размера карты
-CoreStateRef                EQU Game.StatusFlag                 ; указатель на адрес флага состояний (core)
+FrameStateRef               EQU Game.FrameFlags                 ; указатель на адрес флага состояний (frame)
 TilemapWidth                EQU Game.TilemapSize.X              ; ширина тайловой карты (структура FMapSize)
 TilemapHeight               EQU Game.TilemapSize.Y              ; высота тайловой карты (структура FMapSize)
 TilemapOffsetWidth          EQU Game.TilemapOffset.X            ; смещение в тайловой карте по горизонтали (структура FLocation)
 TilemapOffsetHeight         EQU Game.TilemapOffset.Y            ; смещение в тайловой карте по вертикали (структура FLocation)
+
+
+MousePositionRef            EQU Mouse.MousePosition             ; указатель на позицию мыши
+MousePositionX              EQU Mouse.MousePositionX            ; указатель на позицию мыши оси X
+MousePositionY              EQU Mouse.MousePositionY            ; указатель на позицию мыши оси Y
 
                             endif ; ~_GAME_INCLUDE_

@@ -32,5 +32,6 @@ MemoryPage_Tilemap      EQU 1
 MemoryPage_Music        EQU 3
 MemoryPage_ShadowScreen EQU 7
 MemoryPage_TilSprites   EQU 7
+MemoryPage_CursorSprite EQU 7
 
                         endif ; ~_CORE_MEMORY_INCLUDE_

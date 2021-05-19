@@ -11,7 +11,7 @@
 TilemapPtr:     DW TileMap
 TilemapOffset:  FLocation 0, 0
 TilemapSize:    FMapSize 64, 64
-StatusFlag      DB #00
+FrameFlags:     DB #00
 
                 endmodule
 

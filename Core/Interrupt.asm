@@ -36,9 +36,12 @@ Handler:            ;
                     LD HL, InterruptCounter
                     INC (HL)
 
-                    ; keyboard handling
-                    CALL Handlers.Input.ScanKeyboard
-
+                    ;
+                    LD A, (HL)
+                    RRA
+                    JR Z, .NotScanKeys
+                    SetFrameFlag SCAN_KEYS_FLAG
+.NotScanKeys
                     ; mouse handling
                     CALL Handlers.Input.ScanMouse
 
@@ -51,111 +54,53 @@ Handler:            ;
                     LD (Console.NoflicConsoleScreenAddr), A
                     endif
 
-                    ifdef SHOW_DEBUG
-                    LD A, #00
-                    CALL Console.At
-                    LD HL, Handlers.Input.KeyStack
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    LD A, #02
-                    CALL Console.At
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    INC HL
-                    INC HL
-
-                    LD A, #05
-                    CALL Console.At
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    LD A, #07
-                    CALL Console.At
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    INC HL
-                    INC HL
-
-                    LD A, #0A
-                    CALL Console.At
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    LD A, #0C
-                    CALL Console.At
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    INC HL
-                    INC HL
-
-                    LD A, #0F
-                    CALL Console.At
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    LD A, #11
-                    CALL Console.At
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    INC HL
-                    INC HL
-
-                    LD A, #14
-                    CALL Console.At
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    LD A, #16
-                    CALL Console.At
-                    LD B, (HL)
-                    INC HL
-                    CALL Console.Logb
-                    INC HL
-                    INC HL
-                    endif
-
                     ; FPS
                     ifdef SHOW_FPS
 	                CALL FPS_Counter.IntTick
                     CALL FPS_Counter.Render_FPS
 	                endif
 
+                    ; ----- ----- ----- DRAW DEBUG INFO ----- ----- -----
+                    ; show mouse position
+                    ifdef SHOW_DEBUG_MOUSE_POSITION
+                    LD BC, #02E0 + 0
+                    CALL Console.At2
+                    LD HL, MousePositionRef
+                    LD B, (HL)
+                    CALL Console.Logb
+                    LD BC, #02E0 + 3
+                    CALL Console.At2
+                    INC HL
+                    LD B, (HL)
+                    CALL Console.Logb
+                    endif
+                    ; ~~~~~ ~~~~~ ~~~~~ DRAW DEBUG INFO ~~~~~ ~~~~~ ~~~~~
+
                     ; swap screens if it's ready
-                    LD A, (CoreStateRef)
-                    INC A
-                    JR NZ, .SkipSwapScreens
+                    CheckFrameFlag RENDERED_FLAG
+                    JR Z, .SkipSwapScreens
+
+                    ResetFrameFlag RENDERED_FLAG
+
                     SwapScreens
-                    XOR A
-                    LD (CoreStateRef), A
 
                     ; FPS
                     ifdef SHOW_FPS
                     CALL FPS_Counter.FrameRendered
                     endif
 
-                    ; handling key states in a circular buffer
-                    ; CALL Handlers.Input.KeyStates
+                    SetFrameFlag RENDER_ALL_FLAGS
 
-                    ; JP NZ, $+15
-                    ; ; calculate frame per second
-                    ; LD A, #CE
-                    ; LD (HL), A
-                    ; LD HL, FPS_Counter
-                    ; LD A, (HL)
-                    ; INC HL
-                    ; LD (HL), A
-                    ; DEC HL
-                    ; XOR A
-                    ; LD (HL), A
+                    ; keyboard handling
+                    CheckFrameFlag SCAN_KEYS_FLAG
+                    CALL NZ, Handlers.Input.ScanKeyboard
 
-                    
+                    GetCurrentScreen
+                    LD A, #40
+                    JR Z, $+4
+                    LD A, #C0
+                    LD (.CursorScreen), A
 
-                    ;
                     ; LD HL, (TimeOfDay)
                     ; DEC HL
                     ; LD (TimeOfDay), HL
@@ -171,69 +116,24 @@ Handler:            ;
 
                     ; mouse handling
                     ; CALL MemoryPage_2.UpdateStatesMouse
-                    ; keyboard handling
-                    ; LD HL, MemoryPage_5.Flags
-                    ; LD A, (HL)
-                    ; RLA
-                    ; JR C, .SkipInput
-                    ; LD HL, InterruptCounter
-                    ; LD A, (HL)
-                    ; LD HL, MemoryPage_5.Flags
-                    ; OR (HL)
-                    ; RRA
-                    ; JR C, .NextKey4
-                    ;
-
-                    ; LD HL, FPS_Counter
-                    ; INC (HL)
-
-                    ; keyboard handling
-                    ; LD A, (InterruptCounter)
-                    ; RRA
-                    ; JR C, .SkipKeyboardInput
-                    ;
-                    LD HL, (TilemapRef)
-                    PUSH HL
-                    
-                    LD A, VK_A
-                    CALL Keyboard.CheckKeyState_
-                    CALL Z, Tilemap.MoveLeft
-                    LD A, VK_D
-                    CALL Keyboard.CheckKeyState_
-                    CALL Z, Tilemap.MoveRight
-                    LD A, VK_W
-                    CALL Keyboard.CheckKeyState_
-                    CALL Z, Tilemap.MoveUp
-                    LD A, VK_S
-                    CALL Keyboard.CheckKeyState_
-                    CALL Z, Tilemap.MoveDown
-                    ; ; ; ------ Test unit ------
-                    ; ; LD A, VK_H
-                    ; ; CALL CheckKeyState
-                    ; ; CALL Z, MemoryPage_5.Unit_Right
-                    ; ; LD A, VK_F
-                    ; ; CALL CheckKeyState
-                    ; ; CALL Z, MemoryPage_5.Unit_Left
-                    ; ; LD A, VK_T
-                    ; ; CALL CheckKeyState
-                    ; ; CALL Z, MemoryPage_5.Unit_Up
-                    ; ; LD A, VK_G
-                    ; ; CALL CheckKeyState
-                    ; ; CALL Z, MemoryPage_5.Unit_Down
-                    ; ; ; ~~~~~~ Test unit ~~~~~~
-                    ; ;
-                    LD HL, (TilemapRef)
-                    POP DE                    
-                    OR A
-                    SBC HL, DE
-                    CALL NZ, Tilemap.Prepare
-.SkipKeyboardInput
+                    JR .S
 .SkipSwapScreens
+                    GetCurrentScreen
+                    LD A, #40
+                    JR Z, $+4
+                    LD A, #C0
+                    LD (.CursorScreen), A
+                    
+.S    
+                    ; ----- ----- ----- PLAY MUSIC ----- ----- -----
                     ; play music
                     ifdef ENABLE_MUSIC
                     CALL Game.PlayMusic
                     endif
-
+                    ; ~~~~~ ~~~~~ ~~~~~ PLAY MUSIC ~~~~~ ~~~~~ ~~~~~
+.CursorScreen       EQU $+1
+                    LD A, #00
+                    CALL Cursor.Draw
 .ExitIntertupt      ;
 .RestoreMemoryPage  EQU $+1
                     LD A, #00

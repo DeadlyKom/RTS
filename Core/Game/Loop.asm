@@ -2,29 +2,44 @@
                 ifndef _CORE_GAME_LOOP_
                 define _CORE_GAME_LOOP_
 GameLoop:       ;
-                XOR A
-                LD (CoreStateRef), A
+                ResetAllFrameFlags
+                SetFrameFlag RENDER_ALL_FLAGS
+
 .MainLoop       ;
-                LD A, (CoreStateRef)
-                OR A
-                JR NZ, .SomeWork
+                ifdef SHOW_DEBUG_BORDER
+                LD A, DEFAULT_COLOR
+                OUT (#FE), A
+                endif
+
                 ;
+                CheckFrameFlag RENDER_ALL_FLAGS
+                JR Z, .SomeWork
+
+                ; ------------------------------ RENDER ------------------------------
+
                 ; toggle to memory page with tile sprites
                 SeMemoryPage MemoryPage_TilSprites
 
                 ;
-                ; LD A, #02
-                ; OUT (#FE), A
+                CheckFrameFlag RENDER_TILEMAP_FLAG
+                CALL NZ, Tilemap.Display
+                
                 ;
-                CALL Tilemap.Display
-                CALL Tilemap.FOW
+                CheckFrameFlag RENDER_FOW_FLAG
+                CALL NZ, Tilemap.FOW
 
-                ; LD A, #01
-                ; OUT (#FE), A
                 ;
-                LD A, #FF
-                LD (CoreStateRef), A
-.SomeWork
+                SetFrameFlag RENDERED_FLAG
+                ResetFrameFlag RENDER_ALL_FLAGS
+
+                ; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RENDER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.SomeWork       ;
+                ifdef SHOW_DEBUG_BORDER
+                LD A, DEFAULT_COLOR
+                OUT (#FE), A
+                endif
+
                 JR .MainLoop
 
                 endif ; ~_CORE_GAME_LOOP_

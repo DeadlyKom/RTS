@@ -6,9 +6,14 @@
                 defarray TileAddressTableC000 #C000, #C040, #C080, #C0C0, #C800, #C840, #C880, #C8C0, #D000, #D040, #D080, #D0C0
 Prepare:        ; toggle to memory page with tilemap
                 SeMemoryPage MemoryPage_Tilemap
+
                 ; copy the visible block of the tilemap
                 LD HL, (TilemapRef)
                 CALL MEMCPY.Tilemap
+
+                SetFrameFlag RENDER_ALL_FLAGS
+                ResetFrameFlag SCAN_KEYS_FLAG
+
                 RET
 
 ; Prepare:        LD HL, (TilemapRef)
@@ -149,7 +154,13 @@ DisplayTileRow: ;
 ; Note:
 ;   requires included memory page 7 (MemoryPage_TilSprites)
 ; -----------------------------------------
-Display:        ; initialize execute blocks
+Display:        ; show debug border
+                ifdef SHOW_DEBUG_BORDER_TILEMAP
+                LD A, RENDER_TILEMAP_COLOR
+                OUT (#FE), A
+                endif
+
+                ; initialize execute blocks
                 LD IX, DisplayTileRow
                 LD BC, SharedBuffer
                 LD (.ContainerSP), SP

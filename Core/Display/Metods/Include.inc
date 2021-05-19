@@ -2,7 +2,7 @@
                 ifndef _CORE_DISPLAY_METODS_INCLUDE_
                 define _CORE_DISPLAY_METODS_INCLUDE_
 
-                module Display
+                module Metod
 
                 ; ---------- 8 ----------
                 include "8_0.asm"

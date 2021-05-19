@@ -458,27 +458,27 @@ HandlerUnits:           ;
                         
                         
 .TableLSJumpDraw        ; left shift
-                        DW Display.SBP_8_0_LS,  Display.SBP_16_0_LS,    Display.SBP_24_0_LS, #0000
-                        DW #0000,               Display.SBP_16_1_LS,    Display.SBP_24_1_LS, #0000
-                        DW #0000,               #0000,                  Display.SBP_24_2_LS, #0000
+                        DW Metod.SBP_8_0_LS,    Metod.SBP_16_0_LS,      Metod.SBP_24_0_LS, #0000
+                        DW #0000,               Metod.SBP_16_1_LS,      Metod.SBP_24_1_LS, #0000
+                        DW #0000,               #0000,                  Metod.SBP_24_2_LS, #0000
                         ; left, not shift
-                        DW Display.SBP_8_0,     Display.SBP_16_0,       Display.SBP_24_0,    #0000
-                        DW #0000,               Display.SBP_16_1_L,     Display.SBP_24_1_L,  #0000
-                        DW #0000,               #0000,                  Display.SBP_24_2_L,  #0000
+                        DW Metod.SBP_8_0,       Metod.SBP_16_0,         Metod.SBP_24_0,    #0000
+                        DW #0000,               Metod.SBP_16_1_L,       Metod.SBP_24_1_L,  #0000
+                        DW #0000,               #0000,                  Metod.SBP_24_2_L,  #0000
 
 .TableRSJumpDraw        ; right shift
-                        DW Display.SBP_8_0_RS,  Display.SBP_16_0_RS,    Display.SBP_24_0_RS, #0000
-                        DW #0000,               Display.SBP_16_1_RS,    Display.SBP_24_1_RS, #0000
-                        DW #0000,               #0000,                  Display.SBP_24_2_RS, #0000
+                        DW Metod.SBP_8_0_RS,    Metod.SBP_16_0_RS,      Metod.SBP_24_0_RS, #0000
+                        DW #0000,               Metod.SBP_16_1_RS,      Metod.SBP_24_1_RS, #0000
+                        DW #0000,               #0000,                  Metod.SBP_24_2_RS, #0000
                         ; right, not shift
-                        DW Display.SBP_8_0,     Display.SBP_16_0,       Display.SBP_24_0,    #0000
-                        DW #0000,               Display.SBP_16_1_R,     Display.SBP_24_1_R,  #0000
-                        DW #0000,               #0000,                  Display.SBP_24_2_R,  #0000
+                        DW Metod.SBP_8_0,       Metod.SBP_16_0,         Metod.SBP_24_0,    #0000
+                        DW #0000,               Metod.SBP_16_1_R,       Metod.SBP_24_1_R,  #0000
+                        DW #0000,               #0000,                  Metod.SBP_24_2_R,  #0000
 
 .TableJumpDraw          ; method table by sprite width
-                        DW Display.SBP_8_0,    Display.SBP_16_0,    Display.SBP_24_0,    #0000
+                        DW Metod.SBP_8_0,       Metod.SBP_16_0,         Metod.SBP_24_0,    #0000
                         
 .TableShiftJumpDraw     ; shift method table by sprite width 
-                        DW Display.SBP_8_0_S,  Display.SBP_16_0_S,  Display.SBP_24_0_S,  #0000
+                        DW Metod.SBP_8_0_S,     Metod.SBP_16_0_S,       Metod.SBP_24_0_S,  #0000
 
                         endif ; ~_CORE_HANDLER_UNIT_

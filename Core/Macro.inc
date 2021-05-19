@@ -67,6 +67,24 @@ RestoreBC:              macro
                         LD A, #C5
                         LD (Interrupt.Handler.RestoreRegister), A
                         endm
+CheckFrameFlag          macro Flag?
+                        LD A, (FrameStateRef)
+                        AND Flag?
+                        endm
+SetFrameFlag            macro Flag?
+                        LD A, (FrameStateRef)
+                        OR Flag?
+                        LD (FrameStateRef), A
+                        endm
+ResetFrameFlag          macro Flag?
+                        LD A, (FrameStateRef)
+                        AND (~Flag?) & 0xFF
+                        LD (FrameStateRef), A
+                        endm
+ResetAllFrameFlags      macro
+                        XOR A
+                        LD (FrameStateRef), A
+                        endm
 DOWN_BC                 macro
                         ; classic method "DOWN_BC" 25/59
                         INC B

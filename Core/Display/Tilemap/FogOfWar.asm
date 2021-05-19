@@ -8,8 +8,11 @@
 ; Note:
 ;   requires included memory page 7
 ; -----------------------------------------
-FOW:            ;
-                
+FOW:            ; show debug border
+                ifdef SHOW_DEBUG_BORDER_FOW
+                LD A, RENDER_FOW_COLOR
+                OUT (#FE), A
+                endif
                 
                 RET
 

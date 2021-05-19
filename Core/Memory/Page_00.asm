@@ -11,9 +11,9 @@ Start:
 SolderA_Move_0_0:
                 incbin "Sprites/Units/SolderA/Move_0_0.spr"                         ; 8x16
 SolderA_Move_0_1:
-                incbin "Sprites/Units/SolderA/Move_0_1.spr"                         ; 8x16
+                incbin "Sprites/Units/SolderA/Move_0_1.spr"                         ; 16x16
 SolderA_Move_0_2:
-                incbin "Sprites/Units/SolderA/Move_0_2.spr"                         ; 16x16
+                incbin "Sprites/Units/SolderA/Move_0_2.spr"                         ; 8x16
 SolderA_Move_0_3:
                 incbin "Sprites/Units/SolderA/Move_0_3.spr"                         ; 8x16
 

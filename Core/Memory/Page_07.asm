@@ -8,6 +8,9 @@
                     module MemoryPage_7
 Start:              
 
+Sprite_Cursor_1:
+                    incbin "Sprites/Units/SolderA/Move_0_1.spr"                         ; 16x16
+                    
                     ORG Page_7_TileTable
 TableSprites:       DW Sprite_Sand_1,       Sprite_Sand_2,      Sprite_Sand_3,      Sprite_Sand_4       ; 0   - 3
                     DW #0000,               #0000,              #0000,              #0000               ; 4   - 7

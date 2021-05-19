@@ -13,9 +13,9 @@ Initialize:     CALL GetMouseXY
                 INC HL
                 LD (HL), D
                 ;
-                LD HL, 1024 << 3
+                LD HL, 256 >> 1
                 LD (MousePositionX), HL
-                LD HL, 768 << 3
+                LD HL, 192 >> 1
                 LD (MousePositionY), HL
                 ;
                 OR A

@@ -28,7 +28,7 @@ MoveUp:         ;
                 LD DE, #FF00
                 ADD HL, DE
                 LD (TilemapRef), HL
-                RET;JP (IX)
+                RET
 MoveDown:       ;
                 LD HL, TilemapOffsetHeight
 .Clamp          EQU $+1
@@ -41,7 +41,7 @@ MoveDown:       ;
                 LD DE, #0000
                 ADD HL, DE
                 LD (TilemapRef), HL
-                RET;JP (IX)
+                RET
 MoveLeft:       ;
                 LD HL, TilemapOffsetWidth
                 XOR A
@@ -51,7 +51,7 @@ MoveLeft:       ;
                 LD HL, (TilemapRef)
                 DEC HL
                 LD (TilemapRef), HL
-                RET;JP (IX)
+                RET
 MoveRight:      ;
                 LD HL, TilemapOffsetWidth
 .Clamp          EQU $+1
@@ -62,6 +62,6 @@ MoveRight:      ;
                 LD HL, (TilemapRef)
                 INC HL
                 LD (TilemapRef), HL
-                RET;JP (IX)
+                RET
 
                 endif ; ~_CORE_DISPLAY_TILEMAP_CONTROLL_
