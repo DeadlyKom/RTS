@@ -11,8 +11,8 @@ Draw:           LD (.CurrentScreen), A
                 OUT (#FE), A
                 endif
 
-                LD (.ContainerSP), SP
                 ; инициализация
+                LD (.ContainerSP), SP
                 XOR A
                 LD (.OffsetSprite), A                       ; отсутствует пропуск байт в спрайте
                 LD (.OffsetX), A
@@ -30,38 +30,39 @@ Draw:           LD (.CurrentScreen), A
                 ADD HL, HL                                  ; HL = SpriteIdx * 4
                 ADD HL, HL                                  ; HL = SpriteIdx * 8
                 ADD HL, DE                                  ; HL - указатель на информации о текущем спрайте
+                LD SP, HL                                   ; SP - указывает на информацию о текущем спрайте
 
                 ; FSprite Height (8), Offset_Y (8), Width (8), Offset_X (8), Dummy (8), Page Sprite (8), Address Sprite (16)
-                
-                ; bottom_edge_sprite = My + Sy - SOy (нижний край спрайта)
+                POP DE                                      ; D - вертикальное смещение (SOy), E - высота спрайта (Sy)
+
+                ; Eby = My + Sy - SOy (нижний край спрайта)
                 LD A, (MousePositionY)                      ; A = My
-                ADD A, (HL)                                 ; A += Sy
-                INC HL                                      ; HL указывает на - SOy
-                SUB (HL)                                    ; A -= SOy
+                ADD A, E                                    ; A += Sy
+                SUB D                                       ; A -= SOy
                 ; - если отрицательное или равно нулю, спрайт выше экрана (не видим)
                 ; - если больше или равно 192, спрайт ниже экрана (не видим)
-                ; RET M                                       ; bottom_edge_sprite - значение отрицательное
-                JP Z, .Exit                                 ; bottom_edge_sprite - значение нулевое
+                ; RET M                                       ; Eby - значение отрицательное
+                JP Z, .Exit                                 ; Eby - значение нулевое
 
                 ; A - хранит номер нижней линии (bottom_edge_sprite)
                 LD C, A                                     ; C - хранит номер нижней линии спрайта
 
-                ; top_edge_sprite = bottom_edge_sprite - Sy (верхний край спрайта)
-                DEC HL                                      ; HL указывает на - Sy
-                SUB (HL)
+                ; Ety = EPOP DEby - Sy (верхний край спрайта)
+                SUB E
                 JP C, .CroppedTop                           ; урезан верхней частью экрана
                 LD C, A                                     ; C - хранит номер верхней линии спрайта
                 ADD A, #40
                 JP C, .Exit                                 ; если переполнение, то верхняя линия спрайта больше или равно 192
                                                             ; спрайт ниже экрана
                 NEG                                         ; А - хранит количество рисуемых строк
-                SUB (HL)
+                SUB E
                 JP C, .CroppedBottom                        ; урезан нижней частью экрана
 
                 ; рисуется полностью
-                LD A, (HL)                                  ; A = Sy
+
+                LD A, E                                     ; A = Sy
                 LD (.OffsetRow), A
-                EX DE, HL
+
 .CalcRowScrAdr  LD H, (HIGH SCR_ADR_ROWS_TABLE) >> 1
                 LD L, C
                 ADD HL, HL
@@ -74,11 +75,10 @@ Draw:           LD (.CurrentScreen), A
                 OR #00
                 LD H, A
                 LD (.ScreenAddress), HL
-                EX DE, HL
+
                 JP .Row
 
 .CroppedTop     ; урезан верхней частью экрана
-                ; LD C, A                                     ; C - хранит номер нижней линии спрайта
                 NEG                                         ; А - хранит количество пропускаемых строк
                 ; ширину спрайта курсора всегда 16 пикселей
                 ADD A, A                                    ; A *= 2 байта
@@ -95,8 +95,8 @@ Draw:           LD (.CurrentScreen), A
 .CroppedBottom  ; урезан нижней частью экрана
 
                 ; - модификация
-                ; если не чётное увеличим в большую сторону (портит 32 байта после экранной области!)
-                ADD A, (HL)                                 ; А - хранит количество пропускаемых строк
+                ; если не чётное округлим в большую сторону (портит 32 байта после экранной области!)
+                ADD A, E                                    ; А - хранит количество пропускаемых строк
                 RRA
                 ADC A, #00
                 RLA
@@ -106,65 +106,47 @@ Draw:           LD (.CurrentScreen), A
                 JR .CalcRowScrAdr
 
 .Row            ; ------------------------ горизонталь ------------------------
-                ; HL указывает на - Sy
-                INC HL                                      ; HL указывает на - SOy
-                INC HL                                      ; HL указывает на - Sx
+                POP DE                                      ; D - горизонтальное смещение (SOx), E - ширина спрайта (Sx)
 
-                ; right_edge_sprite = Mx + Sx - SOx (правый край спрайта)
-                ; LD A, (MousePositionX)                      ; A = Mx
-                ; ADD A, (HL)                                 ; A += Sx
-                ; INC HL                                      ; HL указывает на - SOx
-                ; SUB (HL)                                    ; A -= SOx
-                XOR A
+                LD A, E                                     ; A - хранит Sx
+                SUB D                                       ; A = Sx - SOx
+                ; преобразуем резульат (Sx - SOx) в 16-битное число
+                LD C, A                                     ; C = Sx - SOx
+                SBC A, A                                    ; если было переполнение (отрицательное число), корректируем
                 LD B, A
-                LD D, A
+
                 LD A, (MousePositionX)                      ; A = Mx
-                LD C, A
-                LD E, (HL)            
-                EX DE, HL
-                ADD HL, BC                                  ; A += Sx
-                INC DE                                      ; DE указывает на - SOx
-                LD A, (DE)
-                LD C, A
+                LD L, A                                     ; E - хранит Mx
+                LD H, #00
+
+                ; Erx = Mx + (Sx - SOx) (правая грань спрайта)
                 OR A
-                SBC HL, BC                                  ; A -= SOx
-                
+                ADC HL, BC                                  ; необходим для определения знака (16-битного числа)
                 ; - если отрицательное или равно нулю, спрайт левее экрана (не видим)
                 ; - если больше или равно 256, спрайт правее экрана (не видим)
-                JP M, .Exit                                 ; right_edge_sprite - значение отрицательное
-                JP Z, .Exit                                 ; right_edge_sprite - значение нулевое
+                JP M, .Exit                                 ; Erx - значение отрицательное
+                JP Z, .Exit                                 ; Erx - значение нулевое
 
-                ; HL - хранит номер правой линии (right_edge_sprite)
+                ; Elx = Mx - SOx (левая грань спрайта)
+                XOR A
+                LD B, A
+                LD C, E
+                SBC HL, BC
 
-
-                ; left_edge_sprite = right_edge_sprite - Sx (левый край спрайта)
-                ; DEC HL                                      ; HL указывает на - Sx
-                ; SUB (HL)                                    ; A -= Sx
-                ; LD C, A                                     ; C - хранит номер левой линии спрайта
-                ; JP Z, .IsFullNotShift                       ; на краю экрана ???????????????
-                ; JP C, .CroppedLeft                          ; урезан левой частью экрана
-                ; NEG
-                ; SUB (HL)
-                ; JP C, .CroppedRight                         ; урезан правой частью экрана
-
-                DEC DE                                      ; DE указывает на - Sx
-                LD A, (DE)
-                LD C, A
-                OR A
-                SBC HL, BC                                  ; A -= Sx
-                EX DE, HL
-                LD C, E                                     ; C - хранит номер левой линии спрайта
                 JP Z, .IsFullNotShift                       ; на краю экрана ???????????????
                 JP C, .CroppedLeft                          ; урезан левой частью экрана
-                LD A, E
+                OR H
+                JP NZ, .Exit                                ; левая часть спрайта за правой частью экрана
+                LD A, L
                 NEG
-                SUB (HL)
+                SUB E
                 JP C, .CroppedRight                         ; урезан правой частью экрана
 
-                ; рисуется полностью
+                ; ---------- рисуется полностью ----------
+                ; C = Elx (левая грань спрайта)
 
-                ; расчёт знакоместа
-                LD A, C
+                ; расчёт знакоместа от левой грани спрайта
+                LD A, L
                 RRA
                 RRA
                 RRA
@@ -172,34 +154,17 @@ Draw:           LD (.CurrentScreen), A
                 LD (.OffsetX), A
 
                 ; расчёт смещения в знакоместе
-                LD A, C
+                LD A, L
                 AND %00000111
                 JR NZ, .IsFullShift
 
 .IsFullNotShift ; выровнен по знакоместу
 
-                ; расчёт адреса в таблице по длине спрайта
-                LD A, (HL)                                  ; A = Sx
-                RRA
-                RRA
-                RRA
-                DEC A
-                ADD A, A
-                EX DE, HL
-                LD HL, HandlerUnits.TableJumpDraw
-                ADD A, L
-                LD L, A
-                JR NC, $+3
-                INC H
-                LD A, (HL)
-                LD IXL, A
-                INC HL
-                LD A, (HL)
-                LD IXH, A
-                EX DE, HL
+                LD IX, Metod.SBP_16_0
                 JP .Draw
 
 .IsFullShift    ; спрайт виден полность, но со смещением
+
                 EXX
                 ; calculate address of shift table
                 DEC A
@@ -208,32 +173,12 @@ Draw:           LD (.CurrentScreen), A
                 LD H, A
                 EXX
 
-                ; расчёт адреса в таблице по длине спрайта
-                LD A, (HL)
-                RRA
-                RRA
-                RRA
-                DEC A
-                ADD A, A
-                EX DE, HL
-                LD HL, HandlerUnits.TableShiftJumpDraw
-                ADD A, L
-                LD L, A
-                JR NC, $+3
-                INC H
-                LD A, (HL)
-                LD IXL, A
-                INC HL
-                LD A, (HL)
-                LD IXH, A
-                EX DE, HL
+                LD IX, Metod.SBP_16_0_S
                 JP .Draw
 
 .CroppedLeft    ; урезан левой частью экрана
-                ; C - номер левой части спрайта (в пикселах)
-                ; A - количество пропускаемых пикселей слева
 
-                ; LD A, C
+                LD A, L
                 ; расчёт количество пропускаемых байт слева
                 NEG
                 RRA
@@ -242,17 +187,16 @@ Draw:           LD (.CurrentScreen), A
                 AND %00011111
                 ADD A, A    ; x2
                 ADD A, A    ; x4
+
                 ; смещение в таблице, если байт выравнен
-                LD E, A
-                LD A, C
+                LD C, A
+                LD A, L
                 AND %00000111
                 LD B, A
-                LD A, E
+                LD A, C
                 JR NZ, $+4
                 ADD A, 12
-                ; LD E, #01   ; !!!!!!!!!!!!!!!!! (ширина спрайта константна)
-                ; ADD A, E    ; + смещение (байтовое)
-                INC A
+                INC A       ; ширина спрайта константна
                 ADD A, A    ; x2 (адрес)
                 ; расчёт адреса обработчика
                 EXX
@@ -274,20 +218,18 @@ Draw:           LD (.CurrentScreen), A
                 ; calculate address of shift table
                 DEC A
                 ADD A, A
-                ADD A, HIGH ShiftTable
+                ADD A, HIGH ShiftTable + 1
                 LD H, A
-                INC H       ; временно (т.к. для текущей функции 24_2)
+                ; INC H       ; временно
                 EXX
                 ; ~ лишний если байт выравнен
 
                 JR .Draw
 
 .CroppedRight   ; урезан правой частью экрана
-                ; C - номер левой части спрайта (в пикселах)
-                ; A - количество пропускаемых пикселей спрайта
+                ; L - номер правой части спрайта (в пикселах)
 
-                ;
-                NEG
+                NEG         ; A - количество пропускаемых пикселей спрайта
                 RRA
                 RRA
                 RRA
@@ -296,17 +238,16 @@ Draw:           LD (.CurrentScreen), A
                 ADD A, A    ; x4
 
                 ; смещение в таблице, если байт выравнен
-                LD E, A
-                LD A, C
+                LD C, A
+                LD A, L
                 AND %00000111
                 LD B, A
-                LD A, E
+                LD A, C
                 JR NZ, $+4
                 ADD A, 12
-                 ; LD E, #01   ; !!!!!!!!!!!!!!!!! (ширина спрайта константна)
-                ; ADD A, E    ; + смещение (байтовое)
-                INC A
+                INC A       ; ширина спрайта константна
                 ADD A, A    ; x2 (адрес)
+
                 ; расчёт адреса обработчика
                 EXX
                 LD HL, HandlerUnits.TableRSJumpDraw
@@ -329,12 +270,11 @@ Draw:           LD (.CurrentScreen), A
                 ADD A, A
                 ADD A, HIGH ShiftTable
                 LD H, A
-                ; INC H       ; временно (т.к. для текущей функции 24_2)
                 EXX
                 ; ~ лишний если байт выравнен
 
                 ; расчёт знакоместа
-                LD A, C
+                LD A, L
                 RRA
                 RRA
                 RRA
@@ -342,21 +282,12 @@ Draw:           LD (.CurrentScreen), A
                 LD (.OffsetX), A
                 ; ------------------------ горизонталь ------------------------
 
-.Draw           ; HL указывает на - Sx
-                INC HL                                      ; HL указывает на - SOx
-                INC HL                                      ; HL указывает на - dummy
-                INC HL                                      ; HL указывает на - страницу спрайта
-                
-                ; установим страницу спрайта
-                LD A, (HL)                                  ; A - номер странички спрайта (F - dummy)
+.Draw           ; установим страницу спрайта
+                POP AF                                      ; A - номер странички спрайта (F - dummy)
                 SeMemoryPage_A
 
                 ; модификация адреса спрайта
-                INC HL                                      ; HL указывает на - адрес спрайта
-                LD A, (HL)
-                INC HL
-                LD H, (HL)
-                LD L, A
+                POP HL                                      ; HL указывает на - адрес спрайта
 
 .OffsetSprite   EQU $+1
                 LD DE, #0000

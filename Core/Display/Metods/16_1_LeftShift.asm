@@ -44,6 +44,12 @@ SBP_16_1_LS:            EXX
                         AND #F8
                         ADD A, B
                         LD B, A
+
+                        ; - костыль (чтобы не рисовать в атрибутах)
+                        LD A, B
+                        AND %00011000
+                        ADD A, #E8
+                        JR Z, .NextRow
 .Backward
                         ;- 1 byte -
                         ; modify the right side of a byte
@@ -73,7 +79,7 @@ SBP_16_1_LS:            EXX
                         ADD A, B
                         LD B, A
 
-                        ; move to the next two row
+.NextRow                ; move to the next two row
                         EXX
                         INC HL
                         INC HL

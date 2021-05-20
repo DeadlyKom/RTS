@@ -18,6 +18,7 @@ SBP_16_1_RS:            EXX
 
                         ;- 1 byte -
                         ; modify the left side of a byte
+                        LD A, (BC)
                         POP DE
                         LD L, E     ; OR
                         OR (HL)
@@ -42,6 +43,12 @@ SBP_16_1_RS:            EXX
                         AND #F8
                         ADD A, B
                         LD B, A
+
+                        ; - костыль (чтобы не рисовать в атрибутах)
+                        LD A, B
+                        AND %00011000
+                        ADD A, #E8
+                        JR Z, .NextRow
 .Backward
                         ;- 1 byte -
                         POP DE                              ; skip 1 byte
@@ -50,7 +57,8 @@ SBP_16_1_RS:            EXX
                         ;- 2 byte -
                         ; modify the left side of a byte
                         LD A, (BC)
-                        DEC H                               ; calculate left shift address
+                        POP DE
+                        ; DEC H                               ; calculate left shift address
                         LD L, E     ; OR
                         OR (HL)
                         LD L, D     ; XOR
@@ -71,7 +79,7 @@ SBP_16_1_RS:            EXX
                         ADD A, B
                         LD B, A
 
-                        ; move to the next two row
+.NextRow                ; move to the next two row
                         EXX
                         INC HL
                         INC HL
