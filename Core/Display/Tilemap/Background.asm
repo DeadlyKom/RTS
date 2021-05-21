@@ -12,7 +12,7 @@ Prepare:        ; toggle to memory page with tilemap
                 CALL MEMCPY.Tilemap
 
                 SetFrameFlag RENDER_ALL_FLAGS
-                ResetFrameFlag SCAN_KEYS_FLAG
+                ; ResetFrameFlag SCAN_KEYS_FLAG
 
                 RET
 

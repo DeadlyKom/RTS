@@ -78,7 +78,7 @@ SetFrameFlag            macro Flag?
                         endm
 ResetFrameFlag          macro Flag?
                         LD A, (FrameStateRef)
-                        AND (~Flag?) & 0xFF
+                        AND ((~Flag?) & 0xFF)
                         LD (FrameStateRef), A
                         endm
 ResetAllFrameFlags      macro

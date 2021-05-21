@@ -9,6 +9,7 @@
                 include "Loop.asm"
                 include "Music.asm"
 TilemapPtr:     DW TileMap
+NewTilemapPtr:  DW TileMap
 TilemapOffset:  FLocation 0, 0
 TilemapSize:    FMapSize 64, 64
 FrameFlags:     DB #00

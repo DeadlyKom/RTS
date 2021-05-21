@@ -8,8 +8,16 @@
                     module MemoryPage_7
 Start:              
 
+Sprite_Cursor_0:
+                    incbin "Sprites/Cursor/Cursor_0.spr"        ; 16x16
 Sprite_Cursor_1:
-                    incbin "Sprites/Units/SolderA/Move_0_1.spr"                         ; 16x16
+                    incbin "Sprites/Cursor/Cursor_1.spr"        ; 16x16
+Sprite_Cursor_2:
+                    incbin "Sprites/Cursor/Cursor_2.spr"        ; 16x16
+Sprite_Cursor_3:
+                    incbin "Sprites/Cursor/Cursor_3.spr"        ; 16x16
+; Sprite_Cursor_1:
+;                     incbin "Sprites/Units/SolderA/Move_0_1.spr"                         ; 16x16
                     
                     ORG Page_7_TileTable
 TableSprites:       DW Sprite_Sand_1,       Sprite_Sand_2,      Sprite_Sand_3,      Sprite_Sand_4       ; 0   - 3

@@ -13,7 +13,20 @@ Initialize:     ;
                 RET
 
 ScanKeyboard:   ;
+                LD HL, (TilemapRef)
+                LD (.CompareAddress), HL
+                
+                ;
                 CALL TilemapMove
+                CALL MouseMove
+
+                ; comparison of current and previous address values
+                LD HL, (TilemapRef)
+.CompareAddress EQU $+1
+                LD DE, #0000                   
+                OR A
+                SBC HL, DE
+                CALL NZ, Tilemap.Prepare
 
                 ; ; select
                 ; LD A, VK_LBUTTON
@@ -23,17 +36,28 @@ ScanKeyboard:   ;
                 ; LD A, VK_RBUTTON
                 ; CALL CheckKeyState
                 ; CALL Z, .SetVK
+
+                RET
+
+MouseMove:      LD A, (MouseEdgeFlagRef)
+                LD C, A
+                RR C
+                CALL C, Tilemap.MoveLeft
+                RR C
+                CALL C, Tilemap.MoveRight
+                RR C
+                CALL C, Tilemap.MoveUp
+                RR C
+                CALL C, Tilemap.MoveDown
+                XOR A
+                LD (MouseEdgeFlagRef), A
                 RET
 
 ScanMouse:      CALL Mouse.UpdateStatesMouse
 
                 RET
 
-TilemapMove:    ;
-                LD HL, (TilemapRef)
-                LD (.CompareAddress), HL
-
-                ; move map left
+TilemapMove:    ; move map left
                 LD A, VK_A
                 CALL CheckKeyState
                 CALL Z, Tilemap.MoveLeft
@@ -53,13 +77,6 @@ TilemapMove:    ;
                 CALL CheckKeyState
                 CALL Z, Tilemap.MoveDown
 
-                ; comparison of current and previous address values
-                LD HL, (TilemapRef)
-.CompareAddress EQU $+1
-                LD DE, #0000                   
-                OR A
-                SBC HL, DE
-                CALL NZ, Tilemap.Prepare
                 RET
 CheckKeyState:  LD HL, .RET
                 LD (.VK), A

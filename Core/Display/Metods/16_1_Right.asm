@@ -18,6 +18,14 @@ SBP_16_1_R:             EXX
 
                         ;- 1 byte -
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+                        
                         POP DE
                         OR E
                         XOR D
@@ -53,6 +61,14 @@ SBP_16_1_R:             EXX
 
                         ;- 2 byte -
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+                        
                         POP DE
                         OR E
                         XOR D

@@ -11,7 +11,7 @@ IntTick:            LD A, (TicksCount)
                     LD (TicksCount), A
                     RET
 
-.StoreFramerate:    LD A, (FramesCount_BCD)
+.StoreFramerate     LD A, (FramesCount_BCD)
                     LD (Result_BCD), A
                     XOR A
                     LD (TicksCount), A

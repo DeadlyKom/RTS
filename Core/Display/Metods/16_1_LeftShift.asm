@@ -23,6 +23,14 @@ SBP_16_1_LS:            EXX
                         ;- 2 byte -
                         ; modify the right side of a byte
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+                        
                         POP DE
                         ; INC H                              ; calculate right shift address
                         LD L, E     ; OR
@@ -54,6 +62,14 @@ SBP_16_1_LS:            EXX
                         ;- 1 byte -
                         ; modify the right side of a byte
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+                        
                         POP DE
                         LD L, E     ; OR
                         OR (HL)

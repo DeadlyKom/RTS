@@ -35,9 +35,14 @@ TableSprites_Infantry:
                 FSprite 16,     0,      8,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_3   ; напровление 0, индекс анимации 3
                 FSprite 16,     0,      8,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_3   ; напровление 0, индекс анимации 3
 
+; Sprite_Cursor_Table:
+;                 FSprite 16,    0,     16,     0,      0, MemoryPage_CursorSprite, MemoryPage_7.Sprite_Cursor_1    ; 
 Sprite_Cursor_Table:
-                FSprite 16,    0,     16,     0,      0, MemoryPage_CursorSprite, MemoryPage_7.Sprite_Cursor_1    ; 
-
+                    FSprite 16,    0,     16,     0,      0, MemoryPage_CursorSprite, MemoryPage_7.Sprite_Cursor_0    ; 
+                    FSprite 16,    0,     16,     0,      0, MemoryPage_CursorSprite, MemoryPage_7.Sprite_Cursor_1    ; 
+                    FSprite 16,    0,     16,     0,      0, MemoryPage_CursorSprite, MemoryPage_7.Sprite_Cursor_2    ; 
+                    FSprite 16,    0,     16,     0,      0, MemoryPage_CursorSprite, MemoryPage_7.Sprite_Cursor_3    ; 
+                    
                 include "../Display/ShiftTable.inc"
                 include "../Display/ScreenAddressRowsTable.inc"
 MemoryPage_5_End:

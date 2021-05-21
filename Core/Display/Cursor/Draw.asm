@@ -4,6 +4,11 @@
 
 Draw:           LD (.CurrentScreen), A
                 LD (.CurrentScreen_), A
+                
+                ; RLA
+                ; JR 
+                ; LD HL, (MouseFlagRef)
+                ; RES 0, (HL)
 
                 ; show debug border
                 ifdef SHOW_DEBUG_BORDER_CURSOR
@@ -16,6 +21,8 @@ Draw:           LD (.CurrentScreen), A
                 XOR A
                 LD (.OffsetSprite), A                       ; отсутствует пропуск байт в спрайте
                 LD (.OffsetX), A
+
+                CALL MouseTick
                 
                 ; Mx, My   - позиция курсора        (в пикселах)
                 ; Sx, Sy   - ширина/высота спрайта  (в пикселах)
@@ -294,11 +301,11 @@ Draw:           LD (.CurrentScreen), A
                 ADD HL, DE
                 LD SP, HL
 
-                LD BC, #0000    ; буфер
+                LD BC, Container    ; буфер
 
                 EXX
 .ScreenAddress  EQU $+1                        
-                LD BC, #0000    ; экран
+                LD BC, #0000        ; экран
                 LD A, C
 .OffsetX        EQU $+1
                 ADD A, #00
@@ -329,6 +336,55 @@ Draw:           LD (.CurrentScreen), A
 .ContainerSP    EQU $+1
                 LD SP, #0000
                 RET
+
+Restore:        ;
+                ResetFrameFlag RESTORE_CURSOR
+                
+                RET
+
+MouseTick:      LD A, (MouseFlagRef)
+                INC A
+                JR Z, .Reset
+                LD A, (TicksCount)
+                INC A
+                CP 250
+                JR Z, .ChangeState
+                LD (TicksCount), A
+                RET
+
+.Reset          XOR A
+                LD (TicksCount), A
+                LD (SpriteIdx), A
+                RET
+
+.ChangeState    LD HL, SpriteIdx
+
+                LD A, (HL)
+                INC HL
+                ADD A, (HL)
+                CP #04
+                JR Z, .RevertNeg
+                CP #FF
+                JR Z, .RevertPos
+                DEC HL
+                LD (HL), A
+                LD A, 246
+                LD (TicksCount), A
+                RET
+
+.RevertNeg      DEC (HL)
+                DEC (HL)
+                RET
+
+.RevertPos      INC (HL)
+                INC (HL)
+                RET
+
+TicksCount:     DB #00
 SpriteIdx:      DB #00
+Flag:           DB #01
+AddressScr:     DW #0000
+Metod:          DB #00
+Container:      DS 3 * 16, 0            ; 3 знакоместа * 16 пикселей высота спрайта
 
                 endif ; ~_CORE_DISPLAY_CURSOR_

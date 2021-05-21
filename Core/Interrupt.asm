@@ -32,18 +32,25 @@ Handler:            ;
                     LD A, (MemoryPagePtr)
                     LD (.RestoreMemoryPage), A
 
-                    ; interrupt counter increment
+                    ; interrupt counter increment ?
                     LD HL, InterruptCounter
                     INC (HL)
 
                     ;
-                    LD A, (HL)
-                    RRA
-                    JR Z, .NotScanKeys
+                    ; LD A, (HL)
+                    ; RRA
+                    ; JR Z, .NotScanKeys
                     SetFrameFlag SCAN_KEYS_FLAG
-.NotScanKeys
+; .NotScanKeys
+
+                    ifdef ENABLE_MOUSE
                     ; mouse handling
                     CALL Handlers.Input.ScanMouse
+
+                    ; restore background cursor
+                    CheckFrameFlag RESTORE_CURSOR
+                    CALL NZ, Cursor.Restore
+                    endif
 
                     ; swith
                     ifdef ENABLE_TOGGLE_SCREENS_DEBUG
@@ -95,11 +102,8 @@ Handler:            ;
                     CheckFrameFlag SCAN_KEYS_FLAG
                     CALL NZ, Handlers.Input.ScanKeyboard
 
-                    GetCurrentScreen
-                    LD A, #40
-                    JR Z, $+4
-                    LD A, #C0
-                    LD (.CursorScreen), A
+                    ;
+                    CALL Handlers.Input.MouseMove
 
                     ; LD HL, (TimeOfDay)
                     ; DEC HL
@@ -113,27 +117,43 @@ Handler:            ;
                     ; CALL MemoryPage_2.BackgroundFill
 ; .SkipTimeOfDay
                     ;
-
-                    ; mouse handling
-                    ; CALL MemoryPage_2.UpdateStatesMouse
-                    JR .S
-.SkipSwapScreens
+.SkipSwapScreens    ; ----- ----- ----- DRAW CURSOR ----- ----- -----
+                    ifdef ENABLE_MOUSE
+                    ;
                     GetCurrentScreen
                     LD A, #40
                     JR Z, $+4
                     LD A, #C0
                     LD (.CursorScreen), A
+
+;                     LD HL, MouseFlagRef
+;                     RLA
+;                     ADC A, A
+;                     ADD A, A
+;                     ADD A, A
+;                     ADD A, A
+;                     OR %10000110
+;                     LD (.RES), A
+; .RES                EQU $+1
+;                     DB #CB, #00
+
+                    ;
+                    LD A, (HL)
+                    AND DRAW_SCREENS_FLAG
+.CursorScreen       EQU $+1
+                    LD A, #00
+                    ; CALL NZ, Cursor.Draw
+                    CALL Cursor.Draw
+                    endif
+                    ; ~~~~~ ~~~~~ ~~~~~ DRAW CURSOR ~~~~~ ~~~~~ ~~~~~
                     
-.S    
                     ; ----- ----- ----- PLAY MUSIC ----- ----- -----
                     ; play music
                     ifdef ENABLE_MUSIC
                     CALL Game.PlayMusic
                     endif
                     ; ~~~~~ ~~~~~ ~~~~~ PLAY MUSIC ~~~~~ ~~~~~ ~~~~~
-.CursorScreen       EQU $+1
-                    LD A, #00
-                    CALL Cursor.Draw
+
 .ExitIntertupt      ;
 .RestoreMemoryPage  EQU $+1
                     LD A, #00

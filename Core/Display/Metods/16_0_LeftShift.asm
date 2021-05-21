@@ -16,9 +16,19 @@
                         DW SBP_16_0_LS_Backward
 SBP_16_0_LS:            EXX
 
+                        
+
                         ;- 1 byte -
                         ; modify the right side of a byte
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
                         POP DE
                         ; INC H                               ; calculate right shift address
                         LD L, E     ; OR
@@ -42,6 +52,14 @@ SBP_16_0_LS:            EXX
 
                         ; modify the right side of a byte
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
                         INC H                               ; calculate right shift address
                         LD L, E     ; OR
                         OR (HL)
@@ -72,6 +90,14 @@ SBP_16_0_LS:            EXX
                         ;- 1 byte -
                         ; modify the right side of a byte
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
                         POP DE
                         LD L, E     ; OR
                         OR (HL)
@@ -83,6 +109,14 @@ SBP_16_0_LS:            EXX
 
                         ; modify the left side of a byte
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
                         DEC H                               ; calculate left shift address
                         LD L, E     ; OR
                         OR (HL)
