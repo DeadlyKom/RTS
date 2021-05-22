@@ -184,6 +184,13 @@ Display:        ; show debug border
 .Exit           ; exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
+
+                ; show debug border
+                ifdef SHOW_DEBUG_BORDER_TILEMAP
+                LD A, DEFAULT_COLOR
+                OUT (#FE), A
+                endif
+                
                 RET
 
 .Display_C000   ;

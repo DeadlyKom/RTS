@@ -13,6 +13,7 @@
 ; Corrupt:
 ;   SP, HL, BC, DE', BC'
 ; -----------------------------------------
+                        DW SBP_16_1_R_Restore
                         DW SBP_16_1_R_Backward
 SBP_16_1_R:             EXX
 
@@ -40,7 +41,7 @@ SBP_16_1_R:             EXX
                         INC B
                         LD A, B
                         AND #07
-                        JP NZ, $+12
+                        JP NZ, $+19
                         LD A, C
                         SUB #E0
                         LD C, A
@@ -97,3 +98,11 @@ SBP_16_1_R_Backward:    ;
                         EX DE, HL
                         EXX
                         JP SBP_16_1_R.Backward
+SBP_16_1_R_Restore:     JP SBP_16_1_L_Restore
+;                         EXX
+
+; .NextRow                ; move to the next two row
+;                         EXX
+;                         INC HL
+;                         INC HL
+;                         JP (HL)

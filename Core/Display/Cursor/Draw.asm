@@ -23,6 +23,7 @@ Draw:           LD (.CurrentScreen), A
                 LD (.OffsetX), A
 
                 CALL MouseTick
+                ; JP C, .Exit                                 ; потом !
                 
                 ; Mx, My   - позиция курсора        (в пикселах)
                 ; Sx, Sy   - ширина/высота спрайта  (в пикселах)
@@ -168,6 +169,7 @@ Draw:           LD (.CurrentScreen), A
 .IsFullNotShift ; выровнен по знакоместу
 
                 LD IX, Metod.SBP_16_0
+                LD (Metod), IX
                 JP .Draw
 
 .IsFullShift    ; спрайт виден полность, но со смещением
@@ -181,6 +183,7 @@ Draw:           LD (.CurrentScreen), A
                 EXX
 
                 LD IX, Metod.SBP_16_0_S
+                LD (Metod), IX
                 JP .Draw
 
 .CroppedLeft    ; урезан левой частью экрана
@@ -217,6 +220,8 @@ Draw:           LD (.CurrentScreen), A
                 INC HL
                 LD A, (HL)
                 LD IXH, A
+
+                LD (Metod), IX
                 EXX
 
                 LD A, B
@@ -267,6 +272,8 @@ Draw:           LD (.CurrentScreen), A
                 INC HL
                 LD A, (HL)
                 LD IXH, A
+
+                LD (Metod), IX
                 EXX
 
                 LD A, B
@@ -310,6 +317,7 @@ Draw:           LD (.CurrentScreen), A
 .OffsetX        EQU $+1
                 ADD A, #00
                 LD C, A
+                LD (AddressScr), BC
                 EXX
 
                 ; двухпроходные вызовы
@@ -317,6 +325,7 @@ Draw:           LD (.CurrentScreen), A
                 LD A, #10
 .OffsetRow      EQU $+1
                 SUB #00
+                LD (CountRows), A
                 LD E, A
                 RRA
                 JP NC, .EvenRows                            ; чётное количество строк
@@ -335,11 +344,67 @@ Draw:           LD (.CurrentScreen), A
 .Exit           ;                
 .ContainerSP    EQU $+1
                 LD SP, #0000
+
+                SetFrameFlag RESTORE_CURSOR
+
+                ; show debug border
+                ifdef SHOW_DEBUG_BORDER_CURSOR
+                LD A, DEFAULT_COLOR
+                OUT (#FE), A
+                endif
+
                 RET
 
-Restore:        ;
-                ResetFrameFlag RESTORE_CURSOR
+Restore:        ; show debug border
+                ifdef SHOW_DEBUG_BORDER_CURSOR
+                LD A, RESTORE_CURSOR_COLOR
+                OUT (#FE), A
+                endif
                 
+                ;
+                ResetFrameFlag RESTORE_CURSOR
+
+                ; инициализация
+                LD (.ContainerSP), SP
+
+                ;
+                LD HL, (Metod)
+                LD DE, #FFFC        ; -4
+                ADD HL, DE
+
+                LD A, (HL)
+                LD IXL, A
+                INC HL
+                LD A, (HL)
+                LD IXH, A
+
+                LD A, (CountRows)
+                LD E, A
+                INC D         
+
+                EXX
+                LD HL, (AddressScr)
+                EXX
+
+                LD HL, Container
+                LD SP, HL
+
+                LD HL, .JumpsRows
+                ADD HL, DE
+
+.JumpsRows      rept 8
+                JP (IX)
+                endr
+
+.ContainerSP    EQU $+1
+                LD SP, #0000
+
+                ; show debug border
+                ifdef SHOW_DEBUG_BORDER_CURSOR
+                LD A, DEFAULT_COLOR
+                OUT (#FE), A
+                endif
+
                 RET
 
 MouseTick:      LD A, (MouseFlagRef)
@@ -350,6 +415,7 @@ MouseTick:      LD A, (MouseFlagRef)
                 CP 250
                 JR Z, .ChangeState
                 LD (TicksCount), A
+                SCF
                 RET
 
 .Reset          XOR A
@@ -370,21 +436,24 @@ MouseTick:      LD A, (MouseFlagRef)
                 LD (HL), A
                 LD A, 246
                 LD (TicksCount), A
+                OR A
                 RET
 
 .RevertNeg      DEC (HL)
                 DEC (HL)
+                OR A
                 RET
 
 .RevertPos      INC (HL)
                 INC (HL)
+                OR A
                 RET
-
 TicksCount:     DB #00
 SpriteIdx:      DB #00
 Flag:           DB #01
 AddressScr:     DW #0000
-Metod:          DB #00
+CountRows:      DB #00
+Metod:          DW #00
 Container:      DS 3 * 16, 0            ; 3 знакоместа * 16 пикселей высота спрайта
 
                 endif ; ~_CORE_DISPLAY_CURSOR_

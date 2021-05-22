@@ -13,6 +13,13 @@ FOW:            ; show debug border
                 LD A, RENDER_FOW_COLOR
                 OUT (#FE), A
                 endif
+
+
+                ; show debug border
+                ifdef SHOW_DEBUG_BORDER_FOW
+                LD A, DEFAULT_COLOR
+                OUT (#FE), A
+                endif
                 
                 RET
 

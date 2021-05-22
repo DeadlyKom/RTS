@@ -13,6 +13,6 @@ RENDER_FOW_COLOR        EQU CYAN
 MUSIC_COLOR             EQU GREEN
 
 CURSOR_COLOR            EQU RED
-
+RESTORE_CURSOR_COLOR    EQU YELLOW
 
                         endif ; ~_DEBUG_INCLUDE_

@@ -102,9 +102,6 @@ Handler:            ;
                     CheckFrameFlag SCAN_KEYS_FLAG
                     CALL NZ, Handlers.Input.ScanKeyboard
 
-                    ;
-                    CALL Handlers.Input.MouseMove
-
                     ; LD HL, (TimeOfDay)
                     ; DEC HL
                     ; LD (TimeOfDay), HL
@@ -126,20 +123,6 @@ Handler:            ;
                     LD A, #C0
                     LD (.CursorScreen), A
 
-;                     LD HL, MouseFlagRef
-;                     RLA
-;                     ADC A, A
-;                     ADD A, A
-;                     ADD A, A
-;                     ADD A, A
-;                     OR %10000110
-;                     LD (.RES), A
-; .RES                EQU $+1
-;                     DB #CB, #00
-
-                    ;
-                    LD A, (HL)
-                    AND DRAW_SCREENS_FLAG
 .CursorScreen       EQU $+1
                     LD A, #00
                     ; CALL NZ, Cursor.Draw

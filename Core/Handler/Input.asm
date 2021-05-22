@@ -18,7 +18,7 @@ ScanKeyboard:   ;
                 
                 ;
                 CALL TilemapMove
-                CALL MouseMove
+                CALL MouseMoveEdgeB
 
                 ; comparison of current and previous address values
                 LD HL, (TilemapRef)
@@ -39,7 +39,8 @@ ScanKeyboard:   ;
 
                 RET
 
-MouseMove:      LD A, (MouseEdgeFlagRef)
+; перемещение, если двигать мышь за пределы экрана
+MouseMoveEdgeA: LD A, (MouseEdgeFlagRef)
                 LD C, A
                 RR C
                 CALL C, Tilemap.MoveLeft
@@ -51,6 +52,23 @@ MouseMove:      LD A, (MouseEdgeFlagRef)
                 CALL C, Tilemap.MoveDown
                 XOR A
                 LD (MouseEdgeFlagRef), A
+                RET
+
+; перемещение, классическое
+MouseMoveEdgeB: LD BC, MousePositionRef
+                LD A, (BC)
+                CP #04
+                CALL C, Tilemap.MoveLeft
+                LD A, (BC)
+                CP #FC
+                CALL NC, Tilemap.MoveRight
+                INC BC
+                LD A, (BC)
+                CP #04
+                CALL C, Tilemap.MoveUp
+                LD A, (BC)
+                CP #BC
+                CALL NC, Tilemap.MoveDown
                 RET
 
 ScanMouse:      CALL Mouse.UpdateStatesMouse

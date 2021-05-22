@@ -13,6 +13,7 @@
 ; Corrupt:
 ;   SP, HL, BC, L', DE', BC'
 ; -----------------------------------------
+                        DW SBP_16_0_S_Restore
                         DW SBP_16_0_S_Backward
 SBP_16_0_S:             EXX
 
@@ -88,7 +89,7 @@ SBP_16_0_S:             EXX
                         INC B
                         LD A, B
                         AND #07
-                        JP NZ, $+12
+                        JP NZ, $+19
                         LD A, C
                         SUB #E0
                         LD C, A
@@ -196,3 +197,57 @@ SBP_16_0_S_Backward:    ;
                         INC C
                         INC H                               ; calculate right shift address
                         JP SBP_16_0_S.Backward
+SBP_16_0_S_Restore:     EXX
+
+                        POP DE
+                        LD (HL), E
+                        INC L
+                        LD (HL), D
+                        INC L
+                        POP DE
+                        LD (HL), E
+
+                        ; classic method "DOWN_HL" 25/59
+                        INC H
+                        LD A, H
+                        AND #07
+                        JP NZ, $+19
+                        LD A, L
+                        SUB #E0
+                        LD L, A
+                        SBC A, A
+                        AND #F8
+                        ADD A, H
+                        LD H, A
+
+                        ; - костыль (чтобы не рисовать в атрибутах)
+                        LD A, H
+                        AND %00011000
+                        ADD A, #E8
+                        JR Z, .NextRow
+
+                        LD (HL), D
+                        DEC L
+                        POP DE
+                        LD (HL), E
+                        DEC L
+                        LD (HL), D
+                        
+                        ; classic method "DOWN_HL" 25/59
+                        INC H
+                        LD A, H
+                        AND #07
+                        JP NZ, $+12
+                        LD A, L
+                        SUB #E0
+                        LD L, A
+                        SBC A, A
+                        AND #F8
+                        ADD A, H
+                        LD H, A
+
+.NextRow                ; move to the next two row
+                        EXX
+                        INC HL
+                        INC HL
+                        JP (HL)
