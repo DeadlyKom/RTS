@@ -2,7 +2,7 @@
                 ifndef _CORE_GAME_MUSIC_
                 define _CORE_GAME_MUSIC_
 
-PlayMusic:      ;
+PlayMusic:      ; show debug border
                 ifdef SHOW_DEBUG_BORDER
                 LD A, MUSIC_COLOR
                 OUT (#FE), A
@@ -11,12 +11,13 @@ PlayMusic:      ;
                 ; toggle to memory page with tile sprites
                 SeMemoryPage MemoryPage_Music
                 CALL #C005
-                RET
 
-                ;
+                ; show debug border
                 ifdef SHOW_DEBUG_BORDER
                 LD A, DEFAULT_COLOR
                 OUT (#FE), A
                 endif
+
+                RET
 
                 endif ; ~_CORE_GAME_MUSIC_

@@ -5,7 +5,7 @@
                     module Interrupt
 InterruptStackSize  EQU 64 * 2                                      ; not change
 InterruptStack:     DS InterruptStackSize, 0                        ; not change
-Handler:            ;
+Handler:            ; ********** HANDLER IM 2 *********
                     EX (SP), HL
                     LD (.ReturnAddress), HL
                     POP HL                                          ; restore HL value
@@ -14,7 +14,7 @@ Handler:            ;
                     NOP                                             ; restore corrupted bytes below SP (PUSH HL/DE/BC)
                     LD SP, InterruptStack + InterruptStackSize      ; use custom stack for IM2
 
-                    ; preservation registers
+.SaveRegs           ; ********* SAVE REGISTERS ********
                     PUSH HL
                     PUSH DE
                     PUSH BC
@@ -27,22 +27,14 @@ Handler:            ;
                     PUSH HL
                     PUSH DE
                     PUSH BC
+                    ; ~ SAVE REGISTERS
 
-                    ; save current memory page
+.SaveMemPage        ; ******** SAVE MEMORY PAGE *******
                     LD A, (MemoryPagePtr)
-                    LD (.RestoreMemoryPage), A
+                    LD (.RestoreMemPage + 1), A
+                    ; ~ SAVE MEMORY PAGE
 
-                    ; interrupt counter increment ?
-                    LD HL, InterruptCounter
-                    INC (HL)
-
-                    ;
-                    ; LD A, (HL)
-                    ; RRA
-                    ; JR Z, .NotScanKeys
-                    SetFrameFlag SCAN_KEYS_FLAG
-; .NotScanKeys
-
+.Mouse              ; ************* MOUSE *************
                     ifdef ENABLE_MOUSE
                     ; mouse handling
                     CALL Handlers.Input.ScanMouse
@@ -51,8 +43,15 @@ Handler:            ;
                     CheckFrameFlag RESTORE_CURSOR
                     CALL NZ, Cursor.Restore
                     endif
+                    ; ~ MOUSE
+                    
+.Keyboard           ; ****** SCAN KEYBOARD KEYS *******
+                    ; keyboard handling
+                    CALL Handlers.Input.ScanKeyboard
+                    ; ~ SCAN KEYBOARD KEYS
 
-                    ; swith
+.DebugInfo          ; ****** SWITCH DEBUG SCREENS *****
+                    ; swith screens
                     ifdef ENABLE_TOGGLE_SCREENS_DEBUG
                     GetCurrentScreen
                     LD A, #C0
@@ -60,16 +59,18 @@ Handler:            ;
                     LD A, #40
                     LD (Console.NoflicConsoleScreenAddr), A
                     endif
+                    ; ~ SWITCH DEBUG SCREENS
 
-                    ; FPS
+.FPS_Counter        ; ************** FPS **************
                     ifdef SHOW_FPS
 	                CALL FPS_Counter.IntTick
                     CALL FPS_Counter.Render_FPS
 	                endif
+                    ; ~ FPS
 
-                    ; ----- ----- ----- DRAW DEBUG INFO ----- ----- -----
-                    ; show mouse position
+.MousePositionInfo  ; *** DRAW DEBUG MOUSE POSITION ***
                     ifdef SHOW_DEBUG_MOUSE_POSITION
+                    ; show mouse position
                     LD BC, #02E0 + 0
                     CALL Console.At2
                     LD HL, MousePositionRef
@@ -81,14 +82,16 @@ Handler:            ;
                     LD B, (HL)
                     CALL Console.Logb
                     endif
-                    ; ~~~~~ ~~~~~ ~~~~~ DRAW DEBUG INFO ~~~~~ ~~~~~ ~~~~~
+                    ; ~ DRAW DEBUG MOUSE POSITION
 
+.SwapScreens        ; ********* SWAP SCREENS **********
                     ; swap screens if it's ready
-                    CheckFrameFlag RENDERED_FLAG
-                    JR Z, .SkipSwapScreens
+                    CheckFrameFlag SWAP_SCREENS_FLAG
+                    JP Z, .SkipSwapScreens
+                    ; ~ SWAP SCREENS
 
-                    ResetFrameFlag RENDERED_FLAG
-
+.Render             ; ************ RENDER *************
+                    
                     SwapScreens
 
                     ; FPS
@@ -96,12 +99,19 @@ Handler:            ;
                     CALL FPS_Counter.FrameRendered
                     endif
 
-                    SetFrameFlag RENDER_ALL_FLAGS
+                    ResetFrameFlag SWAP_SCREENS_FLAG
 
-                    ; keyboard handling
-                    CheckFrameFlag SCAN_KEYS_FLAG
-                    CALL NZ, Handlers.Input.ScanKeyboard
+                    SetFrameFlag ALLOW_MOVE_TILEMAP
 
+                    ; ~ RENDER
+
+.SkipSwapScreens    ; ---------------------------------
+.MoveTilemap        ; ********* MOVE TILEMAP **********
+                    CheckFrameFlag ALLOW_MOVE_TILEMAP
+                    CALL NZ, Handlers.Input.ScanMoveMap
+                    ; ~ MOVE TILEMAP
+
+.TimeOfDay          ; ********* TIME OF DAY **********
                     ; LD HL, (TimeOfDay)
                     ; DEC HL
                     ; LD (TimeOfDay), HL
@@ -112,37 +122,32 @@ Handler:            ;
                     ; LD HL, TimeOfDayChangeRate
                     ; LD (TimeOfDay), HL
                     ; CALL MemoryPage_2.BackgroundFill
-; .SkipTimeOfDay
-                    ;
-.SkipSwapScreens    ; ----- ----- ----- DRAW CURSOR ----- ----- -----
+                    ; .SkipTimeOfDay
+                    ; ~ TIME OF DAY
+
+.DrawCursor         ; ********** DRAW CURSOR **********
                     ifdef ENABLE_MOUSE
-                    ;
                     GetCurrentScreen
                     LD A, #40
                     JR Z, $+4
                     LD A, #C0
-                    LD (.CursorScreen), A
-
-.CursorScreen       EQU $+1
-                    LD A, #00
-                    ; CALL NZ, Cursor.Draw
                     CALL Cursor.Draw
                     endif
-                    ; ~~~~~ ~~~~~ ~~~~~ DRAW CURSOR ~~~~~ ~~~~~ ~~~~~
+                    ; ~ DRAW CURSOR
                     
-                    ; ----- ----- ----- PLAY MUSIC ----- ----- -----
+.Music              ; *********** PLAY MUSIC **********
                     ; play music
                     ifdef ENABLE_MUSIC
                     CALL Game.PlayMusic
                     endif
-                    ; ~~~~~ ~~~~~ ~~~~~ PLAY MUSIC ~~~~~ ~~~~~ ~~~~~
+                    ; ~ PLAY MUSIC
 
-.ExitIntertupt      ;
-.RestoreMemoryPage  EQU $+1
+.RestoreMemPage     ; ****** RESTORE MEMORY PAGE ******
                     LD A, #00
                     SeMemoryPage_A
+                    ; ~ RESTORE MEMORY PAGE
 
-                    ; restore all registers
+.RestoreReg         ; ******** RESTORE REGISTERS ******
                     POP BC
                     POP DE
                     POP HL
@@ -155,13 +160,16 @@ Handler:            ;
                     POP BC
                     POP DE
                     POP HL
+                    ; ~ RESTORE REGISTERS
+
 .Container_SP       EQU $+1
                     LD SP, #0000
                     EI
 .ReturnAddress      EQU $+1
                     JP #0000
+                    ; ~ HANDLER IM 2
 
-Initialize:         ;
+Initialize:         ; **** INITIALIZE HANDLER IM 2 ****
                     LD A, HIGH InterruptVectorAddress - 1
                     LD I, A
                     IM 2
@@ -169,6 +177,7 @@ Initialize:         ;
                     EI
                     HALT
                     RET
+                    ; ~ INITIALIZE HANDLER IM 2
 InterruptCounter:	DB #CE
 TimeOfDay:          DW TimeOfDayChangeRate
 

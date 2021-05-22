@@ -4,11 +4,6 @@
 
 Draw:           LD (.CurrentScreen), A
                 LD (.CurrentScreen_), A
-                
-                ; RLA
-                ; JR 
-                ; LD HL, (MouseFlagRef)
-                ; RES 0, (HL)
 
                 ; show debug border
                 ifdef SHOW_DEBUG_BORDER_CURSOR

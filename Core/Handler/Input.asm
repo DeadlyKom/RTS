@@ -12,12 +12,22 @@ Initialize:     ;
                 CALL Mouse.Initialize
                 RET
 
-ScanKeyboard:   ;
+ScanKeyboard:   ; ; select
+                ; LD A, VK_LBUTTON
+                ; CALL CheckKeyState
+                ; CALL Z, .SetVK
+                ; ; options
+                ; LD A, VK_RBUTTON
+                ; CALL CheckKeyState
+                ; CALL Z, .SetVK
+
+                RET
+
+ScanMoveMap:    ; save the current address of the visible area of the tilemap
                 LD HL, (TilemapRef)
                 LD (.CompareAddress), HL
                 
-                ;
-                CALL TilemapMove
+                CALL KeyboardMove
                 CALL MouseMoveEdgeB
 
                 ; comparison of current and previous address values
@@ -27,16 +37,6 @@ ScanKeyboard:   ;
                 OR A
                 SBC HL, DE
                 CALL NZ, Tilemap.Prepare
-
-                ; ; select
-                ; LD A, VK_LBUTTON
-                ; CALL CheckKeyState
-                ; CALL Z, .SetVK
-                ; ; options
-                ; LD A, VK_RBUTTON
-                ; CALL CheckKeyState
-                ; CALL Z, .SetVK
-
                 RET
 
 ; перемещение, если двигать мышь за пределы экрана
@@ -75,7 +75,7 @@ ScanMouse:      CALL Mouse.UpdateStatesMouse
 
                 RET
 
-TilemapMove:    ; move map left
+KeyboardMove:   ; move map left
                 LD A, VK_A
                 CALL CheckKeyState
                 CALL Z, Tilemap.MoveLeft

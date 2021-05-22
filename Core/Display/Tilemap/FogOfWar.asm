@@ -8,19 +8,6 @@
 ; Note:
 ;   requires included memory page 7
 ; -----------------------------------------
-FOW:            ; show debug border
-                ifdef SHOW_DEBUG_BORDER_FOW
-                LD A, RENDER_FOW_COLOR
-                OUT (#FE), A
-                endif
-
-
-                ; show debug border
-                ifdef SHOW_DEBUG_BORDER_FOW
-                LD A, DEFAULT_COLOR
-                OUT (#FE), A
-                endif
-                
-                RET
+FOW:            RET
 
                 endif ; ~_CORE_DISPLAY_TILEMAP_FOW_

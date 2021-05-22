@@ -5,6 +5,7 @@
 Initialize:     CALL Tilemap.Initialize
                 CALL Handlers.Input.Initialize
                 CALL Interrupt.Initialize
+                CALL Tilemap.SafePrepare
                 
                 ; initialize music
                 ifdef ENABLE_MUSIC

@@ -11,27 +11,30 @@ Prepare:        ; toggle to memory page with tilemap
                 LD HL, (TilemapRef)
                 CALL MEMCPY.Tilemap
 
-                SetFrameFlag RENDER_ALL_FLAGS
-                ; ResetFrameFlag SCAN_KEYS_FLAG
+                ResetFrameFlag ALLOW_MOVE_TILEMAP
 
                 RET
-
-; Prepare:        LD HL, (TilemapRef)
-;                 ; toggle to memory page with tile sprites
-;                 SeMemoryPage MemoryPage_Tilemap
-;                 ; copy the visible block of the tilemap
-;                 LD DE, SharedBuffer                         ; MemoryPage_5.TileMapBuffer
-;                 rept 11
-;                 rept 16
-;                 LDI
-;                 endr
-;                 LD BC, #0030
-;                 ADD HL, BC
-;                 endr
-;                 rept 16
-;                 LDI
-;                 endr
-;                 RET
+; можно заменить!
+                ; DI
+                ; CALL Prepare
+                ; EI
+                ; RET
+SafePrepare:    LD HL, (TilemapRef)
+                ; toggle to memory page with tile sprites
+                SeMemoryPage MemoryPage_Tilemap
+                ; copy the visible block of the tilemap
+                LD DE, SharedBuffer
+                rept 11
+                rept 16
+                LDI
+                endr
+                LD BC, #0030
+                ADD HL, BC
+                endr
+                rept 16
+                LDI
+                endr
+                RET
 
 ; -----------------------------------------
 ; display row tiles
@@ -154,13 +157,7 @@ DisplayTileRow: ;
 ; Note:
 ;   requires included memory page 7 (MemoryPage_TilSprites)
 ; -----------------------------------------
-Display:        ; show debug border
-                ifdef SHOW_DEBUG_BORDER_TILEMAP
-                LD A, RENDER_TILEMAP_COLOR
-                OUT (#FE), A
-                endif
-
-                ; initialize execute blocks
+Display:        ; initialize execute blocks
                 LD IX, DisplayTileRow
                 LD BC, SharedBuffer
                 LD (.ContainerSP), SP
@@ -190,7 +187,7 @@ Display:        ; show debug border
                 LD A, DEFAULT_COLOR
                 OUT (#FE), A
                 endif
-                
+
                 RET
 
 .Display_C000   ;
@@ -205,6 +202,7 @@ Display:        ; show debug border
                 endr
 .Row            = .Row + 1
                 edup
+
                 JP .Exit
 
                 endif ; ~_CORE_DISPLAY_TILEMAP_BACKGROUND_
