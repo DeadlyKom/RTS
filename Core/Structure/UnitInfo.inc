@@ -2,8 +2,6 @@
                     ifndef _STRUCTURE_UNIT_
                     define _STRUCTURE_UNIT_
 
-                    include "Base.inc"
-
 ; unit types
 Infantry            EQU #01
 Ganner              EQU #02

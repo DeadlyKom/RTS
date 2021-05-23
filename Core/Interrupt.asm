@@ -30,7 +30,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; ~ SAVE REGISTERS
 
 .SaveMemPage        ; ******** SAVE MEMORY PAGE *******
-                    LD A, (MemoryPagePtr)
+                    LD A, (MemoryPageRef)
                     LD (.RestoreMemPage + 1), A
                     ; ~ SAVE MEMORY PAGE
 
@@ -69,7 +69,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; ~ FPS
 
 .MousePositionInfo  ; *** DRAW DEBUG MOUSE POSITION ***
-                    ifdef SHOW_DEBUG_MOUSE_POSITION
+                    ifdef SHOW_MOUSE_POSITION
                     ; show mouse position
                     LD BC, #02E0 + 0
                     CALL Console.At2

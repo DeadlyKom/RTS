@@ -3,19 +3,17 @@
                 define _CORE_GAME_MUSIC_
 
 PlayMusic:      ; show debug border
-                ifdef SHOW_DEBUG_BORDER
-                LD A, MUSIC_COLOR
-                OUT (#FE), A
+                ifdef SHOW_DEBUG_BORDER_PLAY_MUSIC
+                BEGIN_DEBUG_BORDER_COL MUSIC_COLOR
                 endif
 
                 ; toggle to memory page with tile sprites
                 SeMemoryPage MemoryPage_Music
                 CALL #C005
 
-                ; show debug border
-                ifdef SHOW_DEBUG_BORDER
-                LD A, DEFAULT_COLOR
-                OUT (#FE), A
+                ; revert old debug border
+                ifdef SHOW_DEBUG_BORDER_PLAY_MUSIC
+                END_DUBUG_BORDER
                 endif
 
                 RET

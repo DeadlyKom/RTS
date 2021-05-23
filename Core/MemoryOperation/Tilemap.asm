@@ -1,31 +1,7 @@
 
-                    ifndef _MEMORY_COPY_
-                    define _MEMORY_COPY_
+                    ifndef _MEMORY_COPY_TILEMAP_
+                    define _MEMORY_COPY_TILEMAP_
 
-                    module MEMCPY
-_192_bytes:         ;
-                    RestoreHL
-                    LD (.ContainerSP), SP
-                    LD E, (HL)
-                    INC HL
-                    LD D, (HL)
-                    INC HL
-                    LD (.ContainerSP_), HL
-                    EX DE, HL
-.ContainerSP_       EQU $+1
-                    LD SP, #0000
-                    JP .MemCopy_192
-
-.Count              defl SharedBuffer
-.MemCopy_192        dup	96
-                    LD	(.Count), HL
-.Count              = .Count + 2
-                    POP HL
-                    edup
-
-.ContainerSP        EQU $+1
-                    LD SP, #0000
-                    RET
 ; -----------------------------------------
 ; copy visible tilemap block
 ; In:
@@ -74,6 +50,4 @@ Tilemap:            ;
                     LD SP, #0000
                     RET
 
-                    endmodule
-
-                    endif ; ~_MEMORY_COPY_
+                    endif ; ~_MEMORY_COPY_TILEMAP_

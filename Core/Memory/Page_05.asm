@@ -11,8 +11,11 @@ MemoryPage_5_Start:
                 
                 include "../../Core/Game/Include.inc"
 
-                ifdef SHOW_FPS
+                ifdef SHOW_DEBUG
                 include "../../Utils/Console.asm"
+                endif
+
+                ifdef SHOW_FPS
 	            include "../../Utils/FPS_Counter.asm"
                 endif
 

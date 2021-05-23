@@ -9,13 +9,13 @@
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-BackgroundFill: DI
-                LD (.ContainerSP), SP
+BackgroundFill: ;
 .ContainerHL    EQU $+1
                 LD HL, .PaperTable
 
-                LD SP, HL
-                POP DE
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
                 
                 LD A, E
                 RRA
@@ -26,11 +26,8 @@ BackgroundFill: DI
 
                 SeMemoryPage MemoryPage_ShadowScreen
 
-                LD SP, #C000 + #1800 + #0300
-
-                rept 384
-                PUSH DE
-                endr
+                LD HL, #C000 + #1800 + #0300
+                CALL MEMSET.Fill_768
 
 .Check          EQU $+1
                 LD DE, .PaperTableEnd
@@ -57,9 +54,6 @@ BackgroundFill: DI
 
                 LD (.ContainerHL), HL
 
-.ContainerSP    EQU $+1
-                LD SP, #0000
-                EI
                 RET
 
 .PaperTable     ZX_COLOR_IPB BLACK, WHITE, 0    : ZX_COLOR_IPB BLACK, WHITE, 0

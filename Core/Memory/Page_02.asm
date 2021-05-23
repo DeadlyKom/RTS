@@ -15,7 +15,7 @@ MemoryPage_2_Start:
                 include "../Interrupt.asm"
 
                 include "../Handler/Include.inc"
-                include "../Display/MemCopy.asm"
+                include "../MemoryOperation/Include.inc"
                 include "../Display/TileMap/Include.inc"
 
                 ifdef ENABLE_MOUSE

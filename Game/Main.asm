@@ -4,17 +4,20 @@
 
                 DEVICE ZXSPECTRUM128
 
-                define ENABLE_TOGGLE_SCREENS_DEBUG
-                define SHOW_DEBUG
+                define ENABLE_MUSIC
+                define ENABLE_MOUSE           
+
                 define SHOW_DEBUG_BORDER
                 define SHOW_DEBUG_BORDER_TILEMAP
                 define SHOW_DEBUG_BORDER_FOW
-                define SHOW_DEBUG_MOUSE_POSITION
                 define SHOW_DEBUG_BORDER_CURSOR
+                define SHOW_DEBUG_BORDER_CURSOR_RESTORE
+                define SHOW_DEBUG_BORDER_PLAY_MUSIC               
 
-                define ENABLE_MUSIC
-                define ENABLE_MOUSE
+                define SHOW_DEBUG
                 define SHOW_FPS
+                define SHOW_MOUSE_POSITION
+                define ENABLE_TOGGLE_SCREENS_DEBUG
 
                 include "Include.inc"
                 include "../Core/Memory/Include.inc"

@@ -2,10 +2,15 @@
                 ifndef _CORE_GAME_INITIALIZE_
                 define _CORE_GAME_INITIALIZE_
 
-Initialize:     CALL Tilemap.Initialize
+Initialize:     ;
+                CALL Tilemap.Initialize
                 CALL Handlers.Input.Initialize
                 CALL Interrupt.Initialize
                 CALL Tilemap.SafePrepare
+                ;
+                LD HL, RenderBuffer + 0xC0
+                LD DE, WORD_RENDER_ALL_FLAGS
+                CALL MEMSET.Fill_192
                 
                 ; initialize music
                 ifdef ENABLE_MUSIC

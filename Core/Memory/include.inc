@@ -13,9 +13,7 @@ Page_7:                 EQU #C000 + #1B00           ; Bank 03 (Screen 1) (про
 Page_7_TileSprites:     EQU #F000                   ; Bank 03 (Screen 1) (тайлы карты)
 Page_7_TileTable:       EQU #F000 - #0100           ; Bank 03 (Screen 1) (тайлы карты)
 
-                        include "../Structure/Base.inc"
-                        include "../Structure/Sprite.inc"
-                        include "../Structure/UnitInfo.inc"
+                        include "../Structure/Include.inc"
 
                         include "Page_00.asm"
                         include "Page_01.asm"

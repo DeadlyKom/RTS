@@ -2,15 +2,10 @@
                 ifndef _CORE_GAME_LOOP_
                 define _CORE_GAME_LOOP_
 GameLoop:       ; initialize
-                
                 ResetAllFrameFlags
                 SetFrameFlag SWAP_SCREENS_FLAG
                 
-.MainLoop       ;
-                ifdef SHOW_DEBUG_BORDER
-                LD A, DEFAULT_COLOR
-                OUT (#FE), A
-                endif
+.MainLoop       BEGIN_DEBUG_BORDER_DEF
 
                 CheckFrameFlag SWAP_SCREENS_FLAG
                 JR NZ, .Logic
@@ -21,26 +16,37 @@ GameLoop:       ; initialize
                 SeMemoryPage MemoryPage_TilSprites
                 ResetFrameFlag ALLOW_MOVE_TILEMAP
 
+                ; ;
+                ; LD HL, RenderBuffer + 0xC0
+                ; LD DE, WORD_RENDER_ALL_FLAGS
+                ; CALL MEMSET.Fill_192
+
 .Tilemap        ; ************ TILEMAP ************
                 ; show debug border
                 ifdef SHOW_DEBUG_BORDER_TILEMAP
-                LD A, RENDER_TILEMAP_COLOR
-                OUT (#FE), A
+                BEGIN_DEBUG_BORDER_COL RENDER_TILEMAP_COLOR
                 endif
 
-                CheckFrameFlag RENDER_TILEMAP_FLAG
                 CALL Tilemap.Display
+
+                ; revert old debug border
+                ifdef SHOW_DEBUG_BORDER_TILEMAP
+                END_DUBUG_BORDER
+                endif
                 ; ~ TILEMAP
                 
 .FOW            ; ************** FOW **************
                 ; show debug border
                 ifdef SHOW_DEBUG_BORDER_FOW
-                LD A, RENDER_FOW_COLOR
-                OUT (#FE), A
+                BEGIN_DEBUG_BORDER_COL RENDER_FOW_COLOR
                 endif
                 
-                CheckFrameFlag RENDER_FOW_FLAG
                 CALL Tilemap.FOW
+
+                ; revert old debug border
+                ifdef SHOW_DEBUG_BORDER_TILEMAP
+                END_DUBUG_BORDER
+                endif
                 ; ~ FOW
 
 .CompliteFlags  ; ************* FLAGS *************
@@ -50,13 +56,10 @@ GameLoop:       ; initialize
                 ; ~ RENDER
 
 .Logic          ; ************* LOGIC *************
-                ifdef SHOW_DEBUG_BORDER
-                LD A, DEFAULT_COLOR
-                OUT (#FE), A
-                endif
+                END_DUBUG_BORDER
 
                 ; ~ LOGIC
 
-                JR .MainLoop
+                JP .MainLoop
 
                 endif ; ~_CORE_GAME_LOOP_

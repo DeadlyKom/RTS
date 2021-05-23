@@ -8,7 +8,7 @@ Basic:          DB #00, #0A                                     ; номер с�
                 DB #EA                                          ; команда REM
 StartBoot:      DI
                 LD A, %00010000
-                LD (MemoryPagePtr), A
+                LD (MemoryPageRef), A
                 LD SP, StackTop
                 ; Чтение данных в 0 страницу
                 SeMemoryPage 0

@@ -10,10 +10,10 @@
 ;   BC
 ; -----------------------------------------
 SeMemoryPage            macro Page?
-                        LD A, (MemoryPagePtr)
+                        LD A, (MemoryPageRef)
                         AND %11111000
                         OR Page?
-                        LD (MemoryPagePtr), A
+                        LD (MemoryPageRef), A
                         LD BC, PORT_7FFD
                         OUT (C), A
                         endm
@@ -28,22 +28,22 @@ SeMemoryPage            macro Page?
 SeMemoryPage_A          macro
                         AND %00000111
                         LD C, A
-                        LD A, (MemoryPagePtr)
+                        LD A, (MemoryPageRef)
                         AND %11111000                      
                         OR C
-                        LD (MemoryPagePtr), A
+                        LD (MemoryPageRef), A
                         LD BC, PORT_7FFD
                         OUT (C), A
                         endm
 SwapScreens             macro
-                        LD A, (MemoryPagePtr)
+                        LD A, (MemoryPageRef)
                         XOR %00001000
-                        LD (MemoryPagePtr), A
+                        LD (MemoryPageRef), A
                         LD BC, PORT_7FFD
                         OUT (C), A
                         endm
 GetCurrentScreen        macro
-                        LD A, (MemoryPagePtr)
+                        LD A, (MemoryPageRef)
                         AND %00001000
                         endm
 ZX_COLOR_IPBF           macro Inc?, Paper?, Bright?, Flash?
@@ -98,6 +98,25 @@ DOWN_BC                 macro
                         AND #F8
                         ADD A, B
                         LD B, A
+                        endm
+BEGIN_DEBUG_BORDER_DEF  macro
+                        BEGIN_DEBUG_BORDER_COL DEFAULT_COLOR
+                        endm
+BEGIN_DEBUG_BORDER_COL  macro Color?
+                        ; show debug border
+                        ifdef SHOW_DEBUG_BORDER
+                        LD A, Color?
+                        LD (BorderStorageStackRef), A
+                        OUT (#FE), A
+                        endif
+                        endm
+
+END_DUBUG_BORDER        macro
+                        ; show debug border
+                        ifdef SHOW_DEBUG_BORDER
+                        LD A, (BorderStorageStackRef)
+                        OUT (#FE), A
+                        endif
                         endm
                                              
                         endif ; ~_MACRO_INCLUDE_

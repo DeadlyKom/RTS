@@ -7,8 +7,7 @@ Draw:           LD (.CurrentScreen), A
 
                 ; show debug border
                 ifdef SHOW_DEBUG_BORDER_CURSOR
-                LD A, CURSOR_COLOR
-                OUT (#FE), A
+                BEGIN_DEBUG_BORDER_COL CURSOR_COLOR
                 endif
 
                 ; инициализация
@@ -342,18 +341,16 @@ Draw:           LD (.CurrentScreen), A
 
                 SetFrameFlag RESTORE_CURSOR
 
-                ; show debug border
+                ; revert old debug border
                 ifdef SHOW_DEBUG_BORDER_CURSOR
-                LD A, DEFAULT_COLOR
-                OUT (#FE), A
+                END_DUBUG_BORDER
                 endif
 
                 RET
 
 Restore:        ; show debug border
-                ifdef SHOW_DEBUG_BORDER_CURSOR
-                LD A, RESTORE_CURSOR_COLOR
-                OUT (#FE), A
+                ifdef SHOW_DEBUG_BORDER_CURSOR_RESTORE
+                BEGIN_DEBUG_BORDER_COL RESTORE_CURSOR_COLOR
                 endif
                 
                 ;
@@ -394,10 +391,9 @@ Restore:        ; show debug border
 .ContainerSP    EQU $+1
                 LD SP, #0000
 
-                ; show debug border
-                ifdef SHOW_DEBUG_BORDER_CURSOR
-                LD A, DEFAULT_COLOR
-                OUT (#FE), A
+                ; revert old debug border
+                ifdef SHOW_DEBUG_BORDER_CURSOR_RESTORE
+                END_DUBUG_BORDER
                 endif
 
                 RET

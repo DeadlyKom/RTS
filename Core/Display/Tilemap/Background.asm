@@ -13,6 +13,11 @@ Prepare:        ; toggle to memory page with tilemap
 
                 ResetFrameFlag ALLOW_MOVE_TILEMAP
 
+                ;
+                LD HL, RenderBuffer + 0xC0
+                LD DE, WORD_RENDER_ALL_FLAGS
+                CALL MEMSET.Fill_192
+
                 RET
 ; можно заменить!
                 ; DI
@@ -51,7 +56,13 @@ SafePrepare:    LD HL, (TilemapRef)
 ;   SP, HL, DE, BC, HL', DE', BC'
 ; -----------------------------------------
 DisplayTileRow: ;
-                LD A, (BC)                              ; read tile index
+
+                EX DE, HL
+                SLA (HL)
+                JR NC, .NextTile_
+
+                INC H
+                LD A, (HL)                              ; read tile index
                 EXX
 
                 ; calculation sprite address
@@ -107,9 +118,6 @@ DisplayTileRow: ;
                 LD (HL), E
 
                 ; calculation to the sprite bottom part
-                ; LD A, #20
-                ; ADD A, L
-                ; LD L, A
                 SET 5, L
 
                 ; draw the sprite bottom part
@@ -139,17 +147,33 @@ DisplayTileRow: ;
 .ContainerSP    EQU $+1
                 LD SP, #0000
 
-                ; move to next column
-.NextTile       INC C
+.NextTile       ; move to next column
+                INC C
                 INC C
 
                 ; move to the next cell in a tile
                 EXX
-                INC BC
+                DEC H                                               ; aligned to 256 bytes
+                INC L                                               ; next cell of the render buffer
+                EX DE, HL
+                
                 INC HL
                 INC HL
                 JP (HL)
 
+.NextTile_      ; move to next column
+                EXX
+                INC C
+                INC C
+
+                ; move to the next cell in a tile
+                EXX
+                DEC L                                               ; next cell of the render buffer
+                EX DE, HL
+                
+                INC HL
+                INC HL
+                JP (HL)
 ; -----------------------------------------
 ; display fog of war
 ; Corrupt:
@@ -159,7 +183,7 @@ DisplayTileRow: ;
 ; -----------------------------------------
 Display:        ; initialize execute blocks
                 LD IX, DisplayTileRow
-                LD BC, SharedBuffer
+                LD DE, SharedBuffer - 0x100                             ; render buffer is stored above
                 LD (.ContainerSP), SP
                 LD (DisplayTileRow.ContainerSP), SP
                 RestoreDE
@@ -181,12 +205,6 @@ Display:        ; initialize execute blocks
 .Exit           ; exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
-
-                ; show debug border
-                ifdef SHOW_DEBUG_BORDER_TILEMAP
-                LD A, DEFAULT_COLOR
-                OUT (#FE), A
-                endif
 
                 RET
 
