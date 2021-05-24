@@ -10,6 +10,7 @@ KeyStackSize    EQU 5
 
 Initialize:     ;
                 CALL Mouse.Initialize
+                CALL NC, Game.HardwareRestriction.Mouse
                 RET
 
 ScanKeyboard:   ; ; select
@@ -28,7 +29,8 @@ ScanMoveMap:    ; save the current address of the visible area of the tilemap
                 LD (.CompareAddress), HL
                 
                 CALL KeyboardMove
-                CALL MouseMoveEdgeB
+                CheckHardwareFlag KEMPSTON_MOUSE
+                CALL NZ, MouseMoveEdgeB
 
                 ; comparison of current and previous address values
                 LD HL, (TilemapRef)
@@ -72,7 +74,8 @@ MouseMoveEdgeB: LD BC, MousePositionRef
                 CALL NC, Tilemap.MoveDown
                 RET
 
-ScanMouse:      CALL Mouse.UpdateStatesMouse
+ScanMouse:      CheckHardwareFlag KEMPSTON_MOUSE
+                CALL NZ, Mouse.UpdateStatesMouse
 
                 RET
 

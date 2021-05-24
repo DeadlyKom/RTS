@@ -13,43 +13,45 @@ Prepare:        ; toggle to memory page with tilemap
 
                 ResetFrameFlag ALLOW_MOVE_TILEMAP
 
-                ;
+                ; set update all visible screen
                 LD HL, RenderBuffer + 0xC0
                 LD DE, WORD_RENDER_ALL_FLAGS
-                CALL MEMSET.Fill_192
+                CALL MEMSET.SafeFill_192
 
                 RET
+
 ; можно заменить!
-                ; DI
-                ; CALL Prepare
-                ; EI
-                ; RET
-SafePrepare:    LD HL, (TilemapRef)
-                ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_Tilemap
-                ; copy the visible block of the tilemap
-                LD DE, SharedBuffer
-                rept 11
-                rept 16
-                LDI
-                endr
-                LD BC, #0030
-                ADD HL, BC
-                endr
-                rept 16
-                LDI
-                endr
+SafePrepare:    DI
+                CALL Prepare
+                EI
                 RET
+
+                ; LD HL, (TilemapRef)
+                ; ; toggle to memory page with tile sprites
+                ; SeMemoryPage MemoryPage_Tilemap
+                ; ; copy the visible block of the tilemap
+                ; LD DE, SharedBuffer
+                ; rept 11
+                ; rept 16
+                ; LDI
+                ; endr
+                ; LD BC, #0030
+                ; ADD HL, BC
+                ; endr
+                ; rept 16
+                ; LDI
+                ; endr
+                ; RET
 
 ; -----------------------------------------
 ; display row tiles
 ; In:
-;   SP  - !
-;   HL  - return addres
-;   DE  - !
-;   BC  - tile buffer
-;   HL' - !
-;   DE' - !
+;   SP  - "intermediate"
+;   HL  - return address
+;   DE  - render tile / tile buffer
+;   BC  - -
+;   HL' - "intermediate"
+;   DE' - "intermediate"
 ;   BC' - screen address
 ; Out:
 ; Corrupt:
@@ -77,10 +79,12 @@ DisplayTileRow: ;
 
                 ; protection data corruption during interruption
                 LD E, (HL)
-                INC L
+                INC L                                   ; ---------- (my be INC HL) ----------
                 LD D, (HL)
-                INC L
+                INC L                                   ; ---------- (my be INC HL) ----------
                 LD SP, HL
+
+                ; HL - stores the screen address of the output
                 LD H, B
                 LD L, C
 
@@ -183,19 +187,21 @@ DisplayTileRow: ;
 ; -----------------------------------------
 Display:        ; initialize execute blocks
                 LD IX, DisplayTileRow
-                LD DE, SharedBuffer - 0x100                             ; render buffer is stored above
+                LD DE, RenderBuffer
                 LD (.ContainerSP), SP
                 LD (DisplayTileRow.ContainerSP), SP
                 RestoreDE
                 GetCurrentScreen
                 JP Z, .Display_C000
-                ;
+
+                ; draw on the screen at #4000
 .Row            defl 0
                 dup TileAddressTable4000[#]
                 EXX
                 LD BC, TileAddressTable4000[.Row]
                 EXX
                 LD HL, $+3
+
                 rept 16                                                 ; number of columns per row
                 JP (IX)
                 endr
@@ -208,13 +214,14 @@ Display:        ; initialize execute blocks
 
                 RET
 
-.Display_C000   ;
+.Display_C000   ; draw on the screen at #C000
 .Row            = 0
                 dup TileAddressTableC000[#]
                 EXX
                 LD BC, TileAddressTableC000[.Row]
                 EXX
                 LD HL, $+3
+
                 rept 16                                                 ; number of columns per row
                 JP (IX)
                 endr

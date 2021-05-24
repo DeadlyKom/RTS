@@ -9,6 +9,7 @@ Initialize:     LD HL, TilemapSizeRef
                 LD (MoveUp.Decrement), A
                 ADD A, #10                                  ; -X += 16
                 LD (MoveRight.Clamp), A
+                LD (TilemapRightClampRef), A
                 ;
                 INC HL                                      ; move to Y
                 ; -(Y - 12)
@@ -16,6 +17,17 @@ Initialize:     LD HL, TilemapSizeRef
                 ADD A, #F4
                 NEG
                 LD (MoveDown.Clamp), A
+                LD (TilemapBottomClampRef), A
+
+                ; TilemapWidth (ширина карты) * TilesOnScreenY (количество тайлов на экране)
+                LD HL, #0000
+                LD A, (TilemapWidth)
+                LD E, A
+                LD D, #00
+                LD B, TilesOnScreenY
+.Multiply       ADD HL, DE
+                DJNZ .Multiply
+                LD (TilemapBottomOffsetRef), HL
                 RET
 MoveUp:         ;
                 LD HL, TilemapOffsetHeight

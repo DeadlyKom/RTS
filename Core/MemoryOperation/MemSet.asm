@@ -10,12 +10,12 @@
 ; Corrupt:
 ;   AF
 ; -----------------------------------------
-Fill_192:           ; fill 192 byts
+SafeFill_192:       ; fill 192 byts
                     RestoreDE
                     LD (ContainerSP), SP
                     LD SP, HL
                     JP MemSet_192
-Fill_768:           ; fill 768 byts
+SafeFill_768:       ; fill 768 byts
                     RestoreDE
                     LD (ContainerSP), SP
                     LD SP, HL

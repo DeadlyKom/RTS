@@ -13,13 +13,8 @@ GameLoop:       ; initialize
 .Render         ; ************ RENDER ************      
 
                 ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_TilSprites
+                SeMemoryPage MemoryPage_ShadowScreen
                 ResetFrameFlag ALLOW_MOVE_TILEMAP
-
-                ; ;
-                ; LD HL, RenderBuffer + 0xC0
-                ; LD DE, WORD_RENDER_ALL_FLAGS
-                ; CALL MEMSET.Fill_192
 
 .Tilemap        ; ************ TILEMAP ************
                 ; show debug border

@@ -6,8 +6,8 @@
                 ORG Page_5
 MemoryPage_5_Start:
 
-                include "../Display/ShiftTable.inc"
-                include "../Display/ScreenAddressRowsTable.inc"
+                include "Tables/ShiftTable.inc"
+                include "Tables/ScreenAddressRowsTable.inc"
                 
                 include "../../Core/Game/Include.inc"
 

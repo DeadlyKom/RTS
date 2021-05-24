@@ -1,7 +1,12 @@
 
                 ifndef _MOUSE_INIT_
                 define _MOUSE_INIT_
-Initialize:     CALL GetMouseXY
+Initialize:     ; set default value cursor position
+                LD HL, (192 >> 1) << 8 | (256 >> 1)
+                LD (MousePosition), HL
+
+                ; detected kempston mouse
+                CALL GetMouseXY
                 INC E
                 JR Z, .Error
                 INC D
@@ -12,14 +17,10 @@ Initialize:     CALL GetMouseXY
                 LD (HL), E
                 INC HL
                 LD (HL), D
-                ;
-                LD HL, 256 >> 1
-                LD (MousePositionX), HL
-                LD HL, 192 >> 1
-                LD (MousePositionY), HL
-                ;
+
                 OR A
                 RET
+
 .Error          SCF
                 RET
                 

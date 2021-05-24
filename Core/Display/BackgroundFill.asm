@@ -27,7 +27,7 @@ BackgroundFill: ;
                 SeMemoryPage MemoryPage_ShadowScreen
 
                 LD HL, #C000 + #1800 + #0300
-                CALL MEMSET.Fill_768
+                CALL MEMSET.SafeFill_768
 
 .Check          EQU $+1
                 LD DE, .PaperTableEnd
