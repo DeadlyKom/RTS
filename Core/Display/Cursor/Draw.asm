@@ -415,33 +415,14 @@ MouseTick:      LD A, (MouseFlagRef)
                 RET
 
 .ChangeState    LD HL, SpriteIdx
-
                 LD A, (HL)
-                ; INC HL
-                ; ADD A, (HL)
-                ; CP #04
-                ; JR Z, .RevertNeg
-                ; CP #FF
-                ; JR Z, .RevertPos
-                ; DEC HL
                 INC A
                 CP #04
                 JR NZ, $+3
                 XOR A
-
                 LD (HL), A
                 LD A, 246
                 LD (TicksCount), A
-                OR A
-                RET
-
-.RevertNeg      DEC (HL)
-                DEC (HL)
-                OR A
-                RET
-
-.RevertPos      INC (HL)
-                INC (HL)
                 OR A
                 RET
 TicksCount:     DB #00

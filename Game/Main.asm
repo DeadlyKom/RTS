@@ -12,12 +12,14 @@
                 define SHOW_DEBUG_BORDER_FOW
                 define SHOW_DEBUG_BORDER_CURSOR
                 define SHOW_DEBUG_BORDER_CURSOR_RESTORE
-                define SHOW_DEBUG_BORDER_PLAY_MUSIC               
+                define SHOW_DEBUG_BORDER_PLAY_MUSIC
 
                 define SHOW_DEBUG
+                ifdef SHOW_DEBUG
                 define SHOW_FPS
                 define SHOW_MOUSE_POSITION
                 define ENABLE_TOGGLE_SCREENS_DEBUG
+                endif
 
                 include "Include.inc"
                 include "../Core/Memory/Include.inc"

@@ -38,7 +38,6 @@ TopRowOffsetFOW             EQU MemoryPage_7.FOW.ROW_UP             ; смеще
 BottomRowOffsetFOW          EQU MemoryPage_7.FOW.ROW_DOWN           ; смещение в буфере нижней строки FOW
 
 MouseFlagRef                EQU Mouse.MousePositionFlag             ; флаг обновления позиции курсора (если #FF изменилось положение)
-MouseEdgeFlagRef            EQU Mouse.MouseDirectionEdge            ; флаги отвечающие если курсор пытается выйти за края экрана
 MousePositionRef            EQU Mouse.MousePosition                 ; указатель на позицию мыши
 MousePositionX              EQU Mouse.MousePositionX                ; указатель на позицию мыши оси X
 MousePositionY              EQU Mouse.MousePositionY                ; указатель на позицию мыши оси Y

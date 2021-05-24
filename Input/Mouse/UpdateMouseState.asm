@@ -10,7 +10,6 @@
 ; -----------------------------------------
 UpdateStatesMouse:          XOR A
                             LD (MousePositionFlag), A
-                            LD (MouseDirectionEdge), A
                             
                             CALL GetMouseX                          ; получить текущее значение позиции мыши по оси X
                             LD E, A
@@ -24,18 +23,10 @@ UpdateStatesMouse:          XOR A
                             ADD A, (HL)
                             JR C, .SetMouseLocationX                ; проверка на переполнение (курсор достиг левого края экрана)
 
-                            LD A, (MouseDirectionEdge)
-                            OR LEFT_EDGE
-                            LD (MouseDirectionEdge), A
-
                             XOR A                                   ; фиксируем значение
                             JR .SetMouseLocationX
 .PositiveX                  ADD A, (HL)
                             JR NC, .SetMouseLocationX               ; проверка на переполнение (курсор достих правого края экрана)
-
-                            LD A, (MouseDirectionEdge)
-                            OR RIGHT_EDGE
-                            LD (MouseDirectionEdge), A
 
                             LD A, #FF                               ; фиксируем значение
 .SetMouseLocationX          LD (HL), A                              ; изменить значение положение мыши по оси X
@@ -56,20 +47,12 @@ UpdateStatesMouse:          XOR A
                             ADD A, (HL)
                             JR C, .SetMouseLocationY                ; проверка на переполнение (курсор достиг верхнего края экрана)
 
-                            LD A, (MouseDirectionEdge)
-                            OR TOP_EDGE
-                            LD (MouseDirectionEdge), A
-
                             XOR A                                   ; фиксируем значение
                             JR .SetMouseLocationY
 .PositiveY                  ADD A, (HL)
                             JR C, .SetMaxLocationY                  ; проверка на переполнение (курсор достих нижнего края экрана)
                             CP #C0
                             JR C, .SetMouseLocationY
-
-                            LD A, (MouseDirectionEdge)
-                            OR BOTTOM_EDGE
-                            LD (MouseDirectionEdge), A
 
 .SetMaxLocationY            LD A, #BF                               ; фиксируем значение
 .SetMouseLocationY          LD (HL), A
@@ -83,6 +66,5 @@ MousePositionY:             DB #60
 LastValueFromMousePortX:    DB #80
 LastValueFromMousePortY:    DB #60
 MousePositionFlag:          DB #FF                                  ; если #FF - поменялась позиция
-MouseDirectionEdge:         DB #00
 
                             endif ; ~_MOUSE_UPDATE_STATES_

@@ -30,7 +30,7 @@ ScanMoveMap:    ; save the current address of the visible area of the tilemap
                 
                 CALL KeyboardMove
                 CheckHardwareFlag KEMPSTON_MOUSE
-                CALL NZ, MouseMoveEdgeB
+                CALL NZ, MouseMoveEdge
 
                 ; comparison of current and previous address values
                 LD HL, (TilemapRef)
@@ -42,23 +42,8 @@ ScanMoveMap:    ; save the current address of the visible area of the tilemap
 
                 RET
 
-; перемещение, если двигать мышь за пределы экрана
-MouseMoveEdgeA: LD A, (MouseEdgeFlagRef)
-                LD C, A
-                RR C
-                CALL C, Tilemap.MoveLeft
-                RR C
-                CALL C, Tilemap.MoveRight
-                RR C
-                CALL C, Tilemap.MoveUp
-                RR C
-                CALL C, Tilemap.MoveDown
-                XOR A
-                LD (MouseEdgeFlagRef), A
-                RET
-
 ; перемещение, классическое
-MouseMoveEdgeB: LD BC, MousePositionRef
+MouseMoveEdge:  LD BC, MousePositionRef
                 LD A, (BC)
                 CP #04
                 CALL C, Tilemap.MoveLeft
@@ -74,12 +59,43 @@ MouseMoveEdgeB: LD BC, MousePositionRef
                 CALL NC, Tilemap.MoveDown
                 RET
 
-ScanMouse:      CheckHardwareFlag KEMPSTON_MOUSE
-                CALL NZ, Mouse.UpdateStatesMouse
+KeyboardCursor: ; move with "SYMBOL SHIFT" key released
+                LD A, VK_SYMBOL_SHIFT
+                CALL CheckKeyState
+                RET Z
+
+                ; move map left
+                LD A, VK_A
+                CALL CheckKeyState
+                CALL Z, Mouse.MoveLeft
+
+                ; move map right
+                LD A, VK_D
+                CALL CheckKeyState
+                CALL Z, Mouse.MoveRight
+
+                ; move map up
+                LD A, VK_W
+                CALL CheckKeyState
+                CALL Z, Mouse.MoveUp
+
+                ; move map down
+                LD A, VK_S
+                CALL CheckKeyState
+                CALL Z, Mouse.MoveDown
 
                 RET
+ScanMouse:      CheckHardwareFlag KEMPSTON_MOUSE
+                CALL NZ, Mouse.UpdateStatesMouse
+                CALL KeyboardCursor
+                RET
 
-KeyboardMove:   ; move map left
+KeyboardMove:   ; move with "SYMBOL SHIFT" key pressed
+                LD A, VK_SYMBOL_SHIFT
+                CALL CheckKeyState
+                RET NZ
+
+                ; move map left
                 LD A, VK_A
                 CALL CheckKeyState
                 CALL Z, Tilemap.MoveLeft
