@@ -17,13 +17,13 @@ MemoryPage_2_Start:
                 include "../Handler/Include.inc"
                 include "../MemoryOperation/Include.inc"
                 include "../Display/TileMap/Include.inc"
+                include "../Display/Units/Include.inc"
 
                 ifdef ENABLE_MOUSE
                 include "../Display/Cursor/Include.inc"
                 endif
 
                 include "../Display/BackgroundFill.asm"
-                include "../Handler/Unit.asm"
                 
                 include "../Display/Metods/Include.inc"
                 

@@ -11,10 +11,14 @@ Initialize:             ; reset all flags
                         CALL Interrupt.Initialize
                         CALL Tilemap.SafePrepare
 
+                        ; DI
+                        ; CALL Tilemap.FillFog
+                        ; EI
+
                         ;
-                        LD HL, RenderBuffer + 0xC0
-                        LD DE, WORD_RENDER_ALL_FLAGS
-                        CALL MEMSET.SafeFill_192
+                        ; LD HL, RenderBuffer + 0xC0
+                        ; LD DE, WORD_RENDER_ALL_FLAGS
+                        ; CALL MEMSET.SafeFill_192
                         
                         ; initialize music
                         ifdef ENABLE_MUSIC

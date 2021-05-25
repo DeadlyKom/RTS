@@ -9,9 +9,10 @@
                 include "Loop.asm"
                 include "Music.asm"
 TilemapPtr:     DW TileMap
-NewTilemapPtr:  DW TileMap
+UnitArrayPtr:   DW UnitArray
 TilemapOffset:  FLocation 0, 0
 TilemapSize:    FMapSize 64, 64
+CountUnits      DB #0A
 FrameFlags:     DB #00
 HardwareFlags:  DB #00
 

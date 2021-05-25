@@ -21,7 +21,7 @@ Page_7_TileSprites:     EQU #F000                   ; Bank 03 (Screen 1) (тай
 
                         include "Page_00.asm"
                         include "Page_01.asm"
-                        include "Page_01_Map.asm"
+                        ; include "Page_01_Map.asm"
                         include "Page_02.asm"
                         include "Page_03.asm"
                         include "Page_04.asm"

@@ -1,6 +1,16 @@
 
                 page 0
+                
                 ORG #4000
+
+Size_0          EQU (SizePage_0 % 256 > 0) & 0x01 + (SizePage_0 >> 8)
+Size_1          EQU (SizePage_1 % 256 > 0) & 0x01 + (SizePage_1 >> 8)
+Size_2          EQU (SizePage_2 % 256 > 0) & 0x01 + (SizePage_2 >> 8)
+Size_3          EQU (SizePage_3 % 256 > 0) & 0x01 + (SizePage_3 >> 8)
+Size_4          EQU (SizePage_4 % 256 > 0) & 0x01 + (SizePage_4 >> 8)
+Size_5          EQU (SizePage_5 % 256 > 0) & 0x01 + (SizePage_5 >> 8)
+Size_6          EQU (SizePage_6 % 256 > 0) & 0x01 + (SizePage_6 >> 8)
+Size_7          EQU (SizePage_7 % 256 > 0) & 0x01 + (SizePage_7 >> 8)
 
                 module Boot                                     ; #5D40
 Basic:          DB #00, #0A                                     ; номер строки 10
@@ -14,55 +24,49 @@ StartBoot:      DI
                 SeMemoryPage 0
                 LD HL, Page_0                                   ; загружаем по адресу Page_0
                 LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (SizePage_0 >> 8) + 1                     ; регистр B содержит кол-во секторов
+                LD B, Size_0                                    ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL #3D13                                      ; переход в TR-DOS
                 ; Чтение данных в 1 страницу
                 SeMemoryPage 1
                 LD HL, Page_1                                   ; загружаем по адресу Page_1
                 LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (SizePage_1 >> 8) + 1                     ; регистр B содержит кол-во секторов
-                LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
-                CALL #3D13                                      ; переход в TR-DOS
-                ; Чтение данных в 1 страницу (карты)
-                LD HL, TileMap                                  ; загружаем по адресу TileMap
-                LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (#1000 >> 8)                              ; регистр B содержит кол-во секторов
+                LD B, Size_1                                    ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL #3D13                                      ; переход в TR-DOS
                 ; Чтение данных в 2 страницу
                 ; SeMemoryPage 2
                 LD HL, Page_2                                   ; загружаем по адресу Page_2
                 LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (SizePage_2 >> 8) + 1                     ; регистр B содержит кол-во секторов
+                LD B, Size_2                                    ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL #3D13                                      ; переход в TR-DOS
                 ; Чтение данных в 3 страницу
                 SeMemoryPage 3
                 LD HL, Page_3                                   ; загружаем по адресу Page_3
                 LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (SizePage_3 >> 8) + 1                     ; регистр B содержит кол-во секторов
+                LD B, Size_3                                    ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL #3D13                                      ; переход в TR-DOS
                 ; Чтение данных в 4 страницу
                 SeMemoryPage 4
                 LD HL, Page_4                                   ; загружаем по адресу Page_4
                 LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (SizePage_4 >> 8) + 1                     ; регистр B содержит кол-во секторов
+                LD B, Size_4                                    ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL #3D13                                      ; переход в TR-DOS
                 ; Чтение данных в 6 страницу
                 SeMemoryPage 6
                 LD HL, Page_6                                   ; загружаем по адресу Page_6
                 LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (SizePage_6 >> 8) + 1                     ; регистр B содержит кол-во секторов
+                LD B, Size_6                                    ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL #3D13                                      ; переход в TR-DOS
                 ; Чтение данных в 7 страницу
                 SeMemoryPage 7
                 LD HL, Page_7                                   ; загружаем по адресу Page_7
                 LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (SizePage_7 >> 8) + 1                     ; регистр B содержит кол-во секторов
+                LD B, Size_7                                    ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 CALL #3D13                                      ; переход в TR-DOS
                 ; Чтение данных в 5 страницу
@@ -71,7 +75,7 @@ StartBoot:      DI
                 PUSH HL
                 LD HL, Page_5                                   ; загружаем по адресу Page_5
                 LD DE, (#5CF4)                                  ; загружаем позицию головки дисковода из системной переменн
-                LD B, (SizePage_5 >> 8) + 1                     ; регистр B содержит кол-во секторов
+                LD B, Size_5                                    ; регистр B содержит кол-во секторов
                 LD C, #05                                       ; регистр С — номер подпрограммы #05 (чтение секторов)
                 JP #3D13                                        ; переход в TR-DOS                
 EndBoot:
@@ -108,8 +112,12 @@ Persent         EQU (SizePage_0 * 100 / #4000)
                 display "--------------------------------------------------------------------------------------------------------"
                 display "Building the TRD-image of the \'", TRD_FILENAME, "\' project ..."
                 display "Boot  :  ", /A, Boot.Basic, " = [ ", /D, Boot.EndBasic - Boot.Basic, " bytes ]"
+SizePage1       defl SizePage_1
+SizeMap         defl MemoryPage_1.SizePage_1_Map
+FreeSizeMap     defl SizeMap + (0x10000 - UnitArray)
+
                 display "Page 0:  ", /A, Page_0, " = busy [ ", /D, SizePage_0, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_0 - Page_0 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_0 * 100 / #4000, " % occupied"
-                display "Page 1:  ", /A, Page_1, " = busy [ ", /D, SizePage_1, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_1 - Page_1 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_1 * 100 / #4000, " % occupied"
+                display "Page 1:  ", /A, Page_1, " = busy [ ", /D, SizePage1,  " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage1  - Page_1 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage1  * 100 / #4000, " % occupied"
                 display "Page 2:  ", /A, Page_2, " = busy [ ", /D, SizePage_2, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_2 - Page_2 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_2 * 100 / #4000, " % occupied"
                 display "Page 3:  ", /A, Page_3, " = busy [ ", /D, SizePage_3, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_3 - Page_3 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_3 * 100 / #4000, " % occupied"
                 display "Page 4:  ", /A, Page_4, " = busy [ ", /D, SizePage_4, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_4 - Page_4 & 0x3FFF, " bytes ]     \t |  ", /D, SizePage_4 * 100 / #4000, " % occupied"
@@ -118,7 +126,7 @@ Persent         EQU (SizePage_0 * 100 / #4000)
                 display "Page 7:  ", /A, Page_7 - #1B00, " = busy [ ", /D, SizePage_7_Real, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_7_Real, " bytes ]     \t |  ", /D, SizePage_7_Real * 100 / #4000, " % occupied"
                 display "--------------------------------------------------------------------------------------------------------"
                 display "Building the TRD-image of the \'", TRD_FILENAME, "\' maps ..."
-                display "Map 1 :  ", /A, TileMap, " = busy [ ", /D, SizePage_1_Map, " bytes ]", "\t /    RAM space [ ", /D, #1000 - SizePage_1_Map, " bytes ]     \t |  ", /D, SizePage_1_Map * 100 / #1000, " % occupied"
+                display "Map 1 :  ", /A, TileMap, " = busy [ ", /D, SizeMap, " bytes ]", "\t /    RAM space [ ", /D, #4000 - FreeSizeMap, " bytes ]     \t |  ", /D, FreeSizeMap * 100 / #4000, " % occupied"
                 display "--------------------------------------------------------------------------------------------------------"
 
                 emptytrd TRD_FILENAME
@@ -127,8 +135,8 @@ Persent         EQU (SizePage_0 * 100 / #4000)
                 savetrd  TRD_FILENAME, "Page0.C", Page_0, SizePage_0        ; bank 03
                 page 1
                 savetrd  TRD_FILENAME, "Page1.C", Page_1, SizePage_1        ; bank 03
-                page 1
-                savetrd  TRD_FILENAME, "Map 1.C", TileMap, SizePage_1_Map   ; bank 01
+                ; page 1
+                ; savetrd  TRD_FILENAME, "Map 1.C", TileMap, SizePage_1_Map   ; bank 01
                 page 2
                 savetrd  TRD_FILENAME, "Page2.C", Page_2, SizePage_2        ; bank 02
                 page 3

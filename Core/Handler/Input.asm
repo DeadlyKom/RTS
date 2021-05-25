@@ -13,10 +13,11 @@ Initialize:     ;
                 CALL NC, Game.HardwareRestriction.Mouse
                 RET
 
-ScanKeyboard:   ; ; select
+ScanKeyboard:   ; select
                 ; LD A, VK_LBUTTON
                 ; CALL CheckKeyState
-                ; CALL Z, .SetVK
+                ; CALL Z, Tilemap.ResetFog
+
                 ; ; options
                 ; LD A, VK_RBUTTON
                 ; CALL CheckKeyState

@@ -89,9 +89,7 @@ DisplayRowFOW:  ;
                 ADD A, A
                 JP C, .FillTile
 
-                ; calculate 
-                ; LD H, B
-                ; LD L, C
+                ; calculate
                 LD B, HIGH SharedBuffer                             ; hight byte SharedBuffer
 
                 rept 4
@@ -327,12 +325,83 @@ DisplayRowFOW:  ;
 
                 ; move to the next cell in a tile
                 EXX
-                DEC L                                               ; next cell of the render buffer
+                INC L                                               ; next cell of the render buffer
                 EX DE, HL
                 
                 INC HL
                 INC HL
                 JP (HL)
-                
+
+; FillFog:        ; toggle to memory page with tilemap
+;                 SeMemoryPage MemoryPage_Tilemap
+
+;                 LD HL, #0000
+;                 LD A, (TilemapWidth)
+;                 LD D, L
+;                 LD E, A
+;                 LD A, (TilemapHeight)
+;                 LD B, A
+; .Multiply       ADD HL, DE
+;                 DJNZ .Multiply
+
+;                 EX DE, HL
+;                 LD HL, (TilemapRef)
+
+; .Loop           LD A, (HL)
+;                 OR #80
+;                 LD (HL), A
+;                 INC HL
+;                 DEC DE
+;                 LD A, D
+;                 OR E
+;                 JR NZ, .Loop
+
+;                 RET
+
+; ResetFog:       ; toggle to memory page with tilemap
+;                 SeMemoryPage MemoryPage_Tilemap
+
+;                 LD HL, TilemapOffsetWidth
+;                 LD DE, MousePositionRef
+;                 LD A, (DE)
+;                 RRA
+;                 RRA
+;                 RRA
+;                 RRA
+;                 AND %00011111
+;                 ADD A, (HL)
+;                 LD C, A
+
+;                 INC HL
+;                 INC DE
+
+;                 ; y
+;                 LD A, (DE)
+;                 RRA
+;                 RRA
+;                 RRA
+;                 RRA
+;                 AND %00011111
+;                 ADD A, (HL)
+;                 LD B, A
+;                 LD HL, #C000
+;                 OR A
+;                 JR Z, .Reset
+
+;                 LD A, (TilemapWidth)
+;                 LD D, L
+;                 LD E, A
+; .Multiply       ADD HL, DE
+;                 DJNZ .Multiply
+; .Reset          ADD HL, BC
+;                 LD A, (HL)
+;                 AND %01111111
+;                 LD (HL), A
+
+;                 CALL Tilemap.Prepare
+
+;                 SeMemoryPage MemoryPage_ShadowScreen
+
+;                 RET
 
                 endif ; ~_CORE_DISPLAY_TILEMAP_FOW_

@@ -16,6 +16,7 @@ MemoryPageRef               EQU #5BFE                               ; адрес
 BorderStorageStackRef       EQU #5BFF                               ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
 TileMap                     EQU #C000                               ; адрес тайловой карты
+UnitArray                   EQU #FC00                               ; адрес масива юнитов (1024 байта 64 юнита)
 RenderBuffer                EQU #BE00                               ; адрес буфера обновлений (192 байта + 64 пустуют)
 SharedBuffer                EQU #BF00                               ; адрес общего буфера (256 байт)
 BypassFOW                   EQU Page_7_BypassFOW                    ; адресс таблицы обхода FOW
@@ -25,7 +26,6 @@ TilesOnScreenX              EQU 16                                  ; колич
 TilesOnScreenY              EQU 12                                  ; количество тайлов на экране по вертикали
 
 TilemapRef                  EQU Game.TilemapPtr                     ; указатель на адрес тайловой карты
-NewTilemapRef               EQU Game.NewTilemapPtr                  ; указатель на адрес новой позиции тайловой карты
 TilemapSizeRef              EQU Game.TilemapSize                    ; указатель на адрес размера карты
 FrameStateRef               EQU Game.FrameFlags                     ; указатель на флага состояний (frame)
 HardwareStateRef            EQU Game.HardwareFlags                  ; указатель на флаг ограничений железа
@@ -33,6 +33,8 @@ TilemapWidth                EQU Game.TilemapSize.X                  ; ширин
 TilemapHeight               EQU Game.TilemapSize.Y                  ; высота тайловой карты (структура FMapSize)
 TilemapOffsetWidth          EQU Game.TilemapOffset.X                ; смещение в тайловой карте по горизонтали (структура FLocation)
 TilemapOffsetHeight         EQU Game.TilemapOffset.Y                ; смещение в тайловой карте по вертикали (структура FLocation)
+
+UnitsRef                    EQU Game.UnitArrayPtr                   ; указатель на массив юнитов (1024 байта 64 юнита)
 
 TopRowOffsetFOW             EQU MemoryPage_7.FOW.ROW_UP             ; смещение в буфере верхней строки FOW
 BottomRowOffsetFOW          EQU MemoryPage_7.FOW.ROW_DOWN           ; смещение в буфере нижней строки FOW

@@ -58,7 +58,6 @@ SafePrepare:    DI
 ;   SP, HL, DE, BC, HL', DE', BC'
 ; -----------------------------------------
 DisplayTileRow: ;
-
                 EX DE, HL
                 SLA (HL)
                 JR NC, .NextTile_
@@ -172,7 +171,7 @@ DisplayTileRow: ;
 
                 ; move to the next cell in a tile
                 EXX
-                DEC L                                               ; next cell of the render buffer
+                INC L                                               ; next cell of the render buffer
                 EX DE, HL
                 
                 INC HL

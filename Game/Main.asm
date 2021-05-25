@@ -9,6 +9,7 @@
 
                 define SHOW_DEBUG_BORDER
                 define SHOW_DEBUG_BORDER_TILEMAP
+                define SHOW_DEBUG_BORDER_DRAW_UNITS
                 define SHOW_DEBUG_BORDER_FOW
                 define SHOW_DEBUG_BORDER_CURSOR
                 define SHOW_DEBUG_BORDER_CURSOR_RESTORE

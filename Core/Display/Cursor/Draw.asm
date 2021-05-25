@@ -204,7 +204,7 @@ Draw:           LD (.CurrentScreen), A
                 ADD A, A    ; x2 (адрес)
                 ; расчёт адреса обработчика
                 EXX
-                LD HL, HandlerUnits.TableLSJumpDraw
+                LD HL, TableLSJumpDraw
                 ADD A, L
                 LD L, A
                 JR NC, $+3
@@ -256,7 +256,7 @@ Draw:           LD (.CurrentScreen), A
 
                 ; расчёт адреса обработчика
                 EXX
-                LD HL, HandlerUnits.TableRSJumpDraw
+                LD HL, TableRSJumpDraw
                 ADD A, L
                 LD L, A
                 JR NC, $+3
@@ -414,16 +414,37 @@ MouseTick:      LD A, (MouseFlagRef)
                 LD (SpriteIdx), A
                 RET
 
+; .ChangeState    LD HL, SpriteIdx
+;                 LD A, (HL)
+;                 INC A
+;                 CP #04
+;                 JR NZ, $+3
+;                 XOR A
+;                 LD (HL), A
+;                 LD A, 246
+;                 LD (TicksCount), A
+;                 OR A
+;                 RET
 .ChangeState    LD HL, SpriteIdx
                 LD A, (HL)
-                INC A
+                INC HL
+                ADD A, (HL)
                 CP #04
-                JR NZ, $+3
-                XOR A
+                JR Z, .RevertNeg
+                CP #FF
+                JR Z, .RevertPos
+                DEC HL
                 LD (HL), A
                 LD A, 246
                 LD (TicksCount), A
-                OR A
+                RET
+
+.RevertNeg      DEC (HL)
+                DEC (HL)
+                RET
+
+.RevertPos      INC (HL)
+                INC (HL)
                 RET
 TicksCount:     DB #00
 SpriteIdx:      DB #00

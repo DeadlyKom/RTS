@@ -29,6 +29,24 @@ GameLoop:       ; initialize
                 END_DUBUG_BORDER
                 endif
                 ; ~ TILEMAP
+
+.Unit           ; ********** DRAW UNITS ***********
+                ; show debug border
+                ifdef SHOW_DEBUG_BORDER_DRAW_UNITS
+                BEGIN_DEBUG_BORDER_COL RENDER_UNITS_COLOR
+                endif
+
+                CALL Unit.Display
+
+                ; revert old debug border
+                ifdef SHOW_DEBUG_BORDER_DRAW_UNITS
+                END_DUBUG_BORDER
+                endif
+                ; ~ DRAW UNITS
+
+                ; ---------------------------------
+                ; toggle to memory page with tile sprites
+                SeMemoryPage MemoryPage_ShadowScreen
                 
 .FOW            ; ************** FOW **************
                 ; show debug border
