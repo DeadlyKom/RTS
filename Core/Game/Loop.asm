@@ -4,6 +4,15 @@
 GameLoop:       ; initialize
                 ResetAllFrameFlags
                 SetFrameFlag SWAP_SCREENS_FLAG
+
+                ; add unit
+                SeMemoryPage MemoryPage_Tilemap
+                LD BC, #0010
+                CALL Spawn.Unit
+                LD BC, #0C10
+                CALL Spawn.Unit
+                LD BC, #0608
+                CALL Spawn.Unit
                 
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
 
@@ -36,7 +45,7 @@ GameLoop:       ; initialize
                 BEGIN_DEBUG_BORDER_COL RENDER_UNITS_COLOR
                 endif
 
-                CALL Unit.Display
+                CALL Unit.Handler
 
                 ; revert old debug border
                 ifdef SHOW_DEBUG_BORDER_DRAW_UNITS
@@ -49,6 +58,7 @@ GameLoop:       ; initialize
                 SeMemoryPage MemoryPage_ShadowScreen
                 
 .FOW            ; ************** FOW **************
+                ifdef ENABLE_FOW
                 ; show debug border
                 ifdef SHOW_DEBUG_BORDER_FOW
                 BEGIN_DEBUG_BORDER_COL RENDER_FOW_COLOR
@@ -59,6 +69,7 @@ GameLoop:       ; initialize
                 ; revert old debug border
                 ifdef SHOW_DEBUG_BORDER_TILEMAP
                 END_DUBUG_BORDER
+                endif
                 endif
                 ; ~ FOW
 

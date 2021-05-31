@@ -3,6 +3,7 @@
                 define _STRUCTURES_INCLUDE_
 
                 include "Base.inc"
+                include "Map.inc"
                 include "Render.inc"
                 include "Sprite.inc"
                 include "UnitInfo.inc"

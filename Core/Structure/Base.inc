@@ -17,16 +17,6 @@ X                   DB #00
 Y                   DB #00            
 
                     ends
-
-; -------------------- sprite info --------------------
-
-                    struct FSpriteInfo
-Height              DB #00
-Offset_Y            DB #00
-Width               DB #00
-Offset_X            DB #00
-
-                    ends
                     
 ; -------------------- size map --------------------
 

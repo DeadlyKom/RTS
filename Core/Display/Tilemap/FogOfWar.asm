@@ -76,7 +76,6 @@ DisplayRowFOW:  ;
                 EX DE, HL
 
                 PUSH HL
-                ; LD (.L1), HL
 
                 INC D
                 LD A, (DE)
@@ -88,6 +87,8 @@ DisplayRowFOW:  ;
                 
                 ADD A, A
                 JP C, .FillTile
+                ; EXX
+                ; JP .NextTile
 
                 ; calculate
                 LD B, HIGH SharedBuffer                             ; hight byte SharedBuffer
@@ -104,7 +105,7 @@ DisplayRowFOW:  ;
                 LD A, %00001111
                 AND D
                 EXX
-                JP Z, .NextTile ;.FillTile
+                JP Z, .NextTile
 
                 ; calculate address sprite FOW
                 DEC A
@@ -252,8 +253,6 @@ DisplayRowFOW:  ;
                 INC E                                               ; next cell of the render buffer
                 
                 POP HL
-; .L1             EQU $+1
-;                 LD HL, #0000
                 INC HL
                 INC HL
                 JP (HL)
@@ -274,47 +273,44 @@ DisplayRowFOW:  ;
 
                 ; draw the sprite top part
                 rept 3
-                LD (BC), A
-                INC C
-                LD (BC), A
-                INC B
-                LD (BC), A
-                DEC C
-                LD (BC), A
-                INC B
+                LD (HL), A
+                INC L
+                LD (HL), A
+                INC H
+                LD (HL), A
+                DEC L
+                LD (HL), A
+                INC H
                 endr
-                LD (BC), A
-                INC C
-                LD (BC), A
-                INC B
-                LD (BC), A
-                DEC C
-                LD (BC), A
+                LD (HL), A
+                INC L
+                LD (HL), A
+                INC H
+                LD (HL), A
+                DEC L
+                LD (HL), A
 
                 ; calculation to the sprite bottom part
-                SET 5, C
+                SET 5, L
 
                 ; draw the sprite bottom part
                 rept 3
-                LD (BC), A
-                INC C
-                LD (BC), A
-                DEC B
-                LD (BC), A
-                DEC C
-                LD (BC), A
-                DEC B
+                LD (HL), A
+                INC L
+                LD (HL), A
+                DEC H
+                LD (HL), A
+                DEC L
+                LD (HL), A
+                DEC H
                 endr
-                LD (BC), A
-                INC C
-                LD (BC), A
-                DEC B
-                LD (BC), A
-                DEC C
-                LD (BC), A
-
-                LD B, H
-                LD C, L
+                LD (HL), A
+                INC L
+                LD (HL), A
+                DEC H
+                LD (HL), A
+                DEC L
+                LD (HL), A
 
                 JP .NextTile
 

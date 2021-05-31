@@ -68,7 +68,9 @@ DisplayTileRow: ;
 
                 ; calculation sprite address
                 ADD A, A                                ; shift left (7 bit - fog of war)
+                ifdef ENABLE_FOW
                 JP C, .NextTile                         ; move to next column (if 7 bit is set)
+                endif
                 LD H, HIGH MemoryPage_7.TableSprites
                 LD L, A
                 LD E, (HL)

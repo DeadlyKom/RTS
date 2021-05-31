@@ -1,7 +1,36 @@
 
                 ifndef _CORE_DISPLAY_TILEMAP_CONTROLL_
                 define _CORE_DISPLAY_TILEMAP_CONTROLL_
-Initialize:     LD HL, TilemapSizeRef
+Initialize:     ; toggle to memory page with tilemap
+                SeMemoryPage MemoryPage_Tilemap
+
+                ; инициализация перменных (из загруженной карты)
+                XOR A
+                LD IX, MapStructure                         ; адрес структуры карты
+                LD HL, (IX + FMap.Address)                  ; HL - адрес начала (смещение 0,0) тайловой карты
+                LD E, (IX + FMap.StartLocation.X)           ; E - смещение по горизонтали
+                LD D, A 
+                ADD HL, DE
+                LD D, (IX + FMap.StartLocation.Y)           ; D -смещение по вертикали
+                LD (TilemapOffsetRef), DE
+                LD BC, (IX + FMap.Size)
+                LD (TilemapSizeRef), BC
+
+                ; расчёт смещения в тайловой карте, 
+                ; в зависимости от размеров карты и смещения
+                LD E, C
+                LD B, D
+                LD D, A
+                LD A, B
+                OR A
+                JR Z, .SetAddress
+
+.Myltiply       ADD HL, DE
+                DJNZ .Multiply
+.SetAddress     LD (TilemapRef), HL
+
+                ;
+                LD HL, TilemapSizeRef
                 ;
                 LD A, (HL)
                 LD (MoveDown.Increment), A

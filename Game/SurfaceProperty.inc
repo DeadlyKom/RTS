@@ -1,0 +1,20 @@
+    
+                ifndef _SURFACE_PROPERTY_INCLUDE_
+                define _SURFACE_PROPERTY_INCLUDE_
+
+; collision flags
+COLLISION_UP    EQU 0x01
+COLLISION_RIGHT EQU 0x02
+COLLISION_DOWN  EQU 0x04
+COLLISION_LEFT  EQU 0x08
+
+; surface slowing effects
+SLOW_RATIO_0    EQU 0x00
+SLOW_RATIO_25   EQU 0x01
+SLOW_RATIO_50   EQU 0x02
+SLOW_RATIO_75   EQU 0x03
+
+; other flag
+DESTRUCTIBLE    EQU 0x80
+
+                endif ; ~_SURFACE_PROPERTY_INCLUDE_

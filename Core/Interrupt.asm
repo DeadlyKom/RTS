@@ -63,6 +63,7 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .FPS_Counter        ; ************** FPS **************
                     ifdef SHOW_FPS
+                     SeMemoryPage MemoryPage_ShadowScreen
 	                CALL FPS_Counter.IntTick
                     CALL FPS_Counter.Render_FPS
 	                endif
@@ -83,6 +84,31 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CALL Console.Logb
                     endif
                     ; ~ DRAW DEBUG MOUSE POSITION
+
+.OffsetTilemap      ; ****** DRAW OFFSET TILEMAP *****
+                    ifdef SHOW_OFFSET_TILEMAP
+                    LD BC, #02A0 + 0
+                    CALL Console.At2
+                    LD HL, TilemapOffsetRef
+                    LD B, (HL)
+                    CALL Console.Logb
+                    LD BC, #02A0 + 3
+                    CALL Console.At2
+                    INC HL
+                    LD B, (HL)
+                    CALL Console.Logb
+                    endif
+                    ; ~ DRAW OFFSET TILEMAP
+
+.NumVisibleUnits    ; ******* DRAW VISIBLE UNITS ******
+                    ifdef SHOW_VISIBLE_UNITS
+                    LD BC, #02A0 + 6
+                    CALL Console.At2
+                    LD HL, Unit.VisibleUnits
+                    LD B, (HL)
+                    CALL Console.Logb
+                    endif
+                    ; ~ DRAW VISIBLE UNITS
 
 .SwapScreens        ; ********* SWAP SCREENS **********
                     ; swap screens if it's ready

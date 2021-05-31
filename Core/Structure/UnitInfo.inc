@@ -3,25 +3,72 @@
                     define _STRUCTURE_UNIT_
 
 ; unit types
-Infantry            EQU #01
-Ganner              EQU #02
-HeavyGunner         EQU #03
-Sniper              EQU #04
-Engineer            EQU #05
-ArmoredCarrier      EQU #06
-Tank                EQU #07
+Infantry            EQU 0x01
+Ganner              EQU 0x02
+HeavyGunner         EQU 0x03
+Sniper              EQU 0x04
+Engineer            EQU 0x05
+ArmoredCarrier      EQU 0x06
+Tank                EQU 0x07
 
-; -------------------- Unit --------------------
+; effects flags (buffs/debuffs)
+EF_SLOW             EQU 0x01                        ; эффект замедления
+
+; behavior flags
+BF_MOVE             EQU 0x01                        ; объект движется
+BF_ATTACK           EQU 0x02                        ; объект атакует
+BF_FLY              EQU 0x04                        ; объект в полёте
+BF_REGENERATION     EQU 0x08                        ; объект в состоянии регенерации
+BF_SELECTED         EQU 0x80                        ; объект выбран
+
+; direction flags
+DF_UP               EQU %000                        ; направление вверх
+DF_UP_RIGHT         EQU %001                        ; направление вверх-вправо
+DF_RIGHT            EQU %010                        ; направление вправо
+DF_DOWN_RIGHT       EQU %011                        ; направление вниз-вправо
+DF_DOWN             EQU %100                        ; направление вниз
+DF_DOWN_LEFT        EQU %101                        ; направление вниз-влево
+DF_LEFT             EQU %110                        ; направление влево
+DF_UP_LEFT          EQU %111                        ; направление вверх-влево
+
 
                     struct FUnit
-Type                DB #00                          ; 1 byte
-Health              DB #00                          ; 1 byte
-Status              DB #00                          ; 1 byte
-AnimationIndex      DB #00                          ; 1 byte (макс 128 индексов)
-Location            FLocation                       ; 2 bytes
-PixelOffset         FLocation                       ; 2 bytes
-PathFinding         FPathFindingStack               ; 8 bytes
+Health              DB #00                          ; 1 byte (количество жизни)
+Armor               DB #00                          ; 1 byte (количество брони)
+Rank                DB #00                          ; 1 byte (ранг)
+Killed              DB #00                          ; 1 byte (количество ибитых)
 
                     ends
+
+
+                    struct FUnitLocation            ; (1)
+TilePosition        FLocation                       ; 2 bytes (позиция в тайлах)
+OffsetByPixel       FLocation                       ; 2 bytes (смещение относительно тайла)
+
+                    ends
+
+
+                    struct FUnitState               ; (2)
+Behavior            DB #00                          ; 1 byte (состояния поведения)
+Direction           DB #00                          ; 1 byte (направления)
+Type                DB #00                          ; 1 byte (тип юнита)
+Animation           DB #00                          ; 1 byte (номер анимации * 8)
+
+                    ends
+
+
+                    struct FUnitTargets
+Location            DW #0000                        ; 1 byte (индекс в массиве целей Way Point'ов) / 2 bytes (позиция тайла)
+Enemy               DB #00                          ; 1 byte (индекс в массиве целей врагов)
+
+                    ends
+
+
+                    struct FFUnitAnimation
+
+Counter             DW #0000                        ; 2 byte (начало отсчёта анимации, глобального счётчика)
+
+                    ends
+
 
                     endif ; ~_STRUCTURE_UNIT_
