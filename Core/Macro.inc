@@ -46,6 +46,15 @@ GetCurrentScreen        macro
                         LD A, (MemoryPageRef)
                         AND %00001000
                         endm
+AdjustHighScreenByte    macro
+                        GetCurrentScreen
+                        RLA
+                        RLA
+                        RLA
+                        RLA
+                        OR H
+                        LD H, A
+                        endm
 ZX_COLOR_IPBF           macro Inc?, Paper?, Bright?, Flash?
                         DB ((Flash? << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)
                         endm

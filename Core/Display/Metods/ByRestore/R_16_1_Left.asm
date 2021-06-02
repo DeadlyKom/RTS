@@ -13,8 +13,9 @@
 ; Corrupt:
 ;   SP, HL, BC, DE', BC'
 ; -----------------------------------------
-                        DW SBP_16_1_L_Backward
-SBP_16_1_L:             EXX
+                        DW SBPR_16_1_L_Restore
+                        DW SBPR_16_1_L_Backward
+SBPR_16_1_L:            EXX
 
                         ;- 1 byte -
                         POP DE                              ; skip 1 byte
@@ -22,6 +23,13 @@ SBP_16_1_L:             EXX
 
                         ;- 2 byte -
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
                         
                         POP DE
                         OR E
@@ -51,6 +59,13 @@ SBP_16_1_L:             EXX
                         ;- 1 byte -
                         LD A, (BC)
 
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
                         POP DE
                         OR E
                         XOR D
@@ -79,7 +94,51 @@ SBP_16_1_L:             EXX
                         INC HL
                         INC HL
                         JP (HL)
-SBP_16_1_L_Backward:    ;
+SBPR_16_1_L_Backward:   ;
                         EX DE, HL
                         EXX
-                        JP SBP_16_1_L.Backward
+                        JP SBPR_16_1_L.Backward
+SBPR_16_1_L_Restore:    EXX
+
+                        POP DE
+                        LD (HL), E
+
+                        ; classic method "DOWN_HL" 25/59
+                        INC H
+                        LD A, H
+                        AND #07
+                        JP NZ, $+19
+                        LD A, L
+                        SUB #E0
+                        LD L, A
+                        SBC A, A
+                        AND #F8
+                        ADD A, H
+                        LD H, A
+
+                        ; - костыль (чтобы не рисовать в атрибутах)
+                        LD A, H
+                        AND %00011000
+                        ADD A, #E8
+                        JR Z, .NextRow
+
+                        LD (HL), D
+
+                        ; classic method "DOWN_HL" 25/59
+                        INC H
+                        LD A, H
+                        AND #07
+                        JP NZ, $+12
+                        LD A, L
+                        SUB #E0
+                        LD L, A
+                        SBC A, A
+                        AND #F8
+                        ADD A, H
+                        LD H, A                     
+
+.NextRow                ; move to the next two row
+                        EXX
+                        INC HL
+                        INC HL
+                        JP (HL)

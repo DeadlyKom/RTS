@@ -13,19 +13,11 @@
 ; Corrupt:
 ;   SP, HL, BC, DE', BC'
 ; -----------------------------------------
-                        DW SBP_16_1_R_Restore
                         DW SBP_16_1_R_Backward
 SBP_16_1_R:             EXX
 
                         ;- 1 byte -
                         LD A, (BC)
-
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
                         
                         POP DE
                         OR E
@@ -62,13 +54,6 @@ SBP_16_1_R:             EXX
 
                         ;- 2 byte -
                         LD A, (BC)
-
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
                         
                         POP DE
                         OR E
@@ -98,11 +83,3 @@ SBP_16_1_R_Backward:    ;
                         EX DE, HL
                         EXX
                         JP SBP_16_1_R.Backward
-SBP_16_1_R_Restore:     JP SBP_16_1_L_Restore
-;                         EXX
-
-; .NextRow                ; move to the next two row
-;                         EXX
-;                         INC HL
-;                         INC HL
-;                         JP (HL)

@@ -1,6 +1,6 @@
 
 ; -----------------------------------------
-; display two rows (пропускает левый байт, выровненый по знакоместу)
+; display two rows (пропускает левый байт и левый сдвиг)
 ; In:
 ;   SP  - sprite address
 ;   HL  - return addres
@@ -11,21 +11,33 @@
 ;   BC' - row screen address
 ; Out:
 ; Corrupt:
-;   SP, HL, BC, DE', BC'
+;   SP, HL, BC, L', DE', BC'
 ; -----------------------------------------
-                        DW SBP_16_1_L_Backward
-SBP_16_1_L:             EXX
+                        DW SBPR_16_1_LS_Restore
+                        DW SBPR_16_1_LS_Backward
+SBPR_16_1_LS:           EXX
 
                         ;- 1 byte -
                         POP DE                              ; skip 1 byte
                         ;~ 1 byte ~
 
                         ;- 2 byte -
+                        ; modify the right side of a byte
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
                         
                         POP DE
-                        OR E
-                        XOR D
+                        ; INC H                              ; calculate right shift address
+                        LD L, E     ; OR
+                        OR (HL)
+                        LD L, D     ; XOR
+                        XOR (HL)
                         LD (BC), A
                         ;~ 2 byte ~
 
@@ -49,11 +61,21 @@ SBP_16_1_L:             EXX
                         JR Z, .NextRow
 .Backward
                         ;- 1 byte -
+                        ; modify the right side of a byte
                         LD A, (BC)
 
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+                        
                         POP DE
-                        OR E
-                        XOR D
+                        LD L, E     ; OR
+                        OR (HL)
+                        LD L, D     ; XOR
+                        XOR (HL)
                         LD (BC), A
                         ;~ 1 byte ~
 
@@ -79,7 +101,8 @@ SBP_16_1_L:             EXX
                         INC HL
                         INC HL
                         JP (HL)
-SBP_16_1_L_Backward:    ;
+SBPR_16_1_LS_Backward:  ;
                         EX DE, HL
                         EXX
-                        JP SBP_16_1_L.Backward
+                        JP SBPR_16_1_LS.Backward
+SBPR_16_1_LS_Restore:   JP SBPR_16_1_L_Restore

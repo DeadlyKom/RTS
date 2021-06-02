@@ -13,19 +13,11 @@
 ; Corrupt:
 ;   SP, HL, BC, DE', BC'
 ; -----------------------------------------
-                        DW SBP_16_0_Restore
                         DW SBP_16_0_Backward
 SBP_16_0:               EXX
 
                         ;- 1 byte -
                         LD A, (BC)
-
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
 
                         POP DE
                         OR E
@@ -37,13 +29,6 @@ SBP_16_0:               EXX
 
                         ;- 2 byte -
                         LD A, (BC)
-
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
                         
                         POP DE
                         OR E
@@ -73,13 +58,6 @@ SBP_16_0:               EXX
                         ;- 1 byte -
                         LD A, (BC)
 
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
-
                         POP DE
                         OR E
                         XOR D
@@ -90,13 +68,6 @@ SBP_16_0:               EXX
 
                         ;- 2 byte -
                         LD A, (BC)
-
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
 
                         POP DE
                         OR E
@@ -127,12 +98,3 @@ SBP_16_0_Backward:      ;
                         EXX
                         INC C
                         JP SBP_16_0.Backward
-SBP_16_0_Restore:       JP SBP_16_0_LS_Restore
-                        
-;                         EXX
-
-; .NextRow                ; move to the next two row
-;                         EXX
-;                         INC HL
-;                         INC HL
-;                         JP (HL)

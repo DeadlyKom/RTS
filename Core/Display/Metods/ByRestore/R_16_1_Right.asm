@@ -1,6 +1,6 @@
 
 ; -----------------------------------------
-; display two rows (пропускает левый байт, выровненый по знакоместу)
+; display two rows (пропускает правый байт, выровненый по знакоместу)
 ; In:
 ;   SP  - sprite address
 ;   HL  - return addres
@@ -13,20 +13,28 @@
 ; Corrupt:
 ;   SP, HL, BC, DE', BC'
 ; -----------------------------------------
-                        DW SBP_16_1_L_Backward
-SBP_16_1_L:             EXX
+                        DW SBPR_16_1_R_Restore
+                        DW SBPR_16_1_R_Backward
+SBPR_16_1_R:            EXX
 
                         ;- 1 byte -
-                        POP DE                              ; skip 1 byte
-                        ;~ 1 byte ~
-
-                        ;- 2 byte -
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
                         
                         POP DE
                         OR E
                         XOR D
                         LD (BC), A
+                        ;~ 1 byte ~
+
+                        ;- 2 byte -
+                        POP DE                              ; skip 2 byte
                         ;~ 2 byte ~
 
                         ; classic method "DOWN_BC" 25/59
@@ -49,16 +57,23 @@ SBP_16_1_L:             EXX
                         JR Z, .NextRow
 .Backward
                         ;- 1 byte -
+                        POP DE                              ; skip 1 byte
+                        ;~ 1 byte ~
+
+                        ;- 2 byte -
                         LD A, (BC)
 
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+                        
                         POP DE
                         OR E
                         XOR D
                         LD (BC), A
-                        ;~ 1 byte ~
-
-                        ;- 2 byte -
-                        POP DE                              ; skip 2 byte
                         ;~ 2 byte ~
 
                         ; classic method "DOWN_BC" 25/59
@@ -79,7 +94,8 @@ SBP_16_1_L:             EXX
                         INC HL
                         INC HL
                         JP (HL)
-SBP_16_1_L_Backward:    ;
+SBPR_16_1_R_Backward:   ;
                         EX DE, HL
                         EXX
-                        JP SBP_16_1_L.Backward
+                        JP SBPR_16_1_R.Backward
+SBPR_16_1_R_Restore:    JP SBPR_16_1_L_Restore

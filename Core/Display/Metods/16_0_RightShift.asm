@@ -13,20 +13,12 @@
 ; Corrupt:
 ;   SP, HL, BC, L', DE', BC'
 ; -----------------------------------------
-                        DW SBP_16_0_RS_Restore
                         DW SBP_16_0_RS_Backward
 SBP_16_0_RS:            EXX
 
                         ;- 1 byte -
                         ; modify the left side of a byte
                         LD A, (BC)
-
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
 
                         POP DE
                         LD L, E     ; OR
@@ -39,13 +31,6 @@ SBP_16_0_RS:            EXX
 
                         ; modify the right side of a byte
                         LD A, (BC)
-
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
                         
                         INC H                               ; calculate right shift address
                         LD L, E     ; OR
@@ -89,13 +74,6 @@ SBP_16_0_RS:            EXX
                         ; modify the left side of a byte
                         LD A, (BC)
 
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
-
                         POP DE
                         ; DEC H                               ; calculate left shift address
                         LD L, E     ; OR
@@ -119,13 +97,6 @@ SBP_16_0_RS:            EXX
 
                         ; modify the left side of a byte
                         LD A, (BC)
-
-                        ; - save background 
-                        EXX
-                        LD (BC), A
-                        INC BC
-                        EXX
-                        ; ~ save background 
 
                         DEC H                               ; calculate left shift address
                         LD L, E     ; OR
@@ -157,54 +128,3 @@ SBP_16_0_RS_Backward:   ;
                         EX DE, HL
                         EXX
                         JP SBP_16_0_RS.Backward
-SBP_16_0_RS_Restore:    JP SBP_16_0_LS_Restore
-
-;                         EXX
-
-;                         POP DE
-;                         LD (HL), E
-;                         INC L
-;                         LD (HL), D
-
-;                         ; classic method "DOWN_HL" 25/59
-;                         INC H
-;                         LD A, H
-;                         AND #07
-;                         JP NZ, $+19
-;                         LD A, L
-;                         SUB #E0
-;                         LD L, A
-;                         SBC A, A
-;                         AND #F8
-;                         ADD A, H
-;                         LD H, A
-
-;                         ; - костыль (чтобы не рисовать в атрибутах)
-;                         LD A, H
-;                         AND %00011000
-;                         ADD A, #E8
-;                         JR Z, .NextRow
-
-;                         POP DE
-;                         LD (HL), E
-;                         DEC L
-;                         LD (HL), D
-                        
-;                         ; classic method "DOWN_HL" 25/59
-;                         INC H
-;                         LD A, H
-;                         AND #07
-;                         JP NZ, $+12
-;                         LD A, L
-;                         SUB #E0
-;                         LD L, A
-;                         SBC A, A
-;                         AND #F8
-;                         ADD A, H
-;                         LD H, A
-
-; .NextRow                ; move to the next two row
-;                         EXX
-;                         INC HL
-;                         INC HL
-;                         JP (HL)

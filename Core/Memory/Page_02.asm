@@ -17,7 +17,6 @@ MemoryPage_2_Start:
                 include "../Handler/Include.inc"
                 include "../MemoryOperation/Include.inc"
                 include "../Display/TileMap/Include.inc"
-                include "../Display/Unit/Include.inc"
 
                 include "../Module/Include.inc"
 
@@ -28,6 +27,7 @@ MemoryPage_2_Start:
                 include "../Display/BackgroundFill.asm"
                 
                 include "../Display/Metods/Include.inc"
+                include "../Display/Metods/ByRestore/Include.inc"
                 
 MemoryPage_2_End:
 

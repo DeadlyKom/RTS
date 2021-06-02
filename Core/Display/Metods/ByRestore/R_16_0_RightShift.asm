@@ -1,6 +1,6 @@
 
 ; -----------------------------------------
-; display two rows (сдвиг)
+; display two rows (пропускает правый сдвиг)
 ; In:
 ;   SP  - sprite address
 ;   HL  - return addres
@@ -13,12 +13,20 @@
 ; Corrupt:
 ;   SP, HL, BC, L', DE', BC'
 ; -----------------------------------------
-                        DW SBP_16_0_S_Backward
-SBP_16_0_S:             EXX
+                        DW SBPR_16_0_RS_Restore
+                        DW SBPR_16_0_RS_Backward
+SBPR_16_0_RS:            EXX
 
                         ;- 1 byte -
                         ; modify the left side of a byte
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
 
                         POP DE
                         LD L, E     ; OR
@@ -32,6 +40,13 @@ SBP_16_0_S:             EXX
                         ; modify the right side of a byte
                         LD A, (BC)
 
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+                        
                         INC H                               ; calculate right shift address
                         LD L, E     ; OR
                         OR (HL)
@@ -44,18 +59,6 @@ SBP_16_0_S:             EXX
                         ;- 2 byte -
                         ; modify the left side of a byte
                         POP DE
-                        LD L, E     ; OR
-                        OR (HL)
-                        LD L, D     ; XOR
-                        XOR (HL)
-                        LD (BC), A
-
-                        INC C                               ; next screen character cell (2)
-
-                        ; modify the right side of a byte
-                        LD A, (BC)
-                        
-                        INC H                               ; calculate right shift address
                         LD L, E     ; OR
                         OR (HL)
                         LD L, D     ; XOR
@@ -81,24 +84,20 @@ SBP_16_0_S:             EXX
                         AND %00011000
                         ADD A, #E8
                         JR Z, .NextRow
-.Backward                        
+.Backward
                         ;- 1 byte -
-                        ; modify the right side of a byte
-                        LD A, (BC)
-
-                        POP DE
-                        LD L, E     ; OR
-                        OR (HL)
-                        LD L, D     ; XOR
-                        XOR (HL)
-                        LD (BC), A
-
-                        DEC C                               ; next screen character cell (2)
-
                         ; modify the left side of a byte
                         LD A, (BC)
 
-                        DEC H                               ; calculate left shift address
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
+                        POP DE
+                        ; DEC H                               ; calculate left shift address
                         LD L, E     ; OR
                         OR (HL)
                         LD L, D     ; XOR
@@ -121,6 +120,13 @@ SBP_16_0_S:             EXX
                         ; modify the left side of a byte
                         LD A, (BC)
 
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
                         DEC H                               ; calculate left shift address
                         LD L, E     ; OR
                         OR (HL)
@@ -142,15 +148,13 @@ SBP_16_0_S:             EXX
                         ADD A, B
                         LD B, A
 
-                        ; move to the next two row
-.NextRow                EXX
+.NextRow                ; move to the next two row
+                        EXX
                         INC HL
                         INC HL
                         JP (HL)
-SBP_16_0_S_Backward:    ;
+SBPR_16_0_RS_Backward:   ;
                         EX DE, HL
                         EXX
-                        INC C
-                        INC C
-                        INC H                               ; calculate right shift address
-                        JP SBP_16_0_S.Backward
+                        JP SBPR_16_0_RS.Backward
+SBPR_16_0_RS_Restore:   JP SBPR_16_0_LS_Restore

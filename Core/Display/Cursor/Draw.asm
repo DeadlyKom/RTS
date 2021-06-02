@@ -162,7 +162,7 @@ Draw:           LD (.CurrentScreen), A
 
 .IsFullNotShift ; выровнен по знакоместу
 
-                LD IX, Metod.SBP_16_0
+                LD IX, Metod.SBPR_16_0
                 LD (Metod), IX
                 JP .Draw
 
@@ -176,7 +176,7 @@ Draw:           LD (.CurrentScreen), A
                 LD H, A
                 EXX
 
-                LD IX, Metod.SBP_16_0_S
+                LD IX, Metod.SBPR_16_0_S
                 LD (Metod), IX
                 JP .Draw
 
@@ -204,7 +204,7 @@ Draw:           LD (.CurrentScreen), A
                 ADD A, A    ; x2 (адрес)
                 ; расчёт адреса обработчика
                 EXX
-                LD HL, TableLSJumpDraw
+                LD HL, TableRLSJumpDraw
                 ADD A, L
                 LD L, A
                 JR NC, $+3
@@ -256,7 +256,7 @@ Draw:           LD (.CurrentScreen), A
 
                 ; расчёт адреса обработчика
                 EXX
-                LD HL, TableRSJumpDraw
+                LD HL, TableRRSJumpDraw
                 ADD A, L
                 LD L, A
                 JR NC, $+3

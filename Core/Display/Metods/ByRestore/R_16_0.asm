@@ -1,6 +1,6 @@
 
 ; -----------------------------------------
-; display two rows (пропускает левый байт, выровненый по знакоместу)
+; display two rows (выровненый по знакоместу)
 ; In:
 ;   SP  - sprite address
 ;   HL  - return addres
@@ -13,15 +13,37 @@
 ; Corrupt:
 ;   SP, HL, BC, DE', BC'
 ; -----------------------------------------
-                        DW SBP_16_1_L_Backward
-SBP_16_1_L:             EXX
+                        DW SBPR_16_0_Restore
+                        DW SBPR_16_0_Backward
+SBPR_16_0:              EXX
 
                         ;- 1 byte -
-                        POP DE                              ; skip 1 byte
+                        LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
+                        POP DE
+                        OR E
+                        XOR D
+                        LD (BC), A
                         ;~ 1 byte ~
+
+                        INC C                               ; next screen character cell (1)
 
                         ;- 2 byte -
                         LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
                         
                         POP DE
                         OR E
@@ -51,14 +73,35 @@ SBP_16_1_L:             EXX
                         ;- 1 byte -
                         LD A, (BC)
 
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
                         POP DE
                         OR E
                         XOR D
                         LD (BC), A
                         ;~ 1 byte ~
 
+                        DEC C                               ; next screen character cell (1)
+
                         ;- 2 byte -
-                        POP DE                              ; skip 2 byte
+                        LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
+                        POP DE
+                        OR E
+                        XOR D
+                        LD (BC), A
                         ;~ 2 byte ~
 
                         ; classic method "DOWN_BC" 25/59
@@ -79,7 +122,9 @@ SBP_16_1_L:             EXX
                         INC HL
                         INC HL
                         JP (HL)
-SBP_16_1_L_Backward:    ;
+SBPR_16_0_Backward:     ;
                         EX DE, HL
                         EXX
-                        JP SBP_16_1_L.Backward
+                        INC C
+                        JP SBPR_16_0.Backward
+SBPR_16_0_Restore:      JP SBPR_16_0_LS_Restore

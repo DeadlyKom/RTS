@@ -1,6 +1,6 @@
 
 ; -----------------------------------------
-; display two rows (пропускает левый байт, выровненый по знакоместу)
+; display two rows (пропускает правый байт и правый сдвиг)
 ; In:
 ;   SP  - sprite address
 ;   HL  - return addres
@@ -11,22 +11,33 @@
 ;   BC' - row screen address
 ; Out:
 ; Corrupt:
-;   SP, HL, BC, DE', BC'
+;   SP, HL, BC, L', DE', BC'
 ; -----------------------------------------
-                        DW SBP_16_1_L_Backward
-SBP_16_1_L:             EXX
+                        DW SBPR_16_1_RS_Restore
+                        DW SBPR_16_1_RS_Backward
+SBPR_16_1_RS:           EXX
 
                         ;- 1 byte -
-                        POP DE                              ; skip 1 byte
+                        ; modify the left side of a byte
+                        LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+                        
+                        POP DE
+                        LD L, E     ; OR
+                        OR (HL)
+                        LD L, D     ; XOR
+                        XOR (HL)
+                        LD (BC), A
                         ;~ 1 byte ~
 
                         ;- 2 byte -
-                        LD A, (BC)
-                        
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP DE                              ; skip 2 byte
                         ;~ 2 byte ~
 
                         ; classic method "DOWN_BC" 25/59
@@ -49,16 +60,27 @@ SBP_16_1_L:             EXX
                         JR Z, .NextRow
 .Backward
                         ;- 1 byte -
-                        LD A, (BC)
-
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP DE                              ; skip 1 byte
                         ;~ 1 byte ~
 
                         ;- 2 byte -
-                        POP DE                              ; skip 2 byte
+                        ; modify the left side of a byte
+                        LD A, (BC)
+
+                        ; - save background 
+                        EXX
+                        LD (BC), A
+                        INC BC
+                        EXX
+                        ; ~ save background 
+
+                        POP DE
+                        ; DEC H                               ; calculate left shift address
+                        LD L, E     ; OR
+                        OR (HL)
+                        LD L, D     ; XOR
+                        XOR (HL)
+                        LD (BC), A
                         ;~ 2 byte ~
 
                         ; classic method "DOWN_BC" 25/59
@@ -79,7 +101,8 @@ SBP_16_1_L:             EXX
                         INC HL
                         INC HL
                         JP (HL)
-SBP_16_1_L_Backward:    ;
+SBPR_16_1_RS_Backward:  ;
                         EX DE, HL
                         EXX
-                        JP SBP_16_1_L.Backward
+                        JP SBPR_16_1_RS.Backward
+SBPR_16_1_RS_Restore:   JP SBPR_16_1_L_Restore
