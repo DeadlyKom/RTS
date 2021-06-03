@@ -91,7 +91,7 @@ DisplayRowFOW:  ;
                 ; JP .NextTile
 
                 ; calculate
-                LD B, HIGH SharedBuffer                             ; hight byte SharedBuffer
+                LD B, HIGH TilemapBuffer                            ; hight byte SharedBuffer
 
                 rept 4
                 LD C, (HL)

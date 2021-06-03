@@ -5,10 +5,10 @@
 ;   SP  - sprite address
 ;   HL  - return addres
 ;   DE  - 
-;   BC  - buffer address
+;   BC  - 'intermediate'
 ;   H'  - high byte of the shift table
-;   DE' -
-;   BC' - row screen address
+;   DE' - row screen address
+;   BC' - 
 ; Out:
 ; Corrupt:
 ;   SP, HL, BC, L', DE', BC'
@@ -18,13 +18,13 @@ SBP_16_0_LS:            EXX
 
                         ;- 1 byte -
                         ; modify the right side of a byte
-                        LD A, (BC)
+                        LD A, (DE)
 
-                        POP DE
+                        POP BC
                         ; INC H                               ; calculate right shift address
-                        LD L, E     ; OR
+                        LD L, C     ; OR
                         OR (HL)
-                        LD L, D     ; XOR
+                        LD L, B     ; XOR
                         XOR (HL)
                         ;~ 1 byte ~
 
@@ -32,65 +32,65 @@ SBP_16_0_LS:            EXX
 
                         ;- 2 byte -
                         ; modify the left side of a byte
-                        POP DE
-                        LD L, E     ; OR
+                        POP BC
+                        LD L, C     ; OR
                         OR (HL)
-                        LD L, D     ; XOR
+                        LD L, B     ; XOR
                         XOR (HL)
-                        LD (BC), A
+                        LD (DE), A
 
-                        INC C                               ; next screen character cell (2)
+                        INC E                               ; next screen character cell (2)
 
                         ; modify the right side of a byte
-                        LD A, (BC)
+                        LD A, (DE)
 
                         INC H                               ; calculate right shift address
-                        LD L, E     ; OR
+                        LD L, C     ; OR
                         OR (HL)
-                        LD L, D     ; XOR
+                        LD L, B     ; XOR
                         XOR (HL)
-                        LD (BC), A
+                        LD (DE), A
                         ;~ 2 byte ~
                         
-                        ; classic method "DOWN_BC" 25/59
-                        INC B
-                        LD A, B
+                        ; classic method "DOWN_DE" 25/59
+                        INC D
+                        LD A, D
                         AND #07
                         JP NZ, $+19
-                        LD A, C
+                        LD A, E
                         SUB #E0
-                        LD C, A
+                        LD E, A
                         SBC A, A
                         AND #F8
-                        ADD A, B
-                        LD B, A
+                        ADD A, D
+                        LD D, A
 
                         ; - костыль (чтобы не рисовать в атрибутах)
-                        LD A, B
+                        LD A, D
                         AND %00011000
                         ADD A, #E8
                         JR Z, .NextRow
 .Backward
                         ;- 1 byte -
                         ; modify the right side of a byte
-                        LD A, (BC)
+                        LD A, (DE)
 
-                        POP DE
-                        LD L, E     ; OR
+                        POP BC
+                        LD L, C     ; OR
                         OR (HL)
-                        LD L, D     ; XOR
+                        LD L, B     ; XOR
                         XOR (HL)
-                        LD (BC), A
+                        LD (DE), A
 
-                        DEC C                               ; next screen character cell (2)
+                        DEC E                               ; next screen character cell (2)
 
                         ; modify the left side of a byte
-                        LD A, (BC)
+                        LD A, (DE)
 
                         DEC H                               ; calculate left shift address
-                        LD L, E     ; OR
+                        LD L, C     ; OR
                         OR (HL)
-                        LD L, D     ; XOR
+                        LD L, B     ; XOR
                         XOR (HL)
                         ;~ 1 byte ~
 
@@ -98,26 +98,26 @@ SBP_16_0_LS:            EXX
 
                         ;- 2 byte -
                         ; modify the right side of a byte
-                        POP DE
-                        LD L, E     ; OR
+                        POP BC
+                        LD L, C     ; OR
                         OR (HL)
-                        LD L, D     ; XOR
+                        LD L, B     ; XOR
                         XOR (HL)
-                        LD (BC), A
+                        LD (DE), A
                         ;~ 2 byte ~
 
-                        ; classic method "DOWN_BC" 25/59
-                        INC B
-                        LD A, B
+                        ; classic method "DOWN_DE" 25/59
+                        INC D
+                        LD A, D
                         AND #07
                         JP NZ, $+12
-                        LD A, C
+                        LD A, E
                         SUB #E0
-                        LD C, A
+                        LD E, A
                         SBC A, A
                         AND #F8
-                        ADD A, B
-                        LD B, A
+                        ADD A, D
+                        LD D, A
 
 .NextRow                ; move to the next two row
                         EXX
@@ -127,5 +127,5 @@ SBP_16_0_LS:            EXX
 SBP_16_0_LS_Backward:   ;
                         EX DE, HL
                         EXX
-                        INC C
+                        INC E
                         JP SBP_16_0_LS.Backward

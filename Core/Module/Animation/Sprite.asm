@@ -69,6 +69,11 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
                 LD A, (DE)                                  ; animation
                 LD L, A
                 LD H, #00
+
+                ; HL *= 8
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, HL
                 ADD HL, BC
 
                 RET

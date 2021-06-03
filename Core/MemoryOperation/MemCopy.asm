@@ -20,22 +20,27 @@ Sprite:             RestoreHL
                     DEC B
                     JR NZ, .Mult_YxSx
 
-.SkipMult_YxSx      ; A = ((-A) << 1) + 144
+.SkipMult_YxSx      
+                    ; A = ((-A) << 1) + 144
                     NEG
                     ADD A, A
                     ADD A, 144
-
+                    
                     LD L, A
+
+                    ADD A, 192 - 144
+                    LD (SpriteAdr), A
+
                     LD H, #00
                     ADD HL, HL
-                    ADD HL, HL
+                    ; ADD HL, HL
                     LD BC, MemCopy._144
                     ADD HL, BC
                     LD (.MemCopyJump), HL
 
                     EX DE, HL
 
-                    LD (ContainerSP), SP
+                    LD (MC_ContainerSP), SP
                     LD E, (HL)
                     INC HL
                     LD D, (HL)
@@ -54,7 +59,7 @@ Sprite:             RestoreHL
 
 _192_bytes:         RestoreHL
 
-                    LD (ContainerSP), SP
+                    LD (MC_ContainerSP), SP
                     LD E, (HL)
                     INC HL
                     LD D, (HL)
@@ -77,9 +82,11 @@ MemCopy:
 .Count              = .Count + 2
                     POP HL
                     edup
-
-ContainerSP         EQU $+1
+                    LD	(.Count), HL
+MC_ContainerSP      EQU $+1
                     LD SP, #0000
+SpriteAdr           EQU $+1
+                    LD HL, SharedBuffer
                     RET
 
                     endif ; ~_MEMORY_COPY_

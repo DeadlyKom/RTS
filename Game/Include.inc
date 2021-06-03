@@ -18,8 +18,9 @@ BorderStorageStackRef       EQU #5BFF                               ; адрес
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
 MapStructure                EQU #C000                               ; адрес структуры карты
 UnitArray                   EQU #FC00                               ; адрес масива юнитов (1024 байта 64 юнита)
+SharedBuffer                EQU #BD00                               ; адрес общего буфера (256 байт)
 RenderBuffer                EQU #BE00                               ; адрес буфера обновлений (192 байта + 64 пустуют)
-SharedBuffer                EQU #BF00                               ; адрес общего буфера (256 байт)
+TilemapBuffer               EQU #BF00                               ; адрес тайловой карты буфера (256 байт)
 BypassFOW                   EQU Page_7_BypassFOW                    ; адресс таблицы обхода FOW
 TimeOfDayChangeRate         EQU 50 * 60                             ; скорость смены времени дня
 

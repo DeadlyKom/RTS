@@ -9,7 +9,7 @@
 Start:
                 ORG MapStructure
 
-                FMap Tilemap, {64, 64}, {1, 1}, UnitArray
+                FMap Tilemap, {64, 64}, {0, 0}, UnitArray
 
 
                 ; align 256

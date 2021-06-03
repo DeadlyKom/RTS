@@ -5,10 +5,10 @@
 ;   SP  - sprite address
 ;   HL  - return addres
 ;   DE  - 
-;   BC  - buffer address
+;   BC  - 'intermediate'
 ;   H'  - high byte of the shift table
-;   DE' -
-;   BC' - row screen address
+;   DE' - row screen address
+;   BC' - 
 ; Out:
 ; Corrupt:
 ;   SP, HL, BC, DE', BC'
@@ -17,76 +17,76 @@
 SBP_16_0:               EXX
 
                         ;- 1 byte -
-                        LD A, (BC)
+                        LD A, (DE)
 
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP BC
+                        OR C
+                        XOR B
+                        LD (DE), A
                         ;~ 1 byte ~
 
-                        INC C                               ; next screen character cell (1)
+                        INC E                               ; next screen character cell (1)
 
                         ;- 2 byte -
-                        LD A, (BC)
+                        LD A, (DE)
                         
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP BC
+                        OR C
+                        XOR B
+                        LD (DE), A
                         ;~ 2 byte ~
 
-                        ; classic method "DOWN_BC" 25/59
-                        INC B
-                        LD A, B
+                        ; classic method "DOWN_DE" 25/59
+                        INC D
+                        LD A, D
                         AND #07
                         JP NZ, $+19
-                        LD A, C
+                        LD A, E
                         SUB #E0
-                        LD C, A
+                        LD E, A
                         SBC A, A
                         AND #F8
-                        ADD A, B
-                        LD B, A
+                        ADD A, D
+                        LD D, A
 
                         ; - костыль (чтобы не рисовать в атрибутах)
-                        LD A, B
+                        LD A, D
                         AND %00011000
                         ADD A, #E8
                         JR Z, .NextRow
 .Backward
                         ;- 1 byte -
-                        LD A, (BC)
+                        LD A, (DE)
 
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP BC
+                        OR C
+                        XOR B
+                        LD (DE), A
                         ;~ 1 byte ~
 
-                        DEC C                               ; next screen character cell (1)
+                        DEC E                               ; next screen character cell (1)
 
                         ;- 2 byte -
-                        LD A, (BC)
+                        LD A, (DE)
 
-                        POP DE
-                        OR E
-                        XOR D
-                        LD (BC), A
+                        POP BC
+                        OR C
+                        XOR B
+                        LD (DE), A
                         ;~ 2 byte ~
 
-                        ; classic method "DOWN_BC" 25/59
-                        INC B
-                        LD A, B
+                        ; classic method "DOWN_DE" 25/59
+                        INC D
+                        LD A, D
                         AND #07
                         JP NZ, $+12
-                        LD A, C
+                        LD A, E
                         SUB #E0
-                        LD C, A
+                        LD E, A
                         SBC A, A
                         AND #F8
-                        ADD A, B
-                        LD B, A
+                        ADD A, D
+                        LD D, A
 
 .NextRow                ; move to the next two row
                         EXX
@@ -96,5 +96,5 @@ SBP_16_0:               EXX
 SBP_16_0_Backward:      ;
                         EX DE, HL
                         EXX
-                        INC C
+                        INC E
                         JP SBP_16_0.Backward

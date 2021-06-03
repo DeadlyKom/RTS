@@ -4,9 +4,10 @@
 
                 DEVICE ZXSPECTRUM128
 
-                define ENABLE_MUSIC                         ; разрешить музыку
+                ; define ENABLE_MUSIC                         ; разрешить музыку
                 define ENABLE_MOUSE                         ; разрешить мышь
-                define ENABLE_FOW                           ; разрешить туман войны
+                ; define ENABLE_FOW                           ; разрешить туман войны
+                define ENABLE_CLS                           ; разрешить очистить 2 экрана перед стартом
 
                 define SHOW_DEBUG_BORDER                    ; разрешить отображать на бордюрах время выполнение
                 define SHOW_DEBUG_BORDER_TILEMAP            ; отображение на бордюрах время отображения бэкграунда карты

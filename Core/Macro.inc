@@ -7,7 +7,7 @@
 ; In:
 ; Out:
 ; Corrupt:
-;   BC
+;   BC, AF
 ; -----------------------------------------
 SeMemoryPage            macro Page?
                         LD A, (MemoryPageRef)
@@ -47,13 +47,25 @@ GetCurrentScreen        macro
                         AND %00001000
                         endm
 AdjustHighScreenByte    macro
-                        GetCurrentScreen
+                        LD A, (MemoryPageRef)
+                        CPL
+                        AND %00001000
                         RLA
                         RLA
                         RLA
                         RLA
                         OR H
                         LD H, A
+                        endm
+CLS_0                   macro
+                        LD DE, #0000
+                        LD HL, #5800
+                        CALL MEMSET.SafeFill_Screen
+                        endm
+CLS_1                   macro
+                        LD DE, #0000
+                        LD HL, #D800
+                        CALL MEMSET.SafeFill_Screen
                         endm
 ZX_COLOR_IPBF           macro Inc?, Paper?, Bright?, Flash?
                         DB ((Flash? << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)

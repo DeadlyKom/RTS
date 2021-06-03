@@ -63,7 +63,7 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .FPS_Counter        ; ************** FPS **************
                     ifdef SHOW_FPS
-                     SeMemoryPage MemoryPage_ShadowScreen
+                    SeMemoryPage MemoryPage_ShadowScreen
 	                CALL FPS_Counter.IntTick
                     CALL FPS_Counter.Render_FPS
 	                endif

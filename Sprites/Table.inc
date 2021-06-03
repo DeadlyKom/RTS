@@ -78,9 +78,9 @@ SpritesTable:
                 DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 3 (?)
 
 .Infantry_0_1   ; t - 0 (), d - 0 (up), s - 1 (move)
-                FSprite 16,     0,      8,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_0   ; напровление 0, индекс анимации 0
-                FSprite 16,     0,      16,     8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_1   ; напровление 0, индекс анимации 1
-                FSprite 16,     0,      8,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_2   ; напровление 0, индекс анимации 2
-                FSprite 16,     0,      8,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_3   ; напровление 0, индекс анимации 3
+                FSprite 16,     8,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_0   ; напровление 0, индекс анимации 0
+                FSprite 16,     8,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_1   ; напровление 0, индекс анимации 1
+                FSprite 16,     8,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_2   ; напровление 0, индекс анимации 2
+                FSprite 16,     8,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_3   ; напровление 0, индекс анимации 3
 
                 endif ; ~_SPRITES_TABLE_

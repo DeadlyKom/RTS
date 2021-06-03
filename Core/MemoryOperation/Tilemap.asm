@@ -35,7 +35,7 @@ Tilemap:            ;
                     POP DE
                     POP BC
                     ; сохранение 16 байт
-                    LD SP, SharedBuffer + 16 + .Offset
+                    LD SP, TilemapBuffer + 16 + .Offset
                     PUSH BC
                     PUSH DE
                     PUSH HL
@@ -71,7 +71,7 @@ Tilemap:            ;
                     POP BC
 
                     ; сохранение 16 байт
-                    LD SP, SharedBuffer + TopRowOffsetFOW + 16
+                    LD SP, TilemapBuffer + TopRowOffsetFOW + 16
                     PUSH BC
                     PUSH DE
                     PUSH HL
@@ -108,7 +108,7 @@ Tilemap:            ;
                     POP BC
 
                     ; сохранение 16 байт
-                    LD SP, SharedBuffer + BottomRowOffsetFOW + 16
+                    LD SP, TilemapBuffer + BottomRowOffsetFOW + 16
                     PUSH BC
                     PUSH DE
                     PUSH HL
@@ -128,40 +128,40 @@ Tilemap:            ;
                     LD HL, (TilemapRef)
                     DEC HL
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_0 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_0 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_1 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_1 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_2 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_2 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_3 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_3 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_4 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_4 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_5 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_5 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_6 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_6 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_7 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_7 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_8 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_8 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_9 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_9 + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_A + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_A + 0), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_B + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_B + 0), A
 
 .Right              ; right
                     LD HL, TilemapOffsetWidth
@@ -174,54 +174,54 @@ Tilemap:            ;
                     LD BC, TilesOnScreenX
                     ADD HL, BC
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_0 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_0 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_1 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_1 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_2 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_2 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_3 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_3 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_4 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_4 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_5 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_5 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_6 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_6 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_7 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_7 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_8 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_8 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_9 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_9 + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_A + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_A + 1), A
                     ADD HL, DE
                     LD A, (HL)
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_B + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_B + 1), A
 
 .Exit
 .ContainerSP        EQU $+1
                     LD SP, #0000
                     RET
 
-.TopEdge            LD SP, SharedBuffer + TopRowOffsetFOW + 16
+.TopEdge            LD SP, TilemapBuffer + TopRowOffsetFOW + 16
                     LD HL, EDGE_WORD_VALUE
                     dup	8
                     PUSH HL
                     edup
                     JP .Bottom
 
-.BottomEdge         LD SP, SharedBuffer + BottomRowOffsetFOW + 16
+.BottomEdge         LD SP, TilemapBuffer + BottomRowOffsetFOW + 16
                     LD HL, EDGE_WORD_VALUE
                     dup	8
                     PUSH HL
@@ -229,33 +229,33 @@ Tilemap:            ;
                     JP .Left
 
 .LeftEdge           LD A, EDGE_BYTE_VALUE
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_0 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_1 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_2 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_3 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_4 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_5 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_6 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_7 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_8 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_9 + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_A + 0), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_B + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_0 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_1 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_2 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_3 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_4 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_5 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_6 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_7 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_8 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_9 + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_A + 0), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_B + 0), A
                     JP .Right
 
 .RightEdge          LD A, EDGE_BYTE_VALUE
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_0 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_1 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_2 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_3 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_4 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_5 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_6 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_7 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_8 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_9 + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_A + 1), A
-                    LD (SharedBuffer + MemoryPage_7.FOW.ROW_B + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_0 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_1 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_2 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_3 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_4 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_5 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_6 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_7 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_8 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_9 + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_A + 1), A
+                    LD (TilemapBuffer + MemoryPage_7.FOW.ROW_B + 1), A
                     JP .Exit
 
                     endif ; ~_MEMORY_COPY_TILEMAP_

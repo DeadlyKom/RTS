@@ -24,6 +24,13 @@ Initialize:             ; reset all flags
 
                         endif
 
+                        ; claer screen
+                        ifdef ENABLE_CLS
+                        CLS_0
+                        SeMemoryPage MemoryPage_ShadowScreen
+                        CLS_1
+                        endif
+
                         ; initialize background
                         CALL BackgroundFill
                         

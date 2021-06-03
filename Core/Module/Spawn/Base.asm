@@ -24,12 +24,30 @@ Unit:           ; определение адреса добавления но�
                 PUSH HL
                 POP IX
 
+                ; ---------------------------------------------
+                ; FUnitLocation
+                ; ---------------------------------------------
+
                 ; инициализция позиции юнита
                 LD (IX + FUnitLocation.TilePosition.X), C
                 LD (IX + FUnitLocation.TilePosition.Y), B
                 XOR A
+                LD A, #FB
                 LD (IX + FUnitLocation.OffsetByPixel.X), A
+                LD A, #00
                 LD (IX + FUnitLocation.OffsetByPixel.Y), A
+
+                ; ---------------------------------------------
+                ; FUnitState
+                ; ---------------------------------------------
+                LD BC, #0002
+                INC IXH
+                LD (IX + FUnitState.Behavior), C
+                LD (IX + FUnitState.Direction), B
+                XOR A
+                LD (IX + FUnitState.Type), A
+                LD A, 0
+                LD (IX + FUnitState.Animation), A
  
                 ; итерирование счётчика
                 LD HL, CountUnitsRef
