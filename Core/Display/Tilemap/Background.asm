@@ -18,6 +18,10 @@ Prepare:        ; toggle to memory page with tilemap
                 LD DE, WORD_RENDER_ALL_FLAGS
                 CALL MEMSET.SafeFill_192
 
+                ;
+                LD A, #03
+                LD (FrareUnitsFlagRef), A
+
                 RET
 
 ; можно заменить!

@@ -29,7 +29,7 @@ SeMemoryPage_A          macro
                         AND %00000111
                         LD C, A
                         LD A, (MemoryPageRef)
-                        AND %11111000                      
+                        AND %11111000
                         OR C
                         LD (MemoryPageRef), A
                         LD BC, PORT_7FFD

@@ -13,6 +13,7 @@ UnitArrayPtr:   DW #0000
 TilemapOffset:  FLocation 0, 0
 TilemapSize:    FMapSize 64, 64
 FrameFlags:     DB #00
+FrameUnitsFlag: DB #00
 HardwareFlags:  DB #00
 
                 endmodule

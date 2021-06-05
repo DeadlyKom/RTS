@@ -7,18 +7,137 @@ GameLoop:       ; initialize
 
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap
-                LD BC, #0306
+                LD BC, #0101
                 CALL Spawn.Unit
-                LD BC, #0C10
-                CALL Spawn.Unit
-                LD BC, #0608
-                CALL Spawn.Unit
-                LD BC, #030A
-                CALL Spawn.Unit
-                LD BC, #0A08
-                CALL Spawn.Unit
-                LD BC, #0909
-                CALL Spawn.Unit
+                ; LD BC, #0101
+                ; CALL Spawn.Unit
+                ; LD BC, #0102
+                ; CALL Spawn.Unit
+                ; LD BC, #0103
+                ; CALL Spawn.Unit
+                ; LD BC, #0104
+                ; CALL Spawn.Unit
+                ; LD BC, #0105
+                ; CALL Spawn.Unit
+                ; LD BC, #0106
+                ; CALL Spawn.Unit
+                ; LD BC, #0107
+                ; CALL Spawn.Unit
+                ; LD BC, #0108
+                ; CALL Spawn.Unit
+                ; LD BC, #0109
+                ; CALL Spawn.Unit
+                ; LD BC, #010A
+                ; CALL Spawn.Unit
+                ; LD BC, #010B
+                ; CALL Spawn.Unit
+                ; LD BC, #010C
+                ; CALL Spawn.Unit
+                ; LD BC, #010D
+                ; CALL Spawn.Unit
+                ; LD BC, #010E
+                ; CALL Spawn.Unit
+                ; LD BC, #010F
+                ; CALL Spawn.Unit
+                ; LD BC, #0300
+                ; CALL Spawn.Unit
+                ; LD BC, #0301
+                ; CALL Spawn.Unit
+                ; LD BC, #0102
+                ; CALL Spawn.Unit
+                ; LD BC, #0303
+                ; CALL Spawn.Unit
+                ; LD BC, #0304
+                ; CALL Spawn.Unit
+                ; LD BC, #0305
+                ; CALL Spawn.Unit
+                ; LD BC, #0306
+                ; CALL Spawn.Unit
+                ; LD BC, #0307
+                ; CALL Spawn.Unit
+                ; LD BC, #0308
+                ; CALL Spawn.Unit
+                ; LD BC, #0309
+                ; CALL Spawn.Unit
+                ; LD BC, #030A
+                ; CALL Spawn.Unit
+                ; LD BC, #040B
+                ; CALL Spawn.Unit
+                ; LD BC, #030C
+                ; CALL Spawn.Unit
+                ; LD BC, #040D
+                ; CALL Spawn.Unit
+                ; LD BC, #050E
+                ; CALL Spawn.Unit
+                ; LD BC, #020F
+                ; CALL Spawn.Unit
+                
+                ; ;
+                ; LD BC, #0600
+                ; CALL Spawn.Unit
+                ; LD BC, #0601
+                ; CALL Spawn.Unit
+                ; LD BC, #0602
+                ; CALL Spawn.Unit
+                ; LD BC, #0603
+                ; CALL Spawn.Unit
+                ; LD BC, #0604
+                ; CALL Spawn.Unit
+                ; LD BC, #0605
+                ; CALL Spawn.Unit
+                ; LD BC, #0606
+                ; CALL Spawn.Unit
+                ; LD BC, #0607
+                ; CALL Spawn.Unit
+                ; LD BC, #0608
+                ; CALL Spawn.Unit
+                ; LD BC, #0609
+                ; CALL Spawn.Unit
+                ; LD BC, #060A
+                ; CALL Spawn.Unit
+                ; LD BC, #060B
+                ; CALL Spawn.Unit
+                ; LD BC, #060C
+                ; CALL Spawn.Unit
+                ; LD BC, #060D
+                ; CALL Spawn.Unit
+                ; LD BC, #060E
+                ; CALL Spawn.Unit
+                ; LD BC, #060F
+                ; CALL Spawn.Unit
+                ; LD BC, #0900
+                ; CALL Spawn.Unit
+                ; LD BC, #0901
+                ; CALL Spawn.Unit
+                ; LD BC, #0902
+                ; CALL Spawn.Unit
+                ; LD BC, #0903
+                ; CALL Spawn.Unit
+                ; LD BC, #0904
+                ; CALL Spawn.Unit
+                ; LD BC, #0905
+                ; CALL Spawn.Unit
+                ; LD BC, #0906
+                ; CALL Spawn.Unit
+                ; LD BC, #0907
+                ; CALL Spawn.Unit
+                ; LD BC, #0908
+                ; CALL Spawn.Unit
+                ; LD BC, #0909
+                ; CALL Spawn.Unit
+                ; LD BC, #090A
+                ; CALL Spawn.Unit
+                ; LD BC, #090B
+                ; CALL Spawn.Unit
+                ; LD BC, #090C
+                ; CALL Spawn.Unit
+                ; LD BC, #090D
+                ; CALL Spawn.Unit
+                ; LD BC, #090E
+                ; CALL Spawn.Unit
+                ; LD BC, #090F
+                ; CALL Spawn.Unit
+                
                 
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
 
@@ -88,8 +207,55 @@ GameLoop:       ; initialize
 .Logic          ; ************* LOGIC *************
                 END_DUBUG_BORDER
 
+                LD HL, (TickCounterRef)
+                LD A, (.AA)
+                XOR L
+                RRA
+                RRA
+                RRA
+                RRA
+                JR NC, .Skip
+
+                LD A, L
+                LD (.AA), A
+                
+                 ; включить страницу
+                SeMemoryPage MemoryPage_Tilemap
+
+                LD HL, MapStructure + FMap.UnitsArray
+                LD E, (HL)
+                INC L
+                LD D, (HL)
+                EX DE, HL
+                
+                LD A, (HL)
+                OR %11000000
+                LD (HL), A
+
+                INC L
+                
+                LD A, (HL)
+                ADD A, #08
+                AND %00111000
+                LD (HL), A
+
+                LD HL, RenderBuffer + 17
+                LD DE, 16
+                LD A, RENDER_ALL_FLAGS
+                LD (HL), A
+                INC HL
+                LD (HL), A
+                ADD HL, DE
+                LD (HL), A
+                DEC HL
+                LD (HL), A
+                
+
+.Skip
                 ; ~ LOGIC
 
                 JP .MainLoop
+
+.AA             DB #00
 
                 endif ; ~_CORE_GAME_LOOP_

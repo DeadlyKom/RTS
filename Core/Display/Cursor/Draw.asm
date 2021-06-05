@@ -353,6 +353,8 @@ Restore:        ; show debug border
                 BEGIN_DEBUG_BORDER_COL RESTORE_CURSOR_COLOR
                 endif
                 
+                ; включим нужную страничку (экранную)
+                SeMemoryPage MemoryPage_ShadowScreen
                 ;
                 ResetFrameFlag RESTORE_CURSOR
 

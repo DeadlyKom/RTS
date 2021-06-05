@@ -2,14 +2,14 @@
                 page 0
                 
                 ORG #4000
-Size_0          EQU (SizePage_0 % 256 > 0) & 0x01 + (SizePage_0 >> 8)
-Size_1          EQU (SizePage_1 % 256 > 0) & 0x01 + (SizePage_1 >> 8)
-Size_2          EQU (SizePage_2 % 256 > 0) & 0x01 + (SizePage_2 >> 8)
-Size_3          EQU (SizePage_3 % 256 > 0) & 0x01 + (SizePage_3 >> 8)
-Size_4          EQU (SizePage_4 % 256 > 0) & 0x01 + (SizePage_4 >> 8)
-Size_5          EQU (SizePage_5 % 256 > 0) & 0x01 + (SizePage_5 >> 8)
-Size_6          EQU (SizePage_6 % 256 > 0) & 0x01 + (SizePage_6 >> 8)
-Size_7          EQU (SizePage_7 % 256 > 0) & 0x01 + (SizePage_7 >> 8)
+Size_0          EQU ((SizePage_0 % 256 > 0) & 0x01) + (SizePage_0 >> 8)
+Size_1          EQU ((SizePage_1 % 256 > 0) & 0x01) + (SizePage_1 >> 8)
+Size_2          EQU ((SizePage_2 % 256 > 0) & 0x01) + (SizePage_2 >> 8)
+Size_3          EQU ((SizePage_3 % 256 > 0) & 0x01) + (SizePage_3 >> 8)
+Size_4          EQU ((SizePage_4 % 256 > 0) & 0x01) + (SizePage_4 >> 8)
+Size_5          EQU ((SizePage_5 % 256 > 0) & 0x01) + (SizePage_5 >> 8)
+Size_6          EQU ((SizePage_6 % 256 > 0) & 0x01) + (SizePage_6 >> 8)
+Size_7          EQU ((SizePage_7 % 256 > 0) & 0x01) + (SizePage_7 >> 8)
 
 TilemapAddress  EQU MemoryPage_1.Tilemap
 TilemapSize     EQU MemoryPage_1.MapSize

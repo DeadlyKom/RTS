@@ -41,18 +41,18 @@ Killed              DB #00                          ; 1 byte (количеств
                     ends
 
 
-                    struct FUnitLocation            ; (1)
-TilePosition        FLocation                       ; 2 bytes (позиция в тайлах)
-OffsetByPixel       FLocation                       ; 2 bytes (смещение относительно тайла)
-
-                    ends
-
-
-                    struct FUnitState               ; (2)
+                    struct FUnitState               ; (1)
 Behavior            DB #00                          ; 1 byte (состояния поведения)
 Direction           DB #00                          ; 1 byte (направления)
 Type                DB #00                          ; 1 byte (тип юнита)
 Animation           DB #00                          ; 1 byte (номер анимации * 8)
+
+                    ends
+
+                    
+                    struct FUnitLocation            ; (2)
+TilePosition        FLocation                       ; 2 bytes (позиция в тайлах)
+OffsetByPixel       FLocation                       ; 2 bytes (смещение относительно тайла)
 
                     ends
 

@@ -24,10 +24,12 @@ TilemapBuffer               EQU #BF00                               ; адрес
 BypassFOW                   EQU Page_7_BypassFOW                    ; адресс таблицы обхода FOW
 TimeOfDayChangeRate         EQU 50 * 60                             ; скорость смены времени дня
 
+TickCounterRef              EQU Interrupt.TickCounter               ; счётчик тиков 1/50
 FrameStateRef               EQU Game.FrameFlags                     ; указатель на флага состояний (frame)
 HardwareStateRef            EQU Game.HardwareFlags                  ; указатель на флаг ограничений железа
 
 CountUnitsRef               EQU MemoryPage_1.UnitCounter            ; счётчик юнитов
+FrareUnitsFlagRef           EQU Game.FrameUnitsFlag                 ; флаг обновления юнитов принудительно (необходим для скролинга)
 
 TilesOnScreenX              EQU 16                                  ; количество тайлов на экране по горизонтали
 TilesOnScreenY              EQU 12                                  ; количество тайлов на экране по вертикали

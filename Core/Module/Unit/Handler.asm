@@ -33,6 +33,21 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 JP Z, .Exit
                 LD (.ProcessedUnits), A
 
+                ; проверка на перерисовку всех юнитов
+                LD HL, FrareUnitsFlagRef
+                SRA (HL)
+                JR NC, .Modify
+
+                EX DE, HL
+                LD A, (HL)
+                AND %00111111
+                LD (HL), A
+                EX DE, HL
+
+                PUSH DE
+                JP .L1
+.Modify         
+
                 ; ---------------------------------------------
                 ; Lx, Ly   - позиция юнита (в тайлах)
                 ; Vx, Vy   - позиция видимой области карты (в тайлах)
@@ -41,7 +56,29 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 ; SOx, SOy - смещение спрайта (в пикселах)
                 ; ---------------------------------------------
 
-.Loop           ; грубый расчёт
+.Loop           PUSH DE                     ; save current address UnitsArray
+
+                ; проврка на перерисовку текущего юнта
+                LD A, (DE)
+                AND %11000000
+                JP Z, .PreNextUnit
+
+                ; сброс состояния обновления спрайта юнита
+                EX DE, HL
+                LD A, (HL)
+                LD E, A
+                AND %0011111
+                LD D, A
+                LD A, E
+                RRA
+                AND %11000000
+                OR D
+                LD (HL), A
+                EX DE, HL
+
+.L1             INC D                       ; переход к стурктуре FUnitLocation
+
+                ; грубый расчёт
                 LD HL, TilemapOffsetRef
 
                 ; position_x = (Lx - Vx) + 1
@@ -50,9 +87,9 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 SUB (HL)
                 INC HL
                 INC A
-                JP M, .NextUnit                                     ; position_x < 0, находится левее экран
+                JP M, .PreNextUnit                                  ; position_x < 0, находится левее экран
                 CP TilesOnScreenX + 2
-                JP NC, .NextUnit                                    ; position_x >= 18, находится правее экрана
+                JP NC, .PreNextUnit                                 ; position_x >= 18, находится правее экрана
 
                 ; ---------------------------------------------
                 ; A = [0..17] - position_x
@@ -63,20 +100,20 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 LD A, (DE)
                 SUB (HL)
                 INC A
-                JP M, .NextUnit                                     ; position_y < 0, находится левее экран
+                JP M, .PreNextUnit                                  ; position_y < 0, находится левее экран
                 CP TilesOnScreenY + 2
-                JP NC, .NextUnit                                    ; position_y >= 14, находится правее экрана
+                JP NC, .PreNextUnit                                 ; position_y >= 14, находится правее экрана
 
                 ; ---------------------------------------------
                 ; A = [0..13] - position_y
                 ; ---------------------------------------------
                 EX AF, AF'                  ; save position_y
-                PUSH DE                     ; save current address UnitsArray
+                ; PUSH DE                     ; save current address UnitsArray
                 XOR A
                 LD (.SpriteOffset), A       ; отсутствует пропуск байт в спрайте
 
                 ; получение адреса хранения информации о спрайте
-                INC D                                               ; перейдём на адрес структуры FUnitState
+                DEC D                                               ; перейдём на адрес структуры FUnitState
                 DEC E
                 CALL Animation.SpriteInfo                           ; получение информации о спрайте
 
@@ -100,7 +137,7 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 ; B - вертикальное смещение в пикселях (SOy), C - высота спрайта в пикселях (Sy)
                 ; ---------------------------------------------
 
-                DEC D                                               ; перейдём на адрес структуры FUnitLocation + 3
+                INC D                                               ; перейдём на адрес структуры FUnitLocation + 3
                 
                 ; добавить смещение относительно тайла (можно объеденить с константным значением 8)
                 ; (Oy + 8)
@@ -520,7 +557,6 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 ; ---------------------------------------------
 .SpriteSize     EQU $+1
                 LD BC, #0000
-                LD BC, #0110
                 ; ---------------------------------------------
                 ; копирование спрайта в буфер
                 ; ---------------------------------------------
@@ -544,8 +580,8 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 ;
                 LD (.ContainerSP), SP
 
-                RestoreBC
                 ; protection data corruption during interruption
+                RestoreBC
                 LD C, (HL)
                 INC L
                 LD B, (HL)
@@ -591,6 +627,7 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
 .PreNextUnit    POP DE                      ; restore address UnitsArray
 
 .NextUnit       INC E
+                INC E
                 INC E
                 INC E
                 ;

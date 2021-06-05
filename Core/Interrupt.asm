@@ -34,6 +34,12 @@ Handler:            ; ********** HANDLER IM 2 *********
                     LD (.RestoreMemPage + 1), A
                     ; ~ SAVE MEMORY PAGE
 
+.TickCounter        ; ********** TICK COUNTER *********
+                    LD HL, (TickCounterRef)
+                    INC HL
+                    LD (TickCounterRef), HL
+                    ; ~  TICK COUNTER
+
 .Mouse              ; ************* MOUSE *************
                     ifdef ENABLE_MOUSE
                     ; mouse handling
@@ -204,8 +210,8 @@ Initialize:         ; **** INITIALIZE HANDLER IM 2 ****
                     HALT
                     RET
                     ; ~ INITIALIZE HANDLER IM 2
-InterruptCounter:	DB #CE
 TimeOfDay:          DW TimeOfDayChangeRate
+TickCounter:        DW #0000
 
                     endmodule
 
