@@ -8,7 +8,7 @@ PlayMusic:      ; show debug border
                 endif
 
                 ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_Music
+                SeMemoryPage MemoryPage_Music, MUSIC_PLAY_ID
                 CALL #C005
 
                 ; revert old debug border

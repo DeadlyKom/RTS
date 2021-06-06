@@ -6,8 +6,8 @@ GameLoop:       ; initialize
                 SetFrameFlag SWAP_SCREENS_FLAG
 
                 ; add unit
-                SeMemoryPage MemoryPage_Tilemap
-                LD BC, #0606
+                SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
+                LD BC, #070F
                 CALL Spawn.Unit
                 ; LD BC, #0101
                 ; CALL Spawn.Unit
@@ -147,7 +147,7 @@ GameLoop:       ; initialize
 .Render         ; ************ RENDER ************      
 
                 ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_ShadowScreen
+                SeMemoryPage MemoryPage_ShadowScreen, RENDER_BEGIN_ID
                 ResetFrameFlag ALLOW_MOVE_TILEMAP
 
 .Tilemap        ; ************ TILEMAP ************
@@ -180,7 +180,7 @@ GameLoop:       ; initialize
 
                 ; ---------------------------------
                 ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_ShadowScreen
+                SeMemoryPage MemoryPage_ShadowScreen, RENDER_FOW_BEGIN_ID
                 
 .FOW            ; ************** FOW **************
                 ifdef ENABLE_FOW
@@ -207,9 +207,9 @@ GameLoop:       ; initialize
 .Logic          ; ************* LOGIC *************
                 END_DUBUG_BORDER
 
-                ; JP .MainLoop
+                JP .MainLoop
 
-                LD HL, (TickCounterRef)
+Test:           LD HL, (TickCounterRef)
                 LD A, (.AA)
                 XOR L
                 RRA
@@ -221,11 +221,13 @@ GameLoop:       ; initialize
                 LD A, L
                 LD (.AA), A
 
-                ; включить страницу
-                SeMemoryPage MemoryPage_Tilemap
+                ; JP .MainLoop
 
                 XOR A
                 CALL Unit.RefUnitOnScr
+
+                ; включить страницу
+                SeMemoryPage MemoryPage_Tilemap, DRAFT_ROTATE_ID
                 
                 LD HL, MapStructure + FMap.UnitsArray
                 LD E, (HL)
@@ -240,10 +242,10 @@ GameLoop:       ; initialize
                 AND %00111000
                 LD (HL), A
                 
-.Skip
+.Skip           RET
                 ; ~ LOGIC
 
-                JP .MainLoop
+                ; JP .MainLoop
 
 .AA             DB #00
 

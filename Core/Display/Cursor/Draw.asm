@@ -292,7 +292,7 @@ Draw:           LD (.CurrentScreen), A
 
 .Draw           ; установим страницу спрайта
                 POP AF                                      ; A - номер странички спрайта (F - dummy)
-                SeMemoryPage_A
+                SeMemoryPage_A CURSOR_SPR_PAGE_ID
 
                 ; модификация адреса спрайта
                 POP HL                                      ; HL указывает на - адрес спрайта
@@ -354,7 +354,7 @@ Restore:        ; show debug border
                 endif
                 
                 ; включим нужную страничку (экранную)
-                SeMemoryPage MemoryPage_ShadowScreen
+                SeMemoryPage MemoryPage_ShadowScreen, CURSOR_RESTORE_ID
                 ;
                 ResetFrameFlag RESTORE_CURSOR
 

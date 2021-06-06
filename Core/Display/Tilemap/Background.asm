@@ -4,8 +4,13 @@
 
                 defarray TileAddressTable4000 #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080, #50C0
                 defarray TileAddressTableC000 #C000, #C040, #C080, #C0C0, #C800, #C840, #C880, #C8C0, #D000, #D040, #D080, #D0C0
-Prepare:        ; toggle to memory page with tilemap
-                SeMemoryPage MemoryPage_Tilemap
+Prepare:        ; show debug border
+                ifdef SHOW_DEBUG_BORDER_SCROLL_PREPARE
+                BEGIN_DEBUG_BORDER_COL SCROLL_COLOR
+                endif
+
+                ; toggle to memory page with tilemap
+                SeMemoryPage MemoryPage_Tilemap, PREPARE_ID
 
                 ; copy the visible block of the tilemap
                 LD HL, (TilemapRef)
@@ -21,6 +26,10 @@ Prepare:        ; toggle to memory page with tilemap
                 ;
                 LD A, #03
                 LD (FrareUnitsFlagRef), A
+
+                ifdef SHOW_DEBUG_BORDER_TILEMAP
+                END_DUBUG_BORDER
+                endif
 
                 RET
 

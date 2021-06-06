@@ -55,7 +55,7 @@ SBP_16_0_RS:            EXX
                         INC D
                         LD A, D
                         AND #07
-                        JP NZ, $+19
+                        JP NZ, $+18
                         LD A, E
                         SUB #E0
                         LD E, A
@@ -65,7 +65,6 @@ SBP_16_0_RS:            EXX
                         LD D, A
 
                         ; - костыль (чтобы не рисовать в атрибутах)
-                        LD A, D
                         AND %00011000
                         ADD A, #E8
                         JR Z, .NextRow

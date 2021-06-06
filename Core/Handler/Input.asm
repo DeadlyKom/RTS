@@ -40,6 +40,7 @@ ScanMoveMap:    ; save the current address of the visible area of the tilemap
                 OR A
                 SBC HL, DE
                 CALL NZ, Tilemap.Prepare
+                CALL Game.Test
 
                 RET
 

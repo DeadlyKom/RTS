@@ -12,7 +12,8 @@
                             include "../Core/Macro.inc"
                     
                             define TRD_FILENAME "Torn Metal.trd"    ; имя образа TRD
-StackTop                    EQU #5BFD                               ; расположение стека
+StackTop                    EQU #5BFB                               ; расположение стека
+MemoryPageIDRef             EQU #5BFC                               ; ID
 MemoryPageRef               EQU #5BFE                               ; адрес хранения номера странички
 BorderStorageStackRef       EQU #5BFF                               ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания

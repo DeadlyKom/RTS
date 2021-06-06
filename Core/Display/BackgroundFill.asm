@@ -24,7 +24,7 @@ BackgroundFill: ;
                 AND %00000111
                 OUT (#FE), A
 
-                SeMemoryPage MemoryPage_ShadowScreen
+                SeMemoryPage MemoryPage_ShadowScreen, BACKGROUND_FILL_ID
 
                 LD HL, #C000 + #1800 + #0300
                 CALL MEMSET.SafeFill_768

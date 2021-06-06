@@ -2,7 +2,7 @@
                 ifndef _CORE_DISPLAY_TILEMAP_CONTROLL_
                 define _CORE_DISPLAY_TILEMAP_CONTROLL_
 Initialize:     ; toggle to memory page with tilemap
-                SeMemoryPage MemoryPage_Tilemap
+                SeMemoryPage MemoryPage_Tilemap, TILEMAP_INIT_ID
 
                 ; инициализация перменных (из загруженной карты)
                 XOR A

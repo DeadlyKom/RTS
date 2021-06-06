@@ -14,7 +14,7 @@ Initialize:             ; reset all flags
                         ifdef ENABLE_MUSIC
 
                         ; toggle to memory page with tile sprites
-                        SeMemoryPage MemoryPage_Music
+                        SeMemoryPage MemoryPage_Music, MUSIC_INIT_ID
                         LD A, R
                         RRA
                         LD HL, #D11B
@@ -27,7 +27,7 @@ Initialize:             ; reset all flags
                         ; claer screen
                         ifdef ENABLE_CLS
                         CLS_0
-                        SeMemoryPage MemoryPage_ShadowScreen
+                        SeMemoryPage MemoryPage_ShadowScreen, CLS_ID
                         CLS_1
                         endif
 

@@ -10,7 +10,7 @@
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
 Handler:        ; включить страницу
-                SeMemoryPage MemoryPage_Tilemap
+                SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_BEGIN_ID
 
                 ; инициализация
 
@@ -247,7 +247,7 @@ Handler:        ; включить страницу
                 ; ---------------------------------------------
                 ; L - хранит номер верхней линии спрайта
 .ClipAtBottom   ; если не чётное увеличим в большую сторону (портит 32 байта после экранной области!)
-                ADD A, E                                            ; А - хранит количество пропускаемых строк
+                ADD A, C                                            ; А - хранит количество пропускаемых строк
                 RRA
                 ADC A, #00
                 RLA
@@ -602,7 +602,7 @@ Handler:        ; включить страницу
                 ; установим страницу спрайта
                 ; ---------------------------------------------
                 LD A, D
-                SeMemoryPage_A
+                SeMemoryPage_A RENDER_UINT_PAGE_SPR_ID
 
                 ; ---------------------------------------------
                 ; модификация адреса спрайта
@@ -627,7 +627,7 @@ Handler:        ; включить страницу
                 BIT 7, D                    ; 7 бит, говорит об использовании маски по смещению
                 CALL MEMCPY.Sprite
 
-                SeMemoryPage MemoryPage_ShadowScreen
+                SeMemoryPage MemoryPage_ShadowScreen, UNIT_HANDLER_RENDER_ID
 
                 ; ---------------------------------------------
                 ; корректировка адреса экран
@@ -683,7 +683,7 @@ Handler:        ; включить страницу
                 LD SP, #0000
 
                 ; включить страницу 
-                SeMemoryPage MemoryPage_Tilemap
+                SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_IT_ID
 
                 ; ---------------------------------------------
                 ; всё же, спрайт за пределами экрана

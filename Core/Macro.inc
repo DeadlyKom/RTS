@@ -9,13 +9,17 @@
 ; Corrupt:
 ;   BC, AF
 ; -----------------------------------------
-SeMemoryPage            macro Page?
+SeMemoryPage            macro Page?, ID?
                         LD A, (MemoryPageRef)
                         AND %11111000
                         OR Page?
                         LD (MemoryPageRef), A
                         LD BC, PORT_7FFD
                         OUT (C), A
+                        ifdef DEBUG_PAGE_ID
+                        LD A, ID?
+                        LD (MemoryPageIDRef), A
+                        endif
                         endm
 ; -----------------------------------------
 ;
@@ -25,7 +29,7 @@ SeMemoryPage            macro Page?
 ; Corrupt:
 ;   BC
 ; -----------------------------------------
-SeMemoryPage_A          macro
+SeMemoryPage_A          macro ID?
                         AND %00000111
                         LD C, A
                         LD A, (MemoryPageRef)
@@ -34,6 +38,10 @@ SeMemoryPage_A          macro
                         LD (MemoryPageRef), A
                         LD BC, PORT_7FFD
                         OUT (C), A
+                        ifdef DEBUG_PAGE_ID
+                        LD A, ID?
+                        LD (MemoryPageIDRef), A
+                        endif
                         endm
 SwapScreens             macro
                         LD A, (MemoryPageRef)
