@@ -10,7 +10,7 @@
                 define ENABLE_FOW                           ; разрешить туман войны
                 define ENABLE_CLS                           ; разрешить очистить 2 экрана перед стартом
 
-                define SHOW_DEBUG_BORDER                    ; разрешить отображать на бордюре время выполнение
+                ; define SHOW_DEBUG_BORDER                    ; разрешить отображать на бордюре время выполнение
                 define SHOW_DEBUG_BORDER_TILEMAP            ; отображение на бордюре время отображения бэкграунда карты
                 define SHOW_DEBUG_BORDER_SCROLL_PREPARE     ; отображение на бордюре время операции подготовки нового участка тайловой карты
                 define SHOW_DEBUG_BORDER_DRAW_UNITS         ; отображение на бордюре время отображения юнитов

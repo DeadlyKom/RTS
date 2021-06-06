@@ -31,7 +31,7 @@ Handler:        ; включить страницу
                 ; проверка на перерисовку всех юнитов принудительно
                 LD HL, FrareUnitsFlagRef
                 SRA (HL)
-                LD A, #1F                               ; #1F для AND
+                LD A, #7F                               ; #3F для AND
                 LD HL, #C312                            ; LD (DE), A : JP
                 LD BC, .Force
                 JR C, .Modify                           ; включим пропуск проверки обновления юнита

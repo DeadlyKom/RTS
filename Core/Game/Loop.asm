@@ -7,7 +7,7 @@ GameLoop:       ; initialize
 
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
-                LD BC, #070F
+                LD BC, #0F09
                 CALL Spawn.Unit
                 ; LD BC, #0101
                 ; CALL Spawn.Unit
@@ -215,7 +215,9 @@ Test:           LD HL, (TickCounterRef)
                 RRA
                 RRA
                 RRA
-                RRA
+                ; RRA
+                ; RRA
+                ; RRA
                 JR NC, .Skip
 
                 LD A, L
