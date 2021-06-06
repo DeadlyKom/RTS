@@ -91,7 +91,7 @@ DisplayRowFOW:  ;
                 ; JP .NextTile
 
                 ; calculate
-                LD B, HIGH TilemapBuffer                            ; hight byte SharedBuffer
+                LD B, HIGH TilemapBuffer                            ; hight byte TilemapBuffer
 
                 rept 4
                 LD C, (HL)
@@ -314,7 +314,13 @@ DisplayRowFOW:  ;
 
                 JP .NextTile
 
-.NextTile_      ; move to next column
+.NextTile_      ; skip four directions
+                INC BC
+                INC BC
+                INC BC
+                INC BC
+                
+                ; move to next column
                 EXX
                 INC C
                 INC C
