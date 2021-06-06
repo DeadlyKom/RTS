@@ -78,51 +78,51 @@ SpritesTable:
                 DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 3 (?)
 
 .Infantry_0_0_1 ; t - 0 (), d - 0 (up), s - 1 (move)
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_0   ; напровление 0, индекс анимации 0
-                FSprite 16-2,     8-1,      2,      8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_1   ; напровление 0, индекс анимации 1
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_2   ; напровление 0, индекс анимации 2
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_3   ; напровление 0, индекс анимации 3
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_0   ; напровление 0, индекс анимации 0
+                FSprite 16-2,     8-1,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_1   ; напровление 0, индекс анимации 1
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_2   ; напровление 0, индекс анимации 2
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_0_3   ; напровление 0, индекс анимации 3
 
 .Infantry_0_1_1 ; t - 0 (), d - 1 (up-right), s - 1 (move)
-                FSprite 16-2,     8-1,      2,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_1_0   ; напровление 1, индекс анимации 0
-                FSprite 16-4,     8-1,      2,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_1_1   ; напровление 1, индекс анимации 1
-                FSprite 16-2,     8-1,      2,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_1_2   ; напровление 1, индекс анимации 2
-                FSprite 16-2,     8-1,      2,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_1_3   ; напровление 1, индекс анимации 3
+                FSprite 16-2,     8-1,      2,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_1_0   ; напровление 1, индекс анимации 0
+                FSprite 16-4,     8-1,      2,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_1_1   ; напровление 1, индекс анимации 1
+                FSprite 16-2,     8-1,      2,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_1_2   ; напровление 1, индекс анимации 2
+                FSprite 16-2,     8-1,      2,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_1_3   ; напровление 1, индекс анимации 3
 
 .Infantry_0_2_1 ; t - 0 (), d - 2 (right), s - 1 (move)
-                FSprite 16-2,     8-1,      2,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_2_0   ; напровление 2, индекс анимации 0
-                FSprite 16-2,     8-1,      2,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_2_1   ; напровление 2, индекс анимации 1
-                FSprite 16-2,     8-1,      2,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_2_2   ; напровление 2, индекс анимации 2
-                FSprite 16-2,     8-1,      2,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_2_3   ; напровление 2, индекс анимации 3
+                FSprite 16-2,     8-1,      2,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_2_0   ; напровление 2, индекс анимации 0
+                FSprite 16-2,     8-1,      2,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_2_1   ; напровление 2, индекс анимации 1
+                FSprite 16-2,     8-1,      2,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_2_2   ; напровление 2, индекс анимации 2
+                FSprite 16-2,     8-1,      2,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_2_3   ; напровление 2, индекс анимации 3
 
 .Infantry_0_3_1 ; t - 0 (), d - 3 (down-right), s - 1 (move)
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_3_0   ; напровление 3, индекс анимации 0
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_3_1   ; напровление 3, индекс анимации 1
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_3_2   ; напровление 3, индекс анимации 2
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_3_3   ; напровление 3, индекс анимации 3
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_3_0   ; напровление 3, индекс анимации 0
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_3_1   ; напровление 3, индекс анимации 1
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_3_2   ; напровление 3, индекс анимации 2
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_3_3   ; напровление 3, индекс анимации 3
 
 .Infantry_0_4_1 ; t - 0 (), d - 4 (down), s - 1 (move)
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_4_0   ; напровление 4, индекс анимации 0
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_4_1   ; напровление 4, индекс анимации 1
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_4_2   ; напровление 4, индекс анимации 2
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_4_3   ; напровление 4, индекс анимации 3
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_4_0   ; напровление 4, индекс анимации 0
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_4_1   ; напровление 4, индекс анимации 1
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_4_2   ; напровление 4, индекс анимации 2
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_4_3   ; напровление 4, индекс анимации 3
 
 .Infantry_0_5_1 ; t - 0 (), d - 5 (down-left), s - 1 (move)
-                FSprite 16-2,     8-1,      2,      8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_5_0   ; напровление 5, индекс анимации 0
-                FSprite 16-2,     8-1,      2,      8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_5_1   ; напровление 5, индекс анимации 1
-                FSprite 16-2,     8-1,      2,      8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_5_2   ; напровление 5, индекс анимации 2
-                FSprite 16-2,     8-1,      2,      8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_5_3   ; напровление 5, индекс анимации 3
+                FSprite 16-2,     8-1,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_5_0   ; напровление 5, индекс анимации 0
+                FSprite 16-2,     8-1,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_5_1   ; напровление 5, индекс анимации 1
+                FSprite 16-2,     8-1,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_5_2   ; напровление 5, индекс анимации 2
+                FSprite 16-2,     8-1,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_5_3   ; напровление 5, индекс анимации 3
 
 .Infantry_0_6_1 ; t - 0 (), d - 6 (left), s - 1 (move)
-                FSprite 16-2,     8-1,      2,      8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_6_0   ; напровление 6, индекс анимации 0
-                FSprite 16-2,     8-1,      2,      8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_6_1   ; напровление 6, индекс анимации 1
-                FSprite 16-2,     8-1,      2,      8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_6_2   ; напровление 6, индекс анимации 2
-                FSprite 16-2,     8-1,      2,      8,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_6_3   ; напровление 6, индекс анимации 3
+                FSprite 16-2,     8-1,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_6_0   ; напровление 6, индекс анимации 0
+                FSprite 16-2,     8-1,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_6_1   ; напровление 6, индекс анимации 1
+                FSprite 16-2,     8-1,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_6_2   ; напровление 6, индекс анимации 2
+                FSprite 16-2,     8-1,      2,     12,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_6_3   ; напровление 6, индекс анимации 3
 
 .Infantry_0_7_1 ; t - 0 (), d - 7 (up-left), s - 1 (move)
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_7_0   ; напровление 7, индекс анимации 0
-                FSprite 16-4,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_7_1   ; напровление 7, индекс анимации 1
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_7_2   ; напровление 7, индекс анимации 2
-                FSprite 16-2,     8-1,      1,      0,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_7_3   ; напровление 7, индекс анимации 3
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_7_0   ; напровление 7, индекс анимации 0
+                FSprite 16-4,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_7_1   ; напровление 7, индекс анимации 1
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_7_2   ; напровление 7, индекс анимации 2
+                FSprite 16-2,     8-1,      1,      4,      0, MemoryPage_Sprites_0,    MemoryPage_0.SolderA_Move_7_3   ; напровление 7, индекс анимации 3
 
                 endif ; ~_SPRITES_TABLE_

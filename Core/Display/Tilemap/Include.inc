@@ -7,6 +7,7 @@
                 include "Controll.asm"
                 include "Background.asm"
                 include "FogOfWar.asm"
+                include "TileUpdate.asm"
 
                 endmodule
 

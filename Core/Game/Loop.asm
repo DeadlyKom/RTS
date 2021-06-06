@@ -7,7 +7,7 @@ GameLoop:       ; initialize
 
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap
-                LD BC, #0101
+                LD BC, #0606
                 CALL Spawn.Unit
                 ; LD BC, #0101
                 ; CALL Spawn.Unit
@@ -207,6 +207,8 @@ GameLoop:       ; initialize
 .Logic          ; ************* LOGIC *************
                 END_DUBUG_BORDER
 
+                ; JP .MainLoop
+
                 LD HL, (TickCounterRef)
                 LD A, (.AA)
                 XOR L
@@ -218,19 +220,18 @@ GameLoop:       ; initialize
 
                 LD A, L
                 LD (.AA), A
-                
-                 ; включить страницу
+
+                ; включить страницу
                 SeMemoryPage MemoryPage_Tilemap
 
+                XOR A
+                CALL Unit.RefUnitOnScr
+                
                 LD HL, MapStructure + FMap.UnitsArray
                 LD E, (HL)
                 INC L
                 LD D, (HL)
                 EX DE, HL
-                
-                LD A, (HL)
-                OR %11000000
-                LD (HL), A
 
                 INC L
                 
@@ -238,19 +239,7 @@ GameLoop:       ; initialize
                 ADD A, #08
                 AND %00111000
                 LD (HL), A
-
-                LD HL, RenderBuffer + 17
-                LD DE, 16
-                LD A, RENDER_ALL_FLAGS
-                LD (HL), A
-                INC HL
-                LD (HL), A
-                ADD HL, DE
-                LD (HL), A
-                DEC HL
-                LD (HL), A
                 
-
 .Skip
                 ; ~ LOGIC
 

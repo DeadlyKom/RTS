@@ -5,6 +5,7 @@
                 module Unit
 
                 include "Handler.asm"
+                include "RenderUpdate.asm"
 
                 endmodule
 

@@ -9,12 +9,7 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-Handler:        ; ******** SAVE MEMORY PAGE *******
-                ; LD A, (MemoryPageRef)
-                ; LD (.RestoreMemPage + 1), A
-                ; ~ SAVE MEMORY PAGE
-
-                ; включить страницу
+Handler:        ; включить страницу
                 SeMemoryPage MemoryPage_Tilemap
 
                 ; инициализация
@@ -33,20 +28,21 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 JP Z, .Exit
                 LD (.ProcessedUnits), A
 
-                ; проверка на перерисовку всех юнитов
+                ; проверка на перерисовку всех юнитов принудительно
                 LD HL, FrareUnitsFlagRef
                 SRA (HL)
-                JR NC, .Modify
+                LD A, #1F                               ; #1F для AND
+                LD HL, #C312                            ; LD (DE), A : JP
+                LD BC, .Force
+                JR C, .Modify                           ; включим пропуск проверки обновления юнита
+                LD A, #C0                               ; #C0 для AND
+                LD HL, #00CA | (LOW  .PreNextUnit << 8) ; JP Z,. PreNextUnit
+                LD BC, #EB00 | (HIGH .PreNextUnit << 0) ; EX DE, HL
 
-                EX DE, HL
-                LD A, (HL)
-                AND %00111111
-                LD (HL), A
-                EX DE, HL
-
-                PUSH DE
-                JP .L1
-.Modify         
+.Modify         ; модификация кода
+                LD (.ModifyCode + 0), A
+                LD (.ModifyCode + 1), HL
+                LD (.ModifyCode + 3), BC
 
                 ; ---------------------------------------------
                 ; Lx, Ly   - позиция юнита (в тайлах)
@@ -60,6 +56,7 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
 
                 ; проврка на перерисовку текущего юнта
                 LD A, (DE)
+.ModifyCode     EQU $+1
                 AND %11000000
                 JP Z, .PreNextUnit
 
@@ -76,7 +73,7 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 LD (HL), A
                 EX DE, HL
 
-.L1             INC D                       ; переход к стурктуре FUnitLocation
+.Force          INC D                                               ; переход к стурктуре FUnitLocation
 
                 ; грубый расчёт
                 LD HL, TilemapOffsetRef
@@ -108,7 +105,6 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 ; A = [0..13] - position_y
                 ; ---------------------------------------------
                 EX AF, AF'                  ; save position_y
-                ; PUSH DE                     ; save current address UnitsArray
                 XOR A
                 LD (.SpriteOffset), A       ; отсутствует пропуск байт в спрайте
 
@@ -181,7 +177,11 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 ; расчитаем верхнюю часть спрайта
                 ; offset_y -= Sy
                 LD A, L                                             ; L - хранит номер нижней линии спрайта
+                ; !!!!!!!!!!!!!!!!!!!!!! Top Line
+                ; LD (.BottomRow), A
                 SUB C
+                ; !!!!!!!!!!!!!!!!!!!!!! Bottom Line
+                ; LD (.TopRow), A
                 JP C, .ClipAtTop                                    ; урезан верхней частью экрана
                 LD L, A                                             ; L - хранит номер верхней линии спрайта
                 ADD A, #40
@@ -271,7 +271,7 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 LD (.ContainerSpr_), HL
 
                 ; ---------------------------------------------
-                ; B - горизонтальное смещение в пикселях (SOx), C - ширина спрайта в знакоместах (Sx)
+                ; E - горизонтальное смещение в пикселях (SOx), C - ширина спрайта в знакоместах (Sx)
                 ; ---------------------------------------------
 
                 ; сохраним ширину спрайта
@@ -327,12 +327,23 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 JP M, .PreNextUnit                          ; offset_x - значение отрицательное
                 JP Z, .PreNextUnit                          ; offset_x - значение нулевое
 
+                ; !!!!!!!!!!!!!!!!!!!!!! Left Line
+                ; LD A, L
+                ; LD (.RightColumn), A
+
                 ; расчитаем левую часть спрайта
                 ; offset_x -= Sx
                 XOR A
                 LD D, A
                 LD E, B
                 SBC HL, DE
+
+                ; !!!!!!!!!!!!!!!!!!!!!! Right Line
+                ; EX AF, AF'
+                ; LD A, L
+                ; LD (.LeftColumn), A
+                ; EX AF, AF'
+
                 JP Z, .SpriteNotShift                       ; на краю экрана ???????????????
                 JP C, .ClipAtLeft                           ; урезан левой частью экрана
                 OR H
@@ -526,6 +537,59 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 LD (VisibleUnits), A
                 endif
 
+;                 ; ---------------------------------------------
+;                 ; пометка областей требующие перерисовки
+;                 ; ---------------------------------------------
+; .TopRow         EQU $+1
+;                 LD A, #00
+;                 AND %11110000
+;                 LD C, A
+; .BottomRow      EQU $+1
+;                 LD A, #00
+;                 AND %11110000
+;                 SUB C
+;                 RRA
+;                 RRA
+;                 RRA
+;                 RRA
+;                 INC A
+;                 LD B, A
+
+;                 ;
+;                 XOR A
+;                 LD HL, .LeftColumn
+;                 RLD
+;                 LD E, A
+                
+;                 INC HL
+;                 RLD
+;                 SUB E
+;                 INC A
+;                 LD D, A
+
+;                 ;
+;                 LD H, HIGH RenderBuffer
+;                 LD A, C
+;                 ADD A, E
+;                 LD E, A
+                
+                
+; .LoopRow        ; LD A, #80; + #40; + #20 + #10
+;                 LD C, D
+;                 LD L, E
+; .LoopColumn     ; LD (HL), A
+;                 SCF
+;                 RR (HL)
+;                 ; SCF
+;                 ; RR (HL)
+;                 INC L
+;                 DEC C
+;                 JR NZ, .LoopColumn
+;                 LD A, E
+;                 ADD A, TilesOnScreenX
+;                 LD E, A
+;                 DJNZ .LoopRow
+                
 .ContainerSpr_  EQU $+1
                 LD HL, #0000
 
@@ -635,18 +699,17 @@ Handler:        ; ******** SAVE MEMORY PAGE *******
                 DEC (HL)
                 JP NZ, .Loop
 
-.Exit           
-.RestoreMemPage ; ****** RESTORE MEMORY PAGE ******
-                ; LD A, #00
-                ; SeMemoryPage_A
-                ; ~ RESTORE MEMORY PAGE
+.Exit           RET
 
-                RET
+; .LeftColumn     DB #00
+; .RightColumn    DB #00
 
 .ProcessedUnits DB #00
 
                 ifdef SHOW_VISIBLE_UNITS
 VisibleUnits    DB #00
+
                 endif
+
 
                 endif ; ~ _CORE_MODULE_UNIT_HANDLER_
