@@ -7,7 +7,7 @@
                 define DEBUG_PAGE_ID                        ; писать кто переключил страницу
                 ; define ENABLE_MUSIC                         ; разрешить музыку
                 define ENABLE_MOUSE                         ; разрешить мышь
-                define ENABLE_FOW                           ; разрешить туман войны
+                ; define ENABLE_FOW                           ; разрешить туман войны
                 define ENABLE_CLS                           ; разрешить очистить 2 экрана перед стартом
 
                 ; define SHOW_DEBUG_BORDER                    ; разрешить отображать на бордюре время выполнение

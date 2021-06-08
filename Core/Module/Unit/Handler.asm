@@ -208,7 +208,7 @@ Handler:        ; включить страницу
                 LD H, (HL)
                 LD L, A
 
-                AdjustHighScreenByte
+                AdjustHighScreenByte_H
 
                 LD (.ScrAdr), HL
                 JP .ClipRow
@@ -237,7 +237,7 @@ Handler:        ; включить страницу
                 
                 ; адрес константный, меняется только номер столбца
                 LD HL, #4000
-                AdjustHighScreenByte
+                AdjustHighScreenByte_H
 
                 LD (.ScrAdr), HL
                 JP .ClipRow

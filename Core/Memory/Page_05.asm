@@ -20,7 +20,9 @@ MemoryPage_5_Start:
                 ifdef SHOW_FPS
 	            include "../../Utils/FPS_Counter.asm"
                 endif
-        
+
+                include "../../Utils/DrawLine.asm"
+
 MemoryPage_5_End:
 SizePage_5:     EQU MemoryPage_5_End - MemoryPage_5_Start
 

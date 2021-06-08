@@ -90,6 +90,13 @@ KeyboardCursor: ; move with "SYMBOL SHIFT" key released
 ScanMouse:      CheckHardwareFlag KEMPSTON_MOUSE
                 CALL NZ, Mouse.UpdateStatesMouse
                 CALL KeyboardCursor
+
+                ;----
+                LD HL, #6080
+                LD DE, (MousePositionRef)
+                CALL DrawLine
+                ;----
+
                 RET
 
 KeyboardMove:   ; move with "SYMBOL SHIFT" key pressed

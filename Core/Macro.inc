@@ -54,7 +54,16 @@ GetCurrentScreen        macro
                         LD A, (MemoryPageRef)
                         AND %00001000
                         endm
-AdjustHighScreenByte    macro
+AdjustHighScreenByte_A  macro
+                        LD A, (MemoryPageRef)
+                        CPL
+                        AND %00001000
+                        RLA
+                        RLA
+                        RLA
+                        RLA
+                        endm
+AdjustHighScreenByte_H  macro
                         LD A, (MemoryPageRef)
                         CPL
                         AND %00001000
@@ -64,6 +73,17 @@ AdjustHighScreenByte    macro
                         RLA
                         OR H
                         LD H, A
+                        endm
+AdjustHighScreenByte_D  macro
+                        LD A, (MemoryPageRef)
+                        CPL
+                        AND %00001000
+                        RLA
+                        RLA
+                        RLA
+                        RLA
+                        OR D
+                        LD D, A
                         endm
 CLS_0                   macro
                         LD DE, #0000

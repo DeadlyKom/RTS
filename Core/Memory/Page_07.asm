@@ -8,6 +8,7 @@
                     module MemoryPage_7
 Start:              
 
+SpriteCursor.Start  EQU $
 Sprite_Cursor_0:
                     incbin "Sprites/Cursor/Cursor_0.spr"        ; 16x16
 Sprite_Cursor_1:
@@ -16,14 +17,24 @@ Sprite_Cursor_2:
                     incbin "Sprites/Cursor/Cursor_2.spr"        ; 16x16
 Sprite_Cursor_3:
                     incbin "Sprites/Cursor/Cursor_3.spr"        ; 16x16
+SpriteCursor.End    EQU $
+SpriteCursor_S      EQU SpriteCursor.End - SpriteCursor.Start
+
+                    ORG Page_7_ScrAdr
+
+                    include "Tables/ScreenAddressTable.inc"
+ScrAdr.End          EQU $
+ScrAdr_S:           EQU ScrAdr.End - Page_7_ScrAdr                                  ; 1024 байта
 
                     ORG Page_7_BypassFOW
 
                     include "Tables/BypassFOW.inc"
+BypassFOW.End       EQU $
+BypassFOW_S:        EQU BypassFOW.End - Page_7_BypassFOW                            ; 768 байта
 
                     ORG Page_7_FOWTable
 TableFOW:           DW SpriteFOW_1, SpriteFOW_2, SpriteFOW_3, SpriteFOW_4, SpriteFOW_5, SpriteFOW_6, SpriteFOW_7, SpriteFOW_8
-                    DW SpriteFOW_9, SpriteFOW_A, SpriteFOW_B, SpriteFOW_C, SpriteFOW_D, SpriteFOW_E, SpriteFOW_F
+                    DW SpriteFOW_9, SpriteFOW_A, SpriteFOW_B, SpriteFOW_C, SpriteFOW_D, SpriteFOW_E, SpriteFOW_F, #0000
 SpriteFOW_1         DW #0000, #0000, #0000, #0000, #0000, #0000, #0000, #0000       ; ! 
                     DW #FFFF, #7FFE, #FC3F, #1FF8, #E007, #0000, #0000, #0000
 SpriteFOW_2         DW #FFFF, #7FFE, #FC3F, #1FF8, #E007, #0000, #0000, #0000       ; !
@@ -54,9 +65,9 @@ SpriteFOW_E         DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF   
                     DW #0180, #8001, #03C0, #E007, #1FF8, #FFFF, #FFFF, #FFFF
 SpriteFOW_F         DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000       ; !
                     DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000
-; SpriteFOW_Fill:     DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
-;                     DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF
-                    
+FOWTable.End:       EQU $
+FOWTable_S:         EQU FOWTable.End - Page_7_FOWTable                              ; 512 байт
+
                     ORG Page_7_TileTable
 TableSprites:       DW Sprite_Sand_1,       Sprite_Sand_2,      Sprite_Sand_3,      Sprite_Sand_4       ; 0   - 3
                     DW #0000,               #0000,              #0000,              #0000               ; 4   - 7
@@ -91,7 +102,7 @@ TableSprites:       DW Sprite_Sand_1,       Sprite_Sand_2,      Sprite_Sand_3,  
                     DW #0000,               #0000,              #0000,              #0000               ; 120 - 123
                     DW #0000,               #0000,              #0000,              #0000               ; 124 - 127
 .End                EQU $
-TableSprites_S:     EQU TableSprites.End - TableSprites
+TableSprites_S:     EQU TableSprites.End - TableSprites                             ; 256 байт
 
                     ORG Page_7_TileSprites
 
@@ -147,11 +158,11 @@ Sprite_Canyon_15:
 Sprite_Canyon_16:        
                     incbin "Sprites/Terrain/Canyon_16.spr"
 End:
-Sprites_S:          EQU End - Page_7_TileSprites
-SizePage_7_S:       EQU #1B00 + TableSprites_S + Sprites_S
+Sprites_S:          EQU End - Page_7_TileSprites                                    ; 4096 байт
+SizePage_7_S:       EQU ScrAdr_S + BypassFOW_S + FOWTable_S + TableSprites_S + 0x1000 ; Sprites_S
 
                     endmodule
-SizePage_7_Real:    EQU MemoryPage_7.SizePage_7_S
-SizePage_7:         EQU MemoryPage_7.End - MemoryPage_7.Start
+SizePage_7_Real:    EQU MemoryPage_7.SpriteCursor_S + MemoryPage_7.SizePage_7_S
+SizePage_7:         EQU 0x4000 - 0x1B00
 
                     endif ; ~_CORE_MEMORY_PAGE_07_
