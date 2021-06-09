@@ -6,7 +6,40 @@
                     ORG Page_7
                     
                     module MemoryPage_7
-Start:              
+Start:
+                    ifdef DEBUG
+
+                    ORG Page_7_DebugTileTable
+DebugTableSprites:  DW COL_00_0,    COL_00_1,   COL_00_2,   COL_00_3                ; 0   - 3
+                    DW COL_00_4,    COL_00_9,   COL_00_5,   COL_00_9                ; 4   - 7
+                    DW COL_00_6,    COL_00_7,   COL_00_9,   COL_00_9                ; 8   - 11
+                    DW COL_25_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
+                    DW COL_25_0,    COL_25_1,   COL_25_2,   COL_25_3                ; 0   - 3
+                    DW COL_25_4,    COL_00_9,   COL_25_5,   COL_00_9                ; 4   - 7
+                    DW COL_25_6,    COL_25_7,   COL_00_9,   COL_00_9                ; 8   - 11
+                    DW COL_25_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
+                    DW COL_50_0,    COL_50_1,   COL_50_2,   COL_50_3                ; 0   - 3
+                    DW COL_50_4,    COL_00_9,   COL_50_5,   COL_00_9                ; 4   - 7
+                    DW COL_50_6,    COL_50_7,   COL_00_9,   COL_00_9                ; 8   - 11
+                    DW COL_50_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
+                    DW COL_75_0,    COL_75_1,   COL_75_2,   COL_75_3                ; 0   - 3
+                    DW COL_75_4,    COL_00_9,   COL_75_5,   COL_00_9                ; 4   - 7
+                    DW COL_75_6,    COL_75_7,   COL_00_9,   COL_00_9                ; 8   - 11
+                    DW COL_75_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
+.End                EQU $
+
+
+DebugSurfSprites:
+                    include "../../Sprites/Debug/SurfaceProperty.inc"
+DebugSurfSprites.End
+DebugSurfSprites_S  EQU DebugSurfSprites.End - DebugSurfSprites
+DebugTableSprites_S EQU DebugTableSprites.End - DebugTableSprites                   ; 256 байт
+
+                    else
+DebugSurfSprites_S  EQU 0
+DebugTableSprites_S EQU 0
+
+                    endif
 
 SpriteCursor.Start  EQU $
 Sprite_Cursor_0:
@@ -162,7 +195,7 @@ Sprites_S:          EQU End - Page_7_TileSprites                                
 SizePage_7_S:       EQU ScrAdr_S + BypassFOW_S + FOWTable_S + TableSprites_S + 0x1000 ; Sprites_S
 
                     endmodule
-SizePage_7_Real:    EQU MemoryPage_7.SpriteCursor_S + MemoryPage_7.SizePage_7_S
+SizePage_7_Real:    EQU MemoryPage_7.DebugTableSprites_S + MemoryPage_7.DebugSurfSprites_S + MemoryPage_7.SpriteCursor_S + MemoryPage_7.SizePage_7_S
 SizePage_7:         EQU 0x4000 - 0x1B00
 
                     endif ; ~_CORE_MEMORY_PAGE_07_

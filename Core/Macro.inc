@@ -156,6 +156,39 @@ ResetAllHardwareFlags   macro
                         XOR A
                         LD (HardwareStateRef), A
                         endm
+CheckDebugFlag          macro Flag?
+                        ifdef DEBUG
+                        LD A, (DebugStateRef)
+                        AND Flag?
+                        endif
+                        endm
+SetDebugFlag            macro Flag?
+                        ifdef DEBUG
+                        LD A, (DebugStateRef)
+                        OR Flag?
+                        LD (DebugStateRef), A
+                        endif
+                        endm
+ResetDebugFlag          macro Flag?
+                        ifdef DEBUG
+                        LD A, (DebugStateRef)
+                        AND ((~Flag?) & 0xFF)
+                        LD (DebugStateRef), A
+                        endif
+                        endm
+SwapDebugFlag           macro Flag?
+                        ifdef DEBUG
+                        LD A, (DebugStateRef)
+                        XOR Flag?
+                        LD (DebugStateRef), A
+                        endif
+                        endm
+ResetAllDebugFlags      macro
+                        ifdef DEBUG
+                        XOR A
+                        LD (DebugStateRef), A
+                        endif
+                        endm
 DOWN_BC                 macro
                         ; classic method "DOWN_BC" 25/59
                         INC B

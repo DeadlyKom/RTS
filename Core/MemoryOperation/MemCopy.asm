@@ -33,7 +33,6 @@ Sprite:             RestoreHL
 
                     LD H, #00
                     ADD HL, HL
-                    ; ADD HL, HL
                     LD BC, MemCopy._144
                     ADD HL, BC
                     LD (.MemCopyJump), HL

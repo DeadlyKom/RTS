@@ -11,7 +11,7 @@ Size_5          EQU ((SizePage_5 % 256 > 0) & 0x01) + (SizePage_5 >> 8)
 Size_6          EQU ((SizePage_6 % 256 > 0) & 0x01) + (SizePage_6 >> 8)
 Size_7          EQU ((SizePage_7 % 256 > 0) & 0x01) + (SizePage_7 >> 8)
 
-TilemapAddress  EQU MemoryPage_1.Tilemap
+TilemapAddress  EQU MemoryPage_1.Map.Tilemap
 TilemapSize     EQU MemoryPage_1.MapSize
 
                 module Boot                                     ; #5D40
@@ -114,7 +114,7 @@ EndBasic:
                 display "Building the TRD-image of the \'", TRD_FILENAME, "\' project ..."
                 display "Boot  :  ", /A, Boot.Basic, " = [ ", /D, Boot.EndBasic - Boot.Basic, " bytes ]"
                 display "Page 0:  ", /A, Page_0, " = busy [ ", /D, SizePage_0, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_0 - Page_0 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_0 - Page_0 & 0x3FFF) * 100 / #4000, " % occupied", "\t graphic #01"
-                display "Page 1:  ", /A, Page_1, " = busy [ ", /D, SizePage_1, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_1 - Page_1 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_1 - Page_1 & 0x3FFF) * 100 / #4000, " % occupied", "\t map & data units"
+                display "Page 1:  ", /A, Page_1, " = busy [ ", /D, SizePage_1_R, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_1_R - Page_1 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_1_R - Page_1 & 0x3FFF) * 100 / #4000, " % occupied", "\t map & data units"
                 display "Page 2:  ", /A, Page_2, " = busy [ ", /D, SizePage_2, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_2 - Page_2 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_2 - Page_2 & 0x3FFF) * 100 / #4000, " % occupied", "\t code"
                 display "Page 3:  ", /A, Page_3, " = busy [ ", /D, SizePage_3, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_3 - Page_3 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_3 - Page_3 & 0x3FFF) * 100 / #4000, " % occupied", "\t music"
                 display "Page 4:  ", /A, Page_4, " = busy [ ", /D, SizePage_4, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_4 - Page_4 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_4 - Page_4 & 0x3FFF) * 100 / #4000, " % occupied", "\t graphic #02"

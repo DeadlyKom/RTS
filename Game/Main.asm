@@ -4,6 +4,8 @@
 
                 DEVICE ZXSPECTRUM128
 
+                define DEBUG
+
                 define DEBUG_PAGE_ID                        ; писать кто переключил страницу
                 ; define ENABLE_MUSIC                         ; разрешить музыку
                 define ENABLE_MOUSE                         ; разрешить мышь

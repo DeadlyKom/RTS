@@ -18,7 +18,8 @@ MemoryPageRef               EQU #5BFE                               ; адрес
 BorderStorageStackRef       EQU #5BFF                               ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
 MapStructure                EQU #C000                               ; адрес структуры карты
-UnitArray                   EQU #FC00                               ; адрес масива юнитов (1024 байта 64 юнита)
+SurfaceProperty             EQU #FB00                               ; адрес свойст тайлов (128 байт)                    - 1 страница
+UnitArray                   EQU #FC00                               ; адрес масива юнитов (1024 байта 64 юнита)         - 1 страница
 SharedBuffer                EQU #BD00                               ; адрес общего буфера (256 байт)
 RenderBuffer                EQU #BE00                               ; адрес буфера обновлений (192 байта + 64 пустуют)
 TilemapBuffer               EQU #BF00                               ; адрес тайловой карты буфера (256 байт)
@@ -29,7 +30,12 @@ TickCounterRef              EQU Interrupt.TickCounter               ; счётч
 FrameStateRef               EQU Game.FrameFlags                     ; указатель на флага состояний (frame)
 HardwareStateRef            EQU Game.HardwareFlags                  ; указатель на флаг ограничений железа
 
-CountUnitsRef               EQU MemoryPage_1.UnitCounter            ; счётчик юнитов
+                            ifdef DEBUG
+DebugStateRef               EQU Game.DebugFlags                     ; указатель на флаги необходимые для отладки
+
+                            endif
+
+CountUnitsRef               EQU MemoryPage_1.Map.UnitCounter         ; счётчик юнитов
 FrareUnitsFlagRef           EQU Game.FrameUnitsFlag                 ; флаг обновления юнитов принудительно (необходим для скролинга)
 
 TilesOnScreenX              EQU 16                                  ; количество тайлов на экране по горизонтали

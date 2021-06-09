@@ -1,7 +1,10 @@
 
                         ifndef _DEBUG_INCLUDE_
                         define _DEBUG_INCLUDE_
+; debug flags
+DISPLAY_COLLISION_FLAG  EQU 0x80
 
+; debug color
 DEFAULT_COLOR           EQU BLACK
 
 RENDER_TILEMAP_COLOR    EQU BLUE
@@ -18,6 +21,7 @@ RESTORE_CURSOR_COLOR    EQU MAGENTA
 
 MEM_OPERATION_COLOR     EQU MAGENTA
 
+; debug ID
 PREPARE_ID              EQU 0x01
 TILEMAP_INIT_ID         EQU 0x02
 BACKGROUND_FILL_ID      EQU 0x03
@@ -39,6 +43,8 @@ RENDER_FPS_ID           EQU 0x12
 
 DRAFT_INIT_ID           EQU 0x80
 DRAFT_ROTATE_ID         EQU 0x81
+DEBUG_SURFACE_PROP_ID   EQU 0x82
+DEBUG_SURFACE_SPR_ID    EQU 0x83
 
 PAGE_0_ID               EQU 0x40
 PAGE_1_ID               EQU 0x41
@@ -48,4 +54,6 @@ PAGE_4_ID               EQU 0x44
 PAGE_5_ID               EQU 0x45
 PAGE_6_ID               EQU 0x46
 PAGE_7_ID               EQU 0x47
+
+
                         endif ; ~_DEBUG_INCLUDE_

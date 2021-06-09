@@ -16,6 +16,10 @@ FrameFlags:     DB #00
 FrameUnitsFlag: DB #00
 HardwareFlags:  DB #00
 
+                ifdef DEBUG
+DebugFlags:     DB #00
+                endif
+
                 endmodule
 
                 endif ; ~_CORE_GAME_INCLUDE_

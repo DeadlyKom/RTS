@@ -536,59 +536,6 @@ Handler:        ; включить страницу
                 INC A
                 LD (VisibleUnits), A
                 endif
-
-;                 ; ---------------------------------------------
-;                 ; пометка областей требующие перерисовки
-;                 ; ---------------------------------------------
-; .TopRow         EQU $+1
-;                 LD A, #00
-;                 AND %11110000
-;                 LD C, A
-; .BottomRow      EQU $+1
-;                 LD A, #00
-;                 AND %11110000
-;                 SUB C
-;                 RRA
-;                 RRA
-;                 RRA
-;                 RRA
-;                 INC A
-;                 LD B, A
-
-;                 ;
-;                 XOR A
-;                 LD HL, .LeftColumn
-;                 RLD
-;                 LD E, A
-                
-;                 INC HL
-;                 RLD
-;                 SUB E
-;                 INC A
-;                 LD D, A
-
-;                 ;
-;                 LD H, HIGH RenderBuffer
-;                 LD A, C
-;                 ADD A, E
-;                 LD E, A
-                
-                
-; .LoopRow        ; LD A, #80; + #40; + #20 + #10
-;                 LD C, D
-;                 LD L, E
-; .LoopColumn     ; LD (HL), A
-;                 SCF
-;                 RR (HL)
-;                 ; SCF
-;                 ; RR (HL)
-;                 INC L
-;                 DEC C
-;                 JR NZ, .LoopColumn
-;                 LD A, E
-;                 ADD A, TilesOnScreenX
-;                 LD E, A
-;                 DJNZ .LoopRow
                 
 .ContainerSpr_  EQU $+1
                 LD HL, #0000

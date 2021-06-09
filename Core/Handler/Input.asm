@@ -23,6 +23,9 @@ ScanKeyboard:   ; select
                 ; CALL CheckKeyState
                 ; CALL Z, .SetVK
 
+                LD DE, InputMode_0_9
+                CALL JumpHandlerNum
+
                 RET
 
 ScanMoveMap:    ; save the current address of the visible area of the tilemap
@@ -92,9 +95,9 @@ ScanMouse:      CheckHardwareFlag KEMPSTON_MOUSE
                 CALL KeyboardCursor
 
                 ;----
-                LD HL, #6080
-                LD DE, (MousePositionRef)
-                CALL DrawLine
+                ; LD HL, #6080
+                ; LD DE, (MousePositionRef)
+                ; CALL DrawLine
                 ;----
 
                 RET
@@ -125,14 +128,101 @@ KeyboardMove:   ; move with "SYMBOL SHIFT" key pressed
                 CALL Z, Tilemap.MoveDown
 
                 RET
-CheckKeyState:  LD HL, .RET
+
+InputMode_0_9:  JR Z, .Processing               ; skip released
+.NotProcessing  SCF
+                RET
+
+.Processing     SwapDebugFlag DISPLAY_COLLISION_FLAG
+                CALL Tilemap.Prepare
+                ; exit, processed
+                OR A
+                RET
+
+CheckKeyState:  PUSH HL
+                LD HL, .RET
                 LD (.VK), A
                 OR A
                 JP M, Mouse.CheckKeyState
                 JP P, Keyboard.CheckKeyState
 .VK             EQU $+1
 .RET            LD A, #00
+                POP HL
                 RET
+
+; -----------------------------------------
+; In :
+;   A  - virtual code
+;   BC - virtual code modifier keys (two)
+;   HL - address key last state
+;   DE - address key handlerKey
+; Out :
+;   if the specified key is pressed/released jump yo handler
+;   if flag Z is reset, the button is released, otherwise it is pressed
+; Corrupt :
+;   HL, DE, BC, AF, AF'
+; -----------------------------------------
+JumpHandlerKey: CALL CheckKeyState
+                LD A, (HL)
+                JR NZ, .IsReleased
+                OR A
+                JR NZ, .NotProcessed
+                INC (HL)
+                EX DE, HL
+                JP (HL)                             ; pressed
+.IsReleased     OR A
+                JR Z, .NotProcessed
+                DEC (HL)
+                EX DE, HL
+                JP (HL)                             ; released
+.NotProcessed   SCF
+                RET
+
+; -----------------------------------------
+; In :
+;   DE - address key handlerKey
+; Out :
+;   if the specified key is pressed/released jump yo handler
+;   if flag Z is reset, the button is released, otherwise it is pressed
+;   if the handler is processing should return a reset Carry flag
+;   C - value
+; Corrupt :
+;   HL, DE, BC, AF, AF'
+; -----------------------------------------
+JumpHandlerNum: LD HL, .KeyLastState
+                EXX
+                LD DE, .ArrayVKNum
+                LD B, .Num
+.Loop           LD A, (DE)
+                INC DE
+                EX AF, AF'
+                LD A, (DE)
+                INC DE
+                EXX
+                LD C, A
+                EX AF, AF'
+                PUSH HL
+                PUSH DE
+                CALL JumpHandlerKey
+                POP DE
+                POP HL
+                RET NC
+                INC HL
+                EXX
+                DJNZ .Loop
+                RET
+.KeyLastState   DS 10, 0
+.ArrayVKNum     DB VK_0, 0
+                DB VK_1, 1
+                DB VK_2, 2
+                DB VK_3, 3
+                DB VK_4, 4
+                DB VK_5, 5
+                DB VK_6, 6
+                DB VK_7, 7
+                DB VK_8, 8
+                DB VK_9, 9
+.Num            EQU ($-.ArrayVKNum) / 2
 
                 endmodule
 

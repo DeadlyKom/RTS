@@ -8,5 +8,6 @@
                 include "Sprite.inc"
                 include "UnitInfo.inc"
                 include "Input.inc"
+                include "SurfaceProperty.inc"
 
                 endif ; ~_STRUCTURES_INCLUDE_
