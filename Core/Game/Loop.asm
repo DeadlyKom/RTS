@@ -137,8 +137,6 @@ GameLoop:       ; initialize
                 ; CALL Spawn.Unit
                 ; LD BC, #090F
                 ; CALL Spawn.Unit
-
-                SetDebugFlag DISPLAY_COLLISION_FLAG
                 
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
 
