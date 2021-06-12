@@ -10,9 +10,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-Idle:           EX AF, AF'
-                OR A
-                EX AF, AF'
+Idle:           OR A
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_IDLE_

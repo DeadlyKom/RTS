@@ -18,14 +18,15 @@ Sequence:       PUSH HL
                 JP AI.HandlerRoot.Next
 
 PostSequence:   POP HL
-                EX AF, AF'
                 RET NC
                 EX AF, AF'
                 INC HL
                 LD A, (HL)
                 AND %11000000
-                RET Z
-                PUSH HL
+                JR NZ, .L1
+                EX AF, AF'
+                RET
+.L1             PUSH HL
                 DEC SP
                 DEC SP
                 JP AI.HandlerRoot.Next

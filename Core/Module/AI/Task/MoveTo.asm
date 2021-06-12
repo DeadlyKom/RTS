@@ -10,9 +10,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-MoveTo:         EX AF, AF'
-                OR A
-                EX AF, AF'
+MoveTo:         OR A
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_MOVE_TO_
