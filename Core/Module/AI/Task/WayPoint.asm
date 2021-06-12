@@ -10,7 +10,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-WayPoint:       OR A
+WayPoint:       SCF
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_WAY_POINT_

@@ -9,39 +9,26 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-; PreSelector:    ; INC HL
-;                 LD B, #00
-;                 ADD HL, BC
-;                 ; LD DE, Selector
-Selector:       PUSH DE                     ; сохраним адрес перехода родительского обработчика
-                PUSH HL
-.Continue       LD DE, PostSelector
-                LD A, (HL)
-                INC HL
-                LD C, (HL)
+Selector:       PUSH HL
                 LD B, #00
                 ADD HL, BC
-                AND %11000000
-                JP Z, Selector              ; BT_SELECTOR
-                SUB #40
-                JP Z, Sequence              ; BT_SEQUENCE
-                SUB #40
-                JR Z, TaskExecute           ; BT_TASK
-                ; BT_BREAK
-                POP HL
-                RET
-
-; .PreSequence    LD DE, PostSelector
-;                 PUSH DE
-;                 JP Selector
-
-; .PreTaskExecute LD HL, PostSelector
-;                 PUSH HL
-;                 JP TaskExecute
+                
+                LD DE, PostSelector
+                PUSH DE
+                JP (IY)
 PostSelector:   POP HL
-                ; INC HL
-                ; INC HL
-                JR NC, Selector.Continue
+                RET C
+                EX AF, AF'
+                INC HL
+                LD A, (HL)
+                OR A
+                JR Z, .RET
+                PUSH HL
+                DEC SP
+                DEC SP
+                JP (IY)
+                
+.RET            EX AF, AF'
                 RET
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_SELECTOR_

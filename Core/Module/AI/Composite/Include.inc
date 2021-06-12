@@ -3,7 +3,8 @@
                 define _CORE_MODULE_AI_COMPOSITE_INCLUDE_
 
                 include "Definition.inc"
-                
+                include "Handler.asm"
+
                 module Composite
                 
                 include "Selector.inc"
@@ -11,7 +12,5 @@
                 include "Task.inc"
 
                 endmodule
-
-                include "Handler.asm"
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_INCLUDE_

@@ -8,14 +8,14 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-TaskExecute:    PUSH DE
-                ; INC HL
-                LD E, (HL)
+TaskExecute:    LD E, C
                 INC HL
                 LD D, (HL)
-                INC HL
+
+                POP BC
                 EX (SP), HL
-                PUSH HL
+                PUSH BC
+
                 EX DE, HL
                 JP (HL)
 

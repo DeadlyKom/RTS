@@ -9,20 +9,15 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-HandlerRoot:    LD DE, .RET
-                LD A, (HL)
+HandlerRoot:    LD IY, .Next
+.Next           LD A, (HL)
                 INC HL
                 LD C, (HL)
-                ; INC HL
-                ; PUSH HL
-                LD B, #00
-                ADD HL, BC
-                AND %11000000
-                JP Z, AI.Composite.Selector      ; BT_SELECTOR
-                SUB #40
-                JP Z, AI.Composite.Sequence         ; BT_SEQUENCE
-                SUB #40
-                JP Z, AI.Composite.TaskExecute      ; BT_TASK
-.RET            RET                                 ; BT_BREAK
+                RLA
+                JP C, AI.Composite.Selector         ; BT_SELECTOR
+                RLA
+                JP C, AI.Composite.Sequence         ; BT_SEQUENCE
+                JP AI.Composite.TaskExecute         ; BT_TASK
+.RET            RET
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_HANDLER_

@@ -10,7 +10,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-MoveTo:         OR A
+MoveTo:         SCF
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_MOVE_TO_
