@@ -3,10 +3,10 @@
                     define _CORE_MODULE_AI_DEFINITION_
 
 ; behavior tree branch type
-BT_SELECTOR_TYPE    EQU 0x00
-BT_SEQUENCE_TYPE    EQU 0x01
-BT_TASK_TYPE        EQU 0x02
-BT_BREAK_TYPE       EQU 0x03
+BT_SELECTOR_TYPE    EQU 0x01
+BT_SEQUENCE_TYPE    EQU 0x02
+BT_TASK_TYPE        EQU 0x03
+BT_BREAK_TYPE       EQU 0x00
 
 ; behavior tree macros
 
@@ -30,7 +30,7 @@ BT_Sequence         macro Offset?
 
 BT_Task             macro AddressTask?
                     BT_TYPE BT_TASK_TYPE
-                    DB #01
+                    ; DB #01
                     DW AddressTask? & 0xFFFF
                     endm
 BT_Break            macro

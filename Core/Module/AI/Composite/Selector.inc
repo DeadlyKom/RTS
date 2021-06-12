@@ -12,36 +12,53 @@
 ; PreSelector:    ; INC HL
 ;                 LD B, #00
 ;                 ADD HL, BC
-;                 ; LD DE, Selector
-Selector:       PUSH DE                     ; сохраним адрес перехода родительского обработчика
-                PUSH HL
-.Continue       LD DE, PostSelector
-                LD A, (HL)
-                INC HL
-                LD C, (HL)
+; ;                 ; LD DE, Selector
+; Selector:       PUSH DE                     ; сохраним адрес перехода родительского обработчика
+;                 PUSH HL
+; .Continue       LD DE, PostSelector
+;                 LD A, (HL)
+;                 INC HL
+;                 LD C, (HL)
+;                 LD B, #00
+;                 ADD HL, BC
+;                 AND %11000000
+;                 JP Z, Selector              ; BT_SELECTOR
+;                 SUB #40
+;                 JP Z, Sequence              ; BT_SEQUENCE
+;                 SUB #40
+;                 JR Z, TaskExecute           ; BT_TASK
+;                 ; BT_BREAK
+;                 POP HL
+;                 RET
+
+; ; .PreSequence    LD DE, PostSelector
+; ;                 PUSH DE
+; ;                 JP Selector
+
+; ; .PreTaskExecute LD HL, PostSelector
+; ;                 PUSH HL
+; ;                 JP TaskExecute
+
+Selector:       LD A, C
+                OR A
+                JR Z, .End
                 LD B, #00
                 ADD HL, BC
-                AND %11000000
-                JP Z, Selector              ; BT_SELECTOR
-                SUB #40
-                JP Z, Sequence              ; BT_SEQUENCE
-                SUB #40
-                JR Z, TaskExecute           ; BT_TASK
-                ; BT_BREAK
-                POP HL
-                RET
+                LD DE, PostSelector
+                JP AI.HandlerRoot.Next
+.End            POP HL
+                INC HL
+                POP DE
+                ; LD DE, PostSelector
+                JP AI.HandlerRoot.Next
+                
 
-; .PreSequence    LD DE, PostSelector
-;                 PUSH DE
-;                 JP Selector
-
-; .PreTaskExecute LD HL, PostSelector
-;                 PUSH HL
-;                 JP TaskExecute
 PostSelector:   POP HL
-                ; INC HL
-                ; INC HL
-                JR NC, Selector.Continue
+                INC HL
+                LD DE, PostSelector
+                JP NC, AI.HandlerRoot.Next
+                JR $
+                ; JR NC, Selector.Continue
                 RET
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_SELECTOR_
