@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_AI_TASK_CHECK_ENEMY__
-                define _CORE_MODULE_AI_TASK_CHECK_ENEMY__
+                ifndef _CORE_MODULE_AI_TASK_CHECK_ENEMY_
+                define _CORE_MODULE_AI_TASK_CHECK_ENEMY_
 
 ; -----------------------------------------
 ; 
@@ -13,4 +13,5 @@
 CheckEnemy:     OR A
                 RET
 
-                endif ; ~_CORE_MODULE_AI_TASK_CHECK_ENEMY__
+                endif ; ~_CORE_MODULE_AI_TASK_CHECK_ENEMY_
+ 

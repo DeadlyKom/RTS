@@ -17,23 +17,23 @@ HandlerRoot:    LD DE, .RET
                 JR Z, .Back
                 INC HL
                 LD C, (HL)
-                PUSH DE
                 PUSH HL
+                PUSH DE
                 ; AND %11000000
                 SUB #40
                 JP Z, AI.Composite.Selector         ; BT_SELECTOR
                 SUB #40
                 JP Z, AI.Composite.Sequence         ; BT_SEQUENCE
                 ; SUB #40
-                JP AI.Composite.TaskExecute      ; BT_TASK
+                JP AI.Composite.TaskExecute         ; BT_TASK
                 ; BT_BREAK
                 ; EX (SP), HL
 
 .RET            RET
-.Back           POP HL
+.Back           ; POP HL
                 ; INC HL
-                EX (SP), HL
-                PUSH HL
+                ; EX (SP), HL
+                ; PUSH HL
                 RET
 
 .Continue       POP HL

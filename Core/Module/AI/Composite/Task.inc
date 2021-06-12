@@ -24,6 +24,8 @@ TaskExecute:    ; PUSH DE
                 INC HL
                 LD D, (HL)
                 ; INC HL
+                ; EX (SP), HL
+                ; PUSH HL
 
                 ; EX (SP), HL
                 ; POP HL
@@ -33,7 +35,7 @@ TaskExecute:    ; PUSH DE
 
                 POP BC          ; мусор
                 EX (SP), HL
-                PUSH HL
+                PUSH BC
                 
 
                 EX DE, HL

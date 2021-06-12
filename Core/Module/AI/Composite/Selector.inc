@@ -46,9 +46,10 @@ Selector:       LD A, C
                 ADD HL, BC
                 LD DE, PostSelector
                 JP AI.HandlerRoot.Next
-.End            POP HL
+.End            POP DE
+                POP HL
                 INC HL
-                POP DE
+                ; POP DE
                 ; LD DE, PostSelector
                 JP AI.HandlerRoot.Next
                 
@@ -57,7 +58,7 @@ PostSelector:   POP HL
                 INC HL
                 LD DE, PostSelector
                 JP NC, AI.HandlerRoot.Next
-                JR $
+                ; JR $
                 ; JR NC, Selector.Continue
                 RET
 
