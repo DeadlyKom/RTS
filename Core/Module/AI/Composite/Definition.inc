@@ -3,15 +3,15 @@
                     define _CORE_MODULE_AI_DEFINITION_
 
 ; behavior tree branch type
-BT_SELECTOR_TYPE    EQU 0x01
-BT_SEQUENCE_TYPE    EQU 0x02
-BT_TASK_TYPE        EQU 0x03
+BT_SELECTOR_TYPE    EQU 0x80
+BT_SEQUENCE_TYPE    EQU 0x40
+BT_TASK_TYPE        EQU 0x20
 BT_BREAK_TYPE       EQU 0x00
 
 ; behavior tree macros
 
 BT_TYPE             macro Type?
-                    DB (Type? << 6) & 0xFF
+                    DB Type? & 0xFF
                     endm
 
 ; Selector

@@ -9,16 +9,14 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-HandlerRoot:    LD DE, .RET
-                PUSH DE
+HandlerRoot:    LD IY, .Next
 .Next           LD A, (HL)
-                AND %11000000
                 INC HL
                 LD C, (HL)
-                SUB #40
-                JP Z, AI.Composite.Selector         ; BT_SELECTOR
-                SUB #40
-                JP Z, AI.Composite.Sequence         ; BT_SEQUENCE
+                RLA
+                JP C, AI.Composite.Selector         ; BT_SELECTOR
+                RLA
+                JP C, AI.Composite.Sequence         ; BT_SEQUENCE
                 JP AI.Composite.TaskExecute         ; BT_TASK
 .RET            RET
 

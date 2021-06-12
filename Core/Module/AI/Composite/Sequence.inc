@@ -15,20 +15,20 @@ Sequence:       PUSH HL
                 
                 LD DE, PostSequence
                 PUSH DE
-                JP AI.HandlerRoot.Next
-
+                JP (IY)
 PostSequence:   POP HL
                 RET NC
                 EX AF, AF'
                 INC HL
                 LD A, (HL)
-                AND %11000000
-                JR NZ, .L1
-                EX AF, AF'
+                OR A
+                JR Z, .RET
+                PUSH HL
+                DEC SP
+                DEC SP
+                JP (IY)
+                
+.RET            EX AF, AF'
                 RET
-.L1             PUSH HL
-                DEC SP
-                DEC SP
-                JP AI.HandlerRoot.Next
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_SEQUENCE_
