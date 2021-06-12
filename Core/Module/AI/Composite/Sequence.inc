@@ -37,7 +37,7 @@ Sequence:       PUSH DE                     ; сохраним адрес пер
 PostSequence:   POP HL
                 ; INC HL
                 ; INC HL
-                JR NC, Selector.Continue
+                JR NC, Sequence.Continue
                 RET
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_SEQUENCE_
