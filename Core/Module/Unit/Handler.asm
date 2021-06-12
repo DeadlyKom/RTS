@@ -13,21 +13,22 @@ Handler:        ; включить страницу
                 SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_BEGIN_ID
 
                 ; инициализация
-
                 ifdef SHOW_VISIBLE_UNITS
                 XOR A
                 LD (VisibleUnits), A
                 endif
 
-                LD HL, MapStructure + FMap.UnitsArray
-                LD E, (HL)
-                INC L
-                LD D, (HL)
+                ; проверка на наличие юнитов в массиве
                 LD A, (CountUnitsRef)
                 OR A
                 JP Z, .Exit
                 LD (.ProcessedUnits), A
 
+                LD HL, MapStructure + FMap.UnitsArray
+                LD E, (HL)
+                INC L
+                LD D, (HL)
+                
                 ; проверка на перерисовку всех юнитов принудительно
                 LD HL, FrareUnitsFlagRef
                 SRA (HL)

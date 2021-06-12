@@ -133,7 +133,10 @@ InputMode_0_9:  JR Z, .Processing               ; skip released
 .NotProcessing  SCF
                 RET
 
-.Processing     SwapDebugFlag DISPLAY_COLLISION_FLAG
+.Processing     EX AF, AF'
+                CP 01                           ; key 1
+                JR NZ, .NotProcessing
+                SwapDebugFlag DISPLAY_COLLISION_FLAG
                 CALL Tilemap.Prepare
                 ; exit, processed
                 OR A

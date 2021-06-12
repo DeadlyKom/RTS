@@ -4,7 +4,7 @@
 
                 module Animation
 
-                include "Sprite.asm"
+                include "SpriteInfo.asm"
 
                 endmodule
 

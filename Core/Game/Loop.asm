@@ -206,7 +206,10 @@ GameLoop:       ; initialize
 .Logic          ; ************* LOGIC *************
                 END_DUBUG_BORDER
 
+                CALL AI.Handler
+
                 JP .MainLoop
+
 
 Test:           LD HL, (TickCounterRef)
                 LD A, (.AA)

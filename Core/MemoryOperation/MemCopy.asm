@@ -13,14 +13,10 @@ Sprite:             RestoreHL
                     ; ---------------------------------------------
 
                     ; Sx * Sy
-                    LD A, C
-                    DEC B
-                    JR Z, .SkipMult_YxSx
-.Mult_YxSx          ADD A, C
-                    DEC B
-                    JR NZ, .Mult_YxSx
+                    XOR A
+.Mult_SySx          ADD A, C
+                    DJNZ .Mult_SySx
 
-.SkipMult_YxSx      
                     ; A = ((-A) << 1) + 144
                     NEG
                     ADD A, A
@@ -31,15 +27,15 @@ Sprite:             RestoreHL
                     ADD A, 192 - 144
                     LD (SpriteAdr), A
 
-                    LD H, #00
+                    LD H, B
                     ADD HL, HL
                     LD BC, MemCopy._144
                     ADD HL, BC
                     LD (.MemCopyJump), HL
+                    LD (MC_ContainerSP), SP
 
                     EX DE, HL
-
-                    LD (MC_ContainerSP), SP
+ 
                     LD E, (HL)
                     INC HL
                     LD D, (HL)

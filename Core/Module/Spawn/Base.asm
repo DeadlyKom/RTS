@@ -48,7 +48,7 @@ Unit:           ; определение адреса добавления но�
                 LD (IX + FUnitLocation.TilePosition.X), C
                 LD (IX + FUnitLocation.TilePosition.Y), B
                 XOR A
-                LD A, #05
+                LD A, #04
                 LD (IX + FUnitLocation.OffsetByPixel.X), A
                 LD A, #04
                 LD (IX + FUnitLocation.OffsetByPixel.Y), A

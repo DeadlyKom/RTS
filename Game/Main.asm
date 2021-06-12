@@ -21,7 +21,7 @@
                 define SHOW_DEBUG_BORDER_CURSOR_RESTORE     ; отображение на бордюре время востановление фона после курсора
                 define SHOW_DEBUG_BORDER_PLAY_MUSIC         ; отображение на бордюре время проигрывания музыки
 
-                define SHOW_DEBUG                           ; разрешить отображать дебажную инормацию
+                ; define SHOW_DEBUG                           ; разрешить отображать дебажную инормацию
                 ifdef SHOW_DEBUG
                 define SHOW_FPS                             ; отображать FPS
                 define SHOW_MOUSE_POSITION                  ; отображать координаты мыши
