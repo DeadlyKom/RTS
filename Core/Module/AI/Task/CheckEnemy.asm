@@ -10,7 +10,9 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-CheckEnemy:     OR A
+CheckEnemy:     EX AF, AF'
+                SCF
+                EX AF, AF'
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_CHECK_ENEMY_

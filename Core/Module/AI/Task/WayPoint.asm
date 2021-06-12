@@ -10,7 +10,9 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-WayPoint:       OR A
+WayPoint:       EX AF, AF'
+                OR A
+                EX AF, AF'
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_WAY_POINT_
