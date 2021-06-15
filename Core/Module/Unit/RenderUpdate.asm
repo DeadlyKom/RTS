@@ -14,6 +14,8 @@ RefUnitOnScr:   ; включить страницу
                 SeMemoryPage MemoryPage_Tilemap, REFRESH_UNIT_ON_SCR_ID
                 EX AF, AF'
 
+                ToDo "RefUnitOnScr", "Make a light version, consider everything oversimplified, or break it down into what is 100% visible and may be invisible."
+
                 ; определение адреса указанного юнита
                 LD HL, MapStructure + FMap.UnitsArray
                 LD E, (HL)

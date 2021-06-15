@@ -29,7 +29,7 @@ Down:           RRA
                 LD A, D
                 RLA
                 SBC A, A
-                CPL             ; !!!!!!!!!
+                CPL             ; Y инвертирован
                 AND %00000100
                 EX AF, AF'
                 
@@ -38,23 +38,20 @@ Down:           RRA
                 XOR E
                 RLA
                 SBC A, A
-                CPL             ; !!!!!!!!!
+                CPL             ; Y инвертирован
                 AND %00010000
                 OR %10000000
                 LD (.Instruction), A
 
-                LD A, D
-                RLA
-                JR NC, $+6
-                RRA
-                NEG
+                ; смена знака если необходимо
+                XOR A
+                SUB D
+                JP M, $+4
                 LD D, A
 
-                LD A, E
-                RLA
-                JR NC, $+6
-                RRA
-                NEG
+                XOR A
+                SUB E
+                JP M, $+4
                 LD E, A
 
                 ; 
@@ -127,10 +124,6 @@ Down:           RRA
                 AND %11000111
                 OR C
                 LD (IX + FUnitState.Direction), A
-
-                ; LD A, (IX + FUnitState.Behavior)
-                ; OR #C0
-                ; LD (IX + FUnitState.Behavior), A
 
                 XOR A
                 CALL Unit.RefUnitOnScr

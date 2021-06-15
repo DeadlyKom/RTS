@@ -55,7 +55,7 @@ Handler:        ; включить страницу
 
 .Loop           PUSH DE                     ; save current address UnitsArray
 
-                ; проврка на перерисовку текущего юнта
+                ; проврка на перерисовку текущего юнита
                 LD A, (DE)
 .ModifyCode     EQU $+1
                 AND %11000000

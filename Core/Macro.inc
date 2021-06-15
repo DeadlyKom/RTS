@@ -189,6 +189,13 @@ ResetAllDebugFlags      macro
                         LD (DebugStateRef), A
                         endif
                         endm
+ToDo                    macro Metod?, Message?
+                        ifdef DEBUG
+                        display "/*********"
+                        display "ToDo : ", Metod?, " - (", Message?, ")"
+                        display "**********/"
+                        endif
+                        endm
 DOWN_BC                 macro
                         ; classic method "DOWN_BC" 25/59
                         INC B
