@@ -13,6 +13,10 @@ Size_7          EQU ((SizePage_7 % 256 > 0) & 0x01) + (SizePage_7 >> 8)
 
 TilemapAddress  EQU MemoryPage_1.Map.Tilemap
 TilemapSize     EQU MemoryPage_1.MapSize
+WayPointsSize   EQU SurfaceProperty - WayPointArray
+SurfPropSize    EQU UnitArray - SurfaceProperty
+UnitArraySize   EQU 0x10000 - UnitArray
+Page_MapSize    EQU TilemapSize + WayPointsSize + SurfPropSize + UnitArraySize
 
                 module Boot                                     ; #5D40
 Basic:          DB #00, #0A                                     ; номер строки 10
@@ -123,7 +127,12 @@ EndBasic:
                 display "Page 7:  ", /A, Page_7 - #1B00, " = busy [ ", /D, SizePage_7_Real, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_7_Real, " bytes ]     \t |  ", /D, SizePage_7_Real * 100 / #4000, " % occupied", "\t graphic #04"
                 display "-------------------------------------------------------------------------------------------------------------------------------"
                 display "Building the TRD-image of the \'", TRD_FILENAME, "\' maps ..."
-                display "Map 'Draft' :  ", /A, TilemapAddress, " = busy [ ", /D, TilemapSize, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - TilemapSize, " bytes ]     \t |  ", /D, TilemapSize * 100 / #4000, " % occupied"
+                display "Map 'Draft' :  \t", /A, TilemapAddress, " = busy [ ", /D, TilemapSize, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - TilemapSize, " bytes ]     \t |  ", /D, TilemapSize * 100 / #4000, " % occupied"
+                display "Way Point Array : \t", /A, WayPointArray, " = busy [ ", /D, WayPointsSize, " bytes  ]"
+                display "Surface Property : \t", /A, SurfaceProperty, " = busy [ ", /D, SurfPropSize, " bytes  ]"
+                display "Unit Array : \t\t", /A, UnitArray, " = busy [ ", /D, UnitArraySize, " bytes ]"
+                display "\t\t\t---------------------------------------------------------------------------------------------------------"
+                display "Total Size : \t\t",  "\t\t\t\t\t\t\t\t\t\t    ", /D, Page_MapSize * 100 / #4000, " % occupied"
                 display "-------------------------------------------------------------------------------------------------------------------------------"
 
                 emptytrd TRD_FILENAME

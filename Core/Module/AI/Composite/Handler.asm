@@ -18,6 +18,5 @@ HandlerRoot:    LD IY, .Next
                 RLA
                 JP C, AI.Composite.Sequence         ; BT_SEQUENCE
                 JP AI.Composite.TaskExecute         ; BT_TASK
-.RET            RET
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_HANDLER_

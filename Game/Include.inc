@@ -18,12 +18,13 @@ MemoryPageRef               EQU #5BFE                               ; адрес
 BorderStorageStackRef       EQU #5BFF                               ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
 MapStructure                EQU #C000                               ; адрес структуры карты
-SurfaceProperty             EQU #FB00                               ; адрес свойст тайлов (128 байт)                    - 1 страница
-UnitArray                   EQU #FC00                               ; адрес масива юнитов (1024 байта 64 юнита)         - 1 страница
+WayPointArray               EQU Page_1.WayPointArray                ; адрес массива Way Point'ов (512 байт)
+SurfaceProperty             EQU Page_1.SurfaceProperty              ; адрес свойст тайлов (128 байт)                    - 1 страница
+UnitArray                   EQU Page_1.UnitArray                    ; адрес масива юнитов (1024 байта 64 юнита)         - 1 страница
 SharedBuffer                EQU #BD00                               ; адрес общего буфера (256 байт)
 RenderBuffer                EQU #BE00                               ; адрес буфера обновлений (192 байта + 64 пустуют)
 TilemapBuffer               EQU #BF00                               ; адрес тайловой карты буфера (256 байт)
-BypassFOW                   EQU Page_7_BypassFOW                    ; адресс таблицы обхода FOW
+BypassFOW                   EQU Page_7.BypassFOW                    ; адресс таблицы обхода FOW
 TimeOfDayChangeRate         EQU 50 * 60                             ; скорость смены времени дня
 
 TickCounterRef              EQU Interrupt.TickCounter               ; счётчик тиков 1/50

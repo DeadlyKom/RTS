@@ -26,6 +26,9 @@ Handler:        ; включить страницу
                 LD D, (HL)
                 PUSH DE
                 POP IX
+                ; EXX
+                ; PUSH HL
+                ; EXX
 
                 ;
                 LD HL, BehaviorTable

@@ -84,4 +84,40 @@ SpriteAdr           EQU $+1
                     LD HL, SharedBuffer
                     RET
 
+                    ; POP DE
+                    ; LD (HL), E
+                    ; INC L
+                    ; INC L
+                    ; LD (HL), D
+                    ; INC L
+                    ; INC L
+
+                    ; LDI
+                    ; INC E
+                    ; LDI
+                    ; INC E
+
+                    ; POP DE
+                    ; LD A, E
+                    ; LD (0), A
+                    ; LD A, E
+                    ; LD (0), A
+
+                    ; LDI
+                    ; PUSH HL
+                    ; INC C
+                    ; LD L, C
+                    ; LD H, B
+                    ; LDI
+                    ; POP HL
+                    
+                    ; EXX
+                    ; LDI
+                    ; EXX
+
+                    ; POP DE
+                    ; LD (IX + 0), E
+                    ; LD (IX + 1), D
+
+
                     endif ; ~_MEMORY_COPY_

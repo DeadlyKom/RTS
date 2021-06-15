@@ -9,6 +9,7 @@
                 include "Idle.asm"
                 include "LookAround.asm"
                 include "MoveTo.asm"
+                include "TurnTo.asm"
                 include "Wait.asm"
                 include "WayPoint.asm"
 

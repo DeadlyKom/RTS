@@ -95,7 +95,7 @@ DisplayTileRow: ;
                 LD A, (HL)
                 AND %00111111
                 ADD A, A
-                LD H,  HIGH MemoryPage_7.DebugTableSprites 
+                LD H,  HIGH MemoryPage_7.DebugSpritesTable
                 LD L, A
 
                 ; toggle to memory page with tile sprites
@@ -113,7 +113,7 @@ DisplayTileRow: ;
                 ifdef ENABLE_FOW
                 JP C, .NextTile                         ; move to next column (if 7 bit is set)
                 endif
-                LD H, HIGH MemoryPage_7.TableSprites
+                LD H, HIGH MemoryPage_7.SpritesTable
                 LD L, A
                 LD E, (HL)
                 INC L
@@ -127,7 +127,7 @@ DisplayTileRow: ;
                 ifdef ENABLE_FOW
                 JP C, .NextTile                         ; move to next column (if 7 bit is set)
                 endif
-                LD H, HIGH MemoryPage_7.TableSprites
+                LD H, HIGH MemoryPage_7.SpritesTable
                 LD L, A
                 LD E, (HL)
                 INC L

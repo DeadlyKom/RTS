@@ -68,7 +68,7 @@ DrawLine:       ; инициализация
                 EX AF, AF'
                 POP DE
                 LD L, D
-                LD H, HIGH Page_7_ScrAdr
+                LD H, HIGH Page_7.ScrAdr
                 LD A, (HL)
                 INC H
                 LD D, (HL)

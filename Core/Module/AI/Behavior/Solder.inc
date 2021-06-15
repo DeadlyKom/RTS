@@ -8,11 +8,12 @@ BEHAVIOR_SOLDER:    ; root
                     
                     ;
 .MoveToTarget       BT_Sequence .SearchTarget
+                    BT_Task AI.BTT.TurnTo
                     BT_Task AI.BTT.MoveTo
                     BT_Break
 
                     ;
-.SearchTarget       BT_Selector $+1
+.SearchTarget       BT_Selector $
                     BT_Task AI.BTT.CheckEnemy
                     BT_Task AI.BTT.WayPoint
                     BT_Break

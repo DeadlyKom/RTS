@@ -31,6 +31,9 @@ DF_DOWN_LEFT        EQU %101                        ; направление в�
 DF_LEFT             EQU %110                        ; направление влево
 DF_UP_LEFT          EQU %111                        ; направление вверх-влево
 
+; FUnitTargets flags
+FUTF_INDEX          EQU 0x00                        ; бит о типе Location (0 - индекс, 1 - 2 байта позиции)
+FUTF_ENEMY          EQU 0x01                        ; бит о валидности индекса цели врага
 
                     struct FUnit
 Health              DB #00                          ; 1 byte (количество жизни)
@@ -57,9 +60,10 @@ OffsetByPixel       FLocation                       ; 2 bytes (смещение 
                     ends
 
 
-                    struct FUnitTargets
-Location            DW #0000                        ; 1 byte (индекс в массиве целей Way Point'ов) / 2 bytes (позиция тайла)
+                    struct FUnitTargets             ; (3)
+Location            FLocationIndex                  ; 1 byte (индекс в массиве целей Way Point'ов) / 2 bytes (позиция тайла)
 Enemy               DB #00                          ; 1 byte (индекс в массиве целей врагов)
+Flags               DB #00
 
                     ends
 

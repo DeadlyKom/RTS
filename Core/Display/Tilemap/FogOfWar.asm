@@ -111,7 +111,7 @@ DisplayRowFOW:  ;
                 DEC A
                 ADD A, A
                 LD L, A
-                LD H, HIGH Page_7_FOWTable
+                LD H, HIGH Page_7.FOWTable
 
                 ;
                 LD E, (HL)

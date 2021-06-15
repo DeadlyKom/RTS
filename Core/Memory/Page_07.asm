@@ -9,8 +9,8 @@
 Start:
                     ifdef DEBUG
 
-                    ORG Page_7_DebugTileTable
-DebugTableSprites:  DW COL_00_0,    COL_00_1,   COL_00_2,   COL_00_3                ; 0   - 3
+                    ORG Page_7.DebugTileTable
+DebugSpritesTable:  DW COL_00_0,    COL_00_1,   COL_00_2,   COL_00_3                ; 0   - 3
                     DW COL_00_4,    COL_00_9,   COL_00_5,   COL_00_9                ; 4   - 7
                     DW COL_00_6,    COL_00_7,   COL_00_9,   COL_00_9                ; 8   - 11
                     DW COL_25_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
@@ -28,16 +28,15 @@ DebugTableSprites:  DW COL_00_0,    COL_00_1,   COL_00_2,   COL_00_3            
                     DW COL_75_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
 .End                EQU $
 
-
 DebugSurfSprites:
                     include "../../Sprites/Debug/SurfaceProperty.inc"
 DebugSurfSprites.End
 DebugSurfSprites_S  EQU DebugSurfSprites.End - DebugSurfSprites
-DebugTableSprites_S EQU DebugTableSprites.End - DebugTableSprites                   ; 256 байт
+DebugSpritesTable_S EQU DebugSpritesTable.End - DebugSpritesTable                   ; 256 байт
 
                     else
 DebugSurfSprites_S  EQU 0
-DebugTableSprites_S EQU 0
+DebugSpritesTable_S EQU 0
 
                     endif
 
@@ -53,19 +52,19 @@ Sprite_Cursor_3:
 SpriteCursor.End    EQU $
 SpriteCursor_S      EQU SpriteCursor.End - SpriteCursor.Start
 
-                    ORG Page_7_ScrAdr
+                    ORG Page_7.ScrAdr
 
                     include "Tables/ScreenAddressTable.inc"
 ScrAdr.End          EQU $
-ScrAdr_S:           EQU ScrAdr.End - Page_7_ScrAdr                                  ; 1024 байта
+ScrAdr_S:           EQU ScrAdr.End - Page_7.ScrAdr                                  ; 1024 байта
 
-                    ORG Page_7_BypassFOW
+                    ORG Page_7.BypassFOW
 
                     include "Tables/BypassFOW.inc"
 BypassFOW.End       EQU $
-BypassFOW_S:        EQU BypassFOW.End - Page_7_BypassFOW                            ; 768 байта
+BypassFOW_S:        EQU BypassFOW.End - Page_7.BypassFOW                            ; 768 байта
 
-                    ORG Page_7_FOWTable
+                    ORG Page_7.FOWTable
 TableFOW:           DW SpriteFOW_1, SpriteFOW_2, SpriteFOW_3, SpriteFOW_4, SpriteFOW_5, SpriteFOW_6, SpriteFOW_7, SpriteFOW_8
                     DW SpriteFOW_9, SpriteFOW_A, SpriteFOW_B, SpriteFOW_C, SpriteFOW_D, SpriteFOW_E, SpriteFOW_F, #0000
 SpriteFOW_1         DW #0000, #0000, #0000, #0000, #0000, #0000, #0000, #0000       ; ! 
@@ -99,10 +98,10 @@ SpriteFOW_E         DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF   
 SpriteFOW_F         DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000       ; !
                     DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000
 FOWTable.End:       EQU $
-FOWTable_S:         EQU FOWTable.End - Page_7_FOWTable                              ; 512 байт
+FOWTable_S:         EQU FOWTable.End - Page_7.FOWTable                              ; 512 байт
 
-                    ORG Page_7_TileTable
-TableSprites:       DW Sprite_Sand_1,       Sprite_Sand_2,      Sprite_Sand_3,      Sprite_Sand_4       ; 0   - 3
+                    ORG Page_7.TileTable
+SpritesTable:       DW Sprite_Sand_1,       Sprite_Sand_2,      Sprite_Sand_3,      Sprite_Sand_4       ; 0   - 3
                     DW #0000,               #0000,              #0000,              #0000               ; 4   - 7
                     DW #0000,               #0000,              #0000,              #0000               ; 8   - 11
                     DW #0000,               #0000,              #0000,              #0000               ; 12  - 15
@@ -135,9 +134,9 @@ TableSprites:       DW Sprite_Sand_1,       Sprite_Sand_2,      Sprite_Sand_3,  
                     DW #0000,               #0000,              #0000,              #0000               ; 120 - 123
                     DW #0000,               #0000,              #0000,              #0000               ; 124 - 127
 .End                EQU $
-TableSprites_S:     EQU TableSprites.End - TableSprites                             ; 256 байт
+SpritesTable_S:     EQU SpritesTable.End - SpritesTable                             ; 256 байт
 
-                    ORG Page_7_TileSprites
+                    ORG Page_7.TileSprites
 
                     ; спрайты драфтовых значков 1 и 2
 Sprite1:            ; 1
@@ -191,11 +190,11 @@ Sprite_Canyon_15:
 Sprite_Canyon_16:        
                     incbin "Sprites/Terrain/Canyon_16.spr"
 End:
-Sprites_S:          EQU End - Page_7_TileSprites                                    ; 4096 байт
-SizePage_7_S:       EQU ScrAdr_S + BypassFOW_S + FOWTable_S + TableSprites_S + 0x1000 ; Sprites_S
+Sprites_S:          EQU End - Page_7.TileSprites                                    ; 4096 байт
+SizePage_7_S:       EQU ScrAdr_S + BypassFOW_S + FOWTable_S + SpritesTable_S + 0x1000 ; Sprites_S
 
                     endmodule
-SizePage_7_Real:    EQU MemoryPage_7.DebugTableSprites_S + MemoryPage_7.DebugSurfSprites_S + MemoryPage_7.SpriteCursor_S + MemoryPage_7.SizePage_7_S
+SizePage_7_Real:    EQU MemoryPage_7.DebugSpritesTable_S + MemoryPage_7.DebugSurfSprites_S + MemoryPage_7.SpriteCursor_S + MemoryPage_7.SizePage_7_S
 SizePage_7:         EQU 0x4000 - 0x1B00
 
                     endif ; ~_CORE_MEMORY_PAGE_07_
