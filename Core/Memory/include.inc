@@ -21,6 +21,7 @@ Page_7.TileTable:       EQU #EF00                   ; Bank 03 (Screen 1) (тай
 Page_7.TileSprites:     EQU #F000                   ; Bank 03 (Screen 1) (тайлы карты)                  - 4096 байт
 
                         include "../Structure/Include.inc"
+                        include "../Module/AI/Composite/Definition.inc"
 
                         include "Page_00.asm"
                         include "Page_01.asm"

@@ -2,8 +2,6 @@
                 ifndef _CORE_MODULE_AI_BEHAVIOR_HANDLER_
                 define _CORE_MODULE_AI_BEHAVIOR_HANDLER_
 
-                include "BehaviorTable.inc"
-
 ; -----------------------------------------
 ; 
 ; In:
@@ -31,7 +29,7 @@ Handler:        ; включить страницу
                 ; EXX
 
                 ;
-                LD HL, BehaviorTable
+                LD HL, (BehaviorTableRef)
 
                 ; DE - указывает на FUnitState.Behavior
                 INC E                                           ; Direction

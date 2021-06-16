@@ -7,6 +7,10 @@ Initialize:     ; toggle to memory page with tilemap
                 ; инициализация перменных (из загруженной карты)
                 XOR A
                 LD IX, MapStructure                         ; адрес структуры карты
+
+                LD HL, (IX + FMap.BehaviorTable)            ; инициализация адреса таблицы поведения
+                LD (BehaviorTableRef), HL
+
                 LD HL, (IX + FMap.Address)                  ; HL - адрес начала (смещение 0,0) тайловой карты
                 LD E, (IX + FMap.StartLocation.X)           ; E - смещение по горизонтали
                 LD D, A 

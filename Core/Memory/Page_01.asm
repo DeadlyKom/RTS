@@ -9,10 +9,13 @@
 
                 ORG MapStructure
 Map:
-.Begin          FMap .Tilemap, {64, 64}, {0, 0}, UnitArray
+.Begin          FMap .Tilemap, {64, 64}, {0, 0}, Behavior.Begin, UnitArray
 .Tilemap        include "Map.asm"
 .UnitCounter    DB #00
 .End
+Behavior.Begin:
+                include "../Behavior/Include.inc"
+Behavior.End:
                 ORG SurfaceProperty
 Surf:
 .Begin
@@ -21,10 +24,10 @@ Surf:
 MapSize:        EQU MemoryPage_1.Map.UnitCounter - MemoryPage_1.Map.Tilemap
 
                 endmodule
-Map_S:          EQU MemoryPage_1.Map.End - MemoryPage_1.Map.Begin 
-Surf_S:         EQU MemoryPage_1.Surf.End - MemoryPage_1.Surf.End
-SizePage_1_R:   EQU Map_S + Surf_S
+Map_S:          EQU MemoryPage_1.Map.End - MemoryPage_1.Map.Begin
+Behavior_S      EQU MemoryPage_1.Behavior.End - MemoryPage_1.Behavior.Begin
+Surf_S:         EQU MemoryPage_1.Surf.End - MemoryPage_1.Surf.Begin
+SizePage_1_R:   EQU Map_S + Behavior_S + Surf_S
 SizePage_1:     EQU UnitArray - Page_1
-
 
                 endif ; ~_CORE_MEMORY_PAGE_01_

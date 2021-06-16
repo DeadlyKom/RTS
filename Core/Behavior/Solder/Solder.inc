@@ -1,6 +1,6 @@
 
-                    ifndef _CORE_MODULE_AI_BEHAVIOR_SOLDER_
-                    define _CORE_MODULE_AI_BEHAVIOR_SOLDER_
+                    ifndef _CORE_AI_BEHAVIOR_SOLDER_
+                    define _CORE_AI_BEHAVIOR_SOLDER_
 BEHAVIOR_SOLDER:    ; root
                     BT_Selector .MoveToTarget
                     BT_Task AI.BTT.Idle

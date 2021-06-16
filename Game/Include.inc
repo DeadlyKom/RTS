@@ -11,6 +11,10 @@
                             include "SurfaceProperty.inc"
                             include "../Core/Macro.inc"
                     
+                            define MAJOR 1
+                            define MINOR 2
+                            define BUILD 1
+
                             define TRD_FILENAME "Torn Metal.trd"    ; имя образа TRD
 StackTop                    EQU #5BFB                               ; расположение стека
 MemoryPageIDRef             EQU #5BFC                               ; ID
@@ -49,6 +53,8 @@ TilemapHeight               EQU Game.TilemapSize.Y                  ; высот
 TilemapOffsetRef            EQU Game.TilemapOffset                  ; указатель смещения тайловой карты
 TilemapOffsetWidth          EQU Game.TilemapOffset.X                ; смещение в тайловой карте по горизонтали (структура FLocation)
 TilemapOffsetHeight         EQU Game.TilemapOffset.Y                ; смещение в тайловой карте по вертикали (структура FLocation)
+
+BehaviorTableRef            EQU Game.BehaviorTable                  ; адрес таблицы поведения юнитов
 
 TopRowOffsetFOW             EQU MemoryPage_7.FOW.ROW_UP             ; смещение в буфере верхней строки FOW
 BottomRowOffsetFOW          EQU MemoryPage_7.FOW.ROW_DOWN           ; смещение в буфере нижней строки FOW

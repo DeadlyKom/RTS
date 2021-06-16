@@ -35,10 +35,7 @@ Unit:           ; определение адреса добавления но�
                 LD A, 0
                 LD (IX + FUnitState.Animation), A
 
-                ; ---------------------------------------------
-                ; переход
-                ; ---------------------------------------------
-                INC IXH
+                INC IXH                                         ; переход к FUnitLocation
 
                 ; ---------------------------------------------
                 ; FUnitLocation
@@ -52,6 +49,32 @@ Unit:           ; определение адреса добавления но�
                 LD (IX + FUnitLocation.OffsetByPixel.X), A
                 LD A, #04
                 LD (IX + FUnitLocation.OffsetByPixel.Y), A
+
+                INC IXH                                         ; переход к FUnitTargets
+
+                ; ---------------------------------------------
+                ; FUnitTargets
+                ; ---------------------------------------------
+
+                ; инициализция
+                XOR A
+                LD (IX + FUnitTargets.Location.IDX_X), A
+                LD (IX + FUnitTargets.Location.Y), A
+                LD (IX + FUnitTargets.Enemy), A
+                LD (IX + FUnitTargets.Flags), A
+
+                INC IXH                                         ; переход к FFUnitAnimation
+
+                ; ---------------------------------------------
+                ; FFUnitAnimation
+                ; ---------------------------------------------
+
+                ; инициализция
+                XOR A
+                LD (IX + FFUnitAnimation.Counter + 0), A
+                LD (IX + FFUnitAnimation.Counter + 1), A
+                LD (IX + FFUnitAnimation.Counter.Second), A
+                LD (IX + FFUnitAnimation.Flags), A
  
                 ; итерирование счётчика
                 LD HL, CountUnitsRef
