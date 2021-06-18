@@ -13,6 +13,7 @@
                 define ENABLE_CLS                           ; разрешить очистить 2 экрана перед стартом
 
                 define SHOW_DEBUG_BORDER                    ; разрешить отображать на бордюре время выполнение
+                define SHOW_DEBUG_BORDER_INTERRUPT          ; отображение на бордюре время прерывания
                 define SHOW_DEBUG_BORDER_TILEMAP            ; отображение на бордюре время отображения бэкграунда карты
                 define SHOW_DEBUG_BORDER_SCROLL_PREPARE     ; отображение на бордюре время операции подготовки нового участка тайловой карты
                 define SHOW_DEBUG_BORDER_DRAW_UNITS         ; отображение на бордюре время отображения юнитов
@@ -22,7 +23,7 @@
                 define SHOW_DEBUG_BORDER_PLAY_MUSIC         ; отображение на бордюре время проигрывания музыки
                 define SHOW_DEBUG_BORDER_DRAFT_LOGIC        ;
                 
-                ; define SHOW_DEBUG                           ; разрешить отображать дебажную инормацию
+                define SHOW_DEBUG                           ; разрешить отображать дебажную инормацию
                 ifdef SHOW_DEBUG
                 define SHOW_FPS                             ; отображать FPS
                 define SHOW_MOUSE_POSITION                  ; отображать координаты мыши

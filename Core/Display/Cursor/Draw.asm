@@ -341,11 +341,6 @@ Draw:           LD (.CurrentScreen), A
 
                 SetFrameFlag RESTORE_CURSOR
 
-                ; revert old debug border
-                ifdef SHOW_DEBUG_BORDER_CURSOR
-                END_DUBUG_BORDER
-                endif
-
                 RET
 
 Restore:        ; show debug border
@@ -392,11 +387,6 @@ Restore:        ; show debug border
 
 .ContainerSP    EQU $+1
                 LD SP, #0000
-
-                ; revert old debug border
-                ifdef SHOW_DEBUG_BORDER_CURSOR_RESTORE
-                END_DUBUG_BORDER
-                endif
 
                 RET
 

@@ -35,10 +35,32 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; ~ SAVE MEMORY PAGE
 
 .TickCounter        ; ********** TICK COUNTER *********
-                    LD HL, (TickCounterRef)
+.TickCounterPtr     EQU $+1
+                    LD HL, #0000
                     INC HL
                     LD (TickCounterRef), HL
-                    ; ~  TICK COUNTER
+                    ; ~ TICK COUNTER
+
+.AI_TickCounter     ; ******** AI TICK COUNTER *********
+                    LD HL, Internal_AICounter                           ; внутрений счётчик (период между обновлениями кластеров юнитов)
+                    DEC (HL)
+                    JP NZ, .AI_TickCounter_End                          ; счётчик не обнулён (ожидаем)
+                    INC (HL)                                            ; увеличим счётчик (возможно ещё подождать 1 фрейм)
+                    EX DE, HL
+                    
+                    ; проверка, возможности перехода к следующему кластеру юнитов
+                    LD HL, UnitClusterRef
+                    LD A, (HL)
+                    INC HL
+                    CP (HL)
+                    JP Z, .AI_TickCounter_End                           ; обработка текущего кластера юнитов не завершена (подождём следующий фрейм)
+
+                    ; обработка текущего кластера, заверщена
+                    LD A, AI_UpdateFrequency
+                    LD (DE), A                                          ; обновим счётчик
+                    DEC HL
+                    INC (HL)                                            ; перейдём к обработке следующего кластера
+.AI_TickCounter_End ; ~ AI TICK COUNTER
 
 .Mouse              ; ************* MOUSE *************
                     ifdef ENABLE_MOUSE
@@ -48,9 +70,15 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; restore background cursor
                     CheckFrameFlag RESTORE_CURSOR
                     CALL NZ, Cursor.Restore
+
                     endif
                     ; ~ MOUSE
-                    
+
+                    ; show debug border
+                    ifdef SHOW_DEBUG_BORDER_INTERRUPT
+                    BEGIN_DEBUG_BORDER_COL INTERRUPT_COLOR
+                    endif
+
 .Keyboard           ; ****** SCAN KEYBOARD KEYS *******
                     ; keyboard handling
                     CALL Handlers.Input.ScanKeyboard
@@ -212,7 +240,8 @@ Initialize:         ; **** INITIALIZE HANDLER IM 2 ****
                     RET
                     ; ~ INITIALIZE HANDLER IM 2
 TimeOfDay:          DW TimeOfDayChangeRate
-TickCounter:        DW #0000
+AI_TickCounterPtr   EQU $+1
+Internal_AICounter: DB AI_UpdateFrequency
 
                     endmodule
 

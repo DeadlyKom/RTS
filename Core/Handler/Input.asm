@@ -4,8 +4,6 @@
 
                 module Input
 
-KeyStackSize    EQU 5
-
                 include "../Structure/Input.inc"
 
 Initialize:     ;

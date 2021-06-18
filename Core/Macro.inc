@@ -217,15 +217,6 @@ BEGIN_DEBUG_BORDER_COL  macro Color?
                         ; show debug border
                         ifdef SHOW_DEBUG_BORDER
                         LD A, Color?
-                        LD (BorderStorageStackRef), A
-                        OUT (#FE), A
-                        endif
-                        endm
-
-END_DUBUG_BORDER        macro
-                        ; show debug border
-                        ifdef SHOW_DEBUG_BORDER
-                        LD A, (BorderStorageStackRef)
                         OUT (#FE), A
                         endif
                         endm

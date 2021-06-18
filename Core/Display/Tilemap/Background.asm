@@ -25,11 +25,7 @@ Prepare:        ; show debug border
 
                 ;
                 LD A, #03
-                LD (FrareUnitsFlagRef), A
-
-                ifdef SHOW_DEBUG_BORDER_TILEMAP
-                END_DUBUG_BORDER
-                endif
+                LD (FrameUnitsFlagRef), A
 
                 RET
 

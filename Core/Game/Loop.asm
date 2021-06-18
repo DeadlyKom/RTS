@@ -5,6 +5,9 @@ GameLoop:       ; initialize
                 ResetAllFrameFlags
                 SetFrameFlag SWAP_SCREENS_FLAG
 
+                ; initialize unit cluster
+                CALL Spawn.Initialize
+
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
                 LD BC, #0F09
@@ -13,7 +16,7 @@ GameLoop:       ; initialize
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
 
                 CheckFrameFlag SWAP_SCREENS_FLAG
-                JR NZ, .Logic
+                JR NZ, .MainLoop
 
 .Render         ; ************ RENDER ************      
 
@@ -29,10 +32,6 @@ GameLoop:       ; initialize
 
                 CALL Tilemap.Display
 
-                ; revert old debug border
-                ifdef SHOW_DEBUG_BORDER_TILEMAP
-                END_DUBUG_BORDER
-                endif
                 ; ~ TILEMAP
 
 .Unit           ; ********** DRAW UNITS ***********
@@ -43,10 +42,6 @@ GameLoop:       ; initialize
 
                 CALL Unit.Handler
 
-                ; revert old debug border
-                ifdef SHOW_DEBUG_BORDER_DRAW_UNITS
-                END_DUBUG_BORDER
-                endif
                 ; ~ DRAW UNITS
 
                 ; ---------------------------------
@@ -62,10 +57,6 @@ GameLoop:       ; initialize
                 
                 CALL Tilemap.FOW
 
-                ; revert old debug border
-                ifdef SHOW_DEBUG_BORDER_TILEMAP
-                END_DUBUG_BORDER
-                endif
                 endif
                 ; ~ FOW
 
@@ -77,10 +68,6 @@ GameLoop:       ; initialize
 
                 CALL AI.Handler
 
-                ; revert old debug border
-                ifdef SHOW_DEBUG_BORDER_DRAFT_LOGIC
-                END_DUBUG_BORDER
-                endif
                 ; ~ FOW
 
 .CompliteFlags  ; ************* FLAGS *************
@@ -90,52 +77,13 @@ GameLoop:       ; initialize
                 ; ~ RENDER
 
 .Logic          ; ************* LOGIC *************
-                END_DUBUG_BORDER
-
-
+                ; LD A, (AI_TickCounterRef)
+                ; OR A
+                ; JP Z, .MainLoop
+                ; PUSH AF
+                ; CALL NZ, Tilemap.FOW
+                ; POP AF
+                ; DEC A
                 JP .MainLoop
-
-
-Test:           LD HL, (TickCounterRef)
-                LD A, (.AA)
-                XOR L
-                RRA
-                RRA
-                RRA
-                ; RRA
-                ; RRA
-                ; RRA
-                JR NC, .Skip
-
-                LD A, L
-                LD (.AA), A
-
-                ; JP .MainLoop
-
-                XOR A
-                CALL Unit.RefUnitOnScr
-
-                ; включить страницу
-                SeMemoryPage MemoryPage_Tilemap, DRAFT_ROTATE_ID
-                
-                LD HL, MapStructure + FMap.UnitsArray
-                LD E, (HL)
-                INC L
-                LD D, (HL)
-                EX DE, HL
-
-                INC L
-                
-                LD A, (HL)
-                ADD A, #08
-                AND %00111000
-                LD (HL), A
-                
-.Skip           RET
-                ; ~ LOGIC
-
-                ; JP .MainLoop
-
-.AA             DB #00
 
                 endif ; ~_CORE_GAME_LOOP_

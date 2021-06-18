@@ -18,19 +18,46 @@ Handler:        ; включить страницу
                 LD (VisibleUnits), A
                 endif
 
-                ; проверка на наличие юнитов в массиве
-                LD A, (CountUnitsRef)
-                OR A
-                JP Z, .Exit
-                LD (.ProcessedUnits), A
+                ; ; проверка на наличие юнитов в массиве
+                ; ; LD A, (CountUnitsRef)
+                ; OR A
+                ; JP Z, .Exit
+                ; LD (.ProcessedUnits), A
 
-                LD HL, MapStructure + FMap.UnitsArray
-                LD E, (HL)
-                INC L
-                LD D, (HL)
+                ; LD HL, MapStructure + FMap.UnitsArray
+                ; LD E, (HL)
+                ; INC L
+                ; LD D, (HL)
+
+                LD HL, UnitClusterRef + FUnitCluster.NumArray
+                LD DE, UnitClusterRef + FUnitCluster.TmpNumArray
+                dup 8
+                LDI
+                edup
+                ; EX DE, HL                               ; сохраним DE - указывает на FUnitCluster.TmpNumArray + 0
+
+                ;
+                ; DE - указывает на FUnitCluster.TmpNumArray + 0
+                LD DE, (UnitArrayRef)                   ; HL - указывает на массив юнитов
+;                 JP .Continue
+
+; .NextCluster    INC HL
+;                 LD A, E
+;                 AND %11110000
+;                 ADD A, #40
+;                 LD E, A
+
+;                 JP C, .Exit                             ; 4 кластера закончились
+
+.Continue       LD A, (HL)
+                OR A
+                JP Z, .NextCluster
+                LD (.ProcessedUnits), HL
+
+                ; EX DE, HL
                 
                 ; проверка на перерисовку всех юнитов принудительно
-                LD HL, FrareUnitsFlagRef
+                LD HL, FrameUnitsFlagRef
                 SRA (HL)
                 LD A, #7F                               ; #3F для AND
                 LD HL, #C312                            ; LD (DE), A : JP
@@ -45,6 +72,8 @@ Handler:        ; включить страницу
                 LD (.ModifyCode + 1), HL
                 LD (.ModifyCode + 3), BC
 
+.Loop           PUSH DE                                 ; save current address UnitsArray
+
                 ; ---------------------------------------------
                 ; Lx, Ly   - позиция юнита (в тайлах)
                 ; Vx, Vy   - позиция видимой области карты (в тайлах)
@@ -52,8 +81,6 @@ Handler:        ; включить страницу
                 ; Sx, Sy   - ширина спрайта (в пикселах)  !!!! [ х - в знакоместах ]
                 ; SOx, SOy - смещение спрайта (в пикселах)
                 ; ---------------------------------------------
-
-.Loop           PUSH DE                     ; save current address UnitsArray
 
                 ; проврка на перерисовку текущего юнита
                 LD A, (DE)
@@ -643,16 +670,51 @@ Handler:        ; включить страницу
                 INC E
                 INC E
                 ;
-                LD HL, .ProcessedUnits
+.ProcessedUnits EQU $+1
+                LD HL, #0000
                 DEC (HL)
                 JP NZ, .Loop
 
+.NextCluster    INC HL
+                LD A, E
+                AND %11110000
+                ADD A, #40
+                LD E, A
+
+                JP C, .Exit
+
+                LD A, (HL)
+                OR A
+                JR Z, .NextCluster
+                LD (.ProcessedUnits), HL
+
+                ; EX DE, HL
+                JP .Loop
+
+                ; EX DE, HL
+                ; JP .NextCluster
+
+                ; ;
+                ; ; DE - указывает на FUnitCluster.TmpNumArray + 0
+                ; LD HL, (UnitArrayRef)                   ; HL - указывает на массив юнитов
+;                 JP .Continue
+
+; .NextCluster    INC DE
+;                 LD A, L
+;                 AND %11110000
+;                 ADD A, #40
+;                 LD L, A
+
+;                 JP C, .Exit                             ; 4 кластера закончились
+
+; .Continue       LD A, (DE)
+;                 OR A
+;                 JR NZ, .NextCluster
+;                 LD (.ProcessedUnits), DE
+
+;                 EX DE, HL
+
 .Exit           RET
-
-; .LeftColumn     DB #00
-; .RightColumn    DB #00
-
-.ProcessedUnits DB #00
 
                 ifdef SHOW_VISIBLE_UNITS
 VisibleUnits    DB #00

@@ -11,11 +11,6 @@ PlayMusic:      ; show debug border
                 SeMemoryPage MemoryPage_Music, MUSIC_PLAY_ID
                 CALL #C005
 
-                ; revert old debug border
-                ifdef SHOW_DEBUG_BORDER_PLAY_MUSIC
-                END_DUBUG_BORDER
-                endif
-
                 RET
 
                 endif ; ~_CORE_GAME_MUSIC_
