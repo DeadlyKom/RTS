@@ -3,6 +3,7 @@
                             define _GAME_INCLUDE_
 
                             include "../Config.inc"
+                            include "AI.inc"
                             include "Color.inc"
                             include "Debug.inc"
                             include "Frame.inc"
@@ -29,21 +30,25 @@ SharedBuffer                EQU #BD00                               ; адрес
 RenderBuffer                EQU #BE00                               ; адрес буфера обновлений (192 байта + 64 пустуют)
 TilemapBuffer               EQU #BF00                               ; адрес тайловой карты буфера (256 байт)
 BypassFOW                   EQU Page_7.BypassFOW                    ; адресс таблицы обхода FOW
+AI_MIN_UPDATE_FREQ          EQU 1                                   ; скорость обновления ИИ (минимальная)
+AI_MAX_UPDATE_FREQ          EQU 8                                   ; скорость обновления ИИ (максимальная)
 TimeOfDayChangeRate         EQU 50 * 60                             ; скорость смены времени дня
-AI_UpdateFrequency          EQU 2                                   ; частота обновления AI  (1/8)
-
 TickCounterRef              EQU Interrupt.Handler.TickCounterPtr    ; счётчик тиков 1/50
 
-FrameStateRef               EQU Game.FrameFlags                     ; указатель на флага состояний (frame)
+; flags
+FrameStateRef               EQU Game.FrameFlags                     ; указатель на флаги состояний (frame)
+AIStateRef                  EQU Game.AIFlags                        ; указатель на флаги состояний (AI)
 HardwareStateRef            EQU Game.HardwareFlags                  ; указатель на флаг ограничений железа
+FrameUnitsFlagRef           EQU Game.FrameUnitsFlag                 ; флаг обновления юнитов принудительно (необходим для скролинга)
 
+; debug
                             ifdef DEBUG
 DebugStateRef               EQU Game.DebugFlags                     ; указатель на флаги необходимые для отладки
 
                             endif
-
-UnitClusterRef              EQU Game.UnitCluster                    ; указатель на кластеры юнитов
-FrameUnitsFlagRef           EQU Game.FrameUnitsFlag                 ; флаг обновления юнитов принудительно (необходим для скролинга)
+; AI
+AI_UpdateFrequencyRef       EQU Game.AI_UpdateFreq                  ; частота обновления AI
+AI_NumUnitsRef              EQU Game.AI_NumUnits                    ; число юнитов
 
 TilesOnScreenX              EQU 16                                  ; количество тайлов на экране по горизонтали
 TilesOnScreenY              EQU 12                                  ; количество тайлов на экране по вертикали

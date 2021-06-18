@@ -4,6 +4,7 @@
 
                 module AI
 
+                include "Base.asm"
                 include "Utils/Include.inc"
                 include "Composite/Include.inc"
                 include "Task/Include.inc"

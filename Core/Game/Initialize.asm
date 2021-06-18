@@ -4,6 +4,11 @@
 
 Initialize:             ; reset all flags
                         ResetAllHardwareFlags
+                        ResetAllAIFlags
+
+                        ; set default values
+                        LD A, AI_MAX_UPDATE_FREQ
+                        LD (AI_UpdateFrequencyRef), A
 
                         CALL Interrupt.Initialize
                         CALL Tilemap.Initialize
@@ -33,7 +38,7 @@ Initialize:             ; reset all flags
 
                         ; initialize background
                         CALL BackgroundFill
-                        
+
                         RET
 
 HardwareRestriction:

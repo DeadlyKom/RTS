@@ -127,19 +127,46 @@ KeyboardMove:   ; move with "SYMBOL SHIFT" key pressed
 
                 RET
 
-InputMode_0_9:  JR Z, .Processing               ; skip released
+InputMode_0_9:  JR NZ, .Processing              ; skip released
 .NotProcessing  SCF
                 RET
 
 .Processing     EX AF, AF'
                 CP 01                           ; key 1
-                JR NZ, .NotProcessing
-                SwapDebugFlag DISPLAY_COLLISION_FLAG
+                JP Z, ToggleCollision
+                CP 08                           ; key 8
+                JP Z, ToggleSyncAI
+                CP 09                           ; key 9
+                JP Z, IncreaseAIFreq
+                CP 00                           ; key 0
+                JP Z, DecreaseAIFreq
+                JR .NotProcessing
+
+ToggleCollision: SwapDebugFlag DISPLAY_COLLISION_FLAG
                 CALL Tilemap.Prepare
                 ; exit, processed
                 OR A
                 RET
-
+ToggleSyncAI:   SwapAIFlag AI_SYNC_UPDATE_FLAG
+                ; exit, processed
+                OR A
+                RET
+IncreaseAIFreq: LD HL, AI_UpdateFrequencyRef
+                LD A, AI_MIN_UPDATE_FREQ
+                CP (HL)
+                RET Z
+                DEC (HL)
+                ; exit, processed
+                OR A
+                RET
+DecreaseAIFreq: LD HL, AI_UpdateFrequencyRef
+                LD A, AI_MAX_UPDATE_FREQ
+                CP (HL)
+                RET Z
+                INC (HL)
+                ; exit, processed
+                OR A
+                RET
 CheckKeyState:  PUSH HL
                 LD HL, .RET
                 LD (.VK), A

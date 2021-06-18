@@ -137,6 +137,33 @@ ResetAllFrameFlags      macro
                         LD (FrameStateRef), A
                         endm
 
+                        ; AI flags
+CheckAIFlag             macro Flag?
+                        LD A, (AIStateRef)
+                        AND Flag?
+                        endm
+SetAIFlag               macro Flag?
+                        LD A, (AIStateRef)
+                        OR Flag?
+                        LD (AIStateRef), A
+                        endm
+ResetAIFlag             macro Flag?
+                        LD A, (AIStateRef)
+                        AND ((~Flag?) & 0xFF)
+                        LD (AIStateRef), A
+                        endm
+SwapAIFlag              macro Flag?
+                        ifdef DEBUG
+                        LD A, (AIStateRef)
+                        XOR Flag?
+                        LD (AIStateRef), A
+                        endif
+                        endm
+ResetAllAIFlags         macro
+                        XOR A
+                        LD (AIStateRef), A
+                        endm
+
                         ; hardware flags
 CheckHardwareFlag       macro Flag?
                         LD A, (HardwareStateRef)

@@ -12,10 +12,12 @@ TilemapPtr:     DW #0000
 UnitArrayPtr:   DW #0000
 TilemapOffset:  FLocation 0, 0
 TilemapSize:    FMapSize 64, 64
-UnitCluster:    FUnitCluster
+AI_UpdateFreq:  DB #00
+AI_NumUnits:    DB #00
 BehaviorTable:  DW #0000
 UnitArray:      DW #0000
 FrameFlags:     DB #00
+AIFlags:        DB #00
 FrameUnitsFlag: DB #00
 HardwareFlags:  DB #00
 

@@ -18,44 +18,18 @@ Handler:        ; включить страницу
                 LD (VisibleUnits), A
                 endif
 
-                ; ; проверка на наличие юнитов в массиве
-                ; ; LD A, (CountUnitsRef)
-                ; OR A
-                ; JP Z, .Exit
-                ; LD (.ProcessedUnits), A
+                ; проверка на наличие юнитов в массиве
+                LD A, (AI_NumUnitsRef)
+                OR A
+                JP Z, .Exit
+                LD (.ProcessedUnits), A
 
                 ; LD HL, MapStructure + FMap.UnitsArray
                 ; LD E, (HL)
                 ; INC L
                 ; LD D, (HL)
+                LD DE, (UnitArrayRef)
 
-                LD HL, UnitClusterRef + FUnitCluster.NumArray
-                LD DE, UnitClusterRef + FUnitCluster.TmpNumArray
-                dup 8
-                LDI
-                edup
-                ; EX DE, HL                               ; сохраним DE - указывает на FUnitCluster.TmpNumArray + 0
-
-                ;
-                ; DE - указывает на FUnitCluster.TmpNumArray + 0
-                LD DE, (UnitArrayRef)                   ; HL - указывает на массив юнитов
-;                 JP .Continue
-
-; .NextCluster    INC HL
-;                 LD A, E
-;                 AND %11110000
-;                 ADD A, #40
-;                 LD E, A
-
-;                 JP C, .Exit                             ; 4 кластера закончились
-
-.Continue       LD A, (HL)
-                OR A
-                JP Z, .NextCluster
-                LD (.ProcessedUnits), HL
-
-                ; EX DE, HL
-                
                 ; проверка на перерисовку всех юнитов принудительно
                 LD HL, FrameUnitsFlagRef
                 SRA (HL)
@@ -670,52 +644,12 @@ Handler:        ; включить страницу
                 INC E
                 INC E
                 ;
-.ProcessedUnits EQU $+1
-                LD HL, #0000
+                LD HL, .ProcessedUnits
                 DEC (HL)
                 JP NZ, .Loop
 
-.NextCluster    INC HL
-                LD A, E
-                AND %11110000
-                ADD A, #40
-                LD E, A
-
-                JP C, .Exit
-
-                LD A, (HL)
-                OR A
-                JR Z, .NextCluster
-                LD (.ProcessedUnits), HL
-
-                ; EX DE, HL
-                JP .Loop
-
-                ; EX DE, HL
-                ; JP .NextCluster
-
-                ; ;
-                ; ; DE - указывает на FUnitCluster.TmpNumArray + 0
-                ; LD HL, (UnitArrayRef)                   ; HL - указывает на массив юнитов
-;                 JP .Continue
-
-; .NextCluster    INC DE
-;                 LD A, L
-;                 AND %11110000
-;                 ADD A, #40
-;                 LD L, A
-
-;                 JP C, .Exit                             ; 4 кластера закончились
-
-; .Continue       LD A, (DE)
-;                 OR A
-;                 JR NZ, .NextCluster
-;                 LD (.ProcessedUnits), DE
-
-;                 EX DE, HL
-
 .Exit           RET
-
+.ProcessedUnits DB #00
                 ifdef SHOW_VISIBLE_UNITS
 VisibleUnits    DB #00
 

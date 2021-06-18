@@ -26,6 +26,7 @@
                 define SHOW_DEBUG                           ; разрешить отображать дебажную инормацию
                 ifdef SHOW_DEBUG
                 define SHOW_FPS                             ; отображать FPS
+                define SHOW_AI_FREQUENCY                    ; отображать частоту обновления AI
                 define SHOW_MOUSE_POSITION                  ; отображать координаты мыши
                 define SHOW_OFFSET_TILEMAP                  ; отображать смещение карты
                 define SHOW_VISIBLE_UNITS                   ; отображать количество видимых юнитов

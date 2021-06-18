@@ -42,25 +42,9 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; ~ TICK COUNTER
 
 .AI_TickCounter     ; ******** AI TICK COUNTER *********
-                    LD HL, Internal_AICounter                           ; внутрений счётчик (период между обновлениями кластеров юнитов)
-                    DEC (HL)
-                    JP NZ, .AI_TickCounter_End                          ; счётчик не обнулён (ожидаем)
-                    INC (HL)                                            ; увеличим счётчик (возможно ещё подождать 1 фрейм)
-                    EX DE, HL
-                    
-                    ; проверка, возможности перехода к следующему кластеру юнитов
-                    LD HL, UnitClusterRef
-                    LD A, (HL)
-                    INC HL
-                    CP (HL)
-                    JP Z, .AI_TickCounter_End                           ; обработка текущего кластера юнитов не завершена (подождём следующий фрейм)
-
-                    ; обработка текущего кластера, заверщена
-                    LD A, AI_UpdateFrequency
-                    LD (DE), A                                          ; обновим счётчик
-                    DEC HL
-                    INC (HL)                                            ; перейдём к обработке следующего кластера
-.AI_TickCounter_End ; ~ AI TICK COUNTER
+                    CheckAIFlag AI_UPDATE_FLAG
+                    CALL Z, AI.Tick
+                    ; ~ AI TICK COUNTER
 
 .Mouse              ; ************* MOUSE *************
                     ifdef ENABLE_MOUSE
@@ -91,7 +75,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     LD A, #C0
                     JR Z, $+4
                     LD A, #40
-                    LD (Console.NoflicConsoleScreenAddr), A
+                    LD (Console.DrawChar.ConsoleScreen), A
                     endif
                     ; ~ SWITCH DEBUG SCREENS
 
@@ -102,6 +86,26 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CALL FPS_Counter.Render_FPS
 	                endif
                     ; ~ FPS
+
+.AI_Frequency       ; ********** AI FREQUENCY *********
+                    ifdef SHOW_AI_FREQUENCY
+                    SeMemoryPage MemoryPage_ShadowScreen, RENDER_AI_FREQUENCY_ID
+                    ; show AI frequency
+                    LD A, #1B
+                    CALL Console.At
+                    LD A, (AI_UpdateFrequencyRef)
+                    LD B, A
+                    CALL Console.Logb
+
+                    ; show AI sync update to frame
+                    CheckAIFlag AI_SYNC_UPDATE_FLAG
+                    LD A, #2B
+                    JR NZ, $+4
+                    LD A, #2D
+                    CALL Console.LogChar
+
+	                endif
+                    ; ~ AI FREQUENCY
 
 .MousePositionInfo  ; *** DRAW DEBUG MOUSE POSITION ***
                     ifdef SHOW_MOUSE_POSITION
@@ -240,8 +244,6 @@ Initialize:         ; **** INITIALIZE HANDLER IM 2 ****
                     RET
                     ; ~ INITIALIZE HANDLER IM 2
 TimeOfDay:          DW TimeOfDayChangeRate
-AI_TickCounterPtr   EQU $+1
-Internal_AICounter: DB AI_UpdateFrequency
 
                     endmodule
 

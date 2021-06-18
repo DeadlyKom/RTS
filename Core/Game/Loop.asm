@@ -5,9 +5,6 @@ GameLoop:       ; initialize
                 ResetAllFrameFlags
                 SetFrameFlag SWAP_SCREENS_FLAG
 
-                ; initialize unit cluster
-                CALL Spawn.Initialize
-
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
                 LD BC, #0F09
@@ -60,16 +57,6 @@ GameLoop:       ; initialize
                 endif
                 ; ~ FOW
 
-.DraftLogic     ; ********** DRAFT LOGIC **********
-                ; show debug border
-                ifdef SHOW_DEBUG_BORDER_DRAFT_LOGIC
-                BEGIN_DEBUG_BORDER_COL DRAFT_LOGIC_COLOR
-                endif
-
-                CALL AI.Handler
-
-                ; ~ FOW
-
 .CompliteFlags  ; ************* FLAGS *************
                 SetFrameFlag SWAP_SCREENS_FLAG
                 ; ~ FLAGS
@@ -77,13 +64,14 @@ GameLoop:       ; initialize
                 ; ~ RENDER
 
 .Logic          ; ************* LOGIC *************
-                ; LD A, (AI_TickCounterRef)
-                ; OR A
-                ; JP Z, .MainLoop
-                ; PUSH AF
-                ; CALL NZ, Tilemap.FOW
-                ; POP AF
-                ; DEC A
+                ; show debug border
+                ifdef SHOW_DEBUG_BORDER_DRAFT_LOGIC
+                BEGIN_DEBUG_BORDER_COL DRAFT_LOGIC_COLOR
+                endif
+
+                CheckAIFlag AI_UPDATE_FLAG
+                CALL NZ, AI.Handler
+                
                 JP .MainLoop
 
                 endif ; ~_CORE_GAME_LOOP_

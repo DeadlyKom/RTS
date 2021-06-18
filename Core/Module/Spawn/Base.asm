@@ -2,15 +2,6 @@
                 ifndef _CORE_MODULE_SPAWN_BASE_
                 define _CORE_MODULE_SPAWN_BASE_
 
-Initialize:     ;
-                XOR A
-                LD HL, UnitClusterRef
-                LD DE, UnitClusterRef + 1
-                LD BC, FUnitCluster-1
-                LD (HL), A
-                LDIR
-                RET
-
 ; -----------------------------------------
 ; spawn unit on world
 ; In:
@@ -24,7 +15,7 @@ Initialize:     ;
 ; -----------------------------------------
 Unit:           ; определение адреса добавления нового юнита
                 LD HL, (UnitArrayRef)
-                XOR A                                           ; !!!!!!!! (1 кластер + 1 юнит)
+                LD A, (AI_NumUnitsRef)
                 ADD A, A
                 ADD A, A
                 ADD A, L
@@ -85,7 +76,7 @@ Unit:           ; определение адреса добавления но�
                 LD (IX + FFUnitAnimation.Flags), A
  
                 ; итерирование счётчика
-                LD HL, UnitClusterRef + FUnitCluster.NumArray   ; !!!!!!!!! добавление в 1 кластер
+                LD HL, AI_NumUnitsRef
                 INC (HL)
 
                 RET
