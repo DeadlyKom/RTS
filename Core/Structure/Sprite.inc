@@ -22,13 +22,11 @@ Data                DW #0000
 
                     ends
 
-;                     struct FSequencer
-; SpritePtr           DW #0000                        ; указатель на структуру спрайта
-;                     ends
 
-;                     struct FAnimation
-; Sequencer           DB #00                          ; номер секвенсора
-; Timeline            DB #00                          ; таймлайн
-;                     ends
+                    struct FAnimation
+Timeline            DB #00                          ; таймлайн
+Flags               DB #00
+
+                    ends
 
                     endif ; ~_STRUCTURE_SPRITE_

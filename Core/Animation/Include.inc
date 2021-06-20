@@ -4,8 +4,7 @@
 
                 module Animation
 
-                ; include "BehaviorTable.inc"             ; первая обязательно!
-                ; include "Solder/Solder.inc"
+                include "Solder/Turn.inc"
 
                 endmodule
 

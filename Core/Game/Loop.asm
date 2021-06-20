@@ -7,9 +7,23 @@ GameLoop:       ; initialize
 
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
-                LD BC, #0F09
+                LD BC, #0206
                 CALL Spawn.Unit
-                
+                ; LD BC, #0307
+                ; CALL Spawn.Unit
+                LD BC, #0208
+                CALL Spawn.Unit
+                ; LD BC, #0309
+                ; CALL Spawn.Unit
+                LD BC, #020A
+                CALL Spawn.Unit
+                ; LD BC, #030B
+                ; CALL Spawn.Unit
+                LD BC, #020C
+                CALL Spawn.Unit
+                ; LD BC, #030D
+                ; CALL Spawn.Unit
+  
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
 
                 CheckFrameFlag SWAP_SCREENS_FLAG

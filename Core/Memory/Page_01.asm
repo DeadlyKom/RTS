@@ -16,6 +16,10 @@ Map:
 Behavior.Begin:
                 include "../Behavior/Include.inc"
 Behavior.End:
+
+Animation.Begin:
+                include "../Animation/Include.inc"
+Animation.End:
                 ORG SurfaceProperty
 Surf:
 .Begin
@@ -26,8 +30,9 @@ MapSize:        EQU MemoryPage_1.Map.UnitCounter - MemoryPage_1.Map.Tilemap
                 endmodule
 Map_S:          EQU MemoryPage_1.Map.End - MemoryPage_1.Map.Begin
 Behavior_S      EQU MemoryPage_1.Behavior.End - MemoryPage_1.Behavior.Begin
+Animation_S     EQU MemoryPage_1.Animation.End - MemoryPage_1.Animation.Begin
 Surf_S:         EQU MemoryPage_1.Surf.End - MemoryPage_1.Surf.Begin
-SizePage_1_R:   EQU Map_S + Behavior_S + Surf_S
+SizePage_1_R:   EQU Map_S + Behavior_S + Animation_S + Surf_S
 SizePage_1:     EQU UnitArray - Page_1
 
                 endif ; ~_CORE_MEMORY_PAGE_01_

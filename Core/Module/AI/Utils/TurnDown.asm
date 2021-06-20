@@ -125,7 +125,11 @@ Down:           RRA
                 OR C
                 LD (IX + FUnitState.Direction), A
 
-                XOR A
+                ; A - номер юнита
+                LD A, IXL
+                RRA
+                RRA
+                AND %00111111
                 CALL Unit.RefUnitOnScr
 
 .Unsuccessful   OR A

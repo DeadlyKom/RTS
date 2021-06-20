@@ -24,8 +24,11 @@ PostSelector:   POP HL
                 OR A
                 JR Z, .RET
                 PUSH HL
-                DEC SP
-                DEC SP
+                ; прерывание может попортить, так что заново сохраняем точку возврата
+                ; DEC SP
+                ; DEC SP
+                LD DE, PostSelector
+                PUSH DE
                 JP (IY)
                 
 .RET            EX AF, AF'

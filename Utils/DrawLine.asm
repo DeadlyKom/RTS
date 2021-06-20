@@ -63,7 +63,10 @@ DrawLine:       ; инициализация
                 LD (.Scr), A
                 EX AF, AF'
 
-.Line4          PUSH DE
+.Line4          ; BIT 0, B
+                ; JR Z, .Line5
+
+                PUSH DE
                 EXX
                 EX AF, AF'
                 POP DE
