@@ -13,10 +13,11 @@ Size_7          EQU ((SizePage_7 % 256 > 0) & 0x01) + (SizePage_7 >> 8)
 
 TilemapAddress  EQU MemoryPage_1.Map.Tilemap
 TilemapSize     EQU MemoryPage_1.MapSize
+OtherAddress    EQU MemoryPage_1.Map.Tilemap + TilemapSize
 WayPointsSize   EQU SurfaceProperty - WayPointArray
 SurfPropSize    EQU UnitArray - SurfaceProperty
 UnitArraySize   EQU 0x10000 - UnitArray
-Page_MapSize    EQU TilemapSize + WayPointsSize + SurfPropSize + UnitArraySize
+Page_MapSize    EQU TilemapSize + Others_S + WayPointsSize + SurfPropSize + UnitArraySize
 
                 module Boot                                     ; #5D40
 Basic:          DB #00, #0A                                     ; номер строки 10
@@ -118,7 +119,7 @@ EndBasic:
                 display "Building the TRD-image of the \'", TRD_FILENAME, "\' project ..."
                 display "Boot  :  ", /A, Boot.Basic, " = [ ", /D, Boot.EndBasic - Boot.Basic, " bytes ]"
                 display "Page 0:  ", /A, Page_0, " = busy [ ", /D, SizePage_0, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_0 - Page_0 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_0 - Page_0 & 0x3FFF) * 100 / #4000, " % occupied", "\t graphic #01"
-                display "Page 1:  ", /A, Page_1, " = busy [ ", /D, SizePage_1_R, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_1_R - Page_1 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_1_R - Page_1 & 0x3FFF) * 100 / #4000, " % occupied", "\t map & data units"
+                display "Page 1:  ", /A, Page_1, " = busy [ ", /D, Page_MapSize, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - Page_MapSize - Page_1 & 0x3FFF, " bytes ]     \t |  ", /D, (Page_MapSize - Page_1 & 0x3FFF) * 100 / #4000, " % occupied", "\t map & data units"
                 display "Page 2:  ", /A, Page_2, " = busy [ ", /D, SizePage_2, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_2 - Page_2 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_2 - Page_2 & 0x3FFF) * 100 / #4000, " % occupied", "\t code"
                 display "Page 3:  ", /A, Page_3, " = busy [ ", /D, SizePage_3, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_3 - Page_3 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_3 - Page_3 & 0x3FFF) * 100 / #4000, " % occupied", "\t music"
                 display "Page 4:  ", /A, Page_4, " = busy [ ", /D, SizePage_4, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_4 - Page_4 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_4 - Page_4 & 0x3FFF) * 100 / #4000, " % occupied", "\t graphic #02"
@@ -128,6 +129,7 @@ EndBasic:
                 display "-------------------------------------------------------------------------------------------------------------------------------"
                 display "Building the TRD-image of the \'", TRD_FILENAME, "\' maps ..."
                 display "Map 'Draft' :  \t", /A, TilemapAddress, " = busy [ ", /D, TilemapSize, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - TilemapSize, " bytes ]     \t |  ", /D, TilemapSize * 100 / #4000, " % occupied"
+                display "Other : \t\t", /A, OtherAddress, " = busy [ ", /D, Others_S, " bytes  ]"
                 display "Way Point Array : \t", /A, WayPointArray, " = busy [ ", /D, WayPointsSize, " bytes  ]"
                 display "Surface Property : \t", /A, SurfaceProperty, " = busy [ ", /D, SurfPropSize, " bytes  ]"
                 display "Unit Array : \t\t", /A, UnitArray, " = busy [ ", /D, UnitArraySize, " bytes ]"

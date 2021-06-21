@@ -23,7 +23,38 @@ GameLoop:       ; initialize
                 CALL Spawn.Unit
                 ; LD BC, #030D
                 ; CALL Spawn.Unit
-  
+                LD BC, #0406
+                CALL Spawn.Unit
+                ; LD BC, #0407
+                ; CALL Spawn.Unit
+                LD BC, #0408
+                CALL Spawn.Unit
+                ; LD BC, #0409
+                ; CALL Spawn.Unit
+                LD BC, #040A
+                CALL Spawn.Unit
+                ; LD BC, #040B
+                ; CALL Spawn.Unit
+                LD BC, #040C
+                CALL Spawn.Unit
+                ; LD BC, #040D
+                ; CALL Spawn.Unit
+                LD BC, #0606
+                CALL Spawn.Unit
+                ; LD BC, #0507
+                ; CALL Spawn.Unit
+                LD BC, #0608
+                CALL Spawn.Unit
+                ; LD BC, #0509
+                ; CALL Spawn.Unit
+                LD BC, #060A
+                CALL Spawn.Unit
+                ; LD BC, #050B
+                ; CALL Spawn.Unit
+                LD BC, #060C
+                CALL Spawn.Unit
+                ; LD BC, #050D
+                ; CALL Spawn.Unit
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
 
                 CheckFrameFlag SWAP_SCREENS_FLAG

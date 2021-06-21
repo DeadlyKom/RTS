@@ -36,7 +36,7 @@ Down:           RRA
                 ; если 7 бит dY^dX, равен 0, то 'ADD A, B', иначе 'SUB B'
                 LD A, D
                 XOR E
-                RLA
+                ADD A, A
                 SBC A, A
                 CPL             ; Y инвертирован
                 AND %00010000
@@ -114,23 +114,24 @@ Down:           RRA
                 CCF
                 ADC A, #00
 
-                ADD A, C
-                AND %00000111
-                ADD A, A
-                ADD A, A
-                ADD A, A
-                LD C, A
-                LD A, (IX + FUnitState.Direction)
-                AND %11000111
-                OR C
-                LD (IX + FUnitState.Direction), A
+                ; ADD A, C
+                ; AND %00000111
+                ; ADD A, A
+                ; ADD A, A
+                ; ADD A, A
+                ; LD C, A
+                ; LD A, (IX + FUnitState.Direction)
+                ; AND %11000111
+                ; OR C
+                ; LD (IX + FUnitState.Direction), A
+                CALL Animation.TurnDown
 
-                ; A - номер юнита
-                LD A, IXL
-                RRA
-                RRA
-                AND %00111111
-                CALL Unit.RefUnitOnScr
+                ; ; A - номер юнита
+                ; LD A, IXL
+                ; RRA
+                ; RRA
+                ; AND %00111111
+                ; CALL Unit.RefUnitOnScr
 
 .Unsuccessful   OR A
                 RET

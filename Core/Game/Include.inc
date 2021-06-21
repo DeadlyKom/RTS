@@ -15,6 +15,7 @@ TilemapSize:    FMapSize 64, 64
 AI_UpdateFreq:  DB #00
 AI_NumUnits:    DB #00
 BehaviorTable:  DW #0000
+AnimTurnTable:  DW #0000
 UnitArray:      DW #0000
 FrameFlags:     DB #00
 AIFlags:        DB #00

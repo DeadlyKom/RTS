@@ -31,7 +31,7 @@ RenderBuffer                EQU #BE00                               ; адрес
 TilemapBuffer               EQU #BF00                               ; адрес тайловой карты буфера (256 байт)
 BypassFOW                   EQU Page_7.BypassFOW                    ; адресс таблицы обхода FOW
 AI_MIN_UPDATE_FREQ          EQU 1                                   ; скорость обновления ИИ (минимальная)
-AI_MAX_UPDATE_FREQ          EQU 8                                   ; скорость обновления ИИ (максимальная)
+AI_MAX_UPDATE_FREQ          EQU 4                                   ; скорость обновления ИИ (максимальная)
 TimeOfDayChangeRate         EQU 50 * 60                             ; скорость смены времени дня
 TickCounterRef              EQU Interrupt.Handler.TickCounterPtr    ; счётчик тиков 1/50
 
@@ -62,6 +62,7 @@ TilemapOffsetWidth          EQU Game.TilemapOffset.X                ; смеще
 TilemapOffsetHeight         EQU Game.TilemapOffset.Y                ; смещение в тайловой карте по вертикали (структура FLocation)
 
 BehaviorTableRef            EQU Game.BehaviorTable                  ; адрес таблицы поведения юнитов
+AnimTurnTableRef            EQU Game.AnimTurnTable                  ; адрес таблицы анимации поворотов
 UnitArrayRef                EQU Game.UnitArray                      ; адрес юнитов
 TopRowOffsetFOW             EQU MemoryPage_7.FOW.ROW_UP             ; смещение в буфере верхней строки FOW
 BottomRowOffsetFOW          EQU MemoryPage_7.FOW.ROW_DOWN           ; смещение в буфере нижней строки FOW

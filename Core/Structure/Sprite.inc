@@ -22,10 +22,13 @@ Data                DW #0000
 
                     ends
 
+                    struct FSequencer
+Number              DB #00                          ; количество анимаций
+
+                    ends
 
                     struct FAnimation
 Timeline            DB #00                          ; таймлайн
-Flags               DB #00
 
                     ends
 

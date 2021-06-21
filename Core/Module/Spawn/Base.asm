@@ -24,9 +24,9 @@ Unit:           ; определение адреса добавления но�
                 POP IX
 
                 ; ---------------------------------------------
-                ; FUnitState
+                ; FUnitState (1)
                 ; ---------------------------------------------
-                LD DE, #3802 + 192
+                LD DE, #0002 + 192
                 LD (IX + FUnitState.Behavior), E
                 LD (IX + FUnitState.Direction), D
                 XOR A
@@ -37,7 +37,7 @@ Unit:           ; определение адреса добавления но�
                 INC IXH                                         ; переход к FUnitLocation
 
                 ; ---------------------------------------------
-                ; FUnitLocation
+                ; FUnitLocation (2)
                 ; ---------------------------------------------
 
                 ; инициализция позиции юнита
@@ -52,7 +52,7 @@ Unit:           ; определение адреса добавления но�
                 INC IXH                                         ; переход к FUnitTargets
 
                 ; ---------------------------------------------
-                ; FUnitTargets
+                ; FUnitTargets (3)
                 ; ---------------------------------------------
 
                 ; инициализция
@@ -65,14 +65,14 @@ Unit:           ; определение адреса добавления но�
                 INC IXH                                         ; переход к FFUnitAnimation
 
                 ; ---------------------------------------------
-                ; FFUnitAnimation
+                ; FFUnitAnimation (4)
                 ; ---------------------------------------------
 
                 ; инициализция
                 XOR A
-                LD (IX + FFUnitAnimation.Counter + 0), A
-                LD (IX + FFUnitAnimation.Counter + 1), A
-                LD (IX + FFUnitAnimation.Counter.Second), A
+                LD (IX + FFUnitAnimation.CounterDown), A
+                LD (IX + FFUnitAnimation.CounterUp), A
+                LD (IX + FFUnitAnimation.Reserve), A
                 LD (IX + FFUnitAnimation.Flags), A
  
                 ; итерирование счётчика

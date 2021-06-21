@@ -1,10 +1,11 @@
 
 Solder_Turn_Down:   ;
-                    FAnimation 0, 0
-                    FAnimation 0, 0
-                    FAnimation 0, 0
-                    FAnimation 0, 0
-                    FAnimation 0, 0
-                    FAnimation 0, 0
-                    FAnimation 0, 0
-                    FAnimation 0, 0
+                    ;FSequencer 7            ; 8 анимаций
+                    FAnimation 2
+                    FAnimation 2
+                    FAnimation 2
+                    FAnimation 2
+                    FAnimation 2
+                    FAnimation 2
+                    FAnimation 2
+                    FAnimation 2

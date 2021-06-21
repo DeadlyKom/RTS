@@ -10,6 +10,8 @@ Initialize:     ; toggle to memory page with tilemap
 
                 LD HL, (IX + FMap.BehaviorTable)            ; инициализация адреса таблицы поведения
                 LD (BehaviorTableRef), HL
+                LD HL, (IX + FMap.AnimTurnTable)            ; инициализация фдреса таблицы анимаций поворота
+                LD (AnimTurnTableRef), HL
                 LD HL, (IX + FMap.UnitsArray)
                 LD (UnitArrayRef), HL
 

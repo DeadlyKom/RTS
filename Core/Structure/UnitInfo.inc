@@ -80,8 +80,9 @@ Flags               DB #00
 
 
                     struct FFUnitAnimation          ; (4)
-Counter             DW #0000                        ; 2 byte (начало отсчёта анимации, глобального счётчика)
-Counter.Second      DB #00                          ; 1 byte (вторйо счётчик смещение от основного, для анимации 2-х суставных юнитов)
+CounterDown         DB #00                          ; 1 byte (счётчика)
+CounterUp           DB #00                          ; 1 byte (счётчика)
+Reserve             DB #00                          ; 1 byte
 Flags               DB #00                          ; 1 byte
 
                     ends
