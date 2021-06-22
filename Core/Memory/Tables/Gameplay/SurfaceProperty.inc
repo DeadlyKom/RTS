@@ -4,9 +4,9 @@
                     ; 1 (Sand 2)
                     FSurface SDR_25_PERCENT |   SCF_NONE
                     ; 2 (Sand 3)
-                    FSurface SDR_0_PERCENT  |   SCF_NONE
+                    FSurface SDR_50_PERCENT  |   SCF_NONE
                     ; 3 (Sand 4)
-                    FSurface SDR_25_PERCENT |   SCF_NONE
+                    FSurface SDR_75_PERCENT |   SCF_NONE
                     ; 4 (Grass 1)
                     FSurface SDR_0_PERCENT  |   SCF_NONE
                     ; 5 (Grass 2)

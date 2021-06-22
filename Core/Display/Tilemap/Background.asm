@@ -79,17 +79,19 @@ DisplayTileRow: ;
                 EX AF, AF'
                 CheckDebugFlag DISPLAY_COLLISION_FLAG
                 JR Z, .DrawTile
-                EX AF, AF'
+
                 ; calculation sprite address
-                LD H, HIGH SurfaceProperty
-                AND %00111111
+                LD A, (HighSurfacePropertyRef)
+                LD H, A
+                EX AF, AF'
+                AND %01111111
                 LD L, A
                 PUSH BC
                 ; toggle to memory page with tile sprites
                 SeMemoryPage MemoryPage_Tilemap, DEBUG_SURFACE_PROP_ID
 
                 LD A, (HL)
-                AND %00111111
+                AND %01111111
                 ADD A, A
                 LD H,  HIGH MemoryPage_7.DebugSpritesTable
                 LD L, A

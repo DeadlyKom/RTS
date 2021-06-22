@@ -27,8 +27,12 @@ Number              DB #00                          ; количество ан�
 
                     ends
 
+
                     struct FAnimation
-Timeline            DB #00                          ; таймлайн
+Possability_A       DB #00                          ; проходимость А (100%)
+Possability_B       DB #00                          ; проходимость Б (75%)
+Possability_C       DB #00                          ; проходимость В (50%)
+Possability_D       DB #00                          ; проходимость Г (25%)
 
                     ends
 

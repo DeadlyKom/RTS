@@ -105,6 +105,7 @@ Down:           RRA
                 ; выбор рандомного вращения
                 LD A, R
                 RRA
+                ; SCF
 
 .NotEqual       LD A, B
                 LD (.Direction), A

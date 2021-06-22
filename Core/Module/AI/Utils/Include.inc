@@ -6,6 +6,7 @@
 
                 include "TurnDown.asm"
                 include "WayPoint.asm"
+                include "SurfaceProperty.asm"
 
                 endmodule
 

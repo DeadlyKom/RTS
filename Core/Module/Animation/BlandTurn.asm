@@ -13,7 +13,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-TurnDown:       ;sbJR $
+TurnDown:       ; JR $
 
                 ;
                 LD B, A                                     ; B - направление поворота (-1/1)
@@ -32,24 +32,20 @@ TurnDown:       ;sbJR $
                 LD E, (HL)
                 INC HL
                 LD D, (HL)
-                EX DE, HL                                   ; HL - указывает на FSequencer
+                EX DE, HL
 
-                PUSH HL                                     ; HL - указывает на 0 FAnimation
-                
-                ; получение текущего счётчика анимаций
-                LD A, C                                     ; A = [0..7] номер поворота
+                INC IXH                                     ; FUnitLocation     (2)
+
+                ;
+                CALL AI.Utils.Surface.GetPassability
                 ADD A, L
                 LD L, A
                 JR NC, $+3
                 INC H
 
                 ; HL - указывает на текущий FAnimation
-                LD A, (HL)
-                EX AF, AF'                                  ; A' - счётчик текущей анимации
-                POP HL                                      ; HL - указывает на 0 FAnimation
+                LD D, (HL)
 
-                ; go to FUnitTargets
-                INC IXH                                     ; FUnitLocation     (2)
                 INC IXH                                     ; FUnitTargets      (3)
                 INC IXH                                     ; FFUnitAnimation   (4)
                 
@@ -69,25 +65,14 @@ TurnDown:       ;sbJR $
                 AND %00011111
                 LD E, A
 
-                ; изменение направления поворота
-                LD A, C                                     ; A = [0..7] номер поворота
-                ADD A, B                                    ; переход к предыдущей анимации (B = -1 / 1)
-                AND %00000111
-                ADD A, L
-                LD L, A
-                JR NC, $+3
-                INC H
-                ; HL - указывает на предыдущую FAnimation
-
                 ; вычислим сколько прошло от предыдущей анимациии
-                EX AF, AF'
+                LD A, D
                 SUB E                                       ; A = количествой пройденых тиков анимации (прошлой)
                 ADD A, (HL)                                 ; A += количество перехода тиков от текущей к предыдущей анимации
                 EX AF, AF'
 
                 ; направления поворота
                 LD A, B                                     ; A - направление поворота (-1/1)
-                ; CPL
                 AND %10000000
                 LD B, A
                 
@@ -108,18 +93,7 @@ TurnDown:       ;sbJR $
 
 .Init           ; установка нового счётчика анимации
 
-                ; изменение направления поворота
-                LD A, C                                     ; A = [0..7] номер поворота
-                ADD A, B                                    ; переход к предыдущей анимации (B = -1 / 1)
-                AND %00000111
-                ADD A, L
-                LD L, A
-                JR NC, $+3
-                INC H
-                ; HL - указывает на следующую FAnimation
-
                 LD A, (HL)                                  ; A - новый счётчик
-                LD E, B
                 
                 ; перенесём знак направления поворота
                 ADD A, A
@@ -130,12 +104,11 @@ TurnDown:       ;sbJR $
 
 .Decrement      ;
                 ADD A, A
-                RL E
+                RL B                                        ; B - направление поворота (-1/1)
                 RRA
                 JR .Set
 
 .Rotate         ; поворот по направлению
-                LD E, (IX + FFUnitAnimation.CounterDown)
                 LD A, E
                 AND %00011111
                 DEC A
@@ -144,16 +117,6 @@ TurnDown:       ;sbJR $
                 JR NZ, .Decrement                           ; чсётчик не нулевой продолжаем отсчёт
 
                 ; установка нового счётчика анимации
-
-                ; получение предыдущий/следующий поворот
-                LD A, C                                     ; A = [0..7] номер поворота
-                ADD A, B                                    ; переход к предыдущей анимации (B = -1 / 1)
-                AND %00000111
-                ADD A, L
-                LD L, A
-                JR NC, $+3
-                INC H
-                ; HL - указывает на следующую FAnimation
 
                 LD A, (HL)                                  ; A - новый счётчик
                 LD E, B                                     ; E - направление поворота (-1/1)

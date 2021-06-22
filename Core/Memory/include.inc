@@ -4,6 +4,7 @@
 
 Page_0:                 EQU #C000                   ; Bank 03
 Page_1:                 EQU #C000                   ; Bank 03
+Page_1.TilemapTableAdr  EQU #F700                   ; Bank 03 (адрес таблицы тайловых карт 512 байт)    - 1 страница
 Page_1.WayPointArray    EQU #F900                   ; Bank 03 (адрес массива Way Point'ов 512 байт)     - 1 страница
 Page_1.SurfaceProperty  EQU #FB00                   ; Bank 03 (адрес свойст тайлов 128 байт)            - 1 страница
 Page_1.UnitArray        EQU #FC00                   ; Bank 03 (адрес масива юнитов 1024 байта 64 юнита) - 1 страница

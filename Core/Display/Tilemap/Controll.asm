@@ -10,32 +10,40 @@ Initialize:     ; toggle to memory page with tilemap
 
                 LD HL, (IX + FMap.BehaviorTable)            ; инициализация адреса таблицы поведения
                 LD (BehaviorTableRef), HL
-                LD HL, (IX + FMap.AnimTurnTable)            ; инициализация фдреса таблицы анимаций поворота
+                LD HL, (IX + FMap.AnimTurnTable)            ; инициализация адреса таблицы анимаций поворота
                 LD (AnimTurnTableRef), HL
-                LD HL, (IX + FMap.UnitsArray)
+                LD HL, (IX + FMap.UnitsArray)               ; инициализация адреса массива юнитов
                 LD (UnitArrayRef), HL
+                LD HL, (IX + FMap.SurfaceProperty)          ; инициализация фдреса свойств поверхностей
+                LD (SurfacePropertyRef), HL
 
                 LD HL, (IX + FMap.Address)                  ; HL - адрес начала (смещение 0,0) тайловой карты
-                LD E, (IX + FMap.StartLocation.X)           ; E - смещение по горизонтали
-                LD D, A 
-                ADD HL, DE
-                LD D, (IX + FMap.StartLocation.Y)           ; D -смещение по вертикали
-                LD (TilemapOffsetRef), DE
+                LD (TilemapAddressRef), HL
+                LD DE, (IX + FMap.AddressTable)             ; DE - адрес таблицы тайловой карты 
+                LD (TilemapTableAddressRef), DE
                 LD BC, (IX + FMap.Size)
-                LD (TilemapSizeRef), BC
+                LD (TilemapSizeRef), BC                     ; размер карты
+
+                CALL Generate
+
+                LD DE, (IX + FMap.StartLocation)           ; E - смещение по горизонтали, D - смещение по вертикали
+                LD (TilemapOffsetRef), DE
+                
 
                 ; расчёт смещения в тайловой карте, 
                 ; в зависимости от размеров карты и смещения
-                LD E, C
-                LD B, D
-                LD D, A
-                LD A, B
-                OR A
-                JR Z, .SetAddress
 
-.Myltiply       ADD HL, DE
-                DJNZ .Multiply
-.SetAddress     LD (TilemapRef), HL
+                LD L, D
+                LD A, (TilemapTableHighAddressRef)
+                LD H, A
+                LD A, (HL)
+                INC H
+                LD H, (HL)
+                ADD A, E
+                LD L, A
+                JR NC, $+3
+                INC H
+                LD (TilemapRef), HL
 
                 ;
                 LD HL, TilemapSizeRef

@@ -23,6 +23,7 @@ MemoryPageRef               EQU #5BFE                               ; адрес
 BorderStorageStackRef       EQU #5BFF                               ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
 MapStructure                EQU #C000                               ; адрес структуры карты
+TilemapTableAddress         EQU Page_1.TilemapTableAdr              ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
 WayPointArray               EQU Page_1.WayPointArray                ; адрес массива Way Point'ов (512 байт)
 SurfaceProperty             EQU Page_1.SurfaceProperty              ; адрес свойст тайлов (128 байт)                    - 1 страница
 UnitArray                   EQU Page_1.UnitArray                    ; адрес масива юнитов (1024 байта 64 юнита)         - 1 страница
@@ -50,9 +51,13 @@ DebugStateRef               EQU Game.DebugFlags                     ; указа
 AI_UpdateFrequencyRef       EQU Game.AI_UpdateFreq                  ; частота обновления AI
 AI_NumUnitsRef              EQU Game.AI_NumUnits                    ; число юнитов
 
+; Tilemap
 TilesOnScreenX              EQU 16                                  ; количество тайлов на экране по горизонтали
 TilesOnScreenY              EQU 12                                  ; количество тайлов на экране по вертикали
 
+TilemapAddressRef           EQU Game.TilemapAddress                 ; указатель на адрес начала тайловой карты
+TilemapTableAddressRef      EQU Game.AddressTable                   ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
+TilemapTableHighAddressRef  EQU Game.AddressTable + 1               ; старший байт таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
 TilemapRef                  EQU Game.TilemapPtr                     ; указатель на адрес тайловой карты
 TilemapSizeRef              EQU Game.TilemapSize                    ; указатель на адрес размера карты
 TilemapWidth                EQU Game.TilemapSize.X                  ; ширина тайловой карты (структура FMapSize)
@@ -61,6 +66,8 @@ TilemapOffsetRef            EQU Game.TilemapOffset                  ; указа
 TilemapOffsetWidth          EQU Game.TilemapOffset.X                ; смещение в тайловой карте по горизонтали (структура FLocation)
 TilemapOffsetHeight         EQU Game.TilemapOffset.Y                ; смещение в тайловой карте по вертикали (структура FLocation)
 
+SurfacePropertyRef          EQU Game.SurfacePropertyPtr             ; адрес таблицы свойст тайлов (128 байт)                    - 1 страница
+HighSurfacePropertyRef      EQU Game.SurfacePropertyPtr + 1         ; старший байт адреса таблицы свойст тайлов (128 байт)                    - 1 страница
 BehaviorTableRef            EQU Game.BehaviorTable                  ; адрес таблицы поведения юнитов
 AnimTurnTableRef            EQU Game.AnimTurnTable                  ; адрес таблицы анимации поворотов
 UnitArrayRef                EQU Game.UnitArray                      ; адрес юнитов
