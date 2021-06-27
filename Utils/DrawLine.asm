@@ -17,9 +17,9 @@
 ;   SP, HL, DE, BC, HL', DE', BC'
 ; -----------------------------------------
 DrawLine:       ; инициализация
-                LD BC, #141C
+                LD BC, #141C    ; #14 - INC D | #1C - INC E
 
-                ; вычисляем Dy = (Sy - Ey)
+                ; вычисляем dY = (Sy - Ey)
                 LD A, H
                 SUB D
 
@@ -29,22 +29,26 @@ DrawLine:       ; инициализация
                 CPL
                 INC A
 
-.Line1          LD H, A         ; H = Dy
+.Line1          LD H, A         ; H = dY
                 
                 ; вычисляем Dx = (Sx - Ex)
                 LD A, L
                 SUB E
                 JR NC, .Line2
                 INC C
+
                 CPL
                 INC A
                 
-.Line2          CP H            ; Dx == Dy ?
-                LD L, A
+.Line2          CP H            ; dX < dY ?
+                LD L, A         ; L = dX
                 JR C, .Line3    ; если меньше то считаем основной координатой DY
 
+                ; swap dX (L), dY (H)
                 LD L, H
                 LD H, A
+
+                ; swap INC D/DEC D, INC E/DEC E
                 LD A, B
                 LD B, C
                 LD C, A
@@ -90,11 +94,11 @@ DrawLine:       ; инициализация
                 EX AF, AF'
                 EXX
 
-.Line5          NOP
+.Line5          NOP                 ; INC/DEC D
                 SUB L
                 JR NC, .Line7
 
-.Line6          NOP
+.Line6          NOP                 ; INC/DEC E
                 ADD A, H
                 
 .Line7          DJNZ .Line4

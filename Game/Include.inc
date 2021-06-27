@@ -24,9 +24,9 @@ BorderStorageStackRef       EQU #5BFF                               ; адрес
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
 MapStructure                EQU #C000                               ; адрес структуры карты
 TilemapTableAddress         EQU Page_1.TilemapTableAdr              ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
-WayPointArray               EQU Page_1.WayPointArray                ; адрес массива Way Point'ов (512 байт)
-SurfaceProperty             EQU Page_1.SurfaceProperty              ; адрес свойст тайлов (128 байт)                    - 1 страница
-UnitArray                   EQU Page_1.UnitArray                    ; адрес масива юнитов (1024 байта 64 юнита)         - 1 страница
+WayPointArrayPtr            EQU Page_1.WayPointArray                ; адрес массива Way Point'ов (512 байт)
+SurfacePropertyPtr          EQU Page_1.SurfaceProperty              ; адрес свойст тайлов (128 байт)                    - 1 страница
+UnitArrayPtr                EQU Page_1.UnitArray                    ; адрес масива юнитов (1024 байта 64 юнита)         - 1 страница
 SharedBuffer                EQU #BD00                               ; адрес общего буфера (256 байт)
 RenderBuffer                EQU #BE00                               ; адрес буфера обновлений (192 байта + 64 пустуют)
 TilemapBuffer               EQU #BF00                               ; адрес тайловой карты буфера (256 байт)
@@ -68,6 +68,8 @@ TilemapOffsetHeight         EQU Game.TilemapOffset.Y                ; смеще
 
 SurfacePropertyRef          EQU Game.SurfacePropertyPtr             ; адрес таблицы свойст тайлов (128 байт)                    - 1 страница
 HighSurfacePropertyRef      EQU Game.SurfacePropertyPtr + 1         ; старший байт адреса таблицы свойст тайлов (128 байт)                    - 1 страница
+WayPointArrayRef            EQU Game.WayPointArray                  ; адрес массива точек пути
+HighWayPointArrayRef        EQU Game.WayPointArray + 1              ; старший байт адрес массива точек пути
 BehaviorTableRef            EQU Game.BehaviorTable                  ; адрес таблицы поведения юнитов
 AnimTurnTableRef            EQU Game.AnimTurnTable                  ; адрес таблицы анимации поворотов
 UnitArrayRef                EQU Game.UnitArray                      ; адрес юнитов

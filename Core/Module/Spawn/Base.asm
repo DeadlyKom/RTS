@@ -46,7 +46,7 @@ Unit:           ; определение адреса добавления но�
                 XOR A
                 LD A, #00
                 LD (IX + FUnitLocation.OffsetByPixel.X), A
-                LD A, #FC
+                LD A, #00
                 LD (IX + FUnitLocation.OffsetByPixel.Y), A
 
                 INC IXH                                         ; переход к FUnitTargets
@@ -62,18 +62,18 @@ Unit:           ; определение адреса добавления но�
                 LD (IX + FUnitTargets.Enemy), A
                 LD (IX + FUnitTargets.Flags), A
 
-                INC IXH                                         ; переход к FFUnitAnimation
+                INC IXH                                         ; переход к FUnitAnimation
 
                 ; ---------------------------------------------
-                ; FFUnitAnimation (4)
+                ; FUnitAnimation (4)
                 ; ---------------------------------------------
 
                 ; инициализция
                 XOR A
-                LD (IX + FFUnitAnimation.CounterDown), A
-                LD (IX + FFUnitAnimation.CounterUp), A
-                LD (IX + FFUnitAnimation.Reserve), A
-                LD (IX + FFUnitAnimation.Flags), A
+                LD (IX + FUnitAnimation.CounterDown), A
+                LD (IX + FUnitAnimation.CounterUp), A
+                LD (IX + FUnitAnimation.Delta), A
+                LD (IX + FUnitAnimation.Flags), A
  
                 ; итерирование счётчика
                 LD HL, AI_NumUnitsRef

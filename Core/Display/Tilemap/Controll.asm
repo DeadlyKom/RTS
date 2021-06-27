@@ -8,6 +8,8 @@ Initialize:     ; toggle to memory page with tilemap
                 XOR A
                 LD IX, MapStructure                         ; адрес структуры карты
 
+                LD HL, (IX + FMap.WayPointArray)            ; инициализация адреса массива точек пути
+                LD (WayPointArrayRef), HL
                 LD HL, (IX + FMap.BehaviorTable)            ; инициализация адреса таблицы поведения
                 LD (BehaviorTableRef), HL
                 LD HL, (IX + FMap.AnimTurnTable)            ; инициализация адреса таблицы анимаций поворота

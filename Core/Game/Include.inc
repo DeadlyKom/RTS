@@ -11,6 +11,7 @@
 TilemapAddress:     DW #0000
 AddressTable:       DW #0000
 SurfacePropertyPtr: DW #0000
+WayPointArray:      DW #0000
 TilemapPtr:         DW #0000
 UnitArrayPtr:       DW #0000
 TilemapOffset:      FLocation 0, 0

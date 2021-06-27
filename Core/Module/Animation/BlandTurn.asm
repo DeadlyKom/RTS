@@ -47,9 +47,14 @@ TurnDown:       ; JR $
                 LD D, (HL)
 
                 INC IXH                                     ; FUnitTargets      (3)
-                INC IXH                                     ; FFUnitAnimation   (4)
-                
-                LD E, (IX + FFUnitAnimation.CounterDown)
+                INC IXH                                     ; FUnitAnimation    (4)
+   
+                ; проверка на инициализацию счётчика после перемещения
+                BIT FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)
+                JR NZ, .Init
+
+                ; проверка на первичную инициализацию (мб вообще убрать её!)
+                LD E, (IX + FUnitAnimation.CounterDown)     ; получим значение текущего счётчика
                 LD A, E
                 OR A
                 JR Z, .Init
@@ -82,7 +87,7 @@ TurnDown:       ; JR $
                 JR C, $+4
                 LD A, %00011111
                 OR B                                        ; добавим направление
-.Set            LD (IX + FFUnitAnimation.CounterDown), A    ; сохраним значение
+.Set            LD (IX + FUnitAnimation.CounterDown), A     ; сохраним значение
 
 .Exit           ; завершение работы
                 DEC IXH                                     ; FUnitTargets      (3)
@@ -91,8 +96,10 @@ TurnDown:       ; JR $
 
                 RET
 
-.Init           ; установка нового счётчика анимации
-
+.Init           ; сброс бита принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                RES FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)
+                
+                ; установка нового счётчика анимации
                 LD A, (HL)                                  ; A - новый счётчик
                 
                 ; перенесём знак направления поворота
@@ -113,7 +120,7 @@ TurnDown:       ; JR $
                 AND %00011111
                 DEC A
 
-                ; DEC (IX + FFUnitAnimation.CounterDown)      ; уменьшим счётчик
+                ; DEC (IX + FUnitAnimation.CounterDown)      ; уменьшим счётчик
                 JR NZ, .Decrement                           ; чсётчик не нулевой продолжаем отсчёт
 
                 ; установка нового счётчика анимации
@@ -125,7 +132,7 @@ TurnDown:       ; JR $
                 ADD A, A
                 RL E
                 RRA
-                LD (IX + FFUnitAnimation.CounterDown), A    ; сохраним значение
+                LD (IX + FUnitAnimation.CounterDown), A    ; сохраним значение
 
                 ; завершение работы
                 DEC IXH                                     ; FUnitTargets      (3)

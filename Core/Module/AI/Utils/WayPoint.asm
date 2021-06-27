@@ -29,8 +29,9 @@ Set:            INC IXH                                     ; FUnitLocation
                 LD (IX + FUnitTargets.Location.IDX_X), A
                 DEC IXH                                     ; FUnitLocation
                 DEC IXH                                     ; FUnitState
-                LD H, HIGH WayPointArray
                 LD L, A
+                LD A, (HighWayPointArrayRef)
+                LD H, A
                 LD (HL), E
                 INC H
                 LD (HL), D

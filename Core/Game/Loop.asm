@@ -7,38 +7,38 @@ GameLoop:       ; initialize
 
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
-                LD BC, #0204
-                CALL Spawn.Unit
+                ; LD BC, #0204
+                ; CALL Spawn.Unit
                 LD BC, #0206
                 CALL Spawn.Unit
-                LD BC, #0208
-                CALL Spawn.Unit
-                LD BC, #020A
-                CALL Spawn.Unit
-                LD BC, #0404
-                CALL Spawn.Unit
-                LD BC, #0406
-                CALL Spawn.Unit
-                LD BC, #0408
-                CALL Spawn.Unit
-                LD BC, #040A
-                CALL Spawn.Unit
-                LD BC, #0604
-                CALL Spawn.Unit
-                LD BC, #0606
-                CALL Spawn.Unit
-                LD BC, #0608
-                CALL Spawn.Unit
-                LD BC, #060A
-                CALL Spawn.Unit
-                LD BC, #0804
-                CALL Spawn.Unit
-                LD BC, #0806
-                CALL Spawn.Unit
-                LD BC, #0808
-                CALL Spawn.Unit
-                LD BC, #080A
-                CALL Spawn.Unit
+                ; LD BC, #0208
+                ; CALL Spawn.Unit
+                ; LD BC, #020A
+                ; CALL Spawn.Unit
+                ; LD BC, #0404
+                ; CALL Spawn.Unit
+                ; LD BC, #0406
+                ; CALL Spawn.Unit
+                ; LD BC, #0408
+                ; CALL Spawn.Unit
+                ; LD BC, #040A
+                ; CALL Spawn.Unit
+                ; LD BC, #0604
+                ; CALL Spawn.Unit
+                ; LD BC, #0606
+                ; CALL Spawn.Unit
+                ; LD BC, #0608
+                ; CALL Spawn.Unit
+                ; LD BC, #060A
+                ; CALL Spawn.Unit
+                ; LD BC, #0804
+                ; CALL Spawn.Unit
+                ; LD BC, #0806
+                ; CALL Spawn.Unit
+                ; LD BC, #0808
+                ; CALL Spawn.Unit
+                ; LD BC, #080A
+                ; CALL Spawn.Unit
 
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
 

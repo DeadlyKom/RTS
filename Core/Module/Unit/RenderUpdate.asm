@@ -214,6 +214,10 @@ RefUnitOnScr:   ; включить страницу
                 RET M                                       ; offset_x - значение отрицательное
                 RET Z                                       ; offset_x - значение нулевое
 
+                LD A, H
+                OR A
+                JR Z, $+4
+                LD L, #FF   ; клипинг (правый)
                 LD A, L
                 LD (.RightColumn), A                        ; A - хранит правую грань спрайта
 
@@ -224,10 +228,10 @@ RefUnitOnScr:   ; включить страницу
                 LD E, B
                 SBC HL, DE
 
-                ; JR NC, .L1
-                ; EX AF, AF'
-                ; XOR A
-                ; JR .L2
+                JR NC, .L1
+                EX AF, AF'
+                XOR A
+                JR .L2
 
 .L1             EX AF, AF'
                 LD A, L

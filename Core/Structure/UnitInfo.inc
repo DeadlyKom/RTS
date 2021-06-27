@@ -36,9 +36,10 @@ FUTF_INDEX          EQU 0x00                        ; бит о типе Locatio
 FUTF_ENEMY          EQU 0x01                        ; бит о валидности индекса цели врага
 
 ; FUnitAnimation flags
-FUAF_MOVE           EQU 0x00                        ; бит перемещения
-FUAF_TURN_DOWN      EQU 0x01                        ; бит поворота низа
-FUAF_TURN_UP        EQU 0x02                        ; бит поворота верха
+FUAF_TURN_MOVE      EQU 0x00                        ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+FUAF_X              EQU 0x01                        ; бит оси X (0 - инкремент, 1- декремент)
+FUAF_Y              EQU 0x02                        ; бит оси Y (0 - инкремент, 1- декремент)
+FUAF_MOVE_MASK      EQU (~(1 << FUAF_TURN_MOVE | 1 << FUAF_X | 1 << FUAF_Y)) & 0xFF
 FUAF_FULL_PLAYBACK  EQU 0x07                        ; бит полного проигрывания анимации, только после этого можно переключать флаги
 
 ; FAnimationInfo flags
@@ -79,10 +80,10 @@ Flags               DB #00
                     ends
 
 
-                    struct FFUnitAnimation          ; (4)
+                    struct FUnitAnimation           ; (4)
 CounterDown         DB #00                          ; 1 byte (счётчика)
 CounterUp           DB #00                          ; 1 byte (счётчика)
-Reserve             DB #00                          ; 1 byte
+Delta               DB #00                          ; 1 byte (дельта)
 Flags               DB #00                          ; 1 byte
 
                     ends

@@ -11,51 +11,21 @@
 ;   requires included memory page
 ; -----------------------------------------
 TurnTo:         ; go to FUnitTargets
-                INC IXH                                     ; FUnitLocation
-                INC IXH                                     ; FUnitTargets
+                INC IXH                                     ; FUnitLocation (2)
+                INC IXH                                     ; FUnitTargets  (3)
 
-                ; get target location
-                BIT FUTF_INDEX, (IX + FUnitTargets.Flags)
-                LD L, (IX + FUnitTargets.Location.IDX_X)
-                JR Z, .GetLocation
-                LD H, (IX + FUnitTargets.Location.Y)
+                CALL AI.Utils.GetDeltaTarget                ; calculate direction delta
 
-                ; calculate direction
-                DEC IXH                                     ; FUnitLocation
+                ; ---------------------------------------------
+                ; IX - pointer to FUnitLocation (2)
+                ; D - dY
+                ; E - dX
+                ; ---------------------------------------------
 
-                ; delta x
-                LD A, H
-                SUB (IX + FUnitLocation.TilePosition.X)
-                LD E, A
-                
-                ; delta y
-                LD A, L
-                SUB (IX + FUnitLocation.TilePosition.Y)
-                LD D, A
-                
-                JR .CalcDirection
-
-.GetLocation    ; calculate direction
-                DEC IXH                                     ; FUnitLocation
-                LD H, HIGH WayPointArray
-
-                ; delta x
-                LD A, (HL)
-                SUB (IX + FUnitLocation.TilePosition.X)
-                LD E, A
-
-                INC H
-
-                ; delta y
-                LD A, (HL)
-                SUB (IX + FUnitLocation.TilePosition.Y)
-                LD D, A
-
-.CalcDirection  ; restor register IX
-                DEC IXH                                     ; FUnitState
+                ; restor register IX
+                DEC IXH                                     ; FUnitState    (1)
 
                 LD A, (IX + FUnitState.Direction)
-                CALL AI.Utils.Turn.Down                     ; вернёт флаг успешности
-                RET
+                JP AI.Utils.Turn.Down                     ; вернёт флаг успешности
 
                 endif ; ~_CORE_MODULE_AI_TASK_TURN_TO_

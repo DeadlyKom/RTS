@@ -5,6 +5,7 @@
                 module Animation
 
                 include "BlandTurn.asm"
+                include "BlandMove.asm"
                 include "SpriteInfo.asm"
 
                 endmodule
