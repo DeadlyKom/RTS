@@ -7,10 +7,10 @@ GameLoop:       ; initialize
 
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
-                ; LD BC, #0204
-                ; CALL Spawn.Unit
-                LD BC, #0206
+                LD BC, #0204
                 CALL Spawn.Unit
+                ; LD BC, #0206
+                ; CALL Spawn.Unit
                 ; LD BC, #0208
                 ; CALL Spawn.Unit
                 ; LD BC, #020A
@@ -38,6 +38,14 @@ GameLoop:       ; initialize
                 ; LD BC, #0808
                 ; CALL Spawn.Unit
                 ; LD BC, #080A
+                ; CALL Spawn.Unit
+                ; LD BC, #0A04
+                ; CALL Spawn.Unit
+                ; LD BC, #0A06
+                ; CALL Spawn.Unit
+                ; LD BC, #0A08
+                ; CALL Spawn.Unit
+                ; LD BC, #0A0A
                 ; CALL Spawn.Unit
 
 .MainLoop       BEGIN_DEBUG_BORDER_DEF

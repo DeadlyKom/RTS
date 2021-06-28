@@ -10,24 +10,13 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-MoveTo:         
-                ; JR $
-                ; RET
-                
-                INC IXH                                     ; FUnitLocation     (2)
+MoveTo:         INC IXH                                     ; FUnitLocation     (2)
 
                 LD E, IXL
                 LD D, IXH
                 INC DE
                 INC DE
-                ; INC DE
                 LD (ShiftLocation.UnitOffset), DE
-
-                ; LD E, IXL
-                ; LD D, IXH
-                ; LD HL, #0003
-                ; ADD HL, DE
-                ; LD (ShiftLocation.UnitOffset), HL
                 
                 INC IXH                                     ; FUnitTargets      (3)
 
@@ -51,11 +40,6 @@ MoveTo:
                 LD C, (IX + FUnitAnimation.Flags)
                 RR C
                 CALL NC, .Init                              ; reinitialize if the FUAF_TURN_MOVE flag is set
-
-                ; LD A, C
-                ; CPL
-                ; AND 3
-                ; LD C, A
 
                 ; if necessary, change the sign of dY
                 XOR A
@@ -88,24 +72,12 @@ MoveTo:
 
                 LD L, #00
 
-                
-
-                ; LD HL, ShiftLocation.UnitOffset
-                ; DEC (HL)
+                ; sing dX <=> sign sY (swap)
+                SRL C
+                JR NC, $+4
+                SET 1, C
                   
 .SkipSwap_dX_dY ;
-
-
-                ; LD A, L
-                ; OR A
-                ; JR Z, $+8
-
-                ; LD A, C
-                ; OR A
-                ; JR Z, $+4
-                ; CPL
-                ; LD C, A
-
                 LD A, (IX + FUnitAnimation.Delta)
                 OR A
                 JR NZ, $+3
@@ -130,9 +102,6 @@ MoveTo:
                 JR NC, .PreExit
                 EX AF, AF'
 
-                ; LD HL, ShiftLocation.UnitOffset
-                ; INC (HL)
-
                 LD A, L
                 OR A
                 LD A, #00
@@ -152,33 +121,6 @@ MoveTo:
                 EX AF, AF'
                 ADD A, D
                 
-
-
-;                 LD HL, $
-;                 PUSH HL
-;                 LD HL, $
-;                 ; dX < dY ?
-;                 CP D
-;                 JR C, .SkipSwap_dX_dY                       ; если dX < dY то считаем основной координатой dY
-;                 ; иначе меняем dX и dY местами (swap dX, dY)
-;                 LD E, D
-;                 LD D, A
-;                 EX (SP), HL                                 ; swap address
-; .SkipSwap_dX_dY LD A, #1C                                   ; INC/DEC E
-;                 RR C
-;                 ADC A, B
-;                 LD (HL), A
-;                 POP HL              
-;                 LD A, #14                                   ; INC/DEC D
-;                 RR C
-;                 ADC A, B
-;                 LD (HL), A
-;                 ;
-;                 LD A, (IX + FUnitAnimation.Delta)
-;                 OR A
-;                 JR NZ, $+3
-;                 LD A, D
-;                 INC E
 .PreExit        ;
                 LD (IX + FUnitAnimation.Delta), A
 
@@ -210,16 +152,18 @@ MoveTo:
                 
                 LD C, #00
 
+                
+                ; знак dX
+                LD A, E
+                RLA
+                RL C                                        ; FUAF_X
+
                 ; знак dY
                 LD A, D
                 RLA
                 ; CCF
                 RL C                                        ; FUAF_Y
 
-                ; знак dX
-                LD A, E
-                RLA
-                RL C                                        ; FUAF_X
 
                 ; FUAF_TURN_MOVE
                 SCF                                         ; установка бита принадлежности CounterDown (0 - поворот, 1 - перемещение)

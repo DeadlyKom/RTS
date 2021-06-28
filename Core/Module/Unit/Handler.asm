@@ -24,10 +24,6 @@ Handler:        ; включить страницу
                 JP Z, .Exit
                 LD (.ProcessedUnits), A
 
-                ; LD HL, MapStructure + FMap.UnitsArray
-                ; LD E, (HL)
-                ; INC L
-                ; LD D, (HL)
                 LD DE, (UnitArrayRef)
 
                 ; проверка на перерисовку всех юнитов принудительно
