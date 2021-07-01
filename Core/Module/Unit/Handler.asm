@@ -724,31 +724,48 @@ Handler:        ; включить страницу
                 JR NZ, .NotTarget
 
                 DEC L                       ; HL = TilemapOffsetWidth
-                
+                ; JR $
                 LD A, (HighWayPointArrayRef)
                 LD B, A
                 LD A, (DE)                  ; A = FUnitTargets.Location.IDX_X
                 LD C, A
 
                 LD A, (BC)
-                SUB (HL)
+                LD E, A
+                LD A, (HL)
+                
                 ADD A, A
-                INC A
                 ADD A, A
                 ADD A, A
                 ADD A, A
+                LD D, A
+                LD A, E
+                SUB D
                 EX AF, AF'
 
                 INC L                       ; HL = TilemapOffsetHeight
-                INC B                       ; BC = Y 
+                INC B                       ; BC = Y
+                INC B
 
+                ; LD A, (BC)
+                ; SUB (HL)
+                ; ADD A, A
+                ; INC A
+                ; ADD A, A
+                ; ADD A, A
+                ; ADD A, A
+                ; LD H, A
                 LD A, (BC)
-                SUB (HL)
+                LD E, A
+                LD A, (HL)
+                
                 ADD A, A
-                INC A
                 ADD A, A
                 ADD A, A
                 ADD A, A
+                LD D, A
+                LD A, E
+                SUB D
                 LD H, A
                 EX AF, AF'
                 LD L, A

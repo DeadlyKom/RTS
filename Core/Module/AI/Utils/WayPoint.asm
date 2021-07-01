@@ -32,6 +32,10 @@ Set:            INC IXH                                     ; FUnitLocation
                 LD L, A
                 LD A, (HighWayPointArrayRef)
                 LD H, A
+                LD (HL), C
+                INC H
+                LD (HL), B
+                INC H
                 LD (HL), E
                 INC H
                 LD (HL), D

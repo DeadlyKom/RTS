@@ -40,29 +40,94 @@ GetDeltaTarget: ; get target location
                 LD H, A
 
                 ; delta x
-                LD A, (HL)
-                SUB (IX + FUnitLocation.TilePosition.X)
-                ADC A, A
-                LD E, A
-                LD A, (IX + FUnitLocation.OffsetByPixel.X)
-                RLA
+                ; LD A, (HL)
+                ; SUB (IX + FUnitLocation.TilePosition.X)
+                ; ADC A, A
+                ; LD E, A
+                ; LD A, (IX + FUnitLocation.OffsetByPixel.X)
+                ; RLA
+                ; LD A, E
+                ; ADC A, A
+                ; LD E, A
+
+                ; JR $
+                PUSH HL
+                LD L, (IX + FUnitLocation.TilePosition.X)
+                LD H, #00
+                ADD HL, HL
+                INC HL
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, HL
+                LD E, (IX + FUnitLocation.OffsetByPixel.X)
                 LD A, E
-                ADC A, A
-                LD E, A
+                RLA
+                SBC A, A
+                LD D, A
+                ADD HL, DE
+                EX DE, HL
+                POP HL
+                LD A, (HL)
+                INC H
+                PUSH HL
+                LD H, (HL)
+                LD L, A
+                OR A
+                SBC HL, DE
+
+                LD A, L
+                RR H
+                RRA
+                ; LD L, A
+                LD (.ContainerX), A
+
+
+                POP HL
                 
                 INC H
 
                 ; delta y
-                LD A, (HL)
-                SUB (IX + FUnitLocation.TilePosition.Y)
-                ADC A, A
-                LD D, A
-                LD A, (IX + FUnitLocation.OffsetByPixel.Y)
-                RLA
-                LD A, D
-                ADC A, A
-                LD D, A
+                ; LD A, (HL)
+                ; SUB (IX + FUnitLocation.TilePosition.Y)
+                ; ADC A, A
+                ; LD D, A
+                ; LD A, (IX + FUnitLocation.OffsetByPixel.Y)
+                ; RLA
+                ; LD A, D
+                ; ADC A, A
+                ; LD D, A
 
+                PUSH HL
+                LD L, (IX + FUnitLocation.TilePosition.Y)
+                LD H, #00
+                ADD HL, HL
+                INC HL
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, HL
+                LD E, (IX + FUnitLocation.OffsetByPixel.Y)
+                LD A, E
+                RLA
+                SBC A, A
+                LD D, A
+                ADD HL, DE
+                EX DE, HL
+                POP HL
+                LD A, (HL)
+                INC H
+                LD H, (HL)
+                LD L, A
+                OR A
+                SBC HL, DE
+
+                LD A, L
+                RR H
+                RRA
+                LD L, A
+
+.ContainerX     EQU $+1
+                LD E, #00
+                LD D, L
 
                 RET
 
