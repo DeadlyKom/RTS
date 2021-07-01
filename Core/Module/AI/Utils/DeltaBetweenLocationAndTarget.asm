@@ -42,26 +42,34 @@ GetDeltaTarget: ; get target location
                 ; delta x
                 LD A, (HL)
                 SUB (IX + FUnitLocation.TilePosition.X)
-                ADC A, A
+                JP NZ, .SkipX
+                ADD A, (IX + FUnitLocation.OffsetByPixel.X)
+                CPL
+                JP .SetX
+.SkipX          ADC A, A
                 LD E, A
                 LD A, (IX + FUnitLocation.OffsetByPixel.X)
                 RLA
                 LD A, E
                 ADC A, A
-                LD E, A
+.SetX           LD E, A
                 
                 INC H
 
                 ; delta y
                 LD A, (HL)
                 SUB (IX + FUnitLocation.TilePosition.Y)
-                ADC A, A
+                JP NZ, .SkipY
+                ADD A, (IX + FUnitLocation.OffsetByPixel.Y)
+                CPL
+                JP .SetY
+.SkipY          ADC A, A
                 LD D, A
                 LD A, (IX + FUnitLocation.OffsetByPixel.Y)
                 RLA
                 LD A, D
                 ADC A, A
-                LD D, A
+.SetY           LD D, A
 
 
                 RET

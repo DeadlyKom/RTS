@@ -14,6 +14,8 @@
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
 TileUpdate:     ;
+                DEC L
+                DEC D
                 LD (.LeftColumn), HL
                 ;
                 LD A, D
