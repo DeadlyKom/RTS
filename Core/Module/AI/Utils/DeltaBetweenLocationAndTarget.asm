@@ -8,7 +8,6 @@
 ; Out:
 ;   IX - pointer to FUnitLocation (2)
 ;   DE - deltas (D - dY, E - dX)
-;   C  - sign (1 bit dY, 0 bit - dY) (?)
 ; Corrupt:
 ;   HL, DE, AF
 ; Note:
@@ -19,7 +18,7 @@ GetDeltaTarget: ; get target location
                 LD L, (IX + FUnitTargets.Location.IDX_X)
                 JR Z, .GetLocation
                 LD H, (IX + FUnitTargets.Location.Y)
-
+                JR $
                 ; calculate direction delta
                 DEC IXH                                     ; FUnitLocation (2)
 
@@ -43,14 +42,27 @@ GetDeltaTarget: ; get target location
                 ; delta x
                 LD A, (HL)
                 SUB (IX + FUnitLocation.TilePosition.X)
+                ADC A, A
                 LD E, A
-
+                LD A, (IX + FUnitLocation.OffsetByPixel.X)
+                RLA
+                LD A, E
+                ADC A, A
+                LD E, A
+                
                 INC H
 
                 ; delta y
                 LD A, (HL)
                 SUB (IX + FUnitLocation.TilePosition.Y)
+                ADC A, A
                 LD D, A
+                LD A, (IX + FUnitLocation.OffsetByPixel.Y)
+                RLA
+                LD A, D
+                ADC A, A
+                LD D, A
+
 
                 RET
 

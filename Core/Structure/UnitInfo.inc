@@ -14,12 +14,12 @@ Tank                EQU 0x07
 ; effects flags (buffs/debuffs)
 EF_SLOW             EQU 0x01                        ; эффект замедления
 
-; behavior flags
-BF_MOVE             EQU 0x01                        ; объект движется
-BF_ATTACK           EQU 0x02                        ; объект атакует
-BF_FLY              EQU 0x04                        ; объект в полёте
-BF_REGENERATION     EQU 0x08                        ; объект в состоянии регенерации
-BF_SELECTED         EQU 0x80                        ; объект выбран
+; FUnitState state flags
+FUSF_SELECTED       EQU 0x00                        ; объект выбран
+FUSF_MOVE           EQU 0x01                        ; объект движется
+FUSF_ATTACK         EQU 0x02                        ; объект атакует
+FUSF_FLY            EQU 0x03                        ; объект в полёте
+FUSF_REGENERATION   EQU 0x04                        ; объект в состоянии регенерации
 
 ; direction flags
 DF_UP               EQU %000                        ; направление вверх
@@ -57,7 +57,7 @@ Killed              DB #00                          ; 1 byte (количеств
 
 
                     struct FUnitState               ; (1)
-Behavior            DB #00                          ; 1 byte (состояния поведения)
+State               DB #00                          ; 1 byte (состояния поведения)
 Direction           DB #00                          ; 1 byte (направления)
 Type                DB #00                          ; 1 byte (тип юнита)
 Animation           DB #00                          ; 1 byte (номер анимации * 8)

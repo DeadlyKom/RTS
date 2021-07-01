@@ -70,19 +70,20 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 LD E, D
                 LD D, A
 
-                LD L, #00
+                LD L, B                                     ; L = 0
 
-                ; sing dX <=> sign sY (swap)
+                ; sing dX <=> sign dY (swap)
                 SRL C
                 JR NC, $+4
                 SET 1, C
                   
-.SkipSwap_dX_dY ;
+.SkipSwap_dX_dY INC E
+
+                ;
                 LD A, (IX + FUnitAnimation.Delta)
                 OR A
                 JR NZ, $+3
                 LD A, D
-                INC E
                 EX AF, AF'
 
                 LD A, L
@@ -103,11 +104,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 EX AF, AF'
 
                 LD A, L
-                OR A
-                LD A, #00
-                JR NZ, $+4
-                LD A, #23
-
+                XOR #23
                 LD (ShiftLocation.dX_dY), A
 
                 ;
@@ -136,6 +133,15 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 DEC IXH                                     ; FUnitLocation     (2)
                 DEC IXH                                     ; FUnitState        (1)
 
+                ; JR $
+                ; LD A, (TickCounterRef)
+                ; RRA
+                ; JR NC, $+5
+                INC (IX + FUnitState.Animation)
+                ; INC A
+                ; AND %00111000
+                ; LD (IX + FUnitState.Animation), A
+
                 OR A
                 RET
 
@@ -151,7 +157,6 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ; ---------------------------------------------
                 
                 LD C, #00
-
                 
                 ; знак dX
                 LD A, E
@@ -161,9 +166,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ; знак dY
                 LD A, D
                 RLA
-                ; CCF
                 RL C                                        ; FUAF_Y
-
 
                 ; FUAF_TURN_MOVE
                 SCF                                         ; установка бита принадлежности CounterDown (0 - поворот, 1 - перемещение)
@@ -193,7 +196,6 @@ ShiftLocation:  ;
                 LD HL, #0000
 
 .dX_dY          NOP                                         ; NOP/INC HL    (NOP - x, INC HL - y)
-
 
                 ADD A, (HL)
                 JP M, .Negative

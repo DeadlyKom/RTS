@@ -66,8 +66,9 @@ Down:           RRA
 
                 LD A, D                 ; A = dY
                 CP E                    ; E = dX
+                ; JR Z, .Adjustment       ; x = y
                 JR C, .AngleTo45        ; x > y
-
+                
                 ; угол от 45 до 90
                 RRA                     ; A = dY * 0.5
                 CP E                    ; E = dX
@@ -93,9 +94,9 @@ Down:           RRA
                 JR Z, .Successful
 
                 ;
-                LD B, #3F               ; значение по умолчанию (по часовой)
+                LD B, #3F               ; значение по умолчанию (по часовой)        CCF
                 JR NC, .Clockwise       ; A > A'
-                LD B, #00               ; значение по умолчанию (против часовой)
+                LD B, #00               ; значение по умолчанию (против часовой)    NOP
 
                 ; A < A'    (вращение против часовой стрелки)
                 NEG
@@ -109,7 +110,7 @@ Down:           RRA
 
 .NotEqual       LD A, B
                 LD (.Direction), A
-.Direction      NOP
+.Direction      NOP                     ; NOP/CCF
 
 .Rotation       SBC A, A                ; < 4 = -1, > 4 = 0
                 CCF

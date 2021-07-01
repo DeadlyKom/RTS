@@ -26,8 +26,9 @@ Unit:           ; определение адреса добавления но�
                 ; ---------------------------------------------
                 ; FUnitState (1)
                 ; ---------------------------------------------
-                LD DE, #0002 + 192
-                LD (IX + FUnitState.Behavior), E
+                ; JR $
+                LD DE,  (1 << FUSF_SELECTED) + (1 << FUSF_MOVE)
+                LD (IX + FUnitState.State), E
                 LD (IX + FUnitState.Direction), D
                 XOR A
                 LD (IX + FUnitState.Type), A
