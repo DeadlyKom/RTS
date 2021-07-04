@@ -52,17 +52,23 @@ Sprite_Cursor_3:
 SpriteCursor.End    EQU $
 SpriteCursor_S      EQU SpriteCursor.End - SpriteCursor.Start
 
+                    ; таблица адресов экрана 
+
                     ORG Page_7.ScrAdr
 
                     include "Tables/ScreenAddressTable.inc"
 ScrAdr.End          EQU $
 ScrAdr_S:           EQU ScrAdr.End - Page_7.ScrAdr                                  ; 1024 байта
 
+                    ; таблица обхода FOW
+
                     ORG Page_7.BypassFOW
 
                     include "Tables/BypassFOW.inc"
 BypassFOW.End       EQU $
 BypassFOW_S:        EQU BypassFOW.End - Page_7.BypassFOW                            ; 768 байта
+
+                    ; спрайты тумана войны
 
                     ORG Page_7.FOWTable
 TableFOW:           DW SpriteFOW_1, SpriteFOW_2, SpriteFOW_3, SpriteFOW_4, SpriteFOW_5, SpriteFOW_6, SpriteFOW_7, SpriteFOW_8
@@ -99,6 +105,8 @@ SpriteFOW_F         DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000   
                     DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000
 FOWTable.End:       EQU $
 FOWTable_S:         EQU FOWTable.End - Page_7.FOWTable                              ; 512 байт
+
+                    ; тайлы карты
 
                     ORG Page_7.TileTable
 SpritesTable:       DW Sprite_Sand_1,       Sprite_Sand_2,      Sprite_Sand_3,      Sprite_Sand_4       ; 0   - 3

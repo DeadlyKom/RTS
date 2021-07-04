@@ -9,9 +9,14 @@ Page_1.WayPointArray    EQU #F900                   ; Bank 03 (адрес мас
 Page_1.SurfaceProperty  EQU #FB00                   ; Bank 03 (адрес свойст тайлов 128 байт)            - 1 страница
 Page_1.UnitArray        EQU #FC00                   ; Bank 03 (адрес масива юнитов 1024 байта 64 юнита) - 1 страница
 Page_2:                 EQU #8000                   ; Bank 02
+Page_2.SharedBuffer     EQU #BD00                   ; Bank 02 (адрес общего буфера)                     - 256 байт
+Page_2.RenderBuffer     EQU #BE00                   ; Bank 02 (адрес буфера обновлений)                 - 192 байта + 64 пустуют
+Page_2.TilemapBuffer    EQU #BF00                   ; Bank 02 (адрес тайловой карты буфера)             - 256 байт
 Page_3:                 EQU #C000                   ; Bank 03
 Page_4:                 EQU #C000                   ; Bank 03
-Page_5:                 EQU #4000 + #1B00 + #0225   ; Bank 01 (Screen 0) (пропуск экрана и 0x225 байт данных для TR DOS )
+Page_5:                 EQU #4000 + #1B00 + #0225   ; Bank 01 (Screen 0) (пропуск экрана и 0x225 байт данных для TR DOS)
+Page_5.Pathfinding      EQU #4000                   ; Bank 01 (Screen 0) (временный массив)             - <= 4096 байт
+Page_5.PathfindingQueue EQU #5000                   ; Bank 01 (Screen 0) (временный массив)             - <= 2048 байт
 Page_6:                 EQU #C000                   ; Bank 03
 Page_7:                 EQU #C000 + #1B00           ; Bank 03 (Screen 1) (пропуск экрана)
 Page_7.DebugTileTable:  EQU #DB00                   ; Bank 03 (Screen 1) (таблица спрайтов дебага)      - 256 байт

@@ -5,9 +5,9 @@
                 MMU 1, 5
                 ORG Page_5
 MemoryPage_5_Start:
-
-                include "Tables/ShiftTable.inc"
-                include "Tables/ScreenAddressRowsTable.inc"
+                ; 219 байт пустует
+                include "Tables/ShiftTable.inc"                         ; таблица сдвигов (3584 байт)
+                include "Tables/ScreenAddressRowsTable.inc"             ; таблица адресов экрана по строкам (384 байта)
                 include "Tables/DrawMetods.inc"
                 include "../../Sprites/Table.inc"
                 

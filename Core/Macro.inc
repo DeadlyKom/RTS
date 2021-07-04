@@ -136,6 +136,10 @@ ResetAllFrameFlags      macro
                         XOR A
                         LD (FrameStateRef), A
                         endm
+SetAllFrameFlags        macro
+                        LD A, #FF
+                        LD (FrameStateRef), A
+                        endm
 
                         ; AI flags
 CheckAIFlag             macro Flag?
