@@ -15,6 +15,8 @@ ScanKeyboard:   ; select
                 ; LD A, VK_LBUTTON
                 ; CALL CheckKeyState
                 ; CALL Z, Tilemap.ResetFog
+                LD DE, InputMouseMode
+                CALL JmpHandMouse              
 
                 ; ; options
                 ; LD A, VK_RBUTTON
@@ -31,8 +33,8 @@ ScanMoveMap:    ; save the current address of the visible area of the tilemap
                 LD (.CompareAddress), HL
                 
                 CALL KeyboardMove
-                CheckHardwareFlag KEMPSTON_MOUSE
-                CALL NZ, MouseMoveEdge
+                CheckHardwareFlag KEMPSTON_MOUSE_FLAG
+                CALL Z, MouseMoveEdge
 
                 ; comparison of current and previous address values
                 LD HL, (TilemapRef)
@@ -41,7 +43,6 @@ ScanMoveMap:    ; save the current address of the visible area of the tilemap
                 OR A
                 SBC HL, DE
                 CALL NZ, Tilemap.Prepare
-                ; CALL Game.Test
 
                 RET
 
@@ -88,8 +89,8 @@ KeyboardCursor: ; move with "SYMBOL SHIFT" key released
                 CALL Z, Mouse.MoveDown
 
                 RET
-ScanMouse:      CheckHardwareFlag KEMPSTON_MOUSE
-                CALL NZ, Mouse.UpdateStatesMouse
+ScanMouse:      CheckHardwareFlag KEMPSTON_MOUSE_FLAG
+                CALL Z, Mouse.UpdateStatesMouse
                 CALL KeyboardCursor
 
                 ;----
@@ -134,14 +135,33 @@ InputMode_0_9:  JR NZ, .Processing              ; skip released
 .Processing     EX AF, AF'
                 CP 01                           ; key 1
                 JP Z, ToggleCollision
-                CP 08                           ; key 8
+                CP 02                           ; key 2
+                JP Z, GamePause
+                CP 03                           ; key 8
                 JP Z, ToggleSyncAI
                 CP 09                           ; key 9
                 JP Z, IncreaseAIFreq
                 CP 00                           ; key 0
                 JP Z, DecreaseAIFreq
                 JR .NotProcessing
+InputMouseMode: JR NZ, .Processing              ; skip released
+.NotProcessing  SCF
+                RET
 
+.Processing     EX AF, AF'
+                CP 01                           ; key VK_LBUTTON
+                JP Z, Pathfinding
+                ; CP 02                           ; key VK_RBUTTON
+                ; JP Z, $
+                ; CP 03                           ; key VK_MBUTTON
+                ; JP Z, $
+                JR .NotProcessing
+
+Pathfinding:    ResetGamePlayFlag PATHFINDING_QUERY_FLAG
+                ; exit, processed
+                OR A
+                
+                RET
 ToggleCollision: SwapDebugFlag DISPLAY_COLLISION_FLAG
                 CALL Tilemap.Prepare
                 ; exit, processed
@@ -167,6 +187,12 @@ DecreaseAIFreq: LD HL, AI_UpdateFrequencyRef
                 ; exit, processed
                 OR A
                 RET
+
+GamePause:      SwapAIFlag GAME_PAUSE_FLAG
+                ; exit, processed
+                OR A
+                RET
+
 CheckKeyState:  PUSH HL
                 LD HL, .RET
                 LD (.VK), A
@@ -250,6 +276,34 @@ JumpHandlerNum: LD HL, .KeyLastState
                 DB VK_7, 7
                 DB VK_8, 8
                 DB VK_9, 9
+.Num            EQU ($-.ArrayVKNum) / 2
+
+JmpHandMouse:   LD HL, .KeyLastState
+                EXX
+                LD DE, .ArrayVKNum
+                LD B, .Num
+.Loop           LD A, (DE)
+                INC DE
+                EX AF, AF'
+                LD A, (DE)
+                INC DE
+                EXX
+                LD C, A
+                EX AF, AF'
+                PUSH HL
+                PUSH DE
+                CALL JumpHandlerKey
+                POP DE
+                POP HL
+                RET NC
+                INC HL
+                EXX
+                DJNZ .Loop
+                RET
+.KeyLastState   DS 3, 0
+.ArrayVKNum     DB VK_LBUTTON, 1
+                DB VK_RBUTTON, 2
+                DB VK_MBUTTON, 3
 .Num            EQU ($-.ArrayVKNum) / 2
 
                 endmodule

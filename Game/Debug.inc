@@ -1,6 +1,6 @@
 
-                        ifndef _DEBUG_INCLUDE_
-                        define _DEBUG_INCLUDE_
+                        ifndef _DEBUG_FLAGS_INCLUDE_
+                        define _DEBUG_FLAGS_INCLUDE_
 ; debug flags
 DISPLAY_COLLISION_FLAG  EQU 0x80
 
@@ -61,4 +61,4 @@ PAGE_6_ID               EQU 0x46
 PAGE_7_ID               EQU 0x47
 
 
-                        endif ; ~_DEBUG_INCLUDE_
+                        endif ; ~_DEBUG_FLAGS_INCLUDE_

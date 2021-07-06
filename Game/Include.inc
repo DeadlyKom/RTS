@@ -7,6 +7,7 @@
                             include "Color.inc"
                             include "Debug.inc"
                             include "Frame.inc"
+                            include "GamePlay.inc"
                             include "Hardware.inc"
                             include "Mouse.inc"
                             include "SurfaceProperty.inc"
@@ -40,6 +41,7 @@ TickCounterRef              EQU Interrupt.Handler.TickCounterPtr    ; счётч
 
 ; flags
 FrameStateRef               EQU Game.FrameFlags                     ; указатель на флаги состояний (frame)
+GamePlayStateRef            EQU Game.GamePlayState                  ; указатель на флаги состояний (game)
 AIStateRef                  EQU Game.AIFlags                        ; указатель на флаги состояний (AI)
 HardwareStateRef            EQU Game.HardwareFlags                  ; указатель на флаг ограничений железа
 FrameUnitsFlagRef           EQU Game.FrameUnitsFlag                 ; флаг обновления юнитов принудительно (необходим для скролинга)

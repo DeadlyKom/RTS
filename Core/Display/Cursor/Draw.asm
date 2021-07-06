@@ -339,7 +339,7 @@ Draw:           LD (.CurrentScreen), A
 .ContainerSP    EQU $+1
                 LD SP, #0000
 
-                SetFrameFlag RESTORE_CURSOR
+                ResetFrameFlag RESTORE_CURSOR
 
                 RET
 
@@ -351,7 +351,7 @@ Restore:        ; show debug border
                 ; включим нужную страничку (экранную)
                 SeMemoryPage MemoryPage_ShadowScreen, CURSOR_RESTORE_ID
                 ;
-                ResetFrameFlag RESTORE_CURSOR
+                SetFrameFlag RESTORE_CURSOR
 
                 ; инициализация
                 LD (.ContainerSP), SP

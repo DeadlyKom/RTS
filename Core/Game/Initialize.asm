@@ -2,9 +2,13 @@
                         ifndef _CORE_GAME_INITIALIZE_
                         define _CORE_GAME_INITIALIZE_
 
-Initialize:             ; reset all flags
-                        ResetAllHardwareFlags
-                        ResetAllAIFlags
+Initialize:             ; initialize
+                        SetAllHardwareFlags                     ;
+                        SetAllFrameFlags                        ; настройка флагов отрисовки
+                        ; ResetFrameFlag DELAY_RENDER_FLAG
+                        SetAllGamePlayFlags                     ; настройка игровых флагов
+                        SetAllAIFlags                           ; настройка ИИ флагов
+                        ResetAIFlag GAME_PAUSE_FLAG
 
                         ; set default values
                         LD A, AI_MAX_UPDATE_FREQ
@@ -44,7 +48,7 @@ Initialize:             ; reset all flags
 HardwareRestriction:
 
 .Mouse                  ; kempston mouse detected
-                        SetHardwareFlag KEMPSTON_MOUSE
+                        ResetHardwareFlag KEMPSTON_MOUSE_FLAG
                         RET
 
                         endif ; ~_CORE_GAME_INITIALIZE_

@@ -1,9 +1,7 @@
 
                 ifndef _CORE_GAME_LOOP_
                 define _CORE_GAME_LOOP_
-GameLoop:       ; initialize
-                ResetAllFrameFlags
-                SetFrameFlag SWAP_SCREENS_FLAG
+GameLoop:       
 
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
@@ -131,15 +129,18 @@ GameLoop:       ; initialize
                 ; CALL Spawn.Unit
 
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
+                
+                CheckGamePlayFlag PATHFINDING_FLAG
+                CALL Z, Test
 
-                CheckFrameFlag SWAP_SCREENS_FLAG
-                JR NZ, .MainLoop
+                CheckFrameFlag SWAP_SCREENS_FLAG; | DELAY_RENDER_FLAG
+                JR Z, .MainLoop
 
 .Render         ; ************ RENDER ************      
 
                 ; toggle to memory page with tile sprites
                 SeMemoryPage MemoryPage_ShadowScreen, RENDER_BEGIN_ID
-                ResetFrameFlag ALLOW_MOVE_TILEMAP
+                SetFrameFlag ALLOW_MOVE_TILEMAP
 
 .Tilemap        ; ************ TILEMAP ************
                 ; show debug border
@@ -178,7 +179,7 @@ GameLoop:       ; initialize
                 ; ~ FOW
 
 .CompliteFlags  ; ************* FLAGS *************
-                SetFrameFlag SWAP_SCREENS_FLAG
+                ResetFrameFlag SWAP_SCREENS_FLAG
                 ; ~ FLAGS
 
                 ; ~ RENDER
@@ -189,9 +190,9 @@ GameLoop:       ; initialize
                 BEGIN_DEBUG_BORDER_COL DRAFT_LOGIC_COLOR
                 endif
 
-                CheckAIFlag AI_UPDATE_FLAG
-                CALL NZ, AI.Handler
+                CheckAIFlag AI_UPDATE_FLAG | GAME_PAUSE_FLAG
+                CALL Z, AI.Handler
                 
                 JP .MainLoop
-
+Test            JR $
                 endif ; ~_CORE_GAME_LOOP_

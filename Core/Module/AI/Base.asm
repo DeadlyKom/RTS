@@ -7,7 +7,7 @@ Tick:           LD HL, .AICounter                   ; внутрений счё�
                 LD A, (AI_UpdateFrequencyRef)
                 LD (HL), A
                 
-                SetAIFlag AI_UPDATE_FLAG
+                ResetAIFlag AI_UPDATE_FLAG
 
                 RET
 

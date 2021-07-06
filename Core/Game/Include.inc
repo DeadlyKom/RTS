@@ -22,6 +22,7 @@ BehaviorTable:      DW #0000
 AnimTurnTable:      DW #0000
 UnitArray:          DW #0000
 FrameFlags:         DB #00
+GamePlayState:      DB #00
 AIFlags:            DB #00
 FrameUnitsFlag:     DB #00
 HardwareFlags:      DB #00

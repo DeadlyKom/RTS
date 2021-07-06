@@ -141,6 +141,35 @@ SetAllFrameFlags        macro
                         LD (FrameStateRef), A
                         endm
 
+                        ; game play flags
+CheckGamePlayFlag       macro Flag?
+                        LD A, (GamePlayStateRef)
+                        AND Flag?
+                        endm
+SetGamePlayFlag         macro Flag?
+                        LD A, (GamePlayStateRef)
+                        OR Flag?
+                        LD (GamePlayStateRef), A
+                        endm
+ResetGamePlayFlag       macro Flag?
+                        LD A, (GamePlayStateRef)
+                        AND ((~Flag?) & 0xFF)
+                        LD (GamePlayStateRef), A
+                        endm
+SwapGamePlayFlag        macro Flag?
+                        LD A, (GamePlayStateRef)
+                        XOR Flag?
+                        LD (GamePlayStateRef), A
+                        endm
+ResetAllGamePlayFlags   macro
+                        XOR A
+                        LD (GamePlayStateRef), A
+                        endm
+SetAllGamePlayFlags     macro
+                        LD A, #FF
+                        LD (GamePlayStateRef), A
+                        endm
+
                         ; AI flags
 CheckAIFlag             macro Flag?
                         LD A, (AIStateRef)
@@ -157,14 +186,16 @@ ResetAIFlag             macro Flag?
                         LD (AIStateRef), A
                         endm
 SwapAIFlag              macro Flag?
-                        ifdef DEBUG
                         LD A, (AIStateRef)
                         XOR Flag?
                         LD (AIStateRef), A
-                        endif
                         endm
 ResetAllAIFlags         macro
                         XOR A
+                        LD (AIStateRef), A
+                        endm
+SetAllAIFlags           macro
+                        LD A, #FF
                         LD (AIStateRef), A
                         endm
 
@@ -185,6 +216,10 @@ ResetHardwareFlag       macro Flag?
                         endm
 ResetAllHardwareFlags   macro
                         XOR A
+                        LD (HardwareStateRef), A
+                        endm
+SetAllHardwareFlags     macro
+                        LD A, #FF
                         LD (HardwareStateRef), A
                         endm
 CheckDebugFlag          macro Flag?

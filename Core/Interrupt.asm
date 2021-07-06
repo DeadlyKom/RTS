@@ -43,7 +43,7 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .AI_TickCounter     ; ******** AI TICK COUNTER *********
                     CheckAIFlag AI_UPDATE_FLAG
-                    CALL Z, AI.Tick
+                    CALL NZ, AI.Tick
                     ; ~ AI TICK COUNTER
 
 .Mouse              ; ************* MOUSE *************
@@ -53,7 +53,7 @@ Handler:            ; ********** HANDLER IM 2 *********
 
                     ; restore background cursor
                     CheckFrameFlag RESTORE_CURSOR
-                    CALL NZ, Cursor.Restore
+                    CALL Z, Cursor.Restore
 
                     endif
                     ; ~ MOUSE
@@ -90,9 +90,17 @@ Handler:            ; ********** HANDLER IM 2 *********
 .AI_Frequency       ; ********** AI FREQUENCY *********
                     ifdef SHOW_AI_FREQUENCY
                     SeMemoryPage MemoryPage_ShadowScreen, RENDER_AI_FREQUENCY_ID
-                    ; show AI frequency
-                    LD A, #1B
+                    LD A, #1A
                     CALL Console.At
+
+                    ; show pause
+                    CheckAIFlag GAME_PAUSE_FLAG
+                    LD A, #47
+                    JR Z, $+4
+                    LD A, #50
+                    CALL Console.LogChar
+
+                    ; show AI frequency
                     LD A, (AI_UpdateFrequencyRef)
                     LD B, A
                     CALL Console.Logb
@@ -100,7 +108,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; show AI sync update to frame
                     CheckAIFlag AI_SYNC_UPDATE_FLAG
                     LD A, #2B
-                    JR NZ, $+4
+                    JR Z, $+4
                     LD A, #2D
                     CALL Console.LogChar
 
@@ -151,28 +159,36 @@ Handler:            ; ********** HANDLER IM 2 *********
 .SwapScreens        ; ********* SWAP SCREENS **********
                     ; swap screens if it's ready
                     CheckFrameFlag SWAP_SCREENS_FLAG
-                    JP Z, .SkipSwapScreens
+                    JP NZ, .SkipSwapScreens
                     ; ~ SWAP SCREENS
 
 .Render             ; ************ RENDER *************
                     
                     SwapScreens
 
+.PathfindingQuery   ; PATHFINDING QUERY
+                    AND %00001000
+                    JR Z, .RequestRejected
+                    CheckGamePlayFlag PATHFINDING_QUERY_FLAG
+                    JR NZ, .RequestRejected
+                    SetGamePlayFlag PATHFINDING_QUERY_FLAG
+                    ResetGamePlayFlag PATHFINDING_FLAG
+.RequestRejected    ; ~ PATHFINDING QUERY
+
                     ; FPS
                     ifdef SHOW_FPS
                     CALL FPS_Counter.FrameRendered
                     endif
 
-                    ResetFrameFlag SWAP_SCREENS_FLAG
-
-                    SetFrameFlag ALLOW_MOVE_TILEMAP
+                    SetFrameFlag SWAP_SCREENS_FLAG
+                    ResetFrameFlag ALLOW_MOVE_TILEMAP
 
                     ; ~ RENDER
 
 .SkipSwapScreens    ; ---------------------------------
 .MoveTilemap        ; ********* MOVE TILEMAP **********
                     CheckFrameFlag ALLOW_MOVE_TILEMAP
-                    CALL NZ, Handlers.Input.ScanMoveMap
+                    CALL Z, Handlers.Input.ScanMoveMap
                     ; ~ MOVE TILEMAP
 
 .TimeOfDay          ; ********* TIME OF DAY **********
