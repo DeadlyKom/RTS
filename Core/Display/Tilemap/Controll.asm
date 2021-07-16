@@ -26,25 +26,23 @@ Initialize:     ; toggle to memory page with tilemap
                 LD BC, (IX + FMap.Size)
                 LD (TilemapSizeRef), BC                     ; размер карты
 
+                ; инициализация отрецательное значение ширины карты 
+                LD A, C
+                NEG
+                LD (TilemapWidth_NEG), A
+
+                ; инициализация отрецательное значение высоты карты 
+                LD A, B
+                NEG
+                LD (TilemapHeight_NEG), A
+
+                ; генерация таблицы адресов по позиции тайла (не использовать умножение)
                 CALL Generate
 
                 LD DE, (IX + FMap.StartLocation)           ; E - смещение по горизонтали, D - смещение по вертикали
                 LD (TilemapOffsetRef), DE
                 
-
-                ; расчёт смещения в тайловой карте, 
-                ; в зависимости от размеров карты и смещения
-
-                LD L, D
-                LD A, (TilemapTableHighAddressRef)
-                LD H, A
-                LD A, (HL)
-                INC H
-                LD H, (HL)
-                ADD A, E
-                LD L, A
-                JR NC, $+3
-                INC H
+                CALL Utils.Tilemap.GetAdrTilemap            ; расчёт адрес расположения тайла
                 LD (TilemapRef), HL
 
                 ;

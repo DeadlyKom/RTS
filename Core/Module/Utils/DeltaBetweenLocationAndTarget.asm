@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_AI_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
-                define _CORE_MODULE_AI_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
+                ifndef _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
+                define _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
 
 ; -----------------------------------------
 ; In:
@@ -47,11 +47,11 @@ GetDeltaTarget: ; get target location
                 CPL
                 JP .SetX
 .SkipX          ADC A, A
-                LD E, A
-                LD A, (IX + FUnitLocation.OffsetByPixel.X)
-                RLA
-                LD A, E
-                ADC A, A
+                ; LD E, A
+                ; LD A, (IX + FUnitLocation.OffsetByPixel.X)
+                ; RLA
+                ; LD A, E
+                ; ADC A, A
 .SetX           LD E, A
                 
                 INC H
@@ -64,14 +64,14 @@ GetDeltaTarget: ; get target location
                 CPL
                 JP .SetY
 .SkipY          ADC A, A
-                LD D, A
-                LD A, (IX + FUnitLocation.OffsetByPixel.Y)
-                RLA
-                LD A, D
-                ADC A, A
+                ; LD D, A
+                ; LD A, (IX + FUnitLocation.OffsetByPixel.Y)
+                ; RLA
+                ; LD A, D
+                ; ADC A, A
 .SetY           LD D, A
 
 
                 RET
 
-                endif ; ~ _CORE_MODULE_AI_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
+                endif ; ~ _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_

@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_AI_UTILS_TURN_DOWN_
-                define _CORE_MODULE_AI_UTILS_TURN_DOWN_
+                ifndef _CORE_MODULE_UTILS_TURN_DOWN_
+                define _CORE_MODULE_UTILS_TURN_DOWN_
 
                 module Turn
 ; -----------------------------------------
@@ -126,4 +126,4 @@ Down:           RRA
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_AI_UTILS_TURN_DOWN_
+                endif ; ~ _CORE_MODULE_UTILS_TURN_DOWN_

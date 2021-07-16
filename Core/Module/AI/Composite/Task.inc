@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_AI_TASK_
                 define _CORE_MODULE_AI_TASK_
 ; -----------------------------------------
-; 
+; task executor
 ; In:
 ; Out:
 ; Corrupt:

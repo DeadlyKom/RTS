@@ -52,6 +52,20 @@ SafePrepare:    DI
                 ; endr
                 ; RET
 
+ForceScreen:    ;LD HL, RenderBuffer
+                ; SCF
+                ; RR (HL)
+                ; set update all visible screen
+                LD HL, RenderBuffer + 0xC0
+                LD DE, WORD_RENDER_ALL_FLAGS
+                CALL MEMSET.SafeFill_192
+                
+                ;
+                LD A, #03
+                LD (FrameUnitsFlagRef), A
+
+                RET
+
 ; -----------------------------------------
 ; display row tiles
 ; In:

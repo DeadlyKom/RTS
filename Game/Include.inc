@@ -7,7 +7,7 @@
                             include "Color.inc"
                             include "Debug.inc"
                             include "Frame.inc"
-                            include "GamePlay.inc"
+                            include "Gameplay.inc"
                             include "Hardware.inc"
                             include "Mouse.inc"
                             include "SurfaceProperty.inc"
@@ -65,7 +65,9 @@ TilemapTableHighAddressRef  EQU Game.AddressTable + 1               ; старш
 TilemapRef                  EQU Game.TilemapPtr                     ; указатель на адрес тайловой карты
 TilemapSizeRef              EQU Game.TilemapSize                    ; указатель на адрес размера карты
 TilemapWidth                EQU Game.TilemapSize.X                  ; ширина тайловой карты (структура FMapSize)
+TilemapWidth_NEG            EQU Game.TilemapSize_NEG.X              ; ширина тайловой карты (отрецательное значение)
 TilemapHeight               EQU Game.TilemapSize.Y                  ; высота тайловой карты (структура FMapSize)
+TilemapHeight_NEG           EQU Game.TilemapSize_NEG.Y              ; высота тайловой карты (отрецательное значение)
 TilemapOffsetRef            EQU Game.TilemapOffset                  ; указатель смещения тайловой карты
 TilemapOffsetWidth          EQU Game.TilemapOffset.X                ; смещение в тайловой карте по горизонтали (структура FLocation)
 TilemapOffsetHeight         EQU Game.TilemapOffset.Y                ; смещение в тайловой карте по вертикали (структура FLocation)

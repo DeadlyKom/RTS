@@ -85,14 +85,14 @@ AdjustHighScreenByte_D  macro
                         OR D
                         LD D, A
                         endm
-CLS_0                   macro
+CLS_4000                macro
                         LD DE, #0000
-                        LD HL, #5800
+                        LD HL, #4000 + #1800
                         CALL MEMSET.SafeFill_Screen
                         endm
-CLS_1                   macro
+CLS_C000                macro
                         LD DE, #0000
-                        LD HL, #D800
+                        LD HL, #C000 + #1800
                         CALL MEMSET.SafeFill_Screen
                         endm
 ZX_COLOR_IPBF           macro Inc?, Paper?, Bright?, Flash?
@@ -142,30 +142,30 @@ SetAllFrameFlags        macro
                         endm
 
                         ; game play flags
-CheckGamePlayFlag       macro Flag?
+CheckGameplayFlag       macro Flag?
                         LD A, (GamePlayStateRef)
                         AND Flag?
                         endm
-SetGamePlayFlag         macro Flag?
+SetGameplayFlag         macro Flag?
                         LD A, (GamePlayStateRef)
                         OR Flag?
                         LD (GamePlayStateRef), A
                         endm
-ResetGamePlayFlag       macro Flag?
+ResetGameplayFlag       macro Flag?
                         LD A, (GamePlayStateRef)
                         AND ((~Flag?) & 0xFF)
                         LD (GamePlayStateRef), A
                         endm
-SwapGamePlayFlag        macro Flag?
+SwapGameplayFlag        macro Flag?
                         LD A, (GamePlayStateRef)
                         XOR Flag?
                         LD (GamePlayStateRef), A
                         endm
-ResetAllGamePlayFlags   macro
+ResetAllGameplayFlags   macro
                         XOR A
                         LD (GamePlayStateRef), A
                         endm
-SetAllGamePlayFlags     macro
+SetAllGameplayFlags     macro
                         LD A, #FF
                         LD (GamePlayStateRef), A
                         endm

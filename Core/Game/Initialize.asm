@@ -6,7 +6,7 @@ Initialize:             ; initialize
                         SetAllHardwareFlags                     ;
                         SetAllFrameFlags                        ; настройка флагов отрисовки
                         ; ResetFrameFlag DELAY_RENDER_FLAG
-                        SetAllGamePlayFlags                     ; настройка игровых флагов
+                        SetAllGameplayFlags                     ; настройка игровых флагов
                         SetAllAIFlags                           ; настройка ИИ флагов
                         ResetAIFlag GAME_PAUSE_FLAG
 
@@ -35,9 +35,9 @@ Initialize:             ; initialize
 
                         ; claer screen
                         ifdef ENABLE_CLS
-                        CLS_0
+                        CLS_4000
                         SeMemoryPage MemoryPage_ShadowScreen, CLS_ID
-                        CLS_1
+                        CLS_C000
                         endif
 
                         ; initialize background

@@ -81,14 +81,18 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .FPS_Counter        ; ************** FPS **************
                     ifdef SHOW_FPS
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowFPS
                     SeMemoryPage MemoryPage_ShadowScreen, RENDER_FPS_ID
 	                CALL FPS_Counter.IntTick
                     CALL FPS_Counter.Render_FPS
 	                endif
-                    ; ~ FPS
+.SkipShowFPS        ; ~ FPS
 
 .AI_Frequency       ; ********** AI FREQUENCY *********
                     ifdef SHOW_AI_FREQUENCY
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowAIFreq
                     SeMemoryPage MemoryPage_ShadowScreen, RENDER_AI_FREQUENCY_ID
                     LD A, #1A
                     CALL Console.At
@@ -113,10 +117,12 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CALL Console.LogChar
 
 	                endif
-                    ; ~ AI FREQUENCY
+.SkipShowAIFreq     ; ~ AI FREQUENCY
 
 .MousePositionInfo  ; *** DRAW DEBUG MOUSE POSITION ***
                     ifdef SHOW_MOUSE_POSITION
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowMousePos
                     ; show mouse position
                     LD BC, #02E0 + 0
                     CALL Console.At2
@@ -129,10 +135,12 @@ Handler:            ; ********** HANDLER IM 2 *********
                     LD B, (HL)
                     CALL Console.Logb
                     endif
-                    ; ~ DRAW DEBUG MOUSE POSITION
+.SkipShowMousePos   ; ~ DRAW DEBUG MOUSE POSITION
 
 .OffsetTilemap      ; ****** DRAW OFFSET TILEMAP *****
                     ifdef SHOW_OFFSET_TILEMAP
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowOffsetTM
                     LD BC, #02A0 + 0
                     CALL Console.At2
                     LD HL, TilemapOffsetRef
@@ -144,17 +152,19 @@ Handler:            ; ********** HANDLER IM 2 *********
                     LD B, (HL)
                     CALL Console.Logb
                     endif
-                    ; ~ DRAW OFFSET TILEMAP
+.SkipShowOffsetTM   ; ~ DRAW OFFSET TILEMAP
 
 .NumVisibleUnits    ; ******* DRAW VISIBLE UNITS ******
                     ifdef SHOW_VISIBLE_UNITS
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowVisibleUnt
                     LD BC, #02A0 + 6
                     CALL Console.At2
                     LD HL, Unit.VisibleUnits
                     LD B, (HL)
                     CALL Console.Logb
                     endif
-                    ; ~ DRAW VISIBLE UNITS
+.SkipShowVisibleUnt ; ~ DRAW VISIBLE UNITS
 
 .SwapScreens        ; ********* SWAP SCREENS **********
                     ; swap screens if it's ready
@@ -166,13 +176,14 @@ Handler:            ; ********** HANDLER IM 2 *********
                     
                     SwapScreens
 
-.PathfindingQuery   ; PATHFINDING QUERY
+.PathfindingQuery   ; ******* PATHFINDING QUERY *******
                     AND %00001000
                     JR Z, .RequestRejected
-                    CheckGamePlayFlag PATHFINDING_QUERY_FLAG
+                    CheckGameplayFlag PATHFINDING_QUERY_FLAG
                     JR NZ, .RequestRejected
-                    SetGamePlayFlag PATHFINDING_QUERY_FLAG
-                    ResetGamePlayFlag PATHFINDING_FLAG
+                    ; SetFrameFlag DELAY_RENDER_FLAG
+                    SetGameplayFlag PATHFINDING_QUERY_FLAG
+                    ResetGameplayFlag PATHFINDING_FLAG
 .RequestRejected    ; ~ PATHFINDING QUERY
 
                     ; FPS

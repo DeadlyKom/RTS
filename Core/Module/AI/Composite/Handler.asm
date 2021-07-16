@@ -3,7 +3,7 @@
                 define _CORE_MODULE_AI_COMPOSITE_HANDLER_
 
 ; -----------------------------------------
-; 
+; run behavior tree
 ; In:
 ; Out:
 ; Corrupt:

@@ -37,7 +37,7 @@ TurnDown:       ; JR $
                 INC IXH                                     ; FUnitLocation     (2)
 
                 ;
-                CALL AI.Utils.Surface.GetPassability
+                CALL Utils.Surface.GetPassability
                 ADD A, L
                 LD L, A
                 JR NC, $+3

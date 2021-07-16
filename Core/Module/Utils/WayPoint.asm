@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_AI_UTILS_WAY_POINT_
-                define _CORE_MODULE_AI_UTILS_WAY_POINT_
+                ifndef _CORE_MODULE_UTILS_WAY_POINT_
+                define _CORE_MODULE_UTILS_WAY_POINT_
 
                 module WayPoint
 ; -----------------------------------------
@@ -49,4 +49,4 @@ Remove:         RET
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_AI_UTILS_WAY_POINT_
+                endif ; ~ _CORE_MODULE_UTILS_WAY_POINT_

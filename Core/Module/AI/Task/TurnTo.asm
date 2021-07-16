@@ -14,7 +14,7 @@ TurnTo:         ; go to FUnitTargets
                 INC IXH                                     ; FUnitLocation (2)
                 INC IXH                                     ; FUnitTargets  (3)
 
-                CALL AI.Utils.GetDeltaTarget                ; calculate direction delta
+                CALL Utils.GetDeltaTarget                   ; calculate direction delta
 
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitLocation (2)
@@ -26,6 +26,6 @@ TurnTo:         ; go to FUnitTargets
                 DEC IXH                                     ; FUnitState    (1)
 
                 LD A, (IX + FUnitState.Direction)
-                JP AI.Utils.Turn.Down                     ; вернёт флаг успешности
+                JP Utils.Turn.Down                          ; вернёт флаг успешности
 
                 endif ; ~_CORE_MODULE_AI_TASK_TURN_TO_

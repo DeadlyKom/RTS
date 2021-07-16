@@ -11,32 +11,10 @@
 ;   requires included memory page
 ; -----------------------------------------
 WayPoint:       ; драфт Way Point положение мыши
-                LD DE, (MousePositionRef)
-                LD HL, TilemapOffsetRef
-
-                ; convert mouse position on screen to tilemap location
-                LD A, E
-                RRA
-                RRA
-                RRA
-                RRA
-                AND %00001111
-                ADD A, (HL)
-                LD E, A
-
-                INC HL
-
-                LD A, D
-                RRA
-                RRA
-                RRA
-                RRA
-                AND %00001111
-                ADD A, (HL)
-                LD D, A
+                CALL Utils.Mouse.ConvertToTilemap
 
                 XOR A
-                CALL AI.Utils.WayPoint.Set
+                CALL Utils.WayPoint.Set
                 ; успешно найденый Way Point
                 SCF
                 RET

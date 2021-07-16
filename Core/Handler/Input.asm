@@ -157,10 +157,11 @@ InputMouseMode: JR NZ, .Processing              ; skip released
                 ; JP Z, $
                 JR .NotProcessing
 
-Pathfinding:    ResetGamePlayFlag PATHFINDING_QUERY_FLAG
+Pathfinding:    CheckGameplayFlag PATHFINDING_FLAG              ; проверим что идёт процесс поиска пути
+                JR Z, InputMouseMode.NotProcessing              ; указать что инпут необработан, если идёт поиск пути 
+                ResetGameplayFlag (PATHFINDING_QUERY_FLAG | PATHFINDING_REQUEST_PLAYER_FLAG)
                 ; exit, processed
                 OR A
-                
                 RET
 ToggleCollision: SwapDebugFlag DISPLAY_COLLISION_FLAG
                 CALL Tilemap.Prepare

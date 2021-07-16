@@ -21,7 +21,8 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 INC IXH                                     ; FUnitTargets      (3)
 
                 ;
-                CALL AI.Utils.GetDeltaTarget                ; calculate direction delta
+                ; JR $
+                CALL Utils.GetDeltaTarget                   ; calculate direction delta
                 
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitLocation (2)

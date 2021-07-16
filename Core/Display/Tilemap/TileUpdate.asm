@@ -13,9 +13,16 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-TileUpdate:     ;
+TileUpdate:     ; ограничение значения меньше 0
                 DEC L
+                JR NC, $+3
+                INC L
+                
+                ; ограничение значения меньше 0
                 DEC D
+                JR NC, $+3
+                INC D
+
                 LD (.LeftColumn), HL
                 ;
                 LD A, D

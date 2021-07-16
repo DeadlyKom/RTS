@@ -16,6 +16,7 @@ TilemapPtr:         DW #0000
 UnitArrayPtr:       DW #0000
 TilemapOffset:      FLocation 0, 0
 TilemapSize:        FMapSize 64, 64
+TilemapSize_NEG:    FMapSize -64, -64
 AI_UpdateFreq:      DB #00
 AI_NumUnits:        DB #00
 BehaviorTable:      DW #0000

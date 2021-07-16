@@ -1,20 +1,18 @@
 
                 ifndef _CORE_DISPLAY_TILEMAP_GENERATE_TABLE_ADDRESS_
                 define _CORE_DISPLAY_TILEMAP_GENERATE_TABLE_ADDRESS_
-
 ; -----------------------------------------
+; генерация таблицы адресов по позиции тайла (не использовать умножение)
 ; In:
 ;   HL - адрес начала (смещение 0,0) тайловой карты
 ;   DE - адрес таблицы тайловой карты 
-;   BC - размера карты (C - x, B - y)
+;   BC - размера карты (B - y, C - x)
 ; Out:
 ; Corrupt:
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
 Generate:       ;
-
-                ; JR $
                 PUSH HL
                 PUSH DE
                 PUSH BC
@@ -22,6 +20,7 @@ Generate:       ;
 
                 LD A, B
                 LD B, #00
+                LD HL, #0000
 
 .Loop           EX DE, HL
                 LD (HL), E

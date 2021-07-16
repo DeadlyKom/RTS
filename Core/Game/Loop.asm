@@ -130,10 +130,10 @@ GameLoop:
 
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
                 
-                CheckGamePlayFlag PATHFINDING_FLAG
-                CALL Z, Test
+                CheckGameplayFlag PATHFINDING_FLAG
+                CALL Z, Pathfinding.Begin
 
-                CheckFrameFlag SWAP_SCREENS_FLAG; | DELAY_RENDER_FLAG
+                CheckFrameFlag SWAP_SCREENS_FLAG
                 JR Z, .MainLoop
 
 .Render         ; ************ RENDER ************      
@@ -194,5 +194,5 @@ GameLoop:
                 CALL Z, AI.Handler
                 
                 JP .MainLoop
-Test            JR $
+
                 endif ; ~_CORE_GAME_LOOP_
