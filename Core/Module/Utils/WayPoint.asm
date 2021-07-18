@@ -23,18 +23,18 @@ Add:            RET
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-Set:            INC IXH                                     ; FUnitLocation
-                INC IXH                                     ; FUnitTargets
-                RES FUTF_INDEX, (IX + FUnitTargets.Flags)
-                LD (IX + FUnitTargets.Location.IDX_X), A
-                DEC IXH                                     ; FUnitLocation
-                DEC IXH                                     ; FUnitState
-                LD L, A
-                LD A, (HighWayPointArrayRef)
-                LD H, A
-                LD (HL), E
-                INC H
-                LD (HL), D
+Set:            ; INC IXH                                     ; FUnitLocation   (2)
+                ; INC IXH                                     ; FUnitTargets    (3)
+                ; RES FUTF_INDEX, (IX + FUnitTargets.Flags)
+                ; LD (IX + FUnitTargets.Location.IDX_X), A
+                ; DEC IXH                                     ; FUnitLocation   (2)
+                ; DEC IXH                                     ; FUnitState  (1)
+                ; LD L, A
+                ; LD A, (HighWayPointArrayRef)
+                ; LD H, A
+                ; LD (HL), E
+                ; INC H
+                ; LD (HL), D
 
                 RET
 ; -----------------------------------------

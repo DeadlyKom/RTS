@@ -24,16 +24,17 @@ Request:        ; ---------------------------------------------
                 ; compute start point
                 ; ---------------------------------------------
                 CALL Utils.Units.GetSelected                                            ; точка старта
-                LD A, Pathfinding.VECTOR_FIELD_BEGIN
-                CALL Utils.Pathfinding.SetVectorField                                   ; установим начальную точку
+                ; LD A, Pathfinding.VECTOR_FIELD_BEGIN
+                ; CALL Utils.Pathfinding.SetVectorField                                   ; установим начальную точку
                 LD (Utils.Pathfinding.GetHeuristic.Location), DE
 
                 ; ---------------------------------------------
                 ; compute end point
                 ; ---------------------------------------------
                 CALL Utils.Mouse.ConvertToTilemap
-                LD A, Pathfinding.VECTOR_FIELD_END
-                CALL Utils.Pathfinding.SetVectorField                                   ; установим конечную точку
+                ; LD A, Pathfinding.VECTOR_FIELD_END
+                ; CALL Utils.Pathfinding.SetVectorField                                   ; установим конечную точку
+                LD (.Test), DE
 
                 ; ---------------------------------------------
                 ; добавить соседей текущего тайла
@@ -55,7 +56,16 @@ Request:        ; ---------------------------------------------
                 ; ---------------------------------------------
                 ; 
                 ; ---------------------------------------------
-.EndLoop        
+.EndLoop        LD IX, (UnitArrayRef)
+                INC IXH                                     ; FUnitLocation   (2)
+                INC IXH                                     ; FUnitTargets    (3)
+                SET FUTF_VALID_WP, (IX + FUnitTargets.Data)
+.Test           EQU $+1
+                LD DE, #0000
+                LD (IX + FUnitTargets.WayPoint.X), E
+                LD (IX + FUnitTargets.WayPoint.Y), D
+                DEC IXH                                     ; FUnitLocation   (2)
+                DEC IXH                                     ; FUnitState  (1)
 
                 ; ---------------------------------------------
                 ; 

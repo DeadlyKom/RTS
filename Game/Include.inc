@@ -24,10 +24,12 @@ MemoryPageRef               EQU #5BFE                               ; адрес
 BorderStorageStackRef       EQU #5BFF                               ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
 MapStructure                EQU #C000                               ; адрес структуры карты
-TilemapTableAddress         EQU Page_1.TilemapTableAdr              ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
+
+SequenceWayPointsPtr        EQU Page_1.SequenceWayPoints            ; адрес последовательностей Way Point'ов (2048 байт)
 WayPointArrayPtr            EQU Page_1.WayPointArray                ; адрес массива Way Point'ов (512 байт)
-SurfacePropertyPtr          EQU Page_1.SurfaceProperty              ; адрес свойст тайлов (128 байт)                    - 1 страница
-UnitArrayPtr                EQU Page_1.UnitArray                    ; адрес масива юнитов (1024 байта 64 юнита)         - 1 страница
+SurfacePropertyPtr          EQU Page_1.SurfaceProperty              ; адрес свойст тайлов (128 байт)
+TilemapTableAddress         EQU Page_1.TilemapTableAdr              ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
+UnitArrayPtr                EQU Page_1.UnitArray                    ; адрес масива юнитов (1024 байта 64 юнита)
 SharedBuffer                EQU Page_2.SharedBuffer                 ; адрес общего буфера (256 байт)
 RenderBuffer                EQU Page_2.RenderBuffer                 ; адрес буфера обновлений (192 байта + 64 пустуют)
 TilemapBuffer               EQU Page_2.TilemapBuffer                ; адрес тайловой карты буфера (256 байт)

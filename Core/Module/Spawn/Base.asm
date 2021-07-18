@@ -58,10 +58,10 @@ Unit:           ; определение адреса добавления но�
 
                 ; инициализция
                 XOR A
-                LD (IX + FUnitTargets.Location.IDX_X), A
-                LD (IX + FUnitTargets.Location.Y), A
-                LD (IX + FUnitTargets.Enemy), A
-                LD (IX + FUnitTargets.Flags), A
+                LD (IX + FUnitTargets.WayPoint.X), A
+                LD (IX + FUnitTargets.WayPoint.Y), A
+                LD (IX + FUnitTargets.Data), A                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                LD (IX + FUnitTargets.Idx), A
 
                 INC IXH                                         ; переход к FUnitAnimation
 

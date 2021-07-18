@@ -34,13 +34,13 @@ Y                   DB #00
 
                     ends
 
-; -------------------- location coordinates on the tilemap --------------------
+; ; -------------------- location coordinates on the tilemap --------------------
 
-                    struct FLocationIndex
-IDX_X               DB #00
-Y                   DB #00            
+;                     struct FLocationIndex
+; IDX_X               DB #00
+; Y                   DB #00            
 
-                    ends
+;                     ends
 
 ; -------------------- path finding stack --------------------
 

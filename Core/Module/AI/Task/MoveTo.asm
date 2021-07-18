@@ -3,8 +3,10 @@
                 define _CORE_MODULE_AI_TASK_MOVE_TO_
 
 ; -----------------------------------------
-; 
+; перемещение к цели
 ; In:
+;   IX - pointer to FUnitState (1)
+; Out:
 ; Out:
 ; Corrupt:
 ; Note:
@@ -23,18 +25,19 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ;
                 ; JR $
                 CALL Utils.GetDeltaTarget                   ; calculate direction delta
-                
+                JR NC, .Fail                                ; неудачая точка назначения
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitLocation (2)
                 ; D = dY (signed)
                 ; E = dX (signed)
                 ; ---------------------------------------------
 
+                INC IXH                                     ; FUnitTargets      (3)
+
                 LD A, E
                 OR D
                 JR Z, .Complite
 
-                INC IXH                                     ; FUnitTargets      (3)
                 INC IXH                                     ; FUnitAnimation    (4)
 
                 ; check for the need to reinitialize the counter after move
@@ -146,9 +149,22 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 OR A
                 RET
 
-.Complite       ;
+                ; ---------------------------------------------
+                ; юнит дошёл до текущего Way Point
+                ; ---------------------------------------------
+                ; IX - pointer to FUnitTargets      (3)
+                ; ---------------------------------------------
+.Complite       RES FUTF_VALID_WP, (IX + FUnitTargets.Data)    ; сброс текущего Way Point
+                DEC IXH                                     ; FUnitLocation     (2)
                 DEC IXH                                     ; FUnitState        (1)
-                SCF
+
+                ; JR $
+                SCF                                         ; успешность выполнения
+                RET
+
+.Fail           DEC IXH                                     ; FUnitState        (1)
+
+                OR A                                        ; неудачное выполнение
                 RET
 
 .Init           ; ---------------------------------------------
