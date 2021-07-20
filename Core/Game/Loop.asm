@@ -5,9 +5,111 @@ GameLoop:
 
                 ; add unit
                 SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
+
+                ; JR $
+
+                LD DE, #0000
+                CALL Utils.Waypoint.FindAndAdd
+                LD DE, #0100
+                CALL Utils.Waypoint.FindAndAdd
+                LD DE, #0101
+                CALL Utils.Waypoint.FindAndAdd
+                LD A, #02
+                CALL Utils.Waypoint.Remove
+                LD DE, #0101
+                CALL Utils.Waypoint.FindAndAdd
+                LD DE, #0102
+                CALL Utils.Waypoint.FindAndAdd
+
+
+
+                LD A, (HighWaypointArrayRef)
+                LD H, A
+                LD L, #01
+
+                ; 1
+                LD DE, #0C0A
+                LD (HL), E
+                INC H
+                LD (HL), D
+                DEC H
+
+                ; 2
+                INC L
+                LD DE, #0D0D
+                LD (HL), E
+                INC H
+                LD (HL), D
+                DEC H
+
+                ; 3
+                INC L
+                LD DE, #110F
+                LD (HL), E
+                INC H
+                LD (HL), D
+                DEC H
+
+                ; 4
+                INC L
+                LD DE, #150D
+                LD (HL), E
+                INC H
+                LD (HL), D
+                DEC H
+
+                ; 5
+                INC L
+                LD DE, #1306
+                LD (HL), E
+                INC H
+                LD (HL), D
+                DEC H
+
+                ; 6
+                INC L
+                LD DE, #0D06
+                LD (HL), E
+                INC H
+                LD (HL), D
+                DEC H
+
+                LD BC, WaypointsSequencePtr + 0x700
+                LD A, #01
+                LD (BC), A
+
+                DEC B
+                
+                LD A, #02
+                LD (BC), A
+
+                DEC B
+                
+                LD A, #03
+                LD (BC), A
+
+                DEC B
+                
+                LD A, #04
+                LD (BC), A
+
+                DEC B
+                
+                LD A, #05
+                LD (BC), A
+
+                DEC B
+                
+                LD A, #06
+                LD (BC), A
+
+                DEC B
+                XOR A
+                LD (BC), A
                 
                 LD BC, #0202
                 CALL Spawn.Unit
+
                 ; LD BC, #0204
                 ; CALL Spawn.Unit
                 ; LD BC, #0206

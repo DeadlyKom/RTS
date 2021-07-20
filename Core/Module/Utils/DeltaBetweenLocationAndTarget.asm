@@ -74,28 +74,10 @@ GetDeltaTarget: BIT FUTF_VALID_WP, (IX + FUnitTargets.Data)
 ;                 BIT FUTF_INDEX, (IX + FUnitTargets.Flags)
 ;                 LD L, (IX + FUnitTargets.Location.IDX_X)
 ;                 JR Z, .GetLocation
-;                 LD H, (IX + FUnitTargets.Location.Y)
-;                 JR $
-;                 ; calculate direction delta
-;                 DEC IXH                                     ; FUnitLocation (2)
-
-;                 ; delta x
-;                 LD A, H
-;                 SUB (IX + FUnitLocation.TilePosition.X)
-;                 LD E, A
-                
-;                 ; delta y
-;                 LD A, L
-;                 SUB (IX + FUnitLocation.TilePosition.Y)
-;                 LD D, A
-                
-;                 RET
-
 ; .GetLocation    ; calculate direction delta
 ;                 DEC IXH                                     ; FUnitLocation (2)
 ;                 LD A, (HighWayPointArrayRef)
 ;                 LD H, A
-
 ;                 ; delta x
 ;                 LD A, (HL)
 ;                 SUB (IX + FUnitLocation.TilePosition.X)
@@ -127,8 +109,6 @@ GetDeltaTarget: BIT FUTF_VALID_WP, (IX + FUnitTargets.Data)
 ;                 ; LD A, D
 ;                 ; ADC A, A
 ; .SetY           LD D, A
-
-
 ;                 RET
 
                 endif ; ~ _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_

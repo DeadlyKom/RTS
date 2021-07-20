@@ -14,12 +14,12 @@ Size_7                  EQU ((SizePage_7 % 256 > 0) & 0x01) + (SizePage_7 >> 8)
 TilemapAddress          EQU MemoryPage_1.Map.Tilemap
 TilemapSize             EQU MemoryPage_1.MapSize
 OtherAddress            EQU MemoryPage_1.Map.Tilemap + TilemapSize
-SequenceWayPointsSize   EQU WayPointArrayPtr - SequenceWayPointsPtr
-WayPointsSize           EQU SurfacePropertyPtr - WayPointArrayPtr
+WaypointsSequenceSize   EQU WaypointArrayPtr - WaypointsSequencePtr
+WayPointsSize           EQU SurfacePropertyPtr - WaypointArrayPtr
 SurfPropSize            EQU TilemapTableAddress - SurfacePropertyPtr
 TilemapTableAdrSize     EQU UnitArrayPtr - TilemapTableAddress
 UnitArraySize           EQU 0x10000 - UnitArrayPtr
-Page_MapSize            EQU TilemapSize + Others_S + SequenceWayPointsSize + WayPointsSize + SurfPropSize + TilemapTableAdrSize + UnitArraySize
+Page_MapSize            EQU TilemapSize + Others_S + WaypointsSequenceSize + WayPointsSize + SurfPropSize + TilemapTableAdrSize + UnitArraySize
 
 Size_2_Real             EQU SizePage_2 + 768 ; 768 = (Page_2.SharedBuffer + Page_2.RenderBuffer + Page_2.TilemapBuffer)
 
@@ -134,8 +134,8 @@ EndBasic:
                         display "Building the TRD-image of the \'", TRD_FILENAME, "\' maps ..."
                         display "Map 'Draft' :  \t\t", /A, TilemapAddress, " = busy [ ", /D, TilemapSize, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - TilemapSize, " bytes ]     \t |  ", /D, TilemapSize * 100 / #4000, " % occupied"
                         display "Other : \t\t\t", /A, OtherAddress, " = busy [ ", /D, Others_S, " bytes  ]"
-                        display "Sequence Way Points : \t", /A, SequenceWayPointsPtr, " = busy [ ", /D, SequenceWayPointsSize, " bytes ]"
-                        display "Way Point Array : \t\t", /A, WayPointArrayPtr, " = busy [ ", /D, WayPointsSize, " bytes  ]"
+                        display "Waypoints Sequence : \t\t", /A, WaypointsSequencePtr, " = busy [ ", /D, WaypointsSequenceSize, " bytes ]"
+                        display "Waypoint Array : \t\t", /A, WaypointArrayPtr, " = busy [ ", /D, WayPointsSize, " bytes  ]"
                         display "Surface Property : \t\t", /A, SurfacePropertyPtr, " = busy [ ", /D, SurfPropSize, " bytes  ]"
                         display "Tilemap table address : \t", /A, TilemapTableAddress, " = busy [ ", /D, TilemapTableAdrSize, " bytes  ]"
                         display "Unit Array : \t\t\t", /A, UnitArrayPtr, " = busy [ ", /D, UnitArraySize, " bytes ]"

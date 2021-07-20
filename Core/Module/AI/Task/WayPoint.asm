@@ -11,7 +11,8 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-WayPoint:       INC IXH                                             ; FUnitLocation     (2)
+WayPoint:       ; JR $
+                INC IXH                                             ; FUnitLocation     (2)
                 INC IXH                                             ; FUnitTargets      (3)
 
                 ; проверка что Way Point валиден
@@ -53,7 +54,7 @@ WayPoint:       INC IXH                                             ; FUnitLocat
                 JR Z, .CheckLoop                                    ; проверка на зацикленность
 
                 ; расчёт адреса WayPoint
-.CalcAdrWP      ADD A, HIGH SequenceWayPointsPtr
+.CalcAdrWP      ADD A, HIGH WaypointsSequencePtr
                 LD H, A
                 LD L, (IX + FUnitTargets.Idx)
                 
@@ -66,7 +67,7 @@ WayPoint:       INC IXH                                             ; FUnitLocat
 
                 ; копирование WayPoint во внутреннее хранилище
                 LD L, A
-                LD A, (HighWayPointArrayRef)
+.CopyWP         LD A, (HighWaypointArrayRef)
                 LD H, A
                 LD E, (HL)
                 INC H
@@ -74,6 +75,7 @@ WayPoint:       INC IXH                                             ; FUnitLocat
                 LD (IX + FUnitTargets.WayPoint.X), E
                 LD (IX + FUnitTargets.WayPoint.Y), D
 
+                SET FUTF_VALID_WP, (IX + FUnitTargets.Data)         ; указан новый WayPoint
                 JR .Successfully
 
                 ; ---------------------------------------------
@@ -87,16 +89,21 @@ WayPoint:       INC IXH                                             ; FUnitLocat
                 LD (IX + FUnitTargets.Data), A
 
                 ; копирование WayPoint во внутреннее хранилище
-                LD L, FUTF_MASK_OFFSET
-.CopyWP         LD A, (HighWayPointArrayRef)
+                LD A, FUTF_MASK_OFFSET
+                ADD A, HIGH WaypointsSequencePtr
                 LD H, A
-                LD E, (HL)
-                INC H
-                LD D, (HL)
-                LD (IX + FUnitTargets.WayPoint.X), E
-                LD (IX + FUnitTargets.WayPoint.Y), D
+                LD L, (IX + FUnitTargets.Idx)
 
-                JR .Successfully
+                LD L, (HL)
+;.CopyWP         LD A, (HighWayPointArrayRef)
+                ; LD H, A
+                ; LD E, (HL)
+                ; INC H
+                ; LD D, (HL)
+                ; LD (IX + FUnitTargets.WayPoint.X), E
+                ; LD (IX + FUnitTargets.WayPoint.Y), D
+                ; JR .Successfully
+                JR .CopyWP
 
 
 .IsNotValid_IDX DEC IXH                                             ; FUnitLocation     (2)
@@ -108,9 +115,15 @@ WayPoint:       INC IXH                                             ; FUnitLocat
                 ; ---------------------------------------------
                 ; ранее была вставка временного WayPoint
                 ; ---------------------------------------------
-.InsertWP       LD A, (IX + FUnitTargets.Data)
+.InsertWP       RES FUTF_INSERT, (IX + FUnitTargets.Data)           ; бит вставки обнулить
+
+                LD A, (IX + FUnitTargets.Data)
                 AND FUTF_MASK_OFFSET
-                LD L, A
+                ADD A, HIGH WaypointsSequencePtr
+                LD H, A
+                LD L, (IX + FUnitTargets.Idx)
+                
+                LD L, (HL)
 
                 JR .CopyWP
 

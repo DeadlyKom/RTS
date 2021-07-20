@@ -9,7 +9,7 @@
 
                 ORG MapStructure
 Map:
-.Begin          FMap .Tilemap, TilemapTableAddress, {64, 64}, {0, 0}, WayPointArrayPtr, Behavior.Begin, Animation.Begin, UnitArrayPtr, #0000, SurfacePropertyPtr
+.Begin          FMap .Tilemap, TilemapTableAddress, {64, 64}, {0, 0}, WaypointArrayPtr, Behavior.Begin, Animation.Begin, UnitArrayPtr, #0000, SurfacePropertyPtr
 .Tilemap        include "Map.asm"
 .UnitCounter    DB #00
 .End

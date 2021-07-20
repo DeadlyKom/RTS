@@ -13,7 +13,8 @@
                 include "Tilemap.asm"
                 include "TurnDown.asm"
                 include "VectorField.asm"
-                include "WayPoint.asm"
+                include "Waypoint.asm"
+                include "WaypointsSequencer.asm"
                 include "Queue.asm"
 
                 endmodule

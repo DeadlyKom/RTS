@@ -104,9 +104,9 @@ Down:           RRA
                 JR NZ, .NotEqual
 
                 ; выбор рандомного вращения
-                LD A, R
-                RRA
-                ; SCF
+                ; LD A, R
+                ; RRA
+                SCF
 
 .NotEqual       LD A, B
                 LD (.Direction), A

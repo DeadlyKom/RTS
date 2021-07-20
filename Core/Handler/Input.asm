@@ -16,8 +16,12 @@ ScanKeyboard:   ; select
                 ; CALL CheckKeyState
                 ; CALL Z, Tilemap.ResetFog
                 LD DE, InputMouseMode
-                CALL JmpHandMouse              
+                CALL JmpHandMouse
 
+                
+                LD DE, InputJoyMode
+                CALL JmpHandJoy
+                
                 ; ; options
                 ; LD A, VK_RBUTTON
                 ; CALL CheckKeyState
@@ -26,6 +30,17 @@ ScanKeyboard:   ; select
                 LD DE, InputMode_0_9
                 CALL JumpHandlerNum
 
+                SetInputFlag ACCELERATE_CURSOR_FLAG
+
+                LD A, VK_KEMPSTON_C
+                CALL Input.CheckKeyState
+                JR NZ, .SkipAccelerate
+                ResetInputFlag ACCELERATE_CURSOR_FLAG
+.SkipAccelerate
+                LD HL, Mouse.AccelerateCursor
+                LD DE, Mouse.DecelerateCursor
+                JumpToFlag ACCELERATE_CURSOR_FLAG
+
                 RET
 
 ScanMoveMap:    ; save the current address of the visible area of the tilemap
@@ -33,7 +48,11 @@ ScanMoveMap:    ; save the current address of the visible area of the tilemap
                 LD (.CompareAddress), HL
                 
                 CALL KeyboardMove
+
                 CheckHardwareFlag KEMPSTON_MOUSE_FLAG
+                CALL Z, MouseMoveEdge
+
+                CheckHardwareFlag KEMPSTON_JOY_BUTTON_3
                 CALL Z, MouseMoveEdge
 
                 ; comparison of current and previous address values
@@ -65,33 +84,59 @@ MouseMoveEdge:  LD BC, MousePositionRef
 
 KeyboardCursor: ; move with "SYMBOL SHIFT" key released
                 LD A, VK_SYMBOL_SHIFT
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
                 RET Z
 
-                ; move map left
+                ; move cursor left
                 LD A, VK_A
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
                 CALL Z, Mouse.MoveLeft
 
-                ; move map right
+                ; move cursor right
                 LD A, VK_D
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
                 CALL Z, Mouse.MoveRight
 
-                ; move map up
+                ; move cursor up
                 LD A, VK_W
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
                 CALL Z, Mouse.MoveUp
 
-                ; move map down
+                ; move cursor down
                 LD A, VK_S
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
+                CALL Z, Mouse.MoveDown
+
+                RET
+
+KempstonJoyB3:  ; move cursor left
+                LD A, VK_KEMPSTON_LEFT
+                CALL Input.CheckKeyState
+                CALL Z, Mouse.MoveLeft
+
+                ; move cursor right
+                LD A, VK_KEMPSTON_RIGHT
+                CALL Input.CheckKeyState
+                CALL Z, Mouse.MoveRight
+
+                ; move cursor up
+                LD A, VK_KEMPSTON_UP
+                CALL Input.CheckKeyState
+                CALL Z, Mouse.MoveUp
+
+                ; move cursor down
+                LD A, VK_KEMPSTON_DOWN
+                CALL Input.CheckKeyState
                 CALL Z, Mouse.MoveDown
 
                 RET
 ScanMouse:      CheckHardwareFlag KEMPSTON_MOUSE_FLAG
                 CALL Z, Mouse.UpdateStatesMouse
+                
                 CALL KeyboardCursor
+
+                CheckHardwareFlag KEMPSTON_JOY_BUTTON_3
+                CALL Z, KempstonJoyB3
 
                 ;----
                 ; LD HL, #6080
@@ -103,27 +148,27 @@ ScanMouse:      CheckHardwareFlag KEMPSTON_MOUSE_FLAG
 
 KeyboardMove:   ; move with "SYMBOL SHIFT" key pressed
                 LD A, VK_SYMBOL_SHIFT
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
                 RET NZ
 
                 ; move map left
                 LD A, VK_A
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
                 CALL Z, Tilemap.MoveLeft
 
                 ; move map right
                 LD A, VK_D
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
                 CALL Z, Tilemap.MoveRight
 
                 ; move map up
                 LD A, VK_W
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
                 CALL Z, Tilemap.MoveUp
 
                 ; move map down
                 LD A, VK_S
-                CALL CheckKeyState
+                CALL Input.CheckKeyState
                 CALL Z, Tilemap.MoveDown
 
                 RET
@@ -137,7 +182,7 @@ InputMode_0_9:  JR NZ, .Processing              ; skip released
                 JP Z, ToggleCollision
                 CP 02                           ; key 2
                 JP Z, GamePause
-                CP 03                           ; key 8
+                CP 08                           ; key 8
                 JP Z, ToggleSyncAI
                 CP 09                           ; key 9
                 JP Z, IncreaseAIFreq
@@ -155,8 +200,20 @@ InputMouseMode: JR NZ, .Processing              ; skip released
                 ; JP Z, $
                 ; CP 03                           ; key VK_MBUTTON
                 ; JP Z, $
-                JR .NotProcessing
 
+                JR .NotProcessing
+InputJoyMode:   JR NZ, .Processing              ; skip released
+.NotProcessing  SCF
+                RET
+
+.Processing     EX AF, AF'
+                CP 01                           ; key VK_KEMPSTON_A
+                JP Z, Pathfinding
+                ; CP 02                           ; key VK_KEMPSTON_B
+                CP 04                           ; key VK_KEMPSTON_START
+                JP Z, GamePause
+
+                JR .NotProcessing
 Pathfinding:    CheckGameplayFlag PATHFINDING_FLAG              ; проверим что идёт процесс поиска пути
                 JR Z, InputMouseMode.NotProcessing              ; указать что инпут необработан, если идёт поиск пути 
                 ResetGameplayFlag (PATHFINDING_QUERY_FLAG | PATHFINDING_REQUEST_PLAYER_FLAG)
@@ -188,21 +245,9 @@ DecreaseAIFreq: LD HL, AI_UpdateFrequencyRef
                 ; exit, processed
                 OR A
                 RET
-
 GamePause:      SwapAIFlag GAME_PAUSE_FLAG
                 ; exit, processed
                 OR A
-                RET
-
-CheckKeyState:  PUSH HL
-                LD HL, .RET
-                LD (.VK), A
-                OR A
-                JP M, Mouse.CheckKeyState
-                JP P, Keyboard.CheckKeyState
-.VK             EQU $+1
-.RET            LD A, #00
-                POP HL
                 RET
 
 ; -----------------------------------------
@@ -217,7 +262,7 @@ CheckKeyState:  PUSH HL
 ; Corrupt :
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-JumpHandlerKey: CALL CheckKeyState
+JumpHandlerKey: CALL Input.CheckKeyState
                 LD A, (HL)
                 JR NZ, .IsReleased
                 OR A
@@ -279,6 +324,57 @@ JumpHandlerNum: LD HL, .KeyLastState
                 DB VK_9, 9
 .Num            EQU ($-.ArrayVKNum) / 2
 
+; -----------------------------------------
+; In :
+;   DE - address key handlerKey
+; Out :
+;   if the specified key is pressed/released jump yo handler
+;   if flag Z is reset, the button is released, otherwise it is pressed
+;   if the handler is processing should return a reset Carry flag
+;   C - value
+; Corrupt :
+;   HL, DE, BC, AF, AF'
+; -----------------------------------------
+JmpHandJoy:     LD HL, .KeyLastState
+                EXX
+                LD DE, .ArrayVKNum
+                LD B, .Num
+.Loop           LD A, (DE)
+                INC DE
+                EX AF, AF'
+                LD A, (DE)
+                INC DE
+                EXX
+                LD C, A
+                EX AF, AF'
+                PUSH HL
+                PUSH DE
+                CALL JumpHandlerKey
+                POP DE
+                POP HL
+                RET NC
+                INC HL
+                EXX
+                DJNZ .Loop
+                RET
+.KeyLastState   DS 4, 0
+.ArrayVKNum     DB VK_KEMPSTON_A, 1
+                DB VK_KEMPSTON_B, 2
+                DB VK_KEMPSTON_C, 3
+                DB VK_KEMPSTON_START, 4
+.Num            EQU ($-.ArrayVKNum) / 2
+
+; -----------------------------------------
+; In :
+;   DE - address key handlerKey
+; Out :
+;   if the specified key is pressed/released jump yo handler
+;   if flag Z is reset, the button is released, otherwise it is pressed
+;   if the handler is processing should return a reset Carry flag
+;   C - value
+; Corrupt :
+;   HL, DE, BC, AF, AF'
+; -----------------------------------------
 JmpHandMouse:   LD HL, .KeyLastState
                 EXX
                 LD DE, .ArrayVKNum
@@ -301,10 +397,10 @@ JmpHandMouse:   LD HL, .KeyLastState
                 EXX
                 DJNZ .Loop
                 RET
-.KeyLastState   DS 3, 0
+.KeyLastState   DS 2, 0
 .ArrayVKNum     DB VK_LBUTTON, 1
                 DB VK_RBUTTON, 2
-                DB VK_MBUTTON, 3
+                ; DB VK_MBUTTON, 3
 .Num            EQU ($-.ArrayVKNum) / 2
 
                 endmodule

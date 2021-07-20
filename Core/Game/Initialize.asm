@@ -4,11 +4,20 @@
 
 Initialize:             ; initialize
                         SetAllHardwareFlags                     ;
+                        ResetHardwareFlag KEMPSTON_JOY_BUTTON_3 ; включить джойстик SEGA
                         SetAllFrameFlags                        ; настройка флагов отрисовки
                         ; ResetFrameFlag DELAY_RENDER_FLAG
                         SetAllGameplayFlags                     ; настройка игровых флагов
+                        SetAllInputFlags                        ; настройки флагов инпута
                         SetAllAIFlags                           ; настройка ИИ флагов
                         ResetAIFlag GAME_PAUSE_FLAG
+
+                        ; initialize cursor speed
+                        LD A, MIN_CURSOR_SPEED
+                        LD (MinCursorSpeedRef), A
+                        LD A, MAX_CURSOR_SPEED
+                        LD (MaxCursorSpeedRef), A
+                        CALL Mouse.InitAcceleration
 
                         ; set default values
                         LD A, AI_MAX_UPDATE_FREQ
@@ -16,6 +25,8 @@ Initialize:             ; initialize
 
                         CALL Interrupt.Initialize
                         CALL Tilemap.Initialize
+                        CALL Utils.Waypoint.Init                ; initialize array waypoints
+                        CALL Utils.WaypointsSequencer.Init      ; initialize bitmap waypoints
                         CALL Handlers.Input.Initialize
                         CALL Tilemap.SafePrepare
                         

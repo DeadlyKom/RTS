@@ -60,7 +60,7 @@ Unit:           ; определение адреса добавления но�
                 XOR A
                 LD (IX + FUnitTargets.WayPoint.X), A
                 LD (IX + FUnitTargets.WayPoint.Y), A
-                LD (IX + FUnitTargets.Data), A                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                LD (IX + FUnitTargets.Data), %01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
                 LD (IX + FUnitTargets.Idx), A
 
                 INC IXH                                         ; переход к FUnitAnimation

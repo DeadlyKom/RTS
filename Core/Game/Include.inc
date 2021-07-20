@@ -11,7 +11,8 @@
 TilemapAddress:     DW #0000
 AddressTable:       DW #0000
 SurfacePropertyPtr: DW #0000
-WayPointArray:      DW #0000
+WaypointCounter:    DB #00
+WaypointArray:      DW #0000
 TilemapPtr:         DW #0000
 UnitArrayPtr:       DW #0000
 TilemapOffset:      FLocation 0, 0
@@ -23,10 +24,13 @@ BehaviorTable:      DW #0000
 AnimTurnTable:      DW #0000
 UnitArray:          DW #0000
 FrameFlags:         DB #00
-GamePlayState:      DB #00
+GameplayState:      DB #00
+InputState:         DB #00
 AIFlags:            DB #00
 FrameUnitsFlag:     DB #00
 HardwareFlags:      DB #00
+MinCursorSpeed:     DB #00
+MaxCursorSpeed:     DB #00
 
                     ifdef DEBUG
 DebugFlags:         DB #00

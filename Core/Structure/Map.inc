@@ -7,7 +7,7 @@ Address         DW #0000                        ; адрес тайловой к
 AddressTable    DW #0000                        ; адрес таблицы (выровнен 256)
 Size            FMapSize 0, 0                   ; размер карты
 StartLocation   FLocation 0, 0                  ; координаты начала
-WayPointArray   DW #0000                        ; адрес массива точек пути
+WaypointArray   DW #0000                        ; адрес массива точек пути
 BehaviorTable   DW #0000                        ; адрес таблицы поведения
 AnimTurnTable   DW #0000                        ; адрес таблицы поворотов
 UnitsArray      DW #0000                        ; адрес массива юнитов (выровнен 256)

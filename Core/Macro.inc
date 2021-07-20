@@ -141,33 +141,71 @@ SetAllFrameFlags        macro
                         LD (FrameStateRef), A
                         endm
 
-                        ; game play flags
+                        ; gameplay flags
 CheckGameplayFlag       macro Flag?
-                        LD A, (GamePlayStateRef)
+                        LD A, (GameplayStateRef)
                         AND Flag?
                         endm
 SetGameplayFlag         macro Flag?
-                        LD A, (GamePlayStateRef)
+                        LD A, (GameplayStateRef)
                         OR Flag?
-                        LD (GamePlayStateRef), A
+                        LD (GameplayStateRef), A
                         endm
 ResetGameplayFlag       macro Flag?
-                        LD A, (GamePlayStateRef)
+                        LD A, (GameplayStateRef)
                         AND ((~Flag?) & 0xFF)
-                        LD (GamePlayStateRef), A
+                        LD (GameplayStateRef), A
                         endm
 SwapGameplayFlag        macro Flag?
-                        LD A, (GamePlayStateRef)
+                        LD A, (GameplayStateRef)
                         XOR Flag?
-                        LD (GamePlayStateRef), A
+                        LD (GameplayStateRef), A
                         endm
 ResetAllGameplayFlags   macro
                         XOR A
-                        LD (GamePlayStateRef), A
+                        LD (GameplayStateRef), A
                         endm
 SetAllGameplayFlags     macro
                         LD A, #FF
-                        LD (GamePlayStateRef), A
+                        LD (GameplayStateRef), A
+                        endm
+
+                        ; input flags
+CheckInputFlag          macro Flag?
+                        LD A, (InputStateRef)
+                        AND Flag?
+                        endm
+SetInputFlag            macro Flag?
+                        LD A, (InputStateRef)
+                        OR Flag?
+                        LD (InputStateRef), A
+                        endm
+ResetInputFlag          macro Flag?
+                        LD A, (InputStateRef)
+                        AND ((~Flag?) & 0xFF)
+                        LD (InputStateRef), A
+                        endm
+JumpToFlag              macro Flag?
+                        LD BC, $+13
+                        PUSH BC
+                        LD A, (InputStateRef)
+                        AND Flag?
+                        JR Z, $+3
+                        EX DE, HL
+                        JP (HL)
+                        endm
+SwapInputFlag           macro Flag?
+                        LD A, (InputStateRef)
+                        XOR Flag?
+                        LD (InputStateRef), A
+                        endm
+ResetAllInputFlags      macro
+                        XOR A
+                        LD (InputStateRef), A
+                        endm
+SetAllInputFlags        macro
+                        LD A, #FF
+                        LD (InputStateRef), A
                         endm
 
                         ; AI flags

@@ -70,6 +70,7 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
                 LD B, (HL)
                 INC E
                 LD A, (DE)                                  ; animation
+                ; RRA
                 AND %00000011
                 LD L, A
                 LD H, #00
