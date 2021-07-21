@@ -14,7 +14,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetDeltaTarget: BIT FUTF_VALID_WP, (IX + FUnitTargets.Data)
+GetDeltaTarget: BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                 JR Z, .IsNotValid                           ; текущий Way Point не валидный
 
                 LD A, (IX + FUnitTargets.WayPoint.Y)

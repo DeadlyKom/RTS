@@ -16,7 +16,7 @@ WayPoint:       ; JR $
                 INC IXH                                             ; FUnitTargets      (3)
 
                 ; проверка что Way Point валиден
-                BIT FUTF_VALID_WP, (IX + FUnitTargets.Data)
+                BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                 JR Z, .IsNotValid_WP                                ; текущий Way Point не валидный
 
 .Successfully   DEC IXH                                             ; FUnitLocation     (2)
@@ -29,14 +29,14 @@ WayPoint:       ; JR $
                 ; ---------------------------------------------
                 ; текущий Way Point стал невалидны (мб дошёл!)
                 ; ---------------------------------------------
-.IsNotValid_WP  BIT FUTF_VALID_INDEX, (IX + FUnitTargets.Data)
+.IsNotValid_WP  BIT FUTF_VALID_IDX_BIT, (IX + FUnitTargets.Data)
                 JR Z, .IsNotValid_IDX                               ; данные об индексе не валидны, 
                                                                     ; дальнейшего пути нет!
 
                 ; ---------------------------------------------
                 ; проверка вставки временного WayPoint
                 ; ---------------------------------------------
-                BIT FUTF_INSERT, (IX + FUnitTargets.Data)
+                BIT FUTF_INSERT_BIT, (IX + FUnitTargets.Data)
                 JR NZ, .InsertWP                                    ; был временно вставлен WayPoint
 
                 ; ---------------------------------------------
@@ -69,19 +69,20 @@ WayPoint:       ; JR $
                 LD L, A
 .CopyWP         LD A, (HighWaypointArrayRef)
                 LD H, A
+                INC H                                               ; первое значение, счётчик
                 LD E, (HL)
                 INC H
                 LD D, (HL)
                 LD (IX + FUnitTargets.WayPoint.X), E
                 LD (IX + FUnitTargets.WayPoint.Y), D
 
-                SET FUTF_VALID_WP, (IX + FUnitTargets.Data)         ; указан новый WayPoint
+                SET FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)     ; указан новый WayPoint
                 JR .Successfully
 
                 ; ---------------------------------------------
                 ; проверка на зацикленность WayPoint
                 ; ---------------------------------------------
-.CheckLoop      BIT FUTF_LOOP, (IX + FUnitTargets.Data)
+.CheckLoop      BIT FUTF_LOOP_BIT, (IX + FUnitTargets.Data)
                 JR Z, .Successfully                                 ; все Way WayPoints пройдены
 
                 LD A, (IX + FUnitTargets.Data)
@@ -115,7 +116,7 @@ WayPoint:       ; JR $
                 ; ---------------------------------------------
                 ; ранее была вставка временного WayPoint
                 ; ---------------------------------------------
-.InsertWP       RES FUTF_INSERT, (IX + FUnitTargets.Data)           ; бит вставки обнулить
+.InsertWP       RES FUTF_INSERT_BIT, (IX + FUnitTargets.Data)       ; бит вставки обнулить
 
                 LD A, (IX + FUnitTargets.Data)
                 AND FUTF_MASK_OFFSET

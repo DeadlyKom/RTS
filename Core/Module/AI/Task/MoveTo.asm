@@ -154,7 +154,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitTargets      (3)
                 ; ---------------------------------------------
-.Complite       RES FUTF_VALID_WP, (IX + FUnitTargets.Data)    ; сброс текущего Way Point
+.Complite       RES FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)    ; сброс текущего Way Point
                 DEC IXH                                     ; FUnitLocation     (2)
                 DEC IXH                                     ; FUnitState        (1)
 

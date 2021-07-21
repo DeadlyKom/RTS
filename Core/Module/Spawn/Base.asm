@@ -8,6 +8,7 @@
 ;   DE  - spawn parameters      (E - type unit, D - ?)
 ;   BC  - unit spawn position   (C - x,         B - y)
 ; Out:
+;   IX  - адрес юнита           FUnitState (1)
 ; Corrupt:
 ;   IX
 ; Note:
@@ -60,7 +61,7 @@ Unit:           ; определение адреса добавления но�
                 XOR A
                 LD (IX + FUnitTargets.WayPoint.X), A
                 LD (IX + FUnitTargets.WayPoint.Y), A
-                LD (IX + FUnitTargets.Data), %01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                LD (IX + FUnitTargets.Data), A
                 LD (IX + FUnitTargets.Idx), A
 
                 INC IXH                                         ; переход к FUnitAnimation

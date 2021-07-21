@@ -60,8 +60,8 @@ Request:        ; ---------------------------------------------
                 INC IXH                                     ; FUnitLocation   (2)
                 INC IXH                                     ; FUnitTargets    (3)
                 
-                SET FUTF_VALID_WP, (IX + FUnitTargets.Data)
-                SET FUTF_INSERT, (IX + FUnitTargets.Data)
+                SET FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
+                SET FUTF_INSERT_BIT, (IX + FUnitTargets.Data)
 
 .Test           EQU $+1
                 LD DE, #0000

@@ -51,15 +51,11 @@ Init:               SeMemoryPage MemoryPage_Tilemap, WAYPOINT_INIT_ID
 ;   L  - waypoint index of the added element
 ;   if the C flag is true, successful
 ; Corrupt:
+;   HL, BC, AF
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-FindAndAdd:         ; CALL FindFreeElement
-                    ; JP Z, Set.ByHL
-                    ; OR A                            ; unsuccessful execution
-                    ; RET
-
-                    LD HL, (WaypointArrayRef)
+FindAndAdd:         LD HL, (WaypointArrayRef)
                     INC L                               ; исключить 0 элемент
                     LD A, (WaypointCounterRef)
                     OR A
@@ -129,6 +125,7 @@ FindAndAdd:         ; CALL FindFreeElement
 ;   DE - waypoint location (tile center) (D - y, E - x)
 ;   the C flag is true
 ; Out:
+;   L  - waypoint index
 ; Corrupt:
 ;   HL, AF
 ; Note:
@@ -143,13 +140,14 @@ Set:                LD L, A
                     LD (HL), E
                     INC H
                     LD (HL), D
+                    LD A, L
 
                     ; увеличение счётчика элементов в массиве waypoint
                     LD HL, WaypointCounterRef
                     INC (HL)
 
+                    LD L, A
                     SCF                             ; successful execution
-                    
                     RET
 ; -----------------------------------------
 ; remove waypoint at specified index

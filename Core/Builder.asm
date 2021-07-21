@@ -19,7 +19,7 @@ WayPointsSize           EQU SurfacePropertyPtr - WaypointArrayPtr
 SurfPropSize            EQU TilemapTableAddress - SurfacePropertyPtr
 TilemapTableAdrSize     EQU UnitArrayPtr - TilemapTableAddress
 UnitArraySize           EQU 0x10000 - UnitArrayPtr
-Page_MapSize            EQU TilemapSize + Others_S + WaypointsSequenceSize + WayPointsSize + SurfPropSize + TilemapTableAdrSize + UnitArraySize
+Page_MapSize            EQU FMap + TilemapSize + Others_S + WaypointsSequenceSize + WayPointsSize + SurfPropSize + TilemapTableAdrSize + UnitArraySize
 
 Size_2_Real             EQU SizePage_2 + 768 ; 768 = (Page_2.SharedBuffer + Page_2.RenderBuffer + Page_2.TilemapBuffer)
 
@@ -132,7 +132,7 @@ EndBasic:
                         display "Page 7:  ", /A, Page_7 - #1B00, " = busy [ ", /D, SizePage_7_Real, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - (SizePage_7_Real + 0x1B00), " bytes ]     \t |  ", /D, (SizePage_7_Real + 0x1B00) * 100 / #4000, " % occupied", "\t graphic #04"
                         display "-------------------------------------------------------------------------------------------------------------------------------"
                         display "Building the TRD-image of the \'", TRD_FILENAME, "\' maps ..."
-                        display "Map 'Draft' :  \t\t", /A, TilemapAddress, " = busy [ ", /D, TilemapSize, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - TilemapSize, " bytes ]     \t |  ", /D, TilemapSize * 100 / #4000, " % occupied"
+                        display "Map 'Draft' :  \t\t", /A, TilemapAddress, " = busy [ ", /D, TilemapSize, " bytes ]", "\t /    RAM space [ ", /D, 0x2000 - (TilemapSize + FMap), " bytes ]     \t |  ", /D, (TilemapSize + FMap) * 100 / #4000, " % occupied"
                         display "Other : \t\t\t", /A, OtherAddress, " = busy [ ", /D, Others_S, " bytes  ]"
                         display "Waypoints Sequence : \t\t", /A, WaypointsSequencePtr, " = busy [ ", /D, WaypointsSequenceSize, " bytes ]"
                         display "Waypoint Array : \t\t", /A, WaypointArrayPtr, " = busy [ ", /D, WayPointsSize, " bytes  ]"
@@ -140,7 +140,9 @@ EndBasic:
                         display "Tilemap table address : \t", /A, TilemapTableAddress, " = busy [ ", /D, TilemapTableAdrSize, " bytes  ]"
                         display "Unit Array : \t\t\t", /A, UnitArrayPtr, " = busy [ ", /D, UnitArraySize, " bytes ]"
                         display "\t\t\t---------------------------------------------------------------------------------------------------------"
-                        display "Total Size : \t\t\t",  "\t\t\t\t\t\t\t\t\t\t    ", /D, Page_MapSize * 100 / #4000, " % occupied"
+                        display "Data Size : \t\t\t",  "\t\t\t\t    ", "\t /    RAM space [ ", /D, 0x2000 - (Page_MapSize - TilemapSize - FMap), " bytes ]     \t |  ",  /D, (Page_MapSize - TilemapSize - FMap) * 100 / #2000, " % occupied"
+                        display "\t\t\t---------------------------------------------------------------------------------------------------------"
+                        display "Total Size : \t\t\t",  "\t\t\t\t    ", "\t /    RAM space [ ", /D, 0x4000 - Page_MapSize, " bytes ]     \t |  ",  /D, Page_MapSize * 100 / #4000, " % occupied"
                         display "-------------------------------------------------------------------------------------------------------------------------------"
 
                         emptytrd TRD_FILENAME
