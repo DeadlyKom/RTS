@@ -27,10 +27,16 @@ ScanMoveMap:        ; save the current address of the visible area of the tilema
                     CheckHardwareFlag KEMPSTON_JOY_BUTTON_3
                     CALL Z, MouseMoveEdge
 
+                    CheckFrameFlag FORCE_FOW_FLAG
+                    JR NZ, .L2
+                    SetFrameFlag FORCE_FOW_FLAG
+                    CALL  Tilemap.Prepare
+                    RET
+.L2
                     ; comparison of current and previous address values
                     LD HL, (TilemapRef)
 .CompareAddress     EQU $+1
-                    LD DE, #0000                   
+                    LD DE, #0000
                     OR A
                     SBC HL, DE
                     CALL NZ, Tilemap.Prepare

@@ -3,7 +3,16 @@
                     define _CORE_HANDLER_GAME_PAUSE_
 
                     module GamePause
-ScanKeyboard:       LD DE, InputMode_0_9
+ScanKeyboard:       ; ---------------------------------
+
+                    CheckHardwareFlag KEMPSTON_JOY_BUTTON_3
+                    JR NZ, .SkipInputJoy
+                    LD DE, InputJoyMode
+                    CALL Handlers.Input.JmpHandJoy
+
+.SkipInputJoy       ; ---------------------------------
+
+                    LD DE, InputMode_0_9
                     CALL Handlers.Input.JumpHandlerNum
                 
                     RET
@@ -57,6 +66,18 @@ IncCursorSpeed:     LD HL, MinCursorSpeedRef
                     ; exit, processed
                     OR A
                     RET
+
+                    ; ***** InputJoyMode *****
+InputJoyMode:       JR NZ, .Processing              ; skip released
+.NotProcessing      SCF
+                    RET
+
+.Processing         EX AF, AF'
+                    CP 04                           ; key VK_KEMPSTON_START
+                    JP Z, MenuGamePause
+                    JR .NotProcessing
+
+                    ; ***********************
 Show:               ResetGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG         ; пауза меню отображается
                     SetGameplayFlag ACTIVATE_PAUSE_MENU_GAME_FLAG       ; сброс запроса активации отобразить меню 
                     GetCurrentScreen

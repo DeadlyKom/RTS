@@ -9,6 +9,7 @@
                 include "DeltaBetweenLocationAndTarget.asm"
                 include "GetHeuristic.asm"
                 include "GetPositionSelectedUnits.asm"
+                include "Reconnaissance.asm"
                 include "SurfaceProperty.asm"
                 include "Tilemap.asm"
                 include "TurnDown.asm"

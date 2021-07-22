@@ -207,6 +207,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
 ; A - delta move (-1/1)
 ; ---------------------------------------------
 ShiftLocation:  ;
+                ; JR $
                 EXX
 
 .UnitOffset     EQU $+1
@@ -229,7 +230,9 @@ ShiftLocation:  ;
                 DEC HL
                 DEC HL
                 INC (HL)
+                CALL Utils.Tilemap.Reconnaissance
                 EXX
+
                 RET
 
 .Negative       CP -9
@@ -244,7 +247,9 @@ ShiftLocation:  ;
                 DEC HL
                 DEC HL
                 DEC (HL)
+                CALL Utils.Tilemap.Reconnaissance
                 EXX
+
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_MOVE_TO_

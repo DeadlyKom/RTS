@@ -336,31 +336,31 @@ DisplayRowFOW:  ;
                 INC HL
                 JP (HL)
 
-; FillFog:        ; toggle to memory page with tilemap
-;                 SeMemoryPage MemoryPage_Tilemap
+FillFog:        ; toggle to memory page with tilemap
+                SeMemoryPage MemoryPage_Tilemap, 0
 
-;                 LD HL, #0000
-;                 LD A, (TilemapWidth)
-;                 LD D, L
-;                 LD E, A
-;                 LD A, (TilemapHeight)
-;                 LD B, A
-; .Multiply       ADD HL, DE
-;                 DJNZ .Multiply
+                LD HL, #0000
+                LD A, (TilemapWidth)
+                LD D, L
+                LD E, A
+                LD A, (TilemapHeight)
+                LD B, A
+.Multiply       ADD HL, DE
+                DJNZ .Multiply
 
-;                 EX DE, HL
-;                 LD HL, (TilemapRef)
+                EX DE, HL
+                LD HL, (TilemapRef)
 
-; .Loop           LD A, (HL)
-;                 OR #80
-;                 LD (HL), A
-;                 INC HL
-;                 DEC DE
-;                 LD A, D
-;                 OR E
-;                 JR NZ, .Loop
+.Loop           LD A, (HL)
+                OR #80
+                LD (HL), A
+                INC HL
+                DEC DE
+                LD A, D
+                OR E
+                JR NZ, .Loop
 
-;                 RET
+                RET
 
 ; ResetFog:       ; toggle to memory page with tilemap
 ;                 SeMemoryPage MemoryPage_Tilemap
