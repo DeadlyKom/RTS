@@ -7,6 +7,7 @@
                 module Handlers
 
                 include "Input.asm"
+                include "Gameplay.asm"
                 include "GamePause.asm"
 
                 endmodule

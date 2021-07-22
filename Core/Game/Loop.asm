@@ -68,19 +68,42 @@ GameLoop:
                 LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 3         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
                 CALL Utils.WaypointsSequencer.AddUnit
 
+                ; spawn unit
+                LD BC, #0C0D
+                CALL Spawn.Unit
+
+                LD A, IXL
+                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 4         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                CALL Utils.WaypointsSequencer.AddUnit
+
+                ; spawn unit
+                LD BC, #1213
+                CALL Spawn.Unit
+
+                LD A, IXL
+                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 5         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                CALL Utils.WaypointsSequencer.AddUnit
+
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
                 
+.PauseMenuGame  ; ******* PAUSE MENU GAME *******
+                CheckGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG             ; пропустим если активирована пауза игры
+                JR Z, .MainLoop
+                ; ~ PAUSE MENU GAME
+
+.PathFinding    ; ********* PATH FINDING *********
                 CheckGameplayFlag PATHFINDING_FLAG
                 CALL Z, Pathfinding.Begin
+                ; ~ PATH FINDING
 
-                CheckFrameFlag SWAP_SCREENS_FLAG
+.RenderBegin    CheckFrameFlag SWAP_SCREENS_FLAG
                 JR Z, .MainLoop
 
-.Render         ; ************ RENDER ************      
+.Render         ; ************ RENDER ************
 
                 ; toggle to memory page with tile sprites
                 SeMemoryPage MemoryPage_ShadowScreen, RENDER_BEGIN_ID
-                SetFrameFlag ALLOW_MOVE_TILEMAP
+                SetFrameFlag RENDER_FINISHED
 
 .Tilemap        ; ************ TILEMAP ************
                 ; show debug border
@@ -121,6 +144,10 @@ GameLoop:
 .CompliteFlags  ; ************* FLAGS *************
                 CheckGameplayFlag PATHFINDING_FLAG                      ; пропустим если необходимо посчитать путь
                 JR Z, .Logic
+                CheckGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG             ; пропустим если активирована пауза игры
+                JR Z, .Logic
+                ; CheckFrameFlag DELAY_RENDER_FLAG
+                ; JR Z, .Logic
                 ResetFrameFlag SWAP_SCREENS_FLAG
                 ; ~ FLAGS
 

@@ -158,7 +158,9 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CALL Console.Logb
                     endif
                     ; ~ DRAW VISIBLE UNITS
+
 .SkipShowVisibleUnt ; ---------------------------------
+
 .SwapScreens        ; ********* SWAP SCREENS **********
                     ; swap screens if it's ready
                     CheckFrameFlag SWAP_SCREENS_FLAG
@@ -187,20 +189,30 @@ Handler:            ; ********** HANDLER IM 2 *********
                     endif
 
                     SetFrameFlag SWAP_SCREENS_FLAG
-                    ResetFrameFlag ALLOW_MOVE_TILEMAP
-
+                    ResetFrameFlag RENDER_FINISHED
                     ; ~ RENDER
+
+.SkipSwapScreens    ; ---------------------------------
 
 .Keyboard           ; ****** SCAN KEYBOARD KEYS *******
                     ; keyboard handling
                     CALL Handlers.Input.ScanKeyboard
                     ; ~ SCAN KEYBOARD KEYS
 
-.SkipSwapScreens    ; ---------------------------------
+.RenderFinished     ; ******* RENDER FINISHED *********
+                    CheckFrameFlag RENDER_FINISHED
+                    JR NZ, .SkipRenderFinished
+                    ; ~ RENDER FINISHED
+
 .MoveTilemap        ; ********* MOVE TILEMAP **********
-                    CheckFrameFlag ALLOW_MOVE_TILEMAP
-                    CALL Z, Handlers.Input.ScanMoveMap
+                    CALL Handlers.Input.ScanMoveMap
                     ; ~ MOVE TILEMAP
+ 
+.PauseMenuGame      ; ******* PAUSE MENU GAME ********
+                    CheckGameplayFlag ACTIVATE_PAUSE_MENU_GAME_FLAG
+                    CALL Z, Handlers.GamePause.Show
+
+.SkipRenderFinished ; ---------------------------------
 
 .TimeOfDay          ; ********* TIME OF DAY **********
                     ; LD HL, (TimeOfDay)

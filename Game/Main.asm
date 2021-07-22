@@ -7,9 +7,9 @@
                 define DEBUG
 
                 define DEBUG_PAGE_ID                        ; писать кто переключил страницу
-                ; define ENABLE_MUSIC                         ; разрешить музыку
+                define ENABLE_MUSIC                         ; разрешить музыку
                 define ENABLE_MOUSE                         ; разрешить мышь
-                ; define ENABLE_KEMSTON_JOYSTICK_SEGA         ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
+                define ENABLE_KEMSTON_JOYSTICK_SEGA         ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
                 define ENABLE_FOW                           ; разрешить туман войны
                 define ENABLE_CLS                           ; разрешить очистить 2 экрана перед стартом
 
@@ -27,10 +27,10 @@
                 define SHOW_DEBUG                           ; разрешить отображать дебажную инормацию
                 ifdef SHOW_DEBUG
                 define SHOW_FPS                             ; отображать FPS
-                define SHOW_AI_FREQUENCY                    ; отображать частоту обновления AI
+                ; define SHOW_AI_FREQUENCY                    ; отображать частоту обновления AI
                 ; define SHOW_MOUSE_POSITION                  ; отображать координаты мыши
                 ; define SHOW_OFFSET_TILEMAP                  ; отображать смещение карты
-                define SHOW_VISIBLE_UNITS                   ; отображать количество видимых юнитов
+                ; define SHOW_VISIBLE_UNITS                   ; отображать количество видимых юнитов
                 define ENABLE_TOGGLE_SCREENS_DEBUG          ; разрешить 2х экранное отображение дебажной инфы
                 endif
 

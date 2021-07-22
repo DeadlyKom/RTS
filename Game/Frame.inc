@@ -4,8 +4,8 @@
 
                     ; активное значение false
 SWAP_SCREENS_FLAG   EQU 0x80        ; разрешить смену экран
-ALLOW_MOVE_TILEMAP  EQU 0x40        ; разрешить смещение карты
+RENDER_FINISHED     EQU 0x40        ; отрисовка завершена
 RESTORE_CURSOR      EQU 0x20        ; востановление данных экрана
-; DELAY_RENDER_FLAG   EQU 0x10        ; отсрочить отрисовку 1 экрана (активный true)
+DELAY_RENDER_FLAG   EQU 0x10        ; отсрочить отрисовку экрана
 
                     endif ; ~_FRAME_FLAGS_INCLUDE_

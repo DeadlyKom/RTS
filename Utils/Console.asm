@@ -84,6 +84,22 @@ DrawChar:		; calculate source font address
 				LD (DE), A
 				
 				RET
+
+SwitchScreen:	; switch screen log
+				GetCurrentScreen
+				LD A, #40
+				JR Z, $+4
+				LD A, #C0
+				LD (DrawChar.ConsoleScreen), A
+				RET
+
+ShadowScreen:	; switch to shadow screen log
+				GetShadowScreen
+				LD A, #40
+				JR Z, $+4
+				LD A, #C0
+				LD (DrawChar.ConsoleScreen), A
+				RET
 	
 ; Prints a string to console
 ; Arguments:

@@ -16,7 +16,7 @@ Prepare:        ; show debug border
                 LD HL, (TilemapRef)
                 CALL MEMCPY.Tilemap
 
-                SetFrameFlag ALLOW_MOVE_TILEMAP
+                ; SetFrameFlag RENDER_FINISHED
 
                 ; set update all visible screen
                 LD HL, RenderBuffer + 0xC0

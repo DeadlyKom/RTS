@@ -54,6 +54,11 @@ GetCurrentScreen        macro
                         LD A, (MemoryPageRef)
                         AND %00001000
                         endm
+GetShadowScreen         macro
+                        LD A, (MemoryPageRef)
+                        CPL
+                        AND %00001000
+                        endm
 AdjustHighScreenByte_A  macro
                         LD A, (MemoryPageRef)
                         CPL
@@ -169,6 +174,15 @@ SetAllGameplayFlags     macro
                         LD A, #FF
                         LD (GameplayStateRef), A
                         endm
+JumpToGameplayFlag      macro Flag?
+                        LD BC, $+13
+                        PUSH BC
+                        LD A, (GameplayStateRef)
+                        AND Flag?
+                        JR Z, $+3
+                        EX DE, HL
+                        JP (HL)
+                        endm
 
                         ; input flags
 CheckInputFlag          macro Flag?
@@ -185,7 +199,7 @@ ResetInputFlag          macro Flag?
                         AND ((~Flag?) & 0xFF)
                         LD (InputStateRef), A
                         endm
-JumpToFlag              macro Flag?
+JumpToInputFlag         macro Flag?
                         LD BC, $+13
                         PUSH BC
                         LD A, (InputStateRef)
@@ -250,6 +264,11 @@ SetHardwareFlag         macro Flag?
 ResetHardwareFlag       macro Flag?
                         LD A, (HardwareStateRef)
                         AND ((~Flag?) & 0xFF)
+                        LD (HardwareStateRef), A
+                        endm
+SwapHardwareFlag        macro Flag?
+                        LD A, (HardwareStateRef)
+                        XOR Flag?
                         LD (HardwareStateRef), A
                         endm
 ResetAllHardwareFlags   macro

@@ -1,9 +1,10 @@
 
                     ifndef _MOUSE_KEYBOARD_
                     define _MOUSE_KEYBOARD_
-MoveLeft:           LD HL, MousePositionX
+MoveLeft:           ; JR $
+                    LD HL, MousePositionX
                     LD A, (NegSpeed)
-                    SRA A
+                    ; SRA A
                     ADD A, (HL)
                     JR C, SetMouseLocationX                 ; проверка на переполнение (курсор достиг левого края экрана)
                     XOR A                                   ; фиксируем значение
@@ -13,9 +14,10 @@ SetMouseLocationX:  LD (HL), A                              ; изменить �
                     LD A, #FF
                     LD (MousePositionFlag), A               ; установка флага изменения позиции мыши
                     RET
-MoveRight:          LD HL, MousePositionX
+MoveRight:          ; JR $
+                    LD HL, MousePositionX
                     LD A, (Speed)
-                    RRA
+                    ; SRL A
                     ADD A, (HL)
                     JR NC, SetMouseLocationX                ; проверка на переполнение (курсор достих правого края экрана)
                     LD A, #FF                               ; фиксируем значение
@@ -23,7 +25,7 @@ MoveRight:          LD HL, MousePositionX
 
 MoveUp:             LD HL, MousePositionY
                     LD A, (NegSpeed)
-                    SRA A
+                    ; SRA A
                     ADD A, (HL)
                     JR C, SetMouseLocationY                 ; проверка на переполнение (курсор достиг верхнего края экрана)
                     XOR A                                   ; фиксируем значение
@@ -34,7 +36,7 @@ SetMouseLocationY:  LD (HL), A
                     RET
 MoveDown:           LD HL, MousePositionY
                     LD A, (Speed)
-                    RRA
+                    ; SRL A
                     ADD A, (HL)
                     JR C, .SetMaxLocationY                  ; проверка на переполнение (курсор достих нижнего края экрана)
                     CP #C0
@@ -64,4 +66,4 @@ DecelerateCursor:   LD HL, MinCursorSpeedRef
 Speed:              DB #04
 NegSpeed            DB #FC
 
-                endif ; ~_MOUSE_KEYBOARD_
+                    endif ; ~_MOUSE_KEYBOARD_

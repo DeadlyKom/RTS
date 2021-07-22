@@ -8,6 +8,7 @@ Initialize:             ; initialize
                         SetAllFrameFlags                        ; настройка флагов отрисовки
                         ; ResetFrameFlag DELAY_RENDER_FLAG
                         SetAllGameplayFlags                     ; настройка игровых флагов
+                        ; ResetGameplayFlag GAME_PAUSE_MENU_FLAG
                         SetAllInputFlags                        ; настройки флагов инпута
                         SetAllAIFlags                           ; настройка ИИ флагов
                         ResetAIFlag GAME_PAUSE_FLAG
