@@ -119,6 +119,8 @@ GameLoop:
                 ; ~ FOW
 
 .CompliteFlags  ; ************* FLAGS *************
+                CheckGameplayFlag PATHFINDING_FLAG                      ; пропустим если необходимо посчитать путь
+                JR Z, .Logic
                 ResetFrameFlag SWAP_SCREENS_FLAG
                 ; ~ FLAGS
 
@@ -130,7 +132,7 @@ GameLoop:
                 BEGIN_DEBUG_BORDER_COL DRAFT_LOGIC_COLOR
                 endif
 
-                CheckAIFlag AI_UPDATE_FLAG | GAME_PAUSE_FLAG
+                CheckAIFlag (AI_UPDATE_FLAG | GAME_PAUSE_FLAG)
                 CALL Z, AI.Handler
                 
                 JP .MainLoop

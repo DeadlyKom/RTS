@@ -42,6 +42,7 @@ Page_7.TileSprites:         EQU #F000                   ; Bank 03 (Screen 1) (т
 MemoryPage_Sprites_0        EQU 0
 MemoryPage_Tilemap          EQU 1
 MemoryPage_Music            EQU 3
+MemoryPage_MainScreen       EQU 5
 MemoryPage_ShadowScreen     EQU 7
 ; MemoryPage_TilSprites      EQU 7
 MemoryPage_CursorSprite     EQU 7

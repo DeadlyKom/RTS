@@ -245,7 +245,14 @@ DecreaseAIFreq: LD HL, AI_UpdateFrequencyRef
                 ; exit, processed
                 OR A
                 RET
-GamePause:      SwapAIFlag GAME_PAUSE_FLAG
+GamePause:      CheckFrameFlag ALLOW_MOVE_TILEMAP
+                JR NZ, InputMouseMode.NotProcessing 
+                SwapAIFlag GAME_PAUSE_FLAG
+
+                AND GAME_PAUSE_FLAG
+                CALL NZ, Handlers.ShowGamePause
+                ; CALL Z, Handlers.HideGamePause
+
                 ; exit, processed
                 OR A
                 RET

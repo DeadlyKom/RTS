@@ -63,11 +63,6 @@ Handler:            ; ********** HANDLER IM 2 *********
                     BEGIN_DEBUG_BORDER_COL INTERRUPT_COLOR
                     endif
 
-.Keyboard           ; ****** SCAN KEYBOARD KEYS *******
-                    ; keyboard handling
-                    CALL Handlers.Input.ScanKeyboard
-                    ; ~ SCAN KEYBOARD KEYS
-
 .DebugInfo          ; ****** SWITCH DEBUG SCREENS *****
                     ; swith screens
                     ifdef ENABLE_TOGGLE_SCREENS_DEBUG
@@ -87,8 +82,8 @@ Handler:            ; ********** HANDLER IM 2 *********
 	                CALL FPS_Counter.IntTick
                     CALL FPS_Counter.Render_FPS
 	                endif
-.SkipShowFPS        ; ~ FPS
-
+                    ; ~ FPS
+.SkipShowFPS        ; ---------------------------------
 .AI_Frequency       ; ********** AI FREQUENCY *********
                     ifdef SHOW_AI_FREQUENCY
                     CheckGameplayFlag PATHFINDING_FLAG
@@ -117,8 +112,8 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CALL Console.LogChar
 
 	                endif
-.SkipShowAIFreq     ; ~ AI FREQUENCY
-
+                    ; ~ AI FREQUENCY
+.SkipShowAIFreq     ; ---------------------------------
 .MousePositionInfo  ; *** DRAW DEBUG MOUSE POSITION ***
                     ifdef SHOW_MOUSE_POSITION
                     CheckGameplayFlag PATHFINDING_FLAG
@@ -136,7 +131,6 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CALL Console.Logb
                     endif
 .SkipShowMousePos   ; ~ DRAW DEBUG MOUSE POSITION
-
 .OffsetTilemap      ; ****** DRAW OFFSET TILEMAP *****
                     ifdef SHOW_OFFSET_TILEMAP
                     CheckGameplayFlag PATHFINDING_FLAG
@@ -153,7 +147,6 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CALL Console.Logb
                     endif
 .SkipShowOffsetTM   ; ~ DRAW OFFSET TILEMAP
-
 .NumVisibleUnits    ; ******* DRAW VISIBLE UNITS ******
                     ifdef SHOW_VISIBLE_UNITS
                     CheckGameplayFlag PATHFINDING_FLAG
@@ -164,8 +157,8 @@ Handler:            ; ********** HANDLER IM 2 *********
                     LD B, (HL)
                     CALL Console.Logb
                     endif
-.SkipShowVisibleUnt ; ~ DRAW VISIBLE UNITS
-
+                    ; ~ DRAW VISIBLE UNITS
+.SkipShowVisibleUnt ; ---------------------------------
 .SwapScreens        ; ********* SWAP SCREENS **********
                     ; swap screens if it's ready
                     CheckFrameFlag SWAP_SCREENS_FLAG
@@ -184,7 +177,9 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; SetFrameFlag DELAY_RENDER_FLAG
                     SetGameplayFlag PATHFINDING_QUERY_FLAG
                     ResetGameplayFlag PATHFINDING_FLAG
-.RequestRejected    ; ~ PATHFINDING QUERY
+                    ; ~ PATHFINDING QUERY
+
+.RequestRejected    ; ---------------------------------
 
                     ; FPS
                     ifdef SHOW_FPS
@@ -195,6 +190,11 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ResetFrameFlag ALLOW_MOVE_TILEMAP
 
                     ; ~ RENDER
+
+.Keyboard           ; ****** SCAN KEYBOARD KEYS *******
+                    ; keyboard handling
+                    CALL Handlers.Input.ScanKeyboard
+                    ; ~ SCAN KEYBOARD KEYS
 
 .SkipSwapScreens    ; ---------------------------------
 .MoveTilemap        ; ********* MOVE TILEMAP **********

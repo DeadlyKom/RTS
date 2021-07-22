@@ -87,6 +87,8 @@ DisplayRowFOW:  ;
                 
                 ADD A, A
                 JP C, .FillTile
+
+                ; отключение сглаживания
                 ; EXX
                 ; JP .NextTile
 

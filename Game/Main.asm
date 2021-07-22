@@ -10,7 +10,7 @@
                 ; define ENABLE_MUSIC                         ; разрешить музыку
                 define ENABLE_MOUSE                         ; разрешить мышь
                 ; define ENABLE_KEMSTON_JOYSTICK_SEGA         ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
-                ; define ENABLE_FOW                           ; разрешить туман войны
+                define ENABLE_FOW                           ; разрешить туман войны
                 define ENABLE_CLS                           ; разрешить очистить 2 экрана перед стартом
 
                 ; define SHOW_DEBUG_BORDER                    ; разрешить отображать на бордюре время выполнение
