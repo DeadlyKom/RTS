@@ -3,7 +3,8 @@
                 define _STRUCTURE_MAP_
 
                 struct FMap
-Address         DW #0000                        ; адрес тайловой карты
+; Address         DW #0000                        ; адрес тайловой карты
+ID              DW #CCCC                        ; идентификатор начала структуры
 AddressTable    DW #0000                        ; адрес таблицы (выровнен 256)
 Size            FMapSize 0, 0                   ; размер карты
 StartLocation   FLocation 0, 0                  ; координаты начала

@@ -17,12 +17,16 @@ TileUpdate:     ; ограничение значения меньше 0
                 DEC L
                 JR NC, $+3
                 INC L
+
+                INC H
+                JR NZ, $+3
+                DEC H
                 
                 ; ограничение значения меньше 0
                 DEC D
                 JR NC, $+3
                 INC D
-
+                
                 LD (.LeftColumn), HL
                 ;
                 LD A, D

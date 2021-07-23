@@ -20,12 +20,7 @@ ScanMoveMap:        ; save the current address of the visible area of the tilema
                     LD (.CompareAddress), HL
                     
                     CALL KeyboardMove
-
-                    CheckHardwareFlag KEMPSTON_MOUSE_FLAG
-                    CALL Z, MouseMoveEdge
-
-                    CheckHardwareFlag KEMPSTON_JOY_BUTTON_3
-                    CALL Z, MouseMoveEdge
+                    CALL MouseMoveEdge
 
                     CheckFrameFlag FORCE_FOW_FLAG
                     JR NZ, .L2

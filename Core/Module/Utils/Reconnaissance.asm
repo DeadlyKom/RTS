@@ -3,101 +3,87 @@
                 define _CORE_MODULE_UTILS_RECONNAISSANCE_
 
                 module Tilemap
-Reconnaissance: ;JR $
-
-                DEC IXH                                     ; FUnitTargets      (3)
-                DEC IXH                                     ; FUnitLocation     (2)
-
-                LD E, (IX + FUnitLocation.TilePosition.X)
+; IX - FUnitLocation (2)
+Reconnaissance: LD E, (IX + FUnitLocation.TilePosition.X)
                 LD D, (IX + FUnitLocation.TilePosition.Y)
+                
+                ; кламп сверху
+                LD A, D         ; D = Y
+                SUB (HL)
+                JR NC, $+7
+                NEG
+                ADD A, L
+                LD L, A
+                XOR A
+                LD D, A         ; D = новое значение Y
+                INC HL
 
-                ; -----
+                ; ---------------------
 
-                ; X + 0, Y + 0
-                CALL GetAdrTilemap
-                RES 7, (HL)
+.Loop           LD B, (HL)      ; B = смещение по горизонтали
+                INC B
+                RET Z
+                INC HL
+                PUSH HL
 
-                ; X - 1, Y + 0
-                DEC E
-                CALL GetAdrTilemap
-                RES 7, (HL)
+                ; кламп слева   (X - смещение)
+                LD A, E         ; E = X
+                SUB B
 
-                ; X - 2, Y + 0
-                DEC E
-                CALL GetAdrTilemap
-                RES 7, (HL)
+                JR NC, $+3
+                XOR A
+                LD C, A         ; C - левый X
 
-                ; X + 1, Y + 0
-                INC E
-                INC E
-                INC E
-                CALL GetAdrTilemap
-                RES 7, (HL)
+                 ; кламп справа
+                LD A, (TilemapWidth)
+                LD L, A         ; L = ширина карты
 
-                ; X + 2, Y + 0
-                INC E
-                CALL GetAdrTilemap
-                RES 7, (HL)
+                LD A, E
+                ADD A, B
+                CP L
+                JR C, $+4
+                LD A, L
+                DEC A
 
-                ; -----
+                SUB C
+                INC A           ; +1 центр
+                LD B, A         ; B - длина по горизонтали
 
-                ; X + 1, Y - 1
-                DEC E
-                DEC D
-                CALL GetAdrTilemap
-                RES 7, (HL)
+                ; ---------------------
 
-                ; X + 0, Y - 1
-                DEC E
-                CALL GetAdrTilemap
-                RES 7, (HL)
+                LD L, D
+                LD A, (TilemapTableHighAddressRef)
+                LD H, A
+                LD A, (HL)
+                INC H
+                LD H, (HL)
+                ADD A, C
+                LD L, A
+                
+                ; ---------------------
 
-                ; X - 1, Y - 1
-                DEC E
-                CALL GetAdrTilemap
-                RES 7, (HL)
+.LoopRow        RES 7, (HL)
+                INC HL
+                DJNZ .LoopRow
 
-                ; -----
+                ; ---------------------
 
-                ; X + 0, Y - 1
-                INC E
-                DEC D
-                CALL GetAdrTilemap
-                RES 7, (HL)
-
-                ; -----
-
-                ; X + 0, Y + 1
+                POP HL
+                
                 INC D
-                INC D
-                INC D
-                CALL GetAdrTilemap
-                RES 7, (HL)
-
-                ; X - 1, Y + 1
-                DEC E
-                CALL GetAdrTilemap
-                RES 7, (HL)
-
-                ; X + 1, Y + 1
-                INC E
-                INC E
-                CALL GetAdrTilemap
-                RES 7, (HL)
-
-                ; -----
-
-                ; X + 0, Y - 2
-                DEC E
-                INC D
-                CALL GetAdrTilemap
-                RES 7, (HL)
-
-                INC IXH                                     ; FUnitTargets      (3)
-                INC IXH                                     ; FUnitAnimation    (4)
-
+                LD A, (TilemapHeight)
+                LD C, A
+                LD A, D
+                CP C
+                JP C, .Loop
+                
                 RET
-
+Radius_2        DB 2, 0,1,2,1,0, #FF
+Radius_3        DB 3, 0,2,2,3,2,2,0, #FF
+Radius_4        DB 3, 0,2,3,4,3,2,0, #FF
+Radius_5        DB 4, 1,3,3,4,5,4,3,3,1, #FF
+Radius_6        DB 5, 1,3,4,5,6,6,6,5,4,3,1, #FF
+Radius_7        DB 7, 1,3,4,5,5,6,6,6,6,6,5,5,4,3,1, #FF
                 endmodule
 
                 endif ; ~ _CORE_MODULE_UTILS_RECONNAISSANCE_

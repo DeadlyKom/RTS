@@ -19,8 +19,9 @@ Initialize:     ; toggle to memory page with tilemap
                 LD HL, (IX + FMap.SurfaceProperty)          ; инициализация фдреса свойств поверхностей
                 LD (SurfacePropertyRef), HL
 
-                LD HL, (IX + FMap.Address)                  ; HL - адрес начала (смещение 0,0) тайловой карты
-                LD (TilemapAddressRef), HL
+                ; LD HL, (IX + FMap.Address)                  ; HL - адрес начала (смещение 0,0) тайловой карты
+                ; LD (TilemapAddressRef), HL
+                LD HL, TilemapPtr
                 LD DE, (IX + FMap.AddressTable)             ; DE - адрес таблицы тайловой карты 
                 LD (TilemapTableAddressRef), DE
                 LD BC, (IX + FMap.Size)
@@ -42,7 +43,7 @@ Initialize:     ; toggle to memory page with tilemap
                 LD DE, (IX + FMap.StartLocation)           ; E - смещение по горизонтали, D - смещение по вертикали
                 LD (TilemapOffsetRef), DE
                 
-                CALL Utils.Tilemap.GetAdrTilemap            ; расчёт адрес расположения тайла
+                CALL Utils.Tilemap.GetAddressTilemap       ; расчёт адрес расположения тайла
                 LD (TilemapRef), HL
 
                 ;

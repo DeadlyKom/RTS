@@ -7,12 +7,11 @@
                 
                 module MemoryPage_1
 
-                ORG MapStructure
+                ORG TilemapPtr
 Map:
-.Begin          FMap .Tilemap, TilemapTableAddress, {64, 64}, {0, 0}, WaypointArrayPtr, Behavior.Begin, Animation.Begin, UnitArrayPtr, #0000, SurfacePropertyPtr
-.Tilemap        include "Map.asm"
-.UnitCounter    DB #00
+                include "Map.asm"
 .End
+                FMap #CCCC, TilemapTableAddress, {64, 64}, {0, 0}, WaypointArrayPtr, Behavior.Begin, Animation.Begin, UnitArrayPtr, #0000, SurfacePropertyPtr
 Behavior.Begin:
                 include "../Behavior/Include.inc"
 Behavior.End:
@@ -26,10 +25,10 @@ Surf:
 .Begin
                 include "Tables/Gameplay/SurfaceProperty.inc"
 .End
-MapSize:        EQU MemoryPage_1.Map.UnitCounter - MemoryPage_1.Map.Tilemap
+MapSize:        EQU MemoryPage_1.Map.End - TilemapPtr
 
                 endmodule
-Map_S:          EQU MemoryPage_1.Map.End - MemoryPage_1.Map.Begin
+; Map_S:          EQU MemoryPage_1.Map.End - MemoryPage_1.Map.Begin
 Behavior_S      EQU MemoryPage_1.Behavior.End - MemoryPage_1.Behavior.Begin
 Animation_S     EQU MemoryPage_1.Animation.End - MemoryPage_1.Animation.Begin
 Surf_S:         EQU MemoryPage_1.Surf.End - MemoryPage_1.Surf.Begin

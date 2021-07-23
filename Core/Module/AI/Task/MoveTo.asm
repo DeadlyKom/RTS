@@ -25,7 +25,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ;
                 ; JR $
                 CALL Utils.GetDeltaTarget                   ; calculate direction delta
-                JR NC, .Fail                                ; неудачая точка назначения
+                JP NC, .Fail                                ; неудачая точка назначения
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitLocation (2)
                 ; D = dY (signed)
@@ -47,7 +47,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
 
                 ; if necessary, change the sign of dY
                 XOR A
-                LD B, A                                     ; reset register B`
+                LD B, A                                     ; reset register B
                 SUB D
                 JP M, $+4
                 LD D, A
@@ -154,9 +154,14 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitTargets      (3)
                 ; ---------------------------------------------
-.Complite       RES FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)    ; сброс текущего Way Point
-                DEC IXH                                     ; FUnitLocation     (2)
-                DEC IXH                                     ; FUnitState        (1)
+.Complite       DEC IXH                                             ; FUnitLocation     (2)
+                LD HL, Utils.Tilemap.Radius_5
+                CALL Utils.Tilemap.Reconnaissance
+                INC IXH                                             ; FUnitTargets      (3)
+
+                RES FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)     ; сброс текущего Way Point
+                DEC IXH                                             ; FUnitLocation     (2)
+                DEC IXH                                             ; FUnitState        (1)
 
                 ; JR $
                 SCF                                         ; успешность выполнения
@@ -230,7 +235,12 @@ ShiftLocation:  ;
                 DEC HL
                 DEC HL
                 INC (HL)
+                DEC IXH                                     ; FUnitTargets      (3)
+                DEC IXH                                     ; FUnitLocation     (2)
+                LD HL, Utils.Tilemap.Radius_3
                 CALL Utils.Tilemap.Reconnaissance
+                INC IXH                                     ; FUnitTargets      (3)
+                INC IXH                                     ; FUnitAnimation    (4)
                 EXX
 
                 RET
@@ -247,7 +257,12 @@ ShiftLocation:  ;
                 DEC HL
                 DEC HL
                 DEC (HL)
+                DEC IXH                                     ; FUnitTargets      (3)
+                DEC IXH                                     ; FUnitLocation     (2)
+                LD HL, Utils.Tilemap.Radius_3
                 CALL Utils.Tilemap.Reconnaissance
+                INC IXH                                     ; FUnitTargets      (3)
+                INC IXH                                     ; FUnitAnimation    (4)
                 EXX
 
                 RET

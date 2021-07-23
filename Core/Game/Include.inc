@@ -8,7 +8,7 @@
                     include "Initialize.asm"
                     include "Loop.asm"
                     include "Music.asm"
-TilemapAddress:     DW #0000
+; TilemapAddress:     DW #0000
 AddressTable:       DW #0000
 SurfacePropertyPtr: DW #0000
 WaypointCounter:    DB #00

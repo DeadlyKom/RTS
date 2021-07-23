@@ -7,7 +7,7 @@
                 define DEBUG
 
                 define DEBUG_PAGE_ID                        ; писать кто переключил страницу
-                define ENABLE_MUSIC                         ; разрешить музыку
+                ; define ENABLE_MUSIC                         ; разрешить музыку
                 define ENABLE_MOUSE                         ; разрешить мышь
                 define ENABLE_KEMSTON_JOYSTICK_SEGA         ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
                 define ENABLE_FOW                           ; разрешить туман войны

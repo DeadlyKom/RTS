@@ -24,7 +24,8 @@ MemoryPageIDRef             EQU #5BFC                               ; ID
 MemoryPageRef               EQU #5BFE                               ; адрес хранения номера странички
 BorderStorageStackRef       EQU #5BFF                               ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
-MapStructure                EQU #C000                               ; адрес структуры карты
+TilemapPtr                  EQU #C000                               ; адрес тайловой карты
+MapStructure                EQU MemoryPage_1.Map.End                ; адрес структуры карты
 
 WaypointsSequencePtr        EQU Page_1.WaypointsSequence            ; адрес последовательностей Way Point'ов (2048 байт)
 WaypointArrayPtr            EQU Page_1.WaypointArray                ; адрес массива Way Point'ов (768 байт)
@@ -70,7 +71,6 @@ AI_NumUnitsRef              EQU Game.AI_NumUnits                    ; число
 TilesOnScreenX              EQU 16                                  ; количество тайлов на экране по горизонтали
 TilesOnScreenY              EQU 12                                  ; количество тайлов на экране по вертикали
 
-TilemapAddressRef           EQU Game.TilemapAddress                 ; указатель на адрес начала тайловой карты
 TilemapTableAddressRef      EQU Game.AddressTable                   ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
 TilemapTableHighAddressRef  EQU Game.AddressTable + 1               ; старший байт таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
 TilemapRef                  EQU Game.TilemapPtr                     ; указатель на адрес тайловой карты

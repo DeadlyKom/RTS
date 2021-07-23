@@ -40,49 +40,49 @@ GameLoop:
                 LD BC, #0202
                 CALL Spawn.Unit
 
-                LD A, IXL
-                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | FUTF_MASK_OFFSET         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
-                CALL Utils.WaypointsSequencer.AddUnit
+                ; LD A, IXL
+                ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | FUTF_MASK_OFFSET         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                ; CALL Utils.WaypointsSequencer.AddUnit
 
-                ; spawn unit
-                LD BC, #0506
-                CALL Spawn.Unit
+                ; ; spawn unit
+                ; LD BC, #0506
+                ; CALL Spawn.Unit
 
-                LD A, IXL
-                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 6         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
-                CALL Utils.WaypointsSequencer.AddUnit
+                ; LD A, IXL
+                ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 6         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                ; CALL Utils.WaypointsSequencer.AddUnit
 
-                ; spawn unit
-                LD BC, #080A
-                CALL Spawn.Unit
+                ; ; spawn unit
+                ; LD BC, #080A
+                ; CALL Spawn.Unit
 
-                LD A, IXL
-                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 5         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
-                CALL Utils.WaypointsSequencer.AddUnit
+                ; LD A, IXL
+                ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 5         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                ; CALL Utils.WaypointsSequencer.AddUnit
 
-                ; spawn unit
-                LD BC, #0A06
-                CALL Spawn.Unit
+                ; ; spawn unit
+                ; LD BC, #0A06
+                ; CALL Spawn.Unit
 
-                LD A, IXL
-                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 3         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
-                CALL Utils.WaypointsSequencer.AddUnit
+                ; LD A, IXL
+                ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 3         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                ; CALL Utils.WaypointsSequencer.AddUnit
 
-                ; spawn unit
-                LD BC, #0C0D
-                CALL Spawn.Unit
+                ; ; spawn unit
+                ; LD BC, #0C0D
+                ; CALL Spawn.Unit
 
-                LD A, IXL
-                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 4         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
-                CALL Utils.WaypointsSequencer.AddUnit
+                ; LD A, IXL
+                ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 4         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                ; CALL Utils.WaypointsSequencer.AddUnit
 
-                ; spawn unit
-                LD BC, #1213
-                CALL Spawn.Unit
+                ; ; spawn unit
+                ; LD BC, #1213
+                ; CALL Spawn.Unit
 
-                LD A, IXL
-                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 5         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
-                CALL Utils.WaypointsSequencer.AddUnit
+                ; LD A, IXL
+                ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 5         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                ; CALL Utils.WaypointsSequencer.AddUnit
 
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
                 

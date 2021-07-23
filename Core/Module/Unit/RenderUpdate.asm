@@ -17,9 +17,9 @@ RefUnitOnScr:   ; включить страницу
                 ToDo "RefUnitOnScr", "Make a light version, consider everything oversimplified, or break it down into what is 100% visible and may be invisible."
 
                 ; определение адреса указанного юнита
-                LD HL, MapStructure + FMap.UnitsArray
+                LD HL, MapStructure + FMap.UnitsArray ; UnitArrayPtr
                 LD E, (HL)
-                INC L
+                INC HL                       ; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 LD D, (HL)
                 ADD A, A
                 ADD A, A

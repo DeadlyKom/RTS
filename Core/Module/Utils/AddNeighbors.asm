@@ -21,7 +21,7 @@ AddNeighbors:   ; ---------------------------------------------
                 DEC E
                 JP M, .SkipLeft
 
-                CALL Utils.Tilemap.GetAdrTilemap            ; HL - указывает на адрес тайла
+                CALL Utils.Tilemap.GetAddressTilemap        ; HL - указывает на адрес тайла
                 CALL Utils.Surface.GetProperty              ; A  - хранит свойство тайла
 
                 LD C, A
@@ -62,7 +62,7 @@ AddNeighbors:   ; ---------------------------------------------
                 ADD A, E
                 JP P, .SkipRight
 
-                CALL Utils.Tilemap.GetAdrTilemap            ; HL - указывает на адрес тайла
+                CALL Utils.Tilemap.GetAddressTilemap        ; HL - указывает на адрес тайла
                 CALL Utils.Surface.GetProperty              ; A  - хранит свойство тайла
 
                 LD C, A
@@ -101,7 +101,7 @@ AddNeighbors:   ; ---------------------------------------------
                 DEC D
                 JP M, .SkipUp
 
-                CALL Utils.Tilemap.GetAdrTilemap            ; HL - указывает на адрес тайла
+                CALL Utils.Tilemap.GetAddressTilemap        ; HL - указывает на адрес тайла
                 CALL Utils.Surface.GetProperty              ; A  - хранит свойство тайла
 
                 LD C, A
@@ -142,7 +142,7 @@ AddNeighbors:   ; ---------------------------------------------
                 ADD A, D
                 JP P, .SkipDown
 
-                CALL Utils.Tilemap.GetAdrTilemap            ; HL - указывает на адрес тайла
+                CALL Utils.Tilemap.GetAddressTilemap        ; HL - указывает на адрес тайла
                 CALL Utils.Surface.GetProperty              ; A  - хранит свойство тайла
 
                 LD C, A

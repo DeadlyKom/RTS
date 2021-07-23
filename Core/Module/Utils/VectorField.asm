@@ -30,14 +30,15 @@ VECTOR_LEFT     EQU 0x06
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetVectorField: CALL Utils.Tilemap.GetOffsetTilemap                 ; получение адреса тайла
+GetVectorField: CALL Utils.Tilemap.GetAddressTilemap                ; получение адреса тайла
 
                 ; HL >> 1
                 SRL H
                 RR L
 
                 ; т.к. адрес первого экрана упростим адресацию
-                SET 6, H                                            ; LD BC, PathfindingVectorField : ADD HL, BC
+                ; SET 6, H                                            ; LD BC, PathfindingVectorField : ADD HL, BC
+                RES 5, H
 
                 LD A, (HL)                                          ; получим заначение из адреса (2 значения)
 
@@ -66,14 +67,15 @@ GetVectorField: CALL Utils.Tilemap.GetOffsetTilemap                 ; получ
 ; -----------------------------------------
 SetVectorField: EX AF, AF'
 
-                CALL Utils.Tilemap.GetOffsetTilemap                 ; получение адреса тайла
-
+                CALL Utils.Tilemap.GetAddressTilemap                ; получение адреса тайла
+                
                 ; HL >> 1
                 SRL H
                 RR L
 
                 ; т.к. адрес первого экрана упростим адресацию
-                SET 6, H                                            ; LD BC, PathfindingVectorField : ADD HL, BC
+                ; SET 6, H                                            ; LD BC, PathfindingVectorField : ADD HL, BC
+                RES 5, H
 
                 JR C, .Less                                         ; если нечётный  сдвигать не нужно
 
