@@ -10,7 +10,7 @@ Request:        ; ---------------------------------------------
                                                                                         ; с последующим перерисованием первого экрана
                 ; ResetFrameFlag RESTORE_CURSOR
                 ; включить страницу
-                SeMemoryPage MemoryPage_Tilemap, PATHFINDING_PLAYER_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, PATHFINDING_PLAYER_ID
                 ; очистка экрана #4000 (#FF)
                 LD DE, Pathfinding.VECTOR_FIELD_FILL
                 LD HL, #4000 + #1800

@@ -47,17 +47,15 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CALL NZ, AI.Tick
                     ; ~ AI TICK COUNTER
 
-.Mouse              ; ************* MOUSE *************
-                    ifdef ENABLE_MOUSE
-                    ; mouse handling
-                    CALL Handlers.Input.ScanMouse
+.Cursor             ; ************* CURSOR *************
+                    ; cursor handling
+                    CALL Handlers.Input.ScanCursor
 
                     ; restore background cursor
                     CheckFrameFlag RESTORE_CURSOR
                     CALL Z, Cursor.Restore
 
-                    endif
-                    ; ~ MOUSE
+                    ; ~ CURSOR
 
                     ; show debug border
                     ifdef SHOW_DEBUG_BORDER_INTERRUPT
@@ -79,7 +77,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ifdef SHOW_FPS
                     CheckGameplayFlag PATHFINDING_FLAG
                     JR Z, .SkipShowFPS
-                    SeMemoryPage MemoryPage_ShadowScreen, RENDER_FPS_ID
+                    CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_FPS_ID
 	                CALL FPS_Counter.IntTick
                     CALL FPS_Counter.Render_FPS
 	                endif
@@ -89,7 +87,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ifdef SHOW_AI_FREQUENCY
                     CheckGameplayFlag PATHFINDING_FLAG
                     JR Z, .SkipShowAIFreq
-                    SeMemoryPage MemoryPage_ShadowScreen, RENDER_AI_FREQUENCY_ID
+                    CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_AI_FREQUENCY_ID
                     LD A, #1A
                     CALL Console.At
 
@@ -122,7 +120,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; show mouse position
                     LD BC, #02E0 + 0
                     CALL Console.At2
-                    LD HL, MousePositionRef
+                    LD HL, CursorPositionRef
                     LD B, (HL)
                     CALL Console.Logb
                     LD BC, #02E0 + 3
@@ -207,11 +205,9 @@ Handler:            ; ********** HANDLER IM 2 *********
                     
                     LD HL, DeltaRefreshFOW
                     DEC (HL)
-                    JR NZ, .L1
+                    JR NZ, .MoveTilemap
                     LD (HL), FOW_Ref
-                    ResetFrameFlag FORCE_FOW_FLAG
-.L1
-                    
+                    ResetFrameFlag FORCE_FOW_FLAG           
 
 .MoveTilemap        ; ********* MOVE TILEMAP **********
                     CALL Handlers.Input.ScanMoveMap
@@ -239,7 +235,7 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .DrawCursor         ; ********** DRAW CURSOR **********
                     ifdef ENABLE_MOUSE
-                    SeMemoryPage MemoryPage_ShadowScreen, RENDER_CURSOT_ID
+                    CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_CURSOT_ID
                     GetCurrentScreen
                     LD A, #40
                     JR Z, $+4
@@ -257,7 +253,7 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .RestoreMemPage     ; ****** RESTORE MEMORY PAGE ******
                     LD A, #00
-                    SeMemoryPage_A INT_RESTORE_PAGE_ID
+                    CALL Memory.SetPage                                 ; SeMemoryPage_A INT_RESTORE_PAGE_ID
                     ; ~ RESTORE MEMORY PAGE
 
 .RestoreReg         ; ******** RESTORE REGISTERS ******

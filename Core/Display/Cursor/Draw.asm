@@ -16,7 +16,7 @@ Draw:           LD (.CurrentScreen), A
                 LD (.OffsetSprite), A                       ; отсутствует пропуск байт в спрайте
                 LD (.OffsetX), A
 
-                CALL MouseTick
+                CALL CursorTick
                 ; JP C, .Exit                                 ; потом !
                 
                 ; Mx, My   - позиция курсора        (в пикселах)
@@ -38,7 +38,7 @@ Draw:           LD (.CurrentScreen), A
                 POP DE                                      ; D - вертикальное смещение (SOy), E - высота спрайта (Sy)
 
                 ; Eby = My + Sy - SOy (нижний край спрайта)
-                LD A, (MousePositionY)                      ; A = My
+                LD A, (Mouse.PositionY)                     ; A = My
                 ADD A, E                                    ; A += Sy
                 SUB D                                       ; A -= SOy
                 ; - если отрицательное или равно нулю, спрайт выше экрана (не видим)
@@ -117,7 +117,7 @@ Draw:           LD (.CurrentScreen), A
                 SBC A, A                                    ; если было переполнение (отрицательное число), корректируем
                 LD B, A
 
-                LD A, (MousePositionX)                      ; A = Mx
+                LD A, (Mouse.PositionX)                     ; A = Mx
                 LD L, A                                     ; E - хранит Mx
                 LD H, #00
 
@@ -292,7 +292,7 @@ Draw:           LD (.CurrentScreen), A
 
 .Draw           ; установим страницу спрайта
                 POP AF                                      ; A - номер странички спрайта (F - dummy)
-                SeMemoryPage_A CURSOR_SPR_PAGE_ID
+                SeMemoryPage_A CURSOR_SPR_PAGE_ID           ; не использовать CALL Memory.SetPage
 
                 ; модификация адреса спрайта
                 POP HL                                      ; HL указывает на - адрес спрайта
@@ -349,7 +349,7 @@ Restore:        ; show debug border
                 endif
                 
                 ; включим нужную страничку (экранную)
-                SeMemoryPage MemoryPage_ShadowScreen, CURSOR_RESTORE_ID
+                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, CURSOR_RESTORE_ID
                 ;
                 SetFrameFlag RESTORE_CURSOR
 
@@ -389,8 +389,7 @@ Restore:        ; show debug border
                 LD SP, #0000
 
                 RET
-
-MouseTick:      LD A, (MouseFlagRef)
+CursorTick:     LD A, (CursorFlagRef)
                 INC A
                 JR Z, .Reset
                 LD A, (TicksCount)

@@ -56,7 +56,7 @@ SpriteCursor_S      EQU SpriteCursor.End - SpriteCursor.Start
 
                     ORG Page_7.ScrAdr
 
-                    include "Tables/ScreenAddressTable.inc"
+                    include "Tables/ScreenAddressTable.inc"                         ; для линий
 ScrAdr.End          EQU $
 ScrAdr_S:           EQU ScrAdr.End - Page_7.ScrAdr                                  ; 1024 байта
 

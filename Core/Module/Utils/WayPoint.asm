@@ -11,7 +11,7 @@
 ;   HL, DE, BC, AF
 ; Note:
 ; -----------------------------------------
-Init:               SeMemoryPage MemoryPage_Tilemap, WAYPOINT_INIT_ID
+Init:               CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, WAYPOINT_INIT_ID
                     XOR A
                     LD (WaypointCounterRef), A
                     LD HL, (WaypointArrayRef)

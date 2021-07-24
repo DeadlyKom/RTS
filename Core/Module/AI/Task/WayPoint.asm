@@ -11,8 +11,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-WayPoint:       ; JR $
-                INC IXH                                             ; FUnitLocation     (2)
+WayPoint:       INC IXH                                             ; FUnitLocation     (2)
                 INC IXH                                             ; FUnitTargets      (3)
 
                 ; проверка что Way Point валиден

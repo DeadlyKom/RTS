@@ -29,10 +29,13 @@ InputMode_0_9:      JR NZ, .Processing              ; skip released
                     JP Z, ToggleKemMouse
                     CP 2                            ; key 2 (Kempston joystick)
                     JP Z, ToggleKemJoystick
-                    CP 3                            ; key 3 (уменьшить скорость курсора)
+                    CP 3                            ; key 3 (WASD/QAOP)
+                    JP Z, ToggleMoveKeys
+                    CP 4                            ; key 4 (уменьшить скорость курсора)
                     JP Z, DecCursorSpeed
-                    CP 4                            ; key 4 (увеличить скорость курсора)
+                    CP 5                            ; key 5 (увеличить скорость курсора)
                     JP Z, IncCursorSpeed
+                    
                     JR .NotProcessing
 MenuGamePause:      CALL Hide
                     ; exit, processed
@@ -50,9 +53,33 @@ ToggleKemJoystick:  SwapHardwareFlag KEMPSTON_JOY_BUTTON_3
                     ; exit, processed
                     OR A
                     RET
+ToggleMoveKeys:     SwapHardwareFlag KEYBOARD_WASD_QAOP
+
+                    CheckHardwareFlag KEYBOARD_WASD_QAOP
+                    
+                    LD DE, (VK_S << 8) | VK_W
+                    LD BC, (VK_D << 8) | VK_A
+                    JR Z, $+8
+                    LD DE, (VK_A << 8) | VK_Q
+                    LD BC, (VK_P << 8) | VK_O
+
+                    LD HL, VirtualKeysRef
+                    LD (HL), E                      ; Up
+                    INC HL
+                    LD (HL), D                      ; Down
+                    INC HL
+                    LD (HL), C                      ; Left
+                    INC HL
+                    LD (HL), B                      ; Right
+                    
+                    CALL Console.SwitchScreen       ; switch screen log
+                    CALL DrawGamePause
+                    ; exit, processed
+                    OR A
+                    RET
 DecCursorSpeed:     LD HL, MinCursorSpeedRef
                     DEC (HL)
-                    CALL Mouse.InitAcceleration
+                    CALL Input.Cursor.InitAcceleration
                     CALL Console.SwitchScreen       ; switch screen log
                     CALL DrawGamePause
                     ; exit, processed
@@ -60,7 +87,7 @@ DecCursorSpeed:     LD HL, MinCursorSpeedRef
                     RET
 IncCursorSpeed:     LD HL, MinCursorSpeedRef
                     INC (HL)
-                    CALL Mouse.InitAcceleration
+                    CALL Input.Cursor.InitAcceleration
                     CALL Console.SwitchScreen       ; switch screen log
                     CALL DrawGamePause
                     ; exit, processed
@@ -85,7 +112,7 @@ Show:               ResetGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG         ; пау
                     JR Z, $+4
                     LD A, MemoryPage_MainScreen
                     LD (Hide.Screen), A
-                    SeMemoryPage_A GAME_PAUSE_MENU_ID
+                    CALL Memory.SetPage                                 ; SeMemoryPage_A GAME_PAUSE_MENU_ID
                     CALL FadeoutScreen
                     CALL Console.ShadowScreen       ; switch screen log
                     CALL DrawGamePause
@@ -94,7 +121,7 @@ Show:               ResetGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG         ; пау
 Hide:               CALL Tilemap.ForceScreen
 .Screen             EQU $+1
                     LD A, #00
-                    SeMemoryPage_A GAME_PAUSE_MENU_ID
+                    CALL Memory.SetPage                                 ; SeMemoryPage_A GAME_PAUSE_MENU_ID
                     ; SwapScreens
                     ;
                     LD HL, #C000 + #1800 + #0300
@@ -149,18 +176,30 @@ DrawGamePause:      LD A, #46
                     LD A, #2D
                     CALL Console.LogChar
 
-                    ; cursor speed
+                    ; movement WASD/QAOP
                     LD BC, #0100 + 6
+                    CALL Console.At2
+                    LD BC, Movement_T
+                    CALL Console.Log
+                    ; ----------
+                    CheckHardwareFlag KEYBOARD_WASD_QAOP
+                    LD A, #2B
+                    JR Z, $+4
+                    LD A, #2D
+                    CALL Console.LogChar
+
+                    ; cursor speed
+                    LD BC, #0120 + 6
                     CALL Console.At2
                     LD BC, CursorSpeed_T
                     CALL Console.Log
                     ; ----------
-                    LD A, (Mouse.Speed)
+                    LD A, (Input.Cursor.Speed)
                     LD B, A
                     CALL Console.Logb
 
                     ; resume game
-                    LD BC, #0120 + 6
+                    LD BC, #0140 + 6
                     CALL Console.At2
                     LD BC, ResumeGame_T
                     CALL Console.Log
@@ -171,7 +210,8 @@ DrawGamePause:      LD A, #46
 
 KemMouse_T          BYTE " 1. Kempston Mouse \0"
 KemJoystick_T       BYTE " 2. Kempston Joystick \0"
-CursorSpeed_T       BYTE " 3/4 Cursor Speed \0"
+Movement_T          BYTE " 3. Movement WASD/QAOP \0"
+CursorSpeed_T       BYTE " 4/5 Cursor Speed \0"
 ResumeGame_T        BYTE " 0. Resume \0"
 
                     endmodule

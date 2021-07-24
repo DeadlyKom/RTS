@@ -9,7 +9,7 @@
 ;   HL, E, BC, AF
 ; -----------------------------------------
 UpdateStatesMouse:          XOR A
-                            LD (MousePositionFlag), A
+                            LD (PositionFlag), A
                             
                             CALL GetMouseX                          ; получить текущее значение позиции мыши по оси X
                             LD E, A
@@ -17,7 +17,7 @@ UpdateStatesMouse:          XOR A
                             SUB (HL)                                ; расчитать разницу значений между текущим и предыдущими значениями
                             LD (HL), E                              ; сохраним текущее значение
                             JR Z, .SkipChangeX                      ; дельта равна 0
-                            LD HL, MousePositionX
+                            LD HL, PositionX
                             JP P, .PositiveX                        ; разница значений положительная
 
                             ADD A, (HL)
@@ -31,7 +31,7 @@ UpdateStatesMouse:          XOR A
                             LD A, #FF                               ; фиксируем значение
 .SetMouseLocationX          LD (HL), A                              ; изменить значение положение мыши по оси X
                             LD A, #FF
-                            LD (MousePositionFlag), A               ; установка флага изменения позиции мыши
+                            LD (PositionFlag), A                    ; установка флага изменения позиции мыши
 
 .SkipChangeX                CALL GetMouseY                          ; получить текущее значение позиции мыши по оси Y
                             LD E, A
@@ -41,7 +41,7 @@ UpdateStatesMouse:          XOR A
 
                             RET Z                                   ; дельта равна 0
                             NEG                                     ; инвертнём значение оси Y
-                            LD HL, MousePositionY
+                            LD HL, PositionY
                             JP P, .PositiveY                        ; разница значений положительная
 
                             ADD A, (HL)
@@ -57,14 +57,14 @@ UpdateStatesMouse:          XOR A
 .SetMaxLocationY            LD A, #BF                               ; фиксируем значение
 .SetMouseLocationY          LD (HL), A
                             LD A, #FF
-                            LD (MousePositionFlag), A               ; установка флага изменения позиции мыши
+                            LD (PositionFlag), A                    ; установка флага изменения позиции мыши
                             RET
 
-MousePosition:              EQU $
-MousePositionX:             DB #80
-MousePositionY:             DB #60
+Position:                   EQU $
+PositionX:                  DB #80
+PositionY:                  DB #60
 LastValueFromMousePortX:    DB #80
 LastValueFromMousePortY:    DB #60
-MousePositionFlag:          DB #FF                                  ; если #FF - поменялась позиция
+PositionFlag:               DB #FF                                  ; если #FF - поменялась позиция
 
                             endif ; ~_MOUSE_UPDATE_STATES_

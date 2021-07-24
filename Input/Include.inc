@@ -9,6 +9,7 @@
                 module Input
 
                 include "CheckKeyState.asm"
+                include "CursorMove.asm"
                 
                 endmodule
 

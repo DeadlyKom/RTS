@@ -43,7 +43,7 @@ SeMemoryPage            macro Page?, ID?
 ;   A - page
 ; Out:
 ; Corrupt:
-;   BC
+;   BC, AF
 ; -----------------------------------------
 SeMemoryPage_A          macro ID?
                         AND %00000111
@@ -138,7 +138,9 @@ RestoreBC:              macro
                         LD (Interrupt.Handler.RestoreRegister), A
                         endm
 
+                        ; ---------------------------------------------
                         ; frame flags
+                        ; ---------------------------------------------
 CheckFrameFlag          macro Flag?
                         LD A, (FrameStateRef)
                         AND Flag?
@@ -162,7 +164,9 @@ SetAllFrameFlags        macro
                         LD (FrameStateRef), A
                         endm
 
+                        ; ---------------------------------------------
                         ; gameplay flags
+                        ; ---------------------------------------------
 CheckGameplayFlag       macro Flag?
                         LD A, (GameplayStateRef)
                         AND Flag?
@@ -200,45 +204,49 @@ JumpToGameplayFlag      macro Flag?
                         JP (HL)
                         endm
 
-                        ; input flags
-CheckInputFlag          macro Flag?
-                        LD A, (InputStateRef)
+                        ; ---------------------------------------------
+                        ; tilemap flags
+                        ; ---------------------------------------------
+CheckTilemapFlag        macro Flag?
+                        LD A, (TilemapStateRef)
                         AND Flag?
                         endm
-SetInputFlag            macro Flag?
-                        LD A, (InputStateRef)
+SetTilemapFlag          macro Flag?
+                        LD A, (TilemapStateRef)
                         OR Flag?
-                        LD (InputStateRef), A
+                        LD (TilemapStateRef), A
                         endm
-ResetInputFlag          macro Flag?
-                        LD A, (InputStateRef)
+ResetTilemapFlag        macro Flag?
+                        LD A, (TilemapStateRef)
                         AND ((~Flag?) & 0xFF)
-                        LD (InputStateRef), A
+                        LD (TilemapStateRef), A
                         endm
-JumpToInputFlag         macro Flag?
+JumpToTilemapFlag       macro Flag?
                         LD BC, $+13
                         PUSH BC
-                        LD A, (InputStateRef)
+                        LD A, (TilemapStateRef)
                         AND Flag?
                         JR Z, $+3
                         EX DE, HL
                         JP (HL)
                         endm
-SwapInputFlag           macro Flag?
-                        LD A, (InputStateRef)
+SwapTilemapFlag         macro Flag?
+                        LD A, (TilemapStateRef)
                         XOR Flag?
-                        LD (InputStateRef), A
+                        LD (TilemapStateRef), A
                         endm
-ResetAllInputFlags      macro
+ResetAllTilemapFlags    macro
                         XOR A
-                        LD (InputStateRef), A
+                        LD (TilemapStateRef), A
                         endm
-SetAllInputFlags        macro
+SetAllTilemapFlags      macro
                         LD A, #FF
-                        LD (InputStateRef), A
+                        LD (TilemapStateRef), A
                         endm
 
+                        ; ---------------------------------------------
                         ; AI flags
+                        ; ---------------------------------------------
 CheckAIFlag             macro Flag?
                         LD A, (AIStateRef)
                         AND Flag?
@@ -267,7 +275,9 @@ SetAllAIFlags           macro
                         LD (AIStateRef), A
                         endm
 
+                        ; ---------------------------------------------
                         ; hardware flags
+                        ; ---------------------------------------------
 CheckHardwareFlag       macro Flag?
                         LD A, (HardwareStateRef)
                         AND Flag?
@@ -295,6 +305,10 @@ SetAllHardwareFlags     macro
                         LD A, #FF
                         LD (HardwareStateRef), A
                         endm
+
+                        ; ---------------------------------------------
+                        ; debug flags
+                        ; ---------------------------------------------
 CheckDebugFlag          macro Flag?
                         ifdef DEBUG
                         LD A, (DebugStateRef)
@@ -328,6 +342,8 @@ ResetAllDebugFlags      macro
                         LD (DebugStateRef), A
                         endif
                         endm
+
+                        ; ---------------------------------------------
 ToDo                    macro Metod?, Message?
                         ifdef DEBUG
                         display "/*********"
@@ -335,6 +351,8 @@ ToDo                    macro Metod?, Message?
                         display "**********/"
                         endif
                         endm
+
+                        ; ---------------------------------------------
 DOWN_BC                 macro
                         ; classic method "DOWN_BC" 25/59
                         INC B
@@ -349,6 +367,8 @@ DOWN_BC                 macro
                         ADD A, B
                         LD B, A
                         endm
+
+                        ; ---------------------------------------------
 BEGIN_DEBUG_BORDER_DEF  macro
                         BEGIN_DEBUG_BORDER_COL DEFAULT_COLOR
                         endm

@@ -2,7 +2,7 @@
                 ifndef _CORE_DISPLAY_TILEMAP_CONTROLL_
                 define _CORE_DISPLAY_TILEMAP_CONTROLL_
 Initialize:     ; toggle to memory page with tilemap
-                SeMemoryPage MemoryPage_Tilemap, TILEMAP_INIT_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, TILEMAP_INIT_ID
 
                 ; инициализация перменных (из загруженной карты)
                 XOR A
@@ -79,47 +79,57 @@ MoveUp:         ;
                 LD HL, TilemapOffsetHeight
                 XOR A
                 OR (HL)
-                RET Z
+                JR Z, .Edge
                 DEC (HL)
                 LD HL, (TilemapRef)
 .Decrement      EQU $+1
                 LD DE, #FF00
                 ADD HL, DE
                 LD (TilemapRef), HL
+                OR A
+                RET
+.Edge           ResetTilemapFlag CURSOR_UP_EDGE_FLAG
                 RET
 MoveDown:       ;
                 LD HL, TilemapOffsetHeight
 .Clamp          EQU $+1
                 LD A, #00
                 ADD A, (HL)
-                RET C
+                JR C, .Edge
                 INC (HL)
                 LD HL, (TilemapRef)
 .Increment      EQU $+1
                 LD DE, #0000
                 ADD HL, DE
                 LD (TilemapRef), HL
+                OR A
+                RET
+.Edge           ResetTilemapFlag CURSOR_DOWN_EDGE_FLAG
                 RET
 MoveLeft:       ;
                 LD HL, TilemapOffsetWidth
                 XOR A
                 OR (HL)
-                RET Z
+                JR Z, .Edge
                 DEC (HL)
                 LD HL, (TilemapRef)
                 DEC HL
                 LD (TilemapRef), HL
+                RET
+.Edge           ResetTilemapFlag CURSOR_LEFT_EDGE_FLAG
                 RET
 MoveRight:      ;
                 LD HL, TilemapOffsetWidth
 .Clamp          EQU $+1
                 LD A, #00
                 ADD A, (HL)
-                RET C
+                JR C, .Edge
                 INC (HL)
                 LD HL, (TilemapRef)
                 INC HL
                 LD (TilemapRef), HL
+                RET
+.Edge           ResetTilemapFlag CURSOR_RIGHT_EDGE_FLAG
                 RET
 
                 endif ; ~_CORE_DISPLAY_TILEMAP_CONTROLL_

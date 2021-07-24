@@ -11,7 +11,7 @@
 ; -----------------------------------------
 RefUnitOnScr:   ; включить страницу
                 EX AF, AF'
-                SeMemoryPage MemoryPage_Tilemap, REFRESH_UNIT_ON_SCR_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, REFRESH_UNIT_ON_SCR_ID
                 EX AF, AF'
 
                 ToDo "RefUnitOnScr", "Make a light version, consider everything oversimplified, or break it down into what is 100% visible and may be invisible."

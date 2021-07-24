@@ -14,7 +14,7 @@
 ;   requires included memory page
 ; -----------------------------------------
 ConvertToTilemap:   ; initialize
-                    LD DE, (MousePositionRef)
+                    LD DE, (CursorPositionRef)
                     LD HL, TilemapOffsetRef
 
                     ; convert mouse position on screen to tilemap location

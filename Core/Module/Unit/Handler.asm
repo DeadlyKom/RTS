@@ -10,7 +10,7 @@
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
 Handler:        ; включить страницу
-                SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_BEGIN_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_BEGIN_ID
 
                 ; инициализация
                 ifdef SHOW_VISIBLE_UNITS
@@ -547,7 +547,7 @@ Handler:        ; включить страницу
                 ; установим страницу спрайта
                 ; ---------------------------------------------
                 LD A, D
-                SeMemoryPage_A RENDER_UINT_PAGE_SPR_ID
+                CALL Memory.SetPage                                 ; SeMemoryPage_A RENDER_UINT_PAGE_SPR_ID
 
                 ; ---------------------------------------------
                 ; модификация адреса спрайта
@@ -572,7 +572,7 @@ Handler:        ; включить страницу
                 BIT 7, D                    ; 7 бит, говорит об использовании маски по смещению
                 CALL MEMCPY.Sprite
 
-                SeMemoryPage MemoryPage_ShadowScreen, UNIT_HANDLER_RENDER_ID
+                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, UNIT_HANDLER_RENDER_ID
 
                 ; ---------------------------------------------
                 ; корректировка адреса экран
@@ -628,7 +628,7 @@ Handler:        ; включить страницу
                 LD SP, #0000
 
                 ; включить страницу 
-                SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_IT_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_IT_ID
 
                 ; ---------------------------------------------
                 ; всё же, спрайт за пределами экрана
@@ -712,8 +712,6 @@ Handler:        ; включить страницу
                 ; BC - позиция юнита в тайлах
                 PUSH BC
 
-                ; JR $
-
                 INC D                       ; FUnitTargets + Location.Y         (3)
                 ; INC E                       ; FUnitTargets + Enemy              (3)
                 ; INC E                       ; FUnitTargets + Flags              (3)
@@ -766,12 +764,12 @@ Handler:        ; включить страницу
                 ;   DE  - (D - y, E - x) end point      (E)
                 POP DE
 
-                SeMemoryPage MemoryPage_ShadowScreen, UNIT_HANDLER_RENDER_ID
+                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, UNIT_HANDLER_RENDER_ID
 
                 CALL DrawLine
 
                 ; включить страницу 
-                SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_IT_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_IT_ID
 
                 POP DE
                 RET

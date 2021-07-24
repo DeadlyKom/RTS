@@ -3,7 +3,7 @@
                 define _MOUSE_INIT_
 Initialize:     ; set default value cursor position
                 LD HL, (192 >> 1) << 8 | (256 >> 1)
-                LD (MousePosition), HL
+                LD (Position), HL
 
                 ; detected kempston mouse
                 CALL GetMouseXY

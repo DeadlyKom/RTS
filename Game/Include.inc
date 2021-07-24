@@ -12,6 +12,7 @@
                             include "Input.inc"
                             include "Mouse.inc"
                             include "SurfaceProperty.inc"
+                            include "TilemapMove.inc"
                             include "../Core/Macro.inc"
                     
                             define MAJOR 1
@@ -21,7 +22,7 @@
                             define TRD_FILENAME "Torn Metal.trd"    ; имя образа TRD
 StackTop                    EQU #5BFB                               ; расположение стека
 MemoryPageIDRef             EQU #5BFC                               ; ID
-MemoryPageRef               EQU #5BFE                               ; адрес хранения номера странички
+MemoryPageRef               EQU PORT_7FFD; #5BFE                               ; адрес хранения номера странички
 BorderStorageStackRef       EQU #5BFF                               ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
 TilemapPtr                  EQU #C000                               ; адрес тайловой карты
@@ -53,7 +54,7 @@ MaxCursorSpeedRef           EQU Game.MaxCursorSpeed                 ; макси
 ; flags
 FrameStateRef               EQU Game.FrameFlags                     ; указатель на флаги состояний (frame)
 GameplayStateRef            EQU Game.GameplayState                  ; указатель на флаги состояний (game)
-InputStateRef               EQU Game.InputState                     ; указатель на флаги инпута (input)
+TilemapStateRef             EQU Game.TilemapState                   ; указатель на флаги тайловой карты (tilemap)
 AIStateRef                  EQU Game.AIFlags                        ; указатель на флаги состояний (AI)
 HardwareStateRef            EQU Game.HardwareFlags                  ; указатель на флаг ограничений железа
 FrameUnitsFlagRef           EQU Game.FrameUnitsFlag                 ; флаг обновления юнитов принудительно (необходим для скролинга)
@@ -94,13 +95,20 @@ UnitArrayRef                EQU Game.UnitArray                      ; адрес
 TopRowOffsetFOW             EQU MemoryPage_7.FOW.ROW_UP             ; смещение в буфере верхней строки FOW
 BottomRowOffsetFOW          EQU MemoryPage_7.FOW.ROW_DOWN           ; смещение в буфере нижней строки FOW
 
-MouseFlagRef                EQU Mouse.MousePositionFlag             ; флаг обновления позиции курсора (если #FF изменилось положение)
-MousePositionRef            EQU Mouse.MousePosition                 ; указатель на позицию мыши
-MousePositionX              EQU Mouse.MousePositionX                ; указатель на позицию мыши оси X
-MousePositionY              EQU Mouse.MousePositionY                ; указатель на позицию мыши оси Y
+CursorFlagRef               EQU Mouse.PositionFlag                  ; флаг обновления позиции курсора (если #FF изменилось положение)
+CursorPositionRef           EQU Mouse.Position                      ; указатель на позицию курсора
+CursorPositionX             EQU Mouse.PositionX                     ; указатель на позицию курсора оси X
+CursorPositionY             EQU Mouse.PositionY                     ; указатель на позицию курсора оси Y
 
 TilemapBottomClampRef       EQU MEMCPY.Tilemap.BottomClamp          ; ограничения при определении нижней границы карты
 TilemapBottomOffsetRef      EQU MEMCPY.Tilemap.BottomOffset         ; смещение до нижней границы карты
 TilemapRightClampRef        EQU MEMCPY.Tilemap.RightClamp           ; ограничения при определении правой границы карты
+
+; Keys
+VirtualKeysRef              EQU Game.VK_Keys                        ; Up, Down, Left, Right
+VirtualKeyUpRef             EQU Game.VK_KeyUp                       ;
+VirtualKeyDownRef           EQU Game.VK_KeyDown                     ;
+VirtualKeyLeftRef           EQU Game.VK_KeyLeft                     ;
+VirtualKeyRightRef          EQU Game.VK_KeyRight                    ;
 
                             endif ; ~_GAME_INCLUDE_

@@ -3,7 +3,11 @@
                     define _CORE_HANDLER_GAMEPLAY_
 
                     module Gameplay
-ScanKeyboard:       CheckHardwareFlag KEMPSTON_MOUSE_FLAG
+ScanKeyboard:       SetTilemapFlag ACCELERATE_CURSOR_FLAG
+
+                    ; ---------------------------------
+
+                    CheckHardwareFlag KEMPSTON_MOUSE_FLAG
                     JR NZ, .SkipInputMouse
                     LD DE, InputMouseMode
                     CALL Handlers.Input.JmpHandMouse
@@ -15,16 +19,11 @@ ScanKeyboard:       CheckHardwareFlag KEMPSTON_MOUSE_FLAG
                     LD DE, InputJoyMode
                     CALL Handlers.Input.JmpHandJoy
 
-                    SetInputFlag ACCELERATE_CURSOR_FLAG
-
                     LD A, VK_KEMPSTON_C
                     CALL Input.CheckKeyState
-                    JR NZ, .SkipAccelerate
-                    ResetInputFlag ACCELERATE_CURSOR_FLAG
-.SkipAccelerate
-                    LD HL, Mouse.AccelerateCursor
-                    LD DE, Mouse.DecelerateCursor
-                    JumpToInputFlag ACCELERATE_CURSOR_FLAG
+                    JR NZ, .SkipAccelerateJoy
+                    ResetTilemapFlag ACCELERATE_CURSOR_FLAG
+.SkipAccelerateJoy
 
 .SkipInputJoy       ; ---------------------------------
 
@@ -33,6 +32,13 @@ ScanKeyboard:       CheckHardwareFlag KEMPSTON_MOUSE_FLAG
 
                     LD DE, InputMode_CH_SP
                     CALL Handlers.Input.JumpHandlerCH_SP
+
+                    LD A, VK_SYMBOL_SHIFT
+                    CALL Input.CheckKeyState
+                    JR NZ, .SkipAccelerateKey
+                    ResetTilemapFlag ACCELERATE_CURSOR_FLAG
+
+.SkipAccelerateKey  ; ---------------------------------
 
                     RET
 

@@ -16,7 +16,7 @@ Handler:        ; проверка на наличие юнитов в маси�
                 EX AF, AF'                                      ; сохраним количество юнитов в масиве
 
                 ; включить страницу
-                SeMemoryPage MemoryPage_Tilemap, AI_HANDLER_BEGIN_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, AI_HANDLER_BEGIN_ID
 
                 ; сохраним текущий фрейм
                 LD A, (TickCounterRef)

@@ -378,7 +378,7 @@ HandlerUnits:           ;
 
 .Draw                   ; установим страницу спрайта
                         POP AF                                      ; A - номер странички спрайта (F - dummy)
-                        SeMemoryPage_A
+                        CALL Memory.SetPage                         ; SeMemoryPage_A
 
                         ; модификация адреса спрайта
                         POP HL                                      ; HL - адрес спрайта

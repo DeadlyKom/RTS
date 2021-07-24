@@ -63,7 +63,6 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
 
                 ToDo "SpriteInfo", "make 2 levels of animation indices"
                 
-                ; JR $
                 ; получение адреса FSprite + Animation (индекс анимации * 8)
                 LD C, (HL)
                 INC HL

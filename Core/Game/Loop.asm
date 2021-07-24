@@ -3,7 +3,7 @@
                 define _CORE_GAME_LOOP_
 GameLoop:       
                 ; add unit
-                SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
 
                 ; JR $
 
@@ -44,13 +44,13 @@ GameLoop:
                 ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | FUTF_MASK_OFFSET         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
                 ; CALL Utils.WaypointsSequencer.AddUnit
 
-                ; ; spawn unit
-                ; LD BC, #0506
-                ; CALL Spawn.Unit
+                ; spawn unit
+                LD BC, #0506
+                CALL Spawn.Unit
 
-                ; LD A, IXL
-                ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 6         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
-                ; CALL Utils.WaypointsSequencer.AddUnit
+                LD A, IXL
+                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 6         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                CALL Utils.WaypointsSequencer.AddUnit
 
                 ; ; spawn unit
                 ; LD BC, #080A
@@ -76,13 +76,13 @@ GameLoop:
                 ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 4         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
                 ; CALL Utils.WaypointsSequencer.AddUnit
 
-                ; ; spawn unit
-                ; LD BC, #1213
-                ; CALL Spawn.Unit
+                ; spawn unit
+                LD BC, #1213
+                CALL Spawn.Unit
 
-                ; LD A, IXL
-                ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 5         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
-                ; CALL Utils.WaypointsSequencer.AddUnit
+                LD A, IXL
+                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 5         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                CALL Utils.WaypointsSequencer.AddUnit
 
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
                 
@@ -102,7 +102,7 @@ GameLoop:
 .Render         ; ************ RENDER ************
 
                 ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_ShadowScreen, RENDER_BEGIN_ID
+                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_BEGIN_ID
                 SetFrameFlag RENDER_FINISHED
 
 .Tilemap        ; ************ TILEMAP ************
@@ -127,7 +127,7 @@ GameLoop:
 
                 ; ---------------------------------
                 ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_ShadowScreen, RENDER_FOW_BEGIN_ID
+                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_FOW_BEGIN_ID
                 
 .FOW            ; ************** FOW **************
                 ifdef ENABLE_FOW

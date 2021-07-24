@@ -5,11 +5,12 @@
 Initialize:             ; initialize
                         SetAllHardwareFlags                     ;
                         ResetHardwareFlag KEMPSTON_JOY_BUTTON_3 ; включить джойстик SEGA
+                        ResetHardwareFlag KEYBOARD_WASD_QAOP    ; включить WASD управление
                         SetAllFrameFlags                        ; настройка флагов отрисовки
                         ; ResetFrameFlag DELAY_RENDER_FLAG
                         SetAllGameplayFlags                     ; настройка игровых флагов
                         ; ResetGameplayFlag GAME_PAUSE_MENU_FLAG
-                        SetAllInputFlags                        ; настройки флагов инпута
+                        SetAllTilemapFlags                      ; настройки флагов тайловой карты
                         SetAllAIFlags                           ; настройка ИИ флагов
                         ResetAIFlag GAME_PAUSE_FLAG
 
@@ -18,7 +19,7 @@ Initialize:             ; initialize
                         LD (MinCursorSpeedRef), A
                         LD A, MAX_CURSOR_SPEED
                         LD (MaxCursorSpeedRef), A
-                        CALL Mouse.InitAcceleration
+                        CALL Input.Cursor.InitAcceleration
 
                         ; set default values
                         LD A, AI_MAX_UPDATE_FREQ
@@ -35,7 +36,7 @@ Initialize:             ; initialize
                         ifdef ENABLE_MUSIC
 
                         ; toggle to memory page with tile sprites
-                        SeMemoryPage MemoryPage_Music, MUSIC_INIT_ID
+                        CALL Memory.SetPage3                       ; SeMemoryPage MemoryPage_Music, MUSIC_INIT_ID
                         LD A, R
                         RRA
                         LD HL, #D11B
@@ -48,7 +49,7 @@ Initialize:             ; initialize
                         ; claer screen
                         ifdef ENABLE_CLS
                         CLS_4000
-                        SeMemoryPage MemoryPage_ShadowScreen, CLS_ID
+                        CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, CLS_ID
                         CLS_C000
                         endif
 

@@ -25,12 +25,20 @@ AnimTurnTable:      DW #0000
 UnitArray:          DW #0000
 FrameFlags:         DB #00
 GameplayState:      DB #00
-InputState:         DB #00
+TilemapState:       DB #00
 AIFlags:            DB #00
 FrameUnitsFlag:     DB #00
 HardwareFlags:      DB #00
 MinCursorSpeed:     DB #00
 MaxCursorSpeed:     DB #00
+
+; keyboard
+VK_Keys             EQU $
+VK_KeyUp:           DB VK_W
+VK_KeyDown:         DB VK_S
+VK_KeyLeft:         DB VK_A
+VK_KeyRight:        DB VK_D
+VK_KeySelect:       DB VK_SPACE
 
                     ifdef DEBUG
 DebugFlags:         DB #00

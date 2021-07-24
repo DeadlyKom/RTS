@@ -137,7 +137,6 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 DEC IXH                                     ; FUnitLocation     (2)
                 DEC IXH                                     ; FUnitState        (1)
 
-                ; JR $
                 ; LD A, (TickCounterRef)
                 ; RRA
                 ; JR NC, $+5
@@ -146,7 +145,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ; AND %00111000
                 ; LD (IX + FUnitState.Animation), A
 
-                OR A
+                SCF                                                 ; успешность выполнения
                 RET
 
                 ; ---------------------------------------------
@@ -163,13 +162,12 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 DEC IXH                                             ; FUnitLocation     (2)
                 DEC IXH                                             ; FUnitState        (1)
 
-                ; JR $
-                SCF                                         ; успешность выполнения
+                SCF                                                 ; успешность выполнения
                 RET
 
-.Fail           DEC IXH                                     ; FUnitState        (1)
+.Fail           DEC IXH                                             ; FUnitState        (1)
 
-                OR A                                        ; неудачное выполнение
+                OR A                                                ; неудачное выполнение
                 RET
 
 .Init           ; ---------------------------------------------
@@ -212,7 +210,6 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
 ; A - delta move (-1/1)
 ; ---------------------------------------------
 ShiftLocation:  ;
-                ; JR $
                 EXX
 
 .UnitOffset     EQU $+1

@@ -15,4 +15,10 @@
 
                 endmodule
 
+                module Memory
+
+                include "MemorySwitch.asm"
+                
+                endmodule
+
                 endif ; ~_MEMORY_OPERATIONS_INCLUDE_

@@ -21,7 +21,6 @@ SVK_MBUTTON     EQU %00000100
                 include "CheckKeyState.asm"
                 include "GetMouseCursorPosition.asm"
                 include "UpdateMouseState.asm"
-                include "KeyboardEmulatesMouse.asm"
 
                 endmodule
 

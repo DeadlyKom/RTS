@@ -8,9 +8,9 @@ Prepare:        ; show debug border
                 ifdef SHOW_DEBUG_BORDER_SCROLL_PREPARE
                 BEGIN_DEBUG_BORDER_COL SCROLL_COLOR
                 endif
-
+                ; JR $
                 ; toggle to memory page with tilemap
-                SeMemoryPage MemoryPage_Tilemap, PREPARE_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, PREPARE_ID
 
                 ; copy the visible block of the tilemap
                 LD HL, (TilemapRef)
@@ -26,6 +26,8 @@ Prepare:        ; show debug border
                 ;
                 LD A, #03
                 LD (FrameUnitsFlagRef), A
+                
+                BEGIN_DEBUG_BORDER_DEF
 
                 RET
 
@@ -102,7 +104,7 @@ DisplayTileRow: ;
                 LD L, A
                 PUSH BC
                 ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_Tilemap, DEBUG_SURFACE_PROP_ID
+                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, DEBUG_SURFACE_PROP_ID
 
                 LD A, (HL)
                 AND %01111111
@@ -111,7 +113,7 @@ DisplayTileRow: ;
                 LD L, A
 
                 ; toggle to memory page with tile sprites
-                SeMemoryPage MemoryPage_ShadowScreen, DEBUG_SURFACE_SPR_ID
+                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, DEBUG_SURFACE_SPR_ID
                 POP BC
                 LD E, (HL)
                 INC L

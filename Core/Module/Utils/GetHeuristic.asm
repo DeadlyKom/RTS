@@ -15,7 +15,6 @@
 ;   requires included memory page
 ; -----------------------------------------
 GetHeuristic:   ;
-                ; JR $
 .Location       EQU $+1
                 LD HL, #0000
 
