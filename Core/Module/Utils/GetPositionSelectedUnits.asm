@@ -70,6 +70,7 @@ GetSelected:        ;
 
                     ;
                     INC H                                   ; HL = FUnitLocation.TilePosition.X (2)
+                    INC L                                   ; HL = FUnitLocation.TilePosition.Y (2)
 
                     ; D - minY, E - minX
                     ; B - maxY, C - maxX
@@ -77,28 +78,26 @@ GetSelected:        ;
                     ; minY = min(minY, Y)
                     LD A, (HL)
                     CP D
-                    JR C, $+3
+                    JR NC, $+3
                     LD D, A
 
                     ; maxY = max(maxY, Y)
                     CP B
-                    JR NC, $+3
+                    JR C, $+3
                     LD B, A
                     
-                    INC L                                   ; HL = FUnitLocation.TilePosition.Y (2)
+                    DEC L                                   ; HL = FUnitLocation.TilePosition.X (2)
 
                     ; minX = min(minX, X)
                     LD A, (HL)
                     CP E
-                    JR C, $+3
+                    JR NC, $+3
                     LD E, A
 
                     ; maxX = max(maxX, X)
                     CP C
-                    JR NC, $+3
+                    JR C, $+3
                     LD C, A
-
-                    DEC L                                   ; HL = FUnitLocation.TilePosition.X (2)
 
                     DEC H                                   ; HL = FUnitState.State             (1)
                     
@@ -109,6 +108,7 @@ GetSelected:        ;
 
                     EXX
                     DJNZ .Loop
+                    EXX
 
                     ; X = minX + (maxX - minX) / 2
                     LD A, C
