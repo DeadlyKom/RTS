@@ -37,6 +37,8 @@ Create:             CALL FindFreeElement                            ; Out:
                     RET C                                           ; unsuccessful execution
                     LD (AddUnit.IndexSequence), A                   ; сохраним индекс последовательности
                     LD (AddWaypoint.Sequencer), HL                  ; инициализация для Waypoints
+                    LD A, #08
+                    LD (AddWaypoint.Counter), A
                     CALL MarkBusyElement                            ; пометить как занятый
                     RET
 
@@ -46,6 +48,7 @@ Create:             CALL FindFreeElement                            ; Out:
 ;   DE - waypoint location (tile center) (D - y, E - x)
 ; Out:
 ; Corrupt:
+;   HL, BC, AF
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
@@ -69,10 +72,12 @@ AddWaypoint:        ; ---------------------------------------------
                     ; переход к следующему элементы в последовательности
                     DEC H
                     LD (.Sequencer), HL
+                    LD HL, .Counter
+                    DEC (HL)
                     JR Z, .More_8
                     SCF                                             ; successful execution
                     RET
-
+.Counter            DB #08
                     ; ---------------------------------------------
                     ; последовательность Waypoints более 8
                     ; ---------------------------------------------
@@ -140,6 +145,7 @@ MarkBusyElement:    LD H, HIGH WaypointsSequenceBitmapPtr
                     ADD A, A
                     ADD A, A
                     ADD A, A
+                    CPL
                     AND %00111000
                     OR %11000110
                     LD (.SET), A

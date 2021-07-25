@@ -50,7 +50,7 @@
                     ; 24 (-)
                     FSurface SDR_0_PERCENT  |   SCF_NONE
                     ; 25 (-)
-                    FSurface SDR_0_PERCENT  |   SCF_NONE
+                    FSurface SDR_0_PERCENT  |   SCF_UP | SCF_RIGHT | SCF_DOWN | SCF_LEFT
                     ; 26 (-)
                     FSurface SDR_0_PERCENT  |   SCF_NONE
                     ; 27 (-)

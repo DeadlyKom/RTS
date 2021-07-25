@@ -64,6 +64,7 @@ SwapScreens             macro
                         XOR %00001000
                         LD (MemoryPageRef), A
                         LD BC, PORT_7FFD
+                        ; XOR %00001000
                         OUT (C), A
                         endm
 GetCurrentScreen        macro

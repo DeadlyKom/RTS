@@ -5,6 +5,7 @@
                 module Utils
 
                 include "AddNeighbors.asm"
+                include "BuildPath.asm"
                 include "ConvertMousePosition.asm"
                 include "DeltaBetweenLocationAndTarget.asm"
                 include "GetHeuristic.asm"

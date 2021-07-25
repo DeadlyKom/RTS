@@ -56,8 +56,8 @@ Initialize:             ; initialize
                         ; initialize background
                         CALL BackgroundFill
 
-                        CALL Tilemap.FillFog
-                        CALL Tilemap.Prepare
+                        ; CALL Tilemap.FillFog
+                        ; CALL Tilemap.Prepare
 
                         RET
 

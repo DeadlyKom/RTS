@@ -48,10 +48,14 @@ GetBestCostInQueue: ;
 
 .NextElement        INC L
                     JR NZ, .Loop
+.ContainerHL        EQU $+1
+                    LD HL, #0000
+                    LD (HL), #FF
 
                     RET
 
-.SetLess            LD C, A
+.SetLess            LD (.ContainerHL), HL
+                    LD C, A
                     INC H
                     LD E, (HL)
                     INC H

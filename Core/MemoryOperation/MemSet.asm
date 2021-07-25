@@ -43,12 +43,51 @@ SafeFill_Screen:    RestoreDE
                     LD A, #31
                     LD (MS_ContainerSP - 1), A
                     RET
+SafeFill_4096:      RestoreDE
+                    LD (.ContainerSP), SP
+                    LD SP, HL
+                    LD A, #23
+                    LD (MS_ContainerSP - 1), A
+                    LD (MS_ContainerSP + 0), A
+                    LD A, #E9
+                    LD (MS_ContainerSP + 1), A
+                    LD IX, MemSet_512
+                    LD HL, .Jumps
+.Jumps              dup 8
+                    JP (IX)
+                    edup
+.ContainerSP        EQU $+1
+                    LD SP, #0000
+                    LD A, #31
+                    LD (MS_ContainerSP - 1), A
+                    RET
+SafeFill_2048:      RestoreDE
+                    LD (.ContainerSP), SP
+                    LD SP, HL
+                    LD A, #23
+                    LD (MS_ContainerSP - 1), A
+                    LD (MS_ContainerSP + 0), A
+                    LD A, #E9
+                    LD (MS_ContainerSP + 1), A
+                    LD IX, MemSet_512
+                    LD HL, .Jumps
+.Jumps              dup 4
+                    JP (IX)
+                    edup
+.ContainerSP        EQU $+1
+                    LD SP, #0000
+                    LD A, #31
+                    LD (MS_ContainerSP - 1), A
+                    RET
 SafeFill_768:       ; fill 768 byts
                     RestoreDE
                     LD (MS_ContainerSP), SP
                     LD SP, HL
 
-MemSet_768:         dup	256         ; 256 * 2 = 512 bytes
+MemSet_768:         dup	128         ; 128 * 2 = 256 bytes
+                    PUSH DE
+                    edup
+MemSet_512:         dup	128         ; 128 * 2 = 256 bytes
                     PUSH DE
                     edup
 MemSet_256:         dup	32          ; 32 * 2  = 64 bytes
