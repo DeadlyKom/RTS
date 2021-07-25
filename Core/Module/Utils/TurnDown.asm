@@ -66,21 +66,23 @@ Down:           RRA
 
                 LD A, D                 ; A = dY
                 CP E                    ; E = dX
-                ; JR Z, .Adjustment       ; x = y
+                ; JR Z, .Adjustment       ; x = y                                 ???
                 JR C, .AngleTo45        ; x > y
                 
                 ; угол от 45 до 90
                 RRA                     ; A = dY * 0.5
                 CP E                    ; E = dX
+                JR Z, .L2               ;                                       ???
                 JR C, .Adjustment       ; угол от 45 до 63.5 (B = 1)
-                DEC B                   ; угол от 63.5 до 90 (B = 0)
+.L2             DEC B                   ; угол от 63.5 до 90 (B = 0)
                 JR .Adjustment
 
 .AngleTo45      ; угол от 0 до 45
                 SRL E                   ; dX *= 0.5
                 CP E                    ; E = dX * 0.5
+                JR Z, .L1               ;                                       ???
                 JR NC, .Adjustment      ; угол от 26.5 до 45 (B = 1)
-                INC B                   ; угол до 0 до 26.5  (B = 2)
+.L1             INC B                   ; угол до 0 до 26.5  (B = 2)
 
 .Adjustment     EX AF, AF'
 .Instruction    NOP                     ; 'ADD A, B'/'SUB B'

@@ -171,7 +171,7 @@ RefUnitOnScr:   ; включить страницу
                 LD A, #00                                   ; A = FUnitLocation.OffsetByPixel.Y (Ox)
                 ADD A, #08                                  ; A += 8
 
-                ; ширину спрайта конвертируем в киксели
+                ; ширину спрайта конвертируем в пиксели
                 EX AF, AF'
                 LD A, C
                 ADD A, A
@@ -216,8 +216,8 @@ RefUnitOnScr:   ; включить страницу
 
                 LD A, H
                 OR A
-                JR Z, $+4
-                LD L, #FF   ; клипинг (правый)
+                JR Z, $+5
+                LD HL, #00FF   ; клипинг (правый)
                 LD A, L
                 LD (.RightColumn), A                        ; A - хранит правую грань спрайта
 

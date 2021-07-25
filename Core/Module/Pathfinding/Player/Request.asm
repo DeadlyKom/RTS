@@ -8,6 +8,7 @@ Request:        ; ---------------------------------------------
                 ; ---------------------------------------------
                 SetFrameFlag SWAP_SCREENS_FLAG                                          ; сбросить переключение экрана,
                                                                                         ; с последующим перерисованием первого экрана
+                SetFrameFlag RENDER_FINISHED
                 ; ResetFrameFlag RESTORE_CURSOR
                 ; включить страницу
                 CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, PATHFINDING_PLAYER_ID
@@ -19,7 +20,7 @@ Request:        ; ---------------------------------------------
                 ; ---------------------------------------------
                 ; поиск производится от конечной точки к начальной
                 ; ---------------------------------------------
-
+                ; JR$
                 ; ---------------------------------------------
                 ; compute start point
                 ; ---------------------------------------------
@@ -57,8 +58,8 @@ Request:        ; ---------------------------------------------
                 ; 
                 ; ---------------------------------------------
 .EndLoop        LD IX, (UnitArrayRef)
-                INC IXH                                     ; FUnitLocation   (2)
-                INC IXH                                     ; FUnitTargets    (3)
+                INC IXH                                                                 ; FUnitLocation     (2)
+                INC IXH                                                                 ; FUnitTargets      (3)
                 
                 SET FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                 SET FUTF_INSERT_BIT, (IX + FUnitTargets.Data)
@@ -68,8 +69,8 @@ Request:        ; ---------------------------------------------
                 LD (IX + FUnitTargets.WayPoint.X), E
                 LD (IX + FUnitTargets.WayPoint.Y), D
 
-                DEC IXH                                     ; FUnitLocation   (2)
-                DEC IXH                                     ; FUnitState  (1)
+                DEC IXH                                                                 ; FUnitLocation     (2)
+                DEC IXH                                                                 ; FUnitState        (1)
 
                 ; ---------------------------------------------
                 ; 
