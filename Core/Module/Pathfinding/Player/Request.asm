@@ -33,7 +33,9 @@ Request:        ; ---------------------------------------------
                 ; compute end point
                 ; ---------------------------------------------
                 CALL Utils.Mouse.ConvertToTilemap
+                LD (Utils.Pathfinding.BuildPath.ContainerLocation), DE
                 LD A, Pathfinding.VECTOR_FIELD_END
+                EX AF, AF'
                 CALL Utils.Pathfinding.SetVectorField                                   ; установим конечную точку
 
                 ; ---------------------------------------------

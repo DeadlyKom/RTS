@@ -20,6 +20,7 @@
 ;   C [0..3] - collision flags
 ;
 ; Corrupt:
+;   HL, AF
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------

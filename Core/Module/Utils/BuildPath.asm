@@ -23,21 +23,27 @@ BuildPath:          ;
 
                     ;
                     LD DE, (Utils.Pathfinding.GetHeuristic.Location)
+                    ; LD (.ContainerLocation), DE
 
                     ;
                     CALL GetVectorField_DE
-                    RES 0, A
+                    AND %00001110
                     LD B, A
                     LD HL, .FirstRET
                     JR .NextCell
 
-.FirstRET           ;LD HL, .Loop
-.Loop               CALL GetVectorField_DE
+.FirstRET           ; LD HL, .Loop
+.ContainerLocation  EQU $+1
+.Loop               LD HL, #0000
+                    OR A
+                    SBC HL, DE
+                    JP Z, Utils.WaypointsSequencer.AddWaypoint
+                    CALL GetVectorField_DE
                     ; CP Pathfinding.VECTOR_FIELD_EMPTY
                     ; JP Z, .Fail
-                    CP Pathfinding.VECTOR_FIELD_END
-                    JP Z, Utils.WaypointsSequencer.AddWaypoint
-                    RES 0, A
+                    ; CP Pathfinding.VECTOR_FIELD_END
+                    ; JP Z, Utils.WaypointsSequencer.AddWaypoint
+                    AND %00001110
                     CP B
                     JR Z, .NextCell
                     ;LD B, A
@@ -52,7 +58,7 @@ BuildPath:          ;
                     LD B, A
 
 .NextCell           LD HL, .Loop
-                    RES 0, A
+                    AND %00001110
                     ADD A, A
                     LD (.Jump), A
 .Jump               EQU $+1

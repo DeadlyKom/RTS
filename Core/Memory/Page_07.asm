@@ -130,10 +130,10 @@ SpritesTable:       DW Sprite_Sand_1,           Sprite_Sand_2,                  
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 72  - 75
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 76  - 79
                     ifdef DEBUG
-                    DW DEBUG_VECTOR_UP,         DEBUG_VECTOR_UP_RIGHT,          DEBUG_VECTOR_RIGHT,             DEBUG_VECTOR_DOWN_RIGHT         ; 80  - 83
-                    DW DEBUG_VECTOR_DOWN,       DEBUG_VECTOR_DOWN_LEFT,         DEBUG_VECTOR_LEFT,              DEBUG_VECTOR_UP_LEFT            ; 84  - 87
-                    DW DEBUG_SEL_VECTOR_UP,     DEBUG_SEL_VECTOR_UP_RIGHT,      DEBUG_SEL_VECTOR_RIGHT,         DEBUG_SEL_VECTOR_DOWN_RIGHT     ; 88  - 91
-                    DW DEBUG_SEL_VECTOR_DOWN,   DEBUG_SEL_VECTOR_DOWN_LEFT,     DEBUG_SEL_VECTOR_LEFT,          DEBUG_SEL_VECTOR_UP_LEFT        ; 92  - 95
+                    DW DEBUG_VECTOR_UP,         DEBUG_SEL_VECTOR_UP,            DEBUG_VECTOR_UP_RIGHT,          DEBUG_SEL_VECTOR_UP_RIGHT       ; 80  - 83
+                    DW DEBUG_VECTOR_RIGHT,      DEBUG_SEL_VECTOR_RIGHT,         DEBUG_VECTOR_DOWN_RIGHT,        DEBUG_SEL_VECTOR_DOWN_RIGHT     ; 84  - 87
+                    DW DEBUG_VECTOR_DOWN,       DEBUG_SEL_VECTOR_DOWN,          DEBUG_VECTOR_DOWN_LEFT,         DEBUG_SEL_VECTOR_DOWN_LEFT      ; 88  - 91
+                    DW DEBUG_VECTOR_LEFT,       DEBUG_SEL_VECTOR_LEFT,          DEBUG_VECTOR_UP_LEFT,           DEBUG_SEL_VECTOR_UP_LEFT        ; 92  - 95
                     else
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 80  - 83
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 84  - 87

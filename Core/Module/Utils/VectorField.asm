@@ -52,7 +52,7 @@ GetVectorField_DE:  CALL Utils.Tilemap.GetAddressTilemap                ; пол
                     RRA
                     RRA
 
-.Less               AND %00001111                                       ; обрежим 
+.Less               AND %00001111                                       ; обрежим
 
                     RET
 
@@ -88,7 +88,7 @@ GetVectorField:     ; BC = HL >> 1
                     RRA
                     RRA
 
-.Less               AND %00001111                                       ; обрежим 
+.Less               AND %00001111                                       ; обрежим
 
                     RET
 ; -----------------------------------------
@@ -102,10 +102,17 @@ GetVectorField:     ; BC = HL >> 1
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-SetVectorField:     EX AF, AF'
+SetVectorField:     ;EX AF, AF'
 
                     CALL Utils.Tilemap.GetAddressTilemap                ; получение адреса тайла
-                    
+ 
+                    ; JR $
+                    EX AF, AF'
+                    ADD A, #50
+                    LD (HL), A
+                    SUB #50
+                    EX AF, AF'
+
                     ; HL >> 1
                     SRL H
                     RR L
@@ -139,6 +146,8 @@ SetVectorField:     EX AF, AF'
 ; -----------------------------------------
 MarkVectorField:    CALL Utils.Tilemap.GetAddressTilemap                ; получение адреса тайла
                     
+                    PUSH HL
+
                     ; HL >> 1
                     SRL H
                     RR L
@@ -149,9 +158,17 @@ MarkVectorField:    CALL Utils.Tilemap.GetAddressTilemap                ; пол
                     JR C, .Less                                         ; если нечётный сдвигать не нужно
 
                     SET 4, (HL)
+
+                    POP HL
+                    SET 0, (HL)
+
                     RET
 
 .Less               SET 0, (HL)
+
+                    POP HL
+                    SET 0, (HL)
+                    
                     RET
 
                     endmodule

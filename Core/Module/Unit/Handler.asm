@@ -636,9 +636,9 @@ Handler:        ; включить страницу
 .PreNextUnit    POP DE                      ; restore address UnitsArray
 
                 ; отрисовка линии пути
-                ; LD A, (DE)                  ; DE = FUnitState
-                ; BIT FUSF_SELECTED, A        ; check flag FUSF_SELECTED
-                ; CALL NZ, .DrawPath
+                LD A, (DE)                  ; DE = FUnitState
+                BIT FUSF_SELECTED, A        ; check flag FUSF_SELECTED
+                CALL NZ, .DrawPath
 
 .NextUnit       INC E
                 INC E
