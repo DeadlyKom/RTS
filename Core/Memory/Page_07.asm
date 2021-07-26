@@ -109,38 +109,45 @@ FOWTable_S:         EQU FOWTable.End - Page_7.FOWTable                          
                     ; тайлы карты
 
                     ORG Page_7.TileTable
-SpritesTable:       DW Sprite_Sand_1,       Sprite_Sand_2,      Sprite_Sand_3,      Sprite_Sand_4       ; 0   - 3
-                    DW #0000,               #0000,              #0000,              #0000               ; 4   - 7
-                    DW #0000,               #0000,              #0000,              #0000               ; 8   - 11
-                    DW #0000,               #0000,              #0000,              #0000               ; 12  - 15
-                    DW #0000,               #0000,              #0000,              #0000               ; 16  - 19
-                    DW #0000,               #0000,              #0000,              #0000               ; 20  - 23
-                    DW #0000,               Sprite1,            Sprite2,            #0000               ; 24  - 27
-                    DW #0000,               #0000,              #0000,              #0000               ; 28  - 31
-                    DW Sprite_Canyon_1,     Sprite_Canyon_2,    Sprite_Canyon_3,    Sprite_Canyon_4     ; 32  - 35
-                    DW Sprite_Canyon_5,     Sprite_Canyon_6,    Sprite_Canyon_7,    Sprite_Canyon_8     ; 36  - 39
-                    DW Sprite_Canyon_9,     Sprite_Canyon_10,   Sprite_Canyon_11,   Sprite_Canyon_12    ; 40  - 43
-                    DW Sprite_Canyon_13,    Sprite_Canyon_14,   Sprite_Canyon_15,   Sprite_Canyon_16    ; 44  - 47
-                    DW #0000,               #0000,              #0000,              #0000               ; 48  - 51
-                    DW #0000,               #0000,              #0000,              #0000               ; 52  - 55
-                    DW #0000,               #0000,              #0000,              #0000               ; 56  - 59
-                    DW #0000,               #0000,              #0000,              #0000               ; 60  - 63
-                    DW #0000,               #0000,              #0000,              #0000               ; 64  - 67
-                    DW #0000,               #0000,              #0000,              #0000               ; 68  - 71
-                    DW #0000,               #0000,              #0000,              #0000               ; 72  - 75
-                    DW #0000,               #0000,              #0000,              #0000               ; 76  - 79
-                    DW #0000,               #0000,              #0000,              #0000               ; 80  - 83
-                    DW #0000,               #0000,              #0000,              #0000               ; 84  - 87
-                    DW #0000,               #0000,              #0000,              #0000               ; 88  - 91
-                    DW #0000,               #0000,              #0000,              #0000               ; 92  - 95
-                    DW #0000,               #0000,              #0000,              #0000               ; 96  - 99
-                    DW #0000,               #0000,              #0000,              #0000               ; 100 - 103
-                    DW #0000,               #0000,              #0000,              #0000               ; 104 - 107
-                    DW #0000,               #0000,              #0000,              #0000               ; 108 - 111
-                    DW #0000,               #0000,              #0000,              #0000               ; 112 - 115
-                    DW #0000,               #0000,              #0000,              #0000               ; 116 - 119
-                    DW #0000,               #0000,              #0000,              #0000               ; 120 - 123
-                    DW #0000,               #0000,              #0000,              #0000               ; 124 - 127
+SpritesTable:       DW Sprite_Sand_1,           Sprite_Sand_2,                  Sprite_Sand_3,                  Sprite_Sand_4                   ; 0   - 3
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 4   - 7
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 8   - 11
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 12  - 15
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 16  - 19
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 20  - 23
+                    DW #0000,                   Sprite1,                        Sprite2,                        #0000                           ; 24  - 27
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 28  - 31
+                    DW Sprite_Canyon_1,         Sprite_Canyon_2,                Sprite_Canyon_3,                Sprite_Canyon_4                 ; 32  - 35
+                    DW Sprite_Canyon_5,         Sprite_Canyon_6,                Sprite_Canyon_7,                Sprite_Canyon_8                 ; 36  - 39
+                    DW Sprite_Canyon_9,         Sprite_Canyon_10,               Sprite_Canyon_11,               Sprite_Canyon_12                ; 40  - 43
+                    DW Sprite_Canyon_13,        Sprite_Canyon_14,               Sprite_Canyon_15,               Sprite_Canyon_16                ; 44  - 47
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 48  - 51
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 52  - 55
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 56  - 59
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 60  - 63
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 64  - 67
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 68  - 71
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 72  - 75
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 76  - 79
+                    ifdef DEBUG
+                    DW DEBUG_VECTOR_UP,         DEBUG_VECTOR_UP_RIGHT,          DEBUG_VECTOR_RIGHT,             DEBUG_VECTOR_DOWN_RIGHT         ; 80  - 83
+                    DW DEBUG_VECTOR_DOWN,       DEBUG_VECTOR_DOWN_LEFT,         DEBUG_VECTOR_LEFT,              DEBUG_VECTOR_UP_LEFT            ; 84  - 87
+                    DW DEBUG_SEL_VECTOR_UP,     DEBUG_SEL_VECTOR_UP_RIGHT,      DEBUG_SEL_VECTOR_RIGHT,         DEBUG_SEL_VECTOR_DOWN_RIGHT     ; 88  - 91
+                    DW DEBUG_SEL_VECTOR_DOWN,   DEBUG_SEL_VECTOR_DOWN_LEFT,     DEBUG_SEL_VECTOR_LEFT,          DEBUG_SEL_VECTOR_UP_LEFT        ; 92  - 95
+                    else
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 80  - 83
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 84  - 87
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 88  - 91
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 92  - 95
+                    endif
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 96  - 99
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 100 - 103
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 104 - 107
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 108 - 111
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 112 - 115
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 116 - 119
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 120 - 123
+                    DW #0000,                   #0000,                          #0000,                          #0000                           ; 124 - 127
 .End                EQU $
 SpritesTable_S:     EQU SpritesTable.End - SpritesTable                             ; 256 байт
 
@@ -197,6 +204,10 @@ Sprite_Canyon_15:
                     incbin "Sprites/Terrain/Canyon_15.spr"
 Sprite_Canyon_16:        
                     incbin "Sprites/Terrain/Canyon_16.spr"
+
+                    ifdef DEBUG
+                    include "Sprites/Debug/Vectors.inc"
+                    endif
 End:
 Sprites_S:          EQU End - Page_7.TileSprites                                    ; 4096 байт
 SizePage_7_S:       EQU ScrAdr_S + BypassFOW_S + FOWTable_S + SpritesTable_S + 0x1000 ; Sprites_S
