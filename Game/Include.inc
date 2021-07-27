@@ -46,7 +46,7 @@ TimeOfDayChangeRate         EQU 50 * 60                             ; скоро
 TickCounterRef              EQU Interrupt.Handler.TickCounterPtr    ; счётчик тиков 1/50
 
 ; cursor speed
-MIN_CURSOR_SPEED            EQU 8                                   ; минимальная дефолтная скорость курсора
+MIN_CURSOR_SPEED            EQU 3                                   ; минимальная дефолтная скорость курсора
 MAX_CURSOR_SPEED            EQU 24                                  ; максимальная дефолтная скорость курсора
 MinCursorSpeedRef           EQU Game.MinCursorSpeed                 ; минимальная скорость курсора
 MaxCursorSpeedRef           EQU Game.MaxCursorSpeed                 ; максимальная скорость курсора

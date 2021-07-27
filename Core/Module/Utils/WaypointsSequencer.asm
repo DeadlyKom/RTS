@@ -66,15 +66,20 @@ AddWaypoint:        ; ---------------------------------------------
                     ; ---------------------------------------------
                     LD A, L
 .Sequencer          EQU $+1
-                    LD HL, #0000
-                    LD (HL), A
+                    LD BC, #0000
+                    LD (BC), A
 
                     ; переход к следующему элементы в последовательности
-                    DEC H
-                    LD (.Sequencer), HL
+                    DEC B
+                    LD (.Sequencer), BC
                     LD HL, .Counter
                     DEC (HL)
                     JR Z, .More_8
+                    DEC (HL)
+                    JR Z, $+4
+                    XOR A
+                    LD (BC), A
+                    INC (HL)
                     SCF                                             ; successful execution
                     RET
 .Counter            DB #08
@@ -82,6 +87,36 @@ AddWaypoint:        ; ---------------------------------------------
                     ; последовательность Waypoints более 8
                     ; ---------------------------------------------
 .More_8             OR A                                            ; unsuccessful execution
+                    RET
+; -----------------------------------------
+; get the last waypoint into an array
+; In:
+;   IY - FUnitTargets           (3)
+; Out:
+;   HL - pointer to waypoint location (tile center)
+; Corrupt:
+;   HL, BC, AF
+; Note:
+;   requires included memory page
+; -----------------------------------------
+GetLastWaypoint:    LD A, (IY + FUnitTargets.Data)
+                    AND FUTF_MASK_OFFSET
+                    LD B, A
+                    INC B
+                    ADD A, HIGH WaypointsSequencePtr
+                    LD H, A
+                    LD L, (IY + FUnitTargets.Idx)
+
+.NextIndex          LD A, (HL)
+                    OR A
+                    JR Z, .IsEmpty
+                    DEC H
+                    DJNZ .NextIndex
+
+.IsEmpty            INC H
+                    LD L, (HL)
+                    LD A, (HighWaypointArrayRef)
+                    LD H, A
                     RET
 
 ; -----------------------------------------

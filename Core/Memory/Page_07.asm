@@ -129,7 +129,7 @@ SpritesTable:       DW Sprite_Sand_1,           Sprite_Sand_2,                  
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 68  - 71
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 72  - 75
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 76  - 79
-                    ifdef DEBUG
+                    ifdef ENABLE_VECTOR_FIELD
                     DW DEBUG_VECTOR_UP,         DEBUG_SEL_VECTOR_UP,            DEBUG_VECTOR_UP_RIGHT,          DEBUG_SEL_VECTOR_UP_RIGHT       ; 80  - 83
                     DW DEBUG_VECTOR_RIGHT,      DEBUG_SEL_VECTOR_RIGHT,         DEBUG_VECTOR_DOWN_RIGHT,        DEBUG_SEL_VECTOR_DOWN_RIGHT     ; 84  - 87
                     DW DEBUG_VECTOR_DOWN,       DEBUG_SEL_VECTOR_DOWN,          DEBUG_VECTOR_DOWN_LEFT,         DEBUG_SEL_VECTOR_DOWN_LEFT      ; 88  - 91
@@ -205,7 +205,7 @@ Sprite_Canyon_15:
 Sprite_Canyon_16:        
                     incbin "Sprites/Terrain/Canyon_16.spr"
 
-                    ifdef DEBUG
+                    ifdef ENABLE_VECTOR_FIELD
                     include "Sprites/Debug/Vectors.inc"
                     endif
 End:

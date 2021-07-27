@@ -11,48 +11,41 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-BuildPath:          ;
+BuildPath:          ; создать цепочку waypoints
                     CALL Utils.WaypointsSequencer.Create
                     JR C, $
 
-                    ;
+                    ; инициализация юнита
                     LD HL, (UnitArrayRef)
                     LD A, L
                     LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_MASK_OFFSET
                     CALL Utils.WaypointsSequencer.AddUnit
 
-                    ;
+                    ; инициализация эвристики
                     LD DE, (Utils.Pathfinding.GetHeuristic.Location)
-                    ; LD (.ContainerLocation), DE
 
-                    ;
+                    ; инициализация первого направления
                     CALL GetVectorField_DE
                     AND %00001110
                     LD B, A
                     LD HL, .FirstRET
                     JR .NextCell
 
-.FirstRET           ; LD HL, .Loop
+.FirstRET           ;
 .ContainerLocation  EQU $+1
 .Loop               LD HL, #0000
                     OR A
                     SBC HL, DE
                     JP Z, Utils.WaypointsSequencer.AddWaypoint
                     CALL GetVectorField_DE
-                    ; CP Pathfinding.VECTOR_FIELD_EMPTY
-                    ; JP Z, .Fail
-                    ; CP Pathfinding.VECTOR_FIELD_END
-                    ; JP Z, Utils.WaypointsSequencer.AddWaypoint
                     AND %00001110
                     CP B
                     JR Z, .NextCell
-                    ;LD B, A
                     LD (.Previous), A
 .RET                ;
                     CALL Utils.WaypointsSequencer.AddWaypoint
                     JR NC, .Fail
-                    ; JR C, .Loop
-                    ; RET
+
 .Previous           EQU $+1
                     LD A, #00
                     LD B, A

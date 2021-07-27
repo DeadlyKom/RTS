@@ -4,8 +4,9 @@
 
 Initialize:             ; initialize
                         SetAllHardwareFlags                     ;
-                        ResetHardwareFlag KEMPSTON_JOY_BUTTON_3 ; включить джойстик SEGA
-                        ResetHardwareFlag KEYBOARD_WASD_QAOP    ; включить WASD управление
+                        ; ResetHardwareFlag KEMPSTON_JOY_BUTTON_3 ; включить джойстик SEGA
+                        ; ResetHardwareFlag KEYBOARD_WASD_QAOP    ; включить WASD управление
+                        CALL ChangeKeyboardLayout
                         SetAllFrameFlags                        ; настройка флагов отрисовки
                         ; ResetFrameFlag DELAY_RENDER_FLAG
                         SetAllGameplayFlags                     ; настройка игровых флагов
@@ -65,6 +66,23 @@ HardwareRestriction:
 
 .Mouse                  ; kempston mouse detected
                         ResetHardwareFlag KEMPSTON_MOUSE_FLAG
+                        RET
+ChangeKeyboardLayout:   ; 
+                        CheckHardwareFlag KEYBOARD_WASD_QAOP
+                        LD DE, (VK_S << 8) | VK_W
+                        LD BC, (VK_D << 8) | VK_A
+                        JR Z, $+8
+                        LD DE, (VK_A << 8) | VK_Q
+                        LD BC, (VK_P << 8) | VK_O
+
+                        LD HL, VirtualKeysRef
+                        LD (HL), E                      ; Up
+                        INC HL
+                        LD (HL), D                      ; Down
+                        INC HL
+                        LD (HL), C                      ; Left
+                        INC HL
+                        LD (HL), B                      ; Right
                         RET
 
                         endif ; ~_CORE_GAME_INITIALIZE_

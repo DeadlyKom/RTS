@@ -54,14 +54,15 @@ GetBestCostInQueue: ;
 
                     RET
 
-.SetLess            LD (.ContainerHL), HL
-                    LD C, A
-                    INC H
+.SetLess            INC H
                     LD E, (HL)
                     INC H
                     LD D, (HL)
                     DEC H
                     DEC H
+
+                    LD C, A
+                    LD (.ContainerHL), HL
                     
                     JR .NextElement
                 

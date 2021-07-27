@@ -5,7 +5,6 @@
 ; -----------------------------------------
 ; draw line
 ; In:
-;   SP  - 
 ;   HL  - (H - y, L - x) start point    (S)
 ;   DE  - (D - y, E - x) end point      (E)
 ;   BC  - 
@@ -14,7 +13,7 @@
 ;   BC' - 
 ; Out:
 ; Corrupt:
-;   SP, HL, DE, BC, HL', DE', BC'
+;   HL, DE, BC, HL', DE', BC'
 ; -----------------------------------------
 DrawLine:       ; инициализация
                 LD BC, #141C    ; #14 - INC D | #1C - INC E
@@ -67,8 +66,8 @@ DrawLine:       ; инициализация
                 LD (.Scr), A
                 EX AF, AF'
 
-.Line4          ; BIT 0, B
-                ; JR Z, .Line5
+.Line4          BIT 1, B
+                JR Z, .Line5
 
                 PUSH DE
                 EXX

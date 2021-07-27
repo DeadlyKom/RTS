@@ -54,24 +54,7 @@ ToggleKemJoystick:  SwapHardwareFlag KEMPSTON_JOY_BUTTON_3
                     OR A
                     RET
 ToggleMoveKeys:     SwapHardwareFlag KEYBOARD_WASD_QAOP
-
-                    CheckHardwareFlag KEYBOARD_WASD_QAOP
-                    
-                    LD DE, (VK_S << 8) | VK_W
-                    LD BC, (VK_D << 8) | VK_A
-                    JR Z, $+8
-                    LD DE, (VK_A << 8) | VK_Q
-                    LD BC, (VK_P << 8) | VK_O
-
-                    LD HL, VirtualKeysRef
-                    LD (HL), E                      ; Up
-                    INC HL
-                    LD (HL), D                      ; Down
-                    INC HL
-                    LD (HL), C                      ; Left
-                    INC HL
-                    LD (HL), B                      ; Right
-                    
+                    CALL Game.ChangeKeyboardLayout 
                     CALL Console.SwitchScreen       ; switch screen log
                     CALL DrawGamePause
                     ; exit, processed

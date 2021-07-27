@@ -3,7 +3,7 @@
                     define _CORE_INTERRUPT_
 
                     module Interrupt
-FOW_Ref             EQU 15
+FOW_Ref             EQU 50
 InterruptStackSize  EQU 64 * 2                                      ; not change
 InterruptStack:     DS InterruptStackSize, 0                        ; not change
 Handler:            ; ********** HANDLER IM 2 *********

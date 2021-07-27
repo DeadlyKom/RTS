@@ -635,10 +635,12 @@ Handler:        ; включить страницу
                 ; ---------------------------------------------
 .PreNextUnit    POP DE                      ; restore address UnitsArray
 
+                PUSH DE
                 ; отрисовка линии пути
                 LD A, (DE)                  ; DE = FUnitState
                 BIT FUSF_SELECTED, A        ; check flag FUSF_SELECTED
-                CALL NZ, .DrawPath
+                CALL NZ, DrawPath
+                POP DE
 
 .NextUnit       INC E
                 INC E
@@ -650,129 +652,6 @@ Handler:        ; включить страницу
                 JP NZ, .Loop
 
 .Exit           RET
-
-                ; LD HL, #6080
-                ; LD DE, (MousePositionRef)
-                ; CALL DrawLine
-
-                ; DE = FUnitState   (1)
-.DrawPath       PUSH DE
-                ; ---------------------------------------------
-                ; Lx, Ly   - позиция юнита (в тайлах)
-                ; Vx, Vy   - позиция видимой области карты (в тайлах)
-                ; ---------------------------------------------
-
-                LD HL, TilemapOffsetRef
-
-                INC D                       ; FUnitLocation + 0     (2)
-                LD A, (DE)                  ; A = Lx
-                SUB (HL)                    ; A -= Vx
-
-                ADD A, A
-                ADD A, A
-                ADD A, A
-                ADD A, A
-
-                ADD A, #08
-
-                INC E
-                INC E
-                EX DE, HL
-                ADD A, (HL)
-                EX DE, HL
-                DEC E
-                DEC E
-
-                EX AF, AF'
-
-                INC L                       ; HL = TilemapOffsetHeight
-                INC E                       ; FUnitLocation + 1     (2)
-
-                LD A, (DE)                  ; A = Ly
-                SUB (HL)                    ; A -= Vy
-                ADD A, A
-                ADD A, A
-                ADD A, A
-                ADD A, A
-
-                ADD A, #08
-
-                INC E
-                INC E
-                EX DE, HL
-                ADD A, (HL)
-                EX DE, HL
-                DEC E
-                DEC E
-
-                LD B, A
-                EX AF, AF'
-                LD C, A
-
-                ; BC - позиция юнита в тайлах
-                PUSH BC
-
-                INC D                       ; FUnitTargets + Location.Y         (3)
-                ; INC E                       ; FUnitTargets + Enemy              (3)
-                ; INC E                       ; FUnitTargets + Flags              (3)
-                ; LD A, (DE)
-                ; LD C, A
-
-                ; DEC E                       ; FUnitTargets + Enemy              (3)
-                ; DEC E                       ; FUnitTargets + Location.Y         (3)
-                ; DEC E                       ; FUnitTargets + Location.X         (3)
-
-                ; BIT FUTF_INDEX, C           ; FUnitTargets.Flags
-                ; JR NZ, .NotTarget
-
-
-                DEC L                       ; HL = TilemapOffsetWidth
-                
-                ; LD A, (HighWayPointArrayRef)
-                ; LD B, A
-                ; LD A, (DE)                  ; A = FUnitTargets.Location.IDX_X
-                ; LD C, A
-
-                LD BC, DE
-
-                DEC C
-
-                LD A, (BC)
-                SUB (HL)
-                ADD A, A
-                INC A
-                ADD A, A
-                ADD A, A
-                ADD A, A
-                EX AF, AF'
-
-                INC L                       ; HL = TilemapOffsetHeight
-                INC C                       ; BC = Y 
-
-                LD A, (BC)
-                SUB (HL)
-                ADD A, A
-                INC A
-                ADD A, A
-                ADD A, A
-                ADD A, A
-                LD H, A
-                EX AF, AF'
-                LD L, A
-
-                ;   HL  - (H - y, L - x) start point    (S)
-                ;   DE  - (D - y, E - x) end point      (E)
-                POP DE
-
-                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, UNIT_HANDLER_RENDER_ID
-
-                CALL DrawLine
-
-                ; включить страницу 
-                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, UNIT_HANDLER_IT_ID
-
-                POP DE
-                RET
 
 .NotTarget      POP AF
                 POP DE

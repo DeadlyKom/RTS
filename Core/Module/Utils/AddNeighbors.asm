@@ -147,7 +147,7 @@ AddNeighbors:       ; ---------------------------------------------
                     CALL .Check
                     RET C                                       ; выход, т.к. очередь переполнено
 
-.SkipLeftDown_Y     DEC D               
+.SkipLeftDown_Y     DEC D
 .SkipLeftDown       INC E
 
                     OR A
@@ -169,14 +169,17 @@ AddNeighbors:       ; ---------------------------------------------
                     LD A, C
                     RRA
                     RRA
-                    AND %00001100
+                    RRA
+                    RRA
+                    AND %00000011
                     LD C, A
 
+                    ; корректировка стоимости для диагоналей
+                    ; у диагональных перемещений бит 1 равен единице
                     EX AF, AF'
                     BIT 1, A
-                    LD B, #00
-                    JR Z, $+4
-                    LD B, #02
+                    JR Z, $+3
+                    INC C
                     EX AF, AF'
 
                     ; добавить в поле направление
@@ -185,7 +188,6 @@ AddNeighbors:       ; ---------------------------------------------
                     ; посчитать стоимость прохода
                     CALL Utils.Pathfinding.GetHeuristic         ; A - значение эвристики
                     ADD A, C                                    ; A += стоимость прохода по поверхности
-                    ADD A, B
                     
                     ; добавить в очередь стоимость и позицию тайла
                     CALL Utils.Pathfinding.AddToQueue

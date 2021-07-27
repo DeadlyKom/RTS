@@ -6,6 +6,10 @@
 
                 define DEBUG
 
+                ifdef DEBUG
+                ; define ENABLE_VECTOR_FIELD                  ; разрешить отобразить векторное поле
+                endif
+
                 define DEBUG_PAGE_ID                        ; писать кто переключил страницу
                 ; define ENABLE_MUSIC                         ; разрешить музыку
                 define ENABLE_MOUSE                         ; разрешить мышь

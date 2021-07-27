@@ -12,14 +12,14 @@
 ;           101 - down-left
 ;           110 - left
 ;           111 - up-left
-VECTOR_UP           EQU 0x00 << 1
-VECTOR_RIGHT_UP     EQU 0x01 << 1
-VECTOR_RIGHT        EQU 0x02 << 1
-VECTOR_RIGHT_DOWN   EQU 0x03 << 1
-VECTOR_DOWN         EQU 0x04 << 1
-VECTOR_LEFT_DOWN    EQU 0x05 << 1
-VECTOR_LEFT         EQU 0x06 << 1
-VECTOR_LEFT_UP      EQU 0x07 << 1
+VECTOR_UP           EQU (0x00 << 1) + 1
+VECTOR_RIGHT_UP     EQU (0x01 << 1) + 1
+VECTOR_RIGHT        EQU (0x02 << 1) + 1
+VECTOR_RIGHT_DOWN   EQU (0x03 << 1) + 1
+VECTOR_DOWN         EQU (0x04 << 1) + 1
+VECTOR_LEFT_DOWN    EQU (0x05 << 1) + 1
+VECTOR_LEFT         EQU (0x06 << 1) + 1
+VECTOR_LEFT_UP      EQU (0x07 << 1) + 1
 
 ; -----------------------------------------
 ; получить значение из в векторного поля
@@ -106,12 +106,13 @@ SetVectorField:     ;EX AF, AF'
 
                     CALL Utils.Tilemap.GetAddressTilemap                ; получение адреса тайла
  
-                    ; JR $
+                    ifdef ENABLE_VECTOR_FIELD
                     EX AF, AF'
                     ADD A, #50
                     LD (HL), A
                     SUB #50
                     EX AF, AF'
+                    endif
 
                     ; HL >> 1
                     SRL H
@@ -146,7 +147,9 @@ SetVectorField:     ;EX AF, AF'
 ; -----------------------------------------
 MarkVectorField:    CALL Utils.Tilemap.GetAddressTilemap                ; получение адреса тайла
                     
-                    PUSH HL
+                    ifdef ENABLE_VECTOR_FIELD
+                    SET 0, (HL)
+                    endif
 
                     ; HL >> 1
                     SRL H
@@ -158,17 +161,9 @@ MarkVectorField:    CALL Utils.Tilemap.GetAddressTilemap                ; пол
                     JR C, .Less                                         ; если нечётный сдвигать не нужно
 
                     SET 4, (HL)
-
-                    POP HL
-                    SET 0, (HL)
-
                     RET
 
 .Less               SET 0, (HL)
-
-                    POP HL
-                    SET 0, (HL)
-                    
                     RET
 
                     endmodule
