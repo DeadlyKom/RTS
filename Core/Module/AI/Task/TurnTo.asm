@@ -31,7 +31,6 @@ TurnTo:         ; go to FUnitTargets
 
                 ; restor register IX
                 DEC IXH                                     ; FUnitState        (1)
-                ; JR $
                 LD A, (IX + FUnitState.Direction)
                 JP Utils.Turn.Down                          ; вернёт флаг успешности
 

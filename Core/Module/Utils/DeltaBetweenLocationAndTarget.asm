@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
-                define _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
+                    ifndef _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
+                    define _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
 
 ; -----------------------------------------
 ; In:
@@ -14,73 +14,66 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetDeltaTarget: BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
-                JR Z, .IsNotValid                           ; текущий Way Point не валидный
+GetDeltaTarget:     BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
+                    JR Z, .IsNotValid                           ; текущий Way Point не валидный
 
-                LD A, (IX + FUnitTargets.WayPoint.Y)
-                EX AF, AF'
-                LD A, (IX + FUnitTargets.WayPoint.X)
+                    LD A, (IX + FUnitTargets.WayPoint.Y)
+                    EX AF, AF'
+                    LD A, (IX + FUnitTargets.WayPoint.X)
 
-                DEC IXH                                     ; FUnitLocation (2)
+                    DEC IXH                                     ; FUnitLocation (2)
 
-                ; delta x = FUnitTargets.WayPoint.X - FUnitLocation.TilePosition.X
-                SUB (IX + FUnitLocation.TilePosition.X)
-                JP NZ, .SkipX
-                ADD A, (IX + FUnitLocation.OffsetByPixel.X)
-                CPL
-                ; JP .SetX
-.SkipX          ; ADC A, A
+                    LD C, #00                                                               ; С = 0 (нет необходимости выравнивать), 
+                                                                                            ; С = 1 (нужно привести к одной точности)
+                    ; delta x = FUnitTargets.WayPoint.X - FUnitLocation.TilePosition.X
+                    SUB (IX + FUnitLocation.TilePosition.X)
+                    JP NZ, .SetX
+                    ; увеличение точности X
+                    ADD A, (IX + FUnitLocation.OffsetByPixel.X)
+                    CPL
+                    INC C                                                                   ; X = более точный, Y нужно будет увеличить точность (Y << 3)
+.SetX               LD E, A
 
-                ; --------
-                ; LD E, A
-                ; LD A, (IX + FUnitLocation.OffsetByPixel.X)
-                ; RLA
-                ; LD A, E
-                ; ADC A, A
-                ; --------
+                    ; delta y = FUnitTargets.WayPoint.Y - FUnitLocation.TilePosition.Y
+                    EX AF, AF'
+                    SUB (IX + FUnitLocation.TilePosition.Y)
+                    JP NZ, .IsImprovedAccuracy                                              ; Y имеет грубую точность, нужно проверить на необходимость увеличения точности
+                    ; увеличение точности Y
+                    ADD A, (IX + FUnitLocation.OffsetByPixel.Y)
+                    CPL
+                    LD D, A
 
-.SetX           LD E, A
-
-                ; delta y = FUnitTargets.WayPoint.Y - FUnitLocation.TilePosition.Y
-                EX AF, AF'
-                SUB (IX + FUnitLocation.TilePosition.Y)
-                JP NZ, .SkipY
-                ADD A, (IX + FUnitLocation.OffsetByPixel.Y)
-                CPL
-                ; JP .SetY
-.SkipY          ; ADC A, A
-
-                ; --------
-                ; LD D, A
-                ; LD A, (IX + FUnitLocation.OffsetByPixel.Y)
-                ; RLA
-                ; LD A, D
-                ; ADC A, A
-                ; --------
+                    ; проверка на необходимость увеличения точности X,
+                    ; т.к. Y имеет более высокую точность
+                    DEC C                                                                   ; если С = 1, значит X имеет высокую точность, и не требуется его улучшение
+                    JR Z, .Successfully                                                     ; X и Y одинаковой точности (точная)
+                    
+                    ; увеличение точности X
+                    LD A, E
+                    ADD A, A
+                    ADD A, A
+                    ADD A, A
+                    LD E, A
+                    JR .Successfully
                 
-.SetY           LD D, A
-                SCF                                         ; успешность операции
+.IsImprovedAccuracy ; проверка на необходимость увеличения точности Y,
+                    ; т.к. X имеет более высокую точность
+                    DEC C                                                                   ; если С = 1, значит X имеет высокую точность, и Y необходимо увеличить точность
+                    JR NZ, .SetY                                                            ; X и Y одинаковой точности (грубая)
 
-                RET
+                    ; увеличение точности Y
+                    ADD A, A
+                    ADD A, A
+                    ADD A, A
+.SetY               LD D, A
 
-.IsNotValid     XOR A                                       ; неудача операции
-                LD D, A
-                LD E, A
-                DEC IXH                                     ; FUnitLocation (2)
-                
-                RET
-                ; delta x = (FUnitTargets.WayPoint.X - FUnitLocation.TilePosition.X) * 16 + 8 + FUnitLocation.OffsetByPixel.X
-                ; delta y = (FUnitTargets.WayPoint.Y - FUnitLocation.TilePosition.Y) * 16 + 8 + FUnitLocation.OffsetByPixel.Y
-                ; LD L, (IX + FUnitTargets.WayPoint + 0)
-                ; LD H, (IX + FUnitTargets.WayPoint + 1)
-                ; LD C, (IX + FUnitLocation.TilePosition + 0)
-                ; LD B, (IX + FUnitLocation.TilePosition + 1)
-                ; OR A
-                ; SBC HL, DE
-                ; ADD HL, HL
-                ; ADD HL, HL
-                ; ADD HL, HL
-                ; ADD HL, HL
-                ; LD E, H
+.Successfully       SCF                                         ; успешность операции
+                    RET
 
-                endif ; ~ _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
+.IsNotValid         XOR A                                       ; неудача операции
+                    LD D, A
+                    LD E, A
+                    DEC IXH                                     ; FUnitLocation (2)
+                    RET
+
+                    endif ; ~ _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_

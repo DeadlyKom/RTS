@@ -23,9 +23,9 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 INC IXH                                     ; FUnitTargets      (3)
 
                 ;
-                ; JR $
                 CALL Utils.GetDeltaTarget                   ; calculate direction delta
                 JP NC, .Fail                                ; неудачая точка назначения
+
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitLocation (2)
                 ; D = dY (signed)
@@ -63,7 +63,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ; E = |dX|
                 ; ---------------------------------------------
 
-                LD L, #23
+                LD L, #2C
 
                 ; dX < dY ?
                 LD A, E
@@ -165,6 +165,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 SCF                                                 ; успешность выполнения
                 RET
 
+; .PreFail        DEC IXH
 .Fail           DEC IXH                                             ; FUnitState        (1)
                 JR $
                 OR A                                                ; неудачное выполнение
@@ -215,7 +216,7 @@ ShiftLocation:  ;
 .UnitOffset     EQU $+1
                 LD HL, #0000
 
-.dX_dY          NOP                                         ; NOP/INC HL    (NOP - x, INC HL - y)
+.dX_dY          NOP                                         ; NOP/INC HL    (NOP - x, INC L - y)
 
                 ADD A, (HL)
                 JP M, .Negative
@@ -229,8 +230,8 @@ ShiftLocation:  ;
 
 .NextCell       ;
                 LD (HL), -8
-                DEC HL
-                DEC HL
+                DEC L
+                DEC L
                 INC (HL)
                 DEC IXH                                     ; FUnitTargets      (3)
                 DEC IXH                                     ; FUnitLocation     (2)
@@ -251,8 +252,8 @@ ShiftLocation:  ;
 
 .PrevCell       ;
                 LD (HL), 7
-                DEC HL
-                DEC HL
+                DEC L
+                DEC L
                 DEC (HL)
                 DEC IXH                                     ; FUnitTargets      (3)
                 DEC IXH                                     ; FUnitLocation     (2)
