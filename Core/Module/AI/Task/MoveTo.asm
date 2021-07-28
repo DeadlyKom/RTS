@@ -108,7 +108,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 EX AF, AF'
 
                 LD A, L
-                XOR #23
+                XOR #2C
                 LD (ShiftLocation.dX_dY), A
 
                 ;
@@ -166,7 +166,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 RET
 
 .Fail           DEC IXH                                             ; FUnitState        (1)
-
+                JR $
                 OR A                                                ; неудачное выполнение
                 RET
 

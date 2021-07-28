@@ -11,7 +11,8 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-WayPoint:       INC IXH                                             ; FUnitLocation     (2)
+WayPoint:       ; JR $
+                INC IXH                                             ; FUnitLocation     (2)
                 INC IXH                                             ; FUnitTargets      (3)
 
                 ; проверка что Way Point валиден
@@ -72,6 +73,7 @@ WayPoint:       INC IXH                                             ; FUnitLocat
                 LD E, (HL)
                 INC H
                 LD D, (HL)
+                ; JR $
                 LD (IX + FUnitTargets.WayPoint.X), E
                 LD (IX + FUnitTargets.WayPoint.Y), D
 
@@ -95,14 +97,6 @@ WayPoint:       INC IXH                                             ; FUnitLocat
                 LD L, (IX + FUnitTargets.Idx)
 
                 LD L, (HL)
-;.CopyWP         LD A, (HighWayPointArrayRef)
-                ; LD H, A
-                ; LD E, (HL)
-                ; INC H
-                ; LD D, (HL)
-                ; LD (IX + FUnitTargets.WayPoint.X), E
-                ; LD (IX + FUnitTargets.WayPoint.Y), D
-                ; JR .Successfully
                 JR .CopyWP
 
 

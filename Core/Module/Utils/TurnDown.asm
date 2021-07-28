@@ -14,7 +14,9 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-Down:           RRA
+Down:           ; JR $
+
+                RRA
                 RRA
                 RRA
                 AND %00000111
