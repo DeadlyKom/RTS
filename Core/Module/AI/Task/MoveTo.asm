@@ -165,7 +165,6 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 SCF                                                 ; успешность выполнения
                 RET
 
-; .PreFail        DEC IXH
 .Fail           DEC IXH                                             ; FUnitState        (1)
                 JR $
                 OR A                                                ; неудачное выполнение
