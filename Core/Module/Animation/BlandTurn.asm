@@ -54,7 +54,7 @@ TurnDown:       ;
                 ; проверка на первичную инициализацию (мб вообще убрать её!)
                 LD E, (IX + FUnitAnimation.CounterDown)     ; получим значение текущего счётчика
                 LD A, E
-                OR A
+                AND %00011111
                 JR Z, .Init
 
                 ; проверка изменения направления поворота
@@ -76,7 +76,7 @@ TurnDown:       ;
 
                 ; направления поворота
                 LD A, B                                     ; A - направление поворота (-1/1)
-                AND %10000000
+                AND %11100000
                 LD B, A
                 
                 EX AF, AF'
@@ -85,7 +85,13 @@ TurnDown:       ;
                 JR C, $+4
                 LD A, %00011111
                 OR B                                        ; добавим направление
-.Set            LD (IX + FUnitAnimation.CounterDown), A     ; сохраним значение
+
+.Set            ;JR$
+                LD B, A
+                LD A, %01100000
+                AND (IX + FUnitAnimation.CounterDown)
+                OR B
+                LD (IX + FUnitAnimation.CounterDown), A     ; сохраним значение
 
 .Exit           ; завершение работы
                 DEC IXH                                     ; FUnitTargets      (3)
@@ -121,8 +127,11 @@ TurnDown:       ;
                 ; DEC (IX + FUnitAnimation.CounterDown)      ; уменьшим счётчик
                 JR NZ, .Decrement                           ; чсётчик не нулевой продолжаем отсчёт
 
-                ; установка нового счётчика анимации
+                LD A, E
+                AND %01100000
+                LD D, A
 
+                ; установка нового счётчика анимации
                 LD A, (HL)                                  ; A - новый счётчик
                 LD E, B                                     ; E - направление поворота (-1/1)
                 
@@ -130,6 +139,7 @@ TurnDown:       ;
                 ADD A, A
                 RL E
                 RRA
+                OR D
                 LD (IX + FUnitAnimation.CounterDown), A    ; сохраним значение
 
                 ; завершение работы

@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_AI_TASK_IDLE_
-                define _CORE_MODULE_AI_TASK_IDLE_
+                    ifndef _CORE_MODULE_AI_TASK_IDLE_
+                    define _CORE_MODULE_AI_TASK_IDLE_
 
 ; -----------------------------------------
 ; 
@@ -10,13 +10,28 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-Idle:           INC IXH                                                         ; FUnitLocation     (2)
+Idle:               LD A, (IX + FUnitState.State)
+                    LD C, A
+                    AND FUSF_IS_IDLE
+                    RET NZ                                                          ; сброс флага, выход если юнит не в состоянии idle
 
-                LD HL, Utils.Tilemap.Radius_3
-                CALL Utils.Tilemap.Reconnaissance
+                    ; проверка бита об проведённой разведки после остановки
+                    BIT FUSE_RECONNAISSANCE_BIT, C
+                    JR Z, .SkipReconnaissance
 
-                DEC IXH                                                         ; FUnitState        (1)
-                OR A
-                RET
+                    INC IXH                                                         ; FUnitLocation     (2)
+                    
+                    LD HL, Utils.Tilemap.Radius_5
+                    CALL Utils.Tilemap.Reconnaissance
 
-                endif ; ~_CORE_MODULE_AI_TASK_IDLE_
+                    DEC IXH                                                         ; FUnitState        (1)
+
+                    RES FUSE_RECONNAISSANCE_BIT, (IX + FUnitState.State)            ; сброс флага разведки
+
+.SkipReconnaissance ;
+                    CALL Animation.Idle
+
+                    OR A
+                    RET
+
+                    endif ; ~_CORE_MODULE_AI_TASK_IDLE_

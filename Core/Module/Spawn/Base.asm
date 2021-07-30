@@ -27,9 +27,21 @@ Unit:           ; определение адреса добавления но�
                 ; ---------------------------------------------
                 ; FUnitState (1)
                 ; ---------------------------------------------
-                LD DE,  (1 << FUSF_SELECTED) + (1 << FUSF_MOVE)
+                LD DE,  FUSF_SELECTED | FUSE_RECONNAISSANCE | FUSF_RENDER
                 LD (IX + FUnitState.State), E
-                LD (IX + FUnitState.Direction), D
+
+                ; рандом направления
+                LD A, R
+                LD D, A
+.Rand           EQU $+1
+                AND %01010101
+                LD A, (.Rand)
+                RRCA
+                XOR D
+                RLA
+                LD (.Rand), A
+
+                LD (IX + FUnitState.Direction), A
                 XOR A
                 LD (IX + FUnitState.Type), A
                 LD A, 0

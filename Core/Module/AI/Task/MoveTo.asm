@@ -12,7 +12,9 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-MoveTo:         INC IXH                                     ; FUnitLocation     (2)
+MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)          ; установка состояния перемещения/поворота
+
+                INC IXH                                             ; FUnitLocation     (2)
 
                 LD E, IXL
                 LD D, IXH
@@ -20,11 +22,11 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 INC DE
                 LD (ShiftLocation.UnitOffset), DE
                 
-                INC IXH                                     ; FUnitTargets      (3)
+                INC IXH                                             ; FUnitTargets      (3)
 
                 ;
-                CALL Utils.GetDeltaTarget                   ; calculate direction delta
-                JP NC, .Fail                                ; неудачая точка назначения
+                CALL Utils.GetDeltaTarget                           ; calculate direction delta
+                JP NC, .Fail                                        ; неудачая точка назначения
 
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitLocation (2)
@@ -32,22 +34,22 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ; E = dX (signed)
                 ; ---------------------------------------------
 
-                INC IXH                                     ; FUnitTargets      (3)
+                INC IXH                                             ; FUnitTargets      (3)
 
                 LD A, E
                 OR D
                 JR Z, .Complite
 
-                INC IXH                                     ; FUnitAnimation    (4)
+                INC IXH                                             ; FUnitAnimation    (4)
 
                 ; check for the need to reinitialize the counter after move
                 LD C, (IX + FUnitAnimation.Flags)
                 RR C
-                CALL NC, .Init                              ; reinitialize if the FUAF_TURN_MOVE flag is set
+                CALL NC, .Init                                      ; reinitialize if the FUAF_TURN_MOVE flag is set
 
                 ; if necessary, change the sign of dY
                 XOR A
-                LD B, A                                     ; reset register B
+                LD B, A                                             ; reset register B
                 SUB D
                 JP M, $+4
                 LD D, A
@@ -68,13 +70,13 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ; dX < dY ?
                 LD A, E
                 CP D
-                JR C, .SkipSwap_dX_dY                       ; if dX < dY, then the base axis dY
+                JR C, .SkipSwap_dX_dY                               ; if dX < dY, then the base axis dY
                 
                 ; dX <=> dY (swap)
                 LD E, D
                 LD D, A
 
-                LD L, B                                     ; L = 0
+                LD L, B                                             ; L = 0
 
                 ; sing dX <=> sign dY (swap)
                 SRL C
@@ -133,9 +135,9 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 CALL Unit.RefUnitOnScr
 
 .Exit           ; завершение работы
-                DEC IXH                                     ; FUnitTargets      (3)
-                DEC IXH                                     ; FUnitLocation     (2)
-                DEC IXH                                     ; FUnitState        (1)
+                DEC IXH                                             ; FUnitTargets      (3)
+                DEC IXH                                             ; FUnitLocation     (2)
+                DEC IXH                                             ; FUnitState        (1)
 
                 ; LD A, (TickCounterRef)
                 ; RRA
@@ -162,10 +164,13 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 DEC IXH                                             ; FUnitLocation     (2)
                 DEC IXH                                             ; FUnitState        (1)
 
+                RES FUSF_MOVE_BIT, (IX + FUnitState.State)          ; сброс состояния перемещения/поворота
+
                 SCF                                                 ; успешность выполнения
                 RET
 
 .Fail           DEC IXH                                             ; FUnitState        (1)
+                RES FUSF_MOVE_BIT, (IX + FUnitState.State)          ; сброс состояния перемещения/поворота
                 JR $
                 OR A                                                ; неудачное выполнение
                 RET
@@ -181,15 +186,15 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 ; знак dX
                 LD A, E
                 RLA
-                RL C                                        ; FUAF_X
+                RL C                                                ; FUAF_X
 
                 ; знак dY
                 LD A, D
                 RLA
-                RL C                                        ; FUAF_Y
+                RL C                                                ; FUAF_Y
 
                 ; FUAF_TURN_MOVE
-                SCF                                         ; установка бита принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                SCF                                                 ; установка бита принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 RL C
 
                 ;
@@ -198,7 +203,7 @@ MoveTo:         INC IXH                                     ; FUnitLocation     
                 OR C
                 LD (IX + FUnitAnimation.Flags), A
 
-                RR C                                        ; skip FUAF_TURN_MOVE
+                RR C                                                ; skip FUAF_TURN_MOVE
 
                 ; сброс дельты
                 XOR A

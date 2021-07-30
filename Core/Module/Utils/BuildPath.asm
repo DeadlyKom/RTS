@@ -31,18 +31,19 @@ BuildPath:          ; создать цепочку waypoints
                     LD HL, .FirstRET
                     JR .NextCell
 
-.FirstRET           ;
+.FirstRET           ; проверка раннего выходы
 .ContainerLocation  EQU $+1
 .Loop               LD HL, #0000
                     OR A
                     SBC HL, DE
-                    JP Z, Utils.WaypointsSequencer.AddWaypoint
+                    JP Z, Utils.WaypointsSequencer.AddWaypoint                  ; ранний выход (добавим последний Waypoint)
+                    ; получение текущее направление
                     CALL GetVectorField_DE
                     AND %00001110
                     CP B
                     JR Z, .NextCell
                     LD (.Previous), A
-.RET                ;
+                    ;
                     CALL Utils.WaypointsSequencer.AddWaypoint
                     JR NC, .Fail
 

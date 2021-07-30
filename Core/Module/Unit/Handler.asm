@@ -638,7 +638,7 @@ Handler:        ; включить страницу
                 PUSH DE
                 ; отрисовка линии пути
                 LD A, (DE)                  ; DE = FUnitState
-                BIT FUSF_SELECTED, A        ; check flag FUSF_SELECTED
+                BIT FUSF_SELECTED_BIT, A    ; check flag FUSF_SELECTED
                 CALL NZ, DrawPath
                 POP DE
 

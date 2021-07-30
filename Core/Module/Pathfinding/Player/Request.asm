@@ -56,8 +56,6 @@ Request:        ; ---------------------------------------------
                 SBC HL, DE
                 JR NZ, .Loop
 
-                ; JR $
-
                 ; ---------------------------------------------
                 ; построить путь из WP по векторному полю
                 ; ---------------------------------------------
@@ -67,20 +65,6 @@ Request:        ; ---------------------------------------------
                 ; 
                 ; ---------------------------------------------
 .EndLoop        
-;                 LD IX, (UnitArrayRef)
-;                 INC IXH                                                                 ; FUnitLocation     (2)
-;                 INC IXH                                                                 ; FUnitTargets      (3)
-                
-;                 SET FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
-;                 SET FUTF_INSERT_BIT, (IX + FUnitTargets.Data)
-
-; .Test           EQU $+1
-;                 LD DE, #0000
-;                 LD (IX + FUnitTargets.WayPoint.X), E
-;                 LD (IX + FUnitTargets.WayPoint.Y), D
-
-;                 DEC IXH                                                                 ; FUnitLocation     (2)
-;                 DEC IXH                                                                 ; FUnitState        (1)
 
                 ; ---------------------------------------------
                 ; 

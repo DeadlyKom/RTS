@@ -11,7 +11,8 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-TurnTo:         ; go to FUnitTargets
+TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)  ; установка состояния перемещения/поворота
+                ; go to FUnitTargets
                 INC IXH                                     ; FUnitLocation     (2)
                 INC IXH                                     ; FUnitTargets      (3)
 
@@ -36,10 +37,14 @@ TurnTo:         ; go to FUnitTargets
 
 .Fail           DEC IXH                                     ; FUnitState        (1)
 
+                RES FUSF_MOVE_BIT, (IX + FUnitState.State)  ; сброс состояния перемещения/поворота
+
                 OR A                                        ; неудачное выполнение
                 RET
 
 .Complite       DEC IXH                                     ; FUnitState        (1)
+
+                RES FUSF_MOVE_BIT, (IX + FUnitState.State)  ; сброс состояния перемещения/поворота
 
                 SCF                                         ; удачное выполнение
                 RET

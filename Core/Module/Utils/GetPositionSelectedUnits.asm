@@ -27,7 +27,7 @@ GetSelected:        ;
                     LD HL, (UnitArrayRef)                   ; HL = FUnitState.State             (1)
 
 .LoopFirst          ;
-                    BIT FUSF_SELECTED, (HL)
+                    BIT FUSF_SELECTED_BIT, (HL)
                     JR Z, .FindFirstUnit
 
                     INC H                                   ; HL = FUnitLocation.TilePosition.X (2)
@@ -65,7 +65,7 @@ GetSelected:        ;
 .Loop               EXX
 
                     ;
-                    BIT FUSF_SELECTED, (HL)
+                    BIT FUSF_SELECTED_BIT, (HL)
                     JR Z, .NextUnit
 
                     ;
