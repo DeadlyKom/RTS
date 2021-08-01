@@ -39,18 +39,18 @@ TurnTo:         ; JR$
                 LD A, (IX + FUnitState.Direction)
                 JP Utils.Turn.Down                          ; вернёт флаг успешности
 
-.Fail           DEC IXH                                     ; FUnitState        (1)
+; .Fail           DEC IXH                                     ; FUnitState        (1)
 
-                RES FUSF_MOVE_BIT, (IX + FUnitState.State)  ; сброс состояния перемещения/поворота
+;                 RES FUSF_MOVE_BIT, (IX + FUnitState.State)  ; сброс состояния перемещения/поворота
 
-                OR A                                        ; неудачное выполнение
-                RET
+;                 OR A                                        ; неудачное выполнение
+;                 RET
 
-.Complite       DEC IXH                                     ; FUnitState        (1)
+; .Complite       DEC IXH                                     ; FUnitState        (1)
 
-                RES FUSF_MOVE_BIT, (IX + FUnitState.State)  ; сброс состояния перемещения/поворота
+;                 RES FUSF_MOVE_BIT, (IX + FUnitState.State)  ; сброс состояния перемещения/поворота
 
-                SCF                                         ; удачное выполнение
-                RET
+;                 SCF                                         ; удачное выполнение
+;                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_TURN_TO_

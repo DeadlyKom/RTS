@@ -82,6 +82,9 @@ WayPoint:       ; JR $
                 LD (IX + FUnitTargets.Delta.Y), D
 
                 SET FUTF_VALID_DT_BIT, (IX + FUnitTargets.Data)     ; указаны новые дельты значения
+                INC IXH                                             ; FUnitAnimation    (4)
+                RES FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)     ; необходимо переинициализировать анимацию перемещения
+                DEC IXH                                             ; FUnitTargets      (3)
                 JR .Successfully
 
                 ; ---------------------------------------------
