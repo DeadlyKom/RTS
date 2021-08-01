@@ -22,12 +22,28 @@ MoveTo:         ; JR$
                 INC DE
                 INC DE
                 LD (ShiftLocation.UnitOffset), DE
+
+                
                 
                 INC IXH                                             ; FUnitTargets      (3)
+
+                CALL Utils.WaypointsSequencer.GetCurrentWaypoint
+                LD E, (HL)
+                INC H
+                LD D, (HL)
+                CALL Utils.GetFastDeltaTarget
+
+                LD A, E
+                OR D
+                JR Z, .Complite
 
                 ;
                 ; CALL Utils.GetDeltaTargetEx                         ; calculate direction delta
                 ; JP NC, .Fail                                        ; неудачая точка назначения
+
+
+
+
                 LD E, (IX + FUnitTargets.Delta.X)
                 LD D, (IX + FUnitTargets.Delta.Y)
 
@@ -39,9 +55,9 @@ MoveTo:         ; JR$
 
                 ; INC IXH                                             ; FUnitTargets      (3)
 
-                LD A, E
-                OR D
-                JR Z, .Complite
+                ; LD A, E
+                ; OR D
+                ; JR Z, .Complite
 
                 INC IXH                                             ; FUnitAnimation    (4)
 

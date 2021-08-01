@@ -22,10 +22,10 @@ TurnTo:         ; JR$
                 LD E, (IX + FUnitTargets.Delta.X)
                 LD D, (IX + FUnitTargets.Delta.Y)
 
-                LD A, E
-                OR D
-                JR Z, .Complite                             ; если позиция юнита совподает с позицией WayPoint
-                                                            ; поворот не требуется
+                ; LD A, E
+                ; OR D
+                ; JR Z, .Complite                             ; если позиция юнита совподает с позицией WayPoint
+                ;                                             ; поворот не требуется
 
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitLocation (2)

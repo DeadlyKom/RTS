@@ -89,9 +89,34 @@ AddWaypoint:        ; ---------------------------------------------
 .More_8             OR A                                            ; unsuccessful execution
                     RET
 ; -----------------------------------------
+; In:
+;   IX - FUnitTargets           (3)
+; Out:
+;   DE - waypoint location (tile center) (D - y, E - x)
+; Corrupt:
+; Note:
+;   requires included memory page
+; -----------------------------------------
+GetCurrentWaypoint: LD A, (IX + FUnitTargets.Data)
+                    AND FUTF_MASK_OFFSET
+                    ADD A, HIGH WaypointsSequencePtr
+                    LD H, A
+                    LD L, (IX + FUnitTargets.Idx)
+                    LD L, (HL)
+
+                    LD A, (HighWaypointArrayRef)
+                    LD H, A
+                    INC H                                               ; первое значение, счётчик
+                    ; LD E, (HL)
+                    ; INC H
+                    ; LD D, (HL)
+
+                    RET
+
+; -----------------------------------------
 ; get the last waypoint into an array
 ; In:
-;   IY - FUnitTargets           (3)
+;   IX - FUnitTargets           (3)
 ; Out:
 ;   HL - pointer to waypoint location (tile center)
 ; Corrupt:
@@ -99,13 +124,13 @@ AddWaypoint:        ; ---------------------------------------------
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetLastWaypoint:    LD A, (IY + FUnitTargets.Data)
+GetLastWaypoint:    LD A, (IX + FUnitTargets.Data)
                     AND FUTF_MASK_OFFSET
                     LD B, A
                     INC B
                     ADD A, HIGH WaypointsSequencePtr
                     LD H, A
-                    LD L, (IY + FUnitTargets.Idx)
+                    LD L, (IX + FUnitTargets.Idx)
 
 .NextIndex          LD A, (HL)
                     OR A
