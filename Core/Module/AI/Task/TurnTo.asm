@@ -16,7 +16,8 @@ TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)  ; установка
                 INC IXH                                     ; FUnitLocation     (2)
                 INC IXH                                     ; FUnitTargets      (3)
 
-                CALL Utils.GetDeltaTarget                   ; calculate direction delta
+                ; CALL Utils.GetDeltaTarget                   ; calculate direction delta
+                CALL Utils.GetPerfectTargetDelta
                 JR NC, .Fail                                ; неудачая точка назначения
 
                 LD A, E

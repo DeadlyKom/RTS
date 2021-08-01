@@ -25,7 +25,8 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)          ; устан
                 INC IXH                                             ; FUnitTargets      (3)
 
                 ;
-                CALL Utils.GetDeltaTarget                           ; calculate direction delta
+                ; CALL Utils.GetDeltaTarget                           ; calculate direction delta
+                CALL Utils.GetPerfectTargetDelta
                 JP NC, .Fail                                        ; неудачая точка назначения
 
                 ; ---------------------------------------------
