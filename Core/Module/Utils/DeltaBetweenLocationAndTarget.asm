@@ -15,13 +15,13 @@
 ;   requires included memory page
 ; -----------------------------------------
 GetDeltaTarget:     BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
-                    JR Z, .IsNotValid                           ; текущий Way Point не валидный
+                    JR Z, .IsNotValid                                                       ; текущий Way Point не валидный
 
                     LD A, (IX + FUnitTargets.WayPoint.Y)
                     EX AF, AF'
                     LD A, (IX + FUnitTargets.WayPoint.X)
 
-                    DEC IXH                                     ; FUnitLocation (2)
+                    DEC IXH                                                                 ; FUnitLocation (2)
 
                     LD C, #00                                                               ; С = 0 (нет необходимости выравнивать), 
                                                                                             ; С = 1 (нужно привести к одной точности)
@@ -67,13 +67,205 @@ GetDeltaTarget:     BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                     ADD A, A
 .SetY               LD D, A
 
-.Successfully       SCF                                         ; успешность операции
+.Successfully       SCF                                                                     ; успешность операции
                     RET
 
-.IsNotValid         XOR A                                       ; неудача операции
+.IsNotValid         XOR A                                                                   ; неудача операции
                     LD D, A
                     LD E, A
-                    DEC IXH                                     ; FUnitLocation (2)
+                    DEC IXH                                                                 ; FUnitLocation (2)
+                    RET
+
+GetDeltaTargetEx:   BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
+                    JR Z, GetDeltaTarget.IsNotValid                                         ; текущий Way Point не валидный
+
+                    LD A, (IX + FUnitTargets.WayPoint.Y)
+                    EX AF, AF'
+                    LD A, (IX + FUnitTargets.WayPoint.X)
+
+                    DEC IXH                                                                 ; FUnitLocation (2)
+
+                    ; LD B, #00
+                    ; delta x = (FUnitTargets.WayPoint.X - FUnitLocation.TilePosition.X) * 16 + 8 + FUnitLocation.OffsetByPixel.X
+                    SUB (IX + FUnitLocation.TilePosition.X)
+                    LD L, A
+                    SBC A, A
+                    LD H, A
+                    ADD HL, HL
+                    ; INC HL
+                    ADD HL, HL
+                    ADD HL, HL
+                    ADD HL, HL
+                    LD A, (IX + FUnitLocation.OffsetByPixel.X)
+                    CPL
+                    LD C, A
+                    RLA
+                    SBC A, A
+                    LD B, A
+                    ADD HL, BC
+
+                    ; LD HL, #0300
+
+                    ADD HL, HL
+                    ADD HL, HL
+                    ADD HL, HL
+
+                    EX DE, HL
+                    ; delta y = (FUnitTargets.WayPoint.Y - FUnitLocation.TilePosition.Y) * 16 + 8 + FUnitLocation.OffsetByPixel.Y
+                    EX AF, AF'
+                    SUB (IX + FUnitLocation.TilePosition.Y)
+                    LD L, A
+                    SBC A, A
+                    LD H, A
+                    ADD HL, HL
+                    ; INC HL
+                    ADD HL, HL
+                    ADD HL, HL
+                    ADD HL, HL
+                    LD A, (IX + FUnitLocation.OffsetByPixel.Y)
+                    CPL
+                    LD C, A
+                    RLA
+                    SBC A, A
+                    LD B, A
+                    ADD HL, BC
+
+                    ; LD HL, #0DF0
+
+                    ADD HL, HL
+                    ADD HL, HL
+                    ADD HL, HL
+
+                    PUSH HL
+                    PUSH DE
+
+                    EXX
+                    
+                    POP HL
+                    BIT 7, H
+                    JR Z, $+9
+                    EX DE, HL
+                    LD HL, #0000
+                    OR A
+                    SBC HL, DE
+
+                    EX DE, HL
+                    POP BC
+
+                    BIT 7, B
+                    JR Z, $+10
+                    LD HL, #0000
+                    OR A
+                    SBC HL, BC
+                    LD B, H
+                    LD C, L
+
+                    LD A, B
+                    OR D
+                    EX AF, AF'
+                    LD A, C
+                    OR E
+                    EXX
+
+                    LD C, A
+                    EX AF, AF'
+                    RLA
+
+                    RLA
+                    JR C, .L1
+                    ADD HL, HL              ; HL = dY
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dX
+
+                    RLA
+                    JR C, .L2
+                    ADD HL, HL              ; HL = dX
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dY
+
+                    RLA
+                    JR C, .L1
+                    ADD HL, HL              ; HL = dY
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dX
+
+                    RLA
+                    JR C, .L2
+                    ADD HL, HL              ; HL = dX
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dY
+
+                    ; --------
+                    OR C
+                    ; -------
+
+                    RLA
+                    JR C, .L1
+                    ADD HL, HL              ; HL = dY
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dX
+
+                    RLA
+                    JR C, .L2
+                    ADD HL, HL              ; HL = dX
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dY
+
+                    RLA
+                    JR C, .L1
+                    ADD HL, HL              ; HL = dY
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dX
+
+                    RLA
+                    JR C, .L2
+                    ADD HL, HL              ; HL = dX
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dY
+
+                    RLA
+                    JR C, .L1
+                    ADD HL, HL              ; HL = dY
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dX
+
+                    RLA
+                    JR C, .L2
+                    ADD HL, HL              ; HL = dX
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dY
+
+                    RLA
+                    JR C, .L1
+                    ADD HL, HL              ; HL = dY
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dX
+
+                    RLA
+                    JR C, .L2
+                    ADD HL, HL              ; HL = dX
+                    EX DE, HL
+                    ADD HL, HL              ; HL = dY                   
+
+
+.L1                 ; HL = dY
+                    ; DE = dX
+                    LD E, D
+                    LD D, H
+
+                    SCF                                                                     ; успешность операции
+                    RET
+
+.L2                 ; HL = dX
+                    ; DE = dY
+                    LD E, H
+                    LD D, D
+
+                    SCF                                                                     ; успешность операции
+                    RET                   
+
+
+.Successfully       SCF                                                                     ; успешность операции
                     RET
 
                     endif ; ~ _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_

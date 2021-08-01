@@ -11,12 +11,13 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)  ; установка состояния перемещения/поворота
+TurnTo:         ; JR$
+                SET FUSF_MOVE_BIT, (IX + FUnitState.State)  ; установка состояния перемещения/поворота
                 ; go to FUnitTargets
                 INC IXH                                     ; FUnitLocation     (2)
                 INC IXH                                     ; FUnitTargets      (3)
 
-                CALL Utils.GetDeltaTarget                   ; calculate direction delta
+                CALL Utils.GetDeltaTargetEx                 ; calculate direction delta
                 JR NC, .Fail                                ; неудачая точка назначения
 
                 LD A, E

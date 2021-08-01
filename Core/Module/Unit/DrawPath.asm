@@ -17,6 +17,15 @@ DrawPath:       LD IYH, D
 
                 CALL Utils.WaypointsSequencer.GetLastWaypoint
                 INC H                                               ; skip counter
+
+                ; JR $
+                LD A, IYL
+                LD L, A
+                LD A, IYH
+                LD H, A
+                ; INC L                                               ; skip counter
+
+
                 
                 LD B, H
                 LD C, L
@@ -33,7 +42,7 @@ DrawPath:       LD IYH, D
                 EX AF, AF'
 
                 INC L                                               ; HL = TilemapOffsetHeight
-                INC B                                               ; BC = Y 
+                INC C                                               ; BC = Y 
 
                 ; A = LyE - VyE
                 LD A, (BC)
