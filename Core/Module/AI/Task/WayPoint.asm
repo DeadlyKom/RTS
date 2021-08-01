@@ -78,6 +78,9 @@ WayPoint:       ; JR $
                 LD (IX + FUnitTargets.WayPoint.Y), D
 
                 SET FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)     ; указан новый WayPoint
+                INC IXH                                             ; FUnitAnimation    (4)
+                RES FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)     ; необходимо переинициализировать анимацию перемещения
+                DEC IXH                                             ; FUnitTargets      (3)
                 JR .Successfully
 
                 ; ---------------------------------------------
