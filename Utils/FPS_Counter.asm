@@ -18,7 +18,7 @@ IntTick:            LD A, (TicksCount)
                     LD (FramesCount_BCD), A
                     RET
 FrameRendered:      LD A, (FramesCount_BCD)
-                    INC A
+                    ADD A, #01
                     DAA
                     LD (FramesCount_BCD), A
                     RET
