@@ -15,9 +15,9 @@ WayPoint:       ; JR $
                 INC IXH                                             ; FUnitLocation     (2)
                 INC IXH                                             ; FUnitTargets      (3)
 
-                ; проверка что Way Point валиден
-                BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
-                JR Z, .IsNotValid_WP                                ; текущий Way Point не валидный
+                ; проверка что дельтазначени валиден
+                BIT FUTF_VALID_DT_BIT, (IX + FUnitTargets.Data)
+                JR Z, .IsNotValid_DT                                ; текущие дельты не валидный
 
 .Successfully   DEC IXH                                             ; FUnitLocation     (2)
                 DEC IXH                                             ; FUnitState        (1)
@@ -27,9 +27,9 @@ WayPoint:       ; JR $
                 RET
 
                 ; ---------------------------------------------
-                ; текущий Way Point стал невалидны (мб дошёл!)
+                ; текущие дельты невалидны
                 ; ---------------------------------------------
-.IsNotValid_WP  BIT FUTF_VALID_IDX_BIT, (IX + FUnitTargets.Data)
+.IsNotValid_DT  BIT FUTF_VALID_IDX_BIT, (IX + FUnitTargets.Data)
                 JR Z, .IsNotValid_IDX                               ; данные об индексе не валидны, 
                                                                     ; дальнейшего пути нет!
 
@@ -65,19 +65,23 @@ WayPoint:       ; JR $
 
                 DEC (IX + FUnitTargets.Data)                        ; уменьшить счётчик
 
-                ; копирование WayPoint во внутреннее хранилище
+                ; получим WayPoint из массива
                 LD L, A
-.CopyWP         LD A, (HighWaypointArrayRef)
+.SetDelta       LD A, (HighWaypointArrayRef)
                 LD H, A
                 INC H                                               ; первое значение, счётчик
                 LD E, (HL)
                 INC H
                 LD D, (HL)
                 ; JR $
-                LD (IX + FUnitTargets.WayPoint.X), E
-                LD (IX + FUnitTargets.WayPoint.Y), D
+                
+                CALL Utils.GetDeltaTarget                           ; расчёт дельт между 2 точек
+                INC IXH                                             ; FUnitTargets      (3)
 
-                SET FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)     ; указан новый WayPoint
+                LD (IX + FUnitTargets.Delta.X), E
+                LD (IX + FUnitTargets.Delta.Y), D
+
+                SET FUTF_VALID_DT_BIT, (IX + FUnitTargets.Data)     ; указаны новые дельты значения
                 JR .Successfully
 
                 ; ---------------------------------------------
@@ -97,7 +101,7 @@ WayPoint:       ; JR $
                 LD L, (IX + FUnitTargets.Idx)
 
                 LD L, (HL)
-                JR .CopyWP
+                JR .SetDelta
 
 
 .IsNotValid_IDX DEC IXH                                             ; FUnitLocation     (2)
@@ -119,6 +123,6 @@ WayPoint:       ; JR $
                 
                 LD L, (HL)
 
-                JR .CopyWP
+                JR .SetDelta
 
                 endif ; ~_CORE_MODULE_AI_TASK_WAY_POINT_

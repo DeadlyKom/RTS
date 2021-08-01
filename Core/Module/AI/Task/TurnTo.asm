@@ -17,8 +17,10 @@ TurnTo:         ; JR$
                 INC IXH                                     ; FUnitLocation     (2)
                 INC IXH                                     ; FUnitTargets      (3)
 
-                CALL Utils.GetDeltaTargetEx                 ; calculate direction delta
-                JR NC, .Fail                                ; неудачая точка назначения
+                ; CALL Utils.GetDeltaTargetEx                 ; calculate direction delta
+                ; JR NC, .Fail                                ; неудачая точка назначения
+                LD E, (IX + FUnitTargets.Delta.X)
+                LD D, (IX + FUnitTargets.Delta.Y)
 
                 LD A, E
                 OR D
@@ -32,6 +34,7 @@ TurnTo:         ; JR$
                 ; ---------------------------------------------
 
                 ; restor register IX
+                DEC IXH                                     ; FUnitLocation     (2)
                 DEC IXH                                     ; FUnitState        (1)
                 LD A, (IX + FUnitState.Direction)
                 JP Utils.Turn.Down                          ; вернёт флаг успешности

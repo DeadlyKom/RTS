@@ -7,7 +7,7 @@ DrawPath:       LD IYH, D
                 LD IYL, E
                 INC IYH                                             ; FUnitLocation     (2)
                 INC IYH                                             ; FUnitTargets      (3)
-                BIT FUTF_VALID_WP_BIT, (IY + FUnitTargets.Data)
+                BIT FUTF_VALID_DT_BIT, (IY + FUnitTargets.Data)
                 RET Z
 
                  ; ---------------------------------------------

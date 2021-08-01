@@ -70,8 +70,8 @@ Unit:           ; определение адреса добавления но�
 
                 ; инициализция
                 XOR A
-                LD (IX + FUnitTargets.WayPoint.X), A
-                LD (IX + FUnitTargets.WayPoint.Y), A
+                LD (IX + FUnitTargets.Delta.X), A
+                LD (IX + FUnitTargets.Delta.Y), A
                 LD (IX + FUnitTargets.Data), A
                 LD (IX + FUnitTargets.Idx), A
 

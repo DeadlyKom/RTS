@@ -1,7 +1,6 @@
 
                     ifndef _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
                     define _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_
-
 ; -----------------------------------------
 ; In:
 ;   IX - pointer to FUnitTargets (3)
@@ -14,79 +13,92 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetDeltaTarget:     BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
-                    JR Z, .IsNotValid                                                       ; текущий Way Point не валидный
+; GetDeltaTarget:     BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
+;                     JR Z, .IsNotValid                                                       ; текущий Way Point не валидный
 
-                    LD A, (IX + FUnitTargets.WayPoint.Y)
-                    EX AF, AF'
-                    LD A, (IX + FUnitTargets.WayPoint.X)
+;                     LD A, (IX + FUnitTargets.WayPoint.Y)
+;                     EX AF, AF'
+;                     LD A, (IX + FUnitTargets.WayPoint.X)
 
-                    DEC IXH                                                                 ; FUnitLocation (2)
+;                     DEC IXH                                                                 ; FUnitLocation (2)
 
-                    LD C, #00                                                               ; С = 0 (нет необходимости выравнивать), 
-                                                                                            ; С = 1 (нужно привести к одной точности)
-                    ; delta x = FUnitTargets.WayPoint.X - FUnitLocation.TilePosition.X
-                    SUB (IX + FUnitLocation.TilePosition.X)
-                    JP NZ, .SetX
-                    ; увеличение точности X
-                    ADD A, (IX + FUnitLocation.OffsetByPixel.X)
-                    CPL
-                    INC C                                                                   ; X = более точный, Y нужно будет увеличить точность (Y << 3)
-.SetX               LD E, A
+;                     LD C, #00                                                               ; С = 0 (нет необходимости выравнивать), 
+;                                                                                             ; С = 1 (нужно привести к одной точности)
+;                     ; delta x = FUnitTargets.WayPoint.X - FUnitLocation.TilePosition.X
+;                     SUB (IX + FUnitLocation.TilePosition.X)
+;                     JP NZ, .SetX
+;                     ; увеличение точности X
+;                     ADD A, (IX + FUnitLocation.OffsetByPixel.X)
+;                     CPL
+;                     INC C                                                                   ; X = более точный, Y нужно будет увеличить точность (Y << 3)
+; .SetX               LD E, A
 
-                    ; delta y = FUnitTargets.WayPoint.Y - FUnitLocation.TilePosition.Y
-                    EX AF, AF'
-                    SUB (IX + FUnitLocation.TilePosition.Y)
-                    JP NZ, .IsImprovedAccuracy                                              ; Y имеет грубую точность, нужно проверить на необходимость увеличения точности
-                    ; увеличение точности Y
-                    ADD A, (IX + FUnitLocation.OffsetByPixel.Y)
-                    CPL
-                    LD D, A
+;                     ; delta y = FUnitTargets.WayPoint.Y - FUnitLocation.TilePosition.Y
+;                     EX AF, AF'
+;                     SUB (IX + FUnitLocation.TilePosition.Y)
+;                     JP NZ, .IsImprovedAccuracy                                              ; Y имеет грубую точность, нужно проверить на необходимость увеличения точности
+;                     ; увеличение точности Y
+;                     ADD A, (IX + FUnitLocation.OffsetByPixel.Y)
+;                     CPL
+;                     LD D, A
 
-                    ; проверка на необходимость увеличения точности X,
-                    ; т.к. Y имеет более высокую точность
-                    DEC C                                                                   ; если С = 1, значит X имеет высокую точность, и не требуется его улучшение
-                    JR Z, .Successfully                                                     ; X и Y одинаковой точности (точная)
+;                     ; проверка на необходимость увеличения точности X,
+;                     ; т.к. Y имеет более высокую точность
+;                     DEC C                                                                   ; если С = 1, значит X имеет высокую точность, и не требуется его улучшение
+;                     JR Z, .Successfully                                                     ; X и Y одинаковой точности (точная)
                     
-                    ; увеличение точности X
-                    LD A, E
-                    ADD A, A
-                    ADD A, A
-                    ADD A, A
-                    LD E, A
-                    JR .Successfully
+;                     ; увеличение точности X
+;                     LD A, E
+;                     ADD A, A
+;                     ADD A, A
+;                     ADD A, A
+;                     LD E, A
+;                     JR .Successfully
                 
-.IsImprovedAccuracy ; проверка на необходимость увеличения точности Y,
-                    ; т.к. X имеет более высокую точность
-                    DEC C                                                                   ; если С = 1, значит X имеет высокую точность, и Y необходимо увеличить точность
-                    JR NZ, .SetY                                                            ; X и Y одинаковой точности (грубая)
+; .IsImprovedAccuracy ; проверка на необходимость увеличения точности Y,
+;                     ; т.к. X имеет более высокую точность
+;                     DEC C                                                                   ; если С = 1, значит X имеет высокую точность, и Y необходимо увеличить точность
+;                     JR NZ, .SetY                                                            ; X и Y одинаковой точности (грубая)
 
-                    ; увеличение точности Y
-                    ADD A, A
-                    ADD A, A
-                    ADD A, A
-.SetY               LD D, A
+;                     ; увеличение точности Y
+;                     ADD A, A
+;                     ADD A, A
+;                     ADD A, A
+; .SetY               LD D, A
 
-.Successfully       SCF                                                                     ; успешность операции
-                    RET
+; .Successfully       SCF                                                                     ; успешность операции
+;                     RET
 
-.IsNotValid         XOR A                                                                   ; неудача операции
-                    LD D, A
-                    LD E, A
+; .IsNotValid         XOR A                                                                   ; неудача операции
+;                     LD D, A
+;                     LD E, A
+;                     DEC IXH                                                                 ; FUnitLocation (2)
+;                     RET
+
+; -----------------------------------------
+; In:
+;   IX - pointer to FUnitTargets (3)
+;   DE - позиция точки назначения (D - y, E - x)
+; Out:
+;   IX - pointer to FUnitLocation (2)
+;   DE - deltas (D - dY, E - dX)
+;   flag Carry true, говорит об успешности расчёта дельт
+; Corrupt:
+;   HL, DE, AF
+; Note:
+;   requires included memory page
+; -----------------------------------------
+GetDeltaTarget:     ; BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
+                    ; JR Z, GetDeltaTarget.IsNotValid                                         ; текущий Way Point не валидный
+
+                    ; LD A, (IX + FUnitTargets.WayPoint.Y)
+                    ; EX AF, AF'
+                    ; LD A, (IX + FUnitTargets.WayPoint.X)
+
                     DEC IXH                                                                 ; FUnitLocation (2)
-                    RET
 
-GetDeltaTargetEx:   BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
-                    JR Z, GetDeltaTarget.IsNotValid                                         ; текущий Way Point не валидный
-
-                    LD A, (IX + FUnitTargets.WayPoint.Y)
-                    EX AF, AF'
-                    LD A, (IX + FUnitTargets.WayPoint.X)
-
-                    DEC IXH                                                                 ; FUnitLocation (2)
-
-                    ; LD B, #00
-                    ; delta x = (FUnitTargets.WayPoint.X - FUnitLocation.TilePosition.X) * 16 + 8 + FUnitLocation.OffsetByPixel.X
+                    ; delta x = (E - FUnitLocation.TilePosition.X) * 16 + 8 + FUnitLocation.OffsetByPixel.X
+                    LD A, E
                     SUB (IX + FUnitLocation.TilePosition.X)
                     LD L, A
                     SBC A, A
@@ -104,15 +116,14 @@ GetDeltaTargetEx:   BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                     LD B, A
                     ADD HL, BC
 
-                    ; LD HL, #0300
-
                     ADD HL, HL
                     ADD HL, HL
                     ADD HL, HL
 
                     EX DE, HL
-                    ; delta y = (FUnitTargets.WayPoint.Y - FUnitLocation.TilePosition.Y) * 16 + 8 + FUnitLocation.OffsetByPixel.Y
-                    EX AF, AF'
+
+                    ; delta y = (D - FUnitLocation.TilePosition.Y) * 16 + 8 + FUnitLocation.OffsetByPixel.Y
+                    LD A, D
                     SUB (IX + FUnitLocation.TilePosition.Y)
                     LD L, A
                     SBC A, A
@@ -129,8 +140,6 @@ GetDeltaTargetEx:   BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                     SBC A, A
                     LD B, A
                     ADD HL, BC
-
-                    ; LD HL, #0DF0
 
                     ADD HL, HL
                     ADD HL, HL
@@ -169,79 +178,92 @@ GetDeltaTargetEx:   BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
 
                     LD C, A
                     EX AF, AF'
-                    RLA
+                    RL C
+                    ADC A, A
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L1
                     ADD HL, HL              ; HL = dY
                     EX DE, HL
                     ADD HL, HL              ; HL = dX
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L2
                     ADD HL, HL              ; HL = dX
                     EX DE, HL
                     ADD HL, HL              ; HL = dY
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L1
                     ADD HL, HL              ; HL = dY
                     EX DE, HL
                     ADD HL, HL              ; HL = dX
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L2
                     ADD HL, HL              ; HL = dX
                     EX DE, HL
                     ADD HL, HL              ; HL = dY
 
                     ; --------
-                    OR C
+                    ; OR C
                     ; -------
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L1
                     ADD HL, HL              ; HL = dY
                     EX DE, HL
                     ADD HL, HL              ; HL = dX
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L2
                     ADD HL, HL              ; HL = dX
                     EX DE, HL
                     ADD HL, HL              ; HL = dY
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L1
                     ADD HL, HL              ; HL = dY
                     EX DE, HL
                     ADD HL, HL              ; HL = dX
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L2
                     ADD HL, HL              ; HL = dX
                     EX DE, HL
                     ADD HL, HL              ; HL = dY
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L1
                     ADD HL, HL              ; HL = dY
                     EX DE, HL
                     ADD HL, HL              ; HL = dX
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L2
                     ADD HL, HL              ; HL = dX
                     EX DE, HL
                     ADD HL, HL              ; HL = dY
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L1
                     ADD HL, HL              ; HL = dY
                     EX DE, HL
                     ADD HL, HL              ; HL = dX
 
-                    RLA
+                    RL C
+                    ADC A, A
                     JR C, .L2
                     ADD HL, HL              ; HL = dX
                     EX DE, HL
@@ -259,13 +281,13 @@ GetDeltaTargetEx:   BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
 .L2                 ; HL = dX
                     ; DE = dY
                     LD E, H
-                    LD D, D
+                    ; LD D, D
 
                     SCF                                                                     ; успешность операции
                     RET                   
 
 
-.Successfully       SCF                                                                     ; успешность операции
-                    RET
+; .Successfully       SCF                                                                     ; успешность операции
+;                     RET
 
                     endif ; ~ _CORE_MODULE_UTILS_DELTA_BETWEEN_LOCATION_AND_TARGET_

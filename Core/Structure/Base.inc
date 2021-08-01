@@ -14,6 +14,12 @@ Y                   DB #00
 
                     ends
 
+                    struct FDelta
+X                   DB #00
+Y                   DB #00            
+
+                    ends
+
                     struct FMapSize
 X                   DB #00
 Y                   DB #00

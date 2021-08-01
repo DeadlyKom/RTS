@@ -26,8 +26,10 @@ MoveTo:         ; JR$
                 INC IXH                                             ; FUnitTargets      (3)
 
                 ;
-                CALL Utils.GetDeltaTargetEx                         ; calculate direction delta
-                JP NC, .Fail                                        ; неудачая точка назначения
+                ; CALL Utils.GetDeltaTargetEx                         ; calculate direction delta
+                ; JP NC, .Fail                                        ; неудачая точка назначения
+                LD E, (IX + FUnitTargets.Delta.X)
+                LD D, (IX + FUnitTargets.Delta.Y)
 
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitLocation (2)
@@ -35,7 +37,7 @@ MoveTo:         ; JR$
                 ; E = dX (signed)
                 ; ---------------------------------------------
 
-                INC IXH                                             ; FUnitTargets      (3)
+                ; INC IXH                                             ; FUnitTargets      (3)
 
                 LD A, E
                 OR D
@@ -161,7 +163,7 @@ MoveTo:         ; JR$
                 CALL Utils.Tilemap.Reconnaissance
                 INC IXH                                             ; FUnitTargets      (3)
 
-                RES FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)     ; сброс текущего Way Point
+                RES FUTF_VALID_DT_BIT, (IX + FUnitTargets.Data)     ; сброс текущих значений 
                 DEC IXH                                             ; FUnitLocation     (2)
                 DEC IXH                                             ; FUnitState        (1)
 
@@ -170,11 +172,11 @@ MoveTo:         ; JR$
                 SCF                                                 ; успешность выполнения
                 RET
 
-.Fail           DEC IXH                                             ; FUnitState        (1)
-                RES FUSF_MOVE_BIT, (IX + FUnitState.State)          ; сброс состояния перемещения/поворота
-                JR $
-                OR A                                                ; неудачное выполнение
-                RET
+; .Fail           DEC IXH                                             ; FUnitState        (1)
+;                 RES FUSF_MOVE_BIT, (IX + FUnitState.State)          ; сброс состояния перемещения/поворота
+;                 JR $
+;                 OR A                                                ; неудачное выполнение
+;                 RET
 
 .Init           ; ---------------------------------------------
                 ; IX - pointer to FUnitAnimation (4)
