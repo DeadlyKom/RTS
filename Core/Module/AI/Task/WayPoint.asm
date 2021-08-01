@@ -94,11 +94,8 @@ WayPoint:       ; JR $
                 LD (IX + FUnitTargets.Data), A
 
                 ; копирование WayPoint во внутреннее хранилище
-                LD A, FUTF_MASK_OFFSET
-                ADD A, HIGH WaypointsSequencePtr
-                LD H, A
+                LD H, HIGH WaypointsSequencePtr + FUTF_MASK_OFFSET
                 LD L, (IX + FUnitTargets.Idx)
-
                 LD L, (HL)
                 JR .CopyWP
 
@@ -119,7 +116,6 @@ WayPoint:       ; JR $
                 ADD A, HIGH WaypointsSequencePtr
                 LD H, A
                 LD L, (IX + FUnitTargets.Idx)
-                
                 LD L, (HL)
 
                 JR .CopyWP
