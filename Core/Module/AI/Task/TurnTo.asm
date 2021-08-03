@@ -15,9 +15,15 @@ TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)  ; установка
                 ; go to FUnitTargets
                 INC IXH                                     ; FUnitLocation     (2)
                 INC IXH                                     ; FUnitTargets      (3)
+                INC IXH                                     ; FUnitAnimation    (4)
+                
+                BIT FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)
+                JR NZ, .IsMoveTo
 
-                ; CALL Utils.GetDeltaTarget                   ; calculate direction delta
-                CALL Utils.GetPerfectTargetDelta
+                DEC IXH                                     ; FUnitTargets      (3)
+
+                CALL Utils.GetDeltaTarget                   ; calculate direction delta
+                ; CALL Utils.GetPerfectTargetDelta
                 JR NC, .Fail                                ; неудачая точка назначения
 
                 LD A, E
@@ -43,6 +49,8 @@ TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)  ; установка
                 OR A                                        ; неудачное выполнение
                 RET
 
+.IsMoveTo       DEC IXH                                     ; FUnitTargets      (3)
+                DEC IXH                                     ; FUnitLocation     (2)
 .Complite       DEC IXH                                     ; FUnitState        (1)
 
                 RES FUSF_MOVE_BIT, (IX + FUnitState.State)  ; сброс состояния перемещения/поворота

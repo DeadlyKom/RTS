@@ -161,6 +161,10 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)          ; устан
                 CALL Utils.Tilemap.Reconnaissance
                 INC IXH                                             ; FUnitTargets      (3)
 
+                INC IXH                                             ; FUnitAnimation    (4)
+                RES FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)     ; необходимо переинициализировать анимацию перемещения
+                DEC IXH                                             ; FUnitTargets      (3)
+
                 RES FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)     ; сброс текущего Way Point
                 DEC IXH                                             ; FUnitLocation     (2)
                 DEC IXH                                             ; FUnitState        (1)

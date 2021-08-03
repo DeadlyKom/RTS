@@ -135,33 +135,7 @@ GetPerfectTargetDelta:  BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                         LD B, A
                         ADD HL, BC
 
-                        ; LD HL, #009F
-                        ; LD DE, #007F
-
-; .Normalize              LD A, H
-;                         OR A
-;                         JR Z, .H_Ready
-;                         INC A
-;                         JR Z, .H_Ready
-
-; .DoRoll                 SRA H
-;                         RR L
-
-;                         SRA D
-;                         RR E
-;                         JR .Normalize
-
-; .H_Ready                LD A, D
-;                         OR A
-;                         JR Z, .D_Ready
-;                         INC A
-;                         JR NZ, .DoRoll
-
-; .D_Ready                SRA H
-;                         RR L
-
-;                         SRA D
-;                         RR E
+                        ; нормализация значений
 
 .Normalize              LD A, H
                         OR A
