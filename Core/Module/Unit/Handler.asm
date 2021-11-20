@@ -635,12 +635,12 @@ Handler:        ; включить страницу
                 ; ---------------------------------------------
 .PreNextUnit    POP DE                      ; restore address UnitsArray
 
-                PUSH DE
-                ; отрисовка линии пути
-                LD A, (DE)                  ; DE = FUnitState
-                BIT FUSF_SELECTED_BIT, A    ; check flag FUSF_SELECTED
-                CALL NZ, DrawPath
-                POP DE
+                ; PUSH DE
+                ; ; отрисовка линии пути
+                ; LD A, (DE)                  ; DE = FUnitState
+                ; BIT FUSF_SELECTED_BIT, A    ; check flag FUSF_SELECTED
+                ; CALL NZ, DrawPath
+                ; POP DE
 
 .NextUnit       INC E
                 INC E
@@ -662,6 +662,5 @@ Handler:        ; включить страницу
 VisibleUnits    DB #00
 
                 endif
-
 
                 endif ; ~ _CORE_MODULE_UNIT_HANDLER_

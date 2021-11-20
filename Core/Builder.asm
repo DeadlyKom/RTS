@@ -165,3 +165,5 @@ EndBasic:
                         savetrd  TRD_FILENAME, "Page7.C", Page_7, SizePage_7        ; bank 03 
                         page 5
                         savetrd  TRD_FILENAME, "Page5.C", Page_5, SizePage_5        ; bank 01
+
+                        labelslist "RTS.l"

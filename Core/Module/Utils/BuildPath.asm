@@ -93,7 +93,6 @@ BuildPath:          ; создать цепочку waypoints
                     JP (HL)
                     ; DB #00
 .Fail               RET
-                    ; JR $
 
                     endmodule
 

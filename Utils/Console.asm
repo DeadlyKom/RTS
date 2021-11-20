@@ -4,7 +4,7 @@
 				define	_UTILS_CONSOLE_
 	
 				module Console	
-FontAdr:		DW #3D00
+FontAddr:		DW #3D00
 
 ; sets cursor position to A
 ; Arguments:
@@ -38,7 +38,7 @@ Sleep:			EI
 ; draw char
 ; A - char
 DrawChar:		; calculate source font address
-				LD HL, (FontAdr)
+				LD HL, (FontAddr)
 				DEC H
 				LD D, #00
 

@@ -84,6 +84,7 @@ Radius_4        DB 3, 0,2,3,4,3,2,0, #FF
 Radius_5        DB 4, 1,3,3,4,5,4,3,3,1, #FF
 Radius_6        DB 5, 1,3,4,5,6,6,6,5,4,3,1, #FF
 Radius_7        DB 7, 1,3,4,5,5,6,6,6,6,6,5,5,4,3,1, #FF
+
                 endmodule
 
                 endif ; ~ _CORE_MODULE_UTILS_RECONNAISSANCE_
