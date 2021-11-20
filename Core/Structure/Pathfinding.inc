@@ -6,7 +6,10 @@
 PF_IN_OPEN_LIST_FLAG    EQU 0x01
 PF_CLOSED_FLAG          EQU 0x02
 
-                    struct FTileData
+; данная структура хранится в памяти не линейно
+; т.е. для перехода к следующему полю структуры приращиваем старший байт адреса
+
+                    struct FPFInfo
 ParentCoord         FLocation
 OpenListIdx         DB #00      ; index in open list
 G_Cost              DB #00      ; distance from starting node

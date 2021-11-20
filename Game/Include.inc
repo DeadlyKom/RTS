@@ -22,7 +22,7 @@
                             define TRD_FILENAME "Torn Metal.trd"    ; имя образа TRD
 StackTop                    EQU #5BFB                               ; расположение стека
 MemoryPageIDRef             EQU #5BFC                               ; ID
-MemoryPageRef               EQU PORT_7FFD; #5BFE                               ; адрес хранения номера странички
+MemoryPageRef               EQU PORT_7FFD; #5BFE                    ; адрес хранения номера странички
 BorderStorageStackRef       EQU #5BFF                               ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                               ; адрес вектора прерывания
 TilemapPtr                  EQU #C000                               ; адрес тайловой карты
@@ -37,8 +37,6 @@ SharedBuffer                EQU Page_2.SharedBuffer                 ; адрес
 RenderBuffer                EQU Page_2.RenderBuffer                 ; адрес буфера обновлений (192 байта)                                               [64]  free
 WaypointsSequenceBitmapPtr  EQU Page_2.RenderBuffer + 0xE0          ; адрес битовой карты последовательностей Way Point'ов (32 байта)                   [32]  free + [32] busy = 64 last bytes
 TilemapBuffer               EQU Page_2.TilemapBuffer                ; адрес тайловой карты буфера (256 байт)
-PathfindingVectorField      EQU Page_5.Pathfinding                  ; адрес буфера для поиска пути - векторное поле (4096 байт)
-PathfindingQueue            EQU Page_5.PathfindingQueue             ; адрес буфера для поиска пути - массив очереди ячеек (2048 байт)
 BypassFOW                   EQU Page_7.BypassFOW                    ; адресс таблицы обхода FOW
 AI_MIN_UPDATE_FREQ          EQU 1                                   ; скорость обновления ИИ (минимальная)
 AI_MAX_UPDATE_FREQ          EQU 4                                   ; скорость обновления ИИ (максимальная)
@@ -110,5 +108,14 @@ VirtualKeyUpRef             EQU Game.VK_KeyUp                       ;
 VirtualKeyDownRef           EQU Game.VK_KeyDown                     ;
 VirtualKeyLeftRef           EQU Game.VK_KeyLeft                     ;
 VirtualKeyRightRef          EQU Game.VK_KeyRight                    ;
+
+; pathfinding
+PFWinWidth                  EQU 16                                  ; ширина окна поисковика (не менять, захардкожено)
+PFWinHeight                 EQU 16                                  ; высота окна поисковика (не менять, захардкожено)
+PFWinBufSize                EQU PFWinWidth * PFWinHeight * FPFInfo  ; размер буфера окна поисковика (2048 байт)
+
+PathfindingVectorField      EQU Page_5.Pathfinding                  ; адрес буфера для поиска пути - векторное поле (4096 байт)                         remove ?
+PathfindingQueue            EQU Page_5.PathfindingQueue             ; адрес буфера для поиска пути - массив очереди ячеек (2048 байт)                   remove ?
+PathfindingBuffer           EQU Page_5.PathfindingBuffer            ; адрес буфера для поиска пути - 
 
                             endif ; ~_GAME_INCLUDE_
