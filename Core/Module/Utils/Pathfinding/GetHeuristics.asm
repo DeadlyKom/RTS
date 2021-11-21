@@ -51,12 +51,6 @@ GetHeuristics:  ;
                 ADD A, A
                 ADD A, A
                 ADD A, L
-
-                LD L, A
-                ADD A, A
-                ADD A, A
-                ADD A, L
-
                 LD L, A
 
                 ; H * Cost_45
