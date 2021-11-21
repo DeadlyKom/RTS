@@ -20,11 +20,10 @@ PF_IS_START_COORD       EQU 1 << PF_IS_START_COORD_BIT
                     struct FPFInfo
 Flags               DB #00          ; pathfinding flags                 (0)
 ParentCoord         FLocation       ;                                   (1,2)
-G_Cost              DB #00          ; distance from starting node       (3)
-H_Cost              DB #00          ; distance from end node            (4)
-F_Cost              DW #0000        ; G_Cost + H_Cost                   (5,6)
-OpenListIdx         DB #00          ; index in open list                (7)
-
+G_Cost              DW #0000        ; distance from starting node       (3,4)
+H_Cost              DW #0000        ; distance from end node            (5,6)
+F_Cost              DW #0000        ; G_Cost + H_Cost                   (7,8)
+OpenListIdx         DB #00          ; index in open list                (9)
 
                     ends
 

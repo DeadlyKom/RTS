@@ -10,7 +10,7 @@
 ; Out:
 ;   HL  - heuristic value
 ; Corrupt:
-;   HL, AF
+;   HL, BC, AF, AF'
 ; Note:
 ;   Cost_90 = 5
 ;   Cost_45 = 7

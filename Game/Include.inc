@@ -112,7 +112,7 @@ VirtualKeyRightRef          EQU Game.VK_KeyRight                    ;
 ; pathfinding
 PFWinWidth                  EQU 16                                  ; ширина окна поисковика (не менять, захардкожено)
 PFWinHeight                 EQU 16                                  ; высота окна поисковика (не менять, захардкожено)
-PFWinBufSize                EQU PFWinWidth * PFWinHeight * FPFInfo  ; размер буфера окна поисковика (2048 байт)
+PFWinBufSize                EQU PFWinWidth * PFWinHeight * FPFInfo  ; размер буфера окна поисковика (2560 байт)
 
 PathfindingVectorField      EQU Page_5.Pathfinding                  ; адрес буфера для поиска пути - векторное поле (4096 байт)                         remove ?
 PathfindingQueue            EQU Page_5.PathfindingQueue             ; адрес буфера для поиска пути - массив очереди ячеек (2048 байт)                   remove ?
