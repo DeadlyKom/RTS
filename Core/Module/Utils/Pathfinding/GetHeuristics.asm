@@ -8,7 +8,7 @@
 ; In:
 ;   DE - tile position (D - y, E - x)
 ; Out:
-;   A  - heuristic value
+;   HL  - heuristic value
 ; Corrupt:
 ;   HL, AF
 ; Note:
@@ -25,6 +25,7 @@ GetHeuristics:  ;
                 JP P, $+5
                 NEG
                 LD H, A
+                EX AF, AF'
 
                 ; dX = abs(Position.x - End.x);
                 LD A, E
@@ -39,37 +40,39 @@ GetHeuristics:  ;
                                     ; else              { A = dX * Cost_45 + (dY - dX) * Cost_90 }
 
                 NEG                 ; Delta = (dY - dX)
-                LD H, L             ; H = dX
+
+                ; replace dY with dX
+                EX AF, AF'
+                LD A, L
+                EX AF, AF'
 
 .dX_more_dY     ; Delta = (dX - dY) or (dY - dX)
 
-                CP 51               ; 51 * Cost_90 = 255 it is max value
-                JR NC, .MaxValue    ; A >= 51 jump, overflow protection
-
                 ; Delta * Cost_90 
+                LD H, #00
                 LD L, A
-                ADD A, A
-                ADD A, A
-                ADD A, L
-                LD L, A
+                LD C, L
+                LD B, H
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, BC
+                PUSH BC
 
-                ; H * Cost_45
-                LD A, H
+                ; (dY or dX) * Cost_45
+                EX AF, AF'
+                LD H, #00
+                LD L, A
+                LD C, L
+                LD B, H
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, HL
+                SBC HL, BC
+
+                ; HL = (dY or dX) * Cost_45 + Delta * Cost_90
+                POP BC
+                ADD HL, BC
                 
-                CP 36               ; 36 * Cost_45 = 252 it is max value
-                JR NC, .MaxValue    ; A >= 36 jump, overflow protection
-
-                ADD A, A
-                ADD A, A
-                ADD A, A
-                SUB H
-
-                ; H * Cost_45 + Delta * Cost_90
-                ADD A, L
-                RET NC
-
-.MaxValue       ; max value
-                LD A, #FF
                 RET
 
                 endmodule
