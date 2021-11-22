@@ -43,34 +43,77 @@ AddToOpenList:  ;
 .BufferStartY   EQU $+1
                 SUB #00                                         ; const value BufferStart.Y
                 LD (HL), A
+                INC H                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
 
-                INC H                                           ; HL - pointer to FPFInfo.G_Cost                    (3)
+                ; OpenList.push_back(DE)
+                CALL $
+
+                ; FPFInfo.OpenListIdx = (OpenList.size() - 1)
+                LD (HL), A
+                INC H                                           ; HL - pointer to FPFInfo.G_Cost                    (4)
 
                 POP BC                                          ; BC = [SP+0]
                 LD (HL), C
-                INC H                                           ; HL - pointer to FPFInfo.G_Cost+1                  (4)
+                INC H                                           ; HL - pointer to FPFInfo.G_Cost+1                  (5)
                 LD (HL), B
-                INC H                                           ; HL - pointer to FPFInfo.H_Cost                    (5)
+                INC H                                           ; HL - pointer to FPFInfo.H_Cost                    (6)
 
                 POP DE                                          ; DE = [SP+4]
                 LD (HL), E
-                INC H                                           ; HL - pointer to FPFInfo.H_Cost+1                  (6)
+                INC H                                           ; HL - pointer to FPFInfo.H_Cost+1                  (7)
                 LD (HL), D
-                INC H                                           ; HL - pointer to FPFInfo.F_Cost                    (7)
+                INC H                                           ; HL - pointer to FPFInfo.F_Cost                    (8)
 
-                ; F_Cost = G_Cost + H_Cost;
+                ; F_Cost = G_Cost + H_Cost
                 EX DE, HL
                 ADD HL, BC
                 EX DE, HL
                 
                 LD (HL), E
-                INC H                                           ; HL - pointer to FPFInfo.F_Cost+1                  (8)
+                INC H                                           ; HL - pointer to FPFInfo.F_Cost+1                  (9)
                 LD (HL), D
-                INC H                                           ; HL - pointer to FPFInfo.OpenListIdx               (9)
 
+                ; TrickleUp(FPFInfo.OpenListIdx);
+                CALL $                                          ; A = FPFInfo.OpenListIdx
+
+                RET
                 
-.InOpenList
+.InOpenList     ; already on openlist
 
+                ; HL + FPFInfo.F_Cost
+                LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost   ; LD A, H : ADD A, FPFInfo.F_Cost : LD H, A
+                EX DE, HL                                       ; DE - pointer to FPFInfo.F_Cost                    (8)
+
+                ; F_Cost = G _Cost + H_Cost
+                POP HL                                          ; HL = G_Cost       [SP+0]
+                POP BC                                          ; BC = H_Cost       [SP+4]
+                ADD HL, BC                                      ; HL = F_Cost
+
+                EX DE, HL                                       ; HL - pointer to FPFInfo.F_Cost                    (8)
+                LD C, (HL)
+                INC H                                           ; HL - pointer to FPFInfo.F_Cost+1                  (9)
+                LD B, (HL)
+                EX DE, HL                                       ; DE - pointer to FPFInfo.F_Cost+1                  (9)
+
+                ; ---------------------------------------------
+                ; HL = F_Cost (G _Cost + H_Cost)
+                ; DE = pointer to FPFInfo.F_Cost+1                                                                  (9)
+                ; BC = FPFInfo.F_Cost
+                ; ---------------------------------------------
+
+                ; F_Cost >= FPFInfo.F_Cost
+                SBC HL, BC                                      ; F_Cost - FPFInfo.F_Cost
+                RET NC                                          ; return if F_Cost >= FPFInfo.F_Cost
+                                                                ; new cost is worse, don't change anything
+
+
+                // new item is better => replace
+                ; Data.g = g;
+                ; Data.h = h;
+                ; Data.f = f;
+                ; Data.ParentCoord =  ParentCoord - BufferStart;
+                ; TrickleUp(Data.OpenListIndex);
+                
                 RET
 
                 endmodule
