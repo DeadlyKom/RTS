@@ -24,7 +24,7 @@ PostSelector:   POP HL
                 OR A
                 JR Z, .RET
                 PUSH HL
-                ; прерывание может попортить, так что заново сохраняем точку возврата
+                ; interruption can corrupt the values, so restore the return point
                 ; DEC SP
                 ; DEC SP
                 LD DE, PostSelector

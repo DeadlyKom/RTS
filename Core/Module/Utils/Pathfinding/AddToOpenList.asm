@@ -12,10 +12,12 @@
 ;   BC   - perent tile position (B - y, C - x)
 ; Out:
 ; Corrupt:
+;   HL, DE, BC, AF, HL', DE', BC', SP+4
 ; Note:
-;   call this function only through a jump
 ; -----------------------------------------
-AddToOpenList:  ;
+AddToOpenList:  ; set return address
+                POP HL
+                LD (.JumpTrickleUp+1), HL
 
                 CALL GetTileInfo
 
@@ -32,18 +34,8 @@ AddToOpenList:  ;
 
                 INC H                                           ; HL - pointer to FPFInfo.ParentCoord.X             (1)
 
-                ; FPFInfo.ParentCoord - BufferStart
-                LD A, C
-.BufferStartX   EQU $+1
-                SUB #00                                         ; const value BufferStart.X
-                LD (HL), A
-                INC H                                           ; HL - pointer to FPFInfo.ParentCoord.Y             (2)
-                
-                LD A, B
-.BufferStartY   EQU $+1
-                SUB #00                                         ; const value BufferStart.Y
-                LD (HL), A
-                INC H                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
+                ; set FPFInfo.ParentCoord
+                CALL .SetParentCoord
 
                 ; OpenList.push_back(DE)
                 CALL $
@@ -74,46 +66,98 @@ AddToOpenList:  ;
                 LD (HL), D
 
                 ; TrickleUp(FPFInfo.OpenListIdx);
-                CALL $                                          ; A = FPFInfo.OpenListIdx
-
-                RET
+                JR .JumpTrickleUp                               ; A = FPFInfo.OpenListIdx
                 
 .InOpenList     ; already on openlist
+                LD A, L                                         ; save low byte of pointer to structure
 
-                ; HL + FPFInfo.F_Cost
-                LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost   ; LD A, H : ADD A, FPFInfo.F_Cost : LD H, A
-                EX DE, HL                                       ; DE - pointer to FPFInfo.F_Cost                    (8)
+                EXX
+                LD L, A                                         ; restore low byte of pointer to structure
+                LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost   ; HL - pointer to FPFInfo.F_Cost                    (8)
+
+                ; get value F_Cost by pointer to structure
+                LD E, (HL)
+                INC H                                           ; HL - pointer to FPFInfo.F_Cost+1                  (9)
+                LD D, (HL)
 
                 ; F_Cost = G _Cost + H_Cost
                 POP HL                                          ; HL = G_Cost       [SP+0]
                 POP BC                                          ; BC = H_Cost       [SP+4]
                 ADD HL, BC                                      ; HL = F_Cost
 
-                EX DE, HL                                       ; HL - pointer to FPFInfo.F_Cost                    (8)
-                LD C, (HL)
-                INC H                                           ; HL - pointer to FPFInfo.F_Cost+1                  (9)
-                LD B, (HL)
-                EX DE, HL                                       ; DE - pointer to FPFInfo.F_Cost+1                  (9)
-
                 ; ---------------------------------------------
                 ; HL = F_Cost (G _Cost + H_Cost)
-                ; DE = pointer to FPFInfo.F_Cost+1                                                                  (9)
-                ; BC = FPFInfo.F_Cost
+                ; DE = FPFInfo.F_Cost
+                ; BC = H_Cost
                 ; ---------------------------------------------
 
                 ; F_Cost >= FPFInfo.F_Cost
-                SBC HL, BC                                      ; F_Cost - FPFInfo.F_Cost
+                SBC HL, DE                                      ; F_Cost - FPFInfo.F_Cost
+                EXX ; ??
                 RET NC                                          ; return if F_Cost >= FPFInfo.F_Cost
                                                                 ; new cost is worse, don't change anything
 
+                EXX ; ??
+                ADC HL, DE                                      ; HL = F_Cost
+                EX DE, HL
+                LD L, A
+                LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost+1 ; HL - pointer to FPFInfo.F_Cost+1                  (9)
 
-                // new item is better => replace
-                ; Data.g = g;
-                ; Data.h = h;
-                ; Data.f = f;
-                ; Data.ParentCoord =  ParentCoord - BufferStart;
-                ; TrickleUp(Data.OpenListIndex);
+                ; FPFInfo.F_Cost = F_Cost
+                LD (HL), D
+                DEC H                                           ; HL - pointer to FPFInfo.F_Cost                    (8)
+                LD (HL), E
+                DEC H                                           ; HL - pointer to FPFInfo.H_Cost+1                  (7)
+
+                ; FPFInfo.H_Cost = H_Cost
+                LD (HL), B
+                DEC H                                           ; HL - pointer to FPFInfo.H_Cost                    (6)
+                LD (HL), C
+                DEC H                                           ; HL - pointer to FPFInfo.G_Cost+1                  (5)
+
+                ; calculate value G_Cost
+                EX DE, HL
+                OR A ; ??
+                SBC HL, BC                                      ; HL = G_Cost
+                EX DE, HL
+
+                ; FPFInfo.G_Cost = G_Cost
+                LD (HL), D
+                DEC H                                           ; HL - pointer to FPFInfo.G_Cost                    (4)
+                LD (HL), E
+                DEC H                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
+
+                EXX
+
+                ; calculate and set FPFInfo.ParentCoord
+                LD H, HIGH PathfindingBuffer | FPFInfo.ParentCoord
+                CALL .SetParentCoord                            ; HL - pointer to FPFInfo.OpenListIdx               (3)
+
+                ; get value FPFInfo.OpenListIdx
+                LD A, (HL)                                      ; A = FPFInfo.OpenListIdx
                 
+.JumpTrickleUp  ; TrickleUp(FPFInfo.OpenListIdx);
+                JP #0000                                        ; A = FPFInfo.OpenListIdx
+
+.SetParentCoord 
+                ; ---------------------------------------------
+                ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)
+                ; BC - perent tile position (B - y, C - x)
+                ; ---------------------------------------------
+
+                ; FPFInfo.ParentCoord.X - BufferStart.X
+                LD A, C
+.BufferStartX   EQU $+1
+                SUB #00                                         ; const value BufferStart.X
+                LD (HL), A
+                INC H                                           ; HL - pointer to FPFInfo.ParentCoord.Y             (2)
+                
+                ; FPFInfo.ParentCoord.Y - BufferStart.Y
+                LD A, B
+.BufferStartY   EQU $+1
+                SUB #00                                         ; const value BufferStart.Y
+                LD (HL), A
+                INC H                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
                 RET
 
                 endmodule
