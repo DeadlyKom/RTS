@@ -20,9 +20,7 @@
                 include "Queue.asm"
 
                 ; new pathfinding
-                include "Pathfinding/GetTileInfo.asm"
-                include "Pathfinding/GetHeuristics.asm"
-                include "Pathfinding/AddToOpenList.asm"
+                include "Pathfinding/Include.inc"
 
                 endmodule
 

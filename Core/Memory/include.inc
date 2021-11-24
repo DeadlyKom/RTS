@@ -19,6 +19,7 @@ Page_5:                     EQU #4000 + #1B00 + #0225   ; Bank 01 (Screen 0) (п
 Page_5.Pathfinding          EQU #4000                   ; Bank 01 (Screen 0) (временный массив)             - <= 4096 байт                  remove ?
 Page_5.PathfindingQueue     EQU #5000                   ; Bank 01 (Screen 0) (временный массив)             - <= 2048 байт                  remove ?
 Page_5.PathfindingBuffer    EQU #4000                   ; Bank 01 (Screen 0) (временный массив)             - размер константа PFWinBufSize
+Page_5.PathfindingOLBuffer  EQU #4A00                   ; Bank 01 (Screen 0) (временный массив)             - максимальный размер 512 байт
 Page_6:                     EQU #C000                   ; Bank 03
 Page_7:                     EQU #C000 + #1B00           ; Bank 03 (Screen 1) (пропуск экрана)
 Page_7.DebugTileTable:      EQU #DB00                   ; Bank 03 (Screen 1) (таблица спрайтов дебага)      - 256 байт

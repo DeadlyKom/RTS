@@ -2,7 +2,6 @@
                 ifndef _CORE_MODULE_UTILS_PATHFINDING_GET_TILE_INFO_
                 define _CORE_MODULE_UTILS_PATHFINDING_GET_TILE_INFO_
 
-                module Pathfinding
 ; -----------------------------------------
 ; get pointer to FPFInfo structure in the buffer
 ; In:
@@ -47,7 +46,5 @@ GetTileInfo:    ;
                 LD H, HIGH PathfindingBuffer
 
                 RET
-
-                endmodule
 
                 endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_GET_TILE_INFO_

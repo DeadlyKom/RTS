@@ -2,7 +2,6 @@
                 ifndef _CORE_MODULE_UTILS_PATHFINDING_HEURISTICS_
                 define _CORE_MODULE_UTILS_PATHFINDING_HEURISTICS_
 
-                module Pathfinding
 ; -----------------------------------------
 ; get heuristic value
 ; In:
@@ -72,9 +71,7 @@ GetHeuristics:  ;
                 ; HL = (dY or dX) * Cost_45 + Delta * Cost_90
                 POP BC
                 ADD HL, BC
-                
-                RET
 
-                endmodule
+                RET
 
                 endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_HEURISTICS_

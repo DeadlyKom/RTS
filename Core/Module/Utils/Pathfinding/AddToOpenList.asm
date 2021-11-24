@@ -2,7 +2,6 @@
                 ifndef _CORE_MODULE_UTILS_PATHFINDING_ADD_TO_OPEN_LIST_
                 define _CORE_MODULE_UTILS_PATHFINDING_ADD_TO_OPEN_LIST_
 
-                module Pathfinding
 ; -----------------------------------------
 ; put on the open list if better
 ; In:
@@ -38,7 +37,7 @@ AddToOpenList:  ; set return address
                 CALL .SetParentCoord
 
                 ; OpenList.push_back(DE)
-                CALL $
+                CALL OpenList.AddElement
 
                 ; FPFInfo.OpenListIdx = (OpenList.size() - 1)
                 LD (HL), A
@@ -96,7 +95,7 @@ AddToOpenList:  ; set return address
                 EXX ; ??
                 RET NC                                          ; return if F_Cost >= FPFInfo.F_Cost
                                                                 ; new cost is worse, don't change anything
-
+                ; new item is better => replace
                 EXX ; ??
                 ADC HL, DE                                      ; HL = F_Cost
                 EX DE, HL
@@ -137,10 +136,11 @@ AddToOpenList:  ; set return address
                 LD A, (HL)                                      ; A = FPFInfo.OpenListIdx
                 
 .JumpTrickleUp  ; TrickleUp(FPFInfo.OpenListIdx);
-                JP #0000                                        ; A = FPFInfo.OpenListIdx
+                LD HL, #0000
+                PUSH HL
+                JP TrickleUp                                    ; A = FPFInfo.OpenListIdx
 
-.SetParentCoord 
-                ; ---------------------------------------------
+.SetParentCoord ; ---------------------------------------------
                 ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)
                 ; BC - perent tile position (B - y, C - x)
                 ; ---------------------------------------------
@@ -159,7 +159,5 @@ AddToOpenList:  ; set return address
                 LD (HL), A
                 INC H                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
                 RET
-
-                endmodule
 
                 endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_ADD_TO_OPEN_LIST_
