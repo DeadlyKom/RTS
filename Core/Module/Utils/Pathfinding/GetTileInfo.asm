@@ -7,7 +7,7 @@
 ; In:
 ;   DE - tile position (D - y, E - x)
 ; Out:
-;   HL - pointer to FPFInfo structure in buffer
+;   A  - low pointer to FPFInfo structure in buffer
 ; Corrupt:
 ;   HL, AF
 ; Note:
@@ -42,8 +42,8 @@ GetTileInfo:    ;
                 ADD A, L
 
                 ; HL = #4000 | Y << 4 | X
-                LD L, A
-                LD H, HIGH PathfindingBuffer
+                ; LD L, A
+                ; LD H, HIGH PathfindingBuffer
 
                 RET
 

@@ -9,6 +9,7 @@
                 include "GetTileInfo.asm"
                 include "GetHeuristics.asm"
                 include "TrickleUp.asm"
+                include "ExtractMin.asm"
                 include "AddToOpenList.asm"
 
                 endmodule

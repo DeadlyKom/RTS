@@ -13,18 +13,27 @@
 ; Note:
 ; -----------------------------------------
 AddElement:     EXX
+
+                ; move to next element
+                LD HL, AddElement.Index
+                INC (HL)
+
+                ; set coordinate value to current index
 .Index          EQU $+1
                 LD HL, PathfindingOpenListBuffer
                 LD (HL), E
                 INC H
                 LD (HL), D
                 LD A, L
-                LD HL, AddElement.Index
-                INC (HL)
+
                 EXX
 
                 RET
 
+PopLastElement: LD HL, AddElement.Index
+                LD A, (HL)
+                DEC (HL)
+                LD B, (HL)
 GetElement:     LD L, A
                 LD H, HIGH PathfindingOpenListBuffer
                 LD E, (HL)
@@ -39,9 +48,8 @@ SetElement:     LD L, A
                 INC H
                 LD (HL), D
 
-                RET
-
-ResetOpenList:  XOR A
+                RET  
+ResetOpenList:  LD A, #FF
                 LD (AddElement.Index), A
                 RET
 
