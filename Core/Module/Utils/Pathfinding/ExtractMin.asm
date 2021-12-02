@@ -63,7 +63,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 INC H
                 LD D, (HL)
                 
-                ; while (Current < (OpenListSize >> 1))
+.While          ; while (Current < (OpenListSize >> 1))
                 LD A, B
                 SRL A
                 SUB C
@@ -88,17 +88,141 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 SUB B
                 JR NC, .NoRigthChild
 
+                LD A, D
+                EX AF, AF'
+
                 ; WORD Left_f = GetMapData(OpenList[LeftChild]).f;
+                LD A, E
+                CALL OpenList.GetElement
+                CALL GetTileInfo
+                LD L, A
+                LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost                   ; HL - pointer to FPFInfo.F_Cost                    (8)
+                LD E, (HL)
+                INC H
+                LD D, (HL)
+                PUSH DE                                                         ; save Left_f
+
                 ; WORD Right_f = GetMapData(OpenList[RightChild]).f;
+                EX AF, AF'
+                CALL OpenList.GetElement
+                EX AF, AF'                                                      ; save RightChild
+                CALL GetTileInfo
+                LD L, A
+                LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost                   ; HL - pointer to FPFInfo.F_Cost                    (8)
+                LD E, (HL)
+                INC H
+                LD D, (HL)
+
+                POP HL                                                          ; restore Left_f
+
+                ; ---------------------------------------------
+                ; HL = Left_f
+                ; DE = Right_f
+                ; ---------------------------------------------
 
                 ; if (Left_f < Right_f)
+                SBC HL, DE
+                JR NC, .LessRight_f                                             ; jump if Left_f >= Right_f
 
-.NoRigthChild   ;
+.LessLeft_f     ; Right_f > Left_f
+
+				; SmallerChild_f = Left_f;
+                ADC HL, DE
+
+                ; SmallerChild = LeftChild;
+                EX AF, AF'                                                      ; restore RightChild
+                DEC A                                                           ; LeftChild = RightChild - 1
+                
+                ; ---------------------------------------------
+                ; HL = Left_f                       (SmallerChild_f)
+                ; A  = LeftChild                    (SmallerChild)
+                ; ---------------------------------------------
+                JR .Top_f
+
+.LessRight_f    ; Left_f >= Right_f
+
+				; SmallerChild_f = Right_f;
+                EX DE, HL
+
+                ; SmallerChild = RightChild;
+                EX AF, AF'                                                      ; restore RightChild
+
+                ; ---------------------------------------------
+                ; HL = Right_f                      (SmallerChild_f)
+                ; A  = RightChild                   (SmallerChild)
+                ; ---------------------------------------------
+                JR .Top_f
+
+.NoRigthChild   ; there is only a left child
+
+                ; ---------------------------------------------
+                ; E = LeftChild
+                ; ---------------------------------------------
+
+			    ; SmallerChild_f = GetMapData(OpenList[LeftChild]).f;
+                LD A, E
+                CALL OpenList.GetElement
+                EX AF, AF'                                                      ; save LeftChild
+                CALL GetTileInfo
+                LD L, A
+                LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost                   ; HL - pointer to FPFInfo.F_Cost                    (8)
+                LD A, (HL)
+                INC H
+                LD H, (HL)
+                LD L, A
+
+                ; SmallerChild = LeftChild;
+                EX AF, AF'                                                      ; restort LeftChild
+
+.Top_f          ; if (Top_f <= SmallerChild_f) { break; }
                 POP DE                                                          ; restore Top_f
+                ; ---------------------------------------------
+                ; HL = SmallerChild_f
+                ; DE = Top_f
+                ; C  = Current
+                ; A  = SmallerChild
+                ; ---------------------------------------------
+                OR A
+                SBC HL, DE
+                JR NC, .PreExit                                                 ; jump if SmallerChild_f >=  Top_f
+
+                ; shift child up
+                ; OpenList[Current] = OpenList[SmallerChild];
+                CALL OpenList.GetElement
+                EX AF, AF'                                                      ; save SmallerChild
+
+                LD L, C
+                ; OpenList[Current] = OpenList[SmallerChild];
+                LD (HL), E
+                INC H
+                LD (HL), D
+
+                ; GetMapData(OpenList[Current]).OpenListIndex = Current;
+                CALL GetTileInfo
+                LD L, A
+                LD H, HIGH PathfindingBuffer | FPFInfo.OpenListIdx
+                LD (HL), C
+
+                // go down one level in the tree
+                ; Current = SmallerChild;
+                EX AF, AF'                                                      ; restore SmallerChild
+                LD C, A
+                JR .While
 
 .PreExit        POP DE                                                          ; restore Top value
 
+                ; OpenList[Current] = Top;
+                LD L, C
+                CALL OpenList.SetElement.SetL
+
+                ; GetMapData(Top).OpenListIndex = Current;
+                CALL GetTileInfo
+                LD L, A
+                LD H, HIGH PathfindingBuffer | FPFInfo.OpenListIdx
+                LD (HL), C
+
 .Exit           POP DE                                                          ; restore first value
+                ; return Ret;
                 RET
 
                 endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_EXTRACT_MIN_
