@@ -7,7 +7,7 @@
 
 PF_IN_OPEN_LIST_BIT     EQU 7       ; находится в открытом списке
 PF_CLOSED_BIT           EQU 6
-PF_IS_START_COORD_BIT   EQU 5       ; это стартовая позиция (чтобы не производить сравнение координат)
+PF_IS_START_COORD_BIT   EQU 5                                                   ; это стартовая позиция (чтобы не производить сравнение координат)
 
 PF_IN_OPEN_LIST         EQU 1 << PF_IN_OPEN_LIST_BIT
 PF_CLOSED               EQU 1 << PF_CLOSED_BIT

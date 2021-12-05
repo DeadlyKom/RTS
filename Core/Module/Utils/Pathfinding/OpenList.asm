@@ -43,7 +43,7 @@ GetElement:     LD L, A
                 RET
 
 SetElement:     LD L, A
-                LD H, HIGH PathfindingOpenListBuffer
+.SetL           LD H, HIGH PathfindingOpenListBuffer
                 LD (HL), E
                 INC H
                 LD (HL), D
@@ -51,6 +51,10 @@ SetElement:     LD L, A
                 RET  
 ResetOpenList:  LD A, #FF
                 LD (AddElement.Index), A
+                RET
+
+IsEmpty:        LD A, (AddElement.Index)
+                CP #FF
                 RET
 
                 endmodule

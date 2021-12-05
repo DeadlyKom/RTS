@@ -8,7 +8,7 @@
 ; Out:
 ;   DE - tile position (D - y, E - x)
 ; Corrupt:
-;   HL, C, AF, AF'
+;   HL, DE, BC, AF, AF'
 ; Note:
 ; -----------------------------------------
 ExtractMin:     ; FCoord Ret = OpenList[0]

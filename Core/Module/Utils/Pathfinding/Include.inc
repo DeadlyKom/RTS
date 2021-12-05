@@ -11,6 +11,9 @@
                 include "TrickleUp.asm"
                 include "ExtractMin.asm"
                 include "AddToOpenList.asm"
+                include "Step.asm"
+                include "GetFoundPath.asm"
+                include "SearchPath.asm"
 
                 endmodule
 

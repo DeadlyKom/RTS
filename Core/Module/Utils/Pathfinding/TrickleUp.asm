@@ -47,7 +47,7 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
                 ; DE = OpenList[Parent]
                 LD A, E
                 LD (.ParentIndex), A
-                CALL OpenList.GetElement                            ; DE = OpenList[A]
+                CALL OpenList.GetElement                                        ; DE = OpenList[A]
 
                 ; HL = GetMapData(OpenList[Parent]).f
                 CALL GetTileInfo
