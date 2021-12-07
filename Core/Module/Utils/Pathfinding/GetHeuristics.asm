@@ -11,8 +11,8 @@
 ; Corrupt:
 ;   HL, BC, AF, AF'
 ; Note:
-;   Cost_90 = 5
 ;   Cost_45 = 7
+;   Cost_90 = 5
 ; -----------------------------------------
 GetHeuristics:  ;
 .EndLocation    EQU $+1

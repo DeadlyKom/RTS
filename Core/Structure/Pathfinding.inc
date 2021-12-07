@@ -3,9 +3,7 @@
                     define _STRUCTURE_PATHFINDING_
 
 ; pathfinding flags
-
-
-PF_IN_OPEN_LIST_BIT     EQU 7       ; находится в открытом списке
+PF_IN_OPEN_LIST_BIT     EQU 7                                                   ; находится в открытом списке
 PF_CLOSED_BIT           EQU 6
 PF_IS_START_COORD_BIT   EQU 5                                                   ; это стартовая позиция (чтобы не производить сравнение координат)
 

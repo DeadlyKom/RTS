@@ -22,9 +22,9 @@ Idle:               ;
                     RLA
                     LD (.Rand), A
 
-                    INC IXH                                     ; FUnitLocation     (2)
-                    INC IXH                                     ; FUnitTargets      (3)
-                    INC IXH                                     ; FUnitAnimation    (4)
+                    INC IXH                                                     ; FUnitLocation     (2)
+                    INC IXH                                                     ; FUnitTargets      (3)
+                    INC IXH                                                     ; FUnitAnimation    (4)
                     
                     LD A, (IX + FUnitAnimation.CounterDown)
                     LD C, A
@@ -38,12 +38,11 @@ Idle:               ;
                     LD (IX + FUnitAnimation.CounterDown), A
 
                     ; завершение работы
-                    DEC IXH                                     ; FUnitTargets      (3)
-                    DEC IXH                                     ; FUnitLocation     (2)
-                    DEC IXH                                     ; FUnitState        (1)
+                    DEC IXH                                                     ; FUnitTargets      (3)
+                    DEC IXH                                                     ; FUnitLocation     (2)
+                    DEC IXH                                                     ; FUnitState        (1)
 
                     RET
-
                     
 .Turn               ;
                     LD A, C
@@ -52,9 +51,9 @@ Idle:               ;
                     LD (IX + FUnitAnimation.CounterDown), A
 
                     ; завершение работы
-                    DEC IXH                                     ; FUnitTargets      (3)
-                    DEC IXH                                     ; FUnitLocation     (2)
-                    DEC IXH                                     ; FUnitState        (1)
+                    DEC IXH                                                     ; FUnitTargets      (3)
+                    DEC IXH                                                     ; FUnitLocation     (2)
+                    DEC IXH                                                     ; FUnitState        (1)
 
                     LD A, R
                     RRA
@@ -66,12 +65,12 @@ Idle:               ;
                     RRA
                     RRA
                     AND %00000111
-                    LD C, A                 ; сохраним текущий поворот
+                    LD C, A                                                     ; сохраним текущий поворот
 
                     LD A, R
                     RRA
 
-                    SBC A, A                ; < 4 = -1, > 4 = 0
+                    SBC A, A                                                    ; < 4 = -1, > 4 = 0
                     CCF
                     ADC A, #00
 

@@ -24,6 +24,8 @@ SearchPath:     ;
                 LD (Step.NegHeightTM_B), A
                 LD (Step.NegHeightTM_C), A
 
+                CALL Memory.SetPage1
+
                 RET
 
                 endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_SEARCH_PATH_

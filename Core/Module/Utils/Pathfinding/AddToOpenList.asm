@@ -15,8 +15,8 @@
 ; Note:
 ; -----------------------------------------
 AddToOpenList:  ; set return address
-                POP HL
-                LD (.JumpTrickleUp+1), HL
+                ; POP HL
+                ; LD (.JumpTrickleUp+1), HL
 
                 CALL GetTileInfo
                 LD L, A
@@ -67,7 +67,8 @@ AddToOpenList:  ; set return address
                 LD (HL), D
 
                 ; TrickleUp(FPFInfo.OpenListIdx);
-                JR .JumpTrickleUp                                               ; A = FPFInfo.OpenListIdx
+                ; JR .JumpTrickleUp                                               ; A = FPFInfo.OpenListIdx
+                RET
                 
 .InOpenList     ; already on openlist
                 LD A, L                                                         ; save low byte of pointer to structure
@@ -137,9 +138,9 @@ AddToOpenList:  ; set return address
                 ; get value FPFInfo.OpenListIdx
                 LD A, (HL)                                                      ; A = FPFInfo.OpenListIdx
                 
-.JumpTrickleUp  ; TrickleUp(FPFInfo.OpenListIdx);
-                LD HL, #0000
-                PUSH HL
+; .JumpTrickleUp  ; TrickleUp(FPFInfo.OpenListIdx);
+;                 LD HL, #0000
+;                 PUSH HL
                 JP TrickleUp                                                    ; A = FPFInfo.OpenListIdx
 
 .SetParentCoord ; ---------------------------------------------

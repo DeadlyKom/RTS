@@ -6,9 +6,9 @@
 Request:        ; ---------------------------------------------
                 ; initialize
                 ; ---------------------------------------------
-                SetFrameFlag SWAP_SCREENS_FLAG                                          ; сбросить переключение экрана,
-                                                                                        ; с последующим перерисованием первого экрана
-                SetFrameFlag RENDER_FINISHED                                            ; запрещает обновление данных на экране (при скролле)
+                SetFrameFlag SWAP_SCREENS_FLAG                                  ; сбросить переключение экрана,
+                                                                                ; с последующим перерисованием первого экрана
+                SetFrameFlag RENDER_FINISHED                                    ; запрещает обновление данных на экране (при скролле)
                 ; включить страницу
                 CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, PATHFINDING_PLAYER_ID
                 ; очистка экрана #4000 (#FF)
@@ -26,7 +26,7 @@ Request:        ; ---------------------------------------------
                 ; ---------------------------------------------
                 ; compute start point
                 ; ---------------------------------------------
-                CALL Utils.Units.GetSelected                                            ; точка старта
+                CALL Utils.Units.GetSelected                                    ; точка старта
                 LD (Utils.Pathfinding.GetHeuristic.Location), DE
 
                 ; ---------------------------------------------
@@ -36,19 +36,19 @@ Request:        ; ---------------------------------------------
                 LD (Utils.Pathfinding.BuildPath.ContainerLocation), DE
                 LD A, Pathfinding.VECTOR_FIELD_END
                 EX AF, AF'
-                CALL Utils.Pathfinding.SetVectorField                                   ; установим конечную точку
+                CALL Utils.Pathfinding.SetVectorField                           ; установим конечную точку
 
                 ; ---------------------------------------------
                 ; добавить соседей текущего тайла
                 ; ---------------------------------------------
 .Loop           CALL Utils.Pathfinding.AddNeighbors
-                JR C, .EndLoop                                                          ; выход если очередь переполнена
+                JR C, .EndLoop                                                  ; выход если очередь переполнена
 
                 ; ---------------------------------------------
                 ; получить из очереди позицию тайла с лучший ценойы
                 ; ---------------------------------------------
-                CALL Utils.Pathfinding.GetBestCostInQueue                               ; вернуть позицию с наименьшей стоимость перемещения
-                CALL Utils.Pathfinding.MarkVectorField                                  ; пометить ячейку
+                CALL Utils.Pathfinding.GetBestCostInQueue                       ; вернуть позицию с наименьшей стоимость перемещения
+                CALL Utils.Pathfinding.MarkVectorField                          ; пометить ячейку
 
                 ; проверка раннего выхода (достиг точки назначения)
                 LD HL, (Utils.Pathfinding.GetHeuristic.Location)
@@ -69,8 +69,8 @@ Request:        ; ---------------------------------------------
                 ; ---------------------------------------------
                 ; 
                 ; ---------------------------------------------
-                CALL Tilemap.ForceScreen                                                ; обновление экранов
-                SetGameplayFlag (PATHFINDING_FLAG | PATHFINDING_REQUEST_PLAYER_FLAG)    ; разрешить поиск
+                CALL Tilemap.ForceScreen                                        ; обновление экранов
+                SetGameplayFlag (PATHFINDING_FLAG | PATHFINDING_REQUEST_PLAYER_FLAG) ; разрешить поиск
                 RET
 
                 endmodule

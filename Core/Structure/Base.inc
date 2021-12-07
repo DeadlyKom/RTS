@@ -27,8 +27,8 @@ Y                   DB #00
                     ends
 
                     struct FWayPoint
-Counter             DB #00                  ; счётчик ссылок
-Location            FLocation 0, 0          ; позиция
+Counter             DB #00                                                      ; счётчик ссылок
+Location            FLocation 0, 0                                              ; позиция
 
                     ends
 

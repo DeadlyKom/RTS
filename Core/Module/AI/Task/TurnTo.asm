@@ -11,25 +11,25 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)  ; установка состояния перемещения/поворота
+TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; установка состояния перемещения/поворота
                 ; go to FUnitTargets
-                INC IXH                                     ; FUnitLocation     (2)
-                INC IXH                                     ; FUnitTargets      (3)
-                INC IXH                                     ; FUnitAnimation    (4)
+                INC IXH                                                         ; FUnitLocation     (2)
+                INC IXH                                                         ; FUnitTargets      (3)
+                INC IXH                                                         ; FUnitAnimation    (4)
                 
                 BIT FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)
                 JR NZ, .IsMoveTo
 
-                DEC IXH                                     ; FUnitTargets      (3)
+                DEC IXH                                                         ; FUnitTargets      (3)
 
-                CALL Utils.GetDeltaTarget                   ; calculate direction delta
+                CALL Utils.GetDeltaTarget                                       ; calculate direction delta
                 ; CALL Utils.GetPerfectTargetDelta
-                JR NC, .Fail                                ; неудачая точка назначения
+                JR NC, .Fail                                                    ; неудачая точка назначения
 
                 LD A, E
                 OR D
-                JR Z, .Complite                             ; если позиция юнита совподает с позицией WayPoint
-                                                            ; поворот не требуется
+                JR Z, .Complite                                                 ; если позиция юнита совподает с позицией WayPoint
+                                                                                ; поворот не требуется
 
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitLocation (2)
@@ -38,24 +38,24 @@ TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)  ; установка
                 ; ---------------------------------------------
 
                 ; restor register IX
-                DEC IXH                                     ; FUnitState        (1)
+                DEC IXH                                                         ; FUnitState        (1)
                 LD A, (IX + FUnitState.Direction)
-                JP Utils.Turn.Down                          ; вернёт флаг успешности
+                JP Utils.Turn.Down                                              ; вернёт флаг успешности
 
-.Fail           DEC IXH                                     ; FUnitState        (1)
+.Fail           DEC IXH                                                         ; FUnitState        (1)
 
-                RES FUSF_MOVE_BIT, (IX + FUnitState.State)  ; сброс состояния перемещения/поворота
+                RES FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; сброс состояния перемещения/поворота
 
-                OR A                                        ; неудачное выполнение
+                OR A                                                            ; неудачное выполнение
                 RET
 
-.IsMoveTo       DEC IXH                                     ; FUnitTargets      (3)
-                DEC IXH                                     ; FUnitLocation     (2)
-.Complite       DEC IXH                                     ; FUnitState        (1)
+.IsMoveTo       DEC IXH                                                         ; FUnitTargets      (3)
+                DEC IXH                                                         ; FUnitLocation     (2)
+.Complite       DEC IXH                                                         ; FUnitState        (1)
 
-                RES FUSF_MOVE_BIT, (IX + FUnitState.State)  ; сброс состояния перемещения/поворота
+                RES FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; сброс состояния перемещения/поворота
 
-                SCF                                         ; удачное выполнение
+                SCF                                                             ; удачное выполнение
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_TURN_TO_

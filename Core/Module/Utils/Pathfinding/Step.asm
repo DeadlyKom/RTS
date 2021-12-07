@@ -18,6 +18,7 @@ Step:           ;
                 ; TileData& Data = GetMapData(CurrentCoord);
                 CALL GetTileInfo
                 LD (.Next + 1), A
+                LD (.Data_L2), A
                 LD L, A
                 LD H, HIGH PathfindingBuffer | FPFInfo.H_Cost                   ; HL - pointer to FPFInfo.H_Cost                    (6,7)
                 LD A, (HL)
@@ -40,11 +41,12 @@ Step:           ;
                 LD (.BestCoord), DE
 
 .Less_H_Cost    ; if (CurrentCoord == End)
-.BestCoord      EQU $+1
-                LD HL, #0000
-                LD BC, (GetHeuristics.EndLocation)
-                OR A
-                SBC HL, BC
+                LD HL, (GetHeuristics.EndLocation)
+                LD A, D
+                CP H
+                JR NZ, $+7
+                LD A, E
+                CP L
                 JP Z, GetFoundPath                                              ; destination found
 
                 ; push a node for each direction we could go
@@ -283,6 +285,108 @@ Step:           ;
                 CALL .CanPass
                 JP .Next
 
-.CanPass        RET
+.CanPass        CALL Utils.Tilemap.GetAddressTilemap                            ; HL - pointer to the tile address
+                CALL Utils.Surface.GetProperty                                  ; A  - tile property
+
+                ; ---------------------------------------------
+                ; tile property
+                ; ---------------------------------------------
+                ;      7    6    5    4    3    2    1    0
+                ;   +----+----+----+----+----+----+----+----+
+                ;   |  D | -- | D1 | D0 | C3 | C2 | C1 | C0 |
+                ;   +----+----+----+----+----+----+----+----+
+                ;
+                ;   D        - destructible
+                ;   D [0..1] - deceleration ratio
+                ;   C [0..3] - collision flags
+                ; ---------------------------------------------
+
+                LD H, A
+
+                ; tile passability check
+                AND SCF_MASK
+                CP SCF_BLOCK
+                RET Z                                                           ; tile is not passable
+
+                ; if (!GetMapData(NextCoord).Flags.bClosed)
+                CALL GetTileInfo
+                LD L, A
+                LD H, HIGH PathfindingBuffer | FPFInfo.Flags                    ; HL - pointer to FPFInfo.Flags                     (0)
+                BIT PF_CLOSED_BIT, (HL)
+                RET NZ                                                          ; return if (GetMapData(NextCoord).Flags.bClosed == true)
+
+                PUSH DE                                                         ; save tile coord (NextCoord)
+
+                LD HL, .Exit
+                PUSH HL
+
+                CALL GetHeuristics
+                PUSH HL                                                         ; SP+2 - cost value H_Cost
+
+                ; Cost_45 = 7
+                ; Cost_90 = 5
+
+.BestCoord      EQU $+1
+                LD BC, #0000
+                LD A, D
+                CP B
+                JR NZ, .LinerMovement
+                LD A, E
+                CP C
+                JR NZ, .LinerMovement
+
+                ; add diagonal movement Cost_45 = 7
+                LD A, H
+                LD H, #10
+                LD L, #07 * 1
+                OR A
+                JR Z, .Calc_H_Cost
+                LD L, #07 * 2
+                SUB H
+                JR Z, .Calc_H_Cost
+                LD L, #07 * 3
+                SUB H
+                JR Z, .Calc_H_Cost
+                LD L, #07 * 4
+                JR .Calc_H_Cost
+
+.LinerMovement  ; add linear movement Cost_90 = 5
+                LD A, H
+                LD H, #10
+                LD L, #05 * 1
+                OR A
+                JR Z, .Calc_H_Cost
+                LD L, #05 * 2
+                SUB H
+                JR Z, .Calc_H_Cost
+                LD L, #05 * 3
+                SUB H
+                JR Z, .Calc_H_Cost
+                LD L, #05 * 4
+
+.Calc_H_Cost    ; G_Cost = Data.g + Cost * GetCost(NextCoord);
+                LD A, L
+.Data_L2        EQU $+1
+                LD L, #00
+                LD H, HIGH PathfindingBuffer | FPFInfo.G_Cost                   ; HL - pointer to FPFInfo.G_Cost                    (4,5)
+                
+                ADD A, (HL)
+                INC H
+                LD H, (HL)
+                LD L, A
+                JR NC, $+3
+                INC H
+
+                PUSH HL                                                         ; SP+0 - cost value G_Cost
+
+                ;   SP+0 - cost value G_Cost
+                ;   SP+2 - cost value H_Cost
+                ;   DE   - tile position (D - y, E - x)
+                ;   BC   - perent tile position (B - y, C - x)
+
+                JP AddToOpenList
+
+.Exit           POP DE                                                          ; restore tile coord (NextCoord)
+                RET
 
                 endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_STEP_

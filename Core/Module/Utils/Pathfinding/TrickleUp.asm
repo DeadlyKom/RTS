@@ -8,6 +8,7 @@
 ;   A  - index of element
 ; Out:
 ; Corrupt:
+;   HL, DE, BC, AF, AF'
 ; Note:
 ; -----------------------------------------
 TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]

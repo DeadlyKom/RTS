@@ -24,12 +24,12 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetProperty:    LD A, (HL)                                  ; A - номер тайла
+GetProperty:    LD A, (HL)                                                      ; A - номер тайла
                 AND %01111111
                 LD L, A
-                LD A, (HighSurfacePropertyRef)
+                LD A, (HighSurfacePropertyRef)                                  ; TODO уростить формирование адреса до LD H, #00
                 LD H, A
-                LD A, (HL)                                  ; A - характеристика тайла
+                LD A, (HL)                                                      ; A - характеристика тайла
                 
                 RET
 ; -----------------------------------------
@@ -47,7 +47,7 @@ GetCollision:   ; расчёт адреса тайла в тайловой ка�
                 LD DE, (IX + FUnitLocation.TilePosition)
                 CALL Utils.Tilemap.GetAddressTilemap
 
-                CALL GetProperty                            ; получим свойство тайла
+                CALL GetProperty                                                ; получим свойство тайла
                 AND %00001111
 
                 RET
@@ -67,7 +67,7 @@ GetPassability: EXX
                 LD DE, (IX + FUnitLocation.TilePosition)
                 CALL Utils.Tilemap.GetAddressTilemap
 
-                CALL GetProperty                            ; получим свойство тайла
+                CALL GetProperty                                                ; получим свойство тайла
 
                 RRA
                 RRA

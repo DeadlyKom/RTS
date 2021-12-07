@@ -42,12 +42,12 @@ SDR_25_PERCENT      EQU 0x01 << 4
 SDR_50_PERCENT      EQU 0x02 << 4
 SDR_75_PERCENT      EQU 0x03 << 4
 
-SP_DESTRUCTIBLE     EQU 0x80                        ; is object can be destroyed
+SP_DESTRUCTIBLE     EQU 0x80                                                    ; is object can be destroyed
 
 
 
 
-                    struct FSurface                 ;
+                    struct FSurface
 ;
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
@@ -58,7 +58,7 @@ SP_DESTRUCTIBLE     EQU 0x80                        ; is object can be destroyed
 ;   D [0..1] - deceleration ratio
 ;   C [0..3] - collision flags
 ;
-Property            DB #00                          ; 1 bytes
+Property            DB #00                                                      ; 1 bytes
 
                     ends
 

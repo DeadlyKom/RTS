@@ -13,20 +13,20 @@
 Idle:               LD A, (IX + FUnitState.State)
                     LD C, A
                     AND FUSF_IS_IDLE
-                    RET NZ                                                          ; сброс флага, выход если юнит не в состоянии idle
+                    RET NZ                                                      ; сброс флага, выход если юнит не в состоянии idle
 
                     ; проверка бита об проведённой разведки после остановки
                     BIT FUSE_RECONNAISSANCE_BIT, C
                     JR Z, .SkipReconnaissance
 
-                    INC IXH                                                         ; FUnitLocation     (2)
+                    INC IXH                                                     ; FUnitLocation     (2)
                     
                     LD HL, Utils.Tilemap.Radius_5
                     CALL Utils.Tilemap.Reconnaissance
 
-                    DEC IXH                                                         ; FUnitState        (1)
+                    DEC IXH                                                     ; FUnitState        (1)
 
-                    RES FUSE_RECONNAISSANCE_BIT, (IX + FUnitState.State)            ; сброс флага разведки
+                    RES FUSE_RECONNAISSANCE_BIT, (IX + FUnitState.State)        ; сброс флага разведки
 
 .SkipReconnaissance ;
                     CALL Animation.Idle

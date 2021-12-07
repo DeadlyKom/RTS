@@ -14,9 +14,9 @@ HandlerRoot:    LD IY, .Next
                 INC HL
                 LD C, (HL)
                 RLA
-                JP C, AI.Composite.Selector         ; BT_SELECTOR
+                JP C, AI.Composite.Selector                                     ; BT_SELECTOR
                 RLA
-                JP C, AI.Composite.Sequence         ; BT_SEQUENCE
-                JP AI.Composite.TaskExecute         ; BT_TASK
+                JP C, AI.Composite.Sequence                                     ; BT_SEQUENCE
+                JP AI.Composite.TaskExecute                                     ; BT_TASK
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_HANDLER_
