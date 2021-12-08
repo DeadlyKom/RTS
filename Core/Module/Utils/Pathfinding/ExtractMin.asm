@@ -29,13 +29,13 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 CALL OpenList.PopLastElement
                 EX AF, AF'                                                      ; A' = last index element
                 LD L, C                                                         ; L = 0
-                LD (HL), E
-                INC H
                 LD (HL), D
+                DEC H
+                LD (HL), E
                 
                 CALL GetTileInfo
                 LD L, A
-                LD H, HIGH PathfindingBuffer
+                LD H, HIGH PathfindingBuffer| FPFInfo.OpenListIdx
                 LD (HL), C                                                      ; set 0 value
 
                 ; if (OpenList.empty()) { return Ret; }
@@ -127,7 +127,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
 .LessLeft_f     ; Right_f > Left_f
 
 				; SmallerChild_f = Left_f;
-                ADC HL, DE
+                ADD HL, DE
 
                 ; SmallerChild = LeftChild;
                 EX AF, AF'                                                      ; restore RightChild
@@ -182,7 +182,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 ; C  = Current
                 ; A  = SmallerChild
                 ; ---------------------------------------------
-                OR A
+                OR A    ; не нужен ??? флаг С = 0
                 SBC HL, DE
                 JR NC, .PreExit                                                 ; jump if SmallerChild_f >=  Top_f
 
@@ -193,9 +193,9 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
 
                 LD L, C
                 ; OpenList[Current] = OpenList[SmallerChild];
-                LD (HL), E
-                INC H
                 LD (HL), D
+                DEC H
+                LD (HL), E
 
                 ; GetMapData(OpenList[Current]).OpenListIndex = Current;
                 CALL GetTileInfo

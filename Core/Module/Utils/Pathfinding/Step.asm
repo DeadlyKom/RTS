@@ -8,8 +8,14 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Step:           ;
-                CALL OpenList.IsEmpty
+Step:           ; ---------------------------------------------
+                ; CALL OpenList.IsEmpty
+                ; ---------------------------------------------
+                LD A, (AddToOpenList.OpenListIndex)
+                CP #FF
+                ; ---------------------------------------------
+                ; ~CALL OpenList.IsEmpty
+                ; ---------------------------------------------
                 JP Z, GetFoundPath
 
                 ; FCoord CurrentCoord = ExtractMin();
@@ -34,7 +40,7 @@ Step:           ;
                 JR NC, .Less_H_Cost
 
                 ; LeastHeuristic = Data.h;
-                ADC HL, BC
+                ADD HL, BC
                 LD (.LeastHeuristic), HL
                 
                 ; BestCoord = CurrentCoord;
@@ -379,11 +385,12 @@ Step:           ;
 
                 PUSH HL                                                         ; SP+0 - cost value G_Cost
 
+                ; ---------------------------------------------
                 ;   SP+0 - cost value G_Cost
                 ;   SP+2 - cost value H_Cost
                 ;   DE   - tile position (D - y, E - x)
                 ;   BC   - perent tile position (B - y, C - x)
-
+                ; ---------------------------------------------
                 JP AddToOpenList
 
 .Exit           POP DE                                                          ; restore tile coord (NextCoord)

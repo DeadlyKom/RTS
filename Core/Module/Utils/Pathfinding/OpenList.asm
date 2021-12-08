@@ -12,25 +12,25 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-AddElement:     EXX
+; AddElement:     EXX
 
-                ; move to next element
-                LD HL, AddElement.Index
-                INC (HL)
+;                 ; move to next element
+;                 LD HL, AddElement.Index
+;                 INC (HL)
 
-                ; set coordinate value to current index
-.Index          EQU $+1
-                LD HL, PathfindingOpenListBuffer
-                LD (HL), E
-                INC H
-                LD (HL), D
-                LD A, L
+;                 ; set coordinate value to current index
+; .Index          EQU $+1
+;                 LD HL, PathfindingOpenListBuffer
+;                 LD (HL), E
+;                 INC H
+;                 LD (HL), D
+;                 LD A, L
 
-                EXX
+;                 EXX
 
-                RET
+;                 RET
 
-PopLastElement: LD HL, AddElement.Index
+PopLastElement: LD HL, Utils.Pathfinding.AddToOpenList.OpenListIndex
                 LD A, (HL)
                 DEC (HL)
                 LD B, (HL)
@@ -49,13 +49,13 @@ SetElement:     LD L, A
                 LD (HL), D
 
                 RET  
-ResetOpenList:  LD A, #FF
-                LD (AddElement.Index), A
-                RET
+; ResetOpenList:  LD A, #FF
+;                 LD (AddElement.Index), A
+;                 RET
 
-IsEmpty:        LD A, (AddElement.Index)
-                CP #FF
-                RET
+; IsEmpty:        LD A, (AddToOpenList.OpenListIndex)
+;                 CP #FF
+;                 RET
 
                 endmodule
 

@@ -39,7 +39,28 @@ AddToOpenList:  ; set return address
                 CALL .SetParentCoord
 
                 ; OpenList.push_back(DE)
-                CALL OpenList.AddElement
+
+                ; ---------------------------------------------
+                ; CALL OpenList.AddElement
+                ; ---------------------------------------------
+                PUSH HL
+
+                ; move to next element
+                LD HL, .OpenListIndex
+                INC (HL)
+
+                ; set coordinate value to current index
+.OpenListIndex  EQU $+1
+                LD HL, PathfindingOpenListBuffer
+                LD (HL), E
+                INC H
+                LD (HL), D
+                LD A, L
+
+                POP HL
+                ; ---------------------------------------------
+                ; ~CALL OpenList.AddElement
+                ; ---------------------------------------------
 
                 ; FPFInfo.OpenListIdx = (OpenList.size() - 1)
                 LD (HL), A
@@ -71,7 +92,7 @@ AddToOpenList:  ; set return address
                 RET
                 
 .InOpenList     ; already on openlist
-                LD A, L                                                         ; save low byte of pointer to structure
+                LD A, L    ;!!!!!!!!!!!!!!!                                                     ; save low byte of pointer to structure
 
                 EXX
                 LD L, A                                                         ; restore low byte of pointer to structure
@@ -100,7 +121,7 @@ AddToOpenList:  ; set return address
                                                                                 ; new cost is worse, don't change anything
                 ; new item is better => replace
                 EXX ; ??
-                ADC HL, DE                                                      ; HL = F_Cost
+                ADD HL, DE                                                      ; HL = F_Cost
                 EX DE, HL
                 LD L, A
                 LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost+1                 ; HL - pointer to FPFInfo.F_Cost+1                  (9)

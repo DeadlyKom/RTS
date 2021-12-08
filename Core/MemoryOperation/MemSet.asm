@@ -14,7 +14,7 @@ SafeFill_256:       ; fill 256 bytes
                     RestoreDE
                     LD (MS_ContainerSP), SP
                     LD SP, HL
-                    JP MemSet_192
+                    JP MemSet_256
 SafeFill_192:       ; fill 192 bytes
                     RestoreDE
                     LD (MS_ContainerSP), SP
