@@ -88,11 +88,11 @@ AddToOpenList:  ; set return address
                 LD (HL), D
 
                 ; TrickleUp(FPFInfo.OpenListIdx);
-                ; JR .JumpTrickleUp                                               ; A = FPFInfo.OpenListIdx
-                RET
+                JP TrickleUp                                                    ; A = FPFInfo.OpenListIdx
+                ; RET
                 
 .InOpenList     ; already on openlist
-                LD A, L    ;!!!!!!!!!!!!!!!                                                     ; save low byte of pointer to structure
+                LD A, L                                                         ; save low byte of pointer to structure
 
                 EXX
                 LD L, A                                                         ; restore low byte of pointer to structure
@@ -116,11 +116,11 @@ AddToOpenList:  ; set return address
 
                 ; F_Cost >= FPFInfo.F_Cost
                 SBC HL, DE                                                      ; F_Cost - FPFInfo.F_Cost
-                EXX ; ??
+                ; EXX ; ??
                 RET NC                                                          ; return if F_Cost >= FPFInfo.F_Cost
                                                                                 ; new cost is worse, don't change anything
                 ; new item is better => replace
-                EXX ; ??
+                ; EXX ; ??
                 ADD HL, DE                                                      ; HL = F_Cost
                 EX DE, HL
                 LD L, A
@@ -140,7 +140,7 @@ AddToOpenList:  ; set return address
 
                 ; calculate value G_Cost
                 EX DE, HL
-                OR A ; ??
+                ; OR A ; ??
                 SBC HL, BC                                                      ; HL = G_Cost
                 EX DE, HL
 

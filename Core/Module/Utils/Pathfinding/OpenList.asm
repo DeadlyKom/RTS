@@ -30,25 +30,25 @@
 
 ;                 RET
 
-PopLastElement: LD HL, Utils.Pathfinding.AddToOpenList.OpenListIndex
-                LD A, (HL)
-                DEC (HL)
-                LD B, (HL)
-GetElement:     LD L, A
-                LD H, HIGH PathfindingOpenListBuffer
-                LD E, (HL)
-                INC H
-                LD D, (HL)
+; PopLastElement: LD HL, Utils.Pathfinding.AddToOpenList.OpenListIndex
+;                 LD A, (HL)
+;                 DEC (HL)
+;                 LD B, (HL)
+; GetElement:     LD L, A
+;                 LD H, HIGH PathfindingOpenListBuffer
+;                 LD E, (HL)
+;                 INC H
+;                 LD D, (HL)
 
-                RET
+;                 RET
 
-SetElement:     LD L, A
-.SetL           LD H, HIGH PathfindingOpenListBuffer
-                LD (HL), E
-                INC H
-                LD (HL), D
+; SetElement:     LD L, A
+; .SetL           LD H, HIGH PathfindingOpenListBuffer
+;                 LD (HL), E
+;                 INC H
+;                 LD (HL), D
 
-                RET  
+;                 RET  
 ; ResetOpenList:  LD A, #FF
 ;                 LD (AddElement.Index), A
 ;                 RET

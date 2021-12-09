@@ -29,10 +29,6 @@ SearchPath:     ; ---------------------------------------------
                 LD HL, #FFFF
                 LD (Step.LeastHeuristic), HL
 
-                ; GetTileInfo.BufferStart
-                ; AddToOpenList.BufferStartX
-                ; AddToOpenList.BufferStartY
-
                 ; ---------------------------------------------
                 ; CALL OpenList.ResetOpenList
                 ; ---------------------------------------------
@@ -51,6 +47,17 @@ SearchPath:     ; ---------------------------------------------
                 LD (Step.NegHeightTM_A), A
                 LD (Step.NegHeightTM_B), A
                 LD (Step.NegHeightTM_C), A
+
+                ;
+                LD HL, #0000   
+                LD (Utils.Pathfinding.Step.BufferStart), HL
+                LD (Utils.Pathfinding.GetTileInfo.BufferStart), HL              ; GetTileInfo.BufferStart
+                LD A, L
+                LD (Utils.Pathfinding.AddToOpenList.BufferStartX), A            ; AddToOpenList.BufferStartX
+                LD A, H
+                LD (Utils.Pathfinding.AddToOpenList.BufferStartY), A            ; AddToOpenList.BufferStartY
+                LD HL, #0F0F
+                LD (Utils.Pathfinding.Step.BufferEnd), HL  
 
                 ; compute end point
                 CALL Utils.Mouse.ConvertToTilemap                               ; DE = end tile position

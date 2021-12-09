@@ -12,7 +12,12 @@
 ; Note:
 ; -----------------------------------------
 TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
-                CALL OpenList.GetElement                                        ; DE = OpenList[A]
+                ; CALL OpenList.GetElement                                        ; DE = OpenList[A]
+                LD L, A
+                LD H, HIGH PathfindingOpenListBuffer
+                LD E, (HL)
+                INC H
+                LD D, (HL)
 
                 PUSH DE
                 EX AF, AF'
@@ -48,7 +53,12 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
                 ; DE = OpenList[Parent]
                 LD A, E
                 LD (.ParentIndex), A
-                CALL OpenList.GetElement                                        ; DE = OpenList[A]
+                ; CALL OpenList.GetElement                                        ; DE = OpenList[A]
+                LD L, A
+                LD H, HIGH PathfindingOpenListBuffer
+                LD E, (HL)
+                INC H
+                LD D, (HL)
 
                 ; HL = GetMapData(OpenList[Parent]).f
                 CALL GetTileInfo
@@ -69,8 +79,13 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
 
 		        ; OpenList[Current] = OpenList[Parent];
 .CurrentIndex   EQU $+1
-                LD A, #00
-                CALL OpenList.SetElement
+                ; LD A, #00
+                ; CALL OpenList.SetElement
+                LD L, #00
+                LD H, HIGH PathfindingOpenListBuffer
+                LD (HL), E
+                INC H
+                LD (HL), D
                 EX AF, AF'
 
                 ; GetMapData(OpenList[Current]).OpenListIndex = Current;
@@ -94,7 +109,12 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
 .Exit           ; OpenList[Current] = Bottom;
                 POP DE
                 LD A, (.CurrentIndex)
-                CALL OpenList.SetElement
+                ; CALL OpenList.SetElement
+                LD L, A
+                LD H, HIGH PathfindingOpenListBuffer
+                LD (HL), E
+                INC H
+                LD (HL), D
                 EX AF, AF'
 
                 ; GetMapData(OpenList[Current]).OpenListIndex = Current;

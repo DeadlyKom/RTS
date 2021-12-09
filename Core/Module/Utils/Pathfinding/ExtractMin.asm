@@ -14,7 +14,12 @@
 ExtractMin:     ; FCoord Ret = OpenList[0]
                 XOR A
                 LD C, A
-                CALL OpenList.GetElement
+                ; CALL OpenList.GetElement
+                LD L, A
+                LD H, HIGH PathfindingOpenListBuffer
+                LD E, (HL)
+                INC H
+                LD D, (HL)
                 PUSH DE                                                         ; save first value
 
                 ; GetMapData(Ret).Flags.bInOpenList = false;
@@ -26,7 +31,17 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 ; OpenList[0] = OpenList.back();
                 ; GetMapData(OpenList[0]).OpenListIndex = 0;
 	            ; OpenList.pop_back();
-                CALL OpenList.PopLastElement
+                ; CALL OpenList.PopLastElement
+                LD HL, Utils.Pathfinding.AddToOpenList.OpenListIndex
+                LD A, (HL)
+                DEC (HL)
+                LD B, (HL)
+                LD L, A
+                LD H, HIGH PathfindingOpenListBuffer
+                LD E, (HL)
+                INC H
+                LD D, (HL)
+
                 EX AF, AF'                                                      ; A' = last index element
                 LD L, C                                                         ; L = 0
                 LD (HL), D
@@ -41,7 +56,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 ; if (OpenList.empty()) { return Ret; }
                 EX AF, AF'
                 OR A
-                JR Z, .Exit
+                JP Z, .Exit
 
                 ; BYTE Current = 0;
                 ; BYTE OpenListSize = (BYTE)OpenList.size();
@@ -92,8 +107,13 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 EX AF, AF'
 
                 ; WORD Left_f = GetMapData(OpenList[LeftChild]).f;
-                LD A, E
-                CALL OpenList.GetElement
+                ; LD A, E
+                ; CALL OpenList.GetElement
+                LD L, E
+                LD H, HIGH PathfindingOpenListBuffer
+                LD E, (HL)
+                INC H
+                LD D, (HL)
                 CALL GetTileInfo
                 LD L, A
                 LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost                   ; HL - pointer to FPFInfo.F_Cost                    (8)
@@ -104,7 +124,12 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
 
                 ; WORD Right_f = GetMapData(OpenList[RightChild]).f;
                 EX AF, AF'
-                CALL OpenList.GetElement
+                ; CALL OpenList.GetElement
+                LD L, A
+                LD H, HIGH PathfindingOpenListBuffer
+                LD E, (HL)
+                INC H
+                LD D, (HL)
                 EX AF, AF'                                                      ; save RightChild
                 CALL GetTileInfo
                 LD L, A
@@ -137,7 +162,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 ; HL = Left_f                       (SmallerChild_f)
                 ; A  = LeftChild                    (SmallerChild)
                 ; ---------------------------------------------
-                JR .Top_f
+                JP .Top_f
 
 .LessRight_f    ; Left_f >= Right_f
 
@@ -151,7 +176,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 ; HL = Right_f                      (SmallerChild_f)
                 ; A  = RightChild                   (SmallerChild)
                 ; ---------------------------------------------
-                JR .Top_f
+                JP .Top_f
 
 .NoRigthChild   ; there is only a left child
 
@@ -161,7 +186,12 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
 
 			    ; SmallerChild_f = GetMapData(OpenList[LeftChild]).f;
                 LD A, E
-                CALL OpenList.GetElement
+                ; CALL OpenList.GetElement
+                LD L, E
+                LD H, HIGH PathfindingOpenListBuffer
+                LD E, (HL)
+                INC H
+                LD D, (HL)
                 EX AF, AF'                                                      ; save LeftChild
                 CALL GetTileInfo
                 LD L, A
@@ -188,7 +218,12 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
 
                 ; shift child up
                 ; OpenList[Current] = OpenList[SmallerChild];
-                CALL OpenList.GetElement
+                ; CALL OpenList.GetElement
+                LD L, A
+                LD H, HIGH PathfindingOpenListBuffer
+                LD E, (HL)
+                INC H
+                LD D, (HL)
                 EX AF, AF'                                                      ; save SmallerChild
 
                 LD L, C
@@ -207,13 +242,17 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 ; Current = SmallerChild;
                 EX AF, AF'                                                      ; restore SmallerChild
                 LD C, A
-                JR .While
+                JP .While
 
 .PreExit        POP DE                                                          ; restore Top value
 
                 ; OpenList[Current] = Top;
                 LD L, C
-                CALL OpenList.SetElement.SetL
+                ; CALL OpenList.SetElement.SetL
+                LD H, HIGH PathfindingOpenListBuffer
+                LD (HL), E
+                INC H
+                LD (HL), D
 
                 ; GetMapData(Top).OpenListIndex = Current;
                 CALL GetTileInfo

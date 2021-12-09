@@ -291,7 +291,36 @@ Step:           ; ---------------------------------------------
                 CALL .CanPass
                 JP .Next
 
-.CanPass        CALL Utils.Tilemap.GetAddressTilemap                            ; HL - pointer to the tile address
+.CanPass        ;
+
+                ; if (Position.x < BufferStart.x || Position.x > BufferEnd.x)
+                ; if (Position.y < BufferStart.y || Position.y > BufferEnd.y)
+.BufferStart    EQU $+1
+                LD HL, #0000
+.BufferEnd      EQU $+1
+                LD BC, #0000
+
+                ; Position.x < BufferStart.x
+                LD A, E
+                SUB L
+                RET C
+
+                ; Position.x > BufferEnd.x
+                LD A, C
+                SUB E
+                RET C
+
+                ; Position.y < BufferStart.y
+                LD A, D
+                SUB H
+                RET C
+                
+                ; Position.y > BufferEnd.y
+                LD A, B
+                SUB D
+                RET C
+                
+                CALL Utils.Tilemap.GetAddressTilemap                            ; HL - pointer to the tile address
                 CALL Utils.Surface.GetProperty                                  ; A  - tile property
 
                 ; ---------------------------------------------
