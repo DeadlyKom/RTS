@@ -180,7 +180,6 @@ Step:           ; ---------------------------------------------
                 ; ---------------------------------------------
                 ; RightDown                                 (6)
                 ; ---------------------------------------------
-                INC D                                                           ; Y = Y + 1
                 CALL .CanPass
 
                 ; ---------------------------------------------
@@ -219,6 +218,7 @@ Step:           ; ---------------------------------------------
                 ; left edge and up edge was checked
 
                 INC D                                                           ; Y = Y + 1
+                INC E                                                           ; X = X + 1
 
                 ; right edge check
                 INC E                                                           ; X = X + 1
@@ -367,10 +367,10 @@ Step:           ; ---------------------------------------------
                 LD BC, #0000
                 LD A, D
                 CP B
-                JR NZ, .LinerMovement
+                JR Z, .LinerMovement
                 LD A, E
                 CP C
-                JR NZ, .LinerMovement
+                JR Z, .LinerMovement
 
                 ; add diagonal movement Cost_45 = 7
                 LD A, H

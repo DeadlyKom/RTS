@@ -20,7 +20,7 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
                 LD D, (HL)
 
 .DE             PUSH DE
-                EX AF, AF'
+                EX AF, AF'                                                      ; save OpenListIndex
 
                 ; WORD New_f = GetMapData(Bottom).f
                 CALL GetTileInfo
@@ -30,14 +30,15 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
                 INC H
                 LD B, (HL)
 
-                EX AF, AF'
+                EX AF, AF'                                                      ; restore OpenListIndex
 .While
                 ; BYTE Current = OpenListIndex; && Current = Parent;
+                LD (.CurrentIndex), A
                 LD D, A
 
                 ; BYTE Parent = (OpenListIndex - 1) >> 1;
                 SUB #01
-                RRA
+                SRL A ;RRA
                 LD E, A
 
                 ; ---------------------------------------------
@@ -47,8 +48,7 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
                 ; Current != 0
                 LD A, D
                 OR A
-                JR Z, .Exit
-                LD (.CurrentIndex), A
+                JR Z, .Exit      
 
                 ; DE = OpenList[Parent]
                 LD A, E
@@ -62,12 +62,13 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
 
                 ; HL = GetMapData(OpenList[Parent]).f
                 CALL GetTileInfo
+                PUSH BC
                 LD L, A
                 LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost
-                LD A, (HL)
+                LD C, (HL)
                 INC H
-                LD H, (HL)
-                LD L, A
+                LD B, (HL)
+                POP HL
 
                 ; GetMapData(OpenList[Parent]).f > New_f
                 SBC HL, BC
@@ -79,20 +80,20 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
 
 		        ; OpenList[Current] = OpenList[Parent];
 .CurrentIndex   EQU $+1
-                ; LD A, #00
+                LD A, #00
                 ; CALL OpenList.SetElement
-                LD L, #00
+                LD L, A
                 LD H, HIGH PathfindingOpenListBuffer
                 LD (HL), E
                 INC H
                 LD (HL), D
-                EX AF, AF'
+                EX AF, AF'                                                      ; save current index
 
                 ; GetMapData(OpenList[Current]).OpenListIndex = Current;
                 CALL GetTileInfo
                 LD L, A
                 LD H, HIGH PathfindingBuffer | FPFInfo.OpenListIdx
-                EX AF, AF'
+                EX AF, AF'                                                      ; restore current index
                 LD (HL), A
 
                 ; ---------------------------------------------
@@ -115,13 +116,13 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
                 LD (HL), E
                 INC H
                 LD (HL), D
-                EX AF, AF'
+                EX AF, AF'                                                      ; save Current
 
                 ; GetMapData(OpenList[Current]).OpenListIndex = Current;
                 CALL GetTileInfo
                 LD L, A
                 LD H, HIGH PathfindingBuffer | FPFInfo.OpenListIdx
-                EX AF, AF'
+                EX AF, AF'                                                      ; restore Current
                 LD (HL), A
 
                 RET

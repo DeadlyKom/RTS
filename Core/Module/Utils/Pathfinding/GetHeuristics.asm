@@ -55,7 +55,7 @@ GetHeuristics:  ;
                 ADD HL, HL
                 ADD HL, HL
                 ADD HL, BC
-                PUSH BC
+                PUSH HL
 
                 ; (dY or dX) * Cost_45
                 EX AF, AF'

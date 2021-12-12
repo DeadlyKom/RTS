@@ -35,7 +35,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 LD HL, Utils.Pathfinding.AddToOpenList.OpenListIndex
                 LD A, (HL)
                 DEC (HL)
-                LD B, (HL)
+                LD B, A
                 LD L, A
                 LD H, HIGH PathfindingOpenListBuffer
                 LD E, (HL)

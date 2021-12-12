@@ -75,8 +75,9 @@ SearchPath:     ; ---------------------------------------------
                 ; preparation of arguments
                 CALL GetHeuristics
                 PUSH HL                                                         ; SP+2 - cost value H_Cost
-                LD BC, #FFFF                                                    ; perent tile position
+                LD BC, #0000                                                    ; perent tile position
                 PUSH BC                                                         ; SP+0 - cost value G_Cost
+                LD BC, #FFFF                                                    ; perent tile position
 
                 ; ---------------------------------------------
                 ;   SP+0 - cost value G_Cost
