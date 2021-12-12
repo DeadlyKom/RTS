@@ -61,10 +61,10 @@ DrawLine:       ; инициализация
                 INC L
                 INC B
 
-                EX AF, AF'
-                AdjustHighScreenByte_A
-                LD (.Scr), A
-                EX AF, AF'
+                ; EX AF, AF'
+                ; AdjustHighScreenByte_A
+                ; LD (.Scr), A
+                ; EX AF, AF'
 
 .Line4          BIT 1, B
                 JR Z, .Line5
@@ -83,10 +83,10 @@ DrawLine:       ; инициализация
                 OR (HL)
                 LD E, A
                 INC H
-                LD A, D
-.Scr            EQU $+1
-                OR #00
-                LD D, A
+;                 LD A, D
+; .Scr            EQU $+1
+;                 OR #00
+;                 LD D, A
                 LD A, (DE)
                 OR (HL)
                 LD (DE), A

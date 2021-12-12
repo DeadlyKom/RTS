@@ -50,6 +50,13 @@ SetPage4:           LD BC, PORT_7FFD
                     LD (BC), A
                     OUT (C), A
                     RET
+SetPage5:           LD BC, PORT_7FFD
+.NotBC              LD A, (BC)
+                    AND %11111000
+                    OR #05
+                    LD (BC), A
+                    OUT (C), A
+                    RET
 SetPage6:           LD BC, PORT_7FFD
                     LD A, (BC)
                     AND %11111000
@@ -59,11 +66,21 @@ SetPage6:           LD BC, PORT_7FFD
                     RET
 ; MemoryPage_ShadowScreen
 SetPage7:           LD BC, PORT_7FFD
-                    LD A, (BC)
+.NotBC              LD A, (BC)
                     AND %11111000
                     OR #07
                     LD (BC), A
                     OUT (C), A
                     RET
+ScrPageToC000:      LD BC, PORT_7FFD
+                    LD A, (BC)
+                    AND %00001000
+                    JR Z, SetPage5.NotBC
+                    JR SetPage7.NotBC
+InvScrPageToC000:   LD BC, PORT_7FFD
+                    LD A, (BC)
+                    AND %00001000
+                    JR NZ, SetPage5.NotBC
+                    JR SetPage7.NotBC
 
                     endif ; ~_MEMORY_SWITCH_

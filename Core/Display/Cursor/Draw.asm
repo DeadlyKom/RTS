@@ -65,16 +65,26 @@ Draw:           LD (.CurrentScreen), A
                 LD A, E                                     ; A = Sy
                 LD (.OffsetRow), A
 
-.CalcRowScrAdr  LD H, (HIGH SCR_ADR_ROWS_TABLE) >> 1
+                ; JR $
+
+.CalcRowScrAdr  ; LD H, (HIGH SCR_ADR_ROWS_TABLE) >> 1
+                ; LD L, C
+                ; ADD HL, HL
+                ; LD A, (HL)
+                ; INC HL
+                ; LD H, (HL)
+                ; LD L, A
+
+                LD H, HIGH MemoryPage_7.SCR_ADR_TABLE
                 LD L, C
-                ADD HL, HL
                 LD A, (HL)
-                INC HL
+                INC H
                 LD H, (HL)
                 LD L, A
+
                 LD A, H
 .CurrentScreen  EQU $+1
-                OR #00
+                XOR #00
                 LD H, A
                 LD (.ScreenAddress), HL
 
@@ -89,8 +99,11 @@ Draw:           LD (.CurrentScreen), A
                 LD A, C                                     ; C - хранит номер нижней линии спрайта == количество рисуемых строк
                 LD (.OffsetRow), A                          ; сохраним количество рисуемых строк
                 ;
-.CurrentScreen_ EQU $+2
-                LD DE, #0000
+                LD DE, #C000
+                LD A, D
+.CurrentScreen_ EQU $+1
+                XOR #00
+                LD D, A
                 LD (.ScreenAddress), DE
                 JP .Row
 

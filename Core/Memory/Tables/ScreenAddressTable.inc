@@ -13,7 +13,7 @@ SCR_ADR_TABLE:
 .Count          = 0
                 ; адрес экрана старший байт
                 dup 192
-                DB ((.Count & %11000000) >> 3) | (.Count & %00000111) + 0x40
+                DB ((.Count & %11000000) >> 3) | (.Count & %00000111) + 0xC0
 .Count          = .Count + 1
                 edup
 

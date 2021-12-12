@@ -2,8 +2,8 @@
                 ifndef _CORE_DISPLAY_TILEMAP_BACKGROUND_
                 define _CORE_DISPLAY_TILEMAP_BACKGROUND_
 
-                defarray TileAddressTable4000 #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080, #50C0
-                defarray TileAddressTableC000 #C000, #C040, #C080, #C0C0, #C800, #C840, #C880, #C8C0, #D000, #D040, #D080, #D0C0
+                ; defarray TileAddressTable4000 #4000, #4040, #4080, #40C0, #4800, #4840, #4880, #48C0, #5000, #5040, #5080, #50C0
+                ; defarray TileAddressTableC000 #C000, #C040, #C080, #C0C0, #C800, #C840, #C880, #C8C0, #D000, #D040, #D080, #D0C0
 Prepare:        ; show debug border
                 ifdef SHOW_DEBUG_BORDER_SCROLL_PREPARE
                 BEGIN_DEBUG_BORDER_COL SCROLL_COLOR
@@ -264,43 +264,228 @@ Display:        ; initialize execute blocks
                 LD (.ContainerSP), SP
                 LD (DisplayTileRow.ContainerSP), SP
                 RestoreDE
-                GetCurrentScreen
-                JP Z, .Display_C000
+;                 GetCurrentScreen
+;                 JP Z, .Display_C000
 
-                ; draw on the screen at #4000
-.Row            defl 0
-                dup TileAddressTable4000[#]
+;                 ; draw on the screen at #4000
+; .Row            defl 0
+;                 dup TileAddressTable4000[#]
+;                 EXX
+;                 LD BC, TileAddressTable4000[.Row]
+;                 EXX
+;                 LD HL, $+3
+
+;                 rept 16                                                 ; number of columns per row
+;                 JP (IX)
+;                 endr
+; .Row            = .Row + 1
+;                 edup
+
+; .Exit           ; exit
+; .ContainerSP    EQU $+1
+;                 LD SP, #0000
+
+;                 RET
+
+; .Display_C000   ; draw on the screen at #C000
+; .Row            = 0
+;                 dup TileAddressTableC000[#]
+;                 EXX
+;                 LD BC, TileAddressTableC000[.Row]
+;                 EXX
+;                 LD HL, $+3
+
+;                 rept 16                                                 ; number of columns per row
+;                 JP (IX)
+;                 endr
+; .Row            = .Row + 1
+;                 edup
+
+;                 JP .Exit
+
+                GetCurrentScreen
+                LD A, #C0
+                JR Z, $+4
+                LD A, #40
+                LD (.Row0), A
+                LD (.Row1), A
+                LD (.Row2), A
+                LD (.Row3), A
+                ADD A, #08
+                LD (.Row4), A
+                LD (.Row5), A
+                LD (.Row6), A
+                LD (.Row7), A
+                ADD A, #08
+                LD (.Row8), A
+                LD (.Row9), A
+                LD (.RowA), A
+                LD (.RowB), A
+
+.DrawRows       ; draw on the screen
+
+                ; ---------------------------------------------
+                ; Row 0
+                ; ---------------------------------------------
                 EXX
-                LD BC, TileAddressTable4000[.Row]
+.Row0           EQU $+2
+                LD BC, #4000
                 EXX
                 LD HL, $+3
 
-                rept 16                                                 ; number of columns per row
+                rept 16                                                         ; number of columns per row
                 JP (IX)
                 endr
-.Row            = .Row + 1
-                edup
 
-.Exit           ; exit
+                ; ---------------------------------------------
+                ; Row 1
+                ; ---------------------------------------------
+                EXX
+.Row1           EQU $+2
+                LD BC, #4040
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 2
+                ; ---------------------------------------------
+                EXX
+.Row2           EQU $+2
+                LD BC, #4080
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 3
+                ; ---------------------------------------------
+                EXX
+.Row3           EQU $+2
+                LD BC, #40C0
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 4
+                ; ---------------------------------------------
+                EXX
+.Row4           EQU $+2
+                LD BC, #4800
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 5
+                ; ---------------------------------------------
+                EXX
+.Row5           EQU $+2
+                LD BC, #4840
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 6
+                ; ---------------------------------------------
+                EXX
+.Row6           EQU $+2
+                LD BC, #4880
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 7
+                ; ---------------------------------------------
+                EXX
+.Row7           EQU $+2
+                LD BC, #48C0
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 8
+                ; ---------------------------------------------
+                EXX
+.Row8           EQU $+2
+                LD BC, #5000
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 9
+                ; ---------------------------------------------
+                EXX
+.Row9           EQU $+2
+                LD BC, #5040
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 10
+                ; ---------------------------------------------
+                EXX
+.RowA           EQU $+2
+                LD BC, #5080
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; ---------------------------------------------
+                ; Row 11
+                ; ---------------------------------------------
+                EXX
+.RowB           EQU $+2
+                LD BC, #50C0
+                EXX
+                LD HL, $+3
+
+                rept 16                                                         ; number of columns per row
+                JP (IX)
+                endr
+
+                ; exit
 .ContainerSP    EQU $+1
                 LD SP, #0000
 
                 RET
 
-.Display_C000   ; draw on the screen at #C000
-.Row            = 0
-                dup TileAddressTableC000[#]
-                EXX
-                LD BC, TileAddressTableC000[.Row]
-                EXX
-                LD HL, $+3
-
-                rept 16                                                 ; number of columns per row
-                JP (IX)
-                endr
-.Row            = .Row + 1
-                edup
-
-                JP .Exit
+                
 
                 endif ; ~_CORE_DISPLAY_TILEMAP_BACKGROUND_

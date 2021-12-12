@@ -199,14 +199,23 @@ Handler:        ; включить страницу
                 LD (.SpriteSize), A
 
                 ; получение адреса строки
-.ScrRowAdr      LD H, (HIGH SCR_ADR_ROWS_TABLE) >> 1
-                ADD HL, HL
+.ScrRowAdr      ; LD H, (HIGH SCR_ADR_ROWS_TABLE) >> 1
+                ; ADD HL, HL
+                ; LD A, (HL)
+                ; INC HL
+                ; LD H, (HL)
+                ; LD L, A
+
+                CALL Memory.SetPage7                                            ; выстовить страничку с таблицей для просчёта адресов экрана
+
+                LD H, HIGH MemoryPage_7.SCR_ADR_TABLE
+                ; LD L, C
                 LD A, (HL)
-                INC HL
+                INC H
                 LD H, (HL)
                 LD L, A
 
-                AdjustHighScreenByte_H
+                ; AdjustHighScreenByte_H
 
                 LD (.ScrAdr), HL
                 JP .ClipRow
@@ -234,8 +243,8 @@ Handler:        ; включить страницу
                 LD (.SpriteSize), A
                 
                 ; адрес константный, меняется только номер столбца
-                LD HL, #4000
-                AdjustHighScreenByte_H
+                LD HL, #C000
+                ; AdjustHighScreenByte_H
 
                 LD (.ScrAdr), HL
                 JP .ClipRow
@@ -572,13 +581,13 @@ Handler:        ; включить страницу
                 BIT 7, D                    ; 7 бит, говорит об использовании маски по смещению
                 CALL MEMCPY.Sprite
 
-                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, UNIT_HANDLER_RENDER_ID
+                CALL Memory.InvScrPageToC000
 
                 ; ---------------------------------------------
                 ; корректировка адреса экран
                 ; ---------------------------------------------
                 EXX
-.ScrAdr         EQU $+1                        
+.ScrAdr         EQU $+1
                 LD DE, #0000    ; экран
                 LD A, E
 .ColumnOffset   EQU $+1

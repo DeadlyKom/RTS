@@ -55,7 +55,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CheckFrameFlag RESTORE_CURSOR
                     CALL Z, Cursor.Restore
 
-                    ; ~ CURSOR
+.SkipRestoreCursor  ; ~ CURSOR
 
                     ; show debug border
                     ifdef SHOW_DEBUG_BORDER_INTERRUPT
@@ -64,20 +64,20 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .DebugInfo          ; ****** SWITCH DEBUG SCREENS *****
                     ; swith screens
-                    ifdef ENABLE_TOGGLE_SCREENS_DEBUG
-                    GetCurrentScreen
-                    LD A, #C0
-                    JR Z, $+4
-                    LD A, #40
-                    LD (Console.DrawChar.ConsoleScreen), A
-                    endif
+                    ; ifdef ENABLE_TOGGLE_SCREENS_DEBUG
+                    ; GetCurrentScreen
+                    ; LD A, #C0
+                    ; JR Z, $+4
+                    ; LD A, #40
+                    ; LD (Console.DrawChar.ConsoleScreen), A
+                    ; endif
                     ; ~ SWITCH DEBUG SCREENS
 
 .FPS_Counter        ; ************** FPS **************
                     ifdef SHOW_FPS
                     CheckGameplayFlag PATHFINDING_FLAG
                     JR Z, .SkipShowFPS
-                    CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_FPS_ID
+                    CALL Memory.InvScrPageToC000
 	                CALL FPS_Counter.IntTick
                     CALL FPS_Counter.Render_FPS
 	                endif
@@ -87,7 +87,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ifdef SHOW_AI_FREQUENCY
                     CheckGameplayFlag PATHFINDING_FLAG
                     JR Z, .SkipShowAIFreq
-                    CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_AI_FREQUENCY_ID
+                    ; CALL Memory.InvScrPageToC000
                     LD A, #1A
                     CALL Console.At
 
@@ -237,9 +237,9 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ifdef ENABLE_MOUSE
                     CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_CURSOT_ID
                     GetCurrentScreen
-                    LD A, #40
+                    LD A, #80
                     JR Z, $+4
-                    LD A, #C0
+                    LD A, #00
                     CALL Cursor.Draw
                     endif
                     ; ~ DRAW CURSOR

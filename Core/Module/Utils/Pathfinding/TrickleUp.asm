@@ -19,7 +19,7 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
                 INC H
                 LD D, (HL)
 
-                PUSH DE
+.DE             PUSH DE
                 EX AF, AF'
 
                 ; WORD New_f = GetMapData(Bottom).f

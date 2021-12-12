@@ -42,20 +42,23 @@ MenuGamePause:      CALL Hide
                     OR A
                     RET
 ToggleKemMouse:     SwapHardwareFlag KEMPSTON_MOUSE_FLAG
-                    CALL Console.SwitchScreen       ; switch screen log
+                    ; CALL Console.SwitchScreen       ; switch screen log
+                    CALL Memory.ScrPageToC000
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
                     RET
 ToggleKemJoystick:  SwapHardwareFlag KEMPSTON_JOY_BUTTON_3
-                    CALL Console.SwitchScreen       ; switch screen log
+                    ; CALL Console.SwitchScreen       ; switch screen log
+                    CALL Memory.ScrPageToC000
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
                     RET
 ToggleMoveKeys:     SwapHardwareFlag KEYBOARD_WASD_QAOP
                     CALL Game.ChangeKeyboardLayout 
-                    CALL Console.SwitchScreen       ; switch screen log
+                    ; CALL Console.SwitchScreen       ; switch screen log
+                    CALL Memory.ScrPageToC000
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
@@ -63,7 +66,8 @@ ToggleMoveKeys:     SwapHardwareFlag KEYBOARD_WASD_QAOP
 DecCursorSpeed:     LD HL, MinCursorSpeedRef
                     DEC (HL)
                     CALL Input.Cursor.InitAcceleration
-                    CALL Console.SwitchScreen       ; switch screen log
+                    ; CALL Console.SwitchScreen       ; switch screen log
+                    CALL Memory.ScrPageToC000
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
@@ -71,7 +75,8 @@ DecCursorSpeed:     LD HL, MinCursorSpeedRef
 IncCursorSpeed:     LD HL, MinCursorSpeedRef
                     INC (HL)
                     CALL Input.Cursor.InitAcceleration
-                    CALL Console.SwitchScreen       ; switch screen log
+                    ; CALL Console.SwitchScreen       ; switch screen log
+                    CALL Memory.ScrPageToC000
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
@@ -90,21 +95,22 @@ InputJoyMode:       JR NZ, .Processing              ; skip released
                     ; ***********************
 Show:               ResetGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG         ; пауза меню отображается
                     SetGameplayFlag ACTIVATE_PAUSE_MENU_GAME_FLAG       ; сброс запроса активации отобразить меню 
-                    GetCurrentScreen
-                    LD A, MemoryPage_ShadowScreen
-                    JR Z, $+4
-                    LD A, MemoryPage_MainScreen
-                    LD (Hide.Screen), A
-                    CALL Memory.SetPage                                 ; SeMemoryPage_A GAME_PAUSE_MENU_ID
+                    ; GetCurrentScreen
+                    ; LD A, MemoryPage_ShadowScreen
+                    ; JR Z, $+4
+                    ; LD A, MemoryPage_MainScreen
+                    ; LD (Hide.Screen), A
+                    ; CALL Memory.SetPage                                 ; SeMemoryPage_A GAME_PAUSE_MENU_ID
+                    CALL Memory.InvScrPageToC000
                     CALL FadeoutScreen
-                    CALL Console.ShadowScreen       ; switch screen log
+                    ; CALL Console.ShadowScreen       ; switch screen log
                     CALL DrawGamePause
                     SwapScreens
                     RET
 Hide:               CALL Tilemap.ForceScreen
-.Screen             EQU $+1
-                    LD A, #00
-                    CALL Memory.SetPage                                 ; SeMemoryPage_A GAME_PAUSE_MENU_ID
+; .Screen             EQU $+1
+;                     LD A, #00
+                    CALL Memory.ScrPageToC000
                     ; SwapScreens
                     ;
                     LD HL, #C000 + #1800 + #0300

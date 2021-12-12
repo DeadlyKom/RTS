@@ -55,9 +55,9 @@ DrawChar:		; calculate source font address
 				RLCA
 				RLCA
 				RLCA
-				ADD A, #40
-.ConsoleScreen 	EQU $+1
-				OR #00
+				ADD A, #C0
+; .ConsoleScreen 	EQU $+1
+; 				OR #00
 				LD D, A
 				LD A, (CursorPos)
 				LD E, A
@@ -86,19 +86,19 @@ DrawChar:		; calculate source font address
 				RET
 
 SwitchScreen:	; switch screen log
-				GetCurrentScreen
-				LD A, #40
-				JR Z, $+4
-				LD A, #C0
-				LD (DrawChar.ConsoleScreen), A
+				; GetCurrentScreen
+				; LD A, #40
+				; JR Z, $+4
+				; LD A, #C0
+				; LD (DrawChar.ConsoleScreen), A
 				RET
 
 ShadowScreen:	; switch to shadow screen log
-				GetShadowScreen
-				LD A, #40
-				JR Z, $+4
-				LD A, #C0
-				LD (DrawChar.ConsoleScreen), A
+				; GetShadowScreen
+				; LD A, #40
+				; JR Z, $+4
+				; LD A, #C0
+				; LD (DrawChar.ConsoleScreen), A
 				RET
 	
 ; Prints a string to console
@@ -138,11 +138,11 @@ AddressToAttrs:	LD A, D
 				RRCA
 				RRCA
 				RRCA
-				OR #58	
+				OR #D8	
 				LD D, A
-				LD A, (DrawChar.ConsoleScreen)
-				OR D
-				LD D, A
+				; LD A, (DrawChar.ConsoleScreen)
+				; OR D
+				; LD D, A
 				RET
 
 ; Prints a 16-bit value to console

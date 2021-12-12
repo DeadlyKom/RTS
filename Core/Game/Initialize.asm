@@ -49,8 +49,8 @@ Initialize:             ; initialize
 
                         ; claer screen
                         ifdef ENABLE_CLS
+                        CALL Memory.SetPage7
                         CLS_4000
-                        CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, CLS_ID
                         CLS_C000
                         endif
 

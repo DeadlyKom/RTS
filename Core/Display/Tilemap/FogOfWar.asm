@@ -12,48 +12,50 @@ FOW:            ; initialize execute blocks
                 LD IX, DisplayRowFOW
                 LD DE, RenderBuffer
                 LD BC, BypassFOW
-                LD (.ContainerSP), SP
+                LD (Display.ContainerSP), SP
                 PUSH AF                                                 ; SP -= 2
                 LD (DisplayRowFOW.ContainerSP), SP
                 POP AF                                                  ; SP += 2
                 RestoreDE
-                GetCurrentScreen
-                JP Z, .Display_C000
+;                 GetCurrentScreen
+;                 JP Z, .Display_C000
 
-                ; draw on the screen at #4000
-.Row            defl 0
-                dup TileAddressTable4000[#]
-                EXX
-                LD BC, TileAddressTable4000[.Row]
-                EXX
-                LD HL, $+3
+;                 ; draw on the screen at #4000
+; .Row            defl 0
+;                 dup TileAddressTable4000[#]
+;                 EXX
+;                 LD BC, TileAddressTable4000[.Row]
+;                 EXX
+;                 LD HL, $+3
 
-                rept 16                                                 ; number of columns per row
-                JP (IX)
-                endr
-.Row            = .Row + 1
-                edup
+;                 rept 16                                                 ; number of columns per row
+;                 JP (IX)
+;                 endr
+; .Row            = .Row + 1
+;                 edup
 
-.Exit           ; exit
-.ContainerSP    EQU $+1
-                LD SP, #0000
-                RET
+; .Exit           ; exit
+; .ContainerSP    EQU $+1
+;                 LD SP, #0000
+;                 RET
 
-.Display_C000   ; draw on the screen at #C000
-.Row            = 0
-                dup TileAddressTableC000[#]
-                EXX
-                LD BC, TileAddressTableC000[.Row]
-                EXX
-                LD HL, $+3
+; .Display_C000   ; draw on the screen at #C000
+; .Row            = 0
+;                 dup TileAddressTableC000[#]
+;                 EXX
+;                 LD BC, TileAddressTableC000[.Row]
+;                 EXX
+;                 LD HL, $+3
 
-                rept 16                                                 ; number of columns per row
-                JP (IX)
-                endr
-.Row            = .Row + 1
-                edup
+;                 rept 16                                                 ; number of columns per row
+;                 JP (IX)
+;                 endr
+; .Row            = .Row + 1
+;                 edup
 
-                JP .Exit
+;                 JP .Exit
+
+                JP Display.DrawRows
 
 ; -----------------------------------------
 ; display row tiles FOW

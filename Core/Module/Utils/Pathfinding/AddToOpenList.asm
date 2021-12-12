@@ -33,7 +33,7 @@ AddToOpenList:  ; set return address
                 ; FPFInfo.Flags.bInOpenList = true
                 SET PF_IN_OPEN_LIST_BIT, (HL)                                   ; HL - pointer to FPFInfo.Flags                     (0)
 
-                INC H                                                           ; HL - pointer to FPFInfo.ParentCoord.X             (1)
+.First          INC H                                                           ; HL - pointer to FPFInfo.ParentCoord.X             (1)
 
                 ; set FPFInfo.ParentCoord
                 CALL .SetParentCoord
@@ -162,7 +162,7 @@ AddToOpenList:  ; set return address
 ; .JumpTrickleUp  ; TrickleUp(FPFInfo.OpenListIdx);
 ;                 LD HL, #0000
 ;                 PUSH HL
-                JP TrickleUp                                                    ; A = FPFInfo.OpenListIdx
+                JP TrickleUp.DE                                                 ; A = FPFInfo.OpenListIdx
 
 .SetParentCoord ; ---------------------------------------------
                 ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)

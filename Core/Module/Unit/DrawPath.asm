@@ -81,7 +81,7 @@ DrawPath:       LD IXH, D
 
                 ;   HL  - (H - y, L - x) start point    (S)
                 ;   DE  - (D - y, E - x) end point      (E)
-                CALL Memory.SetPage7
+                CALL Memory.ScrPageToC000
                 CALL DrawLine
                 CALL Memory.SetPage1
 

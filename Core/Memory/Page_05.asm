@@ -6,8 +6,8 @@
                 ORG Page_5
 MemoryPage_5_Start:
                 ; 219 байт пустует
-                include "Tables/ShiftTable.inc"                         ; таблица сдвигов (3584 байт)
-                include "Tables/ScreenAddressRowsTable.inc"             ; таблица адресов экрана по строкам (384 байта)
+                include "Tables/ShiftTable.inc"                                 ; таблица сдвигов (3584 байт)
+                ; include "Tables/ScreenAddressRowsTable.inc"                     ; таблица адресов экрана по строкам (384 байта)
                 include "Tables/DrawMetods.inc"
                 include "../../Sprites/Table.inc"
                 

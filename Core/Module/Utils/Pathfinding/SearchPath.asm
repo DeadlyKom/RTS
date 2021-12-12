@@ -15,6 +15,8 @@ SearchPath:     ; ---------------------------------------------
                                                                                 ; с последующим перерисованием первого экрана
                 SetFrameFlag RENDER_FINISHED                                    ; запрещает обновление данных на экране (при скролле)
 
+                ; SetFrameFlag RESTORE_CURSOR
+
                 CALL Memory.SetPage1                                            ; включить страницу
 
                 ; clear temp buffer
@@ -73,7 +75,7 @@ SearchPath:     ; ---------------------------------------------
                 ; preparation of arguments
                 CALL GetHeuristics
                 PUSH HL                                                         ; SP+2 - cost value H_Cost
-                LD BC, #0000                                                    ; perent tile position
+                LD BC, #FFFF                                                    ; perent tile position
                 PUSH BC                                                         ; SP+0 - cost value G_Cost
 
                 ; ---------------------------------------------
@@ -82,13 +84,31 @@ SearchPath:     ; ---------------------------------------------
                 ;   DE   - tile position (D - y, E - x)
                 ;   BC   - perent tile position (B - y, C - x)
                 ; ---------------------------------------------
+
+                ; ---------------------------------------------
+                ; AddToOpenList
+                ; ---------------------------------------------
+
+                CALL GetTileInfo
+                LD L, A
+                LD H, HIGH PathfindingBuffer
+
+                ; ---------------------------------------------
+                ; HL - pointer to FPFInfo structure in buffer
+                ; ---------------------------------------------
+
+                ; FPFInfo.Flags.bInOpenList = true
+                LD (HL), PF_IN_OPEN_LIST | PF_IS_START_COORD                    ; HL - pointer to FPFInfo.Flags                     (0)
+
+                ; ---------------------------------------------
                 
-                JP AddToOpenList
+                JP AddToOpenList.First
 
 .Complite       CALL Step
 
                 CALL Tilemap.ForceScreen                                        ; обновление экранов
                 SetGameplayFlag (PATHFINDING_FLAG | PATHFINDING_REQUEST_PLAYER_FLAG) ; разрешить поиск
+                ; ResetFrameFlag RESTORE_CURSOR
                 RET
 
                 endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_SEARCH_PATH_

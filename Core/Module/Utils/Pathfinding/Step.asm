@@ -44,7 +44,7 @@ Step:           ; ---------------------------------------------
                 LD (.LeastHeuristic), HL
                 
                 ; BestCoord = CurrentCoord;
-                LD (.BestCoord), DE
+                LD (GetFoundPath.BestCoord), DE
 
 .Less_H_Cost    ; if (CurrentCoord == End)
                 LD HL, (GetHeuristics.EndLocation)
@@ -56,6 +56,8 @@ Step:           ; ---------------------------------------------
                 JP Z, GetFoundPath                                              ; destination found
 
                 ; push a node for each direction we could go
+
+                LD (.CurrentCoord), DE
 
                 ; ---------------------------------------------
                 ; DE - CurrentCoord (D = Y, E = X)
@@ -361,7 +363,7 @@ Step:           ; ---------------------------------------------
                 ; Cost_45 = 7
                 ; Cost_90 = 5
 
-.BestCoord      EQU $+1
+.CurrentCoord   EQU $+1
                 LD BC, #0000
                 LD A, D
                 CP B
