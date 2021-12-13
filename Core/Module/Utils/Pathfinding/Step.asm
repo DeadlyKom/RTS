@@ -32,6 +32,9 @@ Step:           ; ---------------------------------------------
                 LD H, (HL)
                 LD L, A
 
+                ; HL - Data.h
+                ; BC - LeastHeuristic
+
                 ; if (Data.h < LeastHeuristic)       
 .LeastHeuristic EQU $+1
                 LD BC, #0000
@@ -338,7 +341,7 @@ Step:           ; ---------------------------------------------
                 ;   C [0..3] - collision flags
                 ; ---------------------------------------------
 
-                LD H, A
+                LD (.TileProperty), A
 
                 ; tile passability check
                 AND SCF_MASK
@@ -360,6 +363,9 @@ Step:           ; ---------------------------------------------
                 CALL GetHeuristics
                 PUSH HL                                                         ; SP+2 - cost value H_Cost
 
+.TileProperty   EQU $+1
+                LD HL, #1000
+
                 ; Cost_45 = 7
                 ; Cost_90 = 5
 
@@ -373,8 +379,8 @@ Step:           ; ---------------------------------------------
                 JR Z, .LinerMovement
 
                 ; add diagonal movement Cost_45 = 7
-                LD A, H
-                LD H, #10
+                LD A, L
+                ; LD H, #10
                 LD L, #07 * 1
                 OR A
                 JR Z, .Calc_H_Cost
@@ -388,8 +394,8 @@ Step:           ; ---------------------------------------------
                 JR .Calc_H_Cost
 
 .LinerMovement  ; add linear movement Cost_90 = 5
-                LD A, H
-                LD H, #10
+                LD A, L
+                ; LD H, #10
                 LD L, #05 * 1
                 OR A
                 JR Z, .Calc_H_Cost

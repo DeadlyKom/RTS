@@ -77,6 +77,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 LD E, (HL)
                 INC H
                 LD D, (HL)
+                LD (.Top_f+1), DE
                 
 .While          ; while (Current < (OpenListSize >> 1))
                 LD A, B
@@ -85,7 +86,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 JR C, .PreExit
                 JR Z, .PreExit
 
-                PUSH DE                                                         ; save Top_f
+                ; PUSH DE                                                         ; save Top_f
 
                 ; BYTE LeftChild = (Current << 1) + 1;
                 LD A, C
@@ -104,7 +105,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 JR NC, .NoRigthChild
 
                 LD A, D
-                EX AF, AF'
+                EX AF, AF'                                                      ; save RightChild
 
                 ; WORD Left_f = GetMapData(OpenList[LeftChild]).f;
                 ; LD A, E
@@ -123,7 +124,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 PUSH DE                                                         ; save Left_f
 
                 ; WORD Right_f = GetMapData(OpenList[RightChild]).f;
-                EX AF, AF'
+                EX AF, AF'                                                      ; restore RightChild
                 ; CALL OpenList.GetElement
                 LD L, A
                 LD H, HIGH PathfindingOpenListBuffer
@@ -205,7 +206,8 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 EX AF, AF'                                                      ; restort LeftChild
 
 .Top_f          ; if (Top_f <= SmallerChild_f) { break; }
-                POP DE                                                          ; restore Top_f
+                ; POP DE                                                          ; restore Top_f
+                LD DE, #0000
                 ; ---------------------------------------------
                 ; HL = SmallerChild_f
                 ; DE = Top_f
