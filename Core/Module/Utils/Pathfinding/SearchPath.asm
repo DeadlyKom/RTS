@@ -58,7 +58,7 @@ SearchPath:     ; ---------------------------------------------
                 LD (Utils.Pathfinding.AddToOpenList.BufferStartX), A            ; AddToOpenList.BufferStartX
                 LD A, H
                 LD (Utils.Pathfinding.AddToOpenList.BufferStartY), A            ; AddToOpenList.BufferStartY
-                LD HL, #0F0F
+                LD HL, #0B0F
                 LD (Utils.Pathfinding.Step.BufferEnd), HL  
 
                 ; compute end point
