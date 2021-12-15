@@ -11,7 +11,7 @@
 ;   HL, DE, BC, AF
 ; Note:
 ; -----------------------------------------
-Init:               CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, WAYPOINT_INIT_ID
+Init:               CALL Memory.SetPage1
                     XOR A
                     LD (WaypointCounterRef), A
                     LD HL, (WaypointArrayRef)
@@ -56,7 +56,7 @@ Init:               CALL Memory.SetPage1                       ; SeMemoryPage Me
 ;   requires included memory page
 ; -----------------------------------------
 FindAndAdd:         LD HL, (WaypointArrayRef)
-                    INC L                               ; исключить 0 элемент
+                    INC L                                                       ; исключить 0 элемент
                     LD A, (WaypointCounterRef)
                     OR A
                     JR Z, Set.ByHL
@@ -76,32 +76,32 @@ FindAndAdd:         LD HL, (WaypointArrayRef)
                     INC H
                     LD A, (HL)
                     CP D
-                    JR Z, .Equal            ; обнаружено совпадение
+                    JR Z, .Equal                                                ; обнаружено совпадение
                     DEC H
 .PreNext            DEC H
 
                     ; уменьшим счётчик элементов в массиве
                     DEC B
-                    JR Z, .End              ; счётчик waypoint обнулён, совпадений не обноружено
+                    JR Z, .End                                                  ; счётчик waypoint обнулён, совпадений не обноружено
 
 .Next               ; переход к следующей ячейке
                     XOR A
                     INC L
                     JP NZ, .Loop
-                    JR .ArrayIsFull         ; массив переполнен
+                    JR .ArrayIsFull                                             ; массив переполнен
 
 .End                ; счётчик waypoint обнулён, совпадений не обноружено
-                    LD A, C                 ; C = первый свободный
+                    LD A, C                                                     ; C = первый свободный
                     OR A
                     JR Z, .LastElement
                     LD L, C
-                    JP Set.ByHL             ; установим waypoint по адресу в HL
+                    JP Set.ByHL                                                 ; установим waypoint по адресу в HL
 
 .LastElement        INC L
-                    JP NZ, Set.ByHL         ; установим waypoint по адресу в HL
+                    JP NZ, Set.ByHL                                             ; установим waypoint по адресу в HL
 
 .ArrayIsFull        ; массив переполнен
-                    OR A                    ; unsuccessful execution
+                    OR A                                                        ; unsuccessful execution
                     RET
 
 .FirstEmpty         LD A, C
@@ -113,9 +113,9 @@ FindAndAdd:         LD HL, (WaypointArrayRef)
 .Equal              ; обнаружено совпадение
                     DEC H
                     DEC H
-                    INC (HL)                ; нужна проверка если превысило 255
-                    JR Z, $                 ; ToDo нужно обработать переполнение
-                    SCF                     ; successful execution
+                    INC (HL)                                                    ; нужна проверка если превысило 255
+                    JR Z, $                                                     ; ToDo нужно обработать переполнение
+                    SCF                                                         ; successful execution
                     RET
 
 ; -----------------------------------------
@@ -147,7 +147,7 @@ Set:                LD L, A
                     INC (HL)
 
                     LD L, A
-                    SCF                             ; successful execution
+                    SCF                                                         ; successful execution
                     RET
 ; -----------------------------------------
 ; remove waypoint at specified index
@@ -166,7 +166,7 @@ Remove:             LD L, A
                     JR Z, .DecreaseCounter
 
                     ifdef DEBUG
-                    JR $                            ; ошибка!
+                    JR $                                                        ; ошибка!
                     else
                     RET
                     endif

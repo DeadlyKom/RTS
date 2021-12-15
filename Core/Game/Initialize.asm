@@ -4,15 +4,15 @@
 
 Initialize:             ; initialize
                         SetAllHardwareFlags                     ;
-                        ; ResetHardwareFlag KEMPSTON_JOY_BUTTON_3 ; включить джойстик SEGA
-                        ; ResetHardwareFlag KEYBOARD_WASD_QAOP    ; включить WASD управление
+                        ; ResetHardwareFlag KEMPSTON_JOY_BUTTON_3               ; включить джойстик SEGA
+                        ; ResetHardwareFlag KEYBOARD_WASD_QAOP                  ; включить WASD управление
                         CALL ChangeKeyboardLayout
-                        SetAllFrameFlags                        ; настройка флагов отрисовки
+                        SetAllFrameFlags                                        ; настройка флагов отрисовки
                         ; ResetFrameFlag DELAY_RENDER_FLAG
-                        SetAllGameplayFlags                     ; настройка игровых флагов
+                        SetAllGameplayFlags                                     ; настройка игровых флагов
                         ; ResetGameplayFlag GAME_PAUSE_MENU_FLAG
-                        SetAllTilemapFlags                      ; настройки флагов тайловой карты
-                        SetAllAIFlags                           ; настройка ИИ флагов
+                        SetAllTilemapFlags                                      ; настройки флагов тайловой карты
+                        SetAllAIFlags                                           ; настройка ИИ флагов
                         ResetAIFlag GAME_PAUSE_FLAG
 
                         ; initialize cursor speed
@@ -28,8 +28,8 @@ Initialize:             ; initialize
 
                         CALL Interrupt.Initialize
                         CALL Tilemap.Initialize
-                        CALL Utils.Waypoint.Init                ; initialize array waypoints
-                        CALL Utils.WaypointsSequencer.Init      ; initialize bitmap waypoints
+                        CALL Utils.Waypoint.Init                                ; initialize array waypoints
+                        CALL Utils.WaypointsSequencer.Init                      ; initialize bitmap waypoints
                         CALL Handlers.Input.Initialize
                         CALL Tilemap.SafePrepare
                         
@@ -37,7 +37,7 @@ Initialize:             ; initialize
                         ifdef ENABLE_MUSIC
 
                         ; toggle to memory page with tile sprites
-                        CALL Memory.SetPage3                       ; SeMemoryPage MemoryPage_Music, MUSIC_INIT_ID
+                        CALL Memory.SetPage3
                         LD A, R
                         RRA
                         LD HL, #D11B
@@ -76,13 +76,13 @@ ChangeKeyboardLayout:   ;
                         LD BC, (VK_P << 8) | VK_O
 
                         LD HL, VirtualKeysRef
-                        LD (HL), E                      ; Up
+                        LD (HL), E                                              ; Up
                         INC HL
-                        LD (HL), D                      ; Down
+                        LD (HL), D                                              ; Down
                         INC HL
-                        LD (HL), C                      ; Left
+                        LD (HL), C                                              ; Left
                         INC HL
-                        LD (HL), B                      ; Right
+                        LD (HL), B                                              ; Right
                         RET
 
                         endif ; ~_CORE_GAME_INITIALIZE_

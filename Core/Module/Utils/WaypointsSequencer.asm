@@ -29,17 +29,17 @@ Init:               ; WaypointsSequenceBitmapPtr + 0xE0
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-Create:             CALL FindFreeElement                            ; Out:
-                                                                    ;   HL   - адрес свободной последовательности
-                                                                    ;   L, A - индекс последовательности
-                                                                    ;   если флаг С сброшен, найти свободную не удалось
+Create:             CALL FindFreeElement                                        ; Out:
+                                                                                ;   HL   - адрес свободной последовательности
+                                                                                ;   L, A - индекс последовательности
+                                                                                ;   если флаг С сброшен, найти свободную не удалось
 
-                    RET C                                           ; unsuccessful execution
-                    LD (AddUnit.IndexSequence), A                   ; сохраним индекс последовательности
-                    LD (AddWaypoint.Sequencer), HL                  ; инициализация для Waypoints
+                    RET C                                                       ; unsuccessful execution
+                    LD (AddUnit.IndexSequence), A                               ; сохраним индекс последовательности
+                    LD (AddWaypoint.Sequencer), HL                              ; инициализация для Waypoints
                     LD A, #08
                     LD (AddWaypoint.Counter), A
-                    CALL MarkBusyElement                            ; пометить как занятый
+                    CALL MarkBusyElement                                        ; пометить как занятый
                     RET
 
 ; -----------------------------------------
@@ -47,6 +47,7 @@ Create:             CALL FindFreeElement                            ; Out:
 ; In:
 ;   DE - waypoint location (tile center) (D - y, E - x)
 ; Out:
+;   если флаг С сброшен, буфер последовательности переполнен
 ; Corrupt:
 ;   HL, BC, AF
 ; Note:
@@ -55,11 +56,11 @@ Create:             CALL FindFreeElement                            ; Out:
 AddWaypoint:        ; ---------------------------------------------
                     ; добавить Waypoint в масив
                     ; ---------------------------------------------
-                    CALL Utils.Waypoint.FindAndAdd                  ; Out:
-                                                                    ;   L  - waypoint index of the added element
-                                                                    ;   if the C flag is true, successful
+                    CALL Utils.Waypoint.FindAndAdd                              ; Out:
+                                                                                ;   L  - waypoint index of the added element
+                                                                                ;   if the C flag is true, successful
 
-                    RET NC                                          ; unsuccessful execution
+                    RET NC                                                      ; unsuccessful execution
 
                     ; ---------------------------------------------
                     ; добавить индекс Waypoint в масиве последовательности
@@ -80,13 +81,13 @@ AddWaypoint:        ; ---------------------------------------------
                     XOR A
                     LD (BC), A
                     INC (HL)
-                    SCF                                             ; successful execution
+                    SCF                                                         ; successful execution
                     RET
 .Counter            DB #08
                     ; ---------------------------------------------
                     ; последовательность Waypoints более 8
                     ; ---------------------------------------------
-.More_8             OR A                                            ; unsuccessful execution
+.More_8             OR A                                                        ; unsuccessful execution
                     RET
 ; -----------------------------------------
 ; In:
@@ -106,7 +107,7 @@ GetCurrentWaypoint: LD A, (IX + FUnitTargets.Data)
 
                     LD A, (HighWaypointArrayRef)
                     LD H, A
-                    INC H                                               ; первое значение, счётчик
+                    INC H                                                       ; первое значение, счётчик
                     ; LD E, (HL)
                     ; INC H
                     ; LD D, (HL)
@@ -174,14 +175,14 @@ AddUnit:            LD HL, (UnitArrayRef)
                     LD L, A
 
                     ; HL - FUnitState (1)
-                    INC H                                           ; FUnitLocation     (2)
-                    INC H                                           ; FUnitTargets      (3)
+                    INC H                                                       ; FUnitLocation     (2)
+                    INC H                                                       ; FUnitTargets      (3)
 
-                    INC L                                           ; FUnitTargets.WayPoint.Y
-                    INC L                                           ; FUnitTargets.Data
+                    INC L                                                       ; FUnitTargets.WayPoint.Y
+                    INC L                                                       ; FUnitTargets.Data
                     LD (HL), C
 
-                    INC L                                           ; FUnitTargets.Idx
+                    INC L                                                       ; FUnitTargets.Idx
 .IndexSequence      EQU $+1
                     LD (HL), #00
                     RET
@@ -210,7 +211,7 @@ MarkBusyElement:    LD H, HIGH WaypointsSequenceBitmapPtr
                     OR %11000110
                     LD (.SET), A
 
-.SET                EQU $+1                 ; SET n, (HL)
+.SET                EQU $+1                                                     ; SET n, (HL)
                     DB #CB, #00
                     RET
 
