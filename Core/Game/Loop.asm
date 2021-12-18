@@ -87,7 +87,7 @@ GameLoop:
 .MainLoop       BEGIN_DEBUG_BORDER_DEF
                 
 .PauseMenuGame  ; ******* PAUSE MENU GAME *******
-                CheckGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG             ; пропустим если активирована пауза игры
+                CheckGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG                     ; пропустим если активирована пауза игры
                 JR Z, .MainLoop
                 ; ~ PAUSE MENU GAME
 
@@ -102,7 +102,7 @@ GameLoop:
 .Render         ; ************ RENDER ************
 
                 ; toggle to memory page with tile sprites
-                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_BEGIN_ID
+                CALL Memory.SetPage7
                 SetFrameFlag RENDER_FINISHED
 
 .Tilemap        ; ************ TILEMAP ************
@@ -127,7 +127,7 @@ GameLoop:
 
                 ; ---------------------------------
                 ; toggle to memory page with tile sprites
-                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_FOW_BEGIN_ID
+                CALL Memory.SetPage7
                 
 .FOW            ; ************** FOW **************
                 ifdef ENABLE_FOW
@@ -141,10 +141,15 @@ GameLoop:
                 endif
                 ; ~ FOW
 
+.SelectionRect  ; ******** SELECTION RECT *********
+                CheckInputFlag SELECTION_RECT_FLAG
+                CALL Z, DrawRectangle
+                ; ~ SELECTION RECT
+
 .CompliteFlags  ; ************* FLAGS *************
-                CheckGameplayFlag PATHFINDING_FLAG                      ; пропустим если необходимо посчитать путь
+                CheckGameplayFlag PATHFINDING_FLAG                              ; пропустим если необходимо посчитать путь
                 JR Z, .Logic
-                CheckGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG             ; пропустим если активирована пауза игры
+                CheckGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG                     ; пропустим если активирована пауза игры
                 JR Z, .Logic
                 ; CheckFrameFlag DELAY_RENDER_FLAG
                 ; JR Z, .Logic

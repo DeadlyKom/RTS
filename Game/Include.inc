@@ -52,6 +52,7 @@ MaxCursorSpeedRef           EQU Game.MaxCursorSpeed                             
 ; flags
 FrameStateRef               EQU Game.FrameFlags                                 ; указатель на флаги состояний (frame)
 GameplayStateRef            EQU Game.GameplayState                              ; указатель на флаги состояний (game)
+InputStateRef               EQU Game.InputState                                 ; указатель на флаги состояний (input)
 TilemapStateRef             EQU Game.TilemapState                               ; указатель на флаги тайловой карты (tilemap)
 AIStateRef                  EQU Game.AIFlags                                    ; указатель на флаги состояний (AI)
 HardwareStateRef            EQU Game.HardwareFlags                              ; указатель на флаг ограничений железа

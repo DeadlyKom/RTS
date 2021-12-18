@@ -19,7 +19,7 @@ ScanMoveMap:        ; save the current address of the visible area of the tilema
                     LD HL, (TilemapRef)
                     LD (.CompareAddress), HL
                     
-                    SetTilemapFlag CURSOR_EDGES_FLAGS                         ; очистка флагов граней такловой карты
+                    SetTilemapFlag CURSOR_EDGES_FLAGS                           ; очистка флагов граней такловой карты
 
                     CheckTilemapFlag ACCELERATE_CURSOR_FLAG
                     JR NZ, .SkipMove
@@ -202,7 +202,7 @@ KeyboardCursor:     ; move cursor left
 ; -----------------------------------------
 ; In :
 ;   A  - virtual code
-;   BC - virtual code modifier keys (two)
+;   ~~BC - virtual code modifier keys (two) ????~~
 ;   HL - address key last state
 ;   DE - address key handlerKey
 ; Out :
@@ -336,10 +336,10 @@ JmpHandJoy:         LD HL, .KeyLastState
                     LD DE, .ArrayVKNum
                     LD B, .Num
                     JP JumpHandlerKeys
-.KeyLastState       DS 3, 0
+.KeyLastState       DS 4, 0
 .ArrayVKNum         DB VK_KEMPSTON_A, 1
                     DB VK_KEMPSTON_B, 2
-                    ; DB VK_KEMPSTON_C, 3
+                    DB VK_KEMPSTON_C, 3
                     DB VK_KEMPSTON_START, 4
 .Num                EQU ($-.ArrayVKNum) / 2
 
@@ -365,6 +365,61 @@ JmpHandMouse:       LD HL, .KeyLastState
                     DB VK_RBUTTON, 2
                     ; DB VK_MBUTTON, 3
 .Num                EQU ($-.ArrayVKNum) / 2
+
+
+; Test:               ; JR$
+
+
+;                     ; LD HL, .KeyTimeCounter
+;                     ; LD DE, .ArrayPointers
+;                     CALL Input.CheckKeyState    ;   флаг Z сброшен, если кнопка нажата
+;                     LD A, (HL)
+;                     JR NZ, .IsReleased
+
+;                     ; нажатие кнопки
+;                     OR A
+;                     JR Z, .NotProcessed    ; выход т.к. производился вызов длиного нажатия
+;                     DEC (HL)
+;                     JR NZ, .NotProcessed    ; выход т.к. производится отсчёт времения длиного нажатия
+
+;                     ; время истекло, считаем что произошло длиное нажатие
+; .JumpLong           INC DE
+;                     INC DE
+
+; .JumpDE             EX DE, HL
+;                     LD A, (HL)
+;                     INC HL
+;                     LD H, (HL)
+;                     LD L, A
+;                     JP (HL)                 ; long pressed
+
+; .IsReleased         INC HL
+;                     CP (HL)
+;                     JR Z, .NotProcessed ; 
+;                     ; установим дефолтное значение счётчика (запретим обработку длиного нажатия)
+;                     LD C, (HL)
+;                     DEC HL
+;                     LD (HL), C
+
+;                     OR A
+;                     JR NZ, .JumpDE          ; short released
+
+;                     ; long released
+;                     INC DE
+;                     INC DE
+
+;                     JR .JumpLong
+
+;                     ; EX DE, HL
+;                     ; JP (HL)                             ; released
+; .NotProcessed       SCF
+;                     RET
+
+; ; .KeyTimeCounter     DB #10
+; ; .KeyTimerDefault    DB #10
+; ; .ArrayPointers      DW #0000 ; short released
+; ;                     DW #0000 ; long pressed
+; ;                     DW #0000 ; long released
 
                     endmodule
 

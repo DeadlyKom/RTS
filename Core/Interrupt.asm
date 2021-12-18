@@ -210,7 +210,8 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ResetFrameFlag FORCE_FOW_FLAG           
 
 .MoveTilemap        ; ********* MOVE TILEMAP **********
-                    CALL Handlers.Input.ScanMoveMap
+                    CheckInputFlag SELECTION_RECT_FLAG
+                    CALL NZ, Handlers.Input.ScanMoveMap                         ; перемещение разрешено, если не вкл режим выбора рамкой
                     ; ~ MOVE TILEMAP
  
 .PauseMenuGame      ; ******* PAUSE MENU GAME ********

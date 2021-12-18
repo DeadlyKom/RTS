@@ -10,6 +10,7 @@ Initialize:             ; initialize
                         SetAllFrameFlags                                        ; настройка флагов отрисовки
                         ; ResetFrameFlag DELAY_RENDER_FLAG
                         SetAllGameplayFlags                                     ; настройка игровых флагов
+                        SetAllInputFlags                                        ; настройка инпута флагов
                         ; ResetGameplayFlag GAME_PAUSE_MENU_FLAG
                         SetAllTilemapFlags                                      ; настройки флагов тайловой карты
                         SetAllAIFlags                                           ; настройка ИИ флагов

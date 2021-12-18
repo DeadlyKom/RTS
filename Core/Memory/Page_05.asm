@@ -22,6 +22,7 @@ MemoryPage_5_Start:
                 endif
 
                 include "../../Utils/DrawLine.asm"
+                include "../../Utils/DrawRectangle.asm"
 
 MemoryPage_5_End:
 SizePage_5:     EQU MemoryPage_5_End - MemoryPage_5_Start

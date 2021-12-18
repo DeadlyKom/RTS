@@ -25,6 +25,7 @@ AnimTurnTable:      DW #0000
 UnitArray:          DW #0000
 FrameFlags:         DB #00
 GameplayState:      DB #00
+InputState:         DB #00
 TilemapState:       DB #00
 AIFlags:            DB #00
 FrameUnitsFlag:     DB #00

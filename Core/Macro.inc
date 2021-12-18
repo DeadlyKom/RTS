@@ -78,7 +78,7 @@ GetShadowScreen         macro
                         endm
 AdjustHighScreenByte_A  macro
                         LD A, (MemoryPageRef)
-                        CPL
+                        ; CPL
                         AND %00001000
                         RLA
                         RLA
@@ -199,6 +199,46 @@ JumpToGameplayFlag      macro Flag?
                         LD BC, $+13
                         PUSH BC
                         LD A, (GameplayStateRef)
+                        AND Flag?
+                        JR Z, $+3
+                        EX DE, HL
+                        JP (HL)
+                        endm
+
+                        ; ---------------------------------------------
+                        ; input flags
+                        ; ---------------------------------------------
+CheckInputFlag          macro Flag?
+                        LD A, (InputStateRef)
+                        AND Flag?
+                        endm
+SetInputFlag            macro Flag?
+                        LD A, (InputStateRef)
+                        OR Flag?
+                        LD (InputStateRef), A
+                        endm
+ResetInputFlag          macro Flag?
+                        LD A, (InputStateRef)
+                        AND ((~Flag?) & 0xFF)
+                        LD (InputStateRef), A
+                        endm
+SwapInputFlag           macro Flag?
+                        LD A, (InputStateRef)
+                        XOR Flag?
+                        LD (InputStateRef), A
+                        endm
+ResetAllInputFlags      macro
+                        XOR A
+                        LD (InputStateRef), A
+                        endm
+SetAllInputFlags        macro
+                        LD A, #FF
+                        LD (InputStateRef), A
+                        endm
+JumpToInputFlag         macro Flag?
+                        LD BC, $+13
+                        PUSH BC
+                        LD A, (InputStateRef)
                         AND Flag?
                         JR Z, $+3
                         EX DE, HL

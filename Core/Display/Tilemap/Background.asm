@@ -486,6 +486,4 @@ Display:        ; initialize execute blocks
 
                 RET
 
-                
-
                 endif ; ~_CORE_DISPLAY_TILEMAP_BACKGROUND_

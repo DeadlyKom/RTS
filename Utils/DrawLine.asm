@@ -61,10 +61,10 @@ DrawLine:       ; инициализация
                 INC L
                 INC B
 
-                ; EX AF, AF'
-                ; AdjustHighScreenByte_A
-                ; LD (.Scr), A
-                ; EX AF, AF'
+                EX AF, AF'
+                AdjustHighScreenByte_A
+                LD (.Scr), A
+                EX AF, AF'
 
 .Line4          BIT 1, B
                 JR Z, .Line5
@@ -73,8 +73,12 @@ DrawLine:       ; инициализация
                 EXX
                 EX AF, AF'
                 POP DE
+                
+                LD A, D
+                LD (.Y), A
+
                 LD L, D
-                LD H, HIGH Page_7.ScrAdr
+                LD H, HIGH MemoryPage_7.SCR_ADR_TABLE
                 LD A, (HL)
                 INC H
                 LD D, (HL)
@@ -83,13 +87,27 @@ DrawLine:       ; инициализация
                 OR (HL)
                 LD E, A
                 INC H
-;                 LD A, D
-; .Scr            EQU $+1
-;                 OR #00
-;                 LD D, A
+                LD A, D
+.Scr            EQU $+1
+                XOR #00
+                LD D, A
                 LD A, (DE)
                 OR (HL)
                 LD (DE), A
+
+                ; очистка
+.Y              EQU $+1
+                LD A, #00
+                AND #F0
+                LD L, A
+                LD A, E
+                RRA
+                AND #0F
+                OR L
+                LD L, A
+                
+                LD H, HIGH RenderBuffer                             ; hight byte index table
+                LD (HL), RENDER_ALL_FLAGS
                 EX AF, AF'
                 EXX
 

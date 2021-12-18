@@ -27,7 +27,7 @@ SCR_ADR_TABLE:
 
                 align 256
 .Count          = 0
-                ; 
+                ; пиксели
                 dup 256
                 DB (1 << ((~.Count) & %0000111))
 .Count          = .Count + 1

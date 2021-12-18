@@ -60,10 +60,10 @@ TileUpdate:     ; ограничение значения меньше 0
                 ADD A, E
                 LD E, A
 
-.LoopRow        LD A, RENDER_ALL_FLAGS
+.LoopRow        ; LD A, RENDER_ALL_FLAGS
                 LD C, D
                 LD L, E
-.LoopColumn     LD (HL), A
+.LoopColumn     LD (HL), RENDER_ALL_FLAGS
                 ; SCF
                 ; RR (HL)
                 ; SCF
