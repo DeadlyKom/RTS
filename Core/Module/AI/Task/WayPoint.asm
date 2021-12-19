@@ -12,14 +12,14 @@
 ;   requires included memory page
 ; -----------------------------------------
 WayPoint:       ; JR $
-                INC IXH                                                         ; FUnitLocation     (2)
+                INC IXH                                                         ; FSpriteLocation     (2)
                 INC IXH                                                         ; FUnitTargets      (3)
 
                 ; проверка что Way Point валиден
                 BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                 JR Z, .IsNotValid_WP                                            ; текущий Way Point не валидный
 
-.Successfully   DEC IXH                                                         ; FUnitLocation     (2)
+.Successfully   DEC IXH                                                         ; FSpriteLocation     (2)
                 DEC IXH                                                         ; FUnitState        (1)
 
                 ; успешно найденый Way Point
@@ -100,7 +100,7 @@ WayPoint:       ; JR $
                 JR .CopyWP
 
 
-.IsNotValid_IDX DEC IXH                                                         ; FUnitLocation     (2)
+.IsNotValid_IDX DEC IXH                                                         ; FSpriteLocation     (2)
                 DEC IXH                                                         ; FUnitState        (1)
                 
                 OR A                                                            ; неудачное выполнение

@@ -47,20 +47,20 @@ Unit:           ; определение адреса добавления но�
                 LD A, 0
                 LD (IX + FUnitState.Animation), A
 
-                INC IXH                                                         ; переход к FUnitLocation
+                INC IXH                                                         ; переход к FSpriteLocation
 
                 ; ---------------------------------------------
-                ; FUnitLocation                             (2)
+                ; FSpriteLocation                             (2)
                 ; ---------------------------------------------
 
                 ; инициализция позиции юнита
-                LD (IX + FUnitLocation.TilePosition.X), C
-                LD (IX + FUnitLocation.TilePosition.Y), B
+                LD (IX + FSpriteLocation.TilePosition.X), C
+                LD (IX + FSpriteLocation.TilePosition.Y), B
                 XOR A
                 LD A, #00
-                LD (IX + FUnitLocation.OffsetByPixel.X), A
+                LD (IX + FSpriteLocation.OffsetByPixel.X), A
                 LD A, #00
-                LD (IX + FUnitLocation.OffsetByPixel.Y), A
+                LD (IX + FSpriteLocation.OffsetByPixel.Y), A
 
                 INC IXH                                                         ; переход к FUnitTargets
 

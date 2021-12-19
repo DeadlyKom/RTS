@@ -16,18 +16,21 @@ MemoryPage_2_Start:
 
                 include "../Handler/Include.inc"
                 include "../MemoryOperation/Include.inc"
-                include "../Display/TileMap/Include.inc"
+                include "../Draw/TileMap/Include.inc"
 
                 include "../Module/Include.inc"
 
                 ifdef ENABLE_MOUSE
-                include "../Display/Cursor/Include.inc"
+                include "../Draw/Cursor/Include.inc"
                 endif
 
-                include "../Display/BackgroundFill.asm"
+                include "../Draw/BackgroundFill.asm"
                 
-                include "../Display/Metods/Include.inc"
-                include "../Display/Metods/ByRestore/Include.inc"
+                include "../Draw/Metods/Include.inc"
+                include "../Draw/Metods/ByRestore/Include.inc"
+
+                include "../Draw/Sprite/Include.inc"
+                include "../Module/UI/Include.inc"
                 
 MemoryPage_2_End:
 

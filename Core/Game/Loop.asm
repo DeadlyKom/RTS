@@ -44,7 +44,7 @@ GameLoop:
                 ; LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | FUTF_MASK_OFFSET         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
                 ; CALL Utils.WaypointsSequencer.AddUnit
 
-                ; ; spawn unit
+                ; spawn unit
                 ; LD BC, #0506
                 ; CALL Spawn.Unit
 

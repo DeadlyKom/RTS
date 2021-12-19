@@ -41,7 +41,7 @@ RefUnitOnScr:   ; включить страницу
                 LD (HL), A
 
                 EX DE, HL
-                INC D                                               ; переход к стурктуре FUnitLocation
+                INC D                                               ; переход к стурктуре FSpriteLocation
 
                 ; грубый расчёт
                 LD HL, TilemapOffsetRef
@@ -99,11 +99,11 @@ RefUnitOnScr:   ; включить страницу
                 ; B - вертикальное смещение в пикселях (SOy), C - высота спрайта в пикселях (Sy)
                 ; ---------------------------------------------
 
-                INC D                                               ; перейдём на адрес структуры FUnitLocation + 3
+                INC D                                               ; перейдём на адрес структуры FSpriteLocation + 3
                 
                 ; добавить смещение относительно тайла (можно объеденить с константным значением 8)
                 ; (Oy + 8)
-                LD A, (DE)                                          ; A = FUnitLocation.OffsetByPixel.Y (Oy)
+                LD A, (DE)                                          ; A = FSpriteLocation.OffsetByPixel.Y (Oy)
                 ADD A, #08                                          ; A += 8
 
                 ; (Sy - SOy)
@@ -115,9 +115,9 @@ RefUnitOnScr:   ; включить страницу
                 SBC A, A                                            ; если было переполнение (отрицательное число), корректируем
                 LD H, A
 
-                ; сохранение FUnitLocation.OffsetByPixel.X
+                ; сохранение FSpriteLocation.OffsetByPixel.X
                 DEC E
-                LD A, (DE)                                          ; A = FUnitLocation.OffsetByPixel.Y
+                LD A, (DE)                                          ; A = FSpriteLocation.OffsetByPixel.Y
                 LD (.LocOffset_X), A
 
                 ; A = position_y * 16
@@ -168,7 +168,7 @@ RefUnitOnScr:   ; включить страницу
                 ; добавить смещение относительно тайла (можно объеденить с константным значением 8)
                 ; (Ox + 8)
 .LocOffset_X    EQU $+1
-                LD A, #00                                   ; A = FUnitLocation.OffsetByPixel.Y (Ox)
+                LD A, #00                                   ; A = FSpriteLocation.OffsetByPixel.Y (Ox)
                 ADD A, #08                                  ; A += 8
 
                 ; ширину спрайта конвертируем в пиксели

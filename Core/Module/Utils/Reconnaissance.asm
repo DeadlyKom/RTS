@@ -3,9 +3,9 @@
                 define _CORE_MODULE_UTILS_RECONNAISSANCE_
 
                 module Tilemap
-; IX - FUnitLocation (2)
-Reconnaissance: LD E, (IX + FUnitLocation.TilePosition.X)
-                LD D, (IX + FUnitLocation.TilePosition.Y)
+; IX - FSpriteLocation (2)
+Reconnaissance: LD E, (IX + FSpriteLocation.TilePosition.X)
+                LD D, (IX + FSpriteLocation.TilePosition.Y)
                 
                 ; кламп сверху
                 LD A, D         ; D = Y

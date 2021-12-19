@@ -13,7 +13,7 @@
 ; -----------------------------------------
 TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; установка состояния перемещения/поворота
                 ; go to FUnitTargets
-                INC IXH                                                         ; FUnitLocation     (2)
+                INC IXH                                                         ; FSpriteLocation     (2)
                 INC IXH                                                         ; FUnitTargets      (3)
                 INC IXH                                                         ; FUnitAnimation    (4)
                 
@@ -32,7 +32,7 @@ TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
                                                                                 ; поворот не требуется
 
                 ; ---------------------------------------------
-                ; IX - pointer to FUnitLocation (2)
+                ; IX - pointer to FSpriteLocation (2)
                 ; D - dY
                 ; E - dX
                 ; ---------------------------------------------
@@ -50,7 +50,7 @@ TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
                 RET
 
 .IsMoveTo       DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FUnitLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation     (2)
 .Complite       DEC IXH                                                         ; FUnitState        (1)
 
                 RES FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; сброс состояния перемещения/поворота

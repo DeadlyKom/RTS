@@ -5,7 +5,7 @@
 ; DE = FUnitState   (1)
 DrawPath:       LD IXH, D
                 LD IXL, E
-                INC IXH                                             ; FUnitLocation     (2)
+                INC IXH                                             ; FSpriteLocation     (2)
                 INC IXH                                             ; FUnitTargets      (3)
                 BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                 RET Z
@@ -46,10 +46,10 @@ DrawPath:       LD IXH, D
                 EX AF, AF'
                 LD E, A
 
-                DEC IXH                                             ; FUnitLocation     (2)
+                DEC IXH                                             ; FSpriteLocation     (2)
 
                 ; A = LyS - VyS
-                LD A, (IX + FUnitLocation.TilePosition.Y)
+                LD A, (IX + FSpriteLocation.TilePosition.Y)
                 SUB (HL)
 
                 ADD A, A
@@ -58,13 +58,13 @@ DrawPath:       LD IXH, D
                 ADD A, A
                 ADD A, A
 
-                ADD A, (IX + FUnitLocation.OffsetByPixel.Y)
+                ADD A, (IX + FSpriteLocation.OffsetByPixel.Y)
                 EX AF, AF'
 
                 DEC L                                               ; HL = TilemapOffsetWidth
 
                 ; A = LxS - VxS
-                LD A, (IX + FUnitLocation.TilePosition.X)
+                LD A, (IX + FSpriteLocation.TilePosition.X)
                 SUB (HL)
 
                 ADD A, A
@@ -73,7 +73,7 @@ DrawPath:       LD IXH, D
                 ADD A, A
                 ADD A, A
 
-                ADD A, (IX + FUnitLocation.OffsetByPixel.X)
+                ADD A, (IX + FSpriteLocation.OffsetByPixel.X)
                 
                 LD L, A
                 EX AF, AF'

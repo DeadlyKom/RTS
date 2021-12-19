@@ -35,7 +35,7 @@ GetProperty:    LD A, (HL)                                                      
 ; -----------------------------------------
 ; получить коллизию тайла
 ; In:
-;   IX - pointer to FUnitLocation (2)
+;   IX - pointer to FSpriteLocation (2)
 ; Out:
 ;   A - значение коллизии
 ; Corrupt:
@@ -44,7 +44,7 @@ GetProperty:    LD A, (HL)                                                      
 ;   requires included memory page
 ; -----------------------------------------
 GetCollision:   ; расчёт адреса тайла в тайловой карте
-                LD DE, (IX + FUnitLocation.TilePosition)
+                LD DE, (IX + FSpriteLocation.TilePosition)
                 CALL Utils.Tilemap.GetAddressTilemap
 
                 CALL GetProperty                                                ; получим свойство тайла
@@ -54,7 +54,7 @@ GetCollision:   ; расчёт адреса тайла в тайловой ка�
 ; -----------------------------------------
 ; получить проходимость тайла
 ; In:
-;   IX - pointer to FUnitLocation (2)
+;   IX - pointer to FSpriteLocation (2)
 ; Out:
 ;   A - значение проходимости (0 - 100%, 1 - 75%, 2 - 50%, 3 - 25%)
 ; Corrupt:
@@ -64,7 +64,7 @@ GetCollision:   ; расчёт адреса тайла в тайловой ка�
 GetPassability: EXX
 
                 ; расчёт адреса тайла в тайловой карте
-                LD DE, (IX + FUnitLocation.TilePosition)
+                LD DE, (IX + FSpriteLocation.TilePosition)
                 CALL Utils.Tilemap.GetAddressTilemap
 
                 CALL GetProperty                                                ; получим свойство тайла

@@ -14,7 +14,7 @@
 ; -----------------------------------------
 MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; установка состояния перемещения/поворота
 
-                INC IXH                                                         ; FUnitLocation     (2)
+                INC IXH                                                         ; FSpriteLocation     (2)
 
                 LD E, IXL
                 LD D, IXH
@@ -30,7 +30,7 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
                 JP NC, .Fail                                                    ; неудачая точка назначения
 
                 ; ---------------------------------------------
-                ; IX - pointer to FUnitLocation (2)
+                ; IX - pointer to FSpriteLocation (2)
                 ; D = dY (signed)
                 ; E = dX (signed)
                 ; ---------------------------------------------
@@ -137,7 +137,7 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
 
 .Exit           ; завершение работы
                 DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FUnitLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation     (2)
                 DEC IXH                                                         ; FUnitState        (1)
 
                 ; LD A, (TickCounterRef)
@@ -156,7 +156,7 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitTargets      (3)
                 ; ---------------------------------------------
-.Complite       DEC IXH                                                         ; FUnitLocation     (2)
+.Complite       DEC IXH                                                         ; FSpriteLocation     (2)
                 LD HL, Utils.Tilemap.Radius_5
                 CALL Utils.Tilemap.Reconnaissance
                 INC IXH                                                         ; FUnitTargets      (3)
@@ -166,7 +166,7 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
                 DEC IXH                                                         ; FUnitTargets      (3)
 
                 RES FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)                 ; сброс текущего Way Point
-                DEC IXH                                                         ; FUnitLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation     (2)
                 DEC IXH                                                         ; FUnitState        (1)
 
                 RES FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; сброс состояния перемещения/поворота
@@ -243,7 +243,7 @@ ShiftLocation:  ;
                 DEC L
                 INC (HL)
                 DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FUnitLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation     (2)
                 LD HL, Utils.Tilemap.Radius_3
                 CALL Utils.Tilemap.Reconnaissance
                 INC IXH                                                         ; FUnitTargets      (3)
@@ -265,7 +265,7 @@ ShiftLocation:  ;
                 DEC L
                 DEC (HL)
                 DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FUnitLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation     (2)
                 LD HL, Utils.Tilemap.Radius_3
                 CALL Utils.Tilemap.Reconnaissance
                 INC IXH                                                         ; FUnitTargets      (3)

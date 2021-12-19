@@ -78,7 +78,7 @@ DrawLine:       ; инициализация
                 LD (.Y), A
 
                 LD L, D
-                LD H, HIGH MemoryPage_7.SCR_ADR_TABLE
+                LD H, HIGH SCR_ADR_TABLE
                 LD A, (HL)
                 INC H
                 LD D, (HL)

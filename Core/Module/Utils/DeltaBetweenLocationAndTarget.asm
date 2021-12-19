@@ -6,7 +6,7 @@
 ; In:
 ;   IX - pointer to FUnitTargets (3)
 ; Out:
-;   IX - pointer to FUnitLocation (2)
+;   IX - pointer to FSpriteLocation (2)
 ;   DE - deltas (D - dY, E - dX)
 ;   flag Carry true, говорит об успешности расчёта дельт
 ; Corrupt:
@@ -21,25 +21,25 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                         EX AF, AF'
                         LD A, (IX + FUnitTargets.WayPoint.X)
 
-                        DEC IXH                                     ; FUnitLocation (2)
+                        DEC IXH                                     ; FSpriteLocation (2)
 
                         LD C, #00                                                               ; С = 0 (нет необходимости выравнивать), 
                                                                                                 ; С = 1 (нужно привести к одной точности)
-                        ; delta x = FUnitTargets.WayPoint.X - FUnitLocation.TilePosition.X
-                        SUB (IX + FUnitLocation.TilePosition.X)
+                        ; delta x = FUnitTargets.WayPoint.X - FSpriteLocation.TilePosition.X
+                        SUB (IX + FSpriteLocation.TilePosition.X)
                         JP NZ, .SetX
                         ; увеличение точности X
-                        ADD A, (IX + FUnitLocation.OffsetByPixel.X)
+                        ADD A, (IX + FSpriteLocation.OffsetByPixel.X)
                         CPL
                         INC C                                                                   ; X = более точный, Y нужно будет увеличить точность (Y << 3)
 .SetX                   LD E, A
 
-                        ; delta y = FUnitTargets.WayPoint.Y - FUnitLocation.TilePosition.Y
+                        ; delta y = FUnitTargets.WayPoint.Y - FSpriteLocation.TilePosition.Y
                         EX AF, AF'
-                        SUB (IX + FUnitLocation.TilePosition.Y)
+                        SUB (IX + FSpriteLocation.TilePosition.Y)
                         JP NZ, .IsImprovedAccuracy                                              ; Y имеет грубую точность, нужно проверить на необходимость увеличения точности
                         ; увеличение точности Y
-                        ADD A, (IX + FUnitLocation.OffsetByPixel.Y)
+                        ADD A, (IX + FSpriteLocation.OffsetByPixel.Y)
                         CPL
                         LD D, A
 
@@ -73,7 +73,7 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
 .IsNotValid             XOR A                                       ; неудача операции
                         LD D, A
                         LD E, A
-                        DEC IXH                                     ; FUnitLocation (2)
+                        DEC IXH                                     ; FSpriteLocation (2)
                         RET
 
 ; -----------------------------------------
@@ -81,7 +81,7 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
 ; In:
 ;   IX - pointer to FUnitTargets    (3)
 ; Out:
-;   IX - pointer to FUnitLocation   (2)
+;   IX - pointer to FSpriteLocation   (2)
 ;   DE - deltas (D - dY, E - dX)
 ;   flag Carry true, говорит об успешности расчёта дельт
 ; Corrupt:
@@ -96,10 +96,10 @@ GetPerfectTargetDelta:  BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                         EX AF, AF'
                         LD A, (IX + FUnitTargets.WayPoint.X)
 
-                        DEC IXH                                                                 ; FUnitLocation (2)
+                        DEC IXH                                                                 ; FSpriteLocation (2)
 
-                        ; delta x = (X - FUnitLocation.TilePosition.X) * 16 - FUnitLocation.OffsetByPixel.X
-                        SUB (IX + FUnitLocation.TilePosition.X)
+                        ; delta x = (X - FSpriteLocation.TilePosition.X) * 16 - FSpriteLocation.OffsetByPixel.X
+                        SUB (IX + FSpriteLocation.TilePosition.X)
                         LD L, A
                         SBC A, A
                         LD H, A
@@ -107,7 +107,7 @@ GetPerfectTargetDelta:  BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                         ADD HL, HL
                         ADD HL, HL
                         ADD HL, HL
-                        LD A, (IX + FUnitLocation.OffsetByPixel.X)
+                        LD A, (IX + FSpriteLocation.OffsetByPixel.X)
                         CPL
                         LD C, A
                         ADD A, A
@@ -118,8 +118,8 @@ GetPerfectTargetDelta:  BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                         EX DE, HL
                         EX AF, AF'
 
-                        ; delta y = (Y - FUnitLocation.TilePosition.Y) * 16 - FUnitLocation.OffsetByPixel.Y
-                        SUB (IX + FUnitLocation.TilePosition.Y)
+                        ; delta y = (Y - FSpriteLocation.TilePosition.Y) * 16 - FSpriteLocation.OffsetByPixel.Y
+                        SUB (IX + FSpriteLocation.TilePosition.Y)
                         LD L, A
                         SBC A, A
                         LD H, A
@@ -127,7 +127,7 @@ GetPerfectTargetDelta:  BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                         ADD HL, HL
                         ADD HL, HL
                         ADD HL, HL
-                        LD A, (IX + FUnitLocation.OffsetByPixel.Y)
+                        LD A, (IX + FSpriteLocation.OffsetByPixel.Y)
                         CPL
                         LD C, A
                         ADD A, A

@@ -175,7 +175,7 @@ AddUnit:            LD HL, (UnitArrayRef)
                     LD L, A
 
                     ; HL - FUnitState (1)
-                    INC H                                                       ; FUnitLocation     (2)
+                    INC H                                                       ; FSpriteLocation     (2)
                     INC H                                                       ; FUnitTargets      (3)
 
                     INC L                                                       ; FUnitTargets.WayPoint.Y

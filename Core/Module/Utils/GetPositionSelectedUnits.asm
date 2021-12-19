@@ -30,13 +30,13 @@ GetSelected:        ;
                     BIT FUSF_SELECTED_BIT, (HL)
                     JR Z, .FindFirstUnit
 
-                    INC H                                   ; HL = FUnitLocation.TilePosition.X (2)
+                    INC H                                   ; HL = FSpriteLocation.TilePosition.X (2)
                     
                     ; min
                     LD E, (HL)
-                    INC L                                   ; HL = FUnitLocation.TilePosition.Y (2)
+                    INC L                                   ; HL = FSpriteLocation.TilePosition.Y (2)
                     LD D, (HL)
-                    DEC L                                   ; HL = FUnitLocation.TilePosition.X (2)
+                    DEC L                                   ; HL = FSpriteLocation.TilePosition.X (2)
                     ; max
                     LD C, E
                     LD B, D
@@ -69,8 +69,8 @@ GetSelected:        ;
                     JR Z, .NextUnit
 
                     ;
-                    INC H                                   ; HL = FUnitLocation.TilePosition.X (2)
-                    INC L                                   ; HL = FUnitLocation.TilePosition.Y (2)
+                    INC H                                   ; HL = FSpriteLocation.TilePosition.X (2)
+                    INC L                                   ; HL = FSpriteLocation.TilePosition.Y (2)
 
                     ; D - minY, E - minX
                     ; B - maxY, C - maxX
@@ -86,7 +86,7 @@ GetSelected:        ;
                     JR C, $+3
                     LD B, A
                     
-                    DEC L                                   ; HL = FUnitLocation.TilePosition.X (2)
+                    DEC L                                   ; HL = FSpriteLocation.TilePosition.X (2)
 
                     ; minX = min(minX, X)
                     LD A, (HL)

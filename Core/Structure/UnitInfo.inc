@@ -71,7 +71,7 @@ FAIF_NOT_INTERRUPT          EQU 0x00                                            
 FAIF_END                    EQU 0x07                                            ; бит последний кадр
 
 
-                            struct FUnit
+                            struct FUnit                                        ; (0)
 Health                      DB #00                                              ; 1 byte (количество жизни)
 Armor                       DB #00                                              ; 1 byte (количество брони)
 Rank                        DB #00                                              ; 1 byte (ранг)
@@ -80,7 +80,7 @@ Killed                      DB #00                                              
                             ends
 
 
-                            struct FUnitState                                   ; (1)
+                            struct FUnitState                                   ; (1) - 0xFC00
 State                       DB #00                                              ; 1 byte (состояния поведения)
 Direction                   DB #00                                              ; 1 byte (направления)
 Type                        DB #00                                              ; 1 byte (тип юнита)
@@ -89,14 +89,14 @@ Animation                   DB #00                                              
                             ends
 
                     
-                            struct FUnitLocation                                ; (2)
+                            struct FSpriteLocation                              ; (2) - 0xFD00
 TilePosition                FLocation                                           ; 2 bytes (позиция в тайлах)
 OffsetByPixel               FLocation                                           ; 2 bytes (смещение относительно тайла)
 
                             ends
 
 
-                            struct FUnitTargets                                 ; (3)
+                            struct FUnitTargets                                 ; (3) - 0xFE00
 WayPoint                    FLocation                                           ; 2 bytes (позиция Way Point)
 ;
 ;      7    6    5    4    3    2    1    0
@@ -117,7 +117,7 @@ Idx                         DB #00                                              
                             ends
 
 
-                            struct FUnitAnimation                               ; (4)
+                            struct FUnitAnimation                               ; (4) - 0xFF00
 CounterDown                 DB #00                                              ; 1 byte (счётчика)
 CounterUp                   DB #00                                              ; 1 byte (счётчика)
 Delta                       DB #00                                              ; 1 byte (дельта)

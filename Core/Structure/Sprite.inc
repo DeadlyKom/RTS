@@ -5,10 +5,10 @@
 ; -------------------- sprite info --------------------
 
                     struct FSpriteInfo
-Height              DB #00
-Offset_Y            DB #00
-Width               DB #00
-Offset_X            DB #00
+Height              DB #00                                                      ; высота спрайта (в пикселах)
+OffsetY             DB #00                                                      ; смещение спрайта по вертикали (в пикселах)
+Width               DB #00                                                      ; ширина спрайта (в знакоместах)
+OffsetX             DB #00                                                      ; смещение спрайта по горизонтали (в пикселах)
 
                     ends
                     
@@ -18,7 +18,7 @@ Offset_X            DB #00
 Info                FSpriteInfo
 Dummy               DB #00                                                      ; смещение + Data = адрес маски
 Page                DB #00                                                      ; 7 бит, говорит об использовании маски по смещению
-Data                DW #0000
+Data                DW #0000                                                    ; адрес спрайта
 
                     ends
 

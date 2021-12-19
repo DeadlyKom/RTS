@@ -75,7 +75,7 @@ Draw:           LD (.CurrentScreen), A
                 ; LD H, (HL)
                 ; LD L, A
 
-                LD H, HIGH MemoryPage_7.SCR_ADR_TABLE
+                LD H, HIGH SCR_ADR_TABLE
                 LD L, C
                 LD A, (HL)
                 INC H

@@ -10,29 +10,29 @@ Start:
                     ifdef DEBUG
 
                     ORG Page_7.DebugTileTable
-DebugSpritesTable:  DW COL_00_0,    COL_00_1,   COL_00_2,   COL_00_3                ; 0   - 3
-                    DW COL_00_4,    COL_00_9,   COL_00_5,   COL_00_9                ; 4   - 7
-                    DW COL_00_6,    COL_00_7,   COL_00_9,   COL_00_9                ; 8   - 11
-                    DW COL_25_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
-                    DW COL_25_0,    COL_25_1,   COL_25_2,   COL_25_3                ; 0   - 3
-                    DW COL_25_4,    COL_00_9,   COL_25_5,   COL_00_9                ; 4   - 7
-                    DW COL_25_6,    COL_25_7,   COL_00_9,   COL_00_9                ; 8   - 11
-                    DW COL_25_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
-                    DW COL_50_0,    COL_50_1,   COL_50_2,   COL_50_3                ; 0   - 3
-                    DW COL_50_4,    COL_00_9,   COL_50_5,   COL_00_9                ; 4   - 7
-                    DW COL_50_6,    COL_50_7,   COL_00_9,   COL_00_9                ; 8   - 11
-                    DW COL_50_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
-                    DW COL_75_0,    COL_75_1,   COL_75_2,   COL_75_3                ; 0   - 3
-                    DW COL_75_4,    COL_00_9,   COL_75_5,   COL_00_9                ; 4   - 7
-                    DW COL_75_6,    COL_75_7,   COL_00_9,   COL_00_9                ; 8   - 11
-                    DW COL_75_8,    COL_00_9,   COL_00_9,   COL_00_9                ; 12  - 15
+DebugSpritesTable:  DW COL_00_0,    COL_00_1,   COL_00_2,   COL_00_3            ; 0   - 3
+                    DW COL_00_4,    COL_00_9,   COL_00_5,   COL_00_9            ; 4   - 7
+                    DW COL_00_6,    COL_00_7,   COL_00_9,   COL_00_9            ; 8   - 11
+                    DW COL_25_8,    COL_00_9,   COL_00_9,   COL_00_9            ; 12  - 15
+                    DW COL_25_0,    COL_25_1,   COL_25_2,   COL_25_3            ; 0   - 3
+                    DW COL_25_4,    COL_00_9,   COL_25_5,   COL_00_9            ; 4   - 7
+                    DW COL_25_6,    COL_25_7,   COL_00_9,   COL_00_9            ; 8   - 11
+                    DW COL_25_8,    COL_00_9,   COL_00_9,   COL_00_9            ; 12  - 15
+                    DW COL_50_0,    COL_50_1,   COL_50_2,   COL_50_3            ; 0   - 3
+                    DW COL_50_4,    COL_00_9,   COL_50_5,   COL_00_9            ; 4   - 7
+                    DW COL_50_6,    COL_50_7,   COL_00_9,   COL_00_9            ; 8   - 11
+                    DW COL_50_8,    COL_00_9,   COL_00_9,   COL_00_9            ; 12  - 15
+                    DW COL_75_0,    COL_75_1,   COL_75_2,   COL_75_3            ; 0   - 3
+                    DW COL_75_4,    COL_00_9,   COL_75_5,   COL_00_9            ; 4   - 7
+                    DW COL_75_6,    COL_75_7,   COL_00_9,   COL_00_9            ; 8   - 11
+                    DW COL_75_8,    COL_00_9,   COL_00_9,   COL_00_9            ; 12  - 15
 .End                EQU $
 
 DebugSurfSprites:
                     include "../../Sprites/Debug/SurfaceProperty.inc"
 DebugSurfSprites.End
 DebugSurfSprites_S  EQU DebugSurfSprites.End - DebugSurfSprites
-DebugSpritesTable_S EQU DebugSpritesTable.End - DebugSpritesTable                   ; 256 байт
+DebugSpritesTable_S EQU DebugSpritesTable.End - DebugSpritesTable               ; 256 байт
 
                     else
 DebugSurfSprites_S  EQU 0
@@ -52,13 +52,13 @@ Sprite_Cursor_3:
 SpriteCursor.End    EQU $
 SpriteCursor_S      EQU SpriteCursor.End - SpriteCursor.Start
 
-                    ; таблица адресов экрана 
+;                     ; таблица адресов экрана 
 
-                    ORG Page_7.ScrAdr
+;                     ORG Page_7.ScrAdr
 
-                    include "Tables/ScreenAddressTable.inc"                         ; для линий
-ScrAdr.End          EQU $
-ScrAdr_S:           EQU ScrAdr.End - Page_7.ScrAdr                                  ; 1024 байта
+;                     include "Tables/ScreenAddressTable.inc"                     ; для линий
+; ScrAdr.End          EQU $
+; ScrAdr_S:           EQU ScrAdr.End - Page_7.ScrAdr                              ; 1024 байта
 
                     ; таблица обхода FOW
 
@@ -66,7 +66,7 @@ ScrAdr_S:           EQU ScrAdr.End - Page_7.ScrAdr                              
 
                     include "Tables/BypassFOW.inc"
 BypassFOW.End       EQU $
-BypassFOW_S:        EQU BypassFOW.End - Page_7.BypassFOW                            ; 768 байта
+BypassFOW_S:        EQU BypassFOW.End - Page_7.BypassFOW                        ; 768 байта
 
                     ; спрайты тумана войны
 
@@ -104,7 +104,7 @@ SpriteFOW_E         DW #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF, #FFFF   
 SpriteFOW_F         DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000       ; !
                     DW #1FF8, #E007, #03C0, #8001, #0180, #0000, #0000, #0000
 FOWTable.End:       EQU $
-FOWTable_S:         EQU FOWTable.End - Page_7.FOWTable                              ; 512 байт
+FOWTable_S:         EQU FOWTable.End - Page_7.FOWTable                          ; 512 байт
 
                     ; тайлы карты
 
@@ -149,7 +149,7 @@ SpritesTable:       DW Sprite_Sand_1,           Sprite_Sand_2,                  
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 120 - 123
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 124 - 127
 .End                EQU $
-SpritesTable_S:     EQU SpritesTable.End - SpritesTable                             ; 256 байт
+SpritesTable_S:     EQU SpritesTable.End - SpritesTable                         ; 256 байт
 
                     ORG Page_7.TileSprites
 
@@ -209,8 +209,8 @@ Sprite_Canyon_16:
                     include "Sprites/Debug/Vectors.inc"
                     endif
 End:
-Sprites_S:          EQU End - Page_7.TileSprites                                    ; 4096 байт
-SizePage_7_S:       EQU ScrAdr_S + BypassFOW_S + FOWTable_S + SpritesTable_S + 0x1000 ; Sprites_S
+Sprites_S:          EQU End - Page_7.TileSprites                                ; 4096 байт
+SizePage_7_S:       EQU BypassFOW_S + FOWTable_S + SpritesTable_S + 0x1000 ; ScrAdr_S + Sprites_S
 
                     endmodule
 SizePage_7_Real:    EQU MemoryPage_7.DebugSpritesTable_S + MemoryPage_7.DebugSurfSprites_S + MemoryPage_7.SpriteCursor_S + MemoryPage_7.SizePage_7_S

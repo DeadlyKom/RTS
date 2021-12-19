@@ -22,7 +22,7 @@ Idle:               ;
                     RLA
                     LD (.Rand), A
 
-                    INC IXH                                                     ; FUnitLocation     (2)
+                    INC IXH                                                     ; FSpriteLocation     (2)
                     INC IXH                                                     ; FUnitTargets      (3)
                     INC IXH                                                     ; FUnitAnimation    (4)
                     
@@ -39,7 +39,7 @@ Idle:               ;
 
                     ; завершение работы
                     DEC IXH                                                     ; FUnitTargets      (3)
-                    DEC IXH                                                     ; FUnitLocation     (2)
+                    DEC IXH                                                     ; FSpriteLocation     (2)
                     DEC IXH                                                     ; FUnitState        (1)
 
                     RET
@@ -52,7 +52,7 @@ Idle:               ;
 
                     ; завершение работы
                     DEC IXH                                                     ; FUnitTargets      (3)
-                    DEC IXH                                                     ; FUnitLocation     (2)
+                    DEC IXH                                                     ; FSpriteLocation     (2)
                     DEC IXH                                                     ; FUnitState        (1)
 
                     LD A, R

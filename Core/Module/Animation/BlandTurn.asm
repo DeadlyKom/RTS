@@ -32,7 +32,7 @@ TurnDown:       ;
                 LD D, (HL)
                 EX DE, HL
 
-                INC IXH                                                         ; FUnitLocation     (2)
+                INC IXH                                                         ; FSpriteLocation     (2)
 
                 ;
                 CALL Utils.Surface.GetPassability
@@ -95,7 +95,7 @@ TurnDown:       ;
 
 .Exit           ; завершение работы
                 DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FUnitLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation     (2)
                 DEC IXH                                                         ; FUnitState        (1)
 
                 RET
@@ -144,7 +144,7 @@ TurnDown:       ;
 
                 ; завершение работы
                 DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FUnitLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation     (2)
                 DEC IXH                                                         ; FUnitState        (1)
 
                 ; меняем спрайт

@@ -19,7 +19,7 @@ Idle:               LD A, (IX + FUnitState.State)
                     BIT FUSE_RECONNAISSANCE_BIT, C
                     JR Z, .SkipReconnaissance
 
-                    INC IXH                                                     ; FUnitLocation     (2)
+                    INC IXH                                                     ; FSpriteLocation     (2)
                     
                     LD HL, Utils.Tilemap.Radius_5
                     CALL Utils.Tilemap.Reconnaissance
