@@ -51,10 +51,13 @@ Draw:           ; ---------------------------------------------
                 LD BC, #0000
 
                 EXX
-                ; RLA                                                             ; 7 бит, говорит об использовании маски по смещению
-                BIT 7, L
+                LD A, E                                                         ; FSprite.Dummy
+                EX AF, AF'
+                LD A, L                                                         ; FSprite.Page
                 EXX
-                CALL MEMCPY.Sprite                                              ; копирование спрайта в буфер
+
+                ADD A, A                                                        ; проверка бита FSSF_CUSTOM_BIT
+                CALL NC, MEMCPY.Sprite                                          ; копирование спрайта в буфер
 
                 CALL Memory.InvScrPageToC000
 

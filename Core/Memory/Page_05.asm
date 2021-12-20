@@ -11,7 +11,7 @@ MemoryPage_5_Start:
                 include "Tables/ScreenAddressTable.inc"                         ; таблица таблица адресов экрана (1024 байта)
                 include "Tables/DrawMetods.inc"
                 include "Tables/MultiplySprite.inc"                             ; выровненая таблица (занимает 128 байт)
-                include "../../Sprites/Table.inc"
+                include "../../Sprites/Include.inc"                             ; таблица спрайтов
                 
                 include "../../Core/Game/Include.inc"
 

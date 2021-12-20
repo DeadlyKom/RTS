@@ -131,6 +131,10 @@ Sprite_B2_2:
                 incbin "Sprites/Build/Small/Build_2_2.spr"
 Sprite_B2_3:        
                 incbin "Sprites/Build/Small/Build_2_3.spr"
+
+                ; ************ Health Bar ************
+Sprite_SmallHP:
+                incbin "Sprites/HealthBar/HealthBarSmall_B.spr"
 End:
                 endmodule
 SizePage_0:     EQU MemoryPage_0.End - MemoryPage_0.Start

@@ -59,7 +59,9 @@ PixelClipping:  ; ---------------------------------------------
                 LD H, A
 
                 ; A = PositionY * 16
-                EX AF, AF'
+                ; EX AF, AF'
+.PositionY      EQU $+1
+                LD A, #00
                 DEC A                   ; A = [-1..12] => PositionY
                 ADD A, A
                 ADD A, A

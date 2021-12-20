@@ -1,10 +1,11 @@
 
                     ifndef _MEMORY_COPY_
                     define _MEMORY_COPY_
-Sprite:             RestoreHL
+Sprite:             
+                    ADD A, A                                                    ; проверка бита FSSF_MASK_BIT
+                    JP C, .Alternation
 
-                    JP NZ, .Alternation
-
+                    RestoreHL
                     EX DE, HL
 
                     ; ---------------------------------------------

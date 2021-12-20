@@ -44,14 +44,6 @@ Handler:        ; включить страницу
 
 .Loop           PUSH DE                                                         ; save current address UnitsArray
 
-                ; ---------------------------------------------
-                ; Lx, Ly   - позиция юнита (в тайлах)
-                ; Vx, Vy   - позиция видимой области карты (в тайлах)
-                ; Ox, Oy   - смещение относительно тайла в которых расположен юнит (в пикселах)
-                ; Sx, Sy   - ширина спрайта (в пикселах)  !!!! [ х - в знакоместах ]
-                ; SOx, SOy - смещение спрайта (в пикселах)
-                ; ---------------------------------------------
-
                 ; проврка на перерисовку текущего юнита
                 LD A, (DE)
 .ModifyCode     EQU $+1
@@ -75,9 +67,6 @@ Handler:        ; включить страницу
 
                 CALL Sprite.FastClipping
                 JR C, .PreNextUnit
-
-                EX AF, AF'
-                LD (Sprite.PixelClipping.PositionX), A
                 
                 ; получение адреса хранения информации о спрайте
                 DEC D                                                           ; DE = FUnitState.Animation
@@ -87,42 +76,40 @@ Handler:        ; включить страницу
                 INC D
 
                 CALL Sprite.PixelClipping
+                JR C, .PreNextUnit
 
                 ; подсчёт видимых юнитов
-                ifdef SHOW_VISIBLE_UNITS
-                JR C, .SkipVisible
-
+                ifdef SHOW_VISIBLE_UNITS 
                 LD A, (VisibleUnits)
                 INC A
                 LD (VisibleUnits), A
+                endif
 
                 CALL Sprite.Draw
-.SkipVisible
-                else
 
-                CALL NC, Sprite.Draw
-
-                endif
-                
                 ; включить страницу 
                 CALL Memory.SetPage1
 
-                ; ---------------------------------------------
-                ; всё же, спрайт за пределами экрана
-                ; ---------------------------------------------
-.PreNextUnit    POP DE                                                          ; restore address UnitsArray
-
+                POP DE                                                          ; restore address UnitsArray
                 PUSH DE
+
                 ; ; отрисовка линии пути
                 ; LD A, (DE)                  ; DE = FUnitState
                 ; BIT FUSF_SELECTED_BIT, A    ; check flag FUSF_SELECTED
                 ; CALL NZ, DrawPath
+
+                ; POP DE                                                          ; restore address UnitsArray
+                ; PUSH DE
                 
                 ; отрисовка HP
                 LD A, (DE)                                                      ; DE = FUnitState
-                INC D ; FSpriteLocation
+                INC D                                                           ; FSpriteLocation
                 BIT FUSF_SELECTED_BIT, A                                        ; check flag FUSF_SELECTED    
                 CALL NZ, UI.HP.Draw
+
+.PreNextUnit    ; ---------------------------------------------
+                ; всё же, спрайт за пределами экрана
+                ; ---------------------------------------------
 
                 POP DE
 
