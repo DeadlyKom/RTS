@@ -120,4 +120,8 @@ PathfindingQueue            EQU Page_5.PathfindingQueue                         
 PathfindingBuffer           EQU Page_5.PathfindingBuffer                        ; адрес буфера для поиска пути (2560 байт)
 PathfindingOpenListBuffer   EQU Page_5.PathfindingOLBuffer                      ; адрес буфера для хранения координат открытого списка (max 512 байт)
 
+; selection rectangle
+SelectRectStartRef          EQU DrawRectangle.Start                             ; адрес левой-верхней точки выбора рамкой (в пикселях)
+SelectRectEndRef            EQU DrawRectangle.End                               ; адрес правой-нижней точки выбора рамкой (в пикселях)
+
                             endif ; ~_GAME_INCLUDE_

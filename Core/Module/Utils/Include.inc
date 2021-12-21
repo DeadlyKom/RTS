@@ -4,10 +4,10 @@
 
                 module Utils
 
-                include "AddNeighbors.asm"
+                include "AddNeighbors.asm"                      ; remove ?
                 include "BuildPath.asm"                         ; remove ?
                 include "ConvertMousePosition.asm"
-                include "DeltaBetweenLocationAndTarget.asm"
+                include "DeltaBetweenLocationAndTarget.asm"     ; remove ?
                 include "GetHeuristic.asm"                      ; remove ?
                 include "GetPositionSelectedUnits.asm"
                 include "Reconnaissance.asm"

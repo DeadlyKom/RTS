@@ -27,7 +27,7 @@ Unit:           ; определение адреса добавления но�
                 ; ---------------------------------------------
                 ; FUnitState                                (1)
                 ; ---------------------------------------------
-                LD DE,  FUSF_SELECTED | FUSE_RECONNAISSANCE | FUSF_RENDER
+                LD DE,  FUSE_RECONNAISSANCE | FUSF_RENDER ; | FUSF_SELECTED
                 LD (IX + FUnitState.State), E
 
                 ; рандом направления

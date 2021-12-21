@@ -25,6 +25,7 @@ Draw:           ; DE - указывает на структуру FSpriteLocatio
                 ; расчёт HP
                 RRA
                 RRA
+                RRA
                 AND %00011110
                 LD HL, .SmalHP_Table
                 ADD A, L

@@ -11,8 +11,8 @@
 ;   DE = DE + 1 [FSpriteLocation.TilePosition.Y]
 ;   если флаг переполнения C установлен, объект вне экрана
 ;   иначе в аккамуляторах хранятся значения в пределах
-;   A  -  PositionY => [0..13]
-;   A' -  PositionX => [0..17]
+;   PixelClipping.PositionX -  PositionX => [0..17]
+;   PixelClipping.PositionY -  PositionY => [0..13]
 ; Corrupt:
 ;   HL, DE, AF, AF'
 ; Note:
@@ -66,27 +66,5 @@ FastClipping:   ; ---------------------------------------------
                 LD (PixelClipping.PositionY), A
                 ; ---------------------------------------------
                 RET
-
-; CalcClipping:   LD HL, TilemapOffsetRef                                         ; HL = позиция X, указатель смещения тайловой карты (координаты тайла, верхнего левого угла)
-
-;                 ; ---------------------------------------------
-;                 ; PositionX = (Lx - Vx) + 1
-;                 LD A, (DE)                                                      ; [Lx] DE = FSpriteLocation.TilePosition.X
-;                 SUB (HL)                                                        ; [Vx] - позиция видимой области карты (в тайлах)
-;                 INC A
-;                 ; A = PositionX => [0..17]
-;                 EX AF, AF'                                                      ; сохраним PositionX
-;                 ; ---------------------------------------------
-
-;                 INC E                                                           ; DE = FSpriteLocation.TilePosition.Y
-;                 INC HL                                                          ; HL = позиция Y, указатель смещения тайловой карты (координаты тайла, верхнего левого угла)
-
-;                 ; ---------------------------------------------
-;                 ; PositionY = (Ly - Vy) + 1
-;                 LD A, (DE)                                                      ; [Ly] DE = FSpriteLocation.TilePosition.X
-;                 SUB (HL)                                                        ; [Vy] - позиция видимой области карты (в тайлах)
-;                 INC A
-;                 ; ---------------------------------------------
-;                 RET
 
                 endif ; ~_DRAW_SPRITE_FAST_CLIPPING_

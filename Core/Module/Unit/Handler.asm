@@ -110,6 +110,8 @@ Handler:        ; включить страницу
 .PreNextUnit    ; ---------------------------------------------
                 ; всё же, спрайт за пределами экрана
                 ; ---------------------------------------------
+                ; включить страницу 
+                CALL Memory.SetPage1
 
                 POP DE
 
@@ -129,6 +131,7 @@ Handler:        ; включить страницу
                 RET
 
 .ProcessedUnits DB #00
+
                 ifdef SHOW_VISIBLE_UNITS
 VisibleUnits    DB #00
 

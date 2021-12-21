@@ -17,12 +17,39 @@ TileUpdate:     ; ограничение значения меньше 0
                 DEC L
                 JR NC, $+3
                 INC L
+                DEC L
+                JR NC, $+3
+                INC L
+                DEC L
+                JR NC, $+3
+                INC L
 
+                INC H
+                JR NZ, $+3
+                DEC H
+                INC H
+                JR NZ, $+3
+                DEC H
                 INC H
                 JR NZ, $+3
                 DEC H
                 
                 ; ограничение значения меньше 0
+                DEC D
+                JR NC, $+3
+                INC D
+                DEC D
+                JR NC, $+3
+                INC D
+                DEC D
+                JR NC, $+3
+                INC D
+                DEC D
+                JR NC, $+3
+                INC D
+                DEC D
+                JR NC, $+3
+                INC D
                 DEC D
                 JR NC, $+3
                 INC D

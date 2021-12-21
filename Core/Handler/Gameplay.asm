@@ -69,12 +69,15 @@ ScanKeyboard:       SetTilemapFlag ACCELERATE_CURSOR_FLAG
 
                     ; ***** InputMouseMode *****
 InputMouseMode:     JR NZ, .Processing              ; skip released
+                    EX AF, AF'
+                    CP 01                           ; released key VK_LBUTTON
+                    JP Z, Selecting
 .NotProcessing      SCF
                     RET
 
 .Processing         EX AF, AF'
                     ; CP 01                           ; key VK_LBUTTON
-                    ; JP Z, Pathfinding
+                    ; JP Z, Selecting
                     CP 02                           ; key VK_RBUTTON
                     JP Z, Pathfinding
                     ; CP 03                           ; key VK_MBUTTON
@@ -167,6 +170,10 @@ Pathfinding:        CheckInputFlag SELECTION_RECT_FLAG                          
                     CheckGameplayFlag PATHFINDING_FLAG                          ; проверим что идёт процесс поиска пути
                     JP Z, InputMouseMode.NotProcessing                          ; указать что инпут необработан, если идёт поиск пути 
                     ResetGameplayFlag (PATHFINDING_QUERY_FLAG | PATHFINDING_REQUEST_PLAYER_FLAG)
+                    ; exit, processed
+                    OR A
+                    RET
+Selecting:          CALL Unit.ScanRectSelect
                     ; exit, processed
                     OR A
                     RET

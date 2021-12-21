@@ -7,6 +7,7 @@
                 include "Handler.asm"
                 include "RenderUpdate.asm"
                 include "DrawPath.asm"
+                include "SelectedRect.asm"
 
                 endmodule
 

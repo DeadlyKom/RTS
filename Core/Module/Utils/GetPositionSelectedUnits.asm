@@ -36,6 +36,7 @@ GetSelected:        ;
                     LD E, (HL)
                     INC L                                   ; HL = FSpriteLocation.TilePosition.Y (2)
                     LD D, (HL)
+                    RET     ; !!!!!!!!!!!!!!!!! выход
                     DEC L                                   ; HL = FSpriteLocation.TilePosition.X (2)
                     ; max
                     LD C, E
