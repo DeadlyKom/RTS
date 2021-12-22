@@ -32,7 +32,7 @@ Request:        ; ---------------------------------------------
                 ; ---------------------------------------------
                 ; compute end point
                 ; ---------------------------------------------
-                CALL Utils.Mouse.ConvertToTilemap
+                CALL Utils.Mouse.ToTilemap
                 LD (Utils.Pathfinding.BuildPath.ContainerLocation), DE
                 LD A, Pathfinding.VECTOR_FIELD_END
                 EX AF, AF'

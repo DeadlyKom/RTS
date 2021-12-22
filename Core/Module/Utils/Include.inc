@@ -4,23 +4,26 @@
 
                 module Utils
 
-                include "AddNeighbors.asm"                      ; remove ?
-                include "BuildPath.asm"                         ; remove ?
-                include "ConvertMousePosition.asm"
                 include "DeltaBetweenLocationAndTarget.asm"     ; remove ?
-                include "GetHeuristic.asm"                      ; remove ?
                 include "GetPositionSelectedUnits.asm"
-                include "Reconnaissance.asm"
-                include "SurfaceProperty.asm"
-                include "Tilemap.asm"
-                include "TurnDown.asm"
-                include "VectorField.asm"                       ; remove ?
-                include "Waypoint.asm"
-                include "WaypointsSequencer.asm"
-                include "Queue.asm"
+                
+                ; units
+                include "Unit/Reconnaissance.asm"
+                include "Unit/TurnDown.asm"
 
-                ; new pathfinding
+                ; pathfinding
                 include "Pathfinding/Include.inc"
+
+                ; convert
+                include "Convert/ToTilemap.asm"
+                include "Convert/Tilemap.asm"
+
+                ; waypoint
+                include "Waypoint/Waypoint.asm"
+                include "Waypoint/WaypointsSequencer.asm"
+
+                ; surface
+                include "Surface/SurfaceProperty.asm"
 
                 endmodule
 

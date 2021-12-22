@@ -62,7 +62,7 @@ SearchPath:     ; ---------------------------------------------
                 LD (Utils.Pathfinding.Step.BufferEnd), HL  
 
                 ; compute end point
-                CALL Utils.Mouse.ConvertToTilemap                               ; DE = end tile position
+                CALL Utils.Mouse.ToTilemap                                      ; DE = end tile position
                 LD (Utils.Pathfinding.GetHeuristics.EndLocation), DE
 
                 ; compute start point
