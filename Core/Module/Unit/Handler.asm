@@ -64,7 +64,7 @@ Handler:        ; включить страницу
                 EX DE, HL
 
 .Force          INC D                                                           ; переход к стурктуре FSpriteLocation
-
+                
                 CALL Sprite.FastClipping
                 JR C, .PreNextUnit
                 

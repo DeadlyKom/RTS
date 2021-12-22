@@ -5,8 +5,11 @@
                 module Sprite
 
                 include "FastClipping.asm"
-                include "PixelClipping.asm"
+                include "PixelClipping.asm" ; разбить на 2 и удалить!
                 include "Draw.asm"
+
+                include "VerticalClipping.asm"
+                include "HorizontalClipping.asm"
 
                 endmodule
 

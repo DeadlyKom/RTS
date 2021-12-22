@@ -10,6 +10,7 @@
                 ; units
                 include "Unit/Reconnaissance.asm"
                 include "Unit/TurnDown.asm"
+                include "Unit/GetAABB.asm"
 
                 ; pathfinding
                 include "Pathfinding/Include.inc"
