@@ -100,6 +100,29 @@ Handler:        ; включить страницу
 
                 ; POP DE                                                          ; restore address UnitsArray
                 ; PUSH DE
+
+                ; ; отрисовка AABB
+                ; CALL Utils.AABB.GetRect.CurrentAddress
+                ; ; ---------------------------------------------
+                ; ;   HL  - H - правый край спрайта,   L - левый край спрайта  (в пикселах)
+                ; ;   DE  - D - верхний край спрайта,  E - нижний край спрайта (в пикселях)
+                ; ;   HL' - указывает на структуру текущего юнита FSprite.Dummy
+                ; ;   DE' - указывает на структуру текущего юнита FSpriteLocation.OffsetByPixel.X
+                ; ; ---------------------------------------------
+                ; LD A, L
+                ; LD (DrawRectangle.Start), A
+                ; LD A, H
+                ; LD (DrawRectangle.End), A
+                ; LD A, E
+                ; LD (DrawRectangle.End + 1), A
+                ; LD A, D
+                ; LD (DrawRectangle.Start + 1), A
+                ; CALL Memory.SetPage7
+                ; CALL DrawRectangle.Custom
+                ; CALL Memory.SetPage1
+
+                POP DE                                                          ; restore address UnitsArray
+                PUSH DE
                 
                 ; отрисовка HP
                 LD A, (DE)                                                      ; DE = FUnitState

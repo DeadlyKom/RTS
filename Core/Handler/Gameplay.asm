@@ -5,14 +5,14 @@
                     module Gameplay
 ScanKeyboard:       SetTilemapFlag ACCELERATE_CURSOR_FLAG
                     
-                    ; обновим положение начала рамки, если не начат выбор рамкой
-                    CheckInputFlag SELECTION_RECT_FLAG
-                    JR Z, $+8
-                    LD HL, (CursorPositionRef)
-                    LD (DrawRectangle.Start), HL
+                    ; ; обновим положение начала рамки, если не начат выбор рамкой
+                    ; CheckInputFlag SELECTION_RECT_FLAG
+                    ; JR Z, $+8
+                    ; LD HL, (CursorPositionRef)
+                    ; LD (DrawRectangle.Start), HL
 
-                    ; сбросим выбор рамкой
-                    SetInputFlag SELECTION_RECT_FLAG
+                    ; ; сбросим выбор рамкой
+                    ; SetInputFlag SELECTION_RECT_FLAG
 
                     ; ---------------------------------
 
@@ -71,13 +71,13 @@ ScanKeyboard:       SetTilemapFlag ACCELERATE_CURSOR_FLAG
 InputMouseMode:     JR NZ, .Processing              ; skip released
                     EX AF, AF'
                     CP 01                           ; released key VK_LBUTTON
-                    JP Z, Selecting
+                    JP Z, ReleasSelecting
 .NotProcessing      SCF
                     RET
 
 .Processing         EX AF, AF'
-                    ; CP 01                           ; key VK_LBUTTON
-                    ; JP Z, Selecting
+                    CP 01                           ; key VK_LBUTTON
+                    JP Z, PressSelecting
                     CP 02                           ; key VK_RBUTTON
                     JP Z, Pathfinding
                     ; CP 03                           ; key VK_MBUTTON
@@ -173,7 +173,15 @@ Pathfinding:        CheckInputFlag SELECTION_RECT_FLAG                          
                     ; exit, processed
                     OR A
                     RET
-Selecting:          CALL Unit.ScanRectSelect
+
+PressSelecting:     LD HL, (CursorPositionRef)
+                    LD (DrawRectangle.Start), HL
+                    ; exit, processed
+                    OR A
+                    RET
+ReleasSelecting:    CALL Unit.ScanRectSelect
+                    ; сбросим выбор рамкой
+                    SetInputFlag SELECTION_RECT_FLAG
                     ; exit, processed
                     OR A
                     RET

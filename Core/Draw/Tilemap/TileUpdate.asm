@@ -13,46 +13,33 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-TileUpdate:     ; ограничение значения меньше 0
-                DEC L
-                JR NC, $+3
-                INC L
-                DEC L
-                JR NC, $+3
-                INC L
-                DEC L
-                JR NC, $+3
-                INC L
-
-                INC H
-                JR NZ, $+3
-                DEC H
-                INC H
-                JR NZ, $+3
-                DEC H
-                INC H
-                JR NZ, $+3
-                DEC H
+TileUpdate:     ; увеличение значений AABB (влево/вправо)
                 
-                ; ограничение значения меньше 0
-                DEC D
+                LD A, L
+                SUB #04                                                         ; отступ влево
                 JR NC, $+3
-                INC D
-                DEC D
+                XOR A
+                LD L, A
+
+                LD A, H
+                ADD A, #04                                                      ; отступ вправо
+                JR NC, $+4
+                LD A, #FF
+                LD H, A
+                
+                ; увеличение значений AABB (вверх/вниз)
+                
+                LD A, D
+                SUB #05                                                         ; отступ вверх
                 JR NC, $+3
-                INC D
-                DEC D
-                JR NC, $+3
-                INC D
-                DEC D
-                JR NC, $+3
-                INC D
-                DEC D
-                JR NC, $+3
-                INC D
-                DEC D
-                JR NC, $+3
-                INC D
+                XOR A
+                LD D, A
+
+                ; LD A, E
+                ; ADD A, #04                                                      ; отступ вниз
+                ; JR NC, $+4
+                ; LD A, #BF
+                ; LD E, A
                 
                 LD (.LeftColumn), HL
                 ;
@@ -87,14 +74,9 @@ TileUpdate:     ; ограничение значения меньше 0
                 ADD A, E
                 LD E, A
 
-.LoopRow        ; LD A, RENDER_ALL_FLAGS
-                LD C, D
+.LoopRow        LD C, D
                 LD L, E
 .LoopColumn     LD (HL), RENDER_ALL_FLAGS
-                ; SCF
-                ; RR (HL)
-                ; SCF
-                ; RR (HL)
                 INC L
                 DEC C
                 JR NZ, .LoopColumn
