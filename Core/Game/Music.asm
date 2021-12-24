@@ -8,7 +8,7 @@ PlayMusic:      ; show debug border
                 endif
 
                 ; toggle to memory page with tile sprites
-                CALL Memory.SetPage3                       ; SeMemoryPage MemoryPage_Music, MUSIC_PLAY_ID
+                CALL Memory.SetPage3
                 CALL #C005
 
                 RET

@@ -8,15 +8,13 @@ Prepare:        ; show debug border
                 ifdef SHOW_DEBUG_BORDER_SCROLL_PREPARE
                 BEGIN_DEBUG_BORDER_COL SCROLL_COLOR
                 endif
-                ; JR $
+
                 ; toggle to memory page with tilemap
                 CALL Memory.SetPage1
 
                 ; copy the visible block of the tilemap
                 LD HL, (TilemapRef)
                 CALL MEMCPY.Tilemap
-
-                ; SetFrameFlag RENDER_FINISHED
 
                 ; set update all visible screen
                 LD HL, RenderBuffer + 0xC0
@@ -54,7 +52,7 @@ SafePrepare:    DI
                 ; endr
                 ; RET
 
-ForceScreen:    ;LD HL, RenderBuffer
+ForceScreen:    ; LD HL, RenderBuffer
                 ; SCF
                 ; RR (HL)
                 ; set update all visible screen
@@ -88,7 +86,7 @@ DisplayTileRow: ;
                 JP NC, .NextTile_
 
                 INC H
-                LD A, (HL)                              ; read tile index
+                LD A, (HL)                                                      ; read tile index
                 EXX
 
                 ifdef DEBUG
@@ -113,48 +111,47 @@ DisplayTileRow: ;
                 LD L, A
 
                 ; toggle to memory page with tile sprites
-                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, DEBUG_SURFACE_SPR_ID
+                CALL Memory.SetPage7
                 POP BC
                 LD E, (HL)
                 INC L
                 LD D, (HL)
-                EX DE, HL                               ; HL - address current sprite
+                EX DE, HL                                                       ; HL - address current sprite
 
                 JR .Draw
 .DrawTile       EX AF, AF'
                 ; calculation sprite address
-                ADD A, A                                ; shift left (7 bit - fog of war)
+                ADD A, A                                                        ; shift left (7 bit - fog of war)
+
                 ifdef ENABLE_FOW
-                JP C, .NextTile                         ; move to next column (if 7 bit is set)
+                JP C, .NextTile                                                 ; move to next column (if 7 bit is set)
                 endif
                 LD H, HIGH MemoryPage_7.SpritesTable
                 LD L, A
                 LD E, (HL)
                 INC L
                 LD D, (HL)
-                EX DE, HL                               ; HL - address current sprite
-
+                EX DE, HL                                                       ; HL - address current sprite
                 else
 
                 ; calculation sprite address
-                ADD A, A                                ; shift left (7 bit - fog of war)
+                ADD A, A                                                        ; shift left (7 bit - fog of war)
                 ifdef ENABLE_FOW
-                JP C, .NextTile                         ; move to next column (if 7 bit is set)
+                JP C, .NextTile                                                 ; move to next column (if 7 bit is set)
                 endif
                 LD H, HIGH MemoryPage_7.SpritesTable
                 LD L, A
                 LD E, (HL)
                 INC L
                 LD D, (HL)
-                EX DE, HL                               ; HL - address current sprite
-
+                EX DE, HL                                                       ; HL - address current sprite
                 endif
 .Draw
                 ; protection data corruption during interruption
                 LD E, (HL)
-                INC L                                   ; ---------- (my be INC HL) ----------
+                INC L                                                           ; ---------- (my be INC HL) ----------
                 LD D, (HL)
-                INC L                                   ; ---------- (my be INC HL) ----------
+                INC L                                                           ; ---------- (my be INC HL) ----------
                 LD SP, HL
 
                 ; HL - stores the screen address of the output
@@ -230,8 +227,8 @@ DisplayTileRow: ;
 
                 ; move to the next cell in a tile
                 EXX
-                DEC H                                               ; aligned to 256 bytes
-                INC L                                               ; next cell of the render buffer
+                DEC H                                                           ; aligned to 256 bytes
+                INC L                                                           ; next cell of the render buffer
                 EX DE, HL
                 
                 INC HL
@@ -245,7 +242,7 @@ DisplayTileRow: ;
 
                 ; move to the next cell in a tile
                 EXX
-                INC L                                               ; next cell of the render buffer
+                INC L                                                           ; next cell of the render buffer
                 EX DE, HL
                 
                 INC HL
@@ -264,45 +261,8 @@ Display:        ; initialize execute blocks
                 LD (.ContainerSP), SP
                 LD (DisplayTileRow.ContainerSP), SP
                 RestoreDE
-;                 GetCurrentScreen
-;                 JP Z, .Display_C000
 
-;                 ; draw on the screen at #4000
-; .Row            defl 0
-;                 dup TileAddressTable4000[#]
-;                 EXX
-;                 LD BC, TileAddressTable4000[.Row]
-;                 EXX
-;                 LD HL, $+3
-
-;                 rept 16                                                 ; number of columns per row
-;                 JP (IX)
-;                 endr
-; .Row            = .Row + 1
-;                 edup
-
-; .Exit           ; exit
-; .ContainerSP    EQU $+1
-;                 LD SP, #0000
-
-;                 RET
-
-; .Display_C000   ; draw on the screen at #C000
-; .Row            = 0
-;                 dup TileAddressTableC000[#]
-;                 EXX
-;                 LD BC, TileAddressTableC000[.Row]
-;                 EXX
-;                 LD HL, $+3
-
-;                 rept 16                                                 ; number of columns per row
-;                 JP (IX)
-;                 endr
-; .Row            = .Row + 1
-;                 edup
-
-;                 JP .Exit
-
+                ;
                 GetCurrentScreen
                 LD A, #C0
                 JR Z, $+4

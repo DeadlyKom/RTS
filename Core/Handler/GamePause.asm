@@ -141,7 +141,7 @@ FadeoutScreen:      LD HL, #C000
 DrawGamePause:      LD A, #46
                     LD (Console.Color), A
                     
-                    ; rempston mouse
+                    ; kempston mouse
                     LD BC, #00C0 + 6
                     CALL Console.At2
                     LD BC, KemMouse_T
@@ -153,7 +153,7 @@ DrawGamePause:      LD A, #46
                     LD A, #2D
                     CALL Console.LogChar
 
-                    ; rempston joystick
+                    ; kempston joystick
                     LD BC, #00E0 + 6
                     CALL Console.At2
                     LD BC, KemJoystick_T

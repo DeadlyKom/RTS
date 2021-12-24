@@ -87,7 +87,6 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ifdef SHOW_AI_FREQUENCY
                     CheckGameplayFlag PATHFINDING_FLAG
                     JR Z, .SkipShowAIFreq
-                    ; CALL Memory.InvScrPageToC000
                     LD A, #1A
                     CALL Console.At
 
