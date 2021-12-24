@@ -38,20 +38,28 @@ Horizontal:     EXX                                                             
                                                                                 ; HL = FSprite.Dummy
                                                                                 ; DE = FSpriteLocation.OffsetByPixel.X
                 POP BC
+                
+                ; ; ширину спрайта конвертируем в пиксели
+                ; EX AF, AF'                                                      ; сохраним (Ox + 8)
+                ; LD A, C
+                ; ADD A, A
+                ; ADD A, A
+                ; ADD A, A
+                ; LD E, A
+                ; EX AF, AF'                                                      ; востановим (Ox + 8)
 
-                ; ширину спрайта конвертируем в пиксели
-                EX AF, AF'                                                      ; сохраним (Ox + 8)
-                LD A, C
-                ADD A, A
-                ADD A, A
-                ADD A, A
-                LD E, A
-                EX AF, AF'                                                      ; востановим (Ox + 8)
+                ; ; (Ox + 8 + Sx - SOx)
+                ; ADD A, E                                                        ; A += Sx
+                ; SUB B                                                           ; A -= SOx
+                ; LD B, E
 
+                ; ---------------------------------------------
+                ; перенос на пиксели
                 ; (Ox + 8 + Sx - SOx)
-                ADD A, E                                                        ; A += Sx
+                ADD A, C                                                        ; A += Sx
                 SUB B                                                           ; A -= SOx
-                LD B, E
+                LD B, C
+                ; ---------------------------------------------
 
                 ; ---------------------------------------------
                 ; B - ширина спрайта (Sx)           (в пикселах)
