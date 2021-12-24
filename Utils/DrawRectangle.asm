@@ -36,7 +36,7 @@ DrawRectangle:  ; HL  - (H - y, L - x) start point    (S)
                 CALL DrawLine
                 POP DE
                 LD HL, (.Start)
-                JP DrawLine         
+                JP DrawLine
 
 .Start          DW #0613                                                        ; H - y, L - x
 .End            DW #75A3                                                        ; H - y, L - x

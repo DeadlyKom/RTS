@@ -4,7 +4,7 @@
 
                 module AABB
 ; -----------------------------------------
-; получить описывающий прямоугольник указанного юнита
+; получить описывающий прямоугольник указанного юнита в пределах экрана
 ; In:
 ;   A - номер юнита из массива
 ; Out:
@@ -18,19 +18,19 @@
 ; Note:
 ;   необходимо утановить 1 страничку хранения данных об юнитах
 ; -----------------------------------------
-GetRect:       ; определение адреса указанного юнита
+GetScreen:      ; определение адреса указанного юнита
                 ADD A, A
                 ADD A, A
                 JR C, $                                                         ; номер юнита >= 64
 .NotCheck       LD E, A
 
-                ToDo "AABB.GetRect", "Warning : Необходимо инициализировать значение!"
+                ToDo "AABB.GetScreen", "Warning : .HighAdrUnits необходимо инициализировать значение!"
 
 .HighAdrUnits   EQU $+1                                                         ; старший адрес массива с информацией об юнитах
                 LD D, #FC
 
 .CurrentAddress INC D                                                           ; переход к стурктуре FSpriteLocation
-
+                
                 ; быстрое отсечение видимости
                 ; подготовка данных для следующих тестов
                 CALL Sprite.FastClipping
@@ -44,7 +44,13 @@ GetRect:       ; определение адреса указанного юни
                 INC D
 
                 ; ---------------------------------------------
+                LD A, #06                                                       ; дополнительная высота спрайта
+                LD (Sprite.Clipping.Vertical.OffsetByPixel), A
+                LD (Sprite.Clipping.Vertical.AddSizeByPixel), A
                 CALL Sprite.Clipping.Vertical
+                XOR A
+                LD (Sprite.Clipping.Vertical.OffsetByPixel), A
+                LD (Sprite.Clipping.Vertical.AddSizeByPixel), A
                 RET C
                 ; ---------------------------------------------
                 ; L - хранит номер верхней линии спрайта    (в пикселях)

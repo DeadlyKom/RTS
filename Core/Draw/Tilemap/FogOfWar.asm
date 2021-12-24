@@ -339,7 +339,7 @@ DisplayRowFOW:  ;
                 JP (HL)
 
 FillFog:        ; toggle to memory page with tilemap
-                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, 0
+                CALL Memory.SetPage1
 
                 LD HL, #0000
                 LD A, (TilemapWidth)

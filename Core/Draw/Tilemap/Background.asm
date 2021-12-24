@@ -10,7 +10,7 @@ Prepare:        ; show debug border
                 endif
                 ; JR $
                 ; toggle to memory page with tilemap
-                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, PREPARE_ID
+                CALL Memory.SetPage1
 
                 ; copy the visible block of the tilemap
                 LD HL, (TilemapRef)
@@ -104,7 +104,7 @@ DisplayTileRow: ;
                 LD L, A
                 PUSH BC
                 ; toggle to memory page with tile sprites
-                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, DEBUG_SURFACE_PROP_ID
+                CALL Memory.SetPage1
 
                 LD A, (HL)
                 AND %01111111

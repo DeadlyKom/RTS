@@ -15,7 +15,7 @@ RefUnitOnScr:   ; включить страницу
                 EX AF, AF'
 
                 ; определение AABB выбранного юнита
-                CALL Utils.AABB.GetRect.NotCheck
+                CALL Utils.AABB.GetScreen
                 RET C
 
                 ; ---------------------------------------------

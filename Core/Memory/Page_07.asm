@@ -129,17 +129,10 @@ SpritesTable:       DW Sprite_Sand_1,           Sprite_Sand_2,                  
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 68  - 71
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 72  - 75
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 76  - 79
-                    ifdef ENABLE_VECTOR_FIELD
-                    DW DEBUG_VECTOR_UP,         DEBUG_SEL_VECTOR_UP,            DEBUG_VECTOR_UP_RIGHT,          DEBUG_SEL_VECTOR_UP_RIGHT       ; 80  - 83
-                    DW DEBUG_VECTOR_RIGHT,      DEBUG_SEL_VECTOR_RIGHT,         DEBUG_VECTOR_DOWN_RIGHT,        DEBUG_SEL_VECTOR_DOWN_RIGHT     ; 84  - 87
-                    DW DEBUG_VECTOR_DOWN,       DEBUG_SEL_VECTOR_DOWN,          DEBUG_VECTOR_DOWN_LEFT,         DEBUG_SEL_VECTOR_DOWN_LEFT      ; 88  - 91
-                    DW DEBUG_VECTOR_LEFT,       DEBUG_SEL_VECTOR_LEFT,          DEBUG_VECTOR_UP_LEFT,           DEBUG_SEL_VECTOR_UP_LEFT        ; 92  - 95
-                    else
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 80  - 83
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 84  - 87
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 88  - 91
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 92  - 95
-                    endif
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 96  - 99
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 100 - 103
                     DW #0000,                   #0000,                          #0000,                          #0000                           ; 104 - 107
@@ -205,9 +198,6 @@ Sprite_Canyon_15:
 Sprite_Canyon_16:        
                     incbin "Sprites/Terrain/Canyon_16.spr"
 
-                    ifdef ENABLE_VECTOR_FIELD
-                    include "Sprites/Debug/Vectors.inc"
-                    endif
 End:
 Sprites_S:          EQU End - Page_7.TileSprites                                ; 4096 байт
 SizePage_7_S:       EQU BypassFOW_S + FOWTable_S + SpritesTable_S + 0x1000 ; ScrAdr_S + Sprites_S

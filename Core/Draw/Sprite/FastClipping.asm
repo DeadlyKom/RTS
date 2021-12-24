@@ -14,7 +14,7 @@
 ;   PixelClipping.PositionX -  PositionX => [0..17]
 ;   PixelClipping.PositionY -  PositionY => [0..13]
 ; Corrupt:
-;   HL, DE, AF, AF'
+;   HL, DE, AF
 ; Note:
 ;   Lx, Ly   - позиция спрайта (в тайлах)
 ;   Vx, Vy   - позиция видимой области карты (в тайлах)
@@ -42,8 +42,7 @@ FastClipping:   ; ---------------------------------------------
                 RET C                                                           ; PositionX >= 18, находится правее экрана
 
                 ; A = PositionX => [0..17]
-                ; EX AF, AF'                                                      ; сохраним PositionX
-                LD (PixelClipping.PositionX), A
+                LD (PixelClipping.PositionX), A                                 ; сохраним PositionX
                 ; ---------------------------------------------
 
                 INC E                                                           ; DE = FSpriteLocation.TilePosition.Y

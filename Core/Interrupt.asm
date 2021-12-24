@@ -236,7 +236,7 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .DrawCursor         ; ********** DRAW CURSOR **********
                     ifdef ENABLE_MOUSE
-                    CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, RENDER_CURSOT_ID
+                    CALL Memory.SetPage7
                     GetCurrentScreen
                     LD A, #80
                     JR Z, $+4
@@ -254,7 +254,7 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .RestoreMemPage     ; ****** RESTORE MEMORY PAGE ******
                     LD A, #00
-                    CALL Memory.SetPage                                 ; SeMemoryPage_A INT_RESTORE_PAGE_ID
+                    CALL Memory.SetPage
                     ; ~ RESTORE MEMORY PAGE
 
 .RestoreReg         ; ******** RESTORE REGISTERS ******

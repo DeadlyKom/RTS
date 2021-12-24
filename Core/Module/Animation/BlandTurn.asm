@@ -162,9 +162,9 @@ TurnDown:       ;
 
                 ; A - номер юнита
                 LD A, IXL
-                ; RRA
-                ; RRA
-                ; AND %00111111
+                RRA
+                RRA
+                AND %00111111
                 CALL Unit.RefUnitOnScr
 
                 RET
