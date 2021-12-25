@@ -15,6 +15,10 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 RET Z
                 LD (.ProcessedUnits), A
 
+                ; очистим счётчик выбранных элементов
+                ; XOR A
+                ; LD (CountSelectedRef), A
+
                 ; включить страницу
                 CALL Memory.SetPage1
 
@@ -117,6 +121,18 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 LD A, #00
                 SUB C
                 JR C, .Next                                                     ; jump if TilePosition.X > EndX
+
+                LD A, L
+                EXX
+                RRA
+                RRA
+                AND %00111111
+                CALL PushUnit
+                EXX
+
+                RET C                                                           ; выход, т.к. буфер выделенных объектов переполнен
+                ToDo "ScanRectSelect", "Warning : необходимо подать сигнал!"
+
   
                 ; SET FUSF_SELECTED_BIT, (HL)
                 LD A, #C6 | FUSF_SELECTED_BIT << 3
@@ -153,9 +169,6 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 EX DE, HL
                 DEC (HL)
                 JP NZ, .Loop
-
-                ; LD A, #03
-                ; LD (FrameUnitsFlagRef), A
 
                 RET
 

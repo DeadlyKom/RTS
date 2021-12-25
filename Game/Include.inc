@@ -35,6 +35,9 @@ TilemapTableAddress         EQU Page_1.TilemapTableAdr                          
 UnitArrayPtr                EQU Page_1.UnitArray                                ; адрес масива юнитов (1024 байта 64 юнита)
 SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
 RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
+SelectedBufferLast          EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
+SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xDF                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
+SizeSelectedBuffer          EQU 32                                              ; размер буфера выделенных юнитов
 WaypointsSequenceBitmapPtr  EQU Page_2.RenderBuffer + 0xE0                      ; адрес битовой карты последовательностей Way Point'ов (32 байта)                   [32]  free + [32] busy = 64 last bytes
 TilemapBuffer               EQU Page_2.TilemapBuffer                            ; адрес тайловой карты буфера (256 байт)
 BypassFOW                   EQU Page_7.BypassFOW                                ; адресс таблицы обхода FOW
@@ -115,13 +118,12 @@ PFWinWidth                  EQU 16                                              
 PFWinHeight                 EQU 16                                              ; высота окна поисковика (не менять, захардкожено)
 PFWinNumNodes               EQU PFWinWidth * PFWinHeight                        ; количество узлов согласно размеру окна
 PFWinBufSize                EQU PFWinNumNodes * FPFInfo                         ; размер буфера окна поисковика (2560 байт)
-PathfindingVectorField      EQU Page_5.Pathfinding                              ; адрес буфера для поиска пути - векторное поле (4096 байт)                         remove ?
-PathfindingQueue            EQU Page_5.PathfindingQueue                         ; адрес буфера для поиска пути - массив очереди ячеек (2048 байт)                   remove ?
 PathfindingBuffer           EQU Page_5.PathfindingBuffer                        ; адрес буфера для поиска пути (2560 байт)
 PathfindingOpenListBuffer   EQU Page_5.PathfindingOLBuffer                      ; адрес буфера для хранения координат открытого списка (max 512 байт)
 
-; selection rectangle
+; selection
 SelectRectStartRef          EQU DrawRectangle.Start                             ; адрес левой-верхней точки выбора рамкой (в пикселях)
 SelectRectEndRef            EQU DrawRectangle.End                               ; адрес правой-нижней точки выбора рамкой (в пикселях)
+CountFreeSelectedRef        EQU Unit.Select.PushUnit.CountFree                  ; адрес переменной, сколько элементов свободно в буфере выбора
 
                             endif ; ~_GAME_INCLUDE_

@@ -48,7 +48,7 @@ GetScreen:      ; определение адреса указанного юн�
                 LD (Sprite.Clipping.Vertical.OffsetByPixel), A
                 LD (Sprite.Clipping.Vertical.AddSizeByPixel), A
                 CALL Sprite.Clipping.Vertical
-                XOR A
+                LD A, #00
                 LD (Sprite.Clipping.Vertical.OffsetByPixel), A
                 LD (Sprite.Clipping.Vertical.AddSizeByPixel), A
                 RET C

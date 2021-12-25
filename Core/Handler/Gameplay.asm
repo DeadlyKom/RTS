@@ -174,12 +174,13 @@ Pathfinding:        CheckInputFlag SELECTION_RECT_FLAG                          
                     OR A
                     RET
 
-PressSelecting:     LD HL, (CursorPositionRef)
+PressSelecting:     ; обновим позицию начала рамки
+                    LD HL, (CursorPositionRef)
                     LD (DrawRectangle.Start), HL
                     ; exit, processed
                     OR A
                     RET
-ReleasSelecting:    CALL Unit.ScanRectSelect
+ReleasSelecting:    CALL Unit.Select.ScanRectSelect
                     ; сбросим выбор рамкой
                     SetInputFlag SELECTION_RECT_FLAG
                     ; exit, processed
