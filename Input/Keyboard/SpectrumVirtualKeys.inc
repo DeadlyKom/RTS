@@ -53,7 +53,7 @@ SVK_Z               EQU 1                   ; HalfRow_CS_V
 
 SVK_ENTER           EQU 0                   ; HalfRow_H_ENT
 SVK_SYMBOL_SHIFT    EQU 1                   ; HalfRow_B_SPC
-SVK_CTRL_SHIFT      EQU 0                   ; HalfRow_CS_V
+SVK_CAPS_SHIFT      EQU 0                   ; HalfRow_CS_V
 SVK_SPACE           EQU 0                   ; HalfRow_B_SPC
 
                     endif ; ~_INPUT_KEYBOARD_SPECTRUM_VIRTUAL_KEYS_

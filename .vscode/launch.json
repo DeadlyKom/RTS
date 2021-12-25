@@ -50,7 +50,7 @@
             },
             "rootFolder": "${workspaceFolder}",
             "topOfStack": "StackTop",
-            "load": "RTS.trd",
+            "load": "Torn Metal.trd",
             "smallValuesMaximum": 513,
             "tmpDir": ".tmp"
         }

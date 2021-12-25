@@ -1,5 +1,6 @@
 
 .tmp/
+*.l
 *.labels
 *.list
 *.sld

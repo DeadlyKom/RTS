@@ -2,15 +2,11 @@
                     ifndef _STRUCTURE_BASE_
                     define _STRUCTURE_BASE_
 
-; -------------------- size --------------------
-
                     struct FSize
 Width               DB #00
 Height              DB #00            
 
                     ends
-
-; -------------------- offset --------------------
 
                     struct FOffset
 X                   DB #00
@@ -18,25 +14,11 @@ Y                   DB #00
 
                     ends
 
-; -------------------- sprite info --------------------
-
-                    struct FSpriteInfo
-Height              DB #00
-Offset_Y            DB #00
-Width               DB #00
-Offset_X            DB #00
-
-                    ends
-                    
-; -------------------- size map --------------------
-
                     struct FMapSize
 X                   DB #00
 Y                   DB #00
 
                     ends
-
-; -------------------- location coordinates on the tilemap --------------------
 
                     struct FLocation
 X                   DB #00
@@ -44,10 +26,9 @@ Y                   DB #00
 
                     ends
 
-; -------------------- path finding stack --------------------
-
-                    struct FPathFindingStack
-Stack               DS 8, 0
+                    struct FWayPoint
+Counter             DB #00                                                      ; счётчик ссылок
+Location            FLocation 0, 0                                              ; позиция
 
                     ends
 

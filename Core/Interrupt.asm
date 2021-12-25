@@ -2,22 +2,20 @@
                     ifndef _CORE_INTERRUPT_
                     define _CORE_INTERRUPT_
 
-InterruptStackSize  EQU 24 * 2
-InitInterrupt:      ;DI
-                    ;
-                    LD HL, InterruptHandler
-                    LD (InterruptVectorAddressFrame), HL
-                    ;
-                    LD A, HIGH InterruptVectorAddress
-                    LD I, A
-                    IM 2
+                    module Interrupt
+FOW_Ref             EQU 50
+InterruptStackSize  EQU 64 * 2                                      ; not change
+InterruptStack:     DS InterruptStackSize, 0                        ; not change
+Handler:            ; ********** HANDLER IM 2 *********
+                    EX (SP), HL
+                    LD (.ReturnAddress), HL
+                    POP HL                                          ; restore HL value
+                    LD (.Container_SP), SP                          ; save original SP pointer
+.RestoreRegister    EQU $
+                    NOP                                             ; restore corrupted bytes below SP (PUSH HL/DE/BC)
+                    LD SP, InterruptStack + InterruptStackSize      ; use custom stack for IM2
 
-                    EI
-                    HALT
-                    RET
-InterruptHandler:   ; preservation registers
-                    LD (.Container_SP), SP
-                    LD SP, InterruptStack + InterruptStackSize
+.SaveRegs           ; ********* SAVE REGISTERS ********
                     PUSH HL
                     PUSH DE
                     PUSH BC
@@ -30,96 +28,235 @@ InterruptHandler:   ; preservation registers
                     PUSH HL
                     PUSH DE
                     PUSH BC
-                    ; interrupt counter increment
-                    LD HL, InterruptCounter
-                    INC (HL)
-                    JP NZ, $+15
-                    ; calculate frame per second
-                    LD A, #CE
-                    LD (HL), A
-                    LD HL, FPS_Counter
-                    LD A, (HL)
+                    ; ~ SAVE REGISTERS
+
+.SaveMemPage        ; ******** SAVE MEMORY PAGE *******
+                    LD A, (MemoryPageRef)
+                    LD (.RestoreMemPage + 1), A
+                    ; ~ SAVE MEMORY PAGE
+
+.TickCounter        ; ********** TICK COUNTER *********
+.TickCounterPtr     EQU $+1
+                    LD HL, #0000
                     INC HL
-                    LD (HL), A
-                    DEC HL
-                    XOR A
-                    LD (HL), A 
-                    ; play music
-                    LD A, (MemoryPagePtr)
-                    LD (.RestoreMemoryPage), A
-                    CALL MemoryPage_5.PlayMusic
-                    ;
-                    LD HL, (TimeOfDay)
-                    DEC HL
-                    LD (TimeOfDay), HL
-                    LD A, H
-                    OR L
-                    JR NZ, .SkipTimeOfDay
-                    ;
-                    LD HL, TimeOfDayChangeRate
-                    LD (TimeOfDay), HL
-                    CALL MemoryPage_2.BackgroundFill
-.SkipTimeOfDay
-                    ;
-.RestoreMemoryPage  EQU $+1
-                    LD A, #00
-                    SeMemoryPage_A
-                    ; mouse handling
-                    CALL MemoryPage_2.UpdateStatesMouse
+                    LD (TickCounterRef), HL
+                    ; ~ TICK COUNTER
+
+.AI_TickCounter     ; ******** AI TICK COUNTER *********
+                    CheckAIFlag AI_UPDATE_FLAG
+                    CALL NZ, AI.Tick
+                    ; ~ AI TICK COUNTER
+
+.Cursor             ; ************* CURSOR *************
+                    ; cursor handling
+                    CALL Handlers.Input.ScanCursor
+
+                    ; restore background cursor
+                    CheckFrameFlag RESTORE_CURSOR
+                    CALL Z, Cursor.Restore
+
+.SkipRestoreCursor  ; ~ CURSOR
+
+                    ; show debug border
+                    ifdef SHOW_DEBUG_BORDER_INTERRUPT
+                    BEGIN_DEBUG_BORDER_COL INTERRUPT_COLOR
+                    endif
+
+.DebugInfo          ; ****** SWITCH DEBUG SCREENS *****
+                    ; swith screens
+                    ; ifdef ENABLE_TOGGLE_SCREENS_DEBUG
+                    ; GetCurrentScreen
+                    ; LD A, #C0
+                    ; JR Z, $+4
+                    ; LD A, #40
+                    ; LD (Console.DrawChar.ConsoleScreen), A
+                    ; endif
+                    ; ~ SWITCH DEBUG SCREENS
+
+.FPS_Counter        ; ************** FPS **************
+                    ifdef SHOW_FPS
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowFPS
+                    CALL Memory.InvScrPageToC000
+	                CALL FPS_Counter.IntTick
+                    CALL FPS_Counter.Render_FPS
+	                endif
+                    ; ~ FPS
+.SkipShowFPS        ; ---------------------------------
+.AI_Frequency       ; ********** AI FREQUENCY *********
+                    ifdef SHOW_AI_FREQUENCY
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowAIFreq
+                    LD A, #1A
+                    CALL Console.At
+
+                    ; show pause
+                    CheckAIFlag GAME_PAUSE_FLAG
+                    LD A, #47
+                    JR Z, $+4
+                    LD A, #50
+                    CALL Console.LogChar
+
+                    ; show AI frequency
+                    LD A, (AI_UpdateFrequencyRef)
+                    LD B, A
+                    CALL Console.Logb
+
+                    ; show AI sync update to frame
+                    CheckAIFlag AI_SYNC_UPDATE_FLAG
+                    LD A, #2B
+                    JR Z, $+4
+                    LD A, #2D
+                    CALL Console.LogChar
+
+	                endif
+                    ; ~ AI FREQUENCY
+.SkipShowAIFreq     ; ---------------------------------
+.MousePositionInfo  ; *** DRAW DEBUG MOUSE POSITION ***
+                    ifdef SHOW_MOUSE_POSITION
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowMousePos
+                    ; show mouse position
+                    LD BC, #02E0 + 0
+                    CALL Console.At2
+                    LD HL, CursorPositionRef
+                    LD B, (HL)
+                    CALL Console.Logb
+                    LD BC, #02E0 + 3
+                    CALL Console.At2
+                    INC HL
+                    LD B, (HL)
+                    CALL Console.Logb
+                    endif
+.SkipShowMousePos   ; ~ DRAW DEBUG MOUSE POSITION
+.OffsetTilemap      ; ****** DRAW OFFSET TILEMAP *****
+                    ifdef SHOW_OFFSET_TILEMAP
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowOffsetTM
+                    LD BC, #02A0 + 0
+                    CALL Console.At2
+                    LD HL, TilemapOffsetRef
+                    LD B, (HL)
+                    CALL Console.Logb
+                    LD BC, #02A0 + 3
+                    CALL Console.At2
+                    INC HL
+                    LD B, (HL)
+                    CALL Console.Logb
+                    endif
+.SkipShowOffsetTM   ; ~ DRAW OFFSET TILEMAP
+.NumVisibleUnits    ; ******* DRAW VISIBLE UNITS ******
+                    ifdef SHOW_VISIBLE_UNITS
+                    CheckGameplayFlag PATHFINDING_FLAG
+                    JR Z, .SkipShowVisibleUnt
+                    LD BC, #02A0 + 6
+                    CALL Console.At2
+                    LD HL, Unit.VisibleUnits
+                    LD B, (HL)
+                    CALL Console.Logb
+                    endif
+                    ; ~ DRAW VISIBLE UNITS
+
+.SkipShowVisibleUnt ; ---------------------------------
+
+.SwapScreens        ; ********* SWAP SCREENS **********
+                    ; swap screens if it's ready
+                    CheckFrameFlag SWAP_SCREENS_FLAG
+                    JP NZ, .SkipSwapScreens
+                    ; ~ SWAP SCREENS
+
+.Render             ; ************ RENDER *************
+                    
+                    SwapScreens
+
+.PathfindingQuery   ; ******* PATHFINDING QUERY *******
+                    AND %00001000
+                    JR Z, .RequestRejected
+                    CheckGameplayFlag PATHFINDING_QUERY_FLAG
+                    JR NZ, .RequestRejected
+                    ; SetFrameFlag DELAY_RENDER_FLAG
+                    SetGameplayFlag PATHFINDING_QUERY_FLAG
+                    ResetGameplayFlag PATHFINDING_FLAG
+                    ; ~ PATHFINDING QUERY
+
+.RequestRejected    ; ---------------------------------
+
+                    ; FPS
+                    ifdef SHOW_FPS
+                    CALL FPS_Counter.FrameRendered
+                    endif
+
+                    SetFrameFlag SWAP_SCREENS_FLAG
+                    ResetFrameFlag RENDER_FINISHED
+                    ; ~ RENDER
+
+.SkipSwapScreens    ; ---------------------------------
+
+.Keyboard           ; ****** SCAN KEYBOARD KEYS *******
                     ; keyboard handling
-                    LD HL, MemoryPage_5.Flags
-                    LD A, (HL)
-                    RLA
-                    JR C, .SkipInput
-                    ; LD HL, InterruptCounter
-                    ; LD A, (HL)
-                    ; LD HL, MemoryPage_5.Flags
-                    ; OR (HL)
-                    ; RRA
-                    ; JR C, .NextKey4
+                    CALL Handlers.Input.ScanKeyboard
+                    ; ~ SCAN KEYBOARD KEYS
+
+.RenderFinished     ; ******* RENDER FINISHED *********
+                    CheckFrameFlag RENDER_FINISHED
+                    JR NZ, .SkipRenderFinished
+                    ; ~ RENDER FINISHED
+                    
+                    LD HL, DeltaRefreshFOW
+                    DEC (HL)
+                    JR NZ, .MoveTilemap
+                    LD (HL), FOW_Ref
+                    ResetFrameFlag FORCE_FOW_FLAG           
+
+.MoveTilemap        ; ********* MOVE TILEMAP **********
+                    CheckInputFlag SELECTION_RECT_FLAG
+                    CALL NZ, Handlers.Input.ScanMoveMap                         ; перемещение разрешено, если не вкл режим выбора рамкой
+                    ; ~ MOVE TILEMAP
+ 
+.PauseMenuGame      ; ******* PAUSE MENU GAME ********
+                    CheckGameplayFlag ACTIVATE_PAUSE_MENU_GAME_FLAG
+                    CALL Z, Handlers.GamePause.Show
+
+.SkipRenderFinished ; ---------------------------------
+
+.TimeOfDay          ; ********* TIME OF DAY **********
+                    ; LD HL, (TimeOfDay)
+                    ; DEC HL
+                    ; LD (TimeOfDay), HL
+                    ; LD A, H
+                    ; OR L
+                    ; JR NZ, .SkipTimeOfDay
                     ;
-                    LD HL, FPS_Counter
-                    INC (HL)
-                    ;
-                    LD HL, (MemoryPage_5.TileMapPtr)
-                    PUSH HL
-                    ;
-                    LD A, VK_A
-                    CALL CheckKeyState
-                    CALL Z, MemoryPage_2.Tilemap_Left
-                    LD A, VK_D
-                    CALL CheckKeyState
-                    CALL Z, MemoryPage_2.Tilemap_Right
-                    LD A, VK_W
-                    CALL CheckKeyState
-                    CALL Z, MemoryPage_2.Tilemap_Up
-                    LD A, VK_S
-                    CALL CheckKeyState
-                    CALL Z, MemoryPage_2.Tilemap_Down
-                    ; ------ Test unit ------
-                    LD A, VK_H
-                    CALL CheckKeyState
-                    CALL Z, MemoryPage_5.Unit_Right
-                    LD A, VK_F
-                    CALL CheckKeyState
-                    CALL Z, MemoryPage_5.Unit_Left
-                    LD A, VK_T
-                    CALL CheckKeyState
-                    CALL Z, MemoryPage_5.Unit_Up
-                    LD A, VK_G
-                    CALL CheckKeyState
-                    CALL Z, MemoryPage_5.Unit_Down
-                    ; ~~~~~~ Test unit ~~~~~~
-                    ;
-                    LD HL, (MemoryPage_5.TileMapPtr)
-                    POP DE                    
-                    OR A
-                    SBC HL, DE
-                    JR Z, $+8
-                    LD HL, (MemoryPage_5.TileMapPtr)
-                    CALL MemoryPage_2.PrepareTilemap
-.SkipInput          
-                    ; restore all registers
+                    ; LD HL, TimeOfDayChangeRate
+                    ; LD (TimeOfDay), HL
+                    ; CALL MemoryPage_2.BackgroundFill
+                    ; .SkipTimeOfDay
+                    ; ~ TIME OF DAY
+
+.DrawCursor         ; ********** DRAW CURSOR **********
+                    ifdef ENABLE_MOUSE
+                    CALL Memory.SetPage7
+                    GetCurrentScreen
+                    LD A, #80
+                    JR Z, $+4
+                    LD A, #00
+                    CALL Cursor.Draw
+                    endif
+                    ; ~ DRAW CURSOR
+                    
+.Music              ; *********** PLAY MUSIC **********
+                    ; play music
+                    ifdef ENABLE_MUSIC
+                    CALL Game.PlayMusic
+                    endif
+                    ; ~ PLAY MUSIC
+
+.RestoreMemPage     ; ****** RESTORE MEMORY PAGE ******
+                    LD A, #00
+                    CALL Memory.SetPage
+                    ; ~ RESTORE MEMORY PAGE
+
+.RestoreReg         ; ******** RESTORE REGISTERS ******
                     POP BC
                     POP DE
                     POP HL
@@ -132,14 +269,27 @@ InterruptHandler:   ; preservation registers
                     POP BC
                     POP DE
                     POP HL
+                    ; ~ RESTORE REGISTERS
+
 .Container_SP       EQU $+1
                     LD SP, #0000
                     EI
+.ReturnAddress      EQU $+1
+                    JP #0000
+                    ; ~ HANDLER IM 2
+
+Initialize:         ; **** INITIALIZE HANDLER IM 2 ****
+                    LD A, HIGH InterruptVectorAddress - 1
+                    LD I, A
+                    IM 2
+
+                    EI
+                    HALT
                     RET
-InterruptCounter:	DB #CE
-FPS_Counter:        DB #00
-FPS:                DB #00
+                    ; ~ INITIALIZE HANDLER IM 2
 TimeOfDay:          DW TimeOfDayChangeRate
-InterruptStack:     DS InterruptStackSize, 0
+DeltaRefreshFOW     DB FOW_Ref
+
+                    endmodule
 
                     endif ; ~_CORE_INTERRUPT_
