@@ -9,4 +9,7 @@
                 include "Unit/Include.inc"
                 include "Utils/Include.inc"
 
+                include "SFX/Include.inc"
+                include "VFX/Include.inc"
+
                 endif ; ~_CORE_MODULE_INCLUDE_

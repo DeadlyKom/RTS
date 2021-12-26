@@ -39,8 +39,7 @@ TilemapTableAddress         EQU Page_1.TilemapTableAdr                          
 UnitArrayPtr                EQU Page_1.UnitArray                                ; адрес масива юнитов (1024 байта 64 юнита)
 SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
 RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
-SelectedBufferLast          EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
-SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xDF                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
+SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
 SizeSelectedBuffer          EQU 32                                              ; размер буфера выделенных юнитов
 WaypointsSequenceBitmapPtr  EQU Page_2.RenderBuffer + 0xE0                      ; адрес битовой карты последовательностей Way Point'ов (32 байта)                   [32]  free + [32] busy = 64 last bytes
 TilemapBuffer               EQU Page_2.TilemapBuffer                            ; адрес тайловой карты буфера (256 байт)
@@ -129,6 +128,6 @@ CountFreeQueryQueueRef      EQU Pathfinding.PushUnit.CountFree                  
 ; selection
 SelectRectStartRef          EQU DrawRectangle.Start                             ; адрес левой-верхней точки выбора рамкой (в пикселях)
 SelectRectEndRef            EQU DrawRectangle.End                               ; адрес правой-нижней точки выбора рамкой (в пикселях)
-; CountFreeSelectedRef        EQU Pathfinding.PushUnit.CountFree                  ; адрес переменной, сколько элементов свободно в буфере выбора
+NumberSelectedUnitRef       EQU Unit.Select.ScanRectSelect.NumSelected          ; адрес переменной, сколько элементов в буфере выбора
 
                             endif ; ~_GAME_INCLUDE_

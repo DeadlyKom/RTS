@@ -15,10 +15,6 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 RET Z
                 LD (.ProcessedUnits), A
 
-                ; очистим счётчик выбранных элементов
-                ; XOR A
-                ; LD (CountSelectedRef), A
-
                 ; включить страницу
                 CALL Memory.SetPage1
 
@@ -78,11 +74,31 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 ADD A, B
                 LD (.EndY), A
 
-                ; swap?
-                ; LD C, A
-                ; LD A, (.StartX)
-                ; SUB C
-                
+                ; swap Y?
+                LD C, A
+                LD A, (.StartY)
+                LD B, A
+                SUB C
+                JR C, .SkipSwapY
+                LD A, B
+                LD (.EndY), A
+                LD A, C
+                LD (.StartY), A
+.SkipSwapY
+                ; swap X?
+                LD A, (.EndX)
+                LD C, A
+                LD A, (.StartX)
+                LD B, A
+                SUB C
+                JR C, .SkipSwapX
+                LD A, B
+                LD (.EndX), A
+                LD A, C
+                LD (.StartX), A
+.SkipSwapX                
+                LD HL, SelectedBufferFirst
+                LD (.NumSelected), HL
 
                 ;
                 LD HL, .ProcessedUnits
@@ -122,17 +138,24 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 SUB C
                 JR C, .Next                                                     ; jump if TilePosition.X > EndX
 
+                ; добавим индекс выделенного юнита в список
                 LD A, L
                 EXX
+.NumSelected    EQU $+1                                                         ; количество выделенных юнитов в буфере
+                LD HL, #0000
+
+                ; получим индекс юнита
                 RRA
                 RRA
                 AND %00111111
-                CALL Pathfinding.PushUnit
+                LD (HL), A                                                      ; сохраним индекс
+                
+                ; перейдём к следующему элементу
+                INC L
+                BIT 5, L
+                JP NZ, SFX.BEEP.Fail                                            ; выход, т.к. буфер выделенных объектов переполнен
+                LD (.NumSelected), HL
                 EXX
-
-                ; RET C                                                           ; выход, т.к. буфер выделенных объектов переполнен
-                ; ToDo "ScanRectSelect", "Warning : необходимо подать сигнал!"
-
   
                 ; SET FUSF_SELECTED_BIT, (HL)
                 LD A, #C6 | FUSF_SELECTED_BIT << 3
@@ -173,5 +196,6 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 RET
 
 .ProcessedUnits DB #00
+
 
                 endif ; ~ _CORE_MODULE_UNIT_SELECTED_RECT_
