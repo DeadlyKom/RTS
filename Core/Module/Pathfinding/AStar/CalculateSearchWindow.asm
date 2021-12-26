@@ -12,8 +12,6 @@
 ; Note:
 ; -----------------------------------------
 SearchWindow:   ;
-
-                ; JR$
                 LD (GetHeuristics.EndLocation), HL
                 PUSH DE                                                         ; сохранить начальную позицию тайла (D - y, E - x)
 
@@ -100,31 +98,13 @@ SearchWindow:   ;
                 ; DE - BufferStart    (D - y, E - x)
                 ; ---------------------------------------------
 
-
                 ; инициализация значений для поиска пути
-                ; LD HL, #0F0F
                 LD (Step.BufferEnd), HL
                 EX DE, HL
-                ; LD HL, #0000   
                 LD (Step.BufferStart), HL
                 LD (GetTileInfo.BufferStart), HL                                ; GetTileInfo.BufferStart
-                ; LD (GetFoundPath.BufferStart), HL
-                LD A, L
-                LD (AddToOpenList.BufferStartX), A                              ; AddToOpenList.BufferStartX
-                LD A, H
-                LD (AddToOpenList.BufferStartY), A                              ; AddToOpenList.BufferStartY
 
                 POP DE                                                          ; востановить начальную позицию тайла (D - y, E - x)
-
-                ; ; X = (Coord.x - BufferStart.x) & 0x0F
-                ; LD A, E
-                ; SUB L
-                ; LD E, A
-
-                ; ; Y = (Coord.y - BufferStart.y) & 0x0F
-                ; LD A, D
-                ; SUB H
-                ; LD D, A
 
                 RET
 

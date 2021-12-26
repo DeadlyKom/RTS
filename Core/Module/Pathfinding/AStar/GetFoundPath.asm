@@ -38,8 +38,6 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
                 EX DE, HL
 
                 ; Path.push_front(CurrentCoord);
-                ; LD BC, (.BufferStart)
-                ; ADD HL, BC
                 PUSH HL                                                         ; push CurrentCoord
                 ; EX AF, AF'
                 ; INC A                                                           ; one coord in stack

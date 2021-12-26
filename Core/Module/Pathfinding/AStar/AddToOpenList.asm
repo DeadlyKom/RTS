@@ -36,7 +36,18 @@ AddToOpenList:  ; set return address
 .First          INC H                                                           ; HL - pointer to FPFInfo.ParentCoord.X             (1)
 
                 ; set FPFInfo.ParentCoord
-                CALL .SetParentCoord
+                ; CALL .SetParentCoord
+                ; ---------------------------------------------
+                ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)
+                ; BC - perent tile position (B - y, C - x)
+                ; ---------------------------------------------
+                ; FPFInfo.ParentCoord.X - BufferStart.X
+                LD (HL), C
+                INC H                                                           ; HL - pointer to FPFInfo.ParentCoord.Y             (2)
+                
+                ; FPFInfo.ParentCoord.Y - BufferStart.Y
+                LD (HL), B
+                INC H                                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
 
                 ; OpenList.push_back(DE)
 
@@ -154,7 +165,18 @@ AddToOpenList:  ; set return address
 
                 ; calculate and set FPFInfo.ParentCoord
                 LD H, HIGH PathfindingBuffer | FPFInfo.ParentCoord
-                CALL .SetParentCoord                                            ; HL - pointer to FPFInfo.OpenListIdx               (3)
+                ; CALL .SetParentCoord                                            ; HL - pointer to FPFInfo.OpenListIdx               (3)
+                ; ---------------------------------------------
+                ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)
+                ; BC - perent tile position (B - y, C - x)
+                ; ---------------------------------------------
+                ; FPFInfo.ParentCoord.X - BufferStart.X
+                LD (HL), C
+                INC H                                                           ; HL - pointer to FPFInfo.ParentCoord.Y             (2)
+                
+                ; FPFInfo.ParentCoord.Y - BufferStart.Y
+                LD (HL), B
+                INC H                                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
 
                 ; get value FPFInfo.OpenListIdx
                 LD A, (HL)                                                      ; A = FPFInfo.OpenListIdx
@@ -164,24 +186,17 @@ AddToOpenList:  ; set return address
 ;                 PUSH HL
                 JP TrickleUp.DE                                                 ; A = FPFInfo.OpenListIdx
 
-.SetParentCoord ; ---------------------------------------------
-                ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)
-                ; BC - perent tile position (B - y, C - x)
-                ; ---------------------------------------------
-                ; JR$
-                ; FPFInfo.ParentCoord.X - BufferStart.X
-                LD A, C
-.BufferStartX   EQU $+1
-                SUB #00                                                         ; const value BufferStart.X
-                LD (HL), A
-                INC H                                                           ; HL - pointer to FPFInfo.ParentCoord.Y             (2)
+; .SetParentCoord ; ---------------------------------------------
+;                 ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)
+;                 ; BC - perent tile position (B - y, C - x)
+;                 ; ---------------------------------------------
+;                 ; FPFInfo.ParentCoord.X - BufferStart.X
+;                 LD (HL), C
+;                 INC H                                                           ; HL - pointer to FPFInfo.ParentCoord.Y             (2)
                 
-                ; FPFInfo.ParentCoord.Y - BufferStart.Y
-                LD A, B
-.BufferStartY   EQU $+1
-                SUB #00                                                         ; const value BufferStart.Y
-                LD (HL), A
-                INC H                                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
-                RET
+;                 ; FPFInfo.ParentCoord.Y - BufferStart.Y
+;                 LD (HL), B
+;                 INC H                                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
+;                 RET
 
                 endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_ADD_TO_OPEN_LIST_
