@@ -4,7 +4,7 @@
 
 DEF_FE          EQU #07
 BEEP            EQU 1 << 4
-Fail:           ; JR$
+Fail:           PUSH AF
 
                 LD HL, %1001100111000111
                 LD C, A
@@ -26,6 +26,8 @@ Fail:           ; JR$
                 OR BEEP
                 OUT (#FE), A
                 DJNZ .Loop
+
+                POP AF
 
                 RET
 

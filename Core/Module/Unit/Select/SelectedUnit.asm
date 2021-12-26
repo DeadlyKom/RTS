@@ -13,7 +13,7 @@
 ; -----------------------------------------
 InitSelected:   ; получим значение из очереди
                 CALL Pathfinding.Queue.PopUnit
-                JR C, $                                                         ; буфер оказался пустым ?!
+                JP C, SFX.BEEP.Fail                                             ; буфер оказался пустым ?!
 
                 ; расчёт смещения по индексу юнита
                 ADD A, A
@@ -27,7 +27,7 @@ InitSelected:   ; получим значение из очереди
                 
                 ;
                 BIT FUSF_SELECTED_BIT, (HL)
-                JR Z, $                                                         ; юнит почему то не выбран ?!
+                JP Z,  SFX.BEEP.Fail                                            ; юнит почему то не выбран ?!
 
                 INC H                                                           ; HL = FSpriteLocation.TilePosition.X (2)
                 

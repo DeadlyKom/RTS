@@ -48,17 +48,6 @@ SearchPath:     ; ---------------------------------------------
                 LD (Step.NegHeightTM_B), A
                 LD (Step.NegHeightTM_C), A
 
-                
-                ; LD HL, #0000   
-                ; LD (Step.BufferStart), HL
-                ; LD (GetTileInfo.BufferStart), HL                                ; GetTileInfo.BufferStart
-                ; LD A, L
-                ; LD (AddToOpenList.BufferStartX), A                              ; AddToOpenList.BufferStartX
-                ; LD A, H
-                ; LD (AddToOpenList.BufferStartY), A                              ; AddToOpenList.BufferStartY
-                ; LD HL, #0F0F
-                ; LD (Step.BufferEnd), HL
-
                 ; compute end point
                 CALL Unit.Select.DefineTarget                                   ; DE = end tile position
                 ; LD (GetHeuristics.EndLocation), DE
@@ -67,6 +56,7 @@ SearchPath:     ; ---------------------------------------------
                 ; compute start point
                 CALL Unit.Select.InitSelected                                   ; DE = start tile position
                 POP HL
+                RET C
 
                 ; расчитать окно поиска
                 CALL SearchWindow
