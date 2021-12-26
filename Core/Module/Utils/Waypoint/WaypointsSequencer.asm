@@ -11,9 +11,7 @@
 ;   HL, DE, AF
 ; Note:
 ; -----------------------------------------
-Init:               ; WaypointsSequenceBitmapPtr + 0xE0
-                    LD HL, RenderBuffer
-                    INC H
+Init:               LD HL, WaypointsSequenceBitmapPtr + SizeWaypointsSequenceBitmap
                     LD DE, #0000
                     CALL MEMSET.SafeFill_32
                     RET
@@ -29,7 +27,9 @@ Init:               ; WaypointsSequenceBitmapPtr + 0xE0
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-Create:             CALL FindFreeElement                                        ; Out:
+Create:             
+                    ; JR$
+                    CALL FindFreeElement                                        ; Out:
                                                                                 ;   HL   - адрес свободной последовательности
                                                                                 ;   L, A - индекс последовательности
                                                                                 ;   если флаг С сброшен, найти свободную не удалось
@@ -37,9 +37,11 @@ Create:             CALL FindFreeElement                                        
                     RET C                                                       ; unsuccessful execution
                     LD (AddUnit.IndexSequence), A                               ; сохраним индекс последовательности
                     LD (AddWaypoint.Sequencer), HL                              ; инициализация для Waypoints
+                    
+                    CALL MarkBusyElement                                        ; пометить как занятый
+                    
                     LD A, #08
                     LD (AddWaypoint.Counter), A
-                    CALL MarkBusyElement                                        ; пометить как занятый
                     RET
 
 ; -----------------------------------------
@@ -174,7 +176,7 @@ AddUnit:            LD HL, (UnitArrayRef)
                     ADD A, L
                     LD L, A
 
-                    ; HL - FUnitState (1)
+.UnitAddressToHL    ; HL - FUnitState (1)
                     INC H                                                       ; FSpriteLocation     (2)
                     INC H                                                       ; FUnitTargets      (3)
 

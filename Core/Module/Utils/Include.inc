@@ -5,7 +5,6 @@
                 module Utils
 
                 include "DeltaBetweenLocationAndTarget.asm"     ; remove ?
-                include "GetPositionSelectedUnits.asm"
                 
                 ; units
                 include "Unit/Reconnaissance.asm"

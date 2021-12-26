@@ -94,14 +94,18 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
                 JR .While
 
 .Exit           ; создать цепочку waypoints
+                ; JR$
                 CALL Utils.WaypointsSequencer.Create
                 JR C, $
 
                 ; инициализация юнита
                 LD HL, (UnitArrayRef)
                 LD A, L
+.UnitIdx        EQU $+1
+                ADD A, #00
+                LD L, A
                 LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_MASK_OFFSET
-                CALL Utils.WaypointsSequencer.AddUnit
+                CALL Utils.WaypointsSequencer.AddUnit.UnitAddressToHL
 
 
 .NextWaypoint   EX AF, AF'

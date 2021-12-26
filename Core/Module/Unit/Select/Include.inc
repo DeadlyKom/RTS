@@ -4,8 +4,10 @@
 
                 module Select
 
-                ; include "SelectedArray.asm"
                 include "SelectedRect.asm"
+                include "AddUnitsToQueue.asm"
+                include "TargetDefinition.asm"
+                include "SelectedUnit.asm"
 
                 endmodule
 

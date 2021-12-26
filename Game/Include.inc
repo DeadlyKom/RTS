@@ -41,7 +41,9 @@ SharedBuffer                EQU Page_2.SharedBuffer                             
 RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
 SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
 SizeSelectedBuffer          EQU 32                                              ; размер буфера выделенных юнитов
-WaypointsSequenceBitmapPtr  EQU Page_2.RenderBuffer + 0xE0                      ; адрес битовой карты последовательностей Way Point'ов (32 байта)                   [32]  free + [32] busy = 64 last bytes
+MaskSelectedBuffer          EQU SizeSelectedBuffer - 1                          ; маска буфера выделенных юнитов
+WaypointsSequenceBitmapPtr  EQU Page_2.RenderBuffer + 0xE0                      ; адрес битовой карты последовательностей Way Point'ов (32 байта)                   [32]
+SizeWaypointsSequenceBitmap EQU 32                                              ; размер битовой карты последовательностей Way Point'ов
 TilemapBuffer               EQU Page_2.TilemapBuffer                            ; адрес тайловой карты буфера (256 байт)
 BypassFOW                   EQU Page_7.BypassFOW                                ; адресс таблицы обхода FOW
 AI_MIN_UPDATE_FREQ          EQU 1                                               ; скорость обновления ИИ (минимальная)
@@ -123,7 +125,8 @@ PFWinNumNodes               EQU PFWinWidth * PFWinHeight                        
 PFWinBufSize                EQU PFWinNumNodes * FPFInfo                         ; размер буфера окна поисковика (2560 байт)
 PathfindingBuffer           EQU Page_5.PathfindingBuffer                        ; адрес буфера для поиска пути (2560 байт)
 PathfindingOpenListBuffer   EQU Page_5.PathfindingOLBuffer                      ; адрес буфера для хранения координат открытого списка (max 512 байт)
-CountFreeQueryQueueRef      EQU Pathfinding.PushUnit.CountFree                  ; адрес переменной, сколько доступно в очереди запросов поиска пути
+CountFreeQueryQueueRef      EQU Pathfinding.Queue.PushUnit.CountFree            ; адрес переменной, сколько доступно в очереди запросов поиска пути
+FoundPathToUnitRef          EQU Pathfinding.AStar.GetFoundPath.UnitIdx          ; индекс юнита * 4, для которого строится путь
 
 ; selection
 SelectRectStartRef          EQU DrawRectangle.Start                             ; адрес левой-верхней точки выбора рамкой (в пикселях)

@@ -98,7 +98,7 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 LD (.StartX), A
 .SkipSwapX                
                 LD HL, SelectedBufferFirst
-                LD (.NumSelected), HL
+                LD (NumberSelectedUnitRef), HL
 
                 ;
                 LD HL, .ProcessedUnits
@@ -196,6 +196,5 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 RET
 
 .ProcessedUnits DB #00
-
 
                 endif ; ~ _CORE_MODULE_UNIT_SELECTED_RECT_

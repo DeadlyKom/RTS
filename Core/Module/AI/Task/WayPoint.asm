@@ -11,15 +11,14 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-WayPoint:       ; JR $
-                INC IXH                                                         ; FSpriteLocation     (2)
+WayPoint:       INC IXH                                                         ; FSpriteLocation   (2)
                 INC IXH                                                         ; FUnitTargets      (3)
 
                 ; проверка что Way Point валиден
                 BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                 JR Z, .IsNotValid_WP                                            ; текущий Way Point не валидный
 
-.Successfully   DEC IXH                                                         ; FSpriteLocation     (2)
+.Successfully   DEC IXH                                                         ; FSpriteLocation   (2)
                 DEC IXH                                                         ; FUnitState        (1)
 
                 ; успешно найденый Way Point
@@ -87,7 +86,7 @@ WayPoint:       ; JR $
                 ; проверка на зацикленность WayPoint
                 ; ---------------------------------------------
 .CheckLoop      BIT FUTF_LOOP_BIT, (IX + FUnitTargets.Data)
-                JR Z, .Successfully                                             ; все Way WayPoints пройдены
+                JR Z, .FinishWayPoint                                           ; все Way WayPoints пройдены
 
                 LD A, (IX + FUnitTargets.Data)
                 OR FUTF_MASK_OFFSET
@@ -99,8 +98,9 @@ WayPoint:       ; JR $
                 LD L, (HL)
                 JR .CopyWP
 
+.FinishWayPoint RES FUTF_VALID_IDX_BIT, (IX + FUnitTargets.Data)                ; ToDo сбросим состояние всей последовательности
 
-.IsNotValid_IDX DEC IXH                                                         ; FSpriteLocation     (2)
+.IsNotValid_IDX DEC IXH                                                         ; FSpriteLocation   (2)
                 DEC IXH                                                         ; FUnitState        (1)
                 
                 OR A                                                            ; неудачное выполнение

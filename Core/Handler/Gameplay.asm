@@ -168,8 +168,15 @@ InputMode_CH_SP:    JR NZ, .Processing              ; skip released
 Pathfinding:        CheckInputFlag SELECTION_RECT_FLAG                          ; проверим что не происходит выбор рамкой
                     JP Z, InputMouseMode.NotProcessing                          ; указать что инпут необработан, если идёт поиск пути 
                     CheckGameplayFlag PATHFINDING_FLAG                          ; проверим что идёт процесс поиска пути
-                    JP Z, InputMouseMode.NotProcessing                          ; указать что инпут необработан, если идёт поиск пути 
+                    JP Z, InputMouseMode.NotProcessing                          ; указать что инпут необработан, если идёт поиск пути
+
+                    ; добавим выбранных юнитов в очередь на обработку поиска пути
+                    CALL Unit.Select.AddToQueue
+                    JR C, .SkipAllowPathfind                                    ; выбранных юнитов нет
+
+                    ; разрешим возможность отловить отрисовки теневого экрана и расчитать последующий поиск пути
                     ResetGameplayFlag (PATHFINDING_QUERY_FLAG | PATHFINDING_REQUEST_PLAYER_FLAG)
+.SkipAllowPathfind
                     ; exit, processed
                     OR A
                     RET

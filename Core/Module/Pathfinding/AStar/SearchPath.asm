@@ -11,11 +11,9 @@
 SearchPath:     ; ---------------------------------------------
                 ; preparation before initialization
                 ; ---------------------------------------------
-                SetFrameFlag SWAP_SCREENS_FLAG                                  ; сбросить переключение экрана,
+                SetFrameFlag (SWAP_SCREENS_FLAG | RENDER_FINISHED)              ; сбросить переключение экрана,
                                                                                 ; с последующим перерисованием первого экрана
-                SetFrameFlag RENDER_FINISHED                                    ; запрещает обновление данных на экране (при скролле)
-
-                ; SetFrameFlag RESTORE_CURSOR
+                                                                                ; запрещает обновление данных на экране (при скролле)
 
                 CALL Memory.SetPage1                                            ; включить страницу
 
@@ -62,11 +60,11 @@ SearchPath:     ; ---------------------------------------------
                 LD (Step.BufferEnd), HL  
 
                 ; compute end point
-                CALL Utils.Mouse.ToTilemap                                      ; DE = end tile position
+                CALL Unit.Select.DefineTarget                                   ; DE = end tile position
                 LD (GetHeuristics.EndLocation), DE
 
                 ; compute start point
-                CALL Utils.Units.GetSelected                                    ; DE = start tile position
+                CALL Unit.Select.InitSelected                                   ; DE = start tile position
 
                 ; return address after completion of 'AddToOpenList' function
                 LD HL, .Complite
@@ -108,8 +106,7 @@ SearchPath:     ; ---------------------------------------------
 .Complite       CALL Step
 
                 CALL Tilemap.ForceScreen                                        ; обновление экранов
-                SetGameplayFlag (PATHFINDING_FLAG | PATHFINDING_REQUEST_PLAYER_FLAG) ; разрешить поиск
-                ; ResetFrameFlag RESTORE_CURSOR
+
                 RET
 
                 endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_SEARCH_PATH_

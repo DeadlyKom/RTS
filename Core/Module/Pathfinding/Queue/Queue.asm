@@ -2,6 +2,7 @@
                 ifndef _CORE_MODULE_PATHFINDING_QUEUE_
                 define _CORE_MODULE_PATHFINDING_QUEUE_
 
+                module Queue
 ; -----------------------------------------
 ; добавить элемент в очередь запросов поиска пути
 ; In:
@@ -129,5 +130,20 @@ PopUnit:        LD A, (PushUnit.CountFree)
                 LD A, (HL)
 
                 RET
+; -----------------------------------------
+; проверить пуст ли очередь запросов поиска пути
+; In:
+; Out:
+;   если флаг переполнения C установлен, буфер пуст
+; Corrupt:
+; Note:
+; -----------------------------------------
+IsEmpty:        LD A, (PushUnit.CountFree)
+                CP SizePathfindingQueryQueue
+                JR Z, PushUnit.IsEmpty
+                OR A
+                RET
+
+                endmodule
 
                 endif ; ~ _CORE_MODULE_PATHFINDING_QUEUE_
