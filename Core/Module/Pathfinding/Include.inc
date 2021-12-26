@@ -5,6 +5,8 @@
                 module Pathfinding
 
                 include "Base.asm"
+                include "AStar/Include.inc"
+                include "Queue/Queue.asm"
 
                 endmodule
 

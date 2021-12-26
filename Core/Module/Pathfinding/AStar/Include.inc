@@ -1,9 +1,8 @@
 
-                ifndef _CORE_MODULE_UTILS_PATHFINDING_INCLUDE_
-                define _CORE_MODULE_UTILS_PATHFINDING_INCLUDE_
+                ifndef _CORE_MODULE_PATHFINDING_ASTAR_INCLUDE_
+                define _CORE_MODULE_PATHFINDING_ASTAR_INCLUDE_
 
-                ; new pathfinding
-                module Pathfinding
+                module AStar
                 
                 include "OpenList.asm"
                 include "GetTileInfo.asm"
@@ -17,4 +16,4 @@
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_INCLUDE_
+                endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_INCLUDE_

@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_PATHFINDING_TRICKLE_UP_
-                define _CORE_MODULE_UTILS_PATHFINDING_TRICKLE_UP_
+                ifndef _CORE_MODULE_PATHFINDING_ASTAR_TRICKLE_UP_
+                define _CORE_MODULE_PATHFINDING_ASTAR_TRICKLE_UP_
 
 ; -----------------------------------------
 ; 
@@ -130,4 +130,4 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
 
                 RET
 
-                endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_TRICKLE_UP_
+                endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_TRICKLE_UP_

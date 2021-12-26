@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_PATHFINDING_GET_TILE_INFO_
-                define _CORE_MODULE_UTILS_PATHFINDING_GET_TILE_INFO_
+                ifndef _CORE_MODULE_PATHFINDING_ASTAR_GET_TILE_INFO_
+                define _CORE_MODULE_PATHFINDING_ASTAR_GET_TILE_INFO_
 
 ; -----------------------------------------
 ; get pointer to FPFInfo structure in the buffer
@@ -47,4 +47,4 @@ GetTileInfo:    ;
 
                 RET
 
-                endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_GET_TILE_INFO_
+                endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_GET_TILE_INFO_

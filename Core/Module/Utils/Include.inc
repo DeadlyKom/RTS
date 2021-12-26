@@ -12,9 +12,6 @@
                 include "Unit/TurnDown.asm"
                 include "Unit/GetScreenAABB.asm"
 
-                ; pathfinding
-                include "Pathfinding/Include.inc"
-
                 ; convert
                 include "Convert/ToTilemap.asm"
                 include "Convert/Tilemap.asm"

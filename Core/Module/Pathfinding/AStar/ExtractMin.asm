@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_PATHFINDING_EXTRACT_MIN_
-                define _CORE_MODULE_UTILS_PATHFINDING_EXTRACT_MIN_
+                ifndef _CORE_MODULE_PATHFINDING_ASTAR_EXTRACT_MIN_
+                define _CORE_MODULE_PATHFINDING_ASTAR_EXTRACT_MIN_
 
 ; -----------------------------------------
 ;
@@ -32,7 +32,7 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 ; GetMapData(OpenList[0]).OpenListIndex = 0;
 	            ; OpenList.pop_back();
                 ; CALL OpenList.PopLastElement
-                LD HL, Utils.Pathfinding.AddToOpenList.OpenListIndex
+                LD HL, AddToOpenList.OpenListIndex
                 LD A, (HL)
                 DEC (HL)
                 LD B, A
@@ -266,4 +266,4 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 ; return Ret;
                 RET
 
-                endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_EXTRACT_MIN_
+                endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_EXTRACT_MIN_

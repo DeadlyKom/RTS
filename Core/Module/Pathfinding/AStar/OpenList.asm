@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_PATHFINDING_OPEN_LIST_
-                define _CORE_MODULE_UTILS_PATHFINDING_OPEN_LIST_
+                ifndef _CORE_MODULE_PATHFINDING_ASTAR_OPEN_LIST_
+                define _CORE_MODULE_PATHFINDING_ASTAR_OPEN_LIST_
 
                 module OpenList
 ; -----------------------------------------
@@ -59,4 +59,4 @@
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_OPEN_LIST_
+                endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_OPEN_LIST_

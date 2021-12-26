@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_PATHFINDING_SEARCH_PATH_
-                define _CORE_MODULE_UTILS_PATHFINDING_SEARCH_PATH_
+                ifndef _CORE_MODULE_PATHFINDING_ASTAR_SEARCH_PATH_
+                define _CORE_MODULE_PATHFINDING_ASTAR_SEARCH_PATH_
 
 ; -----------------------------------------
 ; In:
@@ -52,18 +52,18 @@ SearchPath:     ; ---------------------------------------------
 
                 ;
                 LD HL, #0000   
-                LD (Utils.Pathfinding.Step.BufferStart), HL
-                LD (Utils.Pathfinding.GetTileInfo.BufferStart), HL              ; GetTileInfo.BufferStart
+                LD (Step.BufferStart), HL
+                LD (GetTileInfo.BufferStart), HL                                ; GetTileInfo.BufferStart
                 LD A, L
-                LD (Utils.Pathfinding.AddToOpenList.BufferStartX), A            ; AddToOpenList.BufferStartX
+                LD (AddToOpenList.BufferStartX), A                              ; AddToOpenList.BufferStartX
                 LD A, H
-                LD (Utils.Pathfinding.AddToOpenList.BufferStartY), A            ; AddToOpenList.BufferStartY
+                LD (AddToOpenList.BufferStartY), A                              ; AddToOpenList.BufferStartY
                 LD HL, #0F0F
-                LD (Utils.Pathfinding.Step.BufferEnd), HL  
+                LD (Step.BufferEnd), HL  
 
                 ; compute end point
                 CALL Utils.Mouse.ToTilemap                                      ; DE = end tile position
-                LD (Utils.Pathfinding.GetHeuristics.EndLocation), DE
+                LD (GetHeuristics.EndLocation), DE
 
                 ; compute start point
                 CALL Utils.Units.GetSelected                                    ; DE = start tile position
@@ -112,4 +112,4 @@ SearchPath:     ; ---------------------------------------------
                 ; ResetFrameFlag RESTORE_CURSOR
                 RET
 
-                endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_SEARCH_PATH_
+                endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_SEARCH_PATH_

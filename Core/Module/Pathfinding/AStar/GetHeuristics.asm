@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_PATHFINDING_HEURISTICS_
-                define _CORE_MODULE_UTILS_PATHFINDING_HEURISTICS_
+                ifndef _CORE_MODULE_PATHFINDING_ASTAR_HEURISTICS_
+                define _CORE_MODULE_PATHFINDING_ASTAR_HEURISTICS_
 
 ; -----------------------------------------
 ; get heuristic value
@@ -74,4 +74,4 @@ GetHeuristics:  ;
 
                 RET
 
-                endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_HEURISTICS_
+                endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_HEURISTICS_

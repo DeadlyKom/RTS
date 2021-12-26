@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_PATHFINDING_ADD_TO_OPEN_LIST_
-                define _CORE_MODULE_UTILS_PATHFINDING_ADD_TO_OPEN_LIST_
+                ifndef _CORE_MODULE_PATHFINDING_ASTAR_ADD_TO_OPEN_LIST_
+                define _CORE_MODULE_PATHFINDING_ASTAR_ADD_TO_OPEN_LIST_
 
 ; -----------------------------------------
 ; put on the open list if better
@@ -184,4 +184,4 @@ AddToOpenList:  ; set return address
                 INC H                                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
                 RET
 
-                endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_ADD_TO_OPEN_LIST_
+                endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_ADD_TO_OPEN_LIST_

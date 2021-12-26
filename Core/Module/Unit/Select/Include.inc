@@ -4,7 +4,7 @@
 
                 module Select
 
-                include "SelectedArray.asm"
+                ; include "SelectedArray.asm"
                 include "SelectedRect.asm"
 
                 endmodule

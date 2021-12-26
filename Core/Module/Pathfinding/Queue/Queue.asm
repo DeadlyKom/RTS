@@ -1,9 +1,9 @@
 
-                ifndef _CORE_MODULE_UNIT_SELECT_ARRAY_
-                define _CORE_MODULE_UNIT_SELECT_ARRAY_
+                ifndef _CORE_MODULE_PATHFINDING_QUEUE_
+                define _CORE_MODULE_PATHFINDING_QUEUE_
 
 ; -----------------------------------------
-; добавить элемент в буфер выбранных элементов
+; добавить элемент в очередь запросов поиска пути
 ; In:
 ;   A - индекс юнита
 ; Out:
@@ -16,12 +16,12 @@
 ; -----------------------------------------
 PushUnit:       EX AF, AF'                                                      ; сохраним добавляемый индекс
 .NextFree       EQU $+1                                                         ; следующий свободный
-                LD HL, SelectedBufferFirst
+                LD HL, PathfindingQueryQueueLast
 
                 ; проверка возможности добавить элемент
 .CountFree      EQU $+1
-                LD A, SizeSelectedBuffer
-                CP SizeSelectedBuffer
+                LD A, SizePathfindingQueryQueue
+                CP SizePathfindingQueryQueue
                 JR Z, .Push                                                     ; буфер пуст
 
                 ; сохранить адрес следующего свободного элемента
@@ -31,13 +31,13 @@ PushUnit:       EX AF, AF'                                                      
                 ; найдём индекс в буфере
                 LD C, A                                                         ; сохраним количество свободных элементов
                 NEG
-                AND SizeSelectedBuffer - 1
+                AND SizePathfindingQueryQueue - 1
                 LD B, A                                                         ; количество элементов в буфере
                 EX AF, AF'                                                      ; востановим добавляемый индекс
 
 .NextElement    ; перейдём к предыдущему элементу
                 INC L
-                RES 5, L
+                SET 7, L                                                        ; используем старшие 128 байт
 
                 ; сравнение индекса
                 CP (HL)
@@ -52,7 +52,7 @@ PushUnit:       EX AF, AF'                                                      
 .Push           ; добавление элемента
                 DEC A
                 JR Z, .BufferIsFull
-                LD (CountFreeSelectedRef), A
+                LD (CountFreeQueryQueueRef), A
 
                 ; сохраним индекс
                 EX AF, AF'                                                      ; востановим добавляемый индекс
@@ -61,8 +61,7 @@ PushUnit:       EX AF, AF'                                                      
                 ; перейдём к следующему свободному элементу
                 LD A, L
                 DEC A
-                AND %00011111
-                OR LOW SelectedBufferLast
+                OR LOW PathfindingQueryQueueFirst
                 LD (.NextFree), A
                 RET
 
@@ -70,9 +69,9 @@ PushUnit:       EX AF, AF'                                                      
                 EX AF, AF'                                                      ; сохраним добавляемый индекс
 
                 ; расчитаем сколько элементов перемещать
-                LD A, (CountFreeSelectedRef)
+                LD A, (CountFreeQueryQueueRef)
                 NEG
-                AND %00011111
+                AND MaskPathfindingQueryQueue
                 SUB B
                 JR Z, .EndMemcopy                                               ; перемещать не нужно, т.к. добавляемый индекс последний
 
@@ -84,8 +83,7 @@ PushUnit:       EX AF, AF'                                                      
 .Memcopy        ; расчитаем адрес следующего элемента (который нужно переместить)
                 LD A, L
                 DEC A
-                AND %00011111
-                OR LOW SelectedBufferLast
+                OR LOW PathfindingQueryQueueFirst
                 LD L, A
                 LD A, (HL)
                 LD (DE), A
@@ -96,12 +94,13 @@ PushUnit:       EX AF, AF'                                                      
                 LD (HL), A
                 
                 RET
+
 .IsEmpty        ; метка PopUnit
 .BufferIsFull   SCF
                 RET
 
 ; -----------------------------------------
-; взять первый элемент в буфере выбранных элементов
+; взять первый элемент из очереди запросов поиска пути
 ; In:
 ; Out:
 ;   A - индекс юнита, если буфер не пуст
@@ -111,7 +110,7 @@ PushUnit:       EX AF, AF'                                                      
 ; Note:
 ; -----------------------------------------
 PopUnit:        LD A, (PushUnit.CountFree)
-                CP SizeSelectedBuffer
+                CP SizePathfindingQueryQueue
                 JR Z, PushUnit.IsEmpty                                          ; буфер пуст
 
                 LD C, A
@@ -122,7 +121,7 @@ PopUnit:        LD A, (PushUnit.CountFree)
 
                 ; рассчитаем адрес 1 элемента в буфере
                 LD HL, (PushUnit.NextFree)
-                LD A, SizeSelectedBuffer
+                LD A, SizePathfindingQueryQueue
                 SUB C
                 ADD A, L
                 LD L, A
@@ -131,4 +130,4 @@ PopUnit:        LD A, (PushUnit.CountFree)
 
                 RET
 
-                endif ; ~ _CORE_MODULE_UNIT_SELECT_ARRAY_
+                endif ; ~ _CORE_MODULE_PATHFINDING_QUEUE_

@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_PATHFINDING_STEP_
-                define _CORE_MODULE_UTILS_PATHFINDING_STEP_
+                ifndef _CORE_MODULE_PATHFINDING_ASTAR_STEP_
+                define _CORE_MODULE_PATHFINDING_ASTAR_STEP_
 
 ; -----------------------------------------
 ; In:
@@ -433,4 +433,4 @@ Step:           ; ---------------------------------------------
 .Exit           POP DE                                                          ; restore tile coord (NextCoord)
                 RET
 
-                endif ; ~ _CORE_MODULE_UTILS_PATHFINDING_STEP_
+                endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_STEP_

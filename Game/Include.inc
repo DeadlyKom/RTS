@@ -31,6 +31,10 @@ MapStructure                EQU MemoryPage_1.Map.End                            
 WaypointsSequencePtr        EQU Page_1.WaypointsSequence                        ; адрес последовательностей Way Point'ов (2048 байт)
 WaypointArrayPtr            EQU Page_1.WaypointArray                            ; адрес массива Way Point'ов (768 байт)
 SurfacePropertyPtr          EQU Page_1.SurfaceProperty                          ; адрес свойст тайлов (128 байт)                                                    [128] free
+PathfindingQueryQueueFirst  EQU SurfacePropertyPtr + 0x80                       ; адрес очереди запросов поиска пути (128 байт)                                     [128]
+PathfindingQueryQueueLast   EQU SurfacePropertyPtr + 0xFF                       ; адрес очереди запросов поиска пути (128 байт)                                     [128]
+SizePathfindingQueryQueue   EQU 128                                             ; размер очереди запросов поиска пути
+MaskPathfindingQueryQueue   EQU SizePathfindingQueryQueue - 1                   ; маска очереди запросов поиска пути
 TilemapTableAddress         EQU Page_1.TilemapTableAdr                          ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
 UnitArrayPtr                EQU Page_1.UnitArray                                ; адрес масива юнитов (1024 байта 64 юнита)
 SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
@@ -120,10 +124,11 @@ PFWinNumNodes               EQU PFWinWidth * PFWinHeight                        
 PFWinBufSize                EQU PFWinNumNodes * FPFInfo                         ; размер буфера окна поисковика (2560 байт)
 PathfindingBuffer           EQU Page_5.PathfindingBuffer                        ; адрес буфера для поиска пути (2560 байт)
 PathfindingOpenListBuffer   EQU Page_5.PathfindingOLBuffer                      ; адрес буфера для хранения координат открытого списка (max 512 байт)
+CountFreeQueryQueueRef      EQU Pathfinding.PushUnit.CountFree                  ; адрес переменной, сколько доступно в очереди запросов поиска пути
 
 ; selection
 SelectRectStartRef          EQU DrawRectangle.Start                             ; адрес левой-верхней точки выбора рамкой (в пикселях)
 SelectRectEndRef            EQU DrawRectangle.End                               ; адрес правой-нижней точки выбора рамкой (в пикселях)
-CountFreeSelectedRef        EQU Unit.Select.PushUnit.CountFree                  ; адрес переменной, сколько элементов свободно в буфере выбора
+; CountFreeSelectedRef        EQU Pathfinding.PushUnit.CountFree                  ; адрес переменной, сколько элементов свободно в буфере выбора
 
                             endif ; ~_GAME_INCLUDE_
