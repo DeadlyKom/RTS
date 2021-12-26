@@ -27,41 +27,41 @@ Handler:        ; включить страницу
                 LD DE, (UnitArrayRef)
 
                 ; проверка на перерисовку всех юнитов принудительно
-;                 LD HL, FrameUnitsFlagRef
-;                 SRA (HL)
-;                 LD A, #7F                               ; #3F для AND
-;                 LD HL, #C312                            ; LD (DE), A : JP
-;                 LD BC, .Force
-;                 JR C, .Modify                           ; включим пропуск проверки обновления юнита
-;                 LD A, #C0                               ; #C0 для AND
-;                 LD HL, #00CA | (LOW  .PreNextUnit << 8) ; JP Z,. PreNextUnit
-;                 LD BC, #EB00 | (HIGH .PreNextUnit << 0) ; EX DE, HL
+                LD HL, FrameUnitsFlagRef
+                SRA (HL)
+                LD A, #7F                               ; #3F для AND
+                LD HL, #C312                            ; LD (DE), A : JP
+                LD BC, .Force
+                JR C, .Modify                           ; включим пропуск проверки обновления юнита
+                LD A, #C0                               ; #C0 для AND
+                LD HL, #00CA | (LOW  .PreNextUnit << 8) ; JP Z,. PreNextUnit
+                LD BC, #EB00 | (HIGH .PreNextUnit << 0) ; EX DE, HL
 
-; .Modify         ; модификация кода
-;                 LD (.ModifyCode + 0), A
-;                 LD (.ModifyCode + 1), HL
-;                 LD (.ModifyCode + 3), BC
+.Modify         ; модификация кода
+                LD (.ModifyCode + 0), A
+                LD (.ModifyCode + 1), HL
+                LD (.ModifyCode + 3), BC
 
 .Loop           PUSH DE                                                         ; save current address UnitsArray
 
                 ; проврка на перерисовку текущего юнита
-;                 LD A, (DE)
-; .ModifyCode     EQU $+1
-;                 AND %11000000
-;                 JP Z, .PreNextUnit
+                LD A, (DE)
+.ModifyCode     EQU $+1
+                AND %11000000
+                JP Z, .PreNextUnit
 
-;                 ; сброс состояния обновления спрайта юнита
-;                 EX DE, HL
-;                 LD A, (HL)
-;                 LD E, A
-;                 AND %0011111
-;                 LD D, A
-;                 LD A, E
-;                 RRA
-;                 AND %11000000
-;                 OR D
-;                 LD (HL), A
-;                 EX DE, HL
+                ; сброс состояния обновления спрайта юнита
+                EX DE, HL
+                LD A, (HL)
+                LD E, A
+                AND %0011111
+                LD D, A
+                LD A, E
+                RRA
+                AND %11000000
+                OR D
+                LD (HL), A
+                EX DE, HL
 
 .Force          INC D                                                           ; переход к стурктуре FSpriteLocation
                 

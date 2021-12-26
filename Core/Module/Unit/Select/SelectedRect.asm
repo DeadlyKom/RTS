@@ -18,6 +18,30 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 ; включить страницу
                 CALL Memory.SetPage1
 
+                ; single selected
+                LD HL, SelectRectStartRef
+                LD E, (HL)  ; StartX
+                INC HL
+                LD D, (HL)  ; StartY
+                INC HL
+
+                ; DeltaX = EndX - StartX
+                LD A, (HL)  ; EndX
+                SUB E
+                CP #02
+                LD A, #37
+                JR NC, .NotSingle
+
+                ; DeltaY = EndY - StartY
+                INC HL
+                LD A, (HL)  ; EndY
+                SUB D
+                CP #02
+                LD A, #37
+                JR NC, .NotSingle    
+                LD A, #B7                                                       ; is single selected
+
+.NotSingle      LD (.IsSingle), A
                 ; 
                 LD HL, TilemapOffsetRef                                         ; HL = позиция X, указатель смещения тайловой карты (координаты тайла, верхнего левого угла)
                 LD C, (HL)                                                      ; X
@@ -51,7 +75,7 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 ;
                 INC DE
 
-                ; EndX  
+                ; EndX
                 LD A, (DE)
                 RRA
                 RRA
@@ -160,7 +184,14 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 ; SET FUSF_SELECTED_BIT, (HL)
                 LD A, #C6 | FUSF_SELECTED_BIT << 3
                 LD (.SET_RES), A
-                
+
+.IsSingle       EQU $
+                SCF
+                JR C, .Next
+                ; is single selected
+                LD A, #01
+                LD (.ProcessedUnits), A
+
 .Next           ; ---------------------------------------------
                 DEC H                                                           ; FUnitState.Direction              (1)
                 DEC L                                                           ; FUnitState.State                  (1)
