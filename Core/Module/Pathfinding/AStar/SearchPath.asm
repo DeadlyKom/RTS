@@ -48,23 +48,28 @@ SearchPath:     ; ---------------------------------------------
                 LD (Step.NegHeightTM_B), A
                 LD (Step.NegHeightTM_C), A
 
-                ;
-                LD HL, #0000   
-                LD (Step.BufferStart), HL
-                LD (GetTileInfo.BufferStart), HL                                ; GetTileInfo.BufferStart
-                LD A, L
-                LD (AddToOpenList.BufferStartX), A                              ; AddToOpenList.BufferStartX
-                LD A, H
-                LD (AddToOpenList.BufferStartY), A                              ; AddToOpenList.BufferStartY
-                LD HL, #0F0F
-                LD (Step.BufferEnd), HL  
+                
+                ; LD HL, #0000   
+                ; LD (Step.BufferStart), HL
+                ; LD (GetTileInfo.BufferStart), HL                                ; GetTileInfo.BufferStart
+                ; LD A, L
+                ; LD (AddToOpenList.BufferStartX), A                              ; AddToOpenList.BufferStartX
+                ; LD A, H
+                ; LD (AddToOpenList.BufferStartY), A                              ; AddToOpenList.BufferStartY
+                ; LD HL, #0F0F
+                ; LD (Step.BufferEnd), HL
 
                 ; compute end point
                 CALL Unit.Select.DefineTarget                                   ; DE = end tile position
-                LD (GetHeuristics.EndLocation), DE
+                ; LD (GetHeuristics.EndLocation), DE
+                PUSH DE
 
                 ; compute start point
                 CALL Unit.Select.InitSelected                                   ; DE = start tile position
+                POP HL
+
+                ; расчитать окно поиска
+                CALL SearchWindow
 
                 ; return address after completion of 'AddToOpenList' function
                 LD HL, .Complite
@@ -80,7 +85,7 @@ SearchPath:     ; ---------------------------------------------
                 ; ---------------------------------------------
                 ;   SP+0 - cost value G_Cost
                 ;   SP+2 - cost value H_Cost
-                ;   DE   - tile position (D - y, E - x)
+                ;   DE   - tile position        (D - y, E - x)
                 ;   BC   - perent tile position (B - y, C - x)
                 ; ---------------------------------------------
 

@@ -13,6 +13,7 @@
                 include "Step.asm"
                 include "GetFoundPath.asm"
                 include "SearchPath.asm"
+                include "CalculateSearchWindow.asm"
 
                 endmodule
 

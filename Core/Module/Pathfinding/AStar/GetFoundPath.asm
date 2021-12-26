@@ -11,16 +11,19 @@
 GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
 .BestCoord      EQU $+1
                 LD DE, #0000
-
+                ; JR$
                 ; FCoord NextCoord = GetMapData(CurrentCoord).ParentCoord;
                 CALL GetTileInfo
                 LD L, A
                 LD H, HIGH PathfindingBuffer | FPFInfo.Flags
 
+                LD A, #02                                                       ; one coord in stack
+                EX AF, AF'
+
                 ; BIT PF_IS_START_COORD_BIT, (HL)
                 LD A, (HL)                                                      ; HL - pointer to FPFInfo.Flags                     (0)
                 RRA
-                JR C, .Exit
+                JR C, .PreExit
 
                 INC H                                                           ; HL - pointer to FPFInfo.ParentCoord.X             (1)
 
@@ -35,9 +38,12 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
                 EX DE, HL
 
                 ; Path.push_front(CurrentCoord);
+                ; LD BC, (.BufferStart)
+                ; ADD HL, BC
                 PUSH HL                                                         ; push CurrentCoord
-                LD A, #02                                                       ; one coord in stack
-                EX AF, AF'
+                ; EX AF, AF'
+                ; INC A                                                           ; one coord in stack
+                ; EX AF, AF'
 
                 ; FCoord PrevDiff = CurrentCoord - NextCoord;
                 OR A
@@ -93,6 +99,7 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
                 EX AF, AF'
                 JR .While
 
+.PreExit        PUSH DE                                                         ; сохраним CurrentCoord 
 .Exit           ; создать цепочку waypoints
                 ; JR$
                 CALL Utils.WaypointsSequencer.Create

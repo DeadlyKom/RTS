@@ -168,7 +168,7 @@ AddToOpenList:  ; set return address
                 ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)
                 ; BC - perent tile position (B - y, C - x)
                 ; ---------------------------------------------
-
+                ; JR$
                 ; FPFInfo.ParentCoord.X - BufferStart.X
                 LD A, C
 .BufferStartX   EQU $+1
