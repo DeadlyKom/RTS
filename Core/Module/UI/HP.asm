@@ -3,7 +3,13 @@
                 define _DISPLAY_UI_HP_
 
                 module HP
-
+; -----------------------------------------
+; отрисовка указанного юнита Health Point
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
 Draw:           ; DE - указывает на структуру FSpriteLocation
                 INC E
                 INC E
@@ -57,26 +63,6 @@ Draw:           ; DE - указывает на структуру FSpriteLocatio
                 CALL NC, Sprite.Draw
 
                 RET
-
-                ; ; очистка
-                ; LD A, (Sprite.PixelClipping.PositionY)
-                ; SUB #02
-                ; RET M
-                ; ADD A, A
-                ; ADD A, A
-                ; ADD A, A
-                ; ADD A, A
-                ; LD L, A
-                ; LD A, (Sprite.PixelClipping.PositionX)
-                ; DEC A
-                ; RET M
-                ; OR L
-                ; LD L, A
-                
-                ; LD H, HIGH RenderBuffer                             ; hight byte index table
-                ; LD (HL), RENDER_ALL_FLAGS
-
-                ; RET
 
 .OffsetByPixel  FLocation
 .SmalHP_Table   DB %01011111, %11111010                                         ; 0     [0]     - HP    (xxx0000x)  =..........=

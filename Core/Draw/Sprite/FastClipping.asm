@@ -62,8 +62,36 @@ FastClipping:   ; ---------------------------------------------
                 ; замена RET NC
                 CCF
                 ; A = PositionY => [0..13]
-                LD (PixelClipping.PositionY), A
+                LD (PixelClipping.PositionY), A                                 ; сохраним PositionX
                 ; ---------------------------------------------
+                RET
+; -----------------------------------------
+; сохранение предыдущего значения быстрого клипинга
+; In:
+; Out:
+;   BC - сохраняемы значения (B - y, C - x)
+; Corrupt:
+;   BC, AF
+; Note:
+; -----------------------------------------
+SaveClip:       LD A, (PixelClipping.PositionX)
+                LD C, A
+                LD A, (PixelClipping.PositionY)
+                LD B, A
+                RET
+; -----------------------------------------
+; востановление ранее сохранёных значений быстрого клипинга
+; In:
+;   BC - сохраняемы значения (B - y, C - x)
+; Out:
+; Corrupt:
+;   BC, AF
+; Note:
+; -----------------------------------------
+RestoreClip:    LD A, C
+                LD (PixelClipping.PositionX), A
+                LD A, B
+                LD (PixelClipping.PositionY), A
                 RET
 
                 endif ; ~_DRAW_SPRITE_FAST_CLIPPING_

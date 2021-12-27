@@ -37,11 +37,13 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 LD A, (HL)  ; EndY
                 SUB D
                 CP #02
-                LD A, #37
+                LD A, #37                                                       ; (SCF)
                 JR NC, .NotSingle    
-                LD A, #B7                                                       ; is single selected
+                LD A, #B7                                                       ; is single selected (OR A)
 
-.NotSingle      LD (.IsSingle), A
+.NotSingle      LD (.IsSingle_), A
+                LD A, #37
+                LD (.IsSingle), A
                 ; 
                 LD HL, TilemapOffsetRef                                         ; HL = позиция X, указатель смещения тайловой карты (координаты тайла, верхнего левого угла)
                 LD C, (HL)                                                      ; X
@@ -138,6 +140,10 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 LD A, #86 | FUSF_SELECTED_BIT << 3
                 LD (.SET_RES), A
 
+.IsSingle       EQU $
+                SCF
+                JR NC, .Next
+
                 ; TilePosition.X < StartX
                 LD A, C
 .StartX         EQU $+1
@@ -185,12 +191,12 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 LD A, #C6 | FUSF_SELECTED_BIT << 3
                 LD (.SET_RES), A
 
-.IsSingle       EQU $
+.IsSingle_      EQU $
                 SCF
                 JR C, .Next
                 ; is single selected
-                LD A, #01
-                LD (.ProcessedUnits), A
+                LD A, #B7                                                       ; is single selected (OR A)
+                LD (.IsSingle), A
 
 .Next           ; ---------------------------------------------
                 DEC H                                                           ; FUnitState.Direction              (1)
