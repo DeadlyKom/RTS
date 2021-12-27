@@ -58,8 +58,12 @@ Initialize:             ; initialize
                         ; initialize background
                         CALL BackgroundFill
 
-                        ; CALL Tilemap.FillFog
-                        ; CALL Tilemap.Prepare
+                        ifdef ENABLE_FILL_FOW
+                        CALL Tilemap.FillFog
+                        CALL AI.Handler
+                        CALL Tilemap.Prepare
+                        ResetFrameFlag FORCE_FOW_FLAG
+                        endif
 
                         RET
 

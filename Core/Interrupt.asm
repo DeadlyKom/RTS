@@ -206,7 +206,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     DEC (HL)
                     JR NZ, .MoveTilemap
                     LD (HL), FOW_Ref
-                    ResetFrameFlag FORCE_FOW_FLAG           
+                    ResetFrameFlag FORCE_FOW_FLAG
 
 .MoveTilemap        ; ********* MOVE TILEMAP **********
                     CheckInputFlag SELECTION_RECT_FLAG
@@ -220,17 +220,19 @@ Handler:            ; ********** HANDLER IM 2 *********
 .SkipRenderFinished ; ---------------------------------
 
 .TimeOfDay          ; ********* TIME OF DAY **********
-                    ; LD HL, (TimeOfDay)
-                    ; DEC HL
-                    ; LD (TimeOfDay), HL
-                    ; LD A, H
-                    ; OR L
-                    ; JR NZ, .SkipTimeOfDay
-                    ;
-                    ; LD HL, TimeOfDayChangeRate
-                    ; LD (TimeOfDay), HL
-                    ; CALL MemoryPage_2.BackgroundFill
-                    ; .SkipTimeOfDay
+                    ifdef ENABLE_TIME_OF_DAY
+                    LD HL, (TimeOfDay)
+                    DEC HL
+                    LD (TimeOfDay), HL
+                    LD A, H
+                    OR L
+                    JR NZ, .SkipTimeOfDay
+                    
+                    LD HL, TimeOfDayChangeRate
+                    LD (TimeOfDay), HL
+                    CALL BackgroundFill
+.SkipTimeOfDay      
+                    endif
                     ; ~ TIME OF DAY
 
 .DrawCursor         ; ********** DRAW CURSOR **********

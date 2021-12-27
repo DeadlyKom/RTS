@@ -103,6 +103,4 @@ MS_ContainerSP:     EQU $+1
                     LD SP, #0000
                     RET
 
-
-
                     endif ; ~_MEMORY_SET_

@@ -26,6 +26,7 @@ Handler:        ; включить страницу
 
                 LD DE, (UnitArrayRef)
 
+                ifndef ENABLE_FORCE_DRAW_UNITS
                 ; проверка на перерисовку всех юнитов принудительно
                 LD HL, FrameUnitsFlagRef
                 SRA (HL)
@@ -41,9 +42,11 @@ Handler:        ; включить страницу
                 LD (.ModifyCode + 0), A
                 LD (.ModifyCode + 1), HL
                 LD (.ModifyCode + 3), BC
+                endif
 
 .Loop           PUSH DE                                                         ; save current address UnitsArray
 
+                ifndef ENABLE_FORCE_DRAW_UNITS
                 ; проврка на перерисовку текущего юнита
                 LD A, (DE)
 .ModifyCode     EQU $+1
@@ -62,6 +65,7 @@ Handler:        ; включить страницу
                 OR D
                 LD (HL), A
                 EX DE, HL
+                endif
 
 .Force          INC D                                                           ; переход к стурктуре FSpriteLocation
                 

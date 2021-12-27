@@ -12,6 +12,9 @@
                 define ENABLE_KEMSTON_JOYSTICK_SEGA                             ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
                 define ENABLE_FOW                                               ; разрешить туман войны
                 define ENABLE_CLS                                               ; разрешить очистить 2 экрана перед стартом
+                ; define ENABLE_FORCE_DRAW_UNITS                                  ; разрешить принудительное обновление унитов
+                define ENABLE_FILL_FOW                                          ; разрешить заполнение туманом всю карту
+                define ENABLE_TIME_OF_DAY                                       ; разрешить смену дня и ночи
 
                 ; define SHOW_DEBUG_BORDER                                        ; разрешить отображать на бордюре время выполнение
                 ; define SHOW_DEBUG_BORDER_INTERRUPT                              ; отображение на бордюре время прерывания
@@ -30,7 +33,7 @@
                 ; define SHOW_AI_FREQUENCY                                        ; отображать частоту обновления AI
                 ; define SHOW_MOUSE_POSITION                                      ; отображать координаты мыши
                 ; define SHOW_OFFSET_TILEMAP                                      ; отображать смещение карты
-                define SHOW_VISIBLE_UNITS                                       ; отображать количество видимых юнитов
+                ; define SHOW_VISIBLE_UNITS                                       ; отображать количество видимых юнитов
                 define ENABLE_TOGGLE_SCREENS_DEBUG                              ; разрешить 2х экранное отображение дебажной инфы
                 ; define SHOW_AABB                                                ; разрешить отобразить AABB спрайта
                 endif
