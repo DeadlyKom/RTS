@@ -22,6 +22,9 @@
                 ; surface
                 include "Surface/SurfaceProperty.asm"
 
+                ; RNG
+                include "RNG/Rand8.asm"
+
                 endmodule
 
                 endif ; ~ _CORE_MODULE_UTILS_INCLUDE_

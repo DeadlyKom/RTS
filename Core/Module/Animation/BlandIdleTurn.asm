@@ -11,18 +11,12 @@
 ;   requires included memory page
 ; -----------------------------------------
 Idle:               ;
-                    LD A, R
-                    LD C, A
-.Rand               EQU $+1
-                    AND %01010101
-                    RET NZ
-                    LD A, (.Rand)
-                    RRCA
-                    XOR C
-                    RLA
-                    LD (.Rand), A
+                    CALL Utils.Math.Rand8
+                    CP #10                                                      ; чем меньше тем чаще происходит поворот
+                    RET NC
+                    EX AF, AF'                                                  ; сохраним рандомное число
 
-                    INC IXH                                                     ; FSpriteLocation     (2)
+                    INC IXH                                                     ; FSpriteLocation   (2)
                     INC IXH                                                     ; FUnitTargets      (3)
                     INC IXH                                                     ; FUnitAnimation    (4)
                     
@@ -39,7 +33,7 @@ Idle:               ;
 
                     ; завершение работы
                     DEC IXH                                                     ; FUnitTargets      (3)
-                    DEC IXH                                                     ; FSpriteLocation     (2)
+                    DEC IXH                                                     ; FSpriteLocation   (2)
                     DEC IXH                                                     ; FUnitState        (1)
 
                     RET
@@ -52,12 +46,8 @@ Idle:               ;
 
                     ; завершение работы
                     DEC IXH                                                     ; FUnitTargets      (3)
-                    DEC IXH                                                     ; FSpriteLocation     (2)
+                    DEC IXH                                                     ; FSpriteLocation   (2)
                     DEC IXH                                                     ; FUnitState        (1)
-
-                    LD A, R
-                    RRA
-                    RET NC
                     
                     ;
                     LD A, (IX + FUnitState.Direction)
@@ -67,7 +57,7 @@ Idle:               ;
                     AND %00000111
                     LD C, A                                                     ; сохраним текущий поворот
 
-                    LD A, R
+                    EX AF, AF'                                                  ; востановим рандомное число
                     RRA
 
                     SBC A, A                                                    ; < 4 = -1, > 4 = 0
