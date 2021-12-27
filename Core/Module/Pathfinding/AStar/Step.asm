@@ -125,7 +125,7 @@ Step:
                 LD A, D
 .NegHeightTM_A  EQU $+1                                                         ; negative tilemap height
                 ADD A, #00
-                RET P                                                           ; if Y > 'tilemap height' then skip RightDown, Down, LeftDown
+                JP P, .Next                                                     ; if Y > 'tilemap height' then skip RightDown, Down, LeftDown
 
                 ; ---------------------------------------------
                 ; RightDown                                 (6)
@@ -180,7 +180,7 @@ Step:
                 LD A, D
 .NegHeightTM_B  EQU $+1                                                         ; negative tilemap height
                 ADD A, #00
-                RET P                                                           ; if Y > 'tilemap height' then skip RightDown, Down
+                JP P, .Next                                                     ; if Y > 'tilemap height' then skip RightDown, Down
 
                 ; ---------------------------------------------
                 ; RightDown                                 (6)
@@ -258,7 +258,6 @@ Step:
                 JP .Next
 
 .Skip23456      ; skip Right (5), RightDown (6) and LeftUp (2), Up (3), RightUp (4)
-
                 DEC E                                                           ; X = X - 1
 
                 ; ---------------------------------------------
@@ -284,7 +283,7 @@ Step:
                 LD A, D
 .NegHeightTM_C  EQU $+1                                                         ; negative tilemap height
                 ADD A, #00
-                RET P                                                           ; if Y > 'tilemap height' then skip Down, LeftDown
+                JP P, .Next                                                     ; if Y > 'tilemap height' then skip Down, LeftDown
 
                 ; ---------------------------------------------
                 ; Down                                      (7)

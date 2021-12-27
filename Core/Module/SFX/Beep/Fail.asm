@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_SFX_BEEP_FAIL_
                 define _CORE_MODULE_SFX_BEEP_FAIL_
 
-DEF_FE          EQU #07
+DEF_FE          EQU #00
 BEEP            EQU 1 << 4
 Fail:           PUSH AF
 
