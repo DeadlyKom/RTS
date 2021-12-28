@@ -14,19 +14,21 @@
 ; -----------------------------------------
 MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; установка состояния перемещения/поворота
 
+                CALL Animation.MoveDown
+                CCF
+                RET C                                                           ; время ещё не вышло, но возвращаем успешное перемещение
+
                 INC IXH                                                         ; FSpriteLocation     (2)
 
                 LD E, IXL
                 LD D, IXH
-                INC DE
-                INC DE
+                INC E
+                INC E
                 LD (ShiftLocation.UnitOffset), DE
                 
                 INC IXH                                                         ; FUnitTargets      (3)
 
-                ;
-                ; CALL Utils.GetDeltaTarget                                       ; calculate direction delta
-                CALL Utils.GetPerfectTargetDelta
+                CALL Utils.GetPerfectTargetDelta                                ; calculate direction delta
                 JP NC, .Fail                                                    ; неудачая точка назначения
 
                 ; ---------------------------------------------
@@ -43,19 +45,19 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
 
                 INC IXH                                                         ; FUnitAnimation    (4)
 
-                ; check for the need to reinitialize the counter after move
+                ; проверить необходимость повторной инициализации счетчика после хода
                 LD C, (IX + FUnitAnimation.Flags)
                 RR C
-                CALL NC, .Init                                                  ; reinitialize if the FUAF_TURN_MOVE flag is set
+                CALL NC, .Init                                                  ; переинициализировать, если флаг FUAF_TURN_MOVE сброшен
 
-                ; if necessary, change the sign of dY
+                ; при необходимости изменить знак dY
                 XOR A
                 LD B, A                                                         ; reset register B
                 SUB D
                 JP M, $+4
                 LD D, A
 
-                ; if necessary, change the sign of dX
+                ; при необходимости изменить знак dX
                 XOR A
                 SUB E
                 JP M, $+4
@@ -81,6 +83,7 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
 
                 ; sing dX <=> sign dY (swap)
                 SRL C
+                RES 1, C
                 JR NC, $+4
                 SET 1, C
                   
@@ -137,7 +140,7 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
 
 .Exit           ; завершение работы
                 DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation   (2)
                 DEC IXH                                                         ; FUnitState        (1)
 
                 ; LD A, (TickCounterRef)

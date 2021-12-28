@@ -67,13 +67,13 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
                         ADD A, A
 .SetY                   LD D, A
 
-.Successfully           SCF                                         ; успешность операции
+.Successfully           SCF                                                     ; успешность операции
                         RET
 
-.IsNotValid             XOR A                                       ; неудача операции
+.IsNotValid             XOR A                                                   ; неудача операции
                         LD D, A
                         LD E, A
-                        DEC IXH                                     ; FSpriteLocation (2)
+                        DEC IXH                                                 ; FSpriteLocation (2)
                         RET
 
 ; -----------------------------------------
@@ -81,7 +81,7 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
 ; In:
 ;   IX - pointer to FUnitTargets    (3)
 ; Out:
-;   IX - pointer to FSpriteLocation   (2)
+;   IX - pointer to FSpriteLocation (2)
 ;   DE - deltas (D - dY, E - dX)
 ;   flag Carry true, говорит об успешности расчёта дельт
 ; Corrupt:

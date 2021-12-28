@@ -95,7 +95,7 @@ TurnDown:       ;
 
 .Exit           ; завершение работы
                 DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation   (2)
                 DEC IXH                                                         ; FUnitState        (1)
 
                 RET
@@ -111,7 +111,7 @@ TurnDown:       ;
                 RL B
                 RRA
 
-                JR .Set 
+                JR .Set
 
 .Decrement      ;
                 ADD A, A
@@ -144,7 +144,7 @@ TurnDown:       ;
 
                 ; завершение работы
                 DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation     (2)
+                DEC IXH                                                         ; FSpriteLocation   (2)
                 DEC IXH                                                         ; FUnitState        (1)
 
                 ; меняем спрайт
