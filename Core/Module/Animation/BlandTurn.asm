@@ -17,7 +17,7 @@ TurnDown:       ;
                 LD B, A                                                         ; B - направление поворота (-1/1)
                 
                 ; получение адреса анимации поворота для текущего типа юнита
-                LD HL, (AnimTurnTableRef)
+                LD HL, (AnimTurnDownTableRef)
                 LD A, (IX + FUnitState.Type)                                    ; A = Type
                 AND %00011111
                 ADD A, A

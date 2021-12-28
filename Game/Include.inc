@@ -96,8 +96,15 @@ HighSurfacePropertyRef      EQU Game.SurfacePropertyPtr + 1                     
 WaypointCounterRef          EQU Game.WaypointCounter                            ; адрес счётчика элементов waypoint в массиве
 WaypointArrayRef            EQU Game.WaypointArray                              ; адрес массива точек пути
 HighWaypointArrayRef        EQU Game.WaypointArray + 1                          ; старший байт адрес массива точек пути
+
+; brhavior
 BehaviorTableRef            EQU Game.BehaviorTable                              ; адрес таблицы поведения юнитов
-AnimTurnTableRef            EQU Game.AnimTurnTable                              ; адрес таблицы анимации поворотов
+
+; animation
+AnimTurnUpTableRef          EQU Game.AnimTurnUpTable                            ; адрес таблицы анимации поворотов (вверх)
+AnimTurnDownTableRef        EQU Game.AnimTurnDownTable                          ; адрес таблицы анимации поворотов (низ)
+AnimMoveTableRef            EQU Game.AnimMoveTable                              ; адрес таблицы анимации перемещения
+
 UnitArrayRef                EQU Game.UnitArray                                  ; адрес юнитов
 TopRowOffsetFOW             EQU MemoryPage_7.FOW.ROW_UP                         ; смещение в буфере верхней строки FOW
 BottomRowOffsetFOW          EQU MemoryPage_7.FOW.ROW_DOWN                       ; смещение в буфере нижней строки FOW

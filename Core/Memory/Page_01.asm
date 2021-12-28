@@ -11,15 +11,27 @@
 Map:
                 include "Map.asm"
 .End
-                FMap #CCCC, TilemapTableAddress, {64, 64}, {0, 0}, WaypointArrayPtr, Behavior.Begin, Animation.Begin, UnitArrayPtr, #0000, SurfacePropertyPtr
+                FMap #CCCC, TilemapTableAddress, {64, 64}, {0, 0}, WaypointArrayPtr, Behavior.Begin, AnimationTurnUp.Begin, AnimationTurnDown.Begin, AnimationMove.Begin, UnitArrayPtr, #0000, SurfacePropertyPtr
 Behavior.Begin:
                 include "../Behavior/Include.inc"
 Behavior.End:
 
-Animation.Begin:
-                include "../Animation/Include.inc"
-Animation.End:
+Animation.Begin
+                ; ********** ANIMATION TURN UP **********
+AnimationTurnUp.Begin:
+                include "../Animation/AnimationTurnUpTable.inc"
+AnimationTurnUp.End:
 
+                ; ********** ANIMATION TURN DOWN **********
+AnimationTurnDown.Begin:
+                include "../Animation/AnimationTurnDownTable.inc"
+AnimationTurnDown.End:
+
+                ; ********** ANIMATION MOVE **********
+AnimationMove.Begin:
+                include "../Animation/AnimationMoveTable.inc"
+AnimationMove.End:
+Animation.End
                 ORG SurfacePropertyPtr
 Surf:
 .Begin

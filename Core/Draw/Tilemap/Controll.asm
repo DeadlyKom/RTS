@@ -6,17 +6,21 @@ Initialize:     ; toggle to memory page with tilemap
 
                 ; инициализация перменных (из загруженной карты)
                 XOR A
-                LD IX, MapStructure                         ; адрес структуры карты
+                LD IX, MapStructure                                             ; адрес структуры карты
 
-                LD HL, (IX + FMap.WaypointArray)            ; инициализация адреса массива точек пути
+                LD HL, (IX + FMap.WaypointArray)                                ; инициализация адреса массива точек пути
                 LD (WaypointArrayRef), HL
-                LD HL, (IX + FMap.BehaviorTable)            ; инициализация адреса таблицы поведения
+                LD HL, (IX + FMap.BehaviorTable)                                ; инициализация адреса таблицы поведения
                 LD (BehaviorTableRef), HL
-                LD HL, (IX + FMap.AnimTurnTable)            ; инициализация адреса таблицы анимаций поворота
-                LD (AnimTurnTableRef), HL
-                LD HL, (IX + FMap.UnitsArray)               ; инициализация адреса массива юнитов
+                LD HL, (IX + FMap.AnimTurnUpTable)                              ; инициализация адреса таблицы анимаций поворота (вверх)
+                LD (AnimTurnUpTableRef), HL
+                LD HL, (IX + FMap.AnimTurnDownTable)                            ; инициализация адреса таблицы анимаций поворота (низ)
+                LD (AnimTurnDownTableRef), HL
+                LD HL, (IX + FMap.AnimMoveTable)                                ; инициализация адреса таблицы анимаций перемещения
+                LD (AnimMoveTableRef), HL
+                LD HL, (IX + FMap.UnitsArray)                                   ; инициализация адреса массива юнитов
                 LD (UnitArrayRef), HL
-                LD HL, (IX + FMap.SurfaceProperty)          ; инициализация фдреса свойств поверхностей
+                LD HL, (IX + FMap.SurfaceProperty)                              ; инициализация фдреса свойств поверхностей
                 LD (SurfacePropertyRef), HL
 
                 ; LD HL, (IX + FMap.Address)                  ; HL - адрес начала (смещение 0,0) тайловой карты
