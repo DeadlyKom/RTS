@@ -12,27 +12,27 @@ GameLoop:
                 JR C, $
 
                 ; 1
-                LD DE, #0C0A
+                LD DE, #1517
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
                 ; 2
-                LD DE, #0D0D
+                LD DE, #1520
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
                 ; 3
-                LD DE, #110F
+                LD DE, #1E20
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
                 ; 4
-                LD DE, #150D
+                LD DE, #1E17
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
                 ; 5
-                LD DE, #1306
+                LD DE, #1914
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
                 ; 6
-                LD DE, #0D06
+                LD DE, #1816
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
@@ -45,7 +45,7 @@ GameLoop:
                 ; CALL Utils.WaypointsSequencer.AddUnit
 
                 ; spawn unit
-                LD BC, #0506
+                LD BC, #1517
                 CALL Spawn.Unit
 
                 LD A, IXL
@@ -53,7 +53,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddUnit
 
                 ; spawn unit
-                LD BC, #080A
+                LD BC, #1520
                 CALL Spawn.Unit
 
                 LD A, IXL
@@ -61,15 +61,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddUnit
 
                 ; spawn unit
-                LD BC, #0906
-                CALL Spawn.Unit
-
-                LD A, IXL
-                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 3         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
-                CALL Utils.WaypointsSequencer.AddUnit
-
-                ; spawn unit
-                LD BC, #0C0D
+                LD BC, #1E20
                 CALL Spawn.Unit
 
                 LD A, IXL
@@ -77,12 +69,68 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddUnit
 
                 ; spawn unit
-                LD BC, #1213
+                LD BC, #1E17
                 CALL Spawn.Unit
 
                 LD A, IXL
-                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 5         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 3         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
                 CALL Utils.WaypointsSequencer.AddUnit
+
+                ; spawn unit
+                LD BC, #1816
+                CALL Spawn.Unit
+
+                LD A, IXL
+                LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP | 2         ;%01110111                  ; бит FUTF_VALID = 0 (не валидный WayPoint)
+                CALL Utils.WaypointsSequencer.AddUnit
+
+                ; spawn unit
+                LD BC, #1719
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #171A
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #171B
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #171C
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #171D
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #171E
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #1819
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #181A
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #181B
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #181C
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #181D
+                CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #181E
+                CALL Spawn.Unit
 
                 ; spawn unit
                 LD BC, #1919
@@ -180,13 +228,14 @@ GameLoop:
                 LD BC, #1C1E
                 CALL Spawn.Unit
 
-                ; ; spawn unit
-                ; LD BC, #1D19
-                ; CALL Spawn.Unit
+
+                ; spawn unit
+                LD BC, #1315
+                CALL Spawn.Unit
 
                 ; ; spawn unit
-                ; LD BC, #1D1A
-                ; CALL Spawn.Unit
+                LD BC, #1722
+                CALL Spawn.Unit
 
                 ; ; spawn unit
                 ; LD BC, #1D1B
