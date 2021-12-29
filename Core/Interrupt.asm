@@ -174,17 +174,17 @@ Handler:            ; ********** HANDLER IM 2 *********
                     
                     SwapScreens
 
-.PathfindingQuery   ; ******* PATHFINDING QUERY *******
-                    AND %00001000
-                    JR Z, .RequestRejected
-                    CheckGameplayFlag PATHFINDING_QUERY_FLAG
-                    JR NZ, .RequestRejected
-                    ; SetFrameFlag DELAY_RENDER_FLAG
-                    SetGameplayFlag PATHFINDING_QUERY_FLAG
-                    ResetGameplayFlag PATHFINDING_FLAG
-                    ; ~ PATHFINDING QUERY
+; .PathfindingQuery   ; ******* PATHFINDING QUERY *******
+;                     AND %00001000
+;                     JR Z, .RequestRejected
+;                     CheckGameplayFlag PATHFINDING_QUERY_FLAG
+;                     JR NZ, .RequestRejected
+;                     ; SetFrameFlag DELAY_RENDER_FLAG
+;                     SetGameplayFlag PATHFINDING_QUERY_FLAG
+;                     ResetGameplayFlag PATHFINDING_FLAG
+;                     ; ~ PATHFINDING QUERY
 
-.RequestRejected    ; ---------------------------------
+; .RequestRejected    ; ---------------------------------
 
                     ; FPS
                     ifdef SHOW_FPS

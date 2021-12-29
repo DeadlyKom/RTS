@@ -8,7 +8,20 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Step:           
+ContinueStep:   ; сохраним текущий фрейм
+                LD A, (TickCounterRef)
+                LD (Step.LastFrame), A
+Step:           ; проверка прерывания
+                LD A, (TickCounterRef)
+.LastFrame      EQU $+1
+                CP #00
+                ; JR Z, .Continue
+
+                ; ; проверка включена ли синхронизация
+                ; CheckAIFlag AI_SYNC_UPDATE_FLAG
+                ; RET Z
+                RET NZ
+.Continue
                 ; JR$
                 ; ---------------------------------------------
                 ; CALL OpenList.IsEmpty

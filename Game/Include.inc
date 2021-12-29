@@ -30,7 +30,7 @@ MapStructure                EQU MemoryPage_1.Map.End                            
 
 WaypointsSequencePtr        EQU Page_1.WaypointsSequence                        ; адрес последовательностей Way Point'ов (2048 байт)
 WaypointArrayPtr            EQU Page_1.WaypointArray                            ; адрес массива Way Point'ов (768 байт)
-SurfacePropertyPtr          EQU Page_1.SurfaceProperty                          ; адрес свойст тайлов (128 байт)                                                    [128] free
+SurfacePropertyPtr          EQU Page_1.SurfaceProperty                          ; адрес свойст тайлов (128 байт)                                                    [128] free (заняты)
 PathfindingQueryQueueFirst  EQU SurfacePropertyPtr + 0x80                       ; адрес очереди запросов поиска пути (128 байт)                                     [128]
 PathfindingQueryQueueLast   EQU SurfacePropertyPtr + 0xFF                       ; адрес очереди запросов поиска пути (128 байт)                                     [128]
 SizePathfindingQueryQueue   EQU 128                                             ; размер очереди запросов поиска пути
@@ -38,7 +38,7 @@ MaskPathfindingQueryQueue   EQU SizePathfindingQueryQueue - 1                   
 TilemapTableAddress         EQU Page_1.TilemapTableAdr                          ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
 UnitArrayPtr                EQU Page_1.UnitArray                                ; адрес масива юнитов (1024 байта 64 юнита)
 SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
-RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
+RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free (заняты)
 SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
 SizeSelectedBuffer          EQU 32                                              ; размер буфера выделенных юнитов
 MaskSelectedBuffer          EQU SizeSelectedBuffer - 1                          ; маска буфера выделенных юнитов

@@ -11,7 +11,7 @@
 Map:
                 include "Map.asm"
 .End
-                FMap #CCCC, TilemapTableAddress, {64, 64}, {0, 0}, WaypointArrayPtr, Behavior.Begin, AnimationTurnUp.Begin, AnimationTurnDown.Begin, AnimationMove.Begin, UnitArrayPtr, #0000, SurfacePropertyPtr
+                FMap #CCCC, TilemapTableAddress, {64, 64}, {0, 0}, WaypointArrayPtr, Behavior.Begin, AnimationTurnUp.Begin, AnimationTurnDown.Begin, AnimationMove.Begin, UnitArrayPtr, #0000, SurfacePropertyPtr         
 Behavior.Begin:
                 include "../Behavior/Include.inc"
 Behavior.End:

@@ -10,4 +10,7 @@ PATHFINDING_REQUEST_AI_FLAG     EQU 0x10                                        
 ACTIVATE_PAUSE_MENU_GAME_FLAG   EQU 0x08                                        ; флаг активации пауза игры
 SHOW_PAUSE_MENU_GAME_FLAG       EQU 0x04                                        ; отображается меню паузы игры
 
+
+PATHFINDING_ACTIVE_FLAG         EQU 0x01                                        ; не закончен поиск пути для текущего юнита
+
                                 endif ; ~_GAME_PLAY_FLAGS_INCLUDE_

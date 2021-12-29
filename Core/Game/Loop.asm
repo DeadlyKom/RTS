@@ -265,10 +265,10 @@ GameLoop:
                 JR Z, .MainLoop
                 ; ~ PAUSE MENU GAME
 
-.PathFinding    ; ********* PATH FINDING *********
-                CheckGameplayFlag PATHFINDING_FLAG
-                CALL Z, Pathfinding.Begin
-                ; ~ PATH FINDING
+; .PathFinding    ; ********* PATH FINDING *********
+;                 CheckGameplayFlag PATHFINDING_FLAG
+;                 CALL Z, Pathfinding.Begin
+;                 ; ~ PATH FINDING
 
 .RenderBegin    CheckFrameFlag SWAP_SCREENS_FLAG
                 JR Z, .MainLoop
@@ -340,6 +340,11 @@ GameLoop:
 
                 CheckAIFlag (AI_UPDATE_FLAG | GAME_PAUSE_FLAG)
                 CALL Z, AI.Handler
+
+.PathFinding    ; ********* PATH FINDING *********
+                ; CheckGameplayFlag PATHFINDING_FLAG
+                CALL Pathfinding.Begin
+                ; ~ PATH FINDING
                 
                 JP .MainLoop
 

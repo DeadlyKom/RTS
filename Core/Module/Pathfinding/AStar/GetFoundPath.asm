@@ -115,7 +115,8 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
 
 .NextWaypoint   EX AF, AF'
                 DEC A
-                RET Z
+                ; RET Z
+                JR Z, .Finish
                 EX AF, AF'
 
                 POP DE
@@ -131,6 +132,9 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
                 LD H, #00
                 ADD HL, SP
                 LD SP, HL
+                ; RET
+
+.Finish         SetGameplayFlag PATHFINDING_ACTIVE_FLAG                         ; обработка юнита закончилась
                 RET
 
                 endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_GET_FOUND_PATH_

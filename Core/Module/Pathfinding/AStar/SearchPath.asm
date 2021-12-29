@@ -10,12 +10,18 @@
 ; -----------------------------------------
 SearchPath:     ; ---------------------------------------------
                 ; preparation before initialization
-                ; ---------------------------------------------
-                SetFrameFlag (SWAP_SCREENS_FLAG | RENDER_FINISHED)              ; сбросить переключение экрана,
-                                                                                ; с последующим перерисованием первого экрана
-                                                                                ; запрещает обновление данных на экране (при скролле)
+                ; ; ---------------------------------------------
+                ; SetFrameFlag (SWAP_SCREENS_FLAG | RENDER_FINISHED)              ; сбросить переключение экрана,
+                ;                                                                 ; с последующим перерисованием первого экрана
+                ;                                                                 ; запрещает обновление данных на экране (при скролле)
 
-                CALL Memory.SetPage1                                            ; включить страницу
+                ResetGameplayFlag PATHFINDING_ACTIVE_FLAG                       ; обработка юнита началась
+
+                ; сохраним текущий фрейм
+                LD A, (TickCounterRef)
+                LD (Step.LastFrame), A
+
+                ; CALL Memory.SetPage1                                            ; включить страницу
 
                 ; clear temp buffer
                 LD DE, #0000
@@ -62,7 +68,7 @@ SearchPath:     ; ---------------------------------------------
                 CALL SearchWindow
 
                 ; return address after completion of 'AddToOpenList' function
-                LD HL, .Complite
+                LD HL, Step
                 PUSH HL
 
                 ; preparation of arguments
@@ -98,10 +104,10 @@ SearchPath:     ; ---------------------------------------------
                 
                 JP AddToOpenList.First
 
-.Complite       CALL Step
+; .Complite       JP Step
 
-                CALL Tilemap.ForceScreen                                        ; обновление экранов
+                ; CALL Tilemap.ForceScreen                                        ; обновление экранов
 
-                RET
+                ; RET
 
                 endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_SEARCH_PATH_
