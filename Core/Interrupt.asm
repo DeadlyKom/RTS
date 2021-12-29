@@ -4,16 +4,16 @@
 
                     module Interrupt
 FOW_Ref             EQU 50
-InterruptStackSize  EQU 64 * 2                                      ; not change
-InterruptStack:     DS InterruptStackSize, 0                        ; not change
+InterruptStackSize  EQU 64 * 2                                                  ; not change
+InterruptStack:     DS InterruptStackSize, 0                                    ; not change
 Handler:            ; ********** HANDLER IM 2 *********
                     EX (SP), HL
                     LD (.ReturnAddress), HL
-                    POP HL                                          ; restore HL value
-                    LD (.Container_SP), SP                          ; save original SP pointer
+                    POP HL                                                      ; restore HL value
+                    LD (.Container_SP), SP                                      ; save original SP pointer
 .RestoreRegister    EQU $
-                    NOP                                             ; restore corrupted bytes below SP (PUSH HL/DE/BC)
-                    LD SP, InterruptStack + InterruptStackSize      ; use custom stack for IM2
+                    NOP                                                         ; restore corrupted bytes below SP (PUSH HL/DE/BC)
+                    LD SP, InterruptStack + InterruptStackSize                  ; use custom stack for IM2
 
 .SaveRegs           ; ********* SAVE REGISTERS ********
                     PUSH HL
@@ -127,6 +127,11 @@ Handler:            ; ********** HANDLER IM 2 *********
                     INC HL
                     LD B, (HL)
                     CALL Console.Logb
+                    LD BC, #02E0 + 6
+                    CALL Console.At2
+                    LD BC, #FADF
+                    IN B, (C)
+                    CALL Console.Logb
                     endif
 .SkipShowMousePos   ; ~ DRAW DEBUG MOUSE POSITION
 .OffsetTilemap      ; ****** DRAW OFFSET TILEMAP *****
@@ -221,6 +226,10 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .TimeOfDay          ; ********* TIME OF DAY **********
                     ifdef ENABLE_TIME_OF_DAY
+
+                    CheckGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG                 ; пропустим если активирована пауза игры
+                    JR Z, .SkipTimeOfDay
+
                     LD HL, (TimeOfDay)
                     DEC HL
                     LD (TimeOfDay), HL
@@ -230,7 +239,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     
                     LD HL, TimeOfDayChangeRate
                     LD (TimeOfDay), HL
-                    CALL BackgroundFill
+                    CALL NextDay
 .SkipTimeOfDay      
                     endif
                     ; ~ TIME OF DAY

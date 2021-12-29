@@ -9,8 +9,8 @@
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-BackgroundFill: ;
-.ContainerHL    EQU $+1
+NextDay:        ;
+.PostPaper      EQU $+1
                 LD HL, .PaperTable
                 PUSH HL
 
@@ -32,7 +32,7 @@ BackgroundFill: ;
                 LD HL, #C000 + #1800 + #0300
                 CALL MEMSET.SafeFill_768
 
-                ; заполнени 1 экрана
+                ; заполнени 2 экрана
                 CALL Memory.SetPage7
                 LD HL, #C000 + #1800 + #0300
                 CALL MEMSET.SafeFill_768
@@ -56,10 +56,12 @@ BackgroundFill: ;
                 LD (.Check), HL
 
 .SkipRevert     EX DE, HL
+
+                LD (RefreshDay.PrePaper), HL
                 
 .Next           EQU $
                 INC HL
-                LD (.ContainerHL), HL
+                LD (.PostPaper), HL
 
                 RET
 
@@ -72,5 +74,33 @@ BackgroundFill: ;
                 ZX_COLOR_IPB BLACK, BLUE, 0
                 ZX_COLOR_IPB BLACK, BLUE, 0
 .PaperTableEnd  EQU $-1
+
+RefreshDay:     ; обновить цвет
+.PrePaper       EQU $+1
+                LD HL, NextDay.PaperTable
+                LD E, (HL)
+                LD D, E
+
+                LD A, E
+                RRA
+                RRA
+                RRA
+                AND %00000111
+                CP WHITE
+                JR NZ, $+4
+                LD A, BLACK
+                OUT (#FE), A
+
+                ; заполнени 1 экрана
+                CALL Memory.SetPage5
+                LD HL, #C000 + #1800 + #0300
+                CALL MEMSET.SafeFill_768
+
+                ; заполнени 2 экрана
+                CALL Memory.SetPage7
+                LD HL, #C000 + #1800 + #0300
+                CALL MEMSET.SafeFill_768
+
+                RET
 
                 endif ; ~_CORE_DISPLAY_BACKGROUND_FILL_

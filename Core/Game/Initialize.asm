@@ -56,7 +56,7 @@ Initialize:             ; initialize
                         endif
 
                         ; initialize background
-                        CALL BackgroundFill
+                        CALL NextDay
 
                         ifdef ENABLE_FILL_FOW
                         CALL Tilemap.FillFog

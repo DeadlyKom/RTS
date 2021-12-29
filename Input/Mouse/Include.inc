@@ -16,6 +16,7 @@ BOTTOM_EDGE     EQU 0x08
 SVK_LBUTTON     EQU %00000001
 SVK_RBUTTON     EQU %00000010
 SVK_MBUTTON     EQU %00000100
+SVK_BUTTON_MASK EQU SVK_LBUTTON | SVK_RBUTTON | SVK_MBUTTON
 
                 include "Initialize.asm"
                 include "CheckKeyState.asm"

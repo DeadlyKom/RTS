@@ -93,31 +93,26 @@ InputJoyMode:       JR NZ, .Processing              ; skip released
                     JR .NotProcessing
 
                     ; ***********************
-Show:               ResetGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG         ; пауза меню отображается
-                    SetGameplayFlag ACTIVATE_PAUSE_MENU_GAME_FLAG       ; сброс запроса активации отобразить меню 
-                    ; GetCurrentScreen
-                    ; LD A, MemoryPage_ShadowScreen
-                    ; JR Z, $+4
-                    ; LD A, MemoryPage_MainScreen
-                    ; LD (Hide.Screen), A
-                    ; CALL Memory.SetPage                                 ; SeMemoryPage_A GAME_PAUSE_MENU_ID
+Show:               ResetGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG                 ; пауза меню отображается
+                    SetGameplayFlag ACTIVATE_PAUSE_MENU_GAME_FLAG               ; сброс запроса активации отобразить меню 
+
+                    LD A, BLACK
+                    OUT (#FE), A
+
+                    ;
                     CALL Memory.InvScrPageToC000
                     CALL FadeoutScreen
-                    ; CALL Console.ShadowScreen       ; switch screen log
+                    ; 
+                    LD HL, #C000 + #1800 + #0300
+                    LD DE, #3838
+                    CALL MEMSET.SafeFill_768
+
                     CALL DrawGamePause
                     SwapScreens
                     RET
 Hide:               CALL Tilemap.ForceScreen
-; .Screen             EQU $+1
-;                     LD A, #00
-                    CALL Memory.ScrPageToC000
-                    ; SwapScreens
-                    ;
-                    LD HL, #C000 + #1800 + #0300
-                    LD DE, #3838
-                    CALL MEMSET.SafeFill_768
-                    ;
-                    SetGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG           ; выключение
+                    CALL RefreshDay                                             ; востановить значение суток
+                    SetGameplayFlag SHOW_PAUSE_MENU_GAME_FLAG                   ; выключение
                     RET
 
 FadeoutScreen:      LD HL, #C000

@@ -4,14 +4,15 @@
 
 ; -----------------------------------------
 ; In :
-;   A - virtual code
+;   A  - virtual code
 ;   HL - return address
 ; Out :
 ;   if the mouse button is pressed, Z flag is reset
 ; Corrupt :
 ;   BC, AF
 ; -----------------------------------------
-CheckKeyState:      LD BC, #FADF
+CheckKeyState:      AND SVK_BUTTON_MASK
+                    LD BC, #FADF
                     IN C, (C)
                     AND C
                     JP (HL)
