@@ -31,15 +31,9 @@ Unit:           ; определение адреса добавления но�
                 LD (IX + FUnitState.State), E
 
                 ; рандом направления
-                LD A, R
-                LD D, A
-.Rand           EQU $+1
-                AND %01010101
-                LD A, (.Rand)
-                RRCA
-                XOR D
-                RLA
-                LD (.Rand), A
+                EXX
+                CALL Utils.Math.Rand8
+                EXX
 
                 LD (IX + FUnitState.Direction), A
                 XOR A
