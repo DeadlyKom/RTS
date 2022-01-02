@@ -2,12 +2,10 @@
                 ifndef _CORE_MODULE_UNIT_DRAW_PATH_
                 define _CORE_MODULE_UNIT_DRAW_PATH_
 
-; DE = FUnitState   (1)
+; DE = FUnit   (1)
 DrawPath:       LD IXH, D
                 LD IXL, E
-                INC IXH                                             ; FSpriteLocation     (2)
-                INC IXH                                             ; FUnitTargets      (3)
-                BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
+                BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; бит валидности Way Point
                 RET Z
 
                  ; ---------------------------------------------
@@ -46,10 +44,8 @@ DrawPath:       LD IXH, D
                 EX AF, AF'
                 LD E, A
 
-                DEC IXH                                             ; FSpriteLocation     (2)
-
                 ; A = LyS - VyS
-                LD A, (IX + FSpriteLocation.TilePosition.Y)
+                LD A, (IX + FUnit.Position.Y)
                 SUB (HL)
 
                 ADD A, A
@@ -58,13 +54,13 @@ DrawPath:       LD IXH, D
                 ADD A, A
                 ADD A, A
 
-                ADD A, (IX + FSpriteLocation.OffsetByPixel.Y)
+                ADD A, (IX + FUnit.Offset.Y)
                 EX AF, AF'
 
                 DEC L                                               ; HL = TilemapOffsetWidth
 
                 ; A = LxS - VxS
-                LD A, (IX + FSpriteLocation.TilePosition.X)
+                LD A, (IX + FUnit.Position.X)
                 SUB (HL)
 
                 ADD A, A
@@ -73,7 +69,7 @@ DrawPath:       LD IXH, D
                 ADD A, A
                 ADD A, A
 
-                ADD A, (IX + FSpriteLocation.OffsetByPixel.X)
+                ADD A, (IX + FUnit.Offset.X)
                 
                 LD L, A
                 EX AF, AF'
@@ -83,7 +79,7 @@ DrawPath:       LD IXH, D
                 ;   DE  - (D - y, E - x) end point      (E)
                 CALL Memory.SetPage7
                 CALL DrawLine
-                CALL Memory.SetPage1
+                SET_PAGE_UNITS_ARRAY
 
                 RET
 

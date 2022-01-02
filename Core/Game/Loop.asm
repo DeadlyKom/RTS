@@ -2,10 +2,11 @@
                 ifndef _CORE_GAME_LOOP_
                 define _CORE_GAME_LOOP_
 GameLoop:       
-                ; add unit
-                CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, DRAFT_INIT_ID
-
                 ; JR $
+                ; add unit
+                SET_PAGE_UNITS_ARRAY
+
+                
 
                 ;
                 CALL Utils.WaypointsSequencer.Create
@@ -38,7 +39,7 @@ GameLoop:
 
                 ; JR$
 
-                LD A, 60
+                LD A, 1
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
@@ -160,7 +161,7 @@ GameLoop:
                 endif
 
                 CheckAIFlag (AI_UPDATE_FLAG | GAME_PAUSE_FLAG)
-                CALL Z, AI.Handler
+                CALL Z, AI.Behavior
                 
                 JP .MainLoop
 

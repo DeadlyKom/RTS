@@ -3,7 +3,7 @@
                 define _CORE_MODULE_ANIMATION_BLAND_TURN_
 
 ; -----------------------------------------
-; rotation of the bottom of the object/the whole object
+; бленд вращение нижней части/всего объекта
 ; In:
 ;   A  - направление поворота (-1/1)
 ;   C  - текущий поворот
@@ -13,26 +13,12 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-TurnDown:       ;
-                LD B, A                                                         ; B - направление поворота (-1/1)
-                
+TurnDown:       ; B - направление поворота (-1/1)
+                LD B, A
+
                 ; получение адреса анимации поворота для текущего типа юнита
                 LD HL, (AnimTurnDownTableRef)
-                LD A, (IX + FUnitState.Type)                                    ; A = Type
-                AND %00011111
-                ADD A, A
-                ADD A, L
-                LD L, A
-                JR NC, $+3
-                INC H
-
-                ; чтение адреса
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                EX DE, HL
-
-                INC IXH                                                         ; FSpriteLocation     (2)
+                CALL Utils.GetAdrInTable
 
                 ;
                 CALL Utils.Surface.GetPassability
@@ -43,19 +29,16 @@ TurnDown:       ;
 
                 ; HL - указывает на текущий FAnimation
                 LD D, (HL)
-
-                INC IXH                                                         ; FUnitTargets      (3)
-                INC IXH                                                         ; FUnitAnimation    (4)
    
                 ; проверка на инициализацию счётчика после перемещения
-                BIT FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)
+                BIT FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 JR NZ, .Init
 
                 ; проверка на первичную инициализацию (мб вообще убрать её!)
-                LD E, (IX + FUnitAnimation.CounterDown)                         ; получим значение текущего счётчика
+                LD E, (IX + FUnit.CounterDown)                                  ; получим значение текущего счётчика
                 LD A, E
-                AND %00011111
-                JR Z, .Init
+                AND FUAF_COUNT_DOWN_MASK
+                JR Z, .Init                                                     ; счётчик равен нулю, проинициализируем его
 
                 ; проверка изменения направления поворота
                 LD A, B                                                         ; A - направление поворота (-1/1)
@@ -65,7 +48,7 @@ TurnDown:       ;
                 
                 ; обрежим счётчик
                 LD A, E
-                AND %00011111
+                AND FUAF_COUNT_DOWN_MASK
                 LD E, A
 
                 ; вычислим сколько прошло от предыдущей анимациии
@@ -89,19 +72,13 @@ TurnDown:       ;
 .Set            ;JR$
                 LD B, A
                 LD A, %01100000
-                AND (IX + FUnitAnimation.CounterDown)
+                AND (IX + FUnit.CounterDown)
                 OR B
-                LD (IX + FUnitAnimation.CounterDown), A                         ; сохраним значение
-
-.Exit           ; завершение работы
-                DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation   (2)
-                DEC IXH                                                         ; FUnitState        (1)
-
+                LD (IX + FUnit.CounterDown), A                                  ; сохраним значение
                 RET
 
-.Init           ; сброс бита принадлежности CounterDown (0 - поворот, 1 - перемещение)
-                RES FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)
+.Init           ; сброс бита принадлежности
+                RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 
                 ; установка нового счётчика анимации
                 LD A, (HL)                                                      ; A - новый счётчик
@@ -140,12 +117,7 @@ TurnDown:       ;
                 RL E
                 RRA
                 OR D
-                LD (IX + FUnitAnimation.CounterDown), A                         ; сохраним значение
-
-                ; завершение работы
-                DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation   (2)
-                DEC IXH                                                         ; FUnitState        (1)
+                LD (IX + FUnit.CounterDown), A                                  ; сохраним значение
 
                 ; меняем спрайт
                 LD A, B                                                         ; A - направление поворота (-1/1)
@@ -155,10 +127,10 @@ TurnDown:       ;
                 ADD A, A
                 ADD A, A
                 LD C, A
-                LD A, (IX + FUnitState.Direction)
+                LD A, (IX + FUnit.Direction)
                 AND %11000111
                 OR C
-                LD (IX + FUnitState.Direction), A
+                LD (IX + FUnit.Direction), A
 
                 ; A - номер юнита
                 LD A, IXL

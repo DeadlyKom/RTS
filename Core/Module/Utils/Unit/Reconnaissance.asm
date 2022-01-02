@@ -3,9 +3,16 @@
                 define _CORE_MODULE_UTILS_RECONNAISSANCE_
 
                 module Tilemap
-; IX - FSpriteLocation (2)
-Reconnaissance: LD E, (IX + FSpriteLocation.TilePosition.X)
-                LD D, (IX + FSpriteLocation.TilePosition.Y)
+; -----------------------------------------
+; рекогносцировка
+; In:
+;   IX - указывает на структуру FUnit
+; Out:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+Reconnaissance: LD DE, (IX + FUnit.Position)
                 
                 ; кламп сверху
                 LD A, D         ; D = Y
@@ -34,7 +41,7 @@ Reconnaissance: LD E, (IX + FSpriteLocation.TilePosition.X)
                 XOR A
                 LD C, A         ; C - левый X
 
-                 ; кламп справа
+                ; кламп справа
                 LD A, (TilemapWidth)
                 LD L, A         ; L = ширина карты
 
@@ -52,7 +59,7 @@ Reconnaissance: LD E, (IX + FSpriteLocation.TilePosition.X)
                 ; ---------------------
 
                 LD L, D
-                LD A, (TilemapTableHighAddressRef)
+                LD A, HIGH TilemapTableAddress
                 LD H, A
                 LD A, (HL)
                 INC H

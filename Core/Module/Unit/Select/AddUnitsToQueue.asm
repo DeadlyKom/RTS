@@ -10,7 +10,8 @@
 ; Note:
 ; -----------------------------------------
 AddToQueue:     ; выставим необходимую страничку
-                CALL Memory.SetPage1
+                ; CALL Memory.SetPage1
+                SET_PAGE_UNITS_ARRAY
 
                 ; опредлим выбраны ли юниты
                 LD A, (NumberSelectedUnitRef)

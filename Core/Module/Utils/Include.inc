@@ -10,6 +10,7 @@
                 include "Unit/Reconnaissance.asm"
                 include "Unit/TurnDown.asm"
                 include "Unit/GetScreenAABB.asm"
+                include "Unit/GetAddressInTable.asm"
 
                 ; convert
                 include "Convert/ToTilemap.asm"

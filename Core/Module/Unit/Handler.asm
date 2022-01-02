@@ -10,7 +10,8 @@
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
 Handler:        ; включить страницу
-                CALL Memory.SetPage1
+                ; CALL Memory.SetPage1
+                SET_PAGE_UNITS_ARRAY
 
                 ; инициализация
                 ifdef SHOW_VISIBLE_UNITS
@@ -24,7 +25,7 @@ Handler:        ; включить страницу
                 JP Z, .Exit
                 LD (.ProcessedUnits), A
 
-                LD DE, (UnitArrayRef)
+                LD DE, UnitArrayPtr
 
                 ifndef ENABLE_FORCE_DRAW_UNITS
                 ; проверка на перерисовку всех юнитов принудительно
@@ -92,7 +93,8 @@ Handler:        ; включить страницу
                 CALL Sprite.Draw
 
                 ; включить страницу 
-                CALL Memory.SetPage1
+                ; CALL Memory.SetPage1
+                SET_PAGE_UNITS_ARRAY
 
                 POP DE                                                          ; restore address UnitsArray
                 PUSH DE
@@ -124,7 +126,8 @@ Handler:        ; включить страницу
                 LD (DrawRectangle.Start + 1), A
                 CALL Memory.SetPage7
                 CALL DrawRectangle.Custom
-                CALL Memory.SetPage1
+                ; CALL Memory.SetPage1
+                SET_PAGE_UNITS_ARRAY
                 POP DE                                                          ; restore address UnitsArray
                 PUSH DE
                 endif
@@ -139,7 +142,8 @@ Handler:        ; включить страницу
                 ; всё же, спрайт за пределами экрана
                 ; ---------------------------------------------
                 ; включить страницу 
-                CALL Memory.SetPage1
+                ; CALL Memory.SetPage1
+                SET_PAGE_UNITS_ARRAY
 
                 POP DE
 

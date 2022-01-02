@@ -21,7 +21,7 @@ InitSelected:   ; получим значение из очереди
                 LD (FoundPathToUnitRef), A
 
                 ; расчёт адреса структуры FUnitState.State необходимого юнита
-                LD HL, (UnitArrayRef)                                           ; HL = FUnitState.State             (1)
+                LD HL, UnitArrayPtr                                             ; HL = FUnitState.State             (1)
                 ADD A, L
                 LD L, A
                 

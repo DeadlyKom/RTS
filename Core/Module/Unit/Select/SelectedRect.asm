@@ -16,7 +16,8 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 LD (.ProcessedUnits), A
 
                 ; включить страницу
-                CALL Memory.SetPage1
+                ; CALL Memory.SetPage1
+                SET_PAGE_UNITS_ARRAY
 
                 ; single selected
                 LD HL, SelectRectStartRef
@@ -128,7 +129,7 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
 
                 ;
                 LD HL, .ProcessedUnits
-                LD DE, (UnitArrayRef)
+                LD DE, UnitArrayPtr
                 INC D                                                           ; FSpriteLocation
 
 .Loop           EX DE, HL

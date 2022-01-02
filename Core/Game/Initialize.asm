@@ -2,7 +2,9 @@
                         ifndef _CORE_GAME_INITIALIZE_
                         define _CORE_GAME_INITIALIZE_
 
-Initialize:             ; initialize
+Initialize:             CALL LoadMap                                            ; загрузим карту
+
+                        ; инициализация переменных
                         SetAllHardwareFlags                     ;
                         ; ResetHardwareFlag KEMPSTON_JOY_BUTTON_3               ; включить джойстик SEGA
                         ; ResetHardwareFlag KEYBOARD_WASD_QAOP                  ; включить WASD управление
@@ -28,7 +30,7 @@ Initialize:             ; initialize
                         LD (AI_UpdateFrequencyRef), A
 
                         CALL Interrupt.Initialize
-                        CALL Tilemap.Initialize
+                        ; CALL Tilemap.Initialize
                         CALL Utils.Waypoint.Init                                ; initialize array waypoints
                         CALL Utils.WaypointsSequencer.Init                      ; initialize bitmap waypoints
                         CALL Handlers.Input.Initialize

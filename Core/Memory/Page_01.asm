@@ -4,47 +4,23 @@
 
                 MMU 3, 1
                 ORG Page_1
-                
+
+                ORG FileSystemPtr
+
+                include "../Module/FileSystem/Include.inc"
+                include "../Module/Initialize/Include.inc"
+FileSystem.End:
+
+
                 module MemoryPage_1
 
-                ORG TilemapPtr
-Map:
-                include "Map.asm"
-.End
-                FMap #CCCC, TilemapTableAddress, {64, 64}, {0, 0}, WaypointArrayPtr, Behavior.Begin, AnimationTurnUp.Begin, AnimationTurnDown.Begin, AnimationMove.Begin, UnitArrayPtr, #0000, SurfacePropertyPtr
-Behavior.Begin:
-                include "../Behavior/Include.inc"
-Behavior.End:
-
-Animation.Begin
-                ; ********** ANIMATION TURN UP **********
-AnimationTurnUp.Begin:
-                include "../Animation/AnimationTurnUpTable.inc"
-AnimationTurnUp.End:
-
-                ; ********** ANIMATION TURN DOWN **********
-AnimationTurnDown.Begin:
-                include "../Animation/AnimationTurnDownTable.inc"
-AnimationTurnDown.End:
-
-                ; ********** ANIMATION MOVE **********
-AnimationMove.Begin:
-                include "../Animation/AnimationMoveTable.inc"
-AnimationMove.End:
-Animation.End
-                ORG SurfacePropertyPtr
-Surf:
-.Begin
-                include "Tables/Gameplay/SurfaceProperty.inc"
-.End
-MapSize:        EQU MemoryPage_1.Map.End - TilemapPtr
-
                 endmodule
-; Map_S:          EQU MemoryPage_1.Map.End - MemoryPage_1.Map.Begin
-Behavior_S      EQU MemoryPage_1.Behavior.End - MemoryPage_1.Behavior.Begin
-Animation_S     EQU MemoryPage_1.Animation.End - MemoryPage_1.Animation.Begin
-Surf_S:         EQU MemoryPage_1.Surf.End - MemoryPage_1.Surf.Begin
-Others_S        EQU Behavior_S + Animation_S + Surf_S
-SizePage_1:     EQU UnitArrayPtr - Page_1
+
+; Map_S:          EQU MemoryPage_1.Map.End - MemoryPage_1.Map
+; Surf_S:         EQU MemoryPage_1.Surface.End - MemoryPage_1.Surface
+
+FileSystem_S    EQU FileSystem.End - FileSystemPtr
+StartPage_1     EQU FileSystemPtr
+SizePage_1:     EQU FileSystem_S
 
                 endif ; ~_CORE_MEMORY_PAGE_01_

@@ -8,7 +8,6 @@
                 include "Background.asm"
                 include "FogOfWar.asm"
                 include "TileUpdate.asm"
-                include "GenerateTilemapTableAddress.asm"
 
                 endmodule
 

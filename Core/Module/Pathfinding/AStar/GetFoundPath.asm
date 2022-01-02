@@ -104,7 +104,7 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
                 JR C, $
 
                 ; инициализация юнита
-                LD HL, (UnitArrayRef)
+                LD HL, UnitArrayPtr
                 LD A, L
 .UnitIdx        EQU $+1
                 ADD A, #00

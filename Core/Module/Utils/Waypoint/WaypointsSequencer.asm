@@ -93,18 +93,18 @@ AddWaypoint:        ; ---------------------------------------------
                     RET
 ; -----------------------------------------
 ; In:
-;   IX - FUnitTargets           (3)
+;   IX - указывает на структуру FUnit
 ; Out:
 ;   DE - waypoint location (tile center) (D - y, E - x)
 ; Corrupt:
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetCurrentWaypoint: LD A, (IX + FUnitTargets.Data)
+GetCurrentWaypoint: LD A, (IX + FUnit.Data)
                     AND FUTF_MASK_OFFSET
                     ADD A, HIGH WaypointsSequencePtr
                     LD H, A
-                    LD L, (IX + FUnitTargets.Idx)
+                    LD L, (IX + FUnit.Idx)
                     LD L, (HL)
 
                     LD A, (HighWaypointArrayRef)
@@ -119,7 +119,7 @@ GetCurrentWaypoint: LD A, (IX + FUnitTargets.Data)
 ; -----------------------------------------
 ; get the last waypoint into an array
 ; In:
-;   IX - FUnitTargets           (3)
+;   IX - указывает на структуру FUnit
 ; Out:
 ;   HL - pointer to waypoint location (tile center)
 ; Corrupt:
@@ -127,13 +127,13 @@ GetCurrentWaypoint: LD A, (IX + FUnitTargets.Data)
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetLastWaypoint:    LD A, (IX + FUnitTargets.Data)
+GetLastWaypoint:    LD A, (IX + FUnit.Data)
                     AND FUTF_MASK_OFFSET
                     LD B, A
                     INC B
                     ADD A, HIGH WaypointsSequencePtr
                     LD H, A
-                    LD L, (IX + FUnitTargets.Idx)
+                    LD L, (IX + FUnit.Idx)
 
 .NextIndex          LD A, (HL)
                     OR A
@@ -170,7 +170,7 @@ GetLastWaypoint:    LD A, (IX + FUnitTargets.Data)
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-AddUnit:            LD HL, (UnitArrayRef)
+AddUnit:            LD HL, UnitArrayPtr
                     ; ADD A, A
                     ; ADD A, A
                     ADD A, L

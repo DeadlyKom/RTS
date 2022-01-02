@@ -20,7 +20,6 @@ Generate:       ;
 
                 LD A, B
                 LD B, #00
-                ; LD HL, #0000
 
 .Loop           EX DE, HL
                 LD (HL), E

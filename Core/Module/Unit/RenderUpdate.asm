@@ -11,7 +11,8 @@
 ; -----------------------------------------
 RefUnitOnScr:   ; включить страницу
                 EX AF, AF'
-                CALL Memory.SetPage1
+                ; CALL Memory.SetPage1
+                SET_PAGE_UNITS_ARRAY
                 EX AF, AF'
 
                 ; определение AABB выбранного юнита

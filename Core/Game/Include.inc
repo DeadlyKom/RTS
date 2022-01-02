@@ -6,10 +6,13 @@
 
                     include "EntryPoint.asm"
                     include "Initialize.asm"
+                    include "LoadMap.asm"
                     include "Loop.asm"
                     include "Music.asm"
+
+
 ; TilemapAddress:     DW #0000
-AddressTable:       DW #0000
+; AddressTable:       DW #0000
 SurfacePropertyPtr: DW #0000
 WaypointCounter:    DB #00
 WaypointArray:      DW #0000
@@ -24,7 +27,7 @@ BehaviorTable:      DW #0000
 AnimTurnUpTable:    DW #0000
 AnimTurnDownTable:  DW #0000
 AnimMoveTable:      DW #0000
-UnitArray:          DW #0000
+; UnitArray:          DW #0000
 FrameFlags:         DB #00
 GameplayState:      DB #00
 InputState:         DB #00

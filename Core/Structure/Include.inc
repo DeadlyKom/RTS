@@ -7,7 +7,7 @@
                 include "Map.inc"
                 include "Render.inc"
                 include "Sprite.inc"
-                include "UnitInfo.inc"
+                include "Unit.inc"
                 include "Input.inc"
                 include "SurfaceProperty.inc"
                 include "AABBTree.inc"
