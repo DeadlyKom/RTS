@@ -16,9 +16,6 @@ FileSystem.End:
 
                 endmodule
 
-; Map_S:          EQU MemoryPage_1.Map.End - MemoryPage_1.Map
-; Surf_S:         EQU MemoryPage_1.Surface.End - MemoryPage_1.Surface
-
 FileSystem_S    EQU FileSystem.End - FileSystemPtr
 StartPage_1     EQU FileSystemPtr
 SizePage_1:     EQU FileSystem_S

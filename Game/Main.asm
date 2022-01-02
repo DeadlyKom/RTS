@@ -41,7 +41,7 @@
                 include "../Core/Structure/Include.inc"
                 include "Include.inc"
                 include "../Core/Memory/Include.inc"
-                include "../Game/Maps/Include.inc"
                 include "../Core/Builder.asm"
+                include "../Game/Maps/Include.inc"
 
                 endif ; ~_GAME_MAIN_

@@ -3,6 +3,8 @@
                     define _STRUCTURE_MAP_
 
                     struct FMap
+FileName            TEXT 8 , {"", 32}                                           ; имя карты на диске
+Extension           DB 'M'                                                      ; расширение файла
 Size                FMapSize 0, 0                                               ; размер карты
 StartLocation       FLocation 0, 0                                              ; координаты центра экрана
 BehaviorTable       DW #0000                                                    ; адрес таблицы поведения

@@ -18,7 +18,7 @@ Basic:                  DB #00, #0A                                             
 StartBoot:              DI
                         ; отключение 128 бейсика
                         Disable_128k_Basic
-                        LD SP, StackTop
+                        LD SP, StackTopBoot                                     ; установим временный стек
                         ; Чтение данных в 0 страницу
                         SeMemoryPage 0, PAGE_0_ID
                         LD HL, Page_0                                           ; загружаем по адресу Page_0
@@ -28,7 +28,7 @@ StartBoot:              DI
                         CALL #3D13                                              ; переход в TR-DOS
                         ; Чтение данных в 1 страницу
                         SeMemoryPage 1, PAGE_1_ID
-                        LD HL, Page_1                                           ; загружаем по адресу Page_1
+                        LD HL, StartPage_1                                      ; загружаем по адресу Page_1
                         LD DE, (#5CF4)                                          ; загружаем позицию головки дисковода из системной переменн
                         LD B, Size_1                                            ; регистр B содержит кол-во секторов
                         LD C, #05                                               ; регистр С — номер подпрограммы #05 (чтение секторов)
@@ -40,6 +40,7 @@ StartBoot:              DI
                         LD B, Size_2                                            ; регистр B содержит кол-во секторов
                         LD C, #05                                               ; регистр С — номер подпрограммы #05 (чтение секторов)
                         CALL #3D13                                              ; переход в TR-DOS
+                        LD SP, StackTop                                         ; заменим на стек прерывания
                         ; Чтение данных в 3 страницу
                         SeMemoryPage 3, PAGE_3_ID
                         LD HL, Page_3                                           ; загружаем по адресу Page_3
@@ -146,8 +147,6 @@ RealPage1               EQU TilemapMaxSize + SurfecePropertySize + TilemapTableS
                         savetrd  TRD_FILENAME, "Page0.C", Page_0, SizePage_0        ; bank 03
                         page 1
                         savetrd  TRD_FILENAME, "Page1.C", StartPage_1, SizePage_1   ; bank 03
-                        ; page 1
-                        ; savetrd  TRD_FILENAME, "Map 1.C", TileMap, SizePage_1_Map   ; bank 01
                         page 2
                         savetrd  TRD_FILENAME, "Page2.C", Page_2, SizePage_2        ; bank 02
                         page 3
@@ -161,4 +160,4 @@ RealPage1               EQU TilemapMaxSize + SurfecePropertySize + TilemapTableS
                         page 5
                         savetrd  TRD_FILENAME, "Page5.C", Page_5, SizePage_5        ; bank 01
 
-                        labelslist "RTS.l"
+                        labelslist "C:/Work/spectrum/unreal/user.l"

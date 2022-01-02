@@ -8,7 +8,9 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-MapInfo:        ; копирование данных в область переменных
+MapInfo:        
+                ; JR$
+                ; копирование данных в область переменных
                 LD HL, .MapInfoName
                 LD C, TRDOS.SET_NAME
                 CALL TRDOS.EXE_CMD
@@ -17,8 +19,12 @@ MapInfo:        ; копирование данных в область пере
                 LD C, TRDOS.FIND_FILE
                 CALL TRDOS.EXE_CMD
 
-                ; по найденому файлу проинициализируем информацию о расположении файла
+                ; проверка успешного поиска
                 LD A, C
+                CP #FF
+                JR Z, $                                                         ; файл не найден
+
+                ; по найденому файлу проинициализируем информацию о расположении файла 
                 LD C, TRDOS.RD_FILE_INFO
                 CALL TRDOS.EXE_CMD
 
@@ -34,6 +40,6 @@ MapInfo:        ; копирование данных в область пере
 
                 RET
 
-.MapInfoName    BYTE MAP_INFO_FILENAME
+.MapInfoName    BYTE "MapsInfoC"                                                ; MAP_INFO_FILENAME
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_LOAD_MAP_INFO_

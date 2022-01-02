@@ -2,7 +2,8 @@
                         ifndef _CORE_GAME_INITIALIZE_
                         define _CORE_GAME_INITIALIZE_
 
-Initialize:             CALL LoadMap                                            ; загрузим карту
+Initialize:             ; загрузим карту
+                        CALL LoadMap
 
                         ; инициализация переменных
                         SetAllHardwareFlags                     ;

@@ -4,6 +4,7 @@
 
                             ; карта памяти (общая)
 Page_0:                     EQU #C000                                           ; [Bank 03]
+
 Page_1:                     EQU #C000                                           ; [Bank 03]
 Page_1.UnitArray            EQU Page_1                                          ; [Bank 03] адресс массива юнитов
 Page_1.SurfaceProperty      EQU Page_1.UnitArray + TilemapMaxSize               ; [Bank 03] адрес свойст тайлов 128 байт                                            [128] free
@@ -14,9 +15,10 @@ Page_2:                     EQU #8000                                           
 Page_2.SharedBuffer         EQU #BD00                                           ; Bank 02 (адрес общего буфера)                     - 256 байт
 Page_2.RenderBuffer         EQU #BE00                                           ; Bank 02 (адрес буфера обновлений)                 - 192 байта                     [64] заняты буфером выбора и WayPoint'ами
 Page_2.TilemapBuffer        EQU #BF00                                           ; Bank 02 (адрес тайловой карты буфера)             - 256 байт
+
 Page_3:                     EQU #C000                                           ; Bank 03
 Page_4:                     EQU #C000                                           ; Bank 03
-Page_5:                     EQU #4000 + #1B00 + #0225                           ; Bank 01 (Screen 0) (пропуск экрана и 0x225 байт данных для TR DOS)
+Page_5:                     EQU #4000 + #1B00 + #0300                           ; Bank 01 (Screen 0) (пропуск экрана и 0x300 байт данных для TR DOS)
 Page_5.PathfindingBuffer    EQU #4000                                           ; Bank 01 (Screen 0) (временный массив)             - размер константа PFWinBufSize
 Page_5.PathfindingOLBuffer  EQU #4A00                                           ; Bank 01 (Screen 0) (временный массив)             - максимальный размер 512 байт
 Page_6:                     EQU #C000                                           ; Bank 03

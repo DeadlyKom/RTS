@@ -34,6 +34,6 @@ MapData:        ; копирование данных в область пере
 
                 RET
 
-.MapName        BYTE MAP_FILENAME
+.MapName        BYTE "Map     C"                                                ; MAP_FILENAME
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_LOAD_MAP_DATA_

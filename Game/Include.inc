@@ -21,25 +21,17 @@
                             define BUILD 1
 
                             define TRD_FILENAME "Torn Metal.trd"                ; имя образа TRD
-                            define MAP_INFO_FILENAME "MapInfo.C"                ; имя файла информации о карте
+                            define MAP_INFO_FILENAME "MapsInfo.C"               ; имя файла информации о карте
                             define MAP_FILENAME "Map.C"                         ; имя файла карте
-StackTop                    EQU #5BFB                                           ; расположение стека
+StackTopBoot                EQU PORT_7FFD                                       ; расположение стека
+StackTop                    EQU Interrupt.StackTop
 MemoryPageRef               EQU PORT_7FFD;                                      ; адрес хранения номера странички
-BorderStorageStackRef       EQU #5BFF                                           ; адрес бубера хранения цвета бордера
 InterruptVectorAddress      EQU #8181                                           ; адрес вектора прерывания
 
 ; file system
 FileSystemPtr               EQU Page_1.FileSystemPtr                            ; адрес блока работы с загрузкой/сохранением
 
-; MapStructure                EQU MemoryPage_1.Map.End                            ; адрес структуры карты
-
-; WaypointsSequencePtr        EQU Page_1.WaypointsSequence                        ; адрес последовательностей Way Point'ов (2048 байт)
-; WaypointArrayPtr            EQU Page_1.WaypointArray                            ; адрес массива Way Point'ов (768 байт)
-; PathfindingQueryQueueFirst  EQU SurfacePropertyPtr + 0x80                       ; адрес очереди запросов поиска пути (128 байт)                                     [128]
-; PathfindingQueryQueueLast   EQU SurfacePropertyPtr + 0xFF                       ; адрес очереди запросов поиска пути (128 байт)                                     [128]
-
-; TilemapTableAddress         EQU Page_1.TilemapTableAdr                          ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
-; UnitArrayPtr                EQU Page_1.UnitArray                                ; адрес масива юнитов (1024 байта 64 юнита)
+;
 SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
 RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
 SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
