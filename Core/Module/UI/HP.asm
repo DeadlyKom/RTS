@@ -6,13 +6,13 @@
 ; -----------------------------------------
 ; отрисовка указанного юнита Health Point
 ; In:
-;   IY - указывает на структуру FUnit
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
 Draw:           LD HL, .OffsetByPixel
-                LD BC, (IY + FUnit.Offset)
+                LD BC, (IX + FUnit.Offset)
 
                 LD (HL), C
                 INC L
@@ -48,14 +48,14 @@ Draw:           LD HL, .OffsetByPixel
                 INC HL
                 LD (HL), D
 
-                PUSH IY
+                PUSH IX
                 LD HL, ST_HealthBar_Small
-                LD IY, .OffsetByPixel - FUnit.Offset
+                LD IX, .OffsetByPixel - FUnit.Offset
 
                 CALL Sprite.PixelClipping
                 CALL NC, Sprite.Draw
 
-                POP IY
+                POP IX
 
                 RET
 

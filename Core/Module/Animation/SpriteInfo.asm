@@ -6,7 +6,7 @@
 ; sprite address calculation
 ; In:
 ;   DE - адрес структуры FUnitState                 !!!!!!!
-;   IY - указывает на структуру FUnit
+;   IX - указывает на структуру FUnit
 ; Out:
 ;   HL - указывает на адрес информации о спрайте
 ;   DE - DE + 3                                     !!!!!!
@@ -42,18 +42,18 @@
 ; ----------------------------------------------------------------------------------------
 SpriteInfo:     ; расчёт только нижнего (верхний не учитывается)
                 
-                LD A, (IY + FUnit.State)
+                LD A, (IX + FUnit.State)
                 AND FUSF_MOVE | FUSF_ATTACK
                 LD C, A
 
-                LD A, (IY + FUnit.Direction)
+                LD A, (IX + FUnit.Direction)
                 AND DF_DOWN_MASK
                 OR C
                 ADD A, A        ; << 1
                 ADD A, A        ; << 1
                 LD C, A
                 
-                LD A, (IY + FUnit.Type)
+                LD A, (IX + FUnit.Type)
                 AND IDX_UNIT_TYPE
                 RRA
                 RR C
@@ -69,7 +69,7 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
                 LD C, (HL)
                 INC HL
                 LD B, (HL)
-                LD A, (IY + FUnit.Animation)
+                LD A, (IX + FUnit.Animation)
                 AND %00000011
                 LD L, A
                 LD H, #00

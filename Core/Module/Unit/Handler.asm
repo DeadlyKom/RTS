@@ -24,7 +24,8 @@ Handler:        ; включить страницу
                 JP Z, .Exit
                 LD (.ProcessedUnits), A
 
-                LD IY, UnitArrayPtr
+                ; JR$
+                LD IX, UnitArrayPtr
 
                 ifndef ENABLE_FORCE_DRAW_UNITS
                 ; проверка на перерисовку всех юнитов принудительно
@@ -116,7 +117,7 @@ Handler:        ; включить страницу
                 endif
                 
                 ; отрисовка HP
-                BIT FUSF_SELECTED_BIT, (IY + FUnit.State)                       ; проверка флага FUSF_SELECTED
+                BIT FUSF_SELECTED_BIT, (IX + FUnit.State)                       ; проверка флага FUSF_SELECTED
                 CALL NZ, UI.HP.Draw
 
 .PreNextUnit    ; ---------------------------------------------
@@ -127,7 +128,7 @@ Handler:        ; включить страницу
 
 .NextUnit       ; переход к следующему юниту
                 LD DE, UNIT_SIZE
-                ADD IY, DE
+                ADD IX, DE
 
                 LD HL, .ProcessedUnits
                 DEC (HL)

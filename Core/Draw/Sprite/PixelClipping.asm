@@ -1,18 +1,18 @@
 
-                ifndef _DRAW_SPRITE_PIXEL_CLIPPING_
-                define _DRAW_SPRITE_PIXEL_CLIPPING_
+                ifndef _DRAW_SPRITE_PIYEL_CLIPPING_
+                define _DRAW_SPRITE_PIYEL_CLIPPING_
 
 ; -----------------------------------------
 ; отсечение спрайта экраном (попиксельный)
 ; In:
 ;   HL         - указатель на структуру FSprite
-;   IY         - указывает на структуру FUnit
+;   IX         - указывает на структуру FUnit
 ;   A'         -  PositionY => [0..13]
 ;   .PositionX -  PositionX => [0..17]
 ; Out:
 ;   если флаг переполнения C установлен, объект вне экрана
 ; Corrupt:
-;   HL, DE, BC, AF, HL', DE', BC' AF', IX
+;   HL, DE, BC, AF, HL', DE', BC' AF', IY
 ; Note:
 ;   Lx, Ly   - позиция спрайта (в тайлах)
 ;   Vx, Vy   - позиция видимой области карты (в тайлах)
@@ -34,7 +34,7 @@ PixelClipping:  ; ---------------------------------------------
                 PUSH BC
 
                 ; добавить смещение относительно тайла (Oy + 8)
-                LD A, (IY + FUnit.Offset.Y)
+                LD A, (IX + FUnit.Offset.Y)
                 ADD A, #08                                                      ; A += 8 (можно объеденить с значением 8 в данных спрайта)
 
                 EXX                                                             ; сохраним 
@@ -201,7 +201,7 @@ PixelClipping:  ; ---------------------------------------------
                 PUSH BC
 
                 ; (Ox + 8) добавить смещение относительно тайла
-                LD A, (IY + FUnit.Offset.X)
+                LD A, (IX + FUnit.Offset.X)
                 ADD A, #08                                                      ; A += 8 (можно объеденить с значением 8 в данных спрайта)
 
                 EXX                                                             ; сохраним 
@@ -328,10 +328,10 @@ PixelClipping:  ; ---------------------------------------------
 
                 ; получим адрес метода отрисовки
                 LD A, (HL)
-                LD IXL, A
+                LD IYL, A
                 INC L
                 LD A, (HL)
-                LD IXH, A
+                LD IYH, A
 
                 OR A
                 RET
@@ -397,10 +397,10 @@ PixelClipping:  ; ---------------------------------------------
                 
                 ; получим адрес метода отрисовки
                 LD A, (HL)
-                LD IXL, A
+                LD IYL, A
                 INC L
                 LD A, (HL)
-                LD IXH, A
+                LD IYH, A
                 
                 OR A
                 RET
@@ -474,12 +474,12 @@ PixelClipping:  ; ---------------------------------------------
 
                 ; получим адрес метода отрисовки
                 LD A, (HL)
-                LD IXL, A
+                LD IYL, A
                 INC L
                 LD A, (HL)
-                LD IXH, A
+                LD IYH, A
 
                 OR A
                 RET
 
-                endif ; ~_DRAW_SPRITE_PIXEL_CLIPPING_
+                endif ; ~_DRAW_SPRITE_PIYEL_CLIPPING_
