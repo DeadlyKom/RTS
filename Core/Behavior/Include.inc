@@ -4,7 +4,7 @@
 
                 module AI_Behavior
                 
-                DISP GameModeDataPtr
+                DISP #0000
                 include "BehaviorTable.inc"             ; первая обязательно!
                 include "Solder/Solder.inc"
                 ENT

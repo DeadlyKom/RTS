@@ -3,7 +3,6 @@
                     define _CORE_INTERRUPT_
 
                     module Interrupt
-FOW_Ref             EQU 50
 InterruptStackSize  EQU 64 * 2                                                  ; not change
 InterruptStack:     DS InterruptStackSize, 0                                    ; not change
 InterruptStackTop   EQU InterruptStack + InterruptStackSize
@@ -207,12 +206,6 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CheckFrameFlag RENDER_FINISHED
                     JR NZ, .SkipRenderFinished
                     ; ~ RENDER FINISHED
-                    
-                    LD HL, DeltaRefreshFOW
-                    DEC (HL)
-                    JR NZ, .MoveTilemap
-                    LD (HL), FOW_Ref
-                    ResetFrameFlag FORCE_FOW_FLAG
 
 .MoveTilemap        ; ********* MOVE TILEMAP **********
                     CheckInputFlag SELECTION_RECT_FLAG
@@ -300,7 +293,6 @@ Initialize:         ; **** INITIALIZE HANDLER IM 2 ****
                     RET
                     ; ~ INITIALIZE HANDLER IM 2
 TimeOfDay:          DW TimeOfDayChangeRate
-DeltaRefreshFOW     DB FOW_Ref
 
                     endmodule
 

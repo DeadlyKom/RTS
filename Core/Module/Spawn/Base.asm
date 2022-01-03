@@ -15,14 +15,8 @@
 ;   requires included memory page 1 (MemoryPage_Tilemap)
 ; -----------------------------------------
 Unit:           ; определение адреса добавления нового юнита
-                LD HL, UnitArrayPtr
-                LD A, (AI_NumUnitsRef)
-                ADD A, A
-                ADD A, A
-                ADD A, L
-                LD L, A
-                PUSH HL
-                POP IX
+                LD A, (AI_NumUnitsRef)            
+                CALL Utils.GetAdrUnit
 
                 ; ---------------------------------------------
                 ; FUnitState                                (1)

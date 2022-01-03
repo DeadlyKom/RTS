@@ -67,5 +67,4 @@ MoveDown:       ; получение адреса анимации переме�
                 OR A
                 JR .Set
 
-
                 endif ; ~_CORE_MODULE_ANIMATION_BLAND_MOVE_

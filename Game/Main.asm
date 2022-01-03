@@ -13,7 +13,7 @@
                 define ENABLE_FOW                                               ; разрешить туман войны
                 define ENABLE_CLS                                               ; разрешить очистить 2 экрана перед стартом
                 define ENABLE_FORCE_DRAW_UNITS                                  ; разрешить принудительное обновление унитов
-                ; define ENABLE_FILL_FOW                                          ; разрешить заполнение туманом всю карту
+                define ENABLE_FILL_FOW                                          ; разрешить заполнение туманом всю карту
                 ; define ENABLE_TIME_OF_DAY                                       ; разрешить смену дня и ночи
 
                 ; define SHOW_DEBUG_BORDER                                        ; разрешить отображать на бордюре время выполнение

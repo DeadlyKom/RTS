@@ -150,7 +150,7 @@ GetLastWaypoint:    LD A, (IX + FUnit.Data)
 ; -----------------------------------------
 ; add unit to sequence
 ; In:
-;   A - index unit * 4
+;   A - индекс юнита
 ;   C  - флаги
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
@@ -170,23 +170,15 @@ GetLastWaypoint:    LD A, (IX + FUnit.Data)
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-AddUnit:            LD HL, UnitArrayPtr
-                    ; ADD A, A
-                    ; ADD A, A
-                    ADD A, L
-                    LD L, A
+AddUnit:            ; расчёт смещения по индексу юнита
+                    CALL Utils.GetAdrUnit
 
-.UnitAddressToHL    ; HL - FUnitState (1)
-                    INC H                                                       ; FSpriteLocation     (2)
-                    INC H                                                       ; FUnitTargets      (3)
+.UnitAddressToIX    ; IX - указывает на структуру FUnit
+                    LD (IX + FUnit.Data), C
 
-                    INC L                                                       ; FUnitTargets.WayPoint.Y
-                    INC L                                                       ; FUnitTargets.Data
-                    LD (HL), C
+.IndexSequence      EQU $+3
+                    LD (IX + FUnit.Idx), #00
 
-                    INC L                                                       ; FUnitTargets.Idx
-.IndexSequence      EQU $+1
-                    LD (HL), #00
                     RET
 
 ; -----------------------------------------

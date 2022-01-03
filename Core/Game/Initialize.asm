@@ -63,7 +63,7 @@ Initialize:             ; загрузим карту
 
                         ifdef ENABLE_FILL_FOW
                         CALL Tilemap.FillFog
-                        CALL AI.Handler
+                        CALL AI.Behavior
                         CALL Tilemap.Prepare
                         ResetFrameFlag FORCE_FOW_FLAG
                         endif

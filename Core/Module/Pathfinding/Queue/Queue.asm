@@ -16,6 +16,10 @@
 ;   если индекс имеется в буфере, перенесёт его в конец
 ; -----------------------------------------
 PushUnit:       EX AF, AF'                                                      ; сохраним добавляемый индекс
+
+                ; включим страницу с данными о очереди
+                SET_PAGE_TILEMAP
+
 .NextFree       EQU $+1                                                         ; следующий свободный
                 LD HL, PathfindingQueryQueueLast
 
@@ -127,6 +131,8 @@ PopUnit:        LD A, (PushUnit.CountFree)
                 ADD A, L
                 LD L, A
 
+                ; включим страницу с данными о очереди
+                SET_PAGE_TILEMAP
                 LD A, (HL)
 
                 RET

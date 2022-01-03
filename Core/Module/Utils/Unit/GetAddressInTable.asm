@@ -23,7 +23,8 @@ GetAdrInTable:  LD A, (IX + FUnit.Type)                                         
                 LD E, (HL)
                 INC HL
                 LD D, (HL)
-                EX DE, HL
+                DEC HL
+                ADD HL, DE
                 
                 RET
 

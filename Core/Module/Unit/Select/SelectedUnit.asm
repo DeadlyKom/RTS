@@ -16,25 +16,19 @@ InitSelected:   ; получим значение из очереди
                 JP C, SFX.BEEP.Fail                                             ; буфер оказался пустым ?!
 
                 ; расчёт смещения по индексу юнита
-                ADD A, A
-                ADD A, A
-                LD (FoundPathToUnitRef), A
+                CALL Utils.GetAdrUnit
+                LD (FoundPathToUnitRef), IX
 
-                ; расчёт адреса структуры FUnitState.State необходимого юнита
-                LD HL, UnitArrayPtr                                             ; HL = FUnitState.State             (1)
-                ADD A, L
-                LD L, A
+                ; включить страницу массива юнитов
+                SET_PAGE_UNITS_ARRAY
                 
-                ;
-                BIT FUSF_SELECTED_BIT, (HL)
+                ; проверим что объект выбран
+                BIT FUSF_SELECTED_BIT, (IX + FUnit.State)                       ; объект выбран
                 JP Z,  SFX.BEEP.Fail                                            ; юнит почему то не выбран ?!
-
-                INC H                                                           ; HL = FSpriteLocation.TilePosition.X (2)
                 
                 ; получим координаты тайла юнита
-                LD E, (HL)
-                INC L                                                           ; HL = FSpriteLocation.TilePosition.Y (2)
-                LD D, (HL)
+                LD DE, (IX + FUnit.Position)
+
                 RET
 
                 endif ; ~ _CORE_MODULE_PATHFINDING_SELECTED_UNIT_

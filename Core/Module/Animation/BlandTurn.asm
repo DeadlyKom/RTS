@@ -7,7 +7,7 @@
 ; In:
 ;   A  - направление поворота (-1/1)
 ;   C  - текущий поворот
-;   IX - pointer to FUnitState (1)
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ; Note:
@@ -19,8 +19,6 @@ TurnDown:       ; B - направление поворота (-1/1)
                 ; получение адреса анимации поворота для текущего типа юнита
                 LD HL, (AnimTurnDownTableRef)
                 CALL Utils.GetAdrInTable
-
-                ;
                 CALL Utils.Surface.GetPassability
                 ADD A, L
                 LD L, A
@@ -29,7 +27,7 @@ TurnDown:       ; B - направление поворота (-1/1)
 
                 ; HL - указывает на текущий FAnimation
                 LD D, (HL)
-   
+
                 ; проверка на инициализацию счётчика после перемещения
                 BIT FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 JR NZ, .Init

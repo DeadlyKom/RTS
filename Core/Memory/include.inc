@@ -32,15 +32,14 @@ Page_7.TileSprites:         EQU #F000                                           
 
 
 ; file system
-FileSystemPage              EQU 1                                               ; страницы файловой системы
 TilemapPage                 EQU 1                                               ; страница тайловой карты
+FileSystemPage              EQU 1                                               ; страницы файловой системы
+SetMemPage_Tilemap          EQU Memory.SetPage1                                 ; страница тайловой карты
 SetMemPage_FileSystem       EQU Memory.SetPage1                                 ; страница файловой системы
-
 ; data
 UnitDataPage                EQU 0                                               ; страница данных о юнитах
                                                                                 ; поведение ИИ
 MemPage_UnitArray           EQU Memory.SetPage0                                 ; страница массива юнитов
-; BehaviorAdr                 EQU Page_0 | MemoryPage_0.Behavior                  ; адрес BTT юнитов
 
                             include "Macro.inc"
                             include "../Module/AI/Composite/Definition.inc"

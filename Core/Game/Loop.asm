@@ -6,8 +6,6 @@ GameLoop:
                 ; add unit
                 SET_PAGE_UNITS_ARRAY
 
-                
-
                 ;
                 CALL Utils.WaypointsSequencer.Create
                 JR C, $
@@ -72,8 +70,7 @@ GameLoop:
                 AND %00000111
 .SetIndex       ADD A, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP
                 LD C, A
-                LD A, IXL
-                CALL Utils.WaypointsSequencer.AddUnit
+                CALL Utils.WaypointsSequencer.AddUnit.UnitAddressToIX
 
 .Next           POP HL
                 POP AF
