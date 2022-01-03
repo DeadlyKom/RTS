@@ -132,11 +132,7 @@ TurnDown:       ; B - направление поворота (-1/1)
                 OR C
                 LD (IX + FUnit.Direction), A
 
-                ; A - номер юнита
-                LD A, IXL
-                RRA
-                RRA
-                AND %00111111
+                ; обновление облости
                 CALL Unit.RefUnitOnScr
 
                 RET

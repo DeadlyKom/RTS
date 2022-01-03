@@ -124,11 +124,7 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnit.State)                           
 .PreExit        ;
                 LD (IX + FUnit.Delta), A
 
-                ; A - номер юнита
-                LD A, IXL
-                RRA
-                RRA
-                AND %00111111
+                ; обновление облости
                 CALL Unit.RefUnitOnScr
 
 .Exit           ; завершение работы

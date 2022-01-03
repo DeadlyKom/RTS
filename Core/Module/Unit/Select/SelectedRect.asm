@@ -202,8 +202,6 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
 
                 ; очистка юнита
                 PUSH HL
-                ; A - номер юнита
-                CALL .GetIndexUnit
                 CALL Unit.RefUnitOnScr
                 POP HL
 
