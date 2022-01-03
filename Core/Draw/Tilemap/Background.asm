@@ -95,7 +95,7 @@ DisplayTileRow: ;
                 JR Z, .DrawTile
 
                 ; calculation sprite address
-                LD A, (HighSurfacePropertyRef)
+                LD A, HIGH SurfacePropertyPtr
                 LD H, A
                 EX AF, AF'
                 AND %01111111

@@ -15,8 +15,7 @@
 ;   requires included memory page
 ; -----------------------------------------
 GetAddressTilemap:  LD L, D
-                    LD A, HIGH TilemapTableAddress
-                    LD H, A
+                    LD H, HIGH TilemapTableAddress
                     LD A, (HL)
                     INC H
                     LD H, (HL)

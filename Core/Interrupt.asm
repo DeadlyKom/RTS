@@ -6,7 +6,7 @@
 FOW_Ref             EQU 50
 InterruptStackSize  EQU 64 * 2                                                  ; not change
 InterruptStack:     DS InterruptStackSize, 0                                    ; not change
-StackTop            EQU InterruptStack + InterruptStackSize
+InterruptStackTop   EQU InterruptStack + InterruptStackSize
 Handler:            ; ********** HANDLER IM 2 *********
                     EX (SP), HL
                     LD (.ReturnAddress), HL
@@ -14,7 +14,7 @@ Handler:            ; ********** HANDLER IM 2 *********
                     LD (.Container_SP), SP                                      ; save original SP pointer
 .RestoreRegister    EQU $
                     NOP                                                         ; restore corrupted bytes below SP (PUSH HL/DE/BC)
-                    ; LD SP, StackTop                                             ; use custom stack for IM2
+                    LD SP, InterruptStackTop                                    ; use custom stack for IM2
 
 .SaveRegs           ; ********* SAVE REGISTERS ********
                     PUSH HL

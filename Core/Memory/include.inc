@@ -18,7 +18,7 @@ Page_2.TilemapBuffer        EQU #BF00                                           
 
 Page_3:                     EQU #C000                                           ; Bank 03
 Page_4:                     EQU #C000                                           ; Bank 03
-Page_5:                     EQU #4000 + #1B00 + #0300                           ; Bank 01 (Screen 0) (пропуск экрана и 0x300 байт данных для TR DOS)
+Page_5:                     EQU #4000 + #1B00 + #0500                           ; Bank 01 (Screen 0) (пропуск экрана и 0x500 байт данных для TR DOS)
 Page_5.PathfindingBuffer    EQU #4000                                           ; Bank 01 (Screen 0) (временный массив)             - размер константа PFWinBufSize
 Page_5.PathfindingOLBuffer  EQU #4A00                                           ; Bank 01 (Screen 0) (временный массив)             - максимальный размер 512 байт
 Page_6:                     EQU #C000                                           ; Bank 03
@@ -32,11 +32,15 @@ Page_7.TileSprites:         EQU #F000                                           
 
 
 ; file system
-MemPage_FileSystem          EQU Memory.SetPage1                                 ; страница файловой системы
+FileSystemPage              EQU 1                                               ; страницы файловой системы
+TilemapPage                 EQU 1                                               ; страница тайловой карты
+SetMemPage_FileSystem       EQU Memory.SetPage1                                 ; страница файловой системы
 
 ; data
+UnitDataPage                EQU 0                                               ; страница данных о юнитах
+                                                                                ; поведение ИИ
 MemPage_UnitArray           EQU Memory.SetPage0                                 ; страница массива юнитов
-BehaviorAdr                 EQU Page_0 | MemoryPage_0.Behavior                  ; адрес BTT юнитов
+; BehaviorAdr                 EQU Page_0 | MemoryPage_0.Behavior                  ; адрес BTT юнитов
 
                             include "Macro.inc"
                             include "../Module/AI/Composite/Definition.inc"
@@ -51,7 +55,7 @@ BehaviorAdr                 EQU Page_0 | MemoryPage_0.Behavior                  
                             include "Page_07.asm"
 
 PageSprites_0               EQU 4                                               ; sprite page 0
-MemoryPage_Tilemap          EQU 1
+
 MemoryPage_Music            EQU 3
 MemoryPage_MainScreen       EQU 5
 MemoryPage_ShadowScreen     EQU 7

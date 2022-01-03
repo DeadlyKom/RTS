@@ -4,7 +4,7 @@
 
                 module Initialize
 
-                include "Map.asm"
+                include "MapInfo.asm"
                 include "GenerateTilemapTableAddress.asm"
 
                 endmodule

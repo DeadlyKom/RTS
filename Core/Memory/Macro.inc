@@ -9,7 +9,7 @@ SET_PAGE_UNITS_ARRAY    macro
 
 ; включить страницу файловой системы
 SET_PAGE_FILE_SYS       macro
-                        CALL MemPage_FileSystem
+                        CALL SetMemPage_FileSystem
                         endm
 
                         endif ; ~_MEMORY_MACRO_INCLUDE_

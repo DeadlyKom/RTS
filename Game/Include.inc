@@ -23,8 +23,7 @@
                             define TRD_FILENAME "Torn Metal.trd"                ; имя образа TRD
                             define MAP_INFO_FILENAME "MapsInfo.C"               ; имя файла информации о карте
                             define MAP_FILENAME "Map.C"                         ; имя файла карте
-StackTopBoot                EQU PORT_7FFD                                       ; расположение стека
-StackTop                    EQU Interrupt.StackTop
+StackTop                    EQU Page_5                                          ; расположение стека
 MemoryPageRef               EQU PORT_7FFD;                                      ; адрес хранения номера странички
 InterruptVectorAddress      EQU #8181                                           ; адрес вектора прерывания
 
@@ -33,6 +32,7 @@ FileSystemPtr               EQU Page_1.FileSystemPtr                            
 
 ;
 SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
+SharedBufferSize            EQU 256                                             ; размер общего буфера
 RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
 SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
 SizeSelectedBuffer          EQU 32                                              ; размер буфера выделенных юнитов
@@ -90,8 +90,8 @@ TilemapTableSize            EQU 512                                             
 ; surface
 SurfacePropertyPtr          EQU Page_1.SurfaceProperty                          ; адрес свойст тайлов (128 байт)
 SurfecePropertySize         EQU 128 + 128                                       ; размер свойства тайлов (128 тайлов)                       [128] free
-SurfacePropertyRef          EQU Game.SurfacePropertyPtr                         ; адрес таблицы свойст тайлов (128 байт)                    - 1 страница
-HighSurfacePropertyRef      EQU Game.SurfacePropertyPtr + 1                     ; старший байт адреса таблицы свойст тайлов (128 байт)      - 1 страница
+; SurfacePropertyRef          EQU Game.SurfacePropertyPtr                         ; адрес таблицы свойст тайлов (128 байт)                    - 1 страница
+; HighSurfacePropertyRef      EQU Game.SurfacePropertyPtr + 1                     ; старший байт адреса таблицы свойст тайлов (128 байт)      - 1 страница
 WaypointCounterRef          EQU Game.WaypointCounter                            ; адрес счётчика элементов waypoint в массиве
 WaypointArrayRef            EQU Game.WaypointArray                              ; адрес массива точек пути
 HighWaypointArrayRef        EQU Game.WaypointArray + 1                          ; старший байт адрес массива точек пути

@@ -5,6 +5,10 @@
                 module FileSystem
 
                 include "Load/Include.inc"
+                include "Read.asm"
+                include "FindFile.asm"
+FileNameMap:    DS 9, 0
+FileNameInfo:   BYTE "MapsInfoC"
 
                 endmodule
 

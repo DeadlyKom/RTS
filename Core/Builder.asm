@@ -18,7 +18,7 @@ Basic:                  DB #00, #0A                                             
 StartBoot:              DI
                         ; отключение 128 бейсика
                         Disable_128k_Basic
-                        LD SP, StackTopBoot                                     ; установим временный стек
+                        LD SP, StackTop                                         ; установим временный стек
                         ; Чтение данных в 0 страницу
                         SeMemoryPage 0, PAGE_0_ID
                         LD HL, Page_0                                           ; загружаем по адресу Page_0
@@ -40,7 +40,6 @@ StartBoot:              DI
                         LD B, Size_2                                            ; регистр B содержит кол-во секторов
                         LD C, #05                                               ; регистр С — номер подпрограммы #05 (чтение секторов)
                         CALL #3D13                                              ; переход в TR-DOS
-                        LD SP, StackTop                                         ; заменим на стек прерывания
                         ; Чтение данных в 3 страницу
                         SeMemoryPage 3, PAGE_3_ID
                         LD HL, Page_3                                           ; загружаем по адресу Page_3

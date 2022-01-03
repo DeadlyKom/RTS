@@ -27,8 +27,7 @@
 GetProperty:    LD A, (HL)                                                      ; A - номер тайла
                 AND %01111111
                 LD L, A
-                LD A, (HighSurfacePropertyRef)                                  ; TODO упростить формирование адреса до LD H, #00
-                LD H, A
+                LD H, HIGH SurfacePropertyPtr
                 LD A, (HL)                                                      ; A - характеристика тайла
                 
                 RET

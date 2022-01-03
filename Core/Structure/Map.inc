@@ -7,11 +7,12 @@ FileName            TEXT 8 , {"", 32}                                           
 Extension           DB 'M'                                                      ; расширение файла
 Size                FMapSize 0, 0                                               ; размер карты
 StartLocation       FLocation 0, 0                                              ; координаты центра экрана
-BehaviorTable       DW #0000                                                    ; адрес таблицы поведения
-
-; AnimTurnUpTable     DW #0000                                                    ; адрес таблицы анимации поворотов (вверх)
-; AnimTurnDownTable   DW #0000                                                    ; адрес таблицы анимации поворотов (низа)
-; AnimMoveTable       DW #0000                                                    ; адрес таблицы анимации перемещения
+SurfacePropertySize DB #00                                                      ; длина свойств тайлов в байтах
+BehaviorSize        DW #0000                                                    ; длина поведения в байтах
+AnimTUpTableSize    DW #0000                                                    ; длина таблицы анимации поворотов (вверх)
+AnimTDownTableSize  DW #0000                                                    ; длина таблицы анимации поворотов (низа)
+AnimMoveTableSize   DW #0000                                                    ; длина таблицы анимации перемещения
+MapSize             DW #0000                                                    ; длина карты в байтах
 
 ; UnitsProperty       DW #0000                                                    ; адрес таблици характеристик юнитов (выровнен 256)
 

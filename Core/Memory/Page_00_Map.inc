@@ -8,4 +8,8 @@ WaypointsSequenceSize       EQU 256 * 8                                         
 WaypointArrayPtr            EQU WaypointsSequencePtr + WaypointsSequenceSize    ; адрес массива Way Point'ов
 WaypointArraySize           EQU 256 * FWayPoint                                 ; размер массива Way Point'ов
 
+GameModeDataPtr             EQU WaypointArrayPtr + WaypointArraySize            ; начальный адрес режима игры
+                                                                                ; поведение юнитов
+                                                                                ; 
+
                             endif ; ~_CORE_MEMORY_PAGE_MAP_00_

@@ -4,10 +4,14 @@
 
 LoadMap:        ; загрузка информации о карте
                 SET_PAGE_FILE_SYS
+                LD A, #00                                                       ; 0 слот карты
                 CALL FileSystem.Load.MapInfo
 
                 ; инициализация карты
-                CALL Initialize.Map
+                CALL Initialize.MapInfo
+
+                ; загрузка карты
+                CALL FileSystem.Load.MapData
 
                 RET
 
