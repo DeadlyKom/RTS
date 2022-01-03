@@ -62,8 +62,7 @@ WayPoint:       ; проверка что Way Point валиден
                 INC H
                 LD D, (HL)
 
-                LD (IX + FUnit.WayPoint.X), E
-                LD (IX + FUnit.WayPoint.Y), D
+                LD (IX + FUnit.WayPoint), DE
 
                 ; указан новый WayPoint
                 SET FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; бит валидности Way Point

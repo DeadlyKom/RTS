@@ -6,9 +6,8 @@
 ; отсечение спрайта, т.к. спрайт приязан к тайлу,
 ;   можно быстро проверить, видим ли данный тайл
 ; In:
-;   DE - указывает на структуру FSpriteLocation
+;   IY - указывает на структуру FUnit
 ; Out:
-;   DE = DE + 1 [FSpriteLocation.TilePosition.Y]
 ;   если флаг переполнения C установлен, объект вне экрана
 ;   иначе в аккамуляторах хранятся значения в пределах
 ;   PixelClipping.PositionX -  PositionX => [0..17]
@@ -27,7 +26,7 @@ FastClipping:   ; ---------------------------------------------
 
                 ; ---------------------------------------------
                 ; PositionX = (Lx - Vx) + 1
-                LD A, (DE)                                                      ; [Lx] DE = FSpriteLocation.TilePosition.X
+                LD A, (IY + FUnit.Position.X)
                 SUB (HL)                                                        ; [Vx] - позиция видимой области карты (в тайлах)
                 INC A
 
@@ -45,12 +44,11 @@ FastClipping:   ; ---------------------------------------------
                 LD (PixelClipping.PositionX), A                                 ; сохраним PositionX
                 ; ---------------------------------------------
 
-                INC E                                                           ; DE = FSpriteLocation.TilePosition.Y
                 INC HL                                                          ; HL = позиция Y, указатель смещения тайловой карты (координаты тайла, верхнего левого угла)
 
                 ; ---------------------------------------------
                 ; PositionY = (Ly - Vy) + 1
-                LD A, (DE)                                                      ; [Ly] DE = FSpriteLocation.TilePosition.X
+                LD A, (IY + FUnit.Position.Y)
                 SUB (HL)                                                        ; [Vy] - позиция видимой области карты (в тайлах)
                 INC A
                 ; замена RET M

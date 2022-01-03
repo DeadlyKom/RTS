@@ -1,7 +1,6 @@
 
                 ifndef _DRAW_SPRITE_DRAW_
                 define _DRAW_SPRITE_DRAW_
-
 ; -----------------------------------------
 ; рисовани спрайта, по ранне настроенным значениям
 ; смотрите FastClipping и PixelClipping

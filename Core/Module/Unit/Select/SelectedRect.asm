@@ -5,6 +5,7 @@
 ; -----------------------------------------
 ; сканирование выделение прямоугольником
 ; In:
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
@@ -16,18 +17,17 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 LD (.ProcessedUnits), A
 
                 ; включить страницу
-                ; CALL Memory.SetPage1
                 SET_PAGE_UNITS_ARRAY
 
                 ; single selected
                 LD HL, SelectRectStartRef
-                LD E, (HL)  ; StartX
+                LD E, (HL)                                                      ; StartX
                 INC HL
-                LD D, (HL)  ; StartY
+                LD D, (HL)                                                      ; StartY
                 INC HL
 
                 ; DeltaX = EndX - StartX
-                LD A, (HL)  ; EndX
+                LD A, (HL)                                                      ; EndX
                 SUB E
                 CP #02
                 LD A, #37
@@ -129,13 +129,9 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
 
                 ;
                 LD HL, .ProcessedUnits
-                LD DE, UnitArrayPtr
-                INC D                                                           ; FSpriteLocation
+                LD IX, UnitArrayPtr
 
-.Loop           EX DE, HL
-                LD C, (HL)
-                INC L
-                LD B, (HL)
+.Loop           LD BC, (IX + FUnit.Position)
 
                 ; RES FUSF_SELECTED_BIT, (HL)
                 LD A, #86 | FUSF_SELECTED_BIT << 3
@@ -170,23 +166,18 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 JR C, .Next                                                     ; jump if TilePosition.X > EndX
 
                 ; добавим индекс выделенного юнита в список
-                LD A, L
-                EXX
-.NumSelected    EQU $+1                                                         ; количество выделенных юнитов в буфере
-                LD HL, #0000
+                CALL .GetIndexUnit
 
-                ; получим индекс юнита
-                RRA
-                RRA
-                AND %00111111
-                LD (HL), A                                                      ; сохраним индекс
+                ; сохраним индекс
+.NumSelected    EQU $+1                                                         ; количество выделенных юнитов в буфере
+                LD DE, #0000
+                LD (DE), A
                 
                 ; перейдём к следующему элементу
-                INC L
-                BIT 5, L
+                INC E
+                BIT 5, E
                 JP NZ, SFX.BEEP.Fail                                            ; выход, т.к. буфер выделенных объектов переполнен
-                LD (.NumSelected), HL
-                EXX
+                LD (.NumSelected), DE
   
                 ; SET FUSF_SELECTED_BIT, (HL)
                 LD A, #C6 | FUSF_SELECTED_BIT << 3
@@ -195,42 +186,40 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
 .IsSingle_      EQU $
                 SCF
                 JR C, .Next
+
                 ; is single selected
                 LD A, #B7                                                       ; is single selected (OR A)
                 LD (.IsSingle), A
 
 .Next           ; ---------------------------------------------
-                DEC H                                                           ; FUnitState.Direction              (1)
-                DEC L                                                           ; FUnitState.State                  (1)
-.SET_RES        EQU $+1
-                DB #CB, #00                                                     ; SET FUSF_SELECTED_BIT, (HL) / RES FUSF_SELECTED_BIT, (HL)
-                LD A, (HL)
-                OR FUSF_RENDER
-                LD (HL), A
-                INC L                                                           ; FUnitState.Direction              (1)
-                INC H                                                           ; FSpriteLocation.TilePosition.Y    (2)
+.SET_RES        EQU $+3
+                SET FUSF_SELECTED_BIT, (IX + FUnit.State)
+                
+                ; пометим что юнита необходимо обноить
+                LD A, FUSF_RENDER
+                OR (IX + FUnit.State)
+                LD (IX + FUnit.State), A
 
                 ; очистка юнита
                 PUSH HL
-                PUSH DE
                 ; A - номер юнита
-                LD A, L
-                RRA
-                RRA
-                AND %00111111
+                CALL .GetIndexUnit
                 CALL Unit.RefUnitOnScr
-                POP DE
                 POP HL
 
-                ;
-                INC L
-                INC L
-                INC L
-                
-                EX DE, HL
+                ; переход к следующему юниту
+                LD DE, UNIT_SIZE
+                ADD IX, DE
                 DEC (HL)
                 JP NZ, .Loop
 
+                RET
+
+.GetIndexUnit   LD A, IXL
+                ADD A, A
+                LD D, IXH
+                RL D
+                AND %01111111
                 RET
 
 .ProcessedUnits DB #00

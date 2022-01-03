@@ -10,7 +10,6 @@
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
 Handler:        ; включить страницу
-                ; CALL Memory.SetPage1
                 SET_PAGE_UNITS_ARRAY
 
                 ; инициализация
@@ -25,7 +24,7 @@ Handler:        ; включить страницу
                 JP Z, .Exit
                 LD (.ProcessedUnits), A
 
-                LD DE, UnitArrayPtr
+                LD IY, UnitArrayPtr
 
                 ifndef ENABLE_FORCE_DRAW_UNITS
                 ; проверка на перерисовку всех юнитов принудительно
@@ -45,7 +44,7 @@ Handler:        ; включить страницу
                 LD (.ModifyCode + 3), BC
                 endif
 
-.Loop           PUSH DE                                                         ; save current address UnitsArray
+.Loop           ; PUSH DE                                                         ; save current address UnitsArray
 
                 ifndef ENABLE_FORCE_DRAW_UNITS
                 ; проврка на перерисовку текущего юнита
@@ -68,18 +67,11 @@ Handler:        ; включить страницу
                 EX DE, HL
                 endif
 
-.Force          INC D                                                           ; переход к стурктуре FSpriteLocation
-                
-                CALL Sprite.FastClipping
+.Force          CALL Sprite.FastClipping
                 JR C, .PreNextUnit
                 
                 ; получение адреса хранения информации о спрайте
-                DEC D                                                           ; DE = FUnitState.Animation
-                DEC E
                 CALL Animation.SpriteInfo
-
-                INC D
-
                 CALL Sprite.PixelClipping
                 JR C, .PreNextUnit
 
@@ -93,19 +85,12 @@ Handler:        ; включить страницу
                 CALL Sprite.Draw
 
                 ; включить страницу 
-                ; CALL Memory.SetPage1
                 SET_PAGE_UNITS_ARRAY
-
-                POP DE                                                          ; restore address UnitsArray
-                PUSH DE
 
                 ; ; отрисовка линии пути
                 ; LD A, (DE)                  ; DE = FUnitState
                 ; BIT FUSF_SELECTED_BIT, A    ; check flag FUSF_SELECTED
                 ; CALL NZ, DrawPath
-
-                ; POP DE                                                          ; restore address UnitsArray
-                ; PUSH DE
 
                 ifdef SHOW_AABB
                 ; отрисовка AABB
@@ -126,32 +111,24 @@ Handler:        ; включить страницу
                 LD (DrawRectangle.Start + 1), A
                 CALL Memory.SetPage7
                 CALL DrawRectangle.Custom
-                ; CALL Memory.SetPage1
+
                 SET_PAGE_UNITS_ARRAY
-                POP DE                                                          ; restore address UnitsArray
-                PUSH DE
                 endif
                 
                 ; отрисовка HP
-                LD A, (DE)                                                      ; DE = FUnitState
-                INC D                                                           ; FSpriteLocation
-                BIT FUSF_SELECTED_BIT, A                                        ; check flag FUSF_SELECTED    
+                BIT FUSF_SELECTED_BIT, (IY + FUnit.State)                       ; проверка флага FUSF_SELECTED
                 CALL NZ, UI.HP.Draw
 
 .PreNextUnit    ; ---------------------------------------------
                 ; всё же, спрайт за пределами экрана
                 ; ---------------------------------------------
                 ; включить страницу 
-                ; CALL Memory.SetPage1
                 SET_PAGE_UNITS_ARRAY
 
-                POP DE
+.NextUnit       ; переход к следующему юниту
+                LD DE, UNIT_SIZE
+                ADD IY, DE
 
-.NextUnit       INC E
-                INC E
-                INC E
-                INC E
-                ;
                 LD HL, .ProcessedUnits
                 DEC (HL)
                 JP NZ, .Loop

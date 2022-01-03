@@ -6,22 +6,14 @@
 ; -----------------------------------------
 ; отрисовка указанного юнита Health Point
 ; In:
+;   IY - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Draw:           ; DE - указывает на структуру FSpriteLocation
-                INC E
-                INC E
+Draw:           LD HL, .OffsetByPixel
+                LD BC, (IY + FUnit.Offset)
 
-                LD HL, .OffsetByPixel
-
-                EX DE, HL
-                LD C, (HL)                                                      ; FSpriteLocation.OffsetByPixel
-                INC L
-                LD B, (HL)
-
-                EX DE, HL
                 LD (HL), C
                 INC L
                 LD (HL), B
@@ -56,11 +48,14 @@ Draw:           ; DE - указывает на структуру FSpriteLocatio
                 INC HL
                 LD (HL), D
 
+                PUSH IY
                 LD HL, ST_HealthBar_Small
-                LD DE, .OffsetByPixel + 1
+                LD IY, .OffsetByPixel - FUnit.Offset
 
                 CALL Sprite.PixelClipping
                 CALL NC, Sprite.Draw
+
+                POP IY
 
                 RET
 

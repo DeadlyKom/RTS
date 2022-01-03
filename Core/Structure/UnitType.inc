@@ -42,6 +42,8 @@ DF_DOWN_LEFT                EQU %101                                            
 DF_LEFT                     EQU %110                                            ; направление влево
 DF_UP_LEFT                  EQU %111                                            ; направление вверх-влево
 
+DF_DOWN_MASK                EQU %00111000                                       ; маска направления (низ)
+
 ; FUnitTargets flags
 FUTF_VALID_WP_BIT           EQU 0x07                                            ; бит валидности Way Point
 FUTF_VALID_IDX_BIT          EQU 0x06                                            ; бит валидности данных об индексе
