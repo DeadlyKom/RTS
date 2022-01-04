@@ -7,6 +7,7 @@
                 include "BlandIdleTurn.asm"
                 include "BlandTurn.asm"
                 include "BlandMove.asm"
+                include "BlandAttack.asm"
                 include "SpriteInfo.asm"
 
                 endmodule

@@ -115,6 +115,10 @@ Handler:        ; включить страницу
 
                 SET_PAGE_UNITS_ARRAY
                 endif
+
+                ; смена анимация стрельбы
+                BIT FUSF_ATTACK_BIT, (IX + FUnit.State)                         ; проверка флага FUSF_ATTACK_BIT
+                CALL NZ, Animation.Attck
                 
                 ; отрисовка HP
                 BIT FUSF_SELECTED_BIT, (IX + FUnit.State)                       ; проверка флага FUSF_SELECTED
