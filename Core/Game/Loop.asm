@@ -35,9 +35,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                ; JR$
-
-                LD A, 1
+                LD A, 116
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
@@ -224,5 +222,62 @@ GameLoop:
                 DW #3E15    : DB #FF    ; 58
                 DW #2E11    : DB #FF    ; 59
                 DW #1E0C    : DB #FF    ; 60
+
+                DW #121A    : DB #FF    ; 61
+                DW #102A    : DB #FF    ; 62
+                DW #0A0B    : DB #FF    ; 63
+                DW #070C    : DB #FF    ; 64
+                DW #170D    : DB #FF    ; 65
+                DW #070E    : DB #FF    ; 66
+                DW #0809    : DB #FF    ; 67
+                DW #0810    : DB #FF    ; 68
+                DW #102B    : DB #FF    ; 69
+                DW #1F0C    : DB #FF    ; 70
+                DW #282D    : DB #FF    ; 71
+                DW #282F    : DB #FF    ; 72
+                DW #2929    : DB #FF    ; 73
+                DW #092A    : DB #FF    ; 74
+                DW #292B    : DB #FF    ; 75
+                DW #292C    : DB #FF    ; 76
+                DW #092D    : DB #FF    ; 77
+                DW #100E    : DB #FF    ; 78
+                DW #1F1F    : DB #FF    ; 79
+                DW #2A2A    : DB #FF    ; 80
+                DW #3A2B    : DB #FF    ; 81
+                DW #3A3C    : DB #FF    ; 82
+                DW #2A3D    : DB #FF    ; 83
+                DW #2A0E    : DB #FF    ; 84
+                DW #3B29    : DB #FF    ; 85
+                DW #3B2A    : DB #FF    ; 86
+                DW #3B3B    : DB #FF    ; 87
+                DW #2B3C    : DB #FF    ; 88
+                DW #3B3D    : DB #FF    ; 89
+                DW #3B2E    : DB #FF    ; 90
+                DW #3C29    : DB #FF    ; 91
+                DW #2C0A    : DB #FF    ; 92
+                DW #3C3B    : DB #FF    ; 93
+                DW #3C0C    : DB #FF    ; 94
+                DW #0C0D    : DB #FF    ; 95
+                DW #2C0E    : DB #FF    ; 96
+                DW #3335    : DB #FF    ; 97
+                DW #3732    : DB #FF    ; 98
+                DW #2D3B    : DB #FF    ; 99
+                DW #0D3C    : DB #FF    ; 100
+                DW #2D3D    : DB #FF    ; 101
+                DW #2D3E    : DB #FF    ; 102
+                DW #2E2C    : DB #FF    ; 103
+                DW #2E3C    : DB #FF    ; 104
+                DW #323C    : DB #FF    ; 105
+                DW #231C    : DB #FF    ; 106
+                DW #353C    : DB #FF    ; 107
+                DW #362C    : DB #FF    ; 108
+                DW #051C    : DB #FF    ; 109
+                DW #163C    : DB #FF    ; 110
+                DW #2E12    : DB #FF    ; 111
+                DW #2E15    : DB #FF    ; 112
+                DW #1E31    : DB #FF    ; 113
+                DW #1E04    : DB #FF    ; 114
+                DW #2E0C    : DB #FF    ; 115
+                DW #3F0F    : DB #FF    ; 116
 
                 endif ; ~_CORE_GAME_LOOP_
