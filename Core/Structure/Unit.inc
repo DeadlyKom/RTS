@@ -26,7 +26,7 @@ WayPoint        FLocation                                                       
 Data            DB #00                                                          ; данные последовательности
 Idx             DB #00                                                          ; 1 byte (индекс в массиве Way Points)
 Direction       DB #00                                                          ; 1 byte (направления)
-Animation       DB #00                                                          ; 1 byte (номер анимации * 8)
+Animation       DB #00                                                          ; 1 byte (номер анимации)
 CounterDown     DB #00                                                          ; 1 byte (счётчика)
 CounterUp       DB #00                                                          ; 1 byte (счётчика)
 Delta           DB #00                                                          ; 1 byte (дельта)

@@ -56,6 +56,8 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
                 LD A, (IX + FUnit.Type)
                 AND IDX_UNIT_TYPE
                 RRA
+                OR A
+                RRA
                 RR C
                 RRA
                 RR C
@@ -65,7 +67,7 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
 
                 ToDo "SpriteInfo", "make 2 levels of animation indices"
                 
-                ; получение адреса FSprite + Animation (индекс анимации * 8)
+                ; получение адреса FSprite + Animation
                 LD C, (HL)
                 INC HL
                 LD B, (HL)

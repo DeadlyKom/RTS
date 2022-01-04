@@ -10,8 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Idle:           ;JR$
-                LD A, (IX + FUnit.State)
+Idle:           LD A, (IX + FUnit.State)
                 LD C, A
                 AND FUSF_IS_IDLE
                 RET NZ                                                          ; сброс флага, выход если юнит не в состоянии idle

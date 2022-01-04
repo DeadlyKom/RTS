@@ -5,10 +5,10 @@
 ;   SP  - sprite address
 ;   HL  - return addres
 ;   DE  - 
-;   BC  - buffer address
+;   BC  - 'intermediate'
 ;   H'  - high byte of the shift table
-;   DE' -
-;   BC' - row screen address
+;   DE' - row screen address
+;   BC' - 
 ; Out:
 ; Corrupt:
 ;   SP, HL, BC, L', DE', BC'
@@ -18,69 +18,74 @@ SBP_24_2_RS:            EXX
 
                         ;- 1 byte -
                         ; modify the left side of a byte
-                        LD A, (BC)
-                        POP DE
-                        LD L, E     ; OR
+                        LD A, (DE)
+                        POP BC
+                        LD L, C     ; OR
                         OR (HL)
-                        LD L, D     ; XOR
+                        LD L, B     ; XOR
                         XOR (HL)
-                        LD (BC), A
+                        LD (DE), A
                         ;~ 1 byte ~
 
                         ;- 2 byte -
-                        POP DE                              ; skip 2 byte
+                        POP BC                                                  ; skip 2 byte
                         ;~ 2 byte ~
 
                         ;- 3 byte -
-                        POP DE                              ; skip 3 byte
+                        POP BC                                                  ; skip 3 byte
                         ;~ 3 byte ~
 
-                        ; classic method "DOWN_BC" 25/59
-                        INC B
-                        LD A, B
+                        ; classic method "DOWN_DE" 25/59
+                        INC D
+                        LD A, D
                         AND #07
-                        JP NZ, $+12
-                        LD A, C
+                        JP NZ, $+18
+                        LD A, E
                         SUB #E0
-                        LD C, A
+                        LD E, A
                         SBC A, A
                         AND #F8
-                        ADD A, B
-                        LD B, A
+                        ADD A, D
+                        LD D, A
+
+                        ; - костыль (чтобы не рисовать в атрибутах)
+                        AND %00011000
+                        ADD A, #E8
+                        JR Z, .NextRow
 .Backward
                         ;- 1 byte -
-                        POP DE                              ; skip 1 byte
+                        POP BC                                                  ; skip 1 byte
                         ;~ 1 byte ~
 
                         ;- 2 byte -
-                        POP DE                              ; skip 2 byte
+                        POP BC                                                  ; skip 2 byte
                         ;~ 2 byte ~
 
                         ;- 3 byte -
                         ; modify the left side of a byte
-                        LD A, (BC)
-                        POP DE
-                        LD L, E     ; OR
+                        LD A, (DE)
+                        POP BC
+                        LD L, C     ; OR
                         OR (HL)
-                        LD L, D     ; XOR
+                        LD L, B     ; XOR
                         XOR (HL)
-                        LD (BC), A
+                        LD (DE), A
                         ;~ 3 byte ~
 
-                        ; classic method "DOWN_BC" 25/59
-                        INC B
-                        LD A, B
+                        ; classic method "DOWN_DE" 25/59
+                        INC D
+                        LD A, D
                         AND #07
                         JP NZ, $+12
-                        LD A, C
+                        LD A, E
                         SUB #E0
-                        LD C, A
+                        LD E, A
                         SBC A, A
                         AND #F8
-                        ADD A, B
-                        LD B, A
+                        ADD A, D
+                        LD D, A
 
-                        ; move to the next two row
+.NextRow                ; move to the next two row
                         EXX
                         INC HL
                         INC HL
