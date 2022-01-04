@@ -8,12 +8,11 @@
 ; отсечение спрайта по вертикали
 ; In:
 ;   HL - указатель на структуру FSprite
-;   DE - указывает на структуру FSpriteLocation
+;   IX - указывает на структуру FUnit
 ; Out:
 ;   L   - хранит номер верхней линии спрайта
 ;   C   - высота видимой части спрайта в пикселях (Sy)
 ;   HL' - указывает на FSprite.Info.Width
-;   DE' - указывает на FSpriteLocation.OffsetByPixel.Y
 ;   если флаг переполнения C установлен, объект вне экрана
 ; Corrupt:
 ; Note:
@@ -34,7 +33,7 @@ Vertical:       LD C, (HL)                                                      
                 PUSH BC
 
                 ; добавить смещение относительно тайла (Oy + 8)
-                LD A, (DE)                                                      ; A = FSpriteLocation.OffsetByPixel.Y (Oy)
+                LD A, (IX + FUnit.Offset.Y)
                 ADD A, #08                                                      ; A += 8 (можно объеденить с значением 8 в данных спрайта)
 
                 EXX                                                             ; сохраним 

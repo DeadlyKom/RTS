@@ -5,48 +5,41 @@
 ; -----------------------------------------
 ; перемещение к цели
 ; In:
-;   IX - pointer to FUnitState (1)
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Out:
 ; Corrupt:
 ; Note:
-;   requires included memory page
 ; -----------------------------------------
-MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; установка состояния перемещения/поворота
+MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
 
+                ; вызов счётчика анимации перемещения
                 CALL Animation.MoveDown
                 CCF
                 RET C                                                           ; время ещё не вышло, но возвращаем успешное перемещение
 
-                INC IXH                                                         ; FSpriteLocation     (2)
-
-                LD E, IXL
+                ; расчёт смещения в структуре FUnit.Offset
+                LD A, IXL
+                ADD A, FUnit.Offset
+                LD E, A
                 LD D, IXH
-                INC E
-                INC E
                 LD (ShiftLocation.UnitOffset), DE
-                
-                INC IXH                                                         ; FUnitTargets      (3)
 
-                CALL Utils.GetPerfectTargetDelta                                ; calculate direction delta
+                ; расчёт дельты направления
+                CALL Utils.GetPerfectTargetDelta
                 JP NC, .Fail                                                    ; неудачая точка назначения
 
                 ; ---------------------------------------------
-                ; IX - pointer to FSpriteLocation (2)
                 ; D = dY (signed)
                 ; E = dX (signed)
                 ; ---------------------------------------------
-
-                INC IXH                                                         ; FUnitTargets      (3)
 
                 LD A, E
                 OR D
                 JR Z, .Complite
 
-                INC IXH                                                         ; FUnitAnimation    (4)
-
                 ; проверить необходимость повторной инициализации счетчика после хода
-                LD C, (IX + FUnitAnimation.Flags)
+                LD C, (IX + FUnit.Flags)
                 RR C
                 CALL NC, .Init                                                  ; переинициализировать, если флаг FUAF_TURN_MOVE сброшен
 
@@ -90,7 +83,7 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
 .SkipSwap_dX_dY INC E
 
                 ;
-                LD A, (IX + FUnitAnimation.Delta)
+                LD A, (IX + FUnit.Delta)
                 OR A
                 JR NZ, $+3
                 LD A, D
@@ -129,62 +122,43 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
                 ADD A, D
                 
 .PreExit        ;
-                LD (IX + FUnitAnimation.Delta), A
+                LD (IX + FUnit.Delta), A
 
-                ; A - номер юнита
-                LD A, IXL
-                RRA
-                RRA
-                AND %00111111
+                ; обновление облости
                 CALL Unit.RefUnitOnScr
 
 .Exit           ; завершение работы
-                DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation   (2)
-                DEC IXH                                                         ; FUnitState        (1)
+                INC (IX + FUnit.Animation)
 
-                ; LD A, (TickCounterRef)
-                ; RRA
-                ; JR NC, $+5
-                INC (IX + FUnitState.Animation)
-                ; INC A
-                ; AND %00111000
-                ; LD (IX + FUnitState.Animation), A
-
-                SCF                                                             ; успешность выполнения
+                ; успешность выполнения
+                SCF
                 RET
 
-                ; ---------------------------------------------
+.Complite       ; ---------------------------------------------
                 ; юнит дошёл до текущего Way Point
                 ; ---------------------------------------------
                 ; IX - pointer to FUnitTargets      (3)
                 ; ---------------------------------------------
-.Complite       DEC IXH                                                         ; FSpriteLocation   (2)
+
                 LD HL, Utils.Tilemap.Radius_5
                 CALL Utils.Tilemap.Reconnaissance
-                INC IXH                                                         ; FUnitTargets      (3)
 
-                INC IXH                                                         ; FUnitAnimation    (4)
-                RES FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)                 ; необходимо переинициализировать анимацию перемещения
-                DEC IXH                                                         ; FUnitTargets      (3)
+                RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; необходимо переинициализировать анимацию перемещения
+                RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
+                RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
 
-                RES FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)                 ; сброс текущего Way Point
-                DEC IXH                                                         ; FSpriteLocation   (2)
-                DEC IXH                                                         ; FUnitState        (1)
-
-                RES FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; сброс состояния перемещения/поворота
-
-                SCF                                                             ; успешность выполнения
+                ; успешность выполнения
+                SCF
                 RET
 
-.Fail           DEC IXH                                                         ; FUnitState        (1)
-                RES FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; сброс состояния перемещения/поворота
-                JR $
-                OR A                                                            ; неудачное выполнение
+.Fail           RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
+                CALL SFX.BEEP.Fail                                              ; неудачая точка назначения
+
+                ; неудачное выполнение
+                OR A                                                            
                 RET
 
 .Init           ; ---------------------------------------------
-                ; IX - pointer to FUnitAnimation (4)
                 ; D - dY
                 ; E - dX
                 ; ---------------------------------------------
@@ -207,15 +181,15 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      
 
                 ;
                 LD A, FUAF_MOVE_MASK
-                AND (IX + FUnitAnimation.Flags)
+                AND (IX + FUnit.Flags)
                 OR C
-                LD (IX + FUnitAnimation.Flags), A
+                LD (IX + FUnit.Flags), A
 
                 RR C                                                            ; skip FUAF_TURN_MOVE
 
                 ; сброс дельты
                 XOR A
-                LD (IX + FUnitAnimation.Delta), A
+                LD (IX + FUnit.Delta), A
 
                 RET
 
@@ -245,12 +219,8 @@ ShiftLocation:  ;
                 DEC L
                 DEC L
                 INC (HL)
-                DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation     (2)
                 LD HL, Utils.Tilemap.Radius_3
                 CALL Utils.Tilemap.Reconnaissance
-                INC IXH                                                         ; FUnitTargets      (3)
-                INC IXH                                                         ; FUnitAnimation    (4)
                 EXX
 
                 RET
@@ -267,12 +237,8 @@ ShiftLocation:  ;
                 DEC L
                 DEC L
                 DEC (HL)
-                DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation     (2)
                 LD HL, Utils.Tilemap.Radius_3
                 CALL Utils.Tilemap.Reconnaissance
-                INC IXH                                                         ; FUnitTargets      (3)
-                INC IXH                                                         ; FUnitAnimation    (4)
                 EXX
 
                 RET

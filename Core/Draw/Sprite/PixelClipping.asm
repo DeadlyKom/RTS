@@ -1,18 +1,18 @@
 
-                ifndef _DRAW_SPRITE_PIXEL_CLIPPING_
-                define _DRAW_SPRITE_PIXEL_CLIPPING_
+                ifndef _DRAW_SPRITE_PIYEL_CLIPPING_
+                define _DRAW_SPRITE_PIYEL_CLIPPING_
 
 ; -----------------------------------------
 ; отсечение спрайта экраном (попиксельный)
 ; In:
 ;   HL         - указатель на структуру FSprite
-;   DE         - указывает на структуру FSpriteLocation.OffsetByPixel.Y
+;   IX         - указывает на структуру FUnit
 ;   A'         -  PositionY => [0..13]
 ;   .PositionX -  PositionX => [0..17]
 ; Out:
 ;   если флаг переполнения C установлен, объект вне экрана
 ; Corrupt:
-;   HL, DE, BC, AF, HL', DE', BC' AF'
+;   HL, DE, BC, AF, HL', DE', BC' AF', IY
 ; Note:
 ;   Lx, Ly   - позиция спрайта (в тайлах)
 ;   Vx, Vy   - позиция видимой области карты (в тайлах)
@@ -34,7 +34,7 @@ PixelClipping:  ; ---------------------------------------------
                 PUSH BC
 
                 ; добавить смещение относительно тайла (Oy + 8)
-                LD A, (DE)                                                      ; A = FSpriteLocation.OffsetByPixel.Y (Oy)
+                LD A, (IX + FUnit.Offset.Y)
                 ADD A, #08                                                      ; A += 8 (можно объеденить с значением 8 в данных спрайта)
 
                 EXX                                                             ; сохраним 
@@ -172,6 +172,7 @@ PixelClipping:  ; ---------------------------------------------
                 ; L - хранит номер верхней линии спрайта
                 ; C - высота спрайта в пикселях (Sy)
                 ; А - хранит количество не рисуемых строк со знаком минус
+                ; ---------------------------------------------
 
                 ; если не чётное увеличим в большую сторону (портит 32 байта после экранной области!)
                 ADD A, C                                                        ; А - хранит количество пропускаемых строк
@@ -200,8 +201,7 @@ PixelClipping:  ; ---------------------------------------------
                 PUSH BC
 
                 ; (Ox + 8) добавить смещение относительно тайла
-                DEC E                                                           ; DE = FSpriteLocation.OffsetByPixel.X
-                LD A, (DE)                                                      ; A = FSpriteLocation.OffsetByPixel.X (Oy)
+                LD A, (IX + FUnit.Offset.X)
                 ADD A, #08                                                      ; A += 8 (можно объеденить с значением 8 в данных спрайта)
 
                 EXX                                                             ; сохраним 
@@ -328,10 +328,10 @@ PixelClipping:  ; ---------------------------------------------
 
                 ; получим адрес метода отрисовки
                 LD A, (HL)
-                LD IXL, A
+                LD IYL, A
                 INC L
                 LD A, (HL)
-                LD IXH, A
+                LD IYH, A
 
                 OR A
                 RET
@@ -397,10 +397,10 @@ PixelClipping:  ; ---------------------------------------------
                 
                 ; получим адрес метода отрисовки
                 LD A, (HL)
-                LD IXL, A
+                LD IYL, A
                 INC L
                 LD A, (HL)
-                LD IXH, A
+                LD IYH, A
                 
                 OR A
                 RET
@@ -474,12 +474,12 @@ PixelClipping:  ; ---------------------------------------------
 
                 ; получим адрес метода отрисовки
                 LD A, (HL)
-                LD IXL, A
+                LD IYL, A
                 INC L
                 LD A, (HL)
-                LD IXH, A
+                LD IYH, A
 
                 OR A
                 RET
 
-                endif ; ~_DRAW_SPRITE_PIXEL_CLIPPING_
+                endif ; ~_DRAW_SPRITE_PIYEL_CLIPPING_

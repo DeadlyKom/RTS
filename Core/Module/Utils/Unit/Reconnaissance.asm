@@ -3,10 +3,19 @@
                 define _CORE_MODULE_UTILS_RECONNAISSANCE_
 
                 module Tilemap
-; IX - FSpriteLocation (2)
-Reconnaissance: LD E, (IX + FSpriteLocation.TilePosition.X)
-                LD D, (IX + FSpriteLocation.TilePosition.Y)
+; -----------------------------------------
+; рекогносцировка
+; In:
+;   IX - указывает на структуру FUnit
+; Out:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+Reconnaissance: LD DE, (IX + FUnit.Position)
                 
+                SET_PAGE_TILEMAP
+
                 ; кламп сверху
                 LD A, D         ; D = Y
                 SUB (HL)
@@ -22,7 +31,7 @@ Reconnaissance: LD E, (IX + FSpriteLocation.TilePosition.X)
 
 .Loop           LD B, (HL)      ; B = смещение по горизонтали
                 INC B
-                RET Z
+                JR Z, .Exit
                 INC HL
                 PUSH HL
 
@@ -34,7 +43,7 @@ Reconnaissance: LD E, (IX + FSpriteLocation.TilePosition.X)
                 XOR A
                 LD C, A         ; C - левый X
 
-                 ; кламп справа
+                ; кламп справа
                 LD A, (TilemapWidth)
                 LD L, A         ; L = ширина карты
 
@@ -50,25 +59,38 @@ Reconnaissance: LD E, (IX + FSpriteLocation.TilePosition.X)
                 LD B, A         ; B - длина по горизонтали
 
                 ; ---------------------
-
                 LD L, D
-                LD A, (TilemapTableHighAddressRef)
-                LD H, A
+                LD H, HIGH TilemapTableAddress
                 LD A, (HL)
                 INC H
                 LD H, (HL)
                 ADD A, C
                 LD L, A
-                
                 ; ---------------------
 
-.LoopRow        RES 7, (HL)
+.LoopRow        RL (HL)
+                JR C, .Update
+                OR A
+                RR (HL)
                 INC HL
                 DJNZ .LoopRow
+                JR .Next
+
+.Update         OR A
+                RR (HL)
+                INC HL
+                
+                ResetFrameFlag FORCE_FOW_FLAG
+                DJNZ .LoopRow_
+                JR .Next
+
+.LoopRow_       RES 7, (HL)
+                INC HL
+                DJNZ .LoopRow_
 
                 ; ---------------------
 
-                POP HL
+.Next           POP HL
                 
                 INC D
                 LD A, (TilemapHeight)
@@ -76,6 +98,8 @@ Reconnaissance: LD E, (IX + FSpriteLocation.TilePosition.X)
                 LD A, D
                 CP C
                 JP C, .Loop
+
+.Exit           SET_PAGE_UNITS_ARRAY
                 
                 RET
 Radius_2        DB 2, 0,1,2,1,0, #FF

@@ -1,7 +1,6 @@
 
                 ifndef _DRAW_SPRITE_DRAW_
                 define _DRAW_SPRITE_DRAW_
-
 ; -----------------------------------------
 ; рисовани спрайта, по ранне настроенным значениям
 ; смотрите FastClipping и PixelClipping
@@ -95,14 +94,14 @@ Draw:           ; ---------------------------------------------
                 JP NC, .EvenRows                                                ; чётное количество строк
                 DEC E
                 ADD HL, DE
-                LD E, (IX - 2)
-                LD D, (IX - 1)
+                LD E, (IY - 2)
+                LD D, (IY - 1)
                 EX DE, HL
                 JP (HL)
 
 .EvenRows       ADD HL, DE
 .JumpsRows      rept 12
-                JP (IX)
+                JP (IY)
                 endr
 
 .ContainerSP    EQU $+1

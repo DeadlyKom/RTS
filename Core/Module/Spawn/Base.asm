@@ -15,48 +15,36 @@
 ;   requires included memory page 1 (MemoryPage_Tilemap)
 ; -----------------------------------------
 Unit:           ; определение адреса добавления нового юнита
-                LD HL, (UnitArrayRef)
-                LD A, (AI_NumUnitsRef)
-                ADD A, A
-                ADD A, A
-                ADD A, L
-                LD L, A
-                PUSH HL
-                POP IX
+                LD A, (AI_NumUnitsRef)            
+                CALL Utils.GetAdrUnit
 
                 ; ---------------------------------------------
                 ; FUnitState                                (1)
                 ; ---------------------------------------------
                 LD DE,  FUSE_RECONNAISSANCE | FUSF_RENDER ; | FUSF_SELECTED
-                LD (IX + FUnitState.State), E
+                LD (IX + FUnit.State), E
 
                 ; рандом направления
                 EXX
                 CALL Utils.Math.Rand8
                 EXX
 
-                LD (IX + FUnitState.Direction), A
+                LD (IX + FUnit.Direction), A
                 XOR A
-                LD (IX + FUnitState.Type), A
+                LD (IX + FUnit.Type), A
                 LD A, 0
-                LD (IX + FUnitState.Animation), A
-
-                INC IXH                                                         ; переход к FSpriteLocation
+                LD (IX + FUnit.Animation), A
 
                 ; ---------------------------------------------
                 ; FSpriteLocation                             (2)
                 ; ---------------------------------------------
 
                 ; инициализция позиции юнита
-                LD (IX + FSpriteLocation.TilePosition.X), C
-                LD (IX + FSpriteLocation.TilePosition.Y), B
+                LD (IX + FUnit.Position.X), BC
                 XOR A
                 LD A, #00
-                LD (IX + FSpriteLocation.OffsetByPixel.X), A
-                LD A, #00
-                LD (IX + FSpriteLocation.OffsetByPixel.Y), A
-
-                INC IXH                                                         ; переход к FUnitTargets
+                LD (IX + FUnit.Offset.X), A
+                LD (IX + FUnit.Offset.Y), A
 
                 ; ---------------------------------------------
                 ; FUnitTargets                              (3)
@@ -64,12 +52,10 @@ Unit:           ; определение адреса добавления но�
 
                 ; инициализция
                 XOR A
-                LD (IX + FUnitTargets.WayPoint.X), A
-                LD (IX + FUnitTargets.WayPoint.Y), A
-                LD (IX + FUnitTargets.Data), A
-                LD (IX + FUnitTargets.Idx), A
-
-                INC IXH                                                         ; переход к FUnitAnimation
+                LD (IX + FUnit.WayPoint.X), A
+                LD (IX + FUnit.WayPoint.Y), A
+                LD (IX + FUnit.Data), A
+                LD (IX + FUnit.Idx), A
 
                 ; ---------------------------------------------
                 ; FUnitAnimation                            (4)
@@ -77,10 +63,10 @@ Unit:           ; определение адреса добавления но�
 
                 ; инициализция
                 XOR A
-                LD (IX + FUnitAnimation.CounterDown), A
-                LD (IX + FUnitAnimation.CounterUp), A
-                LD (IX + FUnitAnimation.Delta), A
-                LD (IX + FUnitAnimation.Flags), A
+                LD (IX + FUnit.CounterDown), A
+                LD (IX + FUnit.CounterUp), A
+                LD (IX + FUnit.Delta), A
+                LD (IX + FUnit.Flags), A
  
                 ; итерирование счётчика
                 LD HL, AI_NumUnitsRef

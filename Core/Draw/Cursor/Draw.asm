@@ -304,11 +304,11 @@ Draw:           LD (.CurrentScreen), A
                 ; ------------------------ горизонталь ------------------------
 
 .Draw           ; установим страницу спрайта
-                POP AF                                      ; A - номер странички спрайта (F - dummy)
-                SeMemoryPage_A CURSOR_SPR_PAGE_ID           ; не использовать CALL Memory.SetPage
+                POP AF                                                          ; A - номер странички спрайта (F - dummy)
+                ; SeMemoryPage_A CURSOR_SPR_PAGE_ID                               ; не использовать CALL Memory.SetPage
 
                 ; модификация адреса спрайта
-                POP HL                                      ; HL указывает на - адрес спрайта
+                POP HL                                                          ; HL указывает на - адрес спрайта
 
 .OffsetSprite   EQU $+1
                 LD DE, #0000
@@ -362,7 +362,7 @@ Restore:        ; show debug border
                 endif
                 
                 ; включим нужную страничку (экранную)
-                CALL Memory.SetPage7                       ; SeMemoryPage MemoryPage_ShadowScreen, CURSOR_RESTORE_ID
+                CALL Memory.SetPage7
                 ;
                 SetFrameFlag RESTORE_CURSOR
 

@@ -327,7 +327,7 @@ Step:
                 LD A, B
                 SUB D
                 RET C
-                
+
                 CALL Utils.Tilemap.GetAddressTilemap                            ; HL - pointer to the tile address
                 CALL Utils.Surface.GetProperty                                  ; A  - tile property
 

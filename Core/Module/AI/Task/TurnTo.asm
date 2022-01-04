@@ -5,57 +5,43 @@
 ; -----------------------------------------
 ; поворот в направление цели
 ; In:
-;   IX - pointer to FUnitState (1)
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ; Note:
-;   requires included memory page
 ; -----------------------------------------
-TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; установка состояния перемещения/поворота
-                ; go to FUnitTargets
-                INC IXH                                                         ; FSpriteLocation   (2)
-                INC IXH                                                         ; FUnitTargets      (3)
-                INC IXH                                                         ; FUnitAnimation    (4)
-                
-                BIT FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)
-                JR NZ, .IsMoveTo
+TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
+                BIT FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                JR NZ, .IsMoveTo                                                ; счётчик указывает на перемещение
 
-                DEC IXH                                                         ; FUnitTargets      (3)
-
-                CALL Utils.GetDeltaTarget                                       ; calculate direction delta
-                ; CALL Utils.GetPerfectTargetDelta
+                ; расчёт дельты направления
+                CALL Utils.GetDeltaTarget
                 JR NC, .Fail                                                    ; неудачая точка назначения
 
                 LD A, E
                 OR D
                 JR Z, .Complite                                                 ; если позиция юнита совподает с позицией WayPoint
                                                                                 ; поворот не требуется
-
                 ; ---------------------------------------------
-                ; IX - pointer to FSpriteLocation (2)
                 ; D - dY
                 ; E - dX
                 ; ---------------------------------------------
 
-                ; restor register IX
-                DEC IXH                                                         ; FUnitState        (1)
-                LD A, (IX + FUnitState.Direction)
+                LD A, (IX + FUnit.Direction)
                 JP Utils.Turn.Down                                              ; вернёт флаг успешности
 
-.Fail           DEC IXH                                                         ; FUnitState        (1)
+.Fail           RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
 
-                RES FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; сброс состояния перемещения/поворота
-
-                OR A                                                            ; неудачное выполнение
+                ; неудачное выполнение
+                OR A
                 RET
 
-.IsMoveTo       DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation   (2)
-.Complite       DEC IXH                                                         ; FUnitState        (1)
+.IsMoveTo       ; счётчик указан на перемещение
+.Complite       ; юнит повернулся до требуемого направления
+                RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
 
-                RES FUSF_MOVE_BIT, (IX + FUnitState.State)                      ; сброс состояния перемещения/поворота
-
-                SCF                                                             ; удачное выполнение
+                ; удачное выполнение
+                SCF
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_TURN_TO_

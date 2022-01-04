@@ -5,6 +5,7 @@
                 module MEMCPY
 
                 include "MemCopy.asm"
+                include "MemCopyPages.asm"
                 include "Tilemap.asm"
 
                 endmodule

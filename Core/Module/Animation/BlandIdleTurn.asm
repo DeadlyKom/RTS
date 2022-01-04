@@ -3,54 +3,41 @@
                 define _CORE_MODULE_ANIMATION_BLAND_IDLE_TURN_
 
 ; -----------------------------------------
+; бленд анимации простоя
 ; In:
-;   IX - pointer to FUnitState (1)
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ; Note:
-;   requires included memory page
 ; -----------------------------------------
-Idle:               ;
+Idle:               ; расчитаем вероятность поворота
                     CALL Utils.Math.Rand8
                     CP #10                                                      ; чем меньше тем чаще происходит поворот
                     RET NC
                     EX AF, AF'                                                  ; сохраним рандомное число
-
-                    INC IXH                                                     ; FSpriteLocation   (2)
-                    INC IXH                                                     ; FUnitTargets      (3)
-                    INC IXH                                                     ; FUnitAnimation    (4)
                     
-                    LD A, (IX + FUnitAnimation.CounterDown)
+                    ; уменьшим счётчик поворота
+                    LD A, (IX + FUnit.CounterDown)
                     LD C, A
                     AND FUAF_IDLE_COUNT_MASK
-                    SUB %00100000
-                    JR C, .Turn
+                    SUB FUAF_IDLE_DECREMENT
+                    JR C, .Turn                                                 ; счётчик обнулился
 
                     ;
                     LD A, C
-                    SUB %00100000
-                    LD (IX + FUnitAnimation.CounterDown), A
-
-                    ; завершение работы
-                    DEC IXH                                                     ; FUnitTargets      (3)
-                    DEC IXH                                                     ; FSpriteLocation   (2)
-                    DEC IXH                                                     ; FUnitState        (1)
+                    SUB FUAF_IDLE_DECREMENT
+                    LD (IX + FUnit.CounterDown), A
 
                     RET
                     
-.Turn               ;
+.Turn               ; обновим счётчик поворота юнита в состоянии простоя
                     LD A, C
-                    AND FUAF_IDLE_COUNT_MASK_INV
+                    ; AND FUAF_IDLE_COUNT_MASK_INV                              ; не требуется т.к. тупо перезапишим OR новое значение
                     OR FUAF_IDLE_COUNT_MASK
-                    LD (IX + FUnitAnimation.CounterDown), A
-
-                    ; завершение работы
-                    DEC IXH                                                     ; FUnitTargets      (3)
-                    DEC IXH                                                     ; FSpriteLocation   (2)
-                    DEC IXH                                                     ; FUnitState        (1)
+                    LD (IX + FUnit.CounterDown), A
                     
-                    ;
-                    LD A, (IX + FUnitState.Direction)
+                    ; получим текущий поворот
+                    LD A, (IX + FUnit.Direction)
                     RRA
                     RRA
                     RRA
@@ -64,9 +51,7 @@ Idle:               ;
                     CCF
                     ADC A, #00
 
-                    CALL Animation.TurnDown
-
-                    RET
-
+                    ; вращение нижней части/всего объекта
+                    JP Animation.TurnDown
 
                     endif ; ~_CORE_MODULE_ANIMATION_BLAND_IDLE_TURN_

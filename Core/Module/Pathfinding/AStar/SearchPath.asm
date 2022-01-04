@@ -15,8 +15,6 @@ SearchPath:     ; ---------------------------------------------
                                                                                 ; с последующим перерисованием первого экрана
                                                                                 ; запрещает обновление данных на экране (при скролле)
 
-                CALL Memory.SetPage1                                            ; включить страницу
-
                 ; clear temp buffer
                 LD DE, #0000
                 LD HL, PathfindingBuffer | FPFInfo.Flags + #0100
@@ -98,8 +96,8 @@ SearchPath:     ; ---------------------------------------------
                 
                 JP AddToOpenList.First
 
-.Complite       CALL Step
-
+.Complite       SET_PAGE_TILEMAP
+                CALL Step
                 CALL Tilemap.ForceScreen                                        ; обновление экранов
 
                 RET

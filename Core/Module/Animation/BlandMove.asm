@@ -5,7 +5,7 @@
 ; -----------------------------------------
 ; бленд анимаций перемещения
 ; In:
-;   IX - pointer to FUnitState (1)
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ; Note:
@@ -13,23 +13,9 @@
 ; -----------------------------------------
 MoveDown:       ; получение адреса анимации перемещения для текущего типа юнита
                 LD HL, (AnimMoveTableRef)
-                LD A, (IX + FUnitState.Type)                                    ; A = Type
-                AND %00011111
-                ADD A, A
-                ADD A, L
-                LD L, A
-                JR NC, $+3
-                INC H
+                CALL Utils.GetAdrInTable
 
-                ; чтение адреса
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                EX DE, HL
-
-                INC IXH                                                         ; FSpriteLocation     (2)
-
-                ;
+                ; получить проходимость тайла
                 CALL Utils.Surface.GetPassability
                 ADD A, L
                 LD L, A
@@ -38,9 +24,6 @@ MoveDown:       ; получение адреса анимации переме�
 
                 ; HL - указывает на текущий FAnimation
                 LD D, (HL)
-
-                INC IXH                                                         ; FUnitTargets      (3)
-                INC IXH                                                         ; FUnitAnimation    (4)
 
                 ; ; проверка перемещения по диагонали
                 ; LD A, (IX + FUnitAnimation.Flags)
@@ -56,30 +39,24 @@ MoveDown:       ; получение адреса анимации переме�
                 LD A, D
                 OR A
                 SCF
-                JR Z, .Exit
+                RET Z
 
                 ; проверка на инициализацию счётчика после перемещения
-                BIT FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)
+                BIT FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 JR Z, .FirstInit
 
                 ; проверка на первичную инициализацию (мб вообще убрать её!)
-                LD E, (IX + FUnitAnimation.CounterDown)                         ; получим значение текущего счётчика
+                LD E, (IX + FUnit.CounterDown)                                  ; получим значение текущего счётчика
                 LD A, E
-                AND %00011111
-                JR Z, .Init
+                AND FUAF_COUNT_DOWN_MASK
+                JR Z, .Init                                                     ; счётчик равен нулю, проинициализируем его
 
                 DEC A
 
                 JR NZ, $+3
                 SCF
 
-.Set            LD (IX + FUnitAnimation.CounterDown), A                         ; сохраним значение
-
-.Exit           ; завершение работы
-                DEC IXH                                                         ; FUnitTargets      (3)
-                DEC IXH                                                         ; FSpriteLocation   (2)
-                DEC IXH                                                         ; FUnitState        (1)
-
+.Set            LD (IX + FUnit.CounterDown), A                                  ; сохраним значение
                 RET
 
 .FirstInit      LD A, D                                                         ; A - новый счётчик
@@ -89,6 +66,5 @@ MoveDown:       ; получение адреса анимации переме�
 .Init           LD A, D                                                         ; A - новый счётчик
                 OR A
                 JR .Set
-
 
                 endif ; ~_CORE_MODULE_ANIMATION_BLAND_MOVE_

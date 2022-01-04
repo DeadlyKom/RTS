@@ -3,6 +3,7 @@
                             define _GAME_INCLUDE_
 
                             include "../Config.inc"
+                            include "../TRDOSConfig.inc"
                             include "AI.inc"
                             include "Color.inc"
                             include "Debug.inc"
@@ -20,24 +21,18 @@
                             define BUILD 1
 
                             define TRD_FILENAME "Torn Metal.trd"                ; имя образа TRD
-StackTop                    EQU #5BFB                                           ; расположение стека
-MemoryPageIDRef             EQU #5BFC                                           ; ID
-MemoryPageRef               EQU PORT_7FFD; #5BFE                                ; адрес хранения номера странички
-BorderStorageStackRef       EQU #5BFF                                           ; адрес бубера хранения цвета бордера
+                            define MAP_INFO_FILENAME "MapsInfo.C"               ; имя файла информации о карте
+                            define MAP_FILENAME "Map.C"                         ; имя файла карте
+StackTop                    EQU Page_5                                          ; расположение стека
+MemoryPageRef               EQU PORT_7FFD;                                      ; адрес хранения номера странички
 InterruptVectorAddress      EQU #8181                                           ; адрес вектора прерывания
-TilemapPtr                  EQU #C000                                           ; адрес тайловой карты
-MapStructure                EQU MemoryPage_1.Map.End                            ; адрес структуры карты
 
-WaypointsSequencePtr        EQU Page_1.WaypointsSequence                        ; адрес последовательностей Way Point'ов (2048 байт)
-WaypointArrayPtr            EQU Page_1.WaypointArray                            ; адрес массива Way Point'ов (768 байт)
-SurfacePropertyPtr          EQU Page_1.SurfaceProperty                          ; адрес свойст тайлов (128 байт)                                                    [128] free
-PathfindingQueryQueueFirst  EQU SurfacePropertyPtr + 0x80                       ; адрес очереди запросов поиска пути (128 байт)                                     [128]
-PathfindingQueryQueueLast   EQU SurfacePropertyPtr + 0xFF                       ; адрес очереди запросов поиска пути (128 байт)                                     [128]
-SizePathfindingQueryQueue   EQU 128                                             ; размер очереди запросов поиска пути
-MaskPathfindingQueryQueue   EQU SizePathfindingQueryQueue - 1                   ; маска очереди запросов поиска пути
-TilemapTableAddress         EQU Page_1.TilemapTableAdr                          ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
-UnitArrayPtr                EQU Page_1.UnitArray                                ; адрес масива юнитов (1024 байта 64 юнита)
+; file system
+FileSystemPtr               EQU Page_1.FileSystemPtr                            ; адрес блока работы с загрузкой/сохранением
+
+;
 SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
+SharedBufferSize            EQU 256                                             ; размер общего буфера
 RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
 SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
 SizeSelectedBuffer          EQU 32                                              ; размер буфера выделенных юнитов
@@ -76,11 +71,10 @@ AI_UpdateFrequencyRef       EQU Game.AI_UpdateFreq                              
 AI_NumUnitsRef              EQU Game.AI_NumUnits                                ; число юнитов
 
 ; Tilemap
+TilemapPtr                  EQU #C000                                           ; адрес тайловой карты
+TilemapMaxSize              EQU 8192                                            ; максимально доступный размер для карты
 TilesOnScreenX              EQU 16                                              ; количество тайлов на экране по горизонтали
 TilesOnScreenY              EQU 12                                              ; количество тайлов на экране по вертикали
-
-TilemapTableAddressRef      EQU Game.AddressTable                               ; адрес таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
-TilemapTableHighAddressRef  EQU Game.AddressTable + 1                           ; старший байт таблицы тайловой карты (512 байт), для расчёта адреса по позиции тайла (не использовать умножение)
 TilemapRef                  EQU Game.TilemapPtr                                 ; указатель на адрес тайловой карты
 TilemapSizeRef              EQU Game.TilemapSize                                ; указатель на адрес размера карты
 TilemapWidth                EQU Game.TilemapSize.X                              ; ширина тайловой карты (структура FMapSize)
@@ -90,22 +84,26 @@ TilemapHeight_NEG           EQU Game.TilemapSize_NEG.Y                          
 TilemapOffsetRef            EQU Game.TilemapOffset                              ; указатель смещения тайловой карты
 TilemapOffsetWidth          EQU Game.TilemapOffset.X                            ; смещение в тайловой карте по горизонтали (структура FLocation)
 TilemapOffsetHeight         EQU Game.TilemapOffset.Y                            ; смещение в тайловой карте по вертикали (структура FLocation)
+TilemapTableAddress         EQU Page_1.TilemapTableAdr                          ; адрес таблицы тайловой карты, для расчёта адреса используя пизиции тайла X и Y (не использовать умножение)
+TilemapTableSize            EQU 512                                             ; размер таблицы тайлов карты для расчёта адреса используя пизиции тайла X и Y (не использовать умножение)
 
-SurfacePropertyRef          EQU Game.SurfacePropertyPtr                         ; адрес таблицы свойст тайлов (128 байт)                    - 1 страница
-HighSurfacePropertyRef      EQU Game.SurfacePropertyPtr + 1                     ; старший байт адреса таблицы свойст тайлов (128 байт)      - 1 страница
+; surface
+SurfacePropertyPtr          EQU Page_1.SurfaceProperty                          ; адрес свойст тайлов (128 байт)
+SurfecePropertySize         EQU 128 + 128                                       ; размер свойства тайлов (128 тайлов)                       [128] free
+; SurfacePropertyRef          EQU Game.SurfacePropertyPtr                         ; адрес таблицы свойст тайлов (128 байт)                    - 1 страница
+; HighSurfacePropertyRef      EQU Game.SurfacePropertyPtr + 1                     ; старший байт адреса таблицы свойст тайлов (128 байт)      - 1 страница
 WaypointCounterRef          EQU Game.WaypointCounter                            ; адрес счётчика элементов waypoint в массиве
-WaypointArrayRef            EQU Game.WaypointArray                              ; адрес массива точек пути
-HighWaypointArrayRef        EQU Game.WaypointArray + 1                          ; старший байт адрес массива точек пути
+; WaypointArrayRef            EQU Game.WaypointArray                              ; адрес массива точек пути
+; HighWaypointArrayRef        EQU Game.WaypointArray + 1                          ; старший байт адрес массива точек пути
 
 ; brhavior
-BehaviorTableRef            EQU Game.BehaviorTable                              ; адрес таблицы поведения юнитов
+; BehaviorTableRef            EQU Game.BehaviorTable                              ; адрес таблицы поведения юнитов
 
 ; animation
 AnimTurnUpTableRef          EQU Game.AnimTurnUpTable                            ; адрес таблицы анимации поворотов (вверх)
 AnimTurnDownTableRef        EQU Game.AnimTurnDownTable                          ; адрес таблицы анимации поворотов (низ)
 AnimMoveTableRef            EQU Game.AnimMoveTable                              ; адрес таблицы анимации перемещения
 
-UnitArrayRef                EQU Game.UnitArray                                  ; адрес юнитов
 TopRowOffsetFOW             EQU MemoryPage_7.FOW.ROW_UP                         ; смещение в буфере верхней строки FOW
 BottomRowOffsetFOW          EQU MemoryPage_7.FOW.ROW_DOWN                       ; смещение в буфере нижней строки FOW
 
@@ -134,10 +132,19 @@ PathfindingBuffer           EQU Page_5.PathfindingBuffer                        
 PathfindingOpenListBuffer   EQU Page_5.PathfindingOLBuffer                      ; адрес буфера для хранения координат открытого списка (max 512 байт)
 CountFreeQueryQueueRef      EQU Pathfinding.Queue.PushUnit.CountFree            ; адрес переменной, сколько доступно в очереди запросов поиска пути
 FoundPathToUnitRef          EQU Pathfinding.AStar.GetFoundPath.UnitIdx          ; индекс юнита * 4, для которого строится путь
+PathfindingQueryQueueFirst  EQU SurfacePropertyPtr + 0x80                       ; адрес очереди запросов поиска пути (128 байт)             [128]
+PathfindingQueryQueueLast   EQU SurfacePropertyPtr + 0xFF                       ; адрес очереди запросов поиска пути (128 байт)             [128]
+SizePathfindingQueryQueue   EQU 128                                             ; размер очереди запросов поиска пути
+MaskPathfindingQueryQueue   EQU SizePathfindingQueryQueue - 1                   ; маска очереди запросов поиска пути
 
 ; selection
 SelectRectStartRef          EQU DrawRectangle.Start                             ; адрес левой-верхней точки выбора рамкой (в пикселях)
 SelectRectEndRef            EQU DrawRectangle.End                               ; адрес правой-нижней точки выбора рамкой (в пикселях)
 NumberSelectedUnitRef       EQU Unit.Select.ScanRectSelect.NumSelected          ; адрес переменной, сколько элементов в буфере выбора
+
+; units
+UnitArrayPtr                EQU Page_1.UnitArray                                ; адрес массива юнитов
+MAX_UNIT_ARRAY              EQU 128                                             ; максимальное количество юнитов в массиве
+UNITS_STRUCTURE_SIZE        EQU MAX_UNIT_ARRAY * UNIT_SIZE                      ; размер массива всех доступных юнитов
 
                             endif ; ~_GAME_INCLUDE_

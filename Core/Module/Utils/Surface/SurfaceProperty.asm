@@ -27,24 +27,22 @@
 GetProperty:    LD A, (HL)                                                      ; A - номер тайла
                 AND %01111111
                 LD L, A
-                LD A, (HighSurfacePropertyRef)                                  ; TODO уростить формирование адреса до LD H, #00
-                LD H, A
+                LD H, HIGH SurfacePropertyPtr
                 LD A, (HL)                                                      ; A - характеристика тайла
                 
                 RET
 ; -----------------------------------------
 ; получить коллизию тайла
 ; In:
-;   IX - pointer to FSpriteLocation (2)
+;   IX - указывает на структуру FUnit
 ; Out:
 ;   A - значение коллизии
 ; Corrupt:
 ;   HL, AF
 ; Note:
-;   requires included memory page
 ; -----------------------------------------
 GetCollision:   ; расчёт адреса тайла в тайловой карте
-                LD DE, (IX + FSpriteLocation.TilePosition)
+                LD DE, (IX + FUnit.Position)
                 CALL Utils.Tilemap.GetAddressTilemap
 
                 CALL GetProperty                                                ; получим свойство тайла
@@ -54,17 +52,18 @@ GetCollision:   ; расчёт адреса тайла в тайловой ка�
 ; -----------------------------------------
 ; получить проходимость тайла
 ; In:
-;   IX - pointer to FSpriteLocation (2)
+;   IX - указывает на структуру FUnit
 ; Out:
 ;   A - значение проходимости (0 - 100%, 1 - 75%, 2 - 50%, 3 - 25%)
 ; Corrupt:
 ; Note:
-;   requires included memory page
 ; -----------------------------------------
 GetPassability: EXX
 
                 ; расчёт адреса тайла в тайловой карте
-                LD DE, (IX + FSpriteLocation.TilePosition)
+                LD DE, (IX + FUnit.Position)
+
+                SET_PAGE_TILEMAP                                                ; включить страницу тайловой карты
                 CALL Utils.Tilemap.GetAddressTilemap
 
                 CALL GetProperty                                                ; получим свойство тайла
@@ -74,6 +73,11 @@ GetPassability: EXX
                 RRA
                 RRA
                 AND %00000011
+
+                ; включить страницу массива юнитов
+                EX AF, AF'
+                SET_PAGE_UNITS_ARRAY
+                EX AF, AF'
 
                 EXX
 

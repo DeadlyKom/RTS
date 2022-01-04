@@ -10,17 +10,15 @@
 ; Out:
 ; Corrupt:
 ; Note:
-;   requires included memory page
 ; -----------------------------------------
 Generate:       ;
-                PUSH HL
-                PUSH DE
-                PUSH BC
-                PUSH AF
+                ; PUSH HL
+                ; PUSH DE
+                ; PUSH BC
+                ; PUSH AF
 
                 LD A, B
                 LD B, #00
-                ; LD HL, #0000
 
 .Loop           EX DE, HL
                 LD (HL), E
@@ -35,10 +33,10 @@ Generate:       ;
                 DEC A
                 JR NZ, .Loop
 
-                POP AF
-                POP BC
-                POP DE
-                POP HL
+                ; POP AF
+                ; POP BC
+                ; POP DE
+                ; POP HL
 
                 RET
 

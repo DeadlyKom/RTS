@@ -3,13 +3,14 @@
                 define _CORE_MODULE_AI_COMPOSITE_HANDLER_
 
 ; -----------------------------------------
-; run behavior tree
+; запуск behavior tree
 ; In:
+;   HL - адрес дерева поведения
 ; Out:
 ; Corrupt:
-;   HL, DE, BC, AF, AF'
+;   HL, DE, BC, AF, AF', IY
 ; -----------------------------------------
-HandlerRoot:    LD IY, .Next
+RunBTT:         LD IY, .Next
 .Next           LD A, (HL)
                 INC HL
                 LD C, (HL)

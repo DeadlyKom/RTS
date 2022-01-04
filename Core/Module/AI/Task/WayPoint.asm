@@ -5,43 +5,32 @@
 ; -----------------------------------------
 ; получение токи пути
 ; In:
-;   IX - pointer to FUnitState (1)
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ; Note:
-;   requires included memory page
 ; -----------------------------------------
-WayPoint:       INC IXH                                                         ; FSpriteLocation   (2)
-                INC IXH                                                         ; FUnitTargets      (3)
+WayPoint:       ; проверка что Way Point валиден
+                BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; бит валидности Way Point
+                JR NZ, .Successfully                                            ; текущий Way Point не валидный
 
-                ; проверка что Way Point валиден
-                BIT FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)
-                JR Z, .IsNotValid_WP                                            ; текущий Way Point не валидный
-
-.Successfully   DEC IXH                                                         ; FSpriteLocation   (2)
-                DEC IXH                                                         ; FUnitState        (1)
-
-                ; успешно найденый Way Point
-                SCF
-                RET
-
-                ; ---------------------------------------------
+.IsNotValid_WP  ; ---------------------------------------------
                 ; текущий Way Point стал невалидны (мб дошёл!)
                 ; ---------------------------------------------
-.IsNotValid_WP  BIT FUTF_VALID_IDX_BIT, (IX + FUnitTargets.Data)
+                BIT FUTF_VALID_IDX_BIT, (IX + FUnit.Data)                       ; бит валидности данных об индексе
                 JR Z, .IsNotValid_IDX                                           ; данные об индексе не валидны, 
                                                                                 ; дальнейшего пути нет!
 
                 ; ---------------------------------------------
                 ; проверка вставки временного WayPoint
                 ; ---------------------------------------------
-                BIT FUTF_INSERT_BIT, (IX + FUnitTargets.Data)
+                BIT FUTF_INSERT_BIT, (IX + FUnit.Data)                          ; бит вставки (если 1 WP хранит временный путь, увеличивать смещение не нужно)
                 JR NZ, .InsertWP                                                ; был временно вставлен WayPoint
 
                 ; ---------------------------------------------
                 ; итерация к следующему WayPoint
                 ; ---------------------------------------------
-                LD A, (IX + FUnitTargets.Data)
+                LD A, (IX + FUnit.Data)
                 AND FUTF_MASK_OFFSET
                 DEC A                                                           ; уменьшение счётчика
 
@@ -55,67 +44,67 @@ WayPoint:       INC IXH                                                         
                 ; расчёт адреса WayPoint
 .CalcAdrWP      ADD A, HIGH WaypointsSequencePtr
                 LD H, A
-                LD L, (IX + FUnitTargets.Idx)
+                LD L, (IX + FUnit.Idx)
                 
                 ; проверка на наличие валидных значений в массиве (0 - пустота)
                 LD A, (HL)
                 OR A
                 JR Z, .CheckLoop                                                ; проверка на зацикленность
 
-                DEC (IX + FUnitTargets.Data)                                    ; уменьшить счётчик
+                DEC (IX + FUnit.Data)                                           ; уменьшить счётчик
 
                 ; копирование WayPoint во внутреннее хранилище
                 LD L, A
-.CopyWP         LD A, (HighWaypointArrayRef)
-                LD H, A
-                INC H                                                           ; первое значение, счётчик
+.CopyWP         LD H, HIGH WaypointArrayPtr + 1                                 ; первое значение, счётчик
                 LD E, (HL)
                 INC H
                 LD D, (HL)
-                ; JR $
-                LD (IX + FUnitTargets.WayPoint.X), E
-                LD (IX + FUnitTargets.WayPoint.Y), D
 
-                SET FUTF_VALID_WP_BIT, (IX + FUnitTargets.Data)                 ; указан новый WayPoint
-                INC IXH                                                         ; FUnitAnimation    (4)
-                RES FUAF_TURN_MOVE, (IX + FUnitAnimation.Flags)                 ; необходимо переинициализировать анимацию перемещения
-                DEC IXH                                                         ; FUnitTargets      (3)
-                JR .Successfully
+                LD (IX + FUnit.WayPoint), DE
 
-                ; ---------------------------------------------
+                ; указан новый WayPoint
+                SET FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; бит валидности Way Point
+                ; необходимо переинициализировать анимацию перемещения
+                RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+
+.Successfully   ; успешно найденый Way Point
+                SCF
+                RET
+
+.CheckLoop      ; ---------------------------------------------
                 ; проверка на зацикленность WayPoint
                 ; ---------------------------------------------
-.CheckLoop      BIT FUTF_LOOP_BIT, (IX + FUnitTargets.Data)
+                BIT FUTF_LOOP_BIT, (IX + FUnit.Data)                            ; бит зациклености путей
                 JR Z, .FinishWayPoint                                           ; все Way WayPoints пройдены
 
-                LD A, (IX + FUnitTargets.Data)
+                LD A, (IX + FUnit.Data)
                 OR FUTF_MASK_OFFSET
-                LD (IX + FUnitTargets.Data), A
+                LD (IX + FUnit.Data), A
 
                 ; копирование WayPoint во внутреннее хранилище
                 LD H, HIGH WaypointsSequencePtr + FUTF_MASK_OFFSET
-                LD L, (IX + FUnitTargets.Idx)
+                LD L, (IX + FUnit.Idx)
                 LD L, (HL)
                 JR .CopyWP
 
-.FinishWayPoint RES FUTF_VALID_IDX_BIT, (IX + FUnitTargets.Data)                ; ToDo сбросим состояние всей последовательности
+.FinishWayPoint ; ToDo сбросим состояние всей последовательности
+                RES FUTF_VALID_IDX_BIT, (IX + FUnit.Data)                       ; бит валидности данных об индексе
 
-.IsNotValid_IDX DEC IXH                                                         ; FSpriteLocation   (2)
-                DEC IXH                                                         ; FUnitState        (1)
-                
-                OR A                                                            ; неудачное выполнение
+.IsNotValid_IDX ; неудачное выполнение
+                OR A                                                            
                 RET
 
-                ; ---------------------------------------------
+.InsertWP       ; ---------------------------------------------
                 ; ранее была вставка временного WayPoint
                 ; ---------------------------------------------
-.InsertWP       RES FUTF_INSERT_BIT, (IX + FUnitTargets.Data)                   ; бит вставки обнулить
+                ; бит вставки обнулить
+                RES FUTF_INSERT_BIT, (IX + FUnit.Data)                          ; бит вставки (если 1 WP хранит временный путь, увеличивать смещение не нужно)
 
-                LD A, (IX + FUnitTargets.Data)
+                LD A, (IX + FUnit.Data)
                 AND FUTF_MASK_OFFSET
                 ADD A, HIGH WaypointsSequencePtr
                 LD H, A
-                LD L, (IX + FUnitTargets.Idx)
+                LD L, (IX + FUnit.Idx)
                 LD L, (HL)
 
                 JR .CopyWP

@@ -27,9 +27,7 @@ Init:               LD HL, WaypointsSequenceBitmapPtr + SizeWaypointsSequenceBit
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-Create:             
-                    ; JR$
-                    CALL FindFreeElement                                        ; Out:
+Create:             CALL FindFreeElement                                        ; Out:
                                                                                 ;   HL   - адрес свободной последовательности
                                                                                 ;   L, A - индекс последовательности
                                                                                 ;   если флаг С сброшен, найти свободную не удалось
@@ -93,23 +91,21 @@ AddWaypoint:        ; ---------------------------------------------
                     RET
 ; -----------------------------------------
 ; In:
-;   IX - FUnitTargets           (3)
+;   IX - указывает на структуру FUnit
 ; Out:
 ;   DE - waypoint location (tile center) (D - y, E - x)
 ; Corrupt:
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetCurrentWaypoint: LD A, (IX + FUnitTargets.Data)
+GetCurrentWaypoint: LD A, (IX + FUnit.Data)
                     AND FUTF_MASK_OFFSET
                     ADD A, HIGH WaypointsSequencePtr
                     LD H, A
-                    LD L, (IX + FUnitTargets.Idx)
+                    LD L, (IX + FUnit.Idx)
                     LD L, (HL)
 
-                    LD A, (HighWaypointArrayRef)
-                    LD H, A
-                    INC H                                                       ; первое значение, счётчик
+                    LD H, HIGH WaypointArrayPtr + 1                             ; первое значение, счётчик
                     ; LD E, (HL)
                     ; INC H
                     ; LD D, (HL)
@@ -119,7 +115,7 @@ GetCurrentWaypoint: LD A, (IX + FUnitTargets.Data)
 ; -----------------------------------------
 ; get the last waypoint into an array
 ; In:
-;   IX - FUnitTargets           (3)
+;   IX - указывает на структуру FUnit
 ; Out:
 ;   HL - pointer to waypoint location (tile center)
 ; Corrupt:
@@ -127,13 +123,13 @@ GetCurrentWaypoint: LD A, (IX + FUnitTargets.Data)
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetLastWaypoint:    LD A, (IX + FUnitTargets.Data)
+GetLastWaypoint:    LD A, (IX + FUnit.Data)
                     AND FUTF_MASK_OFFSET
                     LD B, A
                     INC B
                     ADD A, HIGH WaypointsSequencePtr
                     LD H, A
-                    LD L, (IX + FUnitTargets.Idx)
+                    LD L, (IX + FUnit.Idx)
 
 .NextIndex          LD A, (HL)
                     OR A
@@ -143,14 +139,13 @@ GetLastWaypoint:    LD A, (IX + FUnitTargets.Data)
 
 .IsEmpty            INC H
                     LD L, (HL)
-                    LD A, (HighWaypointArrayRef)
-                    LD H, A
+                    LD H, HIGH WaypointArrayPtr
                     RET
 
 ; -----------------------------------------
 ; add unit to sequence
 ; In:
-;   A - index unit * 4
+;   A - индекс юнита
 ;   C  - флаги
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
@@ -170,23 +165,15 @@ GetLastWaypoint:    LD A, (IX + FUnitTargets.Data)
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-AddUnit:            LD HL, (UnitArrayRef)
-                    ; ADD A, A
-                    ; ADD A, A
-                    ADD A, L
-                    LD L, A
+AddUnit:            ; расчёт смещения по индексу юнита
+                    CALL Utils.GetAdrUnit
 
-.UnitAddressToHL    ; HL - FUnitState (1)
-                    INC H                                                       ; FSpriteLocation     (2)
-                    INC H                                                       ; FUnitTargets      (3)
+.UnitAddressToIX    ; IX - указывает на структуру FUnit
+                    LD (IX + FUnit.Data), C
 
-                    INC L                                                       ; FUnitTargets.WayPoint.Y
-                    INC L                                                       ; FUnitTargets.Data
-                    LD (HL), C
+.IndexSequence      EQU $+3
+                    LD (IX + FUnit.Idx), #00
 
-                    INC L                                                       ; FUnitTargets.Idx
-.IndexSequence      EQU $+1
-                    LD (HL), #00
                     RET
 
 ; -----------------------------------------

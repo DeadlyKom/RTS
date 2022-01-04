@@ -127,6 +127,8 @@ PopUnit:        LD A, (PushUnit.CountFree)
                 ADD A, L
                 LD L, A
 
+                ; включим страницу с данными о очереди
+                SET_PAGE_TILEMAP
                 LD A, (HL)
 
                 RET

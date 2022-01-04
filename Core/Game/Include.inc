@@ -6,25 +6,35 @@
 
                     include "EntryPoint.asm"
                     include "Initialize.asm"
+                    include "LoadMap.asm"
                     include "Loop.asm"
                     include "Music.asm"
+
+; tilemap
+TilemapSize:        FMapSize 64, 64
+TilemapSize_NEG:    FMapSize -64, -64
+
+; animation
+AnimTurnUpTable:    DW #0000                                                    ; адрес таблицы анимации поворотов (вверх)
+AnimTurnDownTable:  DW #0000                                                    ; адрес таблицы анимации поворотов (низа)
+AnimMoveTable:      DW #0000                                                    ; адрес таблицы анимации перемещения
+
+
 ; TilemapAddress:     DW #0000
-AddressTable:       DW #0000
-SurfacePropertyPtr: DW #0000
+; AddressTable:       DW #0000
+; SurfacePropertyPtr: DW #0000
 WaypointCounter:    DB #00
 WaypointArray:      DW #0000
 TilemapPtr:         DW #0000
 UnitArrayPtr:       DW #0000
 TilemapOffset:      FLocation 0, 0
-TilemapSize:        FMapSize 64, 64
-TilemapSize_NEG:    FMapSize -64, -64
+
+
 AI_UpdateFreq:      DB #00
 AI_NumUnits:        DB #00
 BehaviorTable:      DW #0000
-AnimTurnUpTable:    DW #0000
-AnimTurnDownTable:  DW #0000
-AnimMoveTable:      DW #0000
-UnitArray:          DW #0000
+
+; UnitArray:          DW #0000
 FrameFlags:         DB #00
 GameplayState:      DB #00
 InputState:         DB #00

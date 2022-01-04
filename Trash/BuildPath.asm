@@ -16,7 +16,7 @@ BuildPath:          ; создать цепочку waypoints
                     JR C, $
 
                     ; инициализация юнита
-                    LD HL, (UnitArrayRef)
+                    LD HL, UnitArrayPtr
                     LD A, L
                     LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_MASK_OFFSET
                     CALL Utils.WaypointsSequencer.AddUnit

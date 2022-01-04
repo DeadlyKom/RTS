@@ -5,10 +5,11 @@
 ; ----------------------------------------------------------------------------------------
 ; sprite address calculation
 ; In:
-;   DE - адрес структуры FUnitState
+;   DE - адрес структуры FUnitState                 !!!!!!!
+;   IX - указывает на структуру FUnit
 ; Out:
 ;   HL - указывает на адрес информации о спрайте
-;   DE - DE + 3
+;   DE - DE + 3                                     !!!!!!
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
@@ -40,26 +41,27 @@
 ;
 ; ----------------------------------------------------------------------------------------
 SpriteInfo:     ; расчёт только нижнего (верхний не учитывается)
-                LD A, (DE)                                  ; behavior
-                AND %00000110
+                
+                LD A, (IX + FUnit.State)
+                AND FUSF_MOVE | FUSF_ATTACK
                 LD C, A
-                INC E
-                LD A, (DE)                                  ; direction
-                AND %00111000
+
+                LD A, (IX + FUnit.Direction)
+                AND DF_DOWN_MASK
                 OR C
                 ADD A, A        ; << 1
                 ADD A, A        ; << 1
                 LD C, A
-                INC E
-                LD A, (DE)                                  ; type
-                AND %00011111
+                
+                LD A, (IX + FUnit.Type)
+                AND IDX_UNIT_TYPE
                 RRA
                 RR C
                 RRA
                 RR C
                 LD B, A
                 LD HL, SpritesTable
-                ADD HL, BC                                  ; HL - указатель структуры спрайта FSprite
+                ADD HL, BC                                                      ; HL - указатель структуры спрайта FSprite
 
                 ToDo "SpriteInfo", "make 2 levels of animation indices"
                 
@@ -67,9 +69,7 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
                 LD C, (HL)
                 INC HL
                 LD B, (HL)
-                INC E
-                LD A, (DE)                                  ; animation
-                ; RRA
+                LD A, (IX + FUnit.Animation)
                 AND %00000011
                 LD L, A
                 LD H, #00
