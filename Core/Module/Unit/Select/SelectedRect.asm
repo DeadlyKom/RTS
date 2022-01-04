@@ -166,7 +166,7 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 JR C, .Next                                                     ; jump if TilePosition.X > EndX
 
                 ; добавим индекс выделенного юнита в список
-                CALL .GetIndexUnit
+                CALL Utils.GetIdxUnit
 
                 ; сохраним индекс
 .NumSelected    EQU $+1                                                         ; количество выделенных юнитов в буфере
@@ -211,13 +211,6 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 DEC (HL)
                 JP NZ, .Loop
 
-                RET
-
-.GetIndexUnit   LD A, IXL
-                ADD A, A
-                LD D, IXH
-                RL D
-                AND %01111111
                 RET
 
 .ProcessedUnits DB #00

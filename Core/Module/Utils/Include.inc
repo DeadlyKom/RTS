@@ -12,6 +12,7 @@
                 include "Unit/GetScreenAABB.asm"
                 include "Unit/GetAddressInTable.asm"
                 include "Unit/CalculateUnitAddress.asm"
+                include "Unit/CalculateIndexUnitByAddress.asm"
 
                 ; convert
                 include "Convert/ToTilemap.asm"

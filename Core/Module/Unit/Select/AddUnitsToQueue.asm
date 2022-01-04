@@ -9,9 +9,8 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-AddToQueue:     ; выставим необходимую страничку
-                ; CALL Memory.SetPage1
-                SET_PAGE_UNITS_ARRAY
+AddToQueue:     ; включим страницу с данными о очереди
+                SET_PAGE_TILEMAP
 
                 ; опредлим выбраны ли юниты
                 LD A, (NumberSelectedUnitRef)
