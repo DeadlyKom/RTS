@@ -93,8 +93,8 @@ SurfecePropertySize         EQU 128 + 128                                       
 ; SurfacePropertyRef          EQU Game.SurfacePropertyPtr                         ; адрес таблицы свойст тайлов (128 байт)                    - 1 страница
 ; HighSurfacePropertyRef      EQU Game.SurfacePropertyPtr + 1                     ; старший байт адреса таблицы свойст тайлов (128 байт)      - 1 страница
 WaypointCounterRef          EQU Game.WaypointCounter                            ; адрес счётчика элементов waypoint в массиве
-WaypointArrayRef            EQU Game.WaypointArray                              ; адрес массива точек пути
-HighWaypointArrayRef        EQU Game.WaypointArray + 1                          ; старший байт адрес массива точек пути
+; WaypointArrayRef            EQU Game.WaypointArray                              ; адрес массива точек пути
+; HighWaypointArrayRef        EQU Game.WaypointArray + 1                          ; старший байт адрес массива точек пути
 
 ; brhavior
 ; BehaviorTableRef            EQU Game.BehaviorTable                              ; адрес таблицы поведения юнитов

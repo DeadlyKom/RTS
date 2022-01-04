@@ -62,6 +62,8 @@ GetPassability: EXX
 
                 ; расчёт адреса тайла в тайловой карте
                 LD DE, (IX + FUnit.Position)
+
+                SET_PAGE_TILEMAP                                                ; включить страницу тайловой карты
                 CALL Utils.Tilemap.GetAddressTilemap
 
                 CALL GetProperty                                                ; получим свойство тайла
@@ -71,6 +73,11 @@ GetPassability: EXX
                 RRA
                 RRA
                 AND %00000011
+
+                ; включить страницу массива юнитов
+                EX AF, AF'
+                SET_PAGE_UNITS_ARRAY
+                EX AF, AF'
 
                 EXX
 

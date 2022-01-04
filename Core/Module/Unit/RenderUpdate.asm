@@ -9,10 +9,7 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-RefUnitOnScr:   ; включить страницу
-                SET_PAGE_UNITS_ARRAY
-
-                ; определение AABB выбранного юнита
+RefUnitOnScr:   ; определение AABB выбранного юнита
                 CALL Utils.AABB.GetScreen
                 RET C
 

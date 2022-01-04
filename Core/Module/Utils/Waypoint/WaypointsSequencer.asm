@@ -27,9 +27,7 @@ Init:               LD HL, WaypointsSequenceBitmapPtr + SizeWaypointsSequenceBit
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-Create:             
-                    ; JR$
-                    CALL FindFreeElement                                        ; Out:
+Create:             CALL FindFreeElement                                        ; Out:
                                                                                 ;   HL   - адрес свободной последовательности
                                                                                 ;   L, A - индекс последовательности
                                                                                 ;   если флаг С сброшен, найти свободную не удалось
@@ -107,9 +105,7 @@ GetCurrentWaypoint: LD A, (IX + FUnit.Data)
                     LD L, (IX + FUnit.Idx)
                     LD L, (HL)
 
-                    LD A, (HighWaypointArrayRef)
-                    LD H, A
-                    INC H                                                       ; первое значение, счётчик
+                    LD H, HIGH WaypointArrayPtr + 1                             ; первое значение, счётчик
                     ; LD E, (HL)
                     ; INC H
                     ; LD D, (HL)
@@ -143,8 +139,7 @@ GetLastWaypoint:    LD A, (IX + FUnit.Data)
 
 .IsEmpty            INC H
                     LD L, (HL)
-                    LD A, (HighWaypointArrayRef)
-                    LD H, A
+                    LD H, HIGH WaypointArrayPtr
                     RET
 
 ; -----------------------------------------

@@ -55,9 +55,7 @@ WayPoint:       ; проверка что Way Point валиден
 
                 ; копирование WayPoint во внутреннее хранилище
                 LD L, A
-.CopyWP         LD A, (HighWaypointArrayRef)
-                LD H, A
-                INC H                                                           ; первое значение, счётчик
+.CopyWP         LD H, HIGH WaypointArrayPtr + 1                                 ; первое значение, счётчик
                 LD E, (HL)
                 INC H
                 LD D, (HL)

@@ -14,7 +14,7 @@
 Init:               CALL Memory.SetPage1
                     XOR A
                     LD (WaypointCounterRef), A
-                    LD HL, (WaypointArrayRef)
+                    LD HL, WaypointArrayPtr
                     INC H
                     LD D, A
                     LD E, D
@@ -55,7 +55,7 @@ Init:               CALL Memory.SetPage1
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-FindAndAdd:         LD HL, (WaypointArrayRef)
+FindAndAdd:         LD HL, WaypointArrayPtr
                     INC L                                                       ; исключить 0 элемент
                     LD A, (WaypointCounterRef)
                     OR A
@@ -132,8 +132,7 @@ FindAndAdd:         LD HL, (WaypointArrayRef)
 ;   requires included memory page
 ; -----------------------------------------
 Set:                LD L, A
-                    LD A, (HighWaypointArrayRef)
-                    LD H, A
+                    LD H, HIGH WaypointArrayPtr
 
 .ByHL               LD (HL), #01
                     INC H
@@ -160,8 +159,7 @@ Set:                LD L, A
 ;   requires included memory page
 ; -----------------------------------------
 Remove:             LD L, A
-                    LD A, (HighWaypointArrayRef)
-                    LD H, A
+                    LD H, HIGH WaypointArrayPtr
                     DEC (HL)
                     JR Z, .DecreaseCounter
 
