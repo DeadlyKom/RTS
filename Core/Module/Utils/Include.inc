@@ -14,6 +14,10 @@
                 include "Unit/CalculateUnitAddress.asm"
                 include "Unit/CalculateIndexUnitByAddress.asm"
 
+                ; unit/visibility
+                include "Unit/Visibility/GetListUnits.asm"
+                include "Unit/Visibility/CheckRadius.asm"
+
                 ; convert
                 include "Convert/ToTilemap.asm"
                 include "Convert/Tilemap.asm"
