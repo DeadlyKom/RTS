@@ -11,7 +11,9 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
+MoveTo:         
+                ; JR$
+                SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
 
                 ; вызов счётчика анимации перемещения
                 CALL Animation.MoveDown

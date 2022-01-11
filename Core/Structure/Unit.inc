@@ -9,7 +9,7 @@ Type            DB #00                                                          
 State           DB #00                                                          ; 1 byte (состояния поведения)
 Position        FLocation                                                       ; 2 bytes (позиция в тайлах)
 Offset          FLocation                                                       ; 2 bytes (смещение относительно тайла)
-WayPoint        FLocation                                                       ; 2 bytes (позиция Way Point)
+Target        FLocation                                                         ; 2 bytes (позиция цели)
 ;
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+

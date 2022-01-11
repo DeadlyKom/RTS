@@ -35,7 +35,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                LD A, 116
+                LD A, 1
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
@@ -44,17 +44,18 @@ GameLoop:
                 INC HL
                 LD B, (HL)
                 INC HL
-                LD A, (HL)
+                LD E, (HL)
                 INC HL
 
                 PUSH HL
 
-                OR A
-                JR NZ, $+7
+                LD D, FUSE_RECONNAISSANCE | FUSF_RENDER
                 CALL Spawn.Unit
                 JR .Next
 
-                EX AF, AF' 
+                EX AF, AF'
+                LD D, FUSE_RECONNAISSANCE | FUSF_RENDER
+                LD E, #00
                 CALL Spawn.Unit
                 EX AF, AF'
 
@@ -161,17 +162,27 @@ GameLoop:
                 JP .MainLoop
 
 .Array          
-                DW #0202    : DB #00    ; 1
-                DW #1517    : DB #06    ; 2
-                DW #1520    : DB #05    ; 3
-                DW #1E20    : DB #04    ; 4
-                DW #1E17    : DB #03    ; 5
-                DW #1816    : DB #02    ; 6
+                DW #1117    : DB NEUTRAL_FACTION | INFANTRY    ; 0
+                DW #1217    : DB NEUTRAL_FACTION | INFANTRY    ; 0
+                DW #1317    : DB NEUTRAL_FACTION | INFANTRY    ; 0
+                DW #1417    : DB NEUTRAL_FACTION | INFANTRY    ; 0
+                DW #1517    : DB NEUTRAL_FACTION | INFANTRY    ; 0
+                DW #1617    : DB NEUTRAL_FACTION | INFANTRY    ; 0
+                DW #1717    : DB NEUTRAL_FACTION | INFANTRY    ; 0
 
-                DW #1719    : DB #FF    ; 7
-                DW #171A    : DB #FF    ; 8
-                DW #171B    : DB #FF    ; 9
-                DW #171C    : DB #FF    ; 10
+                DW #1427    : DB ENEMY_FACTION   | INFANTRY    ; 1
+
+                DW #0202    : DB #00    ; 1
+                DW #1517    : DB #00    ; 2
+                DW #1520    : DB #00    ; 3
+                DW #1E20    : DB #00    ; 4
+                DW #1E17    : DB #00    ; 5
+                DW #1816    : DB #00    ; 6
+
+                DW #1719    : DB #00    ; 7
+                DW #171A    : DB #00    ; 8
+                DW #171B    : DB #00    ; 9
+                DW #171C    : DB #00    ; 10
                 DW #171D    : DB #FF    ; 11
                 DW #171E    : DB #FF    ; 12
                 DW #1819    : DB #FF    ; 13

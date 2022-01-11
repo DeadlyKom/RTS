@@ -2,14 +2,19 @@
                             ifndef _STRUCTURE_UNIT_TYPE_
                             define _STRUCTURE_UNIT_TYPE_
 ; FUnitType.Type unit types
-Infantry                    EQU 0x00 << 1
+INFANTRY                    EQU 0x00 << 1
 Ganner                      EQU 0x01 << 1
 HeavyGunner                 EQU 0x02 << 1
 Sniper                      EQU 0x03 << 1
 Engineer                    EQU 0x04 << 1
 ArmoredCarrier              EQU 0x05 << 1
 Tank                        EQU 0x06 << 1
-IDX_UNIT_TYPE               EQU %00011110
+
+TYPE_FACTION_BIT            EQU 0x07                                            ; тип фракции (0 - нейтральная, 1 - враждебная)
+NEUTRAL_FACTION             EQU 0x00 << 7                                       ; нейтральная фракция
+ENEMY_FACTION               EQU 0x01 << 7                                       ; враждебная фракция
+FACTION_MASK                EQU %10000000
+IDX_UNIT_TYPE               EQU %00111110
 
 
 ; FUnitType.State state flags
@@ -29,7 +34,7 @@ FUSF_FLY                    EQU 1 << FUSF_FLY_BIT
 FUSF_REGENERATION           EQU 1 << FUSF_REGENERATION_BIT
 FUSE_RECONNAISSANCE         EQU 1 << FUSE_RECONNAISSANCE_BIT
 FUSF_RENDER                 EQU 1 << FUSF_RENDER_BIT_0 | 1 << FUSF_RENDER_BIT_1
-FUSF_IS_IDLE                EQU FUSF_MOVE | FUSF_ATTACK | FUSF_FLY
+FUSF_IS_IDLE                EQU FUSF_MOVE ; | FUSF_ATTACK | FUSF_FLY
 
 
 ; direction flags
@@ -49,12 +54,14 @@ FUTF_VALID_WP_BIT           EQU 0x07                                            
 FUTF_VALID_IDX_BIT          EQU 0x06                                            ; бит валидности данных об индексе
 FUTF_INSERT_BIT             EQU 0x05                                            ; бит вставки (если 1 WP хранит временный путь, увеличивать смещение не нужно)
 FUTF_LOOP_BIT               EQU 0x04                                            ; бит зациклености путей
-FUTF_NEXT_BIT               EQU 0x03                                            ; бит длины последовательности более 8, последний индекс (отсчёт от 7 до 0) в цепочке указывает индекс следующей цепочки
+; FUTF_NEXT_BIT               EQU 0x03                                            ; бит длины последовательности более 8, последний индекс (отсчёт от 7 до 0) в цепочке указывает индекс следующей цепочки
+FUTF_ENEMY_WP_BIT           EQU 0x03                                            ; бит отвечающий что значения Way Point хранят позицию цели для атаки
+; биты 0, 1, 2 заняты
 FUTF_VALID_WP               EQU 1 << FUTF_VALID_WP_BIT
 FUTF_VALID_IDX              EQU 1 << FUTF_VALID_IDX_BIT
 FUTF_INSERT                 EQU 1 << FUTF_INSERT_BIT
 FUTF_LOOP                   EQU 1 << FUTF_LOOP_BIT
-FUTF_NEXT                   EQU 1 << FUTF_NEXT_BIT
+; FUTF_NEXT                   EQU 1 << FUTF_NEXT_BIT
 FUTF_MASK_OFFSET            EQU 0x07                                            ; маска смещения в массиве последовательностей
 
 ; FUnitAnimation flags

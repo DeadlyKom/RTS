@@ -21,8 +21,8 @@ Unit:           ; определение адреса добавления но�
                 ; ---------------------------------------------
                 ; FUnitState                                (1)
                 ; ---------------------------------------------
-                LD DE,  FUSE_RECONNAISSANCE | FUSF_RENDER ; | FUSF_SELECTED
-                LD (IX + FUnit.State), E
+                ; LD DE,  FUSE_RECONNAISSANCE | FUSF_RENDER ; | FUSF_SELECTED
+                LD (IX + FUnit.State), D
 
                 ; рандом направления
                 EXX
@@ -30,8 +30,7 @@ Unit:           ; определение адреса добавления но�
                 EXX
 
                 LD (IX + FUnit.Direction), A
-                XOR A
-                LD (IX + FUnit.Type), A
+                LD (IX + FUnit.Type), E
                 LD A, 0
                 LD (IX + FUnit.Animation), A
 
@@ -52,8 +51,8 @@ Unit:           ; определение адреса добавления но�
 
                 ; инициализция
                 XOR A
-                LD (IX + FUnit.WayPoint.X), A
-                LD (IX + FUnit.WayPoint.Y), A
+                LD (IX + FUnit.Target.X), A
+                LD (IX + FUnit.Target.Y), A
                 LD (IX + FUnit.Data), A
                 LD (IX + FUnit.Idx), A
 

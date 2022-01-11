@@ -137,6 +137,15 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 LD A, #86 | FUSF_SELECTED_BIT << 3
                 LD (.SET_RES), A
 
+
+
+
+                ; RES FUSF_ATTACK_BIT, (IX + FUnit.State)
+                ; XOR A
+                ; LD (IX + FUnit.Animation), A
+
+
+
 .IsSingle       EQU $
                 SCF
                 JR NC, .Next
@@ -182,6 +191,8 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 ; SET FUSF_SELECTED_BIT, (HL)
                 LD A, #C6 | FUSF_SELECTED_BIT << 3
                 LD (.SET_RES), A
+
+                ; SET FUSF_ATTACK_BIT, (IX + FUnit.State)
 
 .IsSingle_      EQU $
                 SCF

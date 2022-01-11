@@ -14,9 +14,12 @@
                 include "Unit/CalculateUnitAddress.asm"
                 include "Unit/CalculateIndexUnitByAddress.asm"
 
+                ; RNG
+                include "RNG/Rand8.asm"
+
                 ; unit/visibility
-                include "Unit/Visibility/GetListUnits.asm"
                 include "Unit/Visibility/CheckRadius.asm"
+                include "Unit/Visibility/GetListUnits.asm"
 
                 ; convert
                 include "Convert/ToTilemap.asm"
@@ -29,8 +32,8 @@
                 ; surface
                 include "Surface/SurfaceProperty.asm"
 
-                ; RNG
-                include "RNG/Rand8.asm"
+                include "Projectile/Direction.asm"
+                include "Projectile/Direction.asm"
 
                 endmodule
 
