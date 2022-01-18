@@ -13,7 +13,8 @@
 ; -----------------------------------------
 MoveTo:         
                 ; JR$
-                SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
+                ; SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
+                CALL Utils.Unit.State.SetMOVE
 
                 ; вызов счётчика анимации перемещения
                 CALL Animation.MoveDown
@@ -142,18 +143,21 @@ MoveTo:
                 ; IX - pointer to FUnitTargets      (3)
                 ; ---------------------------------------------
 
-                LD HL, Utils.Tilemap.Radius_5
-                CALL Utils.Tilemap.Reconnaissance
+                LD HL, Utils.Unit.Tilemap.Radius_5
+                CALL Utils.Unit.Tilemap.Reconnaissance
 
                 RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; необходимо переинициализировать анимацию перемещения
                 RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
-                RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
+                ; RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
+                CALL Utils.Unit.State.SetIDLE
+                
 
                 ; успешность выполнения
                 SCF
                 RET
 
-.Fail           RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
+.Fail           ;RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
+                CALL Utils.Unit.State.SetIDLE
                 CALL SFX.BEEP.Fail                                              ; неудачая точка назначения
 
                 ; неудачное выполнение
@@ -221,8 +225,8 @@ ShiftLocation:  ;
                 DEC L
                 DEC L
                 INC (HL)
-                LD HL, Utils.Tilemap.Radius_3
-                CALL Utils.Tilemap.Reconnaissance
+                LD HL, Utils.Unit.Tilemap.Radius_3
+                CALL Utils.Unit.Tilemap.Reconnaissance
                 EXX
 
                 RET
@@ -239,8 +243,8 @@ ShiftLocation:  ;
                 DEC L
                 DEC L
                 DEC (HL)
-                LD HL, Utils.Tilemap.Radius_3
-                CALL Utils.Tilemap.Reconnaissance
+                LD HL, Utils.Unit.Tilemap.Radius_3
+                CALL Utils.Unit.Tilemap.Reconnaissance
                 EXX
 
                 RET

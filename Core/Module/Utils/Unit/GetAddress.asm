@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_UTILS_GET_ADDRESS_UNIT_
                 define _CORE_MODULE_UTILS_GET_ADDRESS_UNIT_
 ; -----------------------------------------
-; получить адрес 
+; получить адрес юнита
 ; In:
 ;   A  - индекс юнита
 ; Out:
@@ -10,7 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GetAdrUnit:     ; расчёт смещения по индексу юнита
+GetAddress:     ; расчёт смещения по индексу юнита
                 LD HL, .Value
                 LD (HL), A
                 XOR A

@@ -13,7 +13,7 @@
 ; -----------------------------------------
 MoveDown:       ; получение адреса анимации перемещения для текущего типа юнита
                 LD HL, (AnimMoveTableRef)
-                CALL Utils.GetAdrInTable
+                CALL Utils.Unit.GetAdrInTable
 
                 ; получить проходимость тайла
                 CALL Utils.Surface.GetPassability

@@ -7,7 +7,7 @@
 ; Corrupt:
 ; -----------------------------------------
 Direction:      ; инициализация
-                LD BC, #0101                                                    ; смещение по осям X и Y +1
+                LD BC, #FFFF                                                    ; смещение по осям X и Y +1
 
                 EXX
                 LD HL, PositionY
@@ -32,7 +32,7 @@ Direction:      ; инициализация
                 LD L, A
                 INC HL
 
-                LD B, #FF                                                       ; смещение по оси Y -1
+                LD B, #01                                                       ; смещение по оси Y -1
 
 .PositiveY      ; dY положительный
                 PUSH HL                                                         ; сохранение dY
@@ -55,25 +55,18 @@ Direction:      ; инициализация
                 LD L, A
                 INC HL
 
-                LD C, #FF                                                       ; смещение по оси X -1
+                LD C, #01                                                       ; смещение по оси X -1
 
 .PositiveX      ; dX положительный
                 POP DE                                                          ; востановим dY
-
+                
                 ; сравнение dX и dY
                 OR A
                 SBC HL, DE
-                EX AF, AF'
                 ADD HL, DE                                                      ; востановление dX
-                EX AF, AF'
                 JR C, .dY_More_dX                                               ; переход, если dY больше dX
 
                 EX DE, HL                                                       ; меняем местави dX и dY
-                
-                ; меняем местави смещения по осям
-                LD A, B
-                LD B, C
-                LD C, A
 
                 ;
                 EXX
@@ -107,9 +100,9 @@ Direction:      ; инициализация
                 LD (DeltaY), HL
 
                 ;
-                LD HL, (.EndX)
+                LD HL, (.StartX)
                 LD (PositionX), HL
-                LD HL, (.EndY)
+                LD HL, (.StartY)
                 LD (PositionY), HL
                 
                 RET
@@ -118,7 +111,9 @@ Move:           ; проверка завершения цикла
                 DEC HL
                 LD A, H
                 OR L
-                RET Z
+                JR NZ, $+4
+                SCF
+                RET
                 LD (Loop), HL
 
                 ;
@@ -170,6 +165,7 @@ Move:           ; проверка завершения цикла
                 DEC HL
                 LD (HL), E
                 
+                OR A
                 RET
 
 PositionX       DW #0000

@@ -18,7 +18,7 @@ TurnDown:       ; B - направление поворота (-1/1)
 
                 ; получение адреса анимации поворота для текущего типа юнита
                 LD HL, (AnimTurnDownTableRef)
-                CALL Utils.GetAdrInTable
+                CALL Utils.Unit.GetAdrInTable
                 CALL Utils.Surface.GetPassability
                 ADD A, L
                 LD L, A

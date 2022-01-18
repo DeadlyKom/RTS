@@ -10,9 +10,9 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GetIdxUnit:     EXX
+GetIndex:       EXX
                 ; расчёт индекса по адресу юнита
-                LD HL, GetAdrUnit.Value
+                LD HL, GetAddress.Value
                 LD A, IXL
                 LD (HL), A
                 LD A, IXH

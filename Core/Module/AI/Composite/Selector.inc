@@ -13,21 +13,25 @@ Selector:       PUSH HL
                 LD B, #00
                 ADD HL, BC
 
-                LD A, (HL)
-                OR A
-                JR Z, PostSelector
+                ; LD A, (HL)
+                ; OR A
+                ; JR Z, PostSelector
                 
                 LD DE, PostSelector
                 PUSH DE
                 JP (IY)
 PostSelector:   POP HL
                 RET C
-                ; EX AF, AF'
                 INC HL
                 LD A, (HL)
                 OR A
-                ; JR Z, .RET
                 RET Z
+                
+                RRA
+                JR C, $+4
+                JP (IY)
+                ; INC HL
+
                 PUSH HL
                 ; interruption can corrupt the values, so restore the return point
                 ; DEC SP
@@ -35,8 +39,5 @@ PostSelector:   POP HL
                 LD DE, PostSelector
                 PUSH DE
                 JP (IY)
-                
-; .RET            EX AF, AF'
-;                 RET
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_SELECTOR_

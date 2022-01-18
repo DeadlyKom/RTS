@@ -16,7 +16,7 @@
 ; -----------------------------------------
 Unit:           ; определение адреса добавления нового юнита
                 LD A, (AI_NumUnitsRef)            
-                CALL Utils.GetAdrUnit
+                CALL Utils.Unit.GetAddress
 
                 ; ---------------------------------------------
                 ; FUnitState                                (1)

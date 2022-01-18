@@ -12,7 +12,6 @@
                 include "TurnTo.asm"
                 include "Wait.asm"
                 include "WayPoint.asm"
-                include "AttackOrMoveTo.asm"
 
                 endmodule
 

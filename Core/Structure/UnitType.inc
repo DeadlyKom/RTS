@@ -2,8 +2,10 @@
                             ifndef _STRUCTURE_UNIT_TYPE_
                             define _STRUCTURE_UNIT_TYPE_
 ; FUnitType.Type unit types
-INFANTRY                    EQU 0x00 << 1
-Ganner                      EQU 0x01 << 1
+
+; сдвиг необходим для быстрого получить адрес из таблице по типу юнита (GetAdrInTable)
+Infantry                    EQU 0x00 << 1
+Gunner                      EQU 0x01 << 1
 HeavyGunner                 EQU 0x02 << 1
 Sniper                      EQU 0x03 << 1
 Engineer                    EQU 0x04 << 1
@@ -18,23 +20,33 @@ IDX_UNIT_TYPE               EQU %00111110
 
 
 ; FUnitType.State state flags
+
+UNIT_STATE_IDLE             EQU 0x00
+UNIT_STATE_MOVE             EQU 0x01
+UNIT_STATE_ATTACK           EQU 0x02
+UNIT_STATE_DEAD             EQU 0x03
+
+UNIT_STATE_MASK             EQU %00001110
+UNIT_STATE_INV_MASK         EQU (~UNIT_STATE_MASK) & 0xFF
+
+
 FUSF_SELECTED_BIT           EQU 0x00                                            ; объект выбран
-FUSF_MOVE_BIT               EQU 0x01                                            ; объект движется
-FUSF_ATTACK_BIT             EQU 0x02                                            ; объект атакует
-FUSF_FLY_BIT                EQU 0x03                                            ; объект в полёте
+; FUSF_MOVE_BIT               EQU 0x01                                            ; объект движется
+; FUSF_ATTACK_BIT             EQU 0x02                                            ; объект атакует
+; FUSF_FLY_BIT                EQU 0x03                                            ; объект в полёте
 FUSF_REGENERATION_BIT       EQU 0x04                                            ; объект в состоянии регенерации
 FUSE_RECONNAISSANCE_BIT     EQU 0x05                                            ; объект провёл разведку
 FUSF_RENDER_BIT_0           EQU 0x06                                            ; объект необходимо обновить (экран 0)
 FUSF_RENDER_BIT_1           EQU 0x07                                            ; объект необходимо обновить (экран 1)
 
 FUSF_SELECTED               EQU 1 << FUSF_SELECTED_BIT
-FUSF_MOVE                   EQU 1 << FUSF_MOVE_BIT
-FUSF_ATTACK                 EQU 1 << FUSF_ATTACK_BIT
-FUSF_FLY                    EQU 1 << FUSF_FLY_BIT
+; FUSF_MOVE                   EQU 1 << FUSF_MOVE_BIT
+; FUSF_ATTACK                 EQU 1 << FUSF_ATTACK_BIT
+; FUSF_FLY                    EQU 1 << FUSF_FLY_BIT
 FUSF_REGENERATION           EQU 1 << FUSF_REGENERATION_BIT
 FUSE_RECONNAISSANCE         EQU 1 << FUSE_RECONNAISSANCE_BIT
 FUSF_RENDER                 EQU 1 << FUSF_RENDER_BIT_0 | 1 << FUSF_RENDER_BIT_1
-FUSF_IS_IDLE                EQU FUSF_MOVE ; | FUSF_ATTACK | FUSF_FLY
+; FUSF_IS_IDLE                EQU FUSF_MOVE ; | FUSF_ATTACK | FUSF_FLY
 
 
 ; direction flags
@@ -50,14 +62,16 @@ DF_UP_LEFT                  EQU %111                                            
 DF_DOWN_MASK                EQU %00111000                                       ; маска направления (низ)
 
 ; FUnitTargets flags
-FUTF_VALID_WP_BIT           EQU 0x07                                            ; бит валидности Way Point
-FUTF_VALID_IDX_BIT          EQU 0x06                                            ; бит валидности данных об индексе
-FUTF_INSERT_BIT             EQU 0x05                                            ; бит вставки (если 1 WP хранит временный путь, увеличивать смещение не нужно)
-FUTF_LOOP_BIT               EQU 0x04                                            ; бит зациклености путей
+FUTF_VALID_WP_BIT           EQU 0x07                                            ; бит отвечающий, что значение Target не хранит корректный Way Point
+FUTF_ENEMY_BIT              EQU 0x06                                            ; бит отвечающий, что значения Target хранят позицию цели для атаки
+FUTF_VALID_IDX_BIT          EQU 0x05                                            ; бит валидности данных об индексе
+FUTF_INSERT_BIT             EQU 0x04                                            ; бит отвечающий, что произведена временная вставка значения в Target (т.е., увеличивать смещение не нужно, если это Way Point или иной цели)
+FUTF_LOOP_BIT               EQU 0x03                                            ; бит зациклености путей
 ; FUTF_NEXT_BIT               EQU 0x03                                            ; бит длины последовательности более 8, последний индекс (отсчёт от 7 до 0) в цепочке указывает индекс следующей цепочки
-FUTF_ENEMY_WP_BIT           EQU 0x03                                            ; бит отвечающий что значения Way Point хранят позицию цели для атаки
+
 ; биты 0, 1, 2 заняты
 FUTF_VALID_WP               EQU 1 << FUTF_VALID_WP_BIT
+FUTF_ENEMY                  EQU 1 << FUTF_ENEMY_BIT
 FUTF_VALID_IDX              EQU 1 << FUTF_VALID_IDX_BIT
 FUTF_INSERT                 EQU 1 << FUTF_INSERT_BIT
 FUTF_LOOP                   EQU 1 << FUTF_LOOP_BIT

@@ -6,16 +6,20 @@
 
                 include "DeltaBetweenLocationAndTarget.asm"     ; remove ?
                 
+                 ; RNG
+                include "RNG/Rand8.asm"
+
                 ; units
+                module Unit
                 include "Unit/Reconnaissance.asm"
                 include "Unit/TurnDown.asm"
                 include "Unit/GetScreenAABB.asm"
                 include "Unit/GetAddressInTable.asm"
-                include "Unit/CalculateUnitAddress.asm"
-                include "Unit/CalculateIndexUnitByAddress.asm"
-
-                ; RNG
-                include "RNG/Rand8.asm"
+                include "Unit/GetAddress.asm"
+                include "Unit/GetIndex.asm"
+                include "Unit/State/CheckState.asm"
+                include "Unit/State/SetState.asm"
+                endmodule
 
                 ; unit/visibility
                 include "Unit/Visibility/CheckRadius.asm"
@@ -32,8 +36,7 @@
                 ; surface
                 include "Surface/SurfaceProperty.asm"
 
-                include "Projectile/Direction.asm"
-                include "Projectile/Direction.asm"
+                ; include "Projectile/Direction.asm"
 
                 endmodule
 

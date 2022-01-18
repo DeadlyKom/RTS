@@ -13,21 +13,24 @@ Sequence:       PUSH HL
                 LD B, #00
                 ADD HL, BC
 
-                LD A, (HL)
-                OR A
-                JR Z, PostSequence
+                ; LD A, (HL)
+                ; OR A
+                ; JR Z, PostSequence
                 
                 LD DE, PostSequence
                 PUSH DE
                 JP (IY)
 PostSequence:   POP HL
                 RET NC
-                ; EX AF, AF'
                 INC HL
                 LD A, (HL)
                 OR A
-                ; JR Z, .RET
                 RET Z
+
+                RRA
+                JR C, $+4
+                JP (IY)
+
                 PUSH HL
                 ; interruption can corrupt the values, so restore the return point
                 ; DEC SP
@@ -35,8 +38,5 @@ PostSequence:   POP HL
                 LD DE, PostSequence
                 PUSH DE
                 JP (IY)
-                
-; .RET            EX AF, AF'
-;                 RET
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_SEQUENCE_

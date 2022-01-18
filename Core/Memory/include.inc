@@ -42,7 +42,7 @@ UnitDataPage                EQU 0                                               
 MemPage_UnitArray           EQU Memory.SetPage0                                 ; страница массива юнитов
 
                             include "Macro.inc"
-                            include "../Module/AI/Composite/Definition.inc"
+                            ; include "../Module/AI/Composite/Definition.inc"
 
                             include "Page_00.asm"
                             include "Page_01.asm"

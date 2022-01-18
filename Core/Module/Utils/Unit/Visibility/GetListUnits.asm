@@ -24,7 +24,7 @@ GetListUnits:   ; драфтово формируем список юнитов 
                 EX AF, AF'                                                      ; сохраним счётчик элементов
                 
                 ; включить страницу
-                SET_PAGE_UNITS_ARRAY
+                ; SET_PAGE_UNITS_ARRAY
 
                 ; LD DE, (IX + FUnit.Position)                                    ; получение позиции юнита
                 LD C, (IX + FUnit.Type)                                         ; получение тип юнита

@@ -5,18 +5,16 @@
 ; ----------------------------------------------------------------------------------------
 ; sprite address calculation
 ; In:
-;   DE - адрес структуры FUnitState                 !!!!!!!
 ;   IX - указывает на структуру FUnit
 ; Out:
 ;   HL - указывает на адрес информации о спрайте
-;   DE - DE + 3                                     !!!!!!
 ; Corrupt:
 ;   HL, DE, BC, AF
 ; Note:
 ;   +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
 ;   | 15 | 14 | 13 | 12 | 11 | 10 |  9 |  8 |   |  7 |  6 |  5 |  4 |  3 |  2 |  1 |  0 |
 ;   +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
-;   |  0 |  0 |  0 |  0 |  0 | T4 | T3 | T2 |   | T1 | T0 | D2 | D1 | D0 | S1 | S0 |  0 |
+;   |  0 |  0 |  0 |  0 | T4 | T3 | T2 | T1 |   | T0 | D2 | D1 | D0 | S2 | S1 | S0 |  0 |
 ;   +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
 ;
 ;   T4-T0 - unit type:
@@ -31,7 +29,7 @@
 ;           101 - down-left
 ;           110 - left
 ;           111 - up-left
-;   S1,S0 - unit state:
+;   S2-S0 - unit state:
 ;           00 - idle
 ;           01 - move
 ;           10 - attack
@@ -42,25 +40,32 @@
 ; ----------------------------------------------------------------------------------------
 SpriteInfo:     ; расчёт только нижнего (верхний не учитывается)
                 
+                ; LD A, (IX + FUnit.State)
+                ; AND FUSF_MOVE | FUSF_ATTACK
+                ; GetUnitState
                 LD A, (IX + FUnit.State)
-                AND FUSF_MOVE | FUSF_ATTACK
+                AND UNIT_STATE_MASK
+
                 LD C, A
 
                 LD A, (IX + FUnit.Direction)
                 AND DF_DOWN_MASK
-                OR C
                 ADD A, A        ; << 1
+                OR C
                 ADD A, A        ; << 1
                 LD C, A
                 
                 LD A, (IX + FUnit.Type)
-                AND IDX_UNIT_TYPE
                 RRA
-                OR A
-                RRA
-                RR C
+                AND IDX_UNIT_TYPE >> 1
                 RRA
                 RR C
+                ; RRA
+                ; OR A
+                ; RRA
+                ; RR C
+                ; RRA
+                ; RR C
                 LD B, A
                 LD HL, SpritesTable
                 ADD HL, BC                                                      ; HL - указатель структуры спрайта FSprite

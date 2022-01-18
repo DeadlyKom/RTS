@@ -14,8 +14,13 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                ; бит валидности Way Point
-                        JR Z, .IsNotValid                                       ; текущий Way Point не валидный
+GetDeltaTarget:         ;BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                ; бит валидности Way Point
+                        ;JR Z, .IsNotValid                                       ; текущий Way Point не валидный
+
+                        ; определения валидности значения Target
+                        LD A, (IX + FUnit.Data)                                 ; бит валидности Way Point
+                        AND FUTF_VALID_WP | FUTF_ENEMY
+                        JR Z, .IsNotValid                                       ; текущее значени Target не корректно
 
                         LD A, (IX + FUnit.Target.Y)
                         EX AF, AF'
@@ -71,7 +76,6 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                
 .IsNotValid             XOR A                                                   ; неудача операции
                         LD D, A
                         LD E, A
-                        DEC IXH                                                 ; FSpriteLocation (2)
                         RET
 
 ; -----------------------------------------
@@ -85,8 +89,13 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                
 ;   HL, DE, AF
 ; Note:
 ; -----------------------------------------
-GetPerfectTargetDelta:  BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                ; бит валидности Way Point
-                        JR Z, GetDeltaTarget.IsNotValid                         ; текущий Way Point не валидный
+GetPerfectTargetDelta:  ;BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                ; бит валидности Way Point
+                        ;JR Z, GetDeltaTarget.IsNotValid                         ; текущий Way Point не валидный
+
+                        ; определения валидности значения Target
+                        LD A, (IX + FUnit.Data)                                 ; бит валидности Way Point
+                        AND FUTF_VALID_WP | FUTF_ENEMY
+                        JR Z, GetDeltaTarget.IsNotValid                         ; текущее значени Target не корректно
 
                         LD A, (IX + FUnit.Target.Y)
                         EX AF, AF'

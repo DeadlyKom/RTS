@@ -3,6 +3,7 @@
                 define _CORE_GAME_LOOP_
 GameLoop:       
                 ; JR $
+
                 ; add unit
                 SET_PAGE_UNITS_ARRAY
 
@@ -35,7 +36,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                LD A, 1
+                LD A, 2
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
@@ -162,15 +163,15 @@ GameLoop:
                 JP .MainLoop
 
 .Array          
-                DW #1117    : DB NEUTRAL_FACTION | INFANTRY    ; 0
-                DW #1217    : DB NEUTRAL_FACTION | INFANTRY    ; 0
-                DW #1317    : DB NEUTRAL_FACTION | INFANTRY    ; 0
-                DW #1417    : DB NEUTRAL_FACTION | INFANTRY    ; 0
-                DW #1517    : DB NEUTRAL_FACTION | INFANTRY    ; 0
-                DW #1617    : DB NEUTRAL_FACTION | INFANTRY    ; 0
-                DW #1717    : DB NEUTRAL_FACTION | INFANTRY    ; 0
+                DW #0705    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1217    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1317    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1417    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1517    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1617    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1717    : DB NEUTRAL_FACTION | Infantry    ; 0
 
-                DW #1427    : DB ENEMY_FACTION   | INFANTRY    ; 1
+                DW #070C    : DB ENEMY_FACTION   | Infantry    ; 1
 
                 DW #0202    : DB #00    ; 1
                 DW #1517    : DB #00    ; 2

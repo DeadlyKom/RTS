@@ -12,7 +12,10 @@
 ; -----------------------------------------
 AttackTo:       
                 ; JR$
-                SET FUSF_ATTACK_BIT, (IX + FUnit.State)
+                ; SET FUSF_ATTACK_BIT, (IX + FUnit.State)
+                CALL Utils.Unit.State.SetATTACK
+                ; XOR A
+                ; LD (IX + FUnit.Animation), A
                 SCF
                 ; OR A
                 RET

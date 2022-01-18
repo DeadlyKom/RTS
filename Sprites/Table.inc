@@ -12,7 +12,7 @@ Sprite_Cursor_Table:
 ;   +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
 ;   | 15 | 14 | 13 | 12 | 11 | 10 |  9 |  8 |   |  7 |  6 |  5 |  4 |  3 |  2 |  1 |  0 |
 ;   +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
-;   |  0 |  0 |  0 |  0 |  0 | T4 | T3 | T2 |   | T1 | T0 | D2 | D1 | D0 | S1 | S0 |  0 |
+;   |  0 |  0 |  0 |  0 | T4 | T3 | T2 | T1 |   | T0 | D2 | D1 | D0 | S2 | S1 | S0 |  0 |
 ;   +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
 ;
 ;   T4-T0 - unit type:
@@ -27,7 +27,7 @@ Sprite_Cursor_Table:
 ;           101 - down-left
 ;           110 - left
 ;           111 - up-left
-;   S1,S0 - unit state:
+;   S2-S0 - unit state:
 ;           00 - idle
 ;           01 - move
 ;           10 - attack
@@ -41,41 +41,73 @@ SpritesTable:
                 DW .Infantry_0_0_1                      ; t - 0 (infantry),     d - 0 (up),         s - 1 (move)
                 DW .Infantry_0_0_2                      ; t - 0 (infantry),     d - 0 (up),         s - 2 (attack)
                 DW #0000                                ; t - 0 (infantry),     d - 0 (up),         s - 3 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 0 (up),         s - 4 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 0 (up),         s - 5 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 0 (up),         s - 6 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 0 (up),         s - 7 (?)
 
                 DW .Infantry_0_1_1                      ; t - 0 (infantry),     d - 1 (up-right),   s - 0 (idle)
                 DW .Infantry_0_1_1                      ; t - 0 (infantry),     d - 1 (up-right),   s - 1 (move)
                 DW .Infantry_0_1_2                      ; t - 0 (infantry),     d - 1 (up-right),   s - 2 (attack)
                 DW #0000                                ; t - 0 (infantry),     d - 1 (up-right),   s - 3 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 1 (up-right),   s - 4 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 1 (up-right),   s - 5 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 1 (up-right),   s - 6 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 1 (up-right),   s - 7 (?)
                 
                 DW .Infantry_0_2_1                      ; t - 0 (infantry),     d - 2 (right),      s - 0 (idle)
                 DW .Infantry_0_2_1                      ; t - 0 (infantry),     d - 2 (right),      s - 1 (move)
                 DW .Infantry_0_2_2                      ; t - 0 (infantry),     d - 2 (right),      s - 2 (attack)
                 DW #0000                                ; t - 0 (infantry),     d - 2 (right),      s - 3 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 2 (right),      s - 4 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 2 (right),      s - 5 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 2 (right),      s - 6 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 2 (right),      s - 7 (?)
 
                 DW .Infantry_0_3_1                      ; t - 0 (infantry),     d - 3 (down-right), s - 0 (idle)
                 DW .Infantry_0_3_1                      ; t - 0 (infantry),     d - 3 (down-right), s - 1 (move)
                 DW .Infantry_0_3_2                      ; t - 0 (infantry),     d - 3 (down-right), s - 2 (attack)
                 DW #0000                                ; t - 0 (infantry),     d - 3 (down-right), s - 3 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 3 (down-right), s - 4 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 3 (down-right), s - 5 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 3 (down-right), s - 6 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 3 (down-right), s - 7 (?)
 
                 DW .Infantry_0_4_1                      ; t - 0 (infantry),     d - 4 (down),       s - 0 (idle)
                 DW .Infantry_0_4_1                      ; t - 0 (infantry),     d - 4 (down),       s - 1 (move)
                 DW .Infantry_0_4_2                      ; t - 0 (infantry),     d - 4 (down),       s - 2 (attack)
                 DW #0000                                ; t - 0 (infantry),     d - 4 (down),       s - 3 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 4 (down),       s - 4 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 4 (down),       s - 5 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 4 (down),       s - 6 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 4 (down),       s - 7 (?)
 
                 DW .Infantry_0_5_1                      ; t - 0 (infantry),     d - 5 (down-left),  s - 0 (idle)
                 DW .Infantry_0_5_1                      ; t - 0 (infantry),     d - 5 (down-left),  s - 1 (move)
                 DW .Infantry_0_5_2                      ; t - 0 (infantry),     d - 5 (down-left),  s - 2 (attack)
                 DW #0000                                ; t - 0 (infantry),     d - 5 (down-left),  s - 3 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 5 (down-left),  s - 4 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 5 (down-left),  s - 5 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 5 (down-left),  s - 6 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 5 (down-left),  s - 7 (?)
 
                 DW .Infantry_0_6_1                      ; t - 0 (infantry),     d - 6 (left),       s - 0 (idle)
                 DW .Infantry_0_6_1                      ; t - 0 (infantry),     d - 6 (left),       s - 1 (move)
                 DW .Infantry_0_6_2                      ; t - 0 (infantry),     d - 6 (left),       s - 2 (attack)
                 DW #0000                                ; t - 0 (infantry),     d - 6 (left),       s - 3 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 6 (left),       s - 4 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 6 (left),       s - 5 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 6 (left),       s - 6 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 6 (left),       s - 7 (?)
 
                 DW .Infantry_0_7_1                      ; t - 0 (infantry),     d - 7 (up-left),    s - 0 (idle)
                 DW .Infantry_0_7_1                      ; t - 0 (infantry),     d - 7 (up-left),    s - 1 (move)
                 DW .Infantry_0_7_2                      ; t - 0 (infantry),     d - 7 (up-left),    s - 2 (attack)
                 DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 3 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 4 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 5 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 6 (?)
+                DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 7 (?)
 
 .Infantry_0_0_1 ; t - 0 (), d - 0 (up), s - 1 (move)
                 FSprite 16-2,     8-1+4,      1,      4,      0, PageSprites_0,    MemoryPage_4.SolderA_Move_0_0   ; напровление 0, индекс анимации 0

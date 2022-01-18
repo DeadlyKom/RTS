@@ -10,8 +10,9 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-CheckEnemy:     OR A
-                RET
+CheckEnemy:     ;OR A
+                ;RET
+                ; JR$
 
                 ; получим список юдижайших юнитов
                 CALL Utils.Visibility.GetListUnits
@@ -23,9 +24,11 @@ CheckEnemy:     OR A
 
                 ; DE - позиция ближайшего юнита из массива
                 LD (IX + FUnit.Target), DE
-                ; указан новый WayPoint
-                SET FUTF_INSERT_BIT, (IX + FUnit.Data)                          ; бит вставки (если 1 WP хранит временный путь, увеличивать смещение не нужно)
-                SET FUTF_ENEMY_WP_BIT, (IX + FUnit.Data)                        ; бит отвечающий что значения Way Point хранят позицию цели для атаки
+                
+                ; установка флагов валидности значения Target
+                LD A, (IX + FUnit.Data)
+                OR FUTF_INSERT | FUTF_ENEMY                                     ; произведена временная вставка значения в Target и хранят позицию цели для атаки
+                LD (IX + FUnit.Data), A
 
                 SCF
                 RET

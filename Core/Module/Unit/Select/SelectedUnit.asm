@@ -16,7 +16,7 @@ InitSelected:   ; получим значение из очереди
                 JP C, SFX.BEEP.Fail                                             ; буфер оказался пустым ?!
 
                 ; расчёт смещения по индексу юнита
-                CALL Utils.GetAdrUnit
+                CALL Utils.Unit.GetAddress
                 LD (FoundPathToUnitRef), IX
 
                 ; включить страницу массива юнитов

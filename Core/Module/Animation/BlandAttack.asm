@@ -10,7 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Attck:          LD A, (IX + FUnit.Animation)
+Attack:         LD A, (IX + FUnit.Animation)
                 INC A
                 AND %00000001
                 LD (IX + FUnit.Animation), A

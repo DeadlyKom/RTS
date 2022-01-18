@@ -7,7 +7,7 @@ UNIT_SIZE                   EQU FUnitState + FSpriteLocation + FUnitTargets + FU
 
 ; unit types
 Infantry                    EQU 0x01
-Ganner                      EQU 0x02
+Gunner                      EQU 0x02
 HeavyGunner                 EQU 0x03
 Sniper                      EQU 0x04
 Engineer                    EQU 0x05

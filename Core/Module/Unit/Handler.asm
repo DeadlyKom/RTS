@@ -117,8 +117,9 @@ Handler:        ; включить страницу
                 endif
 
                 ; смена анимация стрельбы
-                BIT FUSF_ATTACK_BIT, (IX + FUnit.State)                         ; проверка флага FUSF_ATTACK_BIT
-                CALL NZ, Animation.Attck
+                ; BIT FUSF_ATTACK_BIT, (IX + FUnit.State)                         ; проверка флага FUSF_ATTACK_BIT
+                CALL Utils.Unit.State.IsATTACK
+                CALL NZ, Animation.Attack
                 
                 ; отрисовка HP
                 BIT FUSF_SELECTED_BIT, (IX + FUnit.State)                       ; проверка флага FUSF_SELECTED
