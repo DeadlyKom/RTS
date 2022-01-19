@@ -32,7 +32,7 @@ Idle:               ; расчитаем вероятность поворота
                     
 .Turn               ; обновим счётчик поворота юнита в состоянии простоя
                     LD A, C
-                    ; AND FUAF_IDLE_COUNT_MASK_INV                              ; не требуется т.к. тупо перезапишим OR новое значение
+                    ; AND FUAF_IDLE_COUNT_MASK_INV                              ; не требуется т.к. тупа перезапишим OR новое значение
                     OR FUAF_IDLE_COUNT_MASK
                     LD (IX + FUnit.CounterDown), A
                     
@@ -41,7 +41,7 @@ Idle:               ; расчитаем вероятность поворота
                     RRA
                     RRA
                     RRA
-                    AND %00000111
+                    AND DF_DOWN_MASK >> 3
                     LD C, A                                                     ; сохраним текущий поворот
 
                     EX AF, AF'                                                  ; востановим рандомное число

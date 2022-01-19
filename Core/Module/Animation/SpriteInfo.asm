@@ -40,12 +40,23 @@
 ; ----------------------------------------------------------------------------------------
 SpriteInfo:     ; расчёт только нижнего (верхний не учитывается)
                 
-                ; LD A, (IX + FUnit.State)
-                ; AND FUSF_MOVE | FUSF_ATTACK
-                ; GetUnitState
-                LD A, (IX + FUnit.State)
-                AND UNIT_STATE_MASK
-
+                GetUnitState
+                ;   A  - хранит состояние юнита
+                ;   +----+----+----+----+----+----+----+----+
+                ;   |  7 |  6 |  5 |  4 |  3 |  2 |  1 |  0 |
+                ;   +----+----+----+----+----+----+----+----+
+                ;   |  0 |  0 |  0 |  0 | S2 | S1 | S0 |  0 |
+                ;   +----+----+----+----+----+----+----+----+
+                ;
+                ;   S2-S0:
+                ;       0 - UNIT_STATE_IDLE
+                ;       1 - UNIT_STATE_MOVE
+                ;       2 - UNIT_STATE_ATTACK
+                ;       3 - UNIT_STATE_DEAD
+                ;       4 -
+                ;       5 -
+                ;       6 - 
+                ;       7 -
                 LD C, A
 
                 LD A, (IX + FUnit.Direction)
@@ -60,12 +71,6 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
                 AND IDX_UNIT_TYPE >> 1
                 RRA
                 RR C
-                ; RRA
-                ; OR A
-                ; RRA
-                ; RR C
-                ; RRA
-                ; RR C
                 LD B, A
                 LD HL, SpritesTable
                 ADD HL, BC                                                      ; HL - указатель структуры спрайта FSprite
@@ -77,7 +82,7 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
                 INC HL
                 LD B, (HL)
                 LD A, (IX + FUnit.Animation)
-                AND %00000011
+                AND FUAF_ANIMATION_MASK
                 LD L, A
                 LD H, #00
 

@@ -19,6 +19,7 @@ Set:            RET
 ;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
+;   AF
 ; Note:
 ; -----------------------------------------
 SetIDLE:        LD A, (IX + FUnit.State)
@@ -33,6 +34,7 @@ SetIDLE:        LD A, (IX + FUnit.State)
 ;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
+;   AF
 ; Note:
 ; -----------------------------------------
 SetMOVE:        LD A, (IX + FUnit.State)
@@ -40,18 +42,32 @@ SetMOVE:        LD A, (IX + FUnit.State)
                 OR UNIT_STATE_MOVE << 1
                 LD (IX + FUnit.State), A
                 RET
-
 ; -----------------------------------------
 ; установить состояние атаки юнита
 ; In:
 ;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
+;   AF
 ; Note:
 ; -----------------------------------------
 SetATTACK:      LD A, (IX + FUnit.State)
                 AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_ATTACK << 1
+                LD (IX + FUnit.State), A
+                RET
+; -----------------------------------------
+; установить состояние атаки мёртв
+; In:
+;   IX - указывает на структуру FUnit
+; Out:
+; Corrupt:
+;   AF
+; Note:
+; -----------------------------------------
+SetDEAD:        LD A, (IX + FUnit.State)
+                AND UNIT_STATE_INV_MASK
+                OR UNIT_STATE_DEAD << 1
                 LD (IX + FUnit.State), A
                 RET
 

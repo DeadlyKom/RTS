@@ -19,7 +19,7 @@ FACTION_MASK                EQU %10000000
 IDX_UNIT_TYPE               EQU %00111110
 
 
-; FUnitType.State state flags
+; FUnit.State state flags
 
 UNIT_STATE_IDLE             EQU 0x00
 UNIT_STATE_MOVE             EQU 0x01
@@ -31,22 +31,15 @@ UNIT_STATE_INV_MASK         EQU (~UNIT_STATE_MASK) & 0xFF
 
 
 FUSF_SELECTED_BIT           EQU 0x00                                            ; объект выбран
-; FUSF_MOVE_BIT               EQU 0x01                                            ; объект движется
-; FUSF_ATTACK_BIT             EQU 0x02                                            ; объект атакует
-; FUSF_FLY_BIT                EQU 0x03                                            ; объект в полёте
 FUSF_REGENERATION_BIT       EQU 0x04                                            ; объект в состоянии регенерации
 FUSE_RECONNAISSANCE_BIT     EQU 0x05                                            ; объект провёл разведку
 FUSF_RENDER_BIT_0           EQU 0x06                                            ; объект необходимо обновить (экран 0)
 FUSF_RENDER_BIT_1           EQU 0x07                                            ; объект необходимо обновить (экран 1)
 
 FUSF_SELECTED               EQU 1 << FUSF_SELECTED_BIT
-; FUSF_MOVE                   EQU 1 << FUSF_MOVE_BIT
-; FUSF_ATTACK                 EQU 1 << FUSF_ATTACK_BIT
-; FUSF_FLY                    EQU 1 << FUSF_FLY_BIT
 FUSF_REGENERATION           EQU 1 << FUSF_REGENERATION_BIT
 FUSE_RECONNAISSANCE         EQU 1 << FUSE_RECONNAISSANCE_BIT
 FUSF_RENDER                 EQU 1 << FUSF_RENDER_BIT_0 | 1 << FUSF_RENDER_BIT_1
-; FUSF_IS_IDLE                EQU FUSF_MOVE ; | FUSF_ATTACK | FUSF_FLY
 
 
 ; direction flags
@@ -61,7 +54,7 @@ DF_UP_LEFT                  EQU %111                                            
 
 DF_DOWN_MASK                EQU %00111000                                       ; маска направления (низ)
 
-; FUnitTargets flags
+; FUnit.Data state flags
 FUTF_VALID_WP_BIT           EQU 0x07                                            ; бит отвечающий, что значение Target не хранит корректный Way Point
 FUTF_ENEMY_BIT              EQU 0x06                                            ; бит отвечающий, что значения Target хранят позицию цели для атаки
 FUTF_VALID_IDX_BIT          EQU 0x05                                            ; бит валидности данных об индексе
@@ -78,7 +71,10 @@ FUTF_LOOP                   EQU 1 << FUTF_LOOP_BIT
 ; FUTF_NEXT                   EQU 1 << FUTF_NEXT_BIT
 FUTF_MASK_OFFSET            EQU 0x07                                            ; маска смещения в массиве последовательностей
 
-; FUnitAnimation flags
+; FUnit.Animation state flags
+FUAF_ANIMATION_MASK         EQU %00000011
+
+; FUnit.Flags state flags
 FUAF_TURN_MOVE              EQU 0x00                                            ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
 FUAF_Y                      EQU 0x01                                            ; бит оси Y (0 - инкремент, 1 - декремент)
 FUAF_X                      EQU 0x02                                            ; бит оси X (0 - инкремент, 1 - декремент)

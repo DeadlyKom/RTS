@@ -14,7 +14,7 @@ Idle:           ; LD A, (IX + FUnit.State)
                 ; LD C, A
                 ; AND FUSF_IS_IDLE
                 CALL Utils.Unit.State.IsIDLE
-                RET NZ                                                          ; сброс флага, выход если юнит не в состоянии idle
+                RET Z                                                          ; сброс флага, выход если юнит не в состоянии idle
 
                 ; проверка бита об проведённой разведки после остановки
                 BIT FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)
