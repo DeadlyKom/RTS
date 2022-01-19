@@ -10,8 +10,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-CheckEnemy:     ;OR A
-                ;RET
+CheckEnemy:     
                 ; JR$
 
                 ; получим список юдижайших юнитов

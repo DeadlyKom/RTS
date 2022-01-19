@@ -13,8 +13,7 @@
 ; -----------------------------------------
 MoveTo:         
                 ; JR$
-                ; SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
-                CALL Utils.Unit.State.SetMOVE
+                CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
 
                 ; вызов счётчика анимации перемещения
                 CALL Animation.MoveDown
@@ -148,16 +147,13 @@ MoveTo:
 
                 RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; необходимо переинициализировать анимацию перемещения
                 RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
-                ; RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
-                CALL Utils.Unit.State.SetIDLE
+                CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
                 
-
                 ; успешность выполнения
                 SCF
                 RET
 
-.Fail           ;RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
-                CALL Utils.Unit.State.SetIDLE
+.Fail           CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
                 CALL SFX.BEEP.Fail                                              ; неудачая точка назначения
 
                 ; неудачное выполнение

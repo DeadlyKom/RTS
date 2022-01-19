@@ -10,8 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-TurnTo:         ; SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
-                CALL Utils.Unit.State.SetMOVE
+TurnTo:         CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
                 BIT FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 JR NZ, .IsMoveTo                                                ; счётчик указывает на перемещение
 
@@ -40,8 +39,7 @@ TurnTo:         ; SET FUSF_MOVE_BIT, (IX + FUnit.State)                         
 
 .IsMoveTo       ; счётчик указан на перемещение
 .Complite       ; юнит повернулся до требуемого направления
-                ; RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
-                CALL Utils.Unit.State.SetIDLE
+                CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
 
                 ; удачное выполнение
                 SCF
