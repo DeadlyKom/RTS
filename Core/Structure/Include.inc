@@ -12,5 +12,6 @@
                 include "SurfaceProperty.inc"
                 include "AABBTree.inc"
                 include "Pathfinding.inc"
+                include "Projectile.inc"
 
                 endif ; ~_STRUCTURES_INCLUDE_

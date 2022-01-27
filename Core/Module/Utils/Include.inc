@@ -27,7 +27,8 @@
                 ; surface
                 include "Surface/SurfaceProperty.asm"
 
-                ; include "Projectile/Direction.asm"
+                ;
+                ; include "Projectile/Include.inc"
 
                 endmodule
 
