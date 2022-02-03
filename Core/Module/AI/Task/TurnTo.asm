@@ -30,8 +30,7 @@ TurnTo:         CALL Utils.Unit.State.SetMOVE                                   
                 LD A, (IX + FUnit.Direction)
                 JP Utils.Unit.Turn.Down                                         ; вернёт флаг успешности
 
-.Fail           ; RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
-                CALL Utils.Unit.State.SetIDLE
+.Fail           CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
 
                 ; неудачное выполнение
                 OR A

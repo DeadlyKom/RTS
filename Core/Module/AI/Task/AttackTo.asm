@@ -12,12 +12,9 @@
 ; -----------------------------------------
 AttackTo:       
                 ; JR$
-                ; SET FUSF_ATTACK_BIT, (IX + FUnit.State)
-                CALL Utils.Unit.State.SetATTACK
-                ; XOR A
-                ; LD (IX + FUnit.Animation), A
+                CALL Utils.Unit.State.SetATTACK                                 ; установка состояния атаки
                 SCF
-                ; OR A
+
                 RET
 
                 endif ; ~_CORE_MODULE_AI_TASK_ATTACK_

@@ -2,6 +2,8 @@
                             ifndef _GAME_INCLUDE_
                             define _GAME_INCLUDE_
 
+                            include "../LUA/Include.inc"
+
                             include "../Config.inc"
                             include "../TRDOSConfig.inc"
                             include "AI.inc"

@@ -4,10 +4,10 @@
 
                 module AI_Behavior
                 
-                DISP #0000
+                ; DISP #0000
                 include "BehaviorTable.inc"             ; первая обязательно!
                 include "Solder/Solder.inc"
-                ENT
+                ; ENT
 
                 endmodule
 

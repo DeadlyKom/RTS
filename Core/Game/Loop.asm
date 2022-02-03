@@ -36,7 +36,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                LD A, 2
+                LD A, 1
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
