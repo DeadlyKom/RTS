@@ -16,7 +16,7 @@ BEHAVIOR_SOLDER:    ; root
                     ; BT_Selector $
 
     
-                    lua pass3
+                    lua allpass
                     Root  = CreateNode("Root",  _c("BT_ROOT"));
 
                     -- Root
@@ -47,7 +47,10 @@ BEHAVIOR_SOLDER:    ; root
                     AddNode(AttackToTarget, AttackTo);
 
                     -- 
-                    PrintTree(Root);
+                    Print(Root);
+
+                    --
+                    PackTree(Root);
                     endlua
                     
 

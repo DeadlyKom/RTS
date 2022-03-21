@@ -1,16 +1,5 @@
 
--- function Test()
---     MacroName = sj.get_define("__BehaviorTree_Name")
---     if MacroName == "Root" then
---         print (MacroName)
---     else
---         MacroName = _c("Name?")
---         print(MacroName)
---     end
--- end
-
 BTNode = {};
-
 local this = BTNode;
 
 function this:New(Name, Type)
@@ -75,6 +64,41 @@ function Print(Node)
     end
 end
 
-function PrintTree(Node)
+function Pack(Offset, Tree, Node, Parent)
+
+    for i, Child in ipairs(Node.Child) do
+        if     (Child.Type == _c("BT_TASK"))     then
+            Tree[#Tree + 1] = 0;
+        elseif (Child.Type == _c("BT_SELECTOR")) then
+            Tree[#Tree + 1] = 1;
+        elseif (Child.Type == _c("BT_SEQUENCE")) then
+            Tree[#Tree + 1] = 2;
+        else
+            sj.error("not valid type");
+        end
+    end
+
+    Offset[#Offset + 1] = #Tree + 1;
+    Offset[#Offset + 1] = Parent;
+
+end
+
+function PackTree(Node)
+    local OffsetPack = {};
+    local TreePack = {};
+
+    IndexParent = 0;
+
+    Pack(OffsetPack, TreePack, Node, 0);
+
+    print("------------------------");
+    for i, Offset in ipairs(OffsetPack) do
+        print("< " .. Offset .. " >");
+    end
+    print("------------------------");
+    for i, Tree in ipairs(TreePack) do
+        print("< " .. Tree .. " >");
+    end
+    print("------------------------");
     
 end
