@@ -2,9 +2,9 @@
                     ifndef _CORE_AI_BEHAVIOR_SOLDER_
                     define _CORE_AI_BEHAVIOR_SOLDER_
 
-BEHAVIOR_SOLDER:    DB .Child, #AA
+BEHAVIOR_SOLDER:    DB .Child-$, #AA
 
-                    BT_TASK 0, BTT_IDLE                                         ; B
+                    BT_TASK 1, BTT_IDLE                                         ; B
                     BT_TASK 6, BTT_ATO                                          ; J
                     BT_TASK 6, BTT_TTO                                          ; I
                     BT_TASK 6, BTT_CE                                           ; H
@@ -13,14 +13,14 @@ BEHAVIOR_SOLDER:    DB .Child, #AA
                     BT_TASK 2, BTT_TTO                                          ; F
                     BT_TASK 2, BTT_WP                                           ; E
                     BT_SEQUENCE 1, 4                                            ; C
-                    BT_SELECTOR 0, 2                                            ; A
+                    BT_SELECTOR 0, 1                                            ; A
 
 .Child              EQU $
 
-                    BT_IDX 1
-                    BT_IDX_BREAK 10
+                    BT_IDX_BREAK 1
                     BT_IDX 2
-                    BT_IDX_BREAK 6
+                    BT_IDX 6
+                    BT_IDX_BREAK 10
                     BT_IDX 3
                     BT_IDX 4
                     BT_IDX_BREAK 5
