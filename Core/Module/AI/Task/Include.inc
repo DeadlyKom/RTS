@@ -15,4 +15,6 @@
 
                 endmodule
 
+                include "TaskTable.inc"
+
                 endif ; ~ _CORE_MODULE_AI_TASKS_INCLUDE_

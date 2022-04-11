@@ -66,6 +66,11 @@ Unit:           ; определение адреса добавления но�
                 LD (IX + FUnit.CounterUp), A
                 LD (IX + FUnit.Delta), A
                 LD (IX + FUnit.Flags), A
+
+                ; JR$
+                ; сброс состояния дерева поведения
+                LD A, BTS_UNKNOW
+                LD (IX + FUnit.BehaviorTree.Info), A
  
                 ; итерирование счётчика
                 LD HL, AI_NumUnitsRef

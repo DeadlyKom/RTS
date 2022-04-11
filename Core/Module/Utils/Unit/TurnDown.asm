@@ -122,11 +122,16 @@ Down:           ; JR $
 
                 CALL Animation.TurnDown
 
-.Unsuccessful   OR A
-                RET
+.Unsuccessful   ; OR A
+                ; RET
+                LD A, BTS_RUNNING
+                JP AI.SetState
 
-.Successful     SCF
-                RET
+.Successful     ; SCF
+                ; RET
+
+                LD A, BTS_SUCCESS
+                JP AI.SetState
 
                 endmodule
 

@@ -7,9 +7,9 @@
 
                 ; module Composite
                 
-                ; include "Selector.inc"
-                ; include "Sequence.inc"
-                ; include "Task.inc"
+                include "Selector.inc"
+                include "Sequence.inc"
+                include "Task.inc"
 
                 ; endmodule
 

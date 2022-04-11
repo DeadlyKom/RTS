@@ -3,7 +3,20 @@
                 define _CORE_GAME_LOOP_
 GameLoop:       
                 ; JR $
+                ; 
+                ; LD A, 'W'
+                ; LD DE, #3303
+                ; CALL MemoryPage_3.PrintChar
 
+                LD DE, #3303
+                LD HL, .Text
+                CALL Memory.SetPage3
+                CALL MemoryPage_3.Printf
+
+                JR .L1
+.Text           BYTE "+1 -2 +4 *6 %i\0"
+.TextValue      DB -3
+.L1
                 ; add unit
                 SET_PAGE_UNITS_ARRAY
 
@@ -36,7 +49,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                LD A, 1
+                LD A, 10
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF

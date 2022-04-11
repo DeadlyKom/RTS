@@ -33,15 +33,19 @@ TurnTo:         CALL Utils.Unit.State.SetMOVE                                   
 .Fail           CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
 
                 ; неудачное выполнение
-                OR A
-                RET
+                ; OR A
+                ; RET
+                LD A, BTS_FAILURE 
+                JP AI.SetState
 
 .IsMoveTo       ; счётчик указан на перемещение
 .Complite       ; юнит повернулся до требуемого направления
                 CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
 
                 ; удачное выполнение
-                SCF
-                RET
+                ; SCF
+                ; RET
+                LD A, BTS_SUCCESS
+                JP AI.SetState
 
                 endif ; ~_CORE_MODULE_AI_TASK_TURN_TO_

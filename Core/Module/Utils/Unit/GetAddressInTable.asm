@@ -25,13 +25,6 @@ GetAdrInTable:  LD A, (IX + FUnit.Type)                                         
                 LD D, (HL)
                 DEC HL
                 ADD HL, DE
-
-                ; корректировка смещения
-                LD A, L
-                ADD A, (HL)
-                LD L, A
-                JR NC, $+3
-                INC H
                 
                 RET
 

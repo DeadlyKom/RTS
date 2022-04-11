@@ -13,8 +13,10 @@
 AttackTo:       
                 ; JR$
                 CALL Utils.Unit.State.SetATTACK                                 ; установка состояния атаки
-                SCF
+                ; SCF
 
-                RET
+                ; RET
+                LD A, BTS_SUCCESS 
+                JP AI.SetState
 
                 endif ; ~_CORE_MODULE_AI_TASK_ATTACK_

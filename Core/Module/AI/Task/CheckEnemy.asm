@@ -15,11 +15,11 @@ CheckEnemy:
 
                 ; получим список юдижайших юнитов
                 CALL Utils.Visibility.GetListUnits
-                RET NC                                                          ; выход нет врагов поблизости
+                JR NC, .None                                                    ; выход нет врагов поблизости
 
                 LD A, 5 * 5                                                     ; радиус видимости
                 CALL Utils.Visibility.CheckRadius
-                RET NC
+                JR NC, .None
 
                 ; DE - позиция ближайшего юнита из массива
                 LD (IX + FUnit.Target), DE
@@ -29,8 +29,11 @@ CheckEnemy:
                 OR FUTF_INSERT | FUTF_ENEMY                                     ; произведена временная вставка значения в Target и хранят позицию цели для атаки
                 LD (IX + FUnit.Data), A
 
-                SCF
-                RET
+                LD A, BTS_SUCCESS 
+                JP AI.SetState
+
+.None           LD A, BTS_FAILURE 
+                JP AI.SetState
 
                 endif ; ~_CORE_MODULE_AI_TASK_CHECK_ENEMY_
  

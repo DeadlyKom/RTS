@@ -18,7 +18,8 @@ MoveTo:
                 ; вызов счётчика анимации перемещения
                 CALL Animation.MoveDown
                 CCF
-                RET C                                                           ; время ещё не вышло, но возвращаем успешное перемещение
+                ; RET C                                                           ; время ещё не вышло, но возвращаем успешное перемещение
+                JR C, .Progress
 
                 ; расчёт смещения в структуре FUnit.Offset
                 LD A, IXL
@@ -133,8 +134,11 @@ MoveTo:
                 INC (IX + FUnit.Animation)
 
                 ; успешность выполнения
-                SCF
-                RET
+                ; SCF
+                ; RET
+.Progress
+                LD A, BTS_RUNNING
+                JP AI.SetState
 
 .Complite       ; ---------------------------------------------
                 ; юнит дошёл до текущего Way Point
@@ -150,15 +154,20 @@ MoveTo:
                 CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
                 
                 ; успешность выполнения
-                SCF
-                RET
+                ; SCF
+                ; RET
+.Success
+                LD A, BTS_SUCCESS 
+                JP AI.SetState
 
 .Fail           CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
                 CALL SFX.BEEP.Fail                                              ; неудачая точка назначения
 
                 ; неудачное выполнение
-                OR A                                                            
-                RET
+                ; OR A                                                            
+                ; RET
+                LD A, BTS_FAILURE 
+                JP AI.SetState
 
 .Init           ; ---------------------------------------------
                 ; D - dY

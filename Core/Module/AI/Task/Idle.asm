@@ -14,7 +14,8 @@ Idle:           ; LD A, (IX + FUnit.State)
                 ; LD C, A
                 ; AND FUSF_IS_IDLE
                 CALL Utils.Unit.State.IsIDLE
-                RET Z                                                          ; сброс флага, выход если юнит не в состоянии idle
+                ; RET NZ                                                          ; сброс флага, выход если юнит не в состоянии idle
+                JR NZ, .Fail
 
                 ; проверка бита об проведённой разведки после остановки
                 BIT FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)
@@ -33,7 +34,12 @@ Idle:           ; LD A, (IX + FUnit.State)
                 CALL Animation.Idle
 
                 ; успешное выполнение
-                OR A
-                RET
+                ; OR A
+                ; RET
+                LD A, BTS_SUCCESS 
+                JP AI.SetState
+
+.Fail           LD A, BTS_FAILURE 
+                JP AI.SetState
 
                 endif ; ~_CORE_MODULE_AI_TASK_IDLE_
