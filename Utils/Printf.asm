@@ -74,9 +74,9 @@ PrintChar:      ; адрес экрана
                 ; protection data corruption during interruption
                 RestoreBC
                 LD C, (HL)
-                INC L
+                INC HL
                 LD B, (HL)
-                DEC L
+                DEC HL
                 PUSH BC
                 EXX
                 POP BC
@@ -130,9 +130,7 @@ GetArgument_16: LD HL, (ArgumentAddress)
 ;   %H - Hex16
 ;   %s - string
 ; -----------------------------------------
-Printf:         ;
-
-                ; поиск аргумента
+Printf:         ; поиск аргумента
                 PUSH HL
 .NextChar       LD A, (HL)
                 INC HL

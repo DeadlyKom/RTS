@@ -15,6 +15,7 @@
                 define ENABLE_FORCE_DRAW_UNITS                                  ; разрешить принудительное обновление унитов
                 ; define ENABLE_FILL_FOW                                          ; разрешить заполнение туманом всю карту
                 ; define ENABLE_TIME_OF_DAY                                       ; разрешить смену дня и ночи
+                define ENABLE_DEBUG_NETWORK                                     ; разрешить отладку по сети
 
                 ; define SHOW_DEBUG_BORDER                                        ; разрешить отображать на бордюре время выполнение
                 ; define SHOW_DEBUG_BORDER_INTERRUPT                              ; отображение на бордюре время прерывания
@@ -28,14 +29,18 @@
                 ; define SHOW_DEBUG_BORDER_DRAFT_LOGIC                            ;
                 
                 define SHOW_DEBUG                                               ; разрешить отображать дебажную инормацию
-                ifdef SHOW_DEBUG
-                define SHOW_FPS                                                 ; отображать FPS
-                define SHOW_AI_FREQUENCY                                        ; отображать частоту обновления AI
-                ; define SHOW_MOUSE_POSITION                                      ; отображать координаты мыши
-                ; define SHOW_OFFSET_TILEMAP                                      ; отображать смещение карты
-                define SHOW_VISIBLE_UNITS                                       ; отображать количество видимых юнитов
-                define ENABLE_TOGGLE_SCREENS_DEBUG                              ; разрешить 2х экранное отображение дебажной инфы
-                ; define SHOW_AABB                                                ; разрешить отобразить AABB спрайта
+                    ifdef SHOW_DEBUG
+                        define SHOW_FPS                                         ; отображать FPS
+                        define SHOW_AI_FREQUENCY                                ; отображать частоту обновления AI
+                        ; define SHOW_MOUSE_POSITION                              ; отображать координаты мыши
+                        ; define SHOW_OFFSET_TILEMAP                              ; отображать смещение карты
+                        define SHOW_VISIBLE_UNITS                               ; отображать количество видимых юнитов
+                        define ENABLE_TOGGLE_SCREENS_DEBUG                      ; разрешить 2х экранное отображение дебажной инфы
+                        ; define SHOW_AABB                                        ; разрешить отобразить AABB спрайта
+
+                        ifdef ENABLE_DEBUG_NETWORK
+                            define ENABLE_BEHAVIOR_TREE_STATE                   ; разрешить отображать состояния дерева поведения
+                        endif
                 endif
 
                 include "../Core/Structure/Include.inc"

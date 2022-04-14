@@ -68,6 +68,11 @@ Initialize:             ; загрузим карту
                         ResetFrameFlag FORCE_FOW_FLAG
                         endif
 
+                        ifdef ENABLE_DEBUG_NETWORK
+                        LD HL, UART.BR_115200
+                        CALL UART.Init
+                        endif
+
                         RET
 
 HardwareRestriction:

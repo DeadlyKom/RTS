@@ -1,22 +1,24 @@
 
                 ifndef _CORE_GAME_LOOP_
                 define _CORE_GAME_LOOP_
-GameLoop:       
-                ; JR $
-                ; 
-                ; LD A, 'W'
-                ; LD DE, #3303
-                ; CALL MemoryPage_3.PrintChar
 
-                LD DE, #3303
-                LD HL, .Text
-                CALL Memory.SetPage3
-                CALL MemoryPage_3.Printf
+GameLoop:
+                ; call Init
+                ; jr c, .no_network
+                ; ld hl,.test_msg
+                ; call SendStr
+                ; jr $
 
-                JR .L1
-.Text           BYTE "+1 -2 +4 *6 %i\0"
-.TextValue      DB -3
-.L1
+;                 LD HL, UART.BR_115200
+;                 CALL UART.Init
+; .L1             LD HL, .Text
+;                 CALL UART.SendString
+;                 dup 1
+;                 ; HALT 
+;                 endr
+;                 JR .L1
+; .Text           BYTE "Ohuetitelno rabotaet eee! \0"
+
                 ; add unit
                 SET_PAGE_UNITS_ARRAY
 
@@ -172,6 +174,11 @@ GameLoop:
 
                 CheckAIFlag (AI_UPDATE_FLAG | GAME_PAUSE_FLAG)
                 CALL Z, AI.Behavior
+
+                ifdef ENABLE_BEHAVIOR_TREE_STATE
+                CheckDebugFlag DRAW_DEBUG_BT_FLAG
+                CALL Z, Debug.DrawStateBT
+                endif
                 
                 JP .MainLoop
 

@@ -6,11 +6,11 @@
 
                 include "DeltaBetweenLocationAndTarget.asm"     ; remove ?
                 
-                 ; RNG
-                include "RNG/Rand8.asm"
-
                 ; units
                 include "Unit/Include.inc"
+
+                ; RNG
+                include "RNG/Rand8.asm"
 
                 ; unit/visibility
                 include "Unit/Visibility/CheckRadius.asm"

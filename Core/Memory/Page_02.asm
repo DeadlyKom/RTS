@@ -31,6 +31,13 @@ MemoryPage_2_Start:
 
                 include "../Draw/Sprite/Include.inc"
                 include "../Module/UI/Include.inc"
+
+                ifdef ENABLE_DEBUG_NETWORK
+                include "../../Utils/UART/Include.inc"
+                ifdef ENABLE_BEHAVIOR_TREE_STATE
+                include "../Draw/Debug/Include.inc"
+                endif
+                endif
                 
 MemoryPage_2_End:
 

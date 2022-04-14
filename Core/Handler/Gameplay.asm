@@ -112,6 +112,8 @@ InputMode_0_9:      JR NZ, .Processing              ; skip released
                     JP Z, AIPause
                     CP 03                           ; key 3
                     JP Z, MenuGamePause
+                    CP 04                           ; key 4
+                    JP Z, DrawStateBT
                     CP 08                           ; key 8
                     JP Z, ToggleSyncAI
                     CP 09                           ; key 9
@@ -150,6 +152,11 @@ AIPause:            SwapAIFlag GAME_PAUSE_FLAG
                     RET
 
 MenuGamePause:      ResetGameplayFlag ACTIVATE_PAUSE_MENU_GAME_FLAG             ; активация меню паузы игры
+                    ; exit, processed
+                    OR A
+                    RET
+
+DrawStateBT:        SwapDebugFlag DRAW_DEBUG_BT_FLAG
                     ; exit, processed
                     OR A
                     RET
