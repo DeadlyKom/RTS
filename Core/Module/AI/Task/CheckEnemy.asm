@@ -10,9 +10,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-CheckEnemy:     
-                ; JR$
-
+CheckEnemy:     ; JR$
                 ; получим список юдижайших юнитов
                 CALL Utils.Visibility.GetListUnits
                 JR NC, .None                                                    ; выход нет врагов поблизости
@@ -29,11 +27,9 @@ CheckEnemy:
                 OR FUTF_INSERT | FUTF_ENEMY                                     ; произведена временная вставка значения в Target и хранят позицию цели для атаки
                 LD (IX + FUnit.Data), A
 
-                LD A, BTS_SUCCESS 
-                JP AI.SetState
+                JP AI.SetBTS_SUCCESS
 
-.None           LD A, BTS_FAILURE 
-                JP AI.SetState
+.None           JP AI.SetBTS_FAILURE
 
                 endif ; ~_CORE_MODULE_AI_TASK_CHECK_ENEMY_
  

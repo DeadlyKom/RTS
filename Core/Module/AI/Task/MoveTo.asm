@@ -134,11 +134,7 @@ MoveTo:
                 INC (IX + FUnit.Animation)
 
                 ; успешность выполнения
-                ; SCF
-                ; RET
-.Progress
-                LD A, BTS_RUNNING
-                JP AI.SetState
+.Progress       JP AI.SetBTS_RUNNING
 
 .Complite       ; ---------------------------------------------
                 ; юнит дошёл до текущего Way Point
@@ -152,22 +148,15 @@ MoveTo:
                 RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; необходимо переинициализировать анимацию перемещения
                 RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
                 CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
-                
-                ; успешность выполнения
-                ; SCF
-                ; RET
-.Success
-                LD A, BTS_SUCCESS 
-                JP AI.SetState
+
+.Success        ; успешность выполнения
+                JP AI.SetBTS_SUCCESS
 
 .Fail           CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
                 CALL SFX.BEEP.Fail                                              ; неудачая точка назначения
 
                 ; неудачное выполнение
-                ; OR A                                                            
-                ; RET
-                LD A, BTS_FAILURE 
-                JP AI.SetState
+                JP AI.SetBTS_FAILURE
 
 .Init           ; ---------------------------------------------
                 ; D - dY

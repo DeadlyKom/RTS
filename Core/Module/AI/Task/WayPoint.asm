@@ -68,10 +68,7 @@ WayPoint:       ; проверка что Way Point валиден
                 RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
 
 .Successfully   ; успешно найденый Way Point
-                LD A, BTS_SUCCESS 
-                JP AI.SetState
-                ; SCF
-                ; RET
+                JP AI.SetBTS_SUCCESS
 
 .CheckLoop      ; ---------------------------------------------
                 ; проверка на зацикленность WayPoint
@@ -93,10 +90,7 @@ WayPoint:       ; проверка что Way Point валиден
                 RES FUTF_VALID_IDX_BIT, (IX + FUnit.Data)                       ; бит валидности данных об индексе
 
 .IsNotValid_IDX ; неудачное выполнение
-                ; OR A 
-                LD A, BTS_FAILURE 
-                JP AI.SetState
-                ; RET
+                JP AI.SetBTS_FAILURE
 
 .InsertWP       ; ---------------------------------------------
                 ; ранее была вставка временного WayPoint

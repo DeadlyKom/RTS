@@ -10,13 +10,8 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-AttackTo:       
-                ; JR$
+AttackTo:       ; 
                 CALL Utils.Unit.State.SetATTACK                                 ; установка состояния атаки
-                ; SCF
-
-                ; RET
-                LD A, BTS_SUCCESS 
-                JP AI.SetState
+                JP AI.SetBTS_SUCCESS
 
                 endif ; ~_CORE_MODULE_AI_TASK_ATTACK_

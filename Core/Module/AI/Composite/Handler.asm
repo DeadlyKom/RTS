@@ -10,9 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-RunBTT:         ; JR$
-
-                ; расчёт текущего исполняемого узла
+RunBTT:         ; расчёт текущего исполняемого узла
                 LD C, (IX + FUnit.BehaviorTree.Info)
                 LD A, C
                 AND BT_INDEX_MASK

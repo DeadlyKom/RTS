@@ -16,8 +16,13 @@
 ;       F0, F1  - internal flags of behavior tree
 ;       C0 - C5 - index child
 ;       P0 - P5 - index parent
+;
+;   IX - указывает на структуру FUnit
+; Out:
+; Corrupt:
+; Note:
 ; -----------------------------------------
-GoToNextChild:  
+GoToNextChild:  ; 
                 LD A, (IX + FUnit.BehaviorTree.Child)
                 BIT BTF_LAST_BIT, A
                 ; проверка, если узел последний
@@ -74,6 +79,9 @@ GoToChild:      LD A, E
 ;       P0 - P5 - index
 ;
 ;   IX - указывает на структуру FUnit
+; Out:
+; Corrupt:
+; Note:
 ; -----------------------------------------
 GoToParent:     ; проверка, если узел последний
                 BIT BTF_ROOT_BIT, E
@@ -132,15 +140,23 @@ SetIndex:       LD C, (IX + FUnit.BehaviorTree.Info)
                 XOR C
                 LD (IX + FUnit.BehaviorTree.Info), A
                 RET
-
+SetBTS_RUNNING: LD A, BTS_RUNNING
+                JP SetState
+SetBTS_UNKNOW:  LD A, BTS_UNKNOW
+                JP SetState
+SetBTS_FAILURE: LD A, BTS_FAILURE
+                JP SetState
+SetBTS_SUCCESS: LD A, BTS_SUCCESS
+                ; JP SetState
 ; -----------------------------------------
 ; установка состояния
 ; In:
-;   A - новое значение
+;   A  - новое значение
 ;       BTS_RUNNING - в процесе выполнения
 ;       BTS_SUCCESS - успешное выполнение
 ;       BTS_FAILURE - неудачное выполнение
 ;       BTS_UNKNOW  - не определено
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ;   C, AF
@@ -151,13 +167,13 @@ SetState:       LD C, (IX + FUnit.BehaviorTree.Info)
 ; -----------------------------------------
 ; установка состояния
 ; In:
-;   A - новое значение
+;   A  - новое значение
 ;       BTS_RUNNING - в процесе выполнения
 ;       BTS_SUCCESS - успешное выполнение
 ;       BTS_FAILURE - неудачное выполнение
 ;       BTS_UNKNOW  - не определено
 ;
-;   C - значение состояниея дерева поведения (подготовленое)
+;   C  - значение состояниея дерева поведения (подготовленое)
 ;       +----+----+----+----+----+----+----+----+
 ;       |  7 |  6 |  5 |  4 |  3 |  2 |  1 |  0 |
 ;       +----+----+----+----+----+----+----+----+
@@ -167,6 +183,7 @@ SetState:       LD C, (IX + FUnit.BehaviorTree.Info)
 ;   S0, S1  - state execute node
 ;   P0 - P5 - index
 ;
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ;   AF

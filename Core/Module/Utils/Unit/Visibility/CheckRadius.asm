@@ -81,10 +81,10 @@ CheckRadius:    ; инициализация
 
                 ; сохраним текущую позицию цели
                 LD A, (DE)
-                LD (.BestPosition), A
+                LD (.BestPosition+1), A
                 DEC E
                 LD A, (DE)
-                LD (.BestPosition+1), A
+                LD (.BestPosition), A
                 INC E
 
                 ; установка SCF, как успешность поиска
