@@ -67,7 +67,12 @@ Unit:           ; определение адреса добавления но�
                 LD (IX + FUnit.Delta), A
                 LD (IX + FUnit.Flags), A
 
-                ; JR$
+                ; установка дефолтной брони и уровня HP
+                LD A, #08
+                LD (IX + FUnit.Armor), A
+                LD A, #FF
+                LD (IX + FUnit.Health), A
+
                 ; сброс состояния дерева поведения
                 LD A, BTS_UNKNOW
                 LD (IX + FUnit.BehaviorTree.Info), A

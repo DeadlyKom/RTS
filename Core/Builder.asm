@@ -123,6 +123,7 @@ EndBasic:
                         display "-------------------------------------------------------------------------------------------------------------------------------"
                         display "Page 0 - arrays for working with units"
                         display "Units Array : \t\t", /A, UnitsArrayPtr, " = busy [ ", /D, UNITS_STRUCTURE_SIZE, " bytes ]"
+                        display "Chunk of Array rot Units : \t", /A, ChunksArrayForUnitsPtr, " = busy [ ", /D, ChunksArrayForUnitsSize, " bytes ]"
                         display "Waypoints Sequence : \t\t", /A, WaypointsSequencePtr, " = busy [ ", /D, WaypointsSequenceSize, " bytes ]"
                         display "Waypoint Array : \t\t", /A, WaypointArrayPtr, " = busy [ ", /D, WaypointArraySize, " bytes  ]"
                         display "\t\t\t---------------------------------------------------------------------------------------------------------"

@@ -9,12 +9,12 @@
                 ; units
                 include "Unit/Include.inc"
 
-                ; RNG
-                include "RNG/Rand8.asm"
-
                 ; unit/visibility
                 include "Unit/Visibility/CheckRadius.asm"
                 include "Unit/Visibility/GetListUnits.asm"
+
+                ; RNG
+                include "RNG/Rand8.asm"
 
                 ; convert
                 include "Convert/ToTilemap.asm"
@@ -26,6 +26,9 @@
 
                 ; surface
                 include "Surface/SurfaceProperty.asm"
+
+                ; chunk array
+                include "ChunkArray/Include.inc"
 
                 ;
                 ; include "Projectile/Include.inc"

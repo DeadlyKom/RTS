@@ -18,7 +18,7 @@ Draw:           LD HL, .OffsetByPixel
                 INC L
                 LD (HL), B
     
-                LD A, R   ; XP
+                LD A, (IX + FUnit.Health)                                       ; XP
             
                 ; расчёт HP
                 RRA

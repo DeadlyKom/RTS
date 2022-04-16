@@ -29,7 +29,8 @@ CheckEnemy:     ; JR$
 
                 JP AI.SetBTS_SUCCESS
 
-.None           JP AI.SetBTS_FAILURE
+.None           CALL Utils.Unit.State.SetIDLE 
+                JP AI.SetBTS_FAILURE
 
                 endif ; ~_CORE_MODULE_AI_TASK_CHECK_ENEMY_
  

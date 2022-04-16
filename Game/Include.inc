@@ -149,4 +149,7 @@ UnitArrayPtr                EQU Page_1.UnitArray                                
 MAX_UNIT_ARRAY              EQU 128                                             ; максимальное количество юнитов в массиве
 UNITS_STRUCTURE_SIZE        EQU MAX_UNIT_ARRAY * UNIT_SIZE                      ; размер массива всех доступных юнитов
 
+; array of chunks for units
+ARRAY_CHUNKS
+
                             endif ; ~_GAME_INCLUDE_

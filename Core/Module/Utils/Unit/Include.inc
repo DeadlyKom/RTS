@@ -10,6 +10,8 @@
                 include "GetAddressInTable.asm"
                 include "GetAddress.asm"
                 include "GetIndex.asm"
+                include "GetUnitsListInLocation.asm"
+                include "Damage/Include.inc"
                 include "State/CheckState.asm"
                 include "State/SetState.asm"
 

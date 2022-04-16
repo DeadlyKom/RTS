@@ -3,21 +3,10 @@
                 define _CORE_GAME_LOOP_
 
 GameLoop:
-                ; call Init
-                ; jr c, .no_network
-                ; ld hl,.test_msg
-                ; call SendStr
-                ; jr $
-
-;                 LD HL, UART.BR_115200
-;                 CALL UART.Init
-; .L1             LD HL, .Text
-;                 CALL UART.SendString
-;                 dup 1
-;                 ; HALT 
-;                 endr
-;                 JR .L1
-; .Text           BYTE "Ohuetitelno rabotaet eee! \0"
+                ; JR$
+                ; CALL Utils.ChunkArray.Init
+                ; LD DE, #0000
+                ; CALL Utils.ChunkArray.Insert
 
                 ; add unit
                 SET_PAGE_UNITS_ARRAY
@@ -51,7 +40,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                LD A, 10
+                LD A, 3
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
@@ -69,23 +58,24 @@ GameLoop:
                 CALL Spawn.Unit
                 JR .Next
 
-                EX AF, AF'
-                LD D, FUSE_RECONNAISSANCE | FUSF_RENDER
-                LD E, #00
-                CALL Spawn.Unit
-                EX AF, AF'
-
-                CP #FF
-                JR NZ, .SetIndex
+;                 LD A, E
+;                 EX AF, AF'
+;                 LD D, FUSE_RECONNAISSANCE | FUSF_RENDER
+;                 LD E, #00
+;                 CALL Spawn.Unit
+;                 EX AF, AF'
+                
+;                 CP #FF
+;                 JR NZ, .SetIndex
     
-                CALL Utils.Math.Rand8
-                OR A
-                JR Z, $+3
-                INC A
-                AND %00000111
-.SetIndex       ADD A, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP
-                LD C, A
-                CALL Utils.WaypointsSequencer.AddUnit.UnitAddressToIX
+;                 CALL Utils.Math.Rand8
+;                 OR A
+;                 JR Z, $+3
+;                 INC A
+;                 AND %00000111
+; .SetIndex       ADD A, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP
+;                 LD C, A
+;                 CALL Utils.WaypointsSequencer.AddUnit.UnitAddressToIX
 
 .Next           POP HL
                 POP AF
