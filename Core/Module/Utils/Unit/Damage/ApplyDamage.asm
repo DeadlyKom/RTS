@@ -19,7 +19,7 @@ Apply:          ;
                 ; LD C, A
                 LD A, (IX + FUnit.Health)
                 SUB C
-                ; JP Z, $                                                         ; уничтожение юнита
+                JR C, .Died                                                     ; уничтожение юнита
                 LD (IX + FUnit.Health), A
 
                 LD A, #08
@@ -27,5 +27,8 @@ Apply:          ;
 .SaveArmor      ; сохранение значение брони
                 LD (IX + FUnit.Armor), A
                 RET
+
+.Died           ; юнит умер, выставляем флаг смерти
+                JP Utils.Unit.State.SetDEAD
 
                 endif ; ~ _CORE_MODULE_UTILS_UNIT_APPLY_DAMAGE_

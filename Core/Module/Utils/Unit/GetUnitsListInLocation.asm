@@ -26,7 +26,6 @@ GetUnitsInLoc:  ; драфтово формируем список юнитов
                 LD HL, SharedBuffer                                             ; HL - указывает на временный буфер
                 LD DE, UnitArrayPtr + FUnit.Position - UNIT_SIZE                ; DE - указывает на FUnit.Position
 
-
 .Loop           EX AF, AF'
 
                 LD A, E

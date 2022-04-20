@@ -38,6 +38,14 @@ GetListUnits:   ; драфтово формируем список юнитов 
                 ADD A, A                                                        ; проверка флага TYPE_FACTION_BIT
                 JR NC, .NextUnit                                                ; если тип фракции одинаковый, переход к следующему юниту
 
+                ; проверка что юнит живой
+                INC E
+                LD A, (DE)
+                DEC E
+                AND UNIT_STATE_MASK
+                CP UNIT_STATE_DEAD << 1
+                JR Z, .NextUnit                                                ; если тип фракции одинаковый, переход к следующему юниту
+
                 ; переход к FUnit.Position
                 INC E
                 INC E

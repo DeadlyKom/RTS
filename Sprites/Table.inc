@@ -40,7 +40,7 @@ SpritesTable:
                 DW .Infantry_0_0_1                      ; t - 0 (infantry),     d - 0 (up),         s - 0 (idle)
                 DW .Infantry_0_0_1                      ; t - 0 (infantry),     d - 0 (up),         s - 1 (move)
                 DW .Infantry_0_0_2                      ; t - 0 (infantry),     d - 0 (up),         s - 2 (attack)
-                DW #0000                                ; t - 0 (infantry),     d - 0 (up),         s - 3 (?)
+                DW .Infantry_0_0_3                      ; t - 0 (infantry),     d - 0 (up),         s - 3 (Dead)
                 DW #0000                                ; t - 0 (infantry),     d - 0 (up),         s - 4 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 0 (up),         s - 5 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 0 (up),         s - 6 (?)
@@ -49,7 +49,7 @@ SpritesTable:
                 DW .Infantry_0_1_1                      ; t - 0 (infantry),     d - 1 (up-right),   s - 0 (idle)
                 DW .Infantry_0_1_1                      ; t - 0 (infantry),     d - 1 (up-right),   s - 1 (move)
                 DW .Infantry_0_1_2                      ; t - 0 (infantry),     d - 1 (up-right),   s - 2 (attack)
-                DW #0000                                ; t - 0 (infantry),     d - 1 (up-right),   s - 3 (?)
+                DW .Infantry_0_1_3                      ; t - 0 (infantry),     d - 1 (up-right),   s - 3 (Dead)
                 DW #0000                                ; t - 0 (infantry),     d - 1 (up-right),   s - 4 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 1 (up-right),   s - 5 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 1 (up-right),   s - 6 (?)
@@ -58,7 +58,7 @@ SpritesTable:
                 DW .Infantry_0_2_1                      ; t - 0 (infantry),     d - 2 (right),      s - 0 (idle)
                 DW .Infantry_0_2_1                      ; t - 0 (infantry),     d - 2 (right),      s - 1 (move)
                 DW .Infantry_0_2_2                      ; t - 0 (infantry),     d - 2 (right),      s - 2 (attack)
-                DW #0000                                ; t - 0 (infantry),     d - 2 (right),      s - 3 (?)
+                DW .Infantry_0_2_3                      ; t - 0 (infantry),     d - 2 (right),      s - 3 (Dead)
                 DW #0000                                ; t - 0 (infantry),     d - 2 (right),      s - 4 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 2 (right),      s - 5 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 2 (right),      s - 6 (?)
@@ -67,7 +67,7 @@ SpritesTable:
                 DW .Infantry_0_3_1                      ; t - 0 (infantry),     d - 3 (down-right), s - 0 (idle)
                 DW .Infantry_0_3_1                      ; t - 0 (infantry),     d - 3 (down-right), s - 1 (move)
                 DW .Infantry_0_3_2                      ; t - 0 (infantry),     d - 3 (down-right), s - 2 (attack)
-                DW #0000                                ; t - 0 (infantry),     d - 3 (down-right), s - 3 (?)
+                DW .Infantry_0_3_3                      ; t - 0 (infantry),     d - 3 (down-right), s - 3 (Dead)
                 DW #0000                                ; t - 0 (infantry),     d - 3 (down-right), s - 4 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 3 (down-right), s - 5 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 3 (down-right), s - 6 (?)
@@ -76,7 +76,7 @@ SpritesTable:
                 DW .Infantry_0_4_1                      ; t - 0 (infantry),     d - 4 (down),       s - 0 (idle)
                 DW .Infantry_0_4_1                      ; t - 0 (infantry),     d - 4 (down),       s - 1 (move)
                 DW .Infantry_0_4_2                      ; t - 0 (infantry),     d - 4 (down),       s - 2 (attack)
-                DW #0000                                ; t - 0 (infantry),     d - 4 (down),       s - 3 (?)
+                DW .Infantry_0_4_3                      ; t - 0 (infantry),     d - 4 (down),       s - 3 (Dead)
                 DW #0000                                ; t - 0 (infantry),     d - 4 (down),       s - 4 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 4 (down),       s - 5 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 4 (down),       s - 6 (?)
@@ -85,7 +85,7 @@ SpritesTable:
                 DW .Infantry_0_5_1                      ; t - 0 (infantry),     d - 5 (down-left),  s - 0 (idle)
                 DW .Infantry_0_5_1                      ; t - 0 (infantry),     d - 5 (down-left),  s - 1 (move)
                 DW .Infantry_0_5_2                      ; t - 0 (infantry),     d - 5 (down-left),  s - 2 (attack)
-                DW #0000                                ; t - 0 (infantry),     d - 5 (down-left),  s - 3 (?)
+                DW .Infantry_0_5_3                      ; t - 0 (infantry),     d - 5 (down-left),  s - 3 (Dead)
                 DW #0000                                ; t - 0 (infantry),     d - 5 (down-left),  s - 4 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 5 (down-left),  s - 5 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 5 (down-left),  s - 6 (?)
@@ -94,7 +94,7 @@ SpritesTable:
                 DW .Infantry_0_6_1                      ; t - 0 (infantry),     d - 6 (left),       s - 0 (idle)
                 DW .Infantry_0_6_1                      ; t - 0 (infantry),     d - 6 (left),       s - 1 (move)
                 DW .Infantry_0_6_2                      ; t - 0 (infantry),     d - 6 (left),       s - 2 (attack)
-                DW #0000                                ; t - 0 (infantry),     d - 6 (left),       s - 3 (?)
+                DW .Infantry_0_6_3                      ; t - 0 (infantry),     d - 6 (left),       s - 3 (Dead)
                 DW #0000                                ; t - 0 (infantry),     d - 6 (left),       s - 4 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 6 (left),       s - 5 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 6 (left),       s - 6 (?)
@@ -103,11 +103,13 @@ SpritesTable:
                 DW .Infantry_0_7_1                      ; t - 0 (infantry),     d - 7 (up-left),    s - 0 (idle)
                 DW .Infantry_0_7_1                      ; t - 0 (infantry),     d - 7 (up-left),    s - 1 (move)
                 DW .Infantry_0_7_2                      ; t - 0 (infantry),     d - 7 (up-left),    s - 2 (attack)
-                DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 3 (?)
+                DW .Infantry_0_7_3                      ; t - 0 (infantry),     d - 7 (up-left),    s - 3 (Dead)
                 DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 4 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 5 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 6 (?)
                 DW #0000                                ; t - 0 (infantry),     d - 7 (up-left),    s - 7 (?)
+
+                ; Move
 
 .Infantry_0_0_1 ; t - 0 (), d - 0 (up), s - 1 (move)
                 FSprite 16-2,     8-1+4,      1,      4,      0, PageSprites_0,    MemoryPage_4.SolderA_Move_0_0   ; напровление 0, индекс анимации 0
@@ -157,6 +159,7 @@ SpritesTable:
                 FSprite 16-2,     8-1+4,      1,      4,      0, PageSprites_0,    MemoryPage_4.SolderA_Move_7_2   ; напровление 7, индекс анимации 2
                 FSprite 16-2,     8-1+4,      1,      4,      0, PageSprites_0,    MemoryPage_4.SolderA_Move_7_3   ; напровление 7, индекс анимации 3
 
+                ; Attack
 
 .Infantry_0_0_2 ; t - 0 (), d - 0 (up), s - 2 (attack)
                 FSprite 18,     14,      2,     11,      0, PageSprites_0,    MemoryPage_4.SolderA_Attack_0_0      ; напровление 0, индекс анимации 0
@@ -187,7 +190,49 @@ SpritesTable:
                 FSprite 14,     10,      3,     20,      0, PageSprites_0,    MemoryPage_4.SolderA_Attack_6_1      ; напровление 6, индекс анимации 1
 
 .Infantry_0_7_2 ; t - 0 (), d - 7 (up-left), s - 2 (attack)
-                FSprite 18,     15,      2,     12,      0, PageSprites_0,    MemoryPage_4.SolderA_Attack_7_0      ; напровление 7, индекс анимации 0
-                FSprite 16,     14,      2,     12,      0, PageSprites_0,    MemoryPage_4.SolderA_Attack_7_1      ; напровление 7, индекс анимации 1
+                FSprite 18,     15,      2,     12,      0, PageSprites_0,    MemoryPage_4.SolderA_Attack_7_0       ; напровление 7, индекс анимации 0
+                FSprite 16,     14,      2,     12,      0, PageSprites_0,    MemoryPage_4.SolderA_Attack_7_1       ; напровление 7, индекс анимации 1
 
+                ; Dead
+
+.Infantry_0_0_3 ; t - 0 (), d - 0 (up), s - 3 (dead) !
+                FSprite 14,     12,      2,      4,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_0_0         ; напровление 0, индекс анимации 0
+                FSprite 12,     10,      2,      5,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_0_1         ; напровление 0, индекс анимации 1
+                FSprite 10,      8,      2,      5,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_0_2         ; напровление 0, индекс анимации 2
+                FSprite  8,      7,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_0_3         ; напровление 0, индекс анимации 3
+.Infantry_0_1_3 ; t - 0 (), d - 1 (up-right), s - 3 (dead) !
+                FSprite 14,     12,      2,      5,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_1_0         ; напровление 1, индекс анимации 0
+                FSprite 12,     10,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_1_1         ; напровление 1, индекс анимации 1
+                FSprite 10,      8,      2,      7,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_1_2         ; напровление 1, индекс анимации 2
+                FSprite 10,      7,      2,      7,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_1_3         ; напровление 1, индекс анимации 3
+.Infantry_0_2_3 ; t - 0 (), d - 2 (right), s - 3 (dead) !
+                FSprite 14,     11,      2,      7,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_2_0         ; напровление 2, индекс анимации 0
+                FSprite 10,      9,      2,      8,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_2_1         ; напровление 2, индекс анимации 1
+                FSprite  8,      7,      2,      7,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_2_2         ; напровление 2, индекс анимации 2
+                FSprite  8,      6,      2,      8,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_2_3         ; напровление 2, индекс анимации 3
+.Infantry_0_3_3 ; t - 0 (), d - 3 (down-right), s - 3 (dead) !
+                FSprite 14,     12,      2,      7,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_3_0         ; напровление 3, индекс анимации 0
+                FSprite 14,     13,      2,      8,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_3_1         ; напровление 3, индекс анимации 1
+                FSprite 10,      7,      2,      8,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_3_2         ; напровление 3, индекс анимации 2
+                FSprite  8,      6,      2,      9,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_3_3         ; напровление 3, индекс анимации 3
+.Infantry_0_4_3 ; t - 0 (), d - 4 (down), s - 3 (dead) !
+                FSprite 14,     12,      2,      7,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_4_0         ; напровление 4, индекс анимации 0
+                FSprite 14,     11,      2,      8,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_4_1         ; напровление 4, индекс анимации 1
+                FSprite 10,      7,      2,      8,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_4_2         ; напровление 4, индекс анимации 2
+                FSprite  8,      5,      2,      8,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_4_3         ; напровление 4, индекс анимации 3
+.Infantry_0_5_3 ; t - 0 (), d - 4 (down), s - 3 (dead) !
+                FSprite 14,     12,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_5_0         ; напровление 5, индекс анимации 0
+                FSprite 14,     11,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_5_1         ; напровление 5, индекс анимации 1
+                FSprite 10,      7,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_5_2         ; напровление 5, индекс анимации 2
+                FSprite  8,      5,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_5_3         ; напровление 5, индекс анимации 3
+.Infantry_0_6_3 ; t - 0 (), d - 4 (down), s - 3 (dead) !
+                FSprite 14,     10,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_6_0         ; напровление 6, индекс анимации 0
+                FSprite 10,      8,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_6_1         ; напровление 6, индекс анимации 1
+                FSprite  8,      6,      2,      7,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_6_2         ; напровление 6, индекс анимации 2
+                FSprite  8,      5,      2,      8,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_6_3         ; напровление 6, индекс анимации 3
+.Infantry_0_7_3 ; t - 0 (), d - 4 (down), s - 3 (dead) !
+                FSprite 14,     11,      2,      7,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_7_0         ; напровление 7, индекс анимации 0
+                FSprite 12,      8,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_7_1         ; напровление 7, индекс анимации 1
+                FSprite 12,      7,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_7_2         ; напровление 7, индекс анимации 2
+                FSprite 10,      6,      2,      6,      0, PageSprites_0,    MemoryPage_4.SolderA_Dead_7_3         ; напровление 7, индекс анимации 3
                 endif ; ~_SPRITES_TABLE_

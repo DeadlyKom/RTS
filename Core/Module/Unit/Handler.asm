@@ -116,10 +116,15 @@ Handler:        ; включить страницу
                 SET_PAGE_UNITS_ARRAY
                 endif
 
-                ; смена анимация стрельбы
-                ; BIT FUSF_ATTACK_BIT, (IX + FUnit.State)                         ; проверка флага FUSF_ATTACK_BIT
-                CALL Utils.Unit.State.IsATTACK
+                ; ---------------------------------------------
+                ; анимация
+                ; ---------------------------------------------
+
+                CALL Utils.Unit.State.IsATTACK                                  ; проверка флага UNIT_STATE_ATTACK
                 CALL Z, Animation.Attack
+
+                CALL Utils.Unit.State.IsDEAD                                    ; проверка флага UNIT_STATE_DEAD
+                CALL Z, Animation.Dead
                 
                 ; отрисовка HP
                 BIT FUSF_SELECTED_BIT, (IX + FUnit.State)                       ; проверка флага FUSF_SELECTED

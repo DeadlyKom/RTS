@@ -40,7 +40,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                LD A, 3
+                LD A, 12
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
@@ -173,7 +173,13 @@ GameLoop:
                 JP .MainLoop
 
 .Array          
-                DW #0705    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #0409    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #0508    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #0607    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #0708    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #0807    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #090A    : DB NEUTRAL_FACTION | Infantry    ; 0
+                
                 ; DW #1217    : DB NEUTRAL_FACTION | Infantry    ; 0
                 ; DW #1317    : DB NEUTRAL_FACTION | Infantry    ; 0
                 ; DW #1417    : DB NEUTRAL_FACTION | Infantry    ; 0
@@ -181,7 +187,12 @@ GameLoop:
                 ; DW #1617    : DB NEUTRAL_FACTION | Infantry    ; 0
                 ; DW #1717    : DB NEUTRAL_FACTION | Infantry    ; 0
 
-                DW #070C    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #070B    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #080A    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #080C    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #0909    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #090B    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #0A05    : DB ENEMY_FACTION   | Infantry    ; 1
 
                 DW #0202    : DB #00    ; 1
                 DW #1517    : DB #00    ; 2
