@@ -5,7 +5,6 @@
 ; -----------------------------------------
 ; сканирование выделение прямоугольником
 ; In:
-;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
@@ -131,7 +130,11 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 LD HL, .ProcessedUnits
                 LD IX, UnitArrayPtr
 
-.Loop           LD BC, (IX + FUnit.Position)
+.Loop           ; проверка что юнит мёртвый
+                CALL Utils.Unit.State.IsDEAD                                    ; проверка флага UNIT_STATE_DEAD
+                JR Z, .Next
+                
+                LD BC, (IX + FUnit.Position)
 
                 ; RES FUSF_SELECTED_BIT, (HL)
                 LD A, #86 | FUSF_SELECTED_BIT << 3

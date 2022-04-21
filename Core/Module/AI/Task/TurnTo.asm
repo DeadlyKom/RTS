@@ -11,7 +11,7 @@
 ; Note:
 ; -----------------------------------------
 TurnTo:         CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
-                BIT FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 JR NZ, .IsMoveTo                                                ; счётчик указывает на перемещение
 
                 ; расчёт дельты направления

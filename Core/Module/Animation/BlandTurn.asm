@@ -29,7 +29,7 @@ TurnDown:       ; B - направление поворота (-1/1)
                 LD D, (HL)
 
                 ; проверка на инициализацию счётчика после перемещения
-                BIT FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 JR NZ, .Init
 
                 ; проверка на первичную инициализацию (мб вообще убрать её!)
@@ -76,7 +76,7 @@ TurnDown:       ; B - направление поворота (-1/1)
                 RET
 
 .Init           ; сброс бита принадлежности
-                RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 
                 ; установка нового счётчика анимации
                 LD A, (HL)                                                      ; A - новый счётчик

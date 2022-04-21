@@ -1,9 +1,18 @@
 
                     ifndef _MEMORY_COPY_
                     define _MEMORY_COPY_
+; -----------------------------------------
+; копирование спрайта в общий буфер
+; In:
+;   HL - начальный адрес спрайта (мб со смещением)
+;   BС - размер спрайта (B - ширина в знакоместах, C - высота в пикселях)
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
 Sprite:             
                     ADD A, A                                                    ; проверка бита FSSF_MASK_BIT
-                    JP C, .Alternation
+                    JP C, .SharedMask
 
                     RestoreHL
                     EX DE, HL
@@ -50,28 +59,29 @@ Sprite:
 .MemCopyJump        EQU $+1
                     JP #0000
 
-.Alternation        
+.SharedMask        ;
+
                     RET
 
-_192_bytes:         RestoreHL
+; _192_bytes:         RestoreHL
 
-                    LD (MC_ContainerSP), SP
-                    LD E, (HL)
-                    INC HL
-                    LD D, (HL)
-                    INC HL
-                    LD (.ContainerSP_), HL
-                    EX DE, HL
-.ContainerSP_       EQU $+1
-                    LD SP, #0000
-                    JP MemCopy._192
+;                     LD (MC_ContainerSP), SP
+;                     LD E, (HL)
+;                     INC HL
+;                     LD D, (HL)
+;                     INC HL
+;                     LD (.ContainerSP_), HL
+;                     EX DE, HL
+; .ContainerSP_       EQU $+1
+;                     LD SP, #0000
+;                     JP MemCopy._192
 MemCopy:
-.Count              defl SharedBuffer
-._192               dup 96 - 72
-                    LD	(.Count), HL
-.Count              = .Count + 2
-                    POP HL
-                    edup
+.Count              defl SharedBuffer + 48
+; ._192               dup 96 - 72
+;                     LD	(.Count), HL
+; .Count              = .Count + 2
+;                     POP HL
+;                     edup
 
 ._144               dup	72
                     LD	(.Count), HL
@@ -85,40 +95,29 @@ SpriteAdr           EQU $+1
                     LD HL, SharedBuffer
                     RET
 
-                    ; POP DE
-                    ; LD (HL), E
+                    ; ; копирование в 1 массив 
+                    ; ; SP - адрес спрайта
+                    ; ; HL - буфер
+                    ; ; DE - адрес маски
+                    ; POP BC
+                    ; LD (HL), C
                     ; INC L
+                    ; LD A, (DE)
+                    ; LD (HL), A
                     ; INC L
-                    ; LD (HL), D
+                    ; INC DE
+                    ; LD (HL), B
+                    ; LD A, (DE)
+                    ; LD (HL), A
                     ; INC L
-                    ; INC L
+                    ; INC DE
 
+                    ; ; HL - спрайт
+                    ; ; DE - буфер
+                    ; ; BC - маска
+                    ; LD A, (BC)
                     ; LDI
-                    ; INC E
-                    ; LDI
-                    ; INC E
-
-                    ; POP DE
-                    ; LD A, E
-                    ; LD (0), A
-                    ; LD A, E
-                    ; LD (0), A
-
-                    ; LDI
-                    ; PUSH HL
-                    ; INC C
-                    ; LD L, C
-                    ; LD H, B
-                    ; LDI
-                    ; POP HL
-                    
-                    ; EXX
-                    ; LDI
-                    ; EXX
-
-                    ; POP DE
-                    ; LD (IX + 0), E
-                    ; LD (IX + 1), D
-
+                    ; LD (DE), A
+                    ; INC DE
 
                     endif ; ~_MEMORY_COPY_

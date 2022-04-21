@@ -24,6 +24,8 @@ Apply:          ;
 
                 LD A, #20
 
+                SET FUAF_FLASH_BIT, (IX + FUnit.Flags)                          ; включить мерцание
+
 .SaveArmor      ; сохранение значение брони
                 LD (IX + FUnit.Armor), A
                 RET

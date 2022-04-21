@@ -7,9 +7,11 @@
                 
                 module MemoryPage_4
 Start:
-                include "Sprite/SolderMove.inc"
-                include "Sprite/SolderAttack.inc"
-                include "Sprite/SolderDead.inc"
+                include "Sprite/Solder/Move.inc"
+                include "Sprite/Solder/Attack.inc"
+                include "Sprite/Solder/Dead.inc"
+                
+                include "Sprite/Tank/Move.inc"
 
                 ;
 Sprite_Tile_0:        

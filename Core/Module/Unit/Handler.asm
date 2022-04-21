@@ -68,7 +68,16 @@ Handler:        ; включить страницу
                 EX DE, HL
                 endif
 
-.Force          CALL Sprite.FastClipping
+.Force          ;
+                ; BIT FUAF_FLASH_BIT, (IX + FUnit.Flags)
+                ; JR Z, .SkipFlash
+
+                ;
+;                 RES FUAF_FLASH_BIT, (IX + FUnit.Flags)
+;                 JR .PreNextUnit
+
+; .SkipFlash      ;
+                CALL Sprite.FastClipping
                 JR C, .PreNextUnit
                 
                 ; получение адреса хранения информации о спрайте

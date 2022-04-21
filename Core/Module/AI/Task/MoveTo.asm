@@ -145,7 +145,7 @@ MoveTo:
                 LD HL, Utils.Unit.Tilemap.Radius_5
                 CALL Utils.Unit.Tilemap.Reconnaissance
 
-                RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; необходимо переинициализировать анимацию перемещения
+                RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                          ; необходимо переинициализировать анимацию перемещения
                 RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
                 CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
 

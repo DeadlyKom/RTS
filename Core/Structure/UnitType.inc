@@ -75,12 +75,13 @@ FUTF_MASK_OFFSET            EQU 0x07                                            
 FUAF_ANIMATION_MASK         EQU %00000011
 
 ; FUnit.Flags state flags
-FUAF_TURN_MOVE              EQU 0x00                                            ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
-FUAF_Y                      EQU 0x01                                            ; бит оси Y (0 - инкремент, 1 - декремент)
-FUAF_X                      EQU 0x02                                            ; бит оси X (0 - инкремент, 1 - декремент)
+FUAF_TURN_MOVE_BIT          EQU 0x00                                            ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+FUAF_Y_BIT                  EQU 0x01                                            ; бит оси Y (0 - инкремент, 1 - декремент)
+FUAF_X_BIT                  EQU 0x02                                            ; бит оси X (0 - инкремент, 1 - декремент)
+FUAF_FLASH_BIT              EQU 0x03                                            ; бит мерцания
 FUAF_FULL_PLAYBACK          EQU 0x07                                            ; бит полного проигрывания анимации, только после этого можно переключать флаги
-FUAF_X_Y_MASK               EQU (~(1 << FUAF_X | 1 << FUAF_Y)) & 0xFF
-FUAF_MOVE_MASK              EQU (~(1 << FUAF_TURN_MOVE | 1 << FUAF_X | 1 << FUAF_Y)) & 0xFF
+FUAF_X_Y_MASK               EQU (~(1 << FUAF_X_BIT | 1 << FUAF_Y_BIT)) & 0xFF
+FUAF_MOVE_MASK              EQU (~(1 << FUAF_TURN_MOVE_BIT | 1 << FUAF_X_BIT | 1 << FUAF_Y_BIT)) & 0xFF
 FUAF_IDLE_COUNT_MASK        EQU %01100000                                       ; маска счётчика в состоянии простоя юнита
 FUAF_IDLE_DECREMENT         EQU %00100000                                       ; значение декремента счётчика юнита в состоянии простоя
 FUAF_IDLE_COUNT_MASK_INV    EQU (~FUAF_IDLE_COUNT_MASK) & 0xFF
