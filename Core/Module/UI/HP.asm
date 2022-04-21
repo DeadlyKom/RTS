@@ -18,13 +18,21 @@ Draw:           LD HL, .OffsetByPixel
                 INC L
                 LD (HL), B
     
-                LD A, (IX + FUnit.Health)                                       ; XP
-            
+                LD E, (IX + FUnit.Health)                                       ; XP
+
                 ; расчёт HP
+                LD A, E
                 RRA
                 RRA
                 RRA
+                LD D, A
+                LD A, E
+                AND %00001111
+                LD A, D
+                JR Z, $+4
+                OR %00000010
                 AND %00011110
+
                 LD HL, .SmalHP_Table
                 ADD A, L
                 LD L, A

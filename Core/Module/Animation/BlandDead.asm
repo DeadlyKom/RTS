@@ -22,11 +22,8 @@ Dead:           ;
 
                 ;
                 LD A, (IX + FUnit.Animation)
-                AND %00000011
-                INC A
-                CP #04
-                JR NZ, $+3
-                DEC A
+                CP #03
+                ADC A, #00
                 LD (IX + FUnit.Animation), A
 
                 ; обновление облости
