@@ -20,6 +20,11 @@ SafeFill_192:       ; fill 192 bytes
                     LD (MS_ContainerSP), SP
                     LD SP, HL
                     JP MemSet_192
+SafeFill_128:       ; fill 128 bytes
+                    RestoreDE
+                    LD (MS_ContainerSP), SP
+                    LD SP, HL
+                    JP MemSet_128
 SafeFill_32:        ; fill 32 bytes
                     RestoreDE
                     LD (MS_ContainerSP), SP
@@ -84,19 +89,22 @@ SafeFill_768:       ; fill 768 byts
                     LD (MS_ContainerSP), SP
                     LD SP, HL
 
-MemSet_768:         dup	128         ; 128 * 2 = 256 bytes
+MemSet_768:         dup	128                                                     ; 128 * 2 = 256 bytes
                     PUSH DE
                     edup
-MemSet_512:         dup	128         ; 128 * 2 = 256 bytes
+MemSet_512:         dup	128                                                     ; 128 * 2 = 256 bytes
                     PUSH DE
                     edup
-MemSet_256:         dup	32          ; 32 * 2  = 64 bytes
+MemSet_256:         dup	32                                                      ; 32 * 2  = 64 bytes
                     PUSH DE
                     edup
-MemSet_192:         dup	80          ; 80 * 2  = 160 bytes
+MemSet_192:         dup	32                                                      ; 32 * 2  = 64 bytes
                     PUSH DE
                     edup
-MemSet_32:          dup	16          ; 16 * 2  = 32 bytes
+MemSet_128:         dup 48                                                      ; 48 * 2  = 96 bytes
+                    PUSH DE
+                    edup
+MemSet_32:          dup	16                                                      ; 16 * 2  = 32 bytes
                     PUSH DE
                     edup
 MS_ContainerSP:     EQU $+1

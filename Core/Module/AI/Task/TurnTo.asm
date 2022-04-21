@@ -10,38 +10,39 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-TurnTo:         SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
+TurnTo:         CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
                 BIT FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 JR NZ, .IsMoveTo                                                ; счётчик указывает на перемещение
 
                 ; расчёт дельты направления
                 CALL Utils.GetDeltaTarget
+                ; JR$
+                ; ---------------------------------------------
+                ; D - dY
+                ; E - dX
+                ; ---------------------------------------------
+                
                 JR NC, .Fail                                                    ; неудачая точка назначения
 
                 LD A, E
                 OR D
                 JR Z, .Complite                                                 ; если позиция юнита совподает с позицией WayPoint
                                                                                 ; поворот не требуется
-                ; ---------------------------------------------
-                ; D - dY
-                ; E - dX
-                ; ---------------------------------------------
+
 
                 LD A, (IX + FUnit.Direction)
-                JP Utils.Turn.Down                                              ; вернёт флаг успешности
+                JP Utils.Unit.Turn.Down                                         ; вернёт флаг успешности
 
-.Fail           RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
+.Fail           CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
 
                 ; неудачное выполнение
-                OR A
-                RET
+                JP AI.SetBTS_FAILURE
 
 .IsMoveTo       ; счётчик указан на перемещение
 .Complite       ; юнит повернулся до требуемого направления
-                RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
+                CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
 
                 ; удачное выполнение
-                SCF
-                RET
+                JP AI.SetBTS_SUCCESS
 
                 endif ; ~_CORE_MODULE_AI_TASK_TURN_TO_

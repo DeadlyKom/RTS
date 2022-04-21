@@ -2,7 +2,7 @@
                 ifndef _MOUSE_INIT_
                 define _MOUSE_INIT_
 Initialize:     ; set default value cursor position
-                LD HL, (192 >> 1) << 8 | (256 >> 1)
+                LD HL, 128 + 10 | (96 - 20) <<8;(192 >> 1) << 8 | (256 >> 1)
                 LD (Position), HL
 
                 ; detected kempston mouse

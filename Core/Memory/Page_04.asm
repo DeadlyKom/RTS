@@ -9,6 +9,7 @@
 Start:
                 include "Sprite/SolderMove.inc"
                 include "Sprite/SolderAttack.inc"
+                include "Sprite/SolderDead.inc"
 
                 ;
 Sprite_Tile_0:        

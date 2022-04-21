@@ -122,11 +122,11 @@ Down:           ; JR $
 
                 CALL Animation.TurnDown
 
-.Unsuccessful   OR A
-                RET
+.Progress       ; в процессе выполнения
+                JP AI.SetBTS_RUNNING
 
-.Successful     SCF
-                RET
+.Successful     ; успешное выполнение
+                JP AI.SetBTS_SUCCESS
 
                 endmodule
 

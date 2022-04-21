@@ -14,16 +14,21 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                ; бит валидности Way Point
-                        JR Z, .IsNotValid                                       ; текущий Way Point не валидный
+GetDeltaTarget:         ;BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                ; бит валидности Way Point
+                        ;JR Z, .IsNotValid                                       ; текущий Way Point не валидный
 
-                        LD A, (IX + FUnit.WayPoint.Y)
+                        ; определения валидности значения Target
+                        LD A, (IX + FUnit.Data)                                 ; бит валидности Way Point
+                        AND FUTF_VALID_WP | FUTF_ENEMY
+                        JR Z, .IsNotValid                                       ; текущее значени Target не корректно
+
+                        LD A, (IX + FUnit.Target.Y)
                         EX AF, AF'
-                        LD A, (IX + FUnit.WayPoint.X)
+                        LD A, (IX + FUnit.Target.X)
 
                         LD C, #00                                               ; С = 0 (нет необходимости выравнивать), 
                                                                                 ; С = 1 (нужно привести к одной точности)
-                        ; delta x = FUnit.WayPoint.X - FUnit.Position.X
+                        ; delta x = FUnit.Target.X - FUnit.Position.X
                         SUB (IX + FUnit.Position.X)
                         JP NZ, .SetX
                         ; увеличение точности X
@@ -32,7 +37,7 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                
                         INC C                                                   ; X = более точный, Y нужно будет увеличить точность (Y << 3)
 .SetX                   LD E, A
 
-                        ; delta y = FUnit.WayPoint.Y - FUnit.Position.Y
+                        ; delta y = FUnit.Target.Y - FUnit.Position.Y
                         EX AF, AF'
                         SUB (IX + FUnit.Position.Y)
                         JP NZ, .IsImprovedAccuracy                              ; Y имеет грубую точность, нужно проверить на необходимость увеличения точности
@@ -71,7 +76,6 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                
 .IsNotValid             XOR A                                                   ; неудача операции
                         LD D, A
                         LD E, A
-                        DEC IXH                                                 ; FSpriteLocation (2)
                         RET
 
 ; -----------------------------------------
@@ -85,12 +89,17 @@ GetDeltaTarget:         BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                
 ;   HL, DE, AF
 ; Note:
 ; -----------------------------------------
-GetPerfectTargetDelta:  BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                ; бит валидности Way Point
-                        JR Z, GetDeltaTarget.IsNotValid                         ; текущий Way Point не валидный
+GetPerfectTargetDelta:  ;BIT FUTF_VALID_WP_BIT, (IX + FUnit.Data)                ; бит валидности Way Point
+                        ;JR Z, GetDeltaTarget.IsNotValid                         ; текущий Way Point не валидный
 
-                        LD A, (IX + FUnit.WayPoint.Y)
+                        ; определения валидности значения Target
+                        LD A, (IX + FUnit.Data)                                 ; бит валидности Way Point
+                        AND FUTF_VALID_WP | FUTF_ENEMY
+                        JR Z, GetDeltaTarget.IsNotValid                         ; текущее значени Target не корректно
+
+                        LD A, (IX + FUnit.Target.Y)
                         EX AF, AF'
-                        LD A, (IX + FUnit.WayPoint.X)
+                        LD A, (IX + FUnit.Target.X)
 
                         ; delta x = (X - FUnit.Position.X) * 16 - FUnit.Offset.X
                         SUB (IX + FUnit.Position.X)

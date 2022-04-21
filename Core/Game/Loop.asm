@@ -1,8 +1,13 @@
 
                 ifndef _CORE_GAME_LOOP_
                 define _CORE_GAME_LOOP_
-GameLoop:       
-                ; JR $
+
+GameLoop:
+                ; JR$
+                ; CALL Utils.ChunkArray.Init
+                ; LD DE, #0000
+                ; CALL Utils.ChunkArray.Insert
+
                 ; add unit
                 SET_PAGE_UNITS_ARRAY
 
@@ -35,7 +40,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                LD A, 116
+                LD A, 12
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
@@ -44,31 +49,33 @@ GameLoop:
                 INC HL
                 LD B, (HL)
                 INC HL
-                LD A, (HL)
+                LD E, (HL)
                 INC HL
 
                 PUSH HL
 
-                OR A
-                JR NZ, $+7
+                LD D, FUSE_RECONNAISSANCE | FUSF_RENDER
                 CALL Spawn.Unit
                 JR .Next
 
-                EX AF, AF' 
-                CALL Spawn.Unit
-                EX AF, AF'
-
-                CP #FF
-                JR NZ, .SetIndex
+;                 LD A, E
+;                 EX AF, AF'
+;                 LD D, FUSE_RECONNAISSANCE | FUSF_RENDER
+;                 LD E, #00
+;                 CALL Spawn.Unit
+;                 EX AF, AF'
+                
+;                 CP #FF
+;                 JR NZ, .SetIndex
     
-                CALL Utils.Math.Rand8
-                OR A
-                JR Z, $+3
-                INC A
-                AND %00000111
-.SetIndex       ADD A, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP
-                LD C, A
-                CALL Utils.WaypointsSequencer.AddUnit.UnitAddressToIX
+;                 CALL Utils.Math.Rand8
+;                 OR A
+;                 JR Z, $+3
+;                 INC A
+;                 AND %00000111
+; .SetIndex       ADD A, FUTF_VALID_IDX | FUTF_INSERT | FUTF_LOOP
+;                 LD C, A
+;                 CALL Utils.WaypointsSequencer.AddUnit.UnitAddressToIX
 
 .Next           POP HL
                 POP AF
@@ -157,21 +164,47 @@ GameLoop:
 
                 CheckAIFlag (AI_UPDATE_FLAG | GAME_PAUSE_FLAG)
                 CALL Z, AI.Behavior
+
+                ifdef ENABLE_BEHAVIOR_TREE_STATE
+                CheckDebugFlag DRAW_DEBUG_BT_FLAG
+                CALL Z, Debug.DrawStateBT
+                endif
                 
                 JP .MainLoop
 
 .Array          
-                DW #0202    : DB #00    ; 1
-                DW #1517    : DB #06    ; 2
-                DW #1520    : DB #05    ; 3
-                DW #1E20    : DB #04    ; 4
-                DW #1E17    : DB #03    ; 5
-                DW #1816    : DB #02    ; 6
+                DW #0409    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #0508    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #0607    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #0708    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #0807    : DB NEUTRAL_FACTION | Infantry    ; 0
+                DW #090A    : DB NEUTRAL_FACTION | Infantry    ; 0
+                
+                ; DW #1217    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1317    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1417    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1517    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1617    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1717    : DB NEUTRAL_FACTION | Infantry    ; 0
 
-                DW #1719    : DB #FF    ; 7
-                DW #171A    : DB #FF    ; 8
-                DW #171B    : DB #FF    ; 9
-                DW #171C    : DB #FF    ; 10
+                DW #070B    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #080A    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #080C    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #0909    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #090B    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #0A05    : DB ENEMY_FACTION   | Infantry    ; 1
+
+                DW #0202    : DB #00    ; 1
+                DW #1517    : DB #00    ; 2
+                DW #1520    : DB #00    ; 3
+                DW #1E20    : DB #00    ; 4
+                DW #1E17    : DB #00    ; 5
+                DW #1816    : DB #00    ; 6
+
+                DW #1719    : DB #00    ; 7
+                DW #171A    : DB #00    ; 8
+                DW #171B    : DB #00    ; 9
+                DW #171C    : DB #00    ; 10
                 DW #171D    : DB #FF    ; 11
                 DW #171E    : DB #FF    ; 12
                 DW #1819    : DB #FF    ; 13

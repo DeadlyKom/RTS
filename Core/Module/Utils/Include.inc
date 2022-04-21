@@ -7,16 +7,14 @@
                 include "DeltaBetweenLocationAndTarget.asm"     ; remove ?
                 
                 ; units
-                include "Unit/Reconnaissance.asm"
-                include "Unit/TurnDown.asm"
-                include "Unit/GetScreenAABB.asm"
-                include "Unit/GetAddressInTable.asm"
-                include "Unit/CalculateUnitAddress.asm"
-                include "Unit/CalculateIndexUnitByAddress.asm"
+                include "Unit/Include.inc"
 
                 ; unit/visibility
-                include "Unit/Visibility/GetListUnits.asm"
                 include "Unit/Visibility/CheckRadius.asm"
+                include "Unit/Visibility/GetListUnits.asm"
+
+                ; RNG
+                include "RNG/Rand8.asm"
 
                 ; convert
                 include "Convert/ToTilemap.asm"
@@ -29,8 +27,11 @@
                 ; surface
                 include "Surface/SurfaceProperty.asm"
 
-                ; RNG
-                include "RNG/Rand8.asm"
+                ; chunk array
+                include "ChunkArray/Include.inc"
+
+                ;
+                ; include "Projectile/Include.inc"
 
                 endmodule
 

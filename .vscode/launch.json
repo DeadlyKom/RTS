@@ -10,8 +10,8 @@
             "name": "Internal Simulator",
             "remoteType": "zsim",
             "zsim": {
-                "visualMemory": "ZX128",
-                "memoryModel": "ZX128",
+                "visualMemory": "ZX128K",
+                "memoryModel": "ZX128K",
                 "ulaScreen": true,
                 "zxBorderWidth": 20,
                 "vsyncInterrupt": true,

@@ -16,13 +16,13 @@
 ; -----------------------------------------
 Unit:           ; определение адреса добавления нового юнита
                 LD A, (AI_NumUnitsRef)            
-                CALL Utils.GetAdrUnit
+                CALL Utils.Unit.GetAddress
 
                 ; ---------------------------------------------
                 ; FUnitState                                (1)
                 ; ---------------------------------------------
-                LD DE,  FUSE_RECONNAISSANCE | FUSF_RENDER ; | FUSF_SELECTED
-                LD (IX + FUnit.State), E
+                ; LD DE,  FUSE_RECONNAISSANCE | FUSF_RENDER ; | FUSF_SELECTED
+                LD (IX + FUnit.State), D
 
                 ; рандом направления
                 EXX
@@ -30,8 +30,7 @@ Unit:           ; определение адреса добавления но�
                 EXX
 
                 LD (IX + FUnit.Direction), A
-                XOR A
-                LD (IX + FUnit.Type), A
+                LD (IX + FUnit.Type), E
                 LD A, 0
                 LD (IX + FUnit.Animation), A
 
@@ -52,8 +51,8 @@ Unit:           ; определение адреса добавления но�
 
                 ; инициализция
                 XOR A
-                LD (IX + FUnit.WayPoint.X), A
-                LD (IX + FUnit.WayPoint.Y), A
+                LD (IX + FUnit.Target.X), A
+                LD (IX + FUnit.Target.Y), A
                 LD (IX + FUnit.Data), A
                 LD (IX + FUnit.Idx), A
 
@@ -67,6 +66,16 @@ Unit:           ; определение адреса добавления но�
                 LD (IX + FUnit.CounterUp), A
                 LD (IX + FUnit.Delta), A
                 LD (IX + FUnit.Flags), A
+
+                ; установка дефолтной брони и уровня HP
+                LD A, #20
+                LD (IX + FUnit.Armor), A
+                LD A, #FF
+                LD (IX + FUnit.Health), A
+
+                ; сброс состояния дерева поведения
+                LD A, BTS_UNKNOW
+                LD (IX + FUnit.BehaviorTree.Info), A
  
                 ; итерирование счётчика
                 LD HL, AI_NumUnitsRef

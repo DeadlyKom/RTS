@@ -20,7 +20,7 @@ WayPoint:       ; проверка что Way Point валиден
                 BIT FUTF_VALID_IDX_BIT, (IX + FUnit.Data)                       ; бит валидности данных об индексе
                 JR Z, .IsNotValid_IDX                                           ; данные об индексе не валидны, 
                                                                                 ; дальнейшего пути нет!
-
+ 
                 ; ---------------------------------------------
                 ; проверка вставки временного WayPoint
                 ; ---------------------------------------------
@@ -60,7 +60,7 @@ WayPoint:       ; проверка что Way Point валиден
                 INC H
                 LD D, (HL)
 
-                LD (IX + FUnit.WayPoint), DE
+                LD (IX + FUnit.Target), DE
 
                 ; указан новый WayPoint
                 SET FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; бит валидности Way Point
@@ -68,8 +68,7 @@ WayPoint:       ; проверка что Way Point валиден
                 RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
 
 .Successfully   ; успешно найденый Way Point
-                SCF
-                RET
+                JP AI.SetBTS_SUCCESS
 
 .CheckLoop      ; ---------------------------------------------
                 ; проверка на зацикленность WayPoint
@@ -91,8 +90,7 @@ WayPoint:       ; проверка что Way Point валиден
                 RES FUTF_VALID_IDX_BIT, (IX + FUnit.Data)                       ; бит валидности данных об индексе
 
 .IsNotValid_IDX ; неудачное выполнение
-                OR A                                                            
-                RET
+                JP AI.SetBTS_FAILURE
 
 .InsertWP       ; ---------------------------------------------
                 ; ранее была вставка временного WayPoint

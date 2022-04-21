@@ -15,6 +15,7 @@
                 "Game/Main.asm"
             ],
             "problemMatcher": {
+                "owner": "c",
                 "fileLocation": [
                     "relative",
                     "${workspaceRoot}"
@@ -23,6 +24,7 @@
                     "regexp": "^(.*)\\((\\d+)\\):\\s+(warning|error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
+                    "column": 3,
                     "severity": 3,
                     "message": 4
                 }

@@ -1,46 +1,58 @@
 
-                    ifndef _CORE_MODULE_AI_DEFINITION_
-                    define _CORE_MODULE_AI_DEFINITION_
+                ifndef _CORE_MODULE_AI_DEFINITION_
+                define _CORE_MODULE_AI_DEFINITION_
 
-; behavior tree branch type
-BT_SELECTOR_TYPE    EQU 0x80
-BT_SEQUENCE_TYPE    EQU 0x40
-BT_TASK_TYPE        EQU 0x20
-BT_BREAK_TYPE       EQU 0x00
+; node types
+BTT_NONE        EQU 0x00 << 6
+BTT_SELECTOR    EQU 0x01 << 6
+BTT_SEQUENCE    EQU 0x02 << 6
+BTT_TASK        EQU 0x03 << 6
 
-; behavior tree macros
-BT_TYPE             macro Type?
-                    DB Type? & 0xFF
-                    endm
+; behavior tree status
+BTS_RUNNING     EQU 0x00 << 6
+BTS_SUCCESS     EQU 0x01 << 6
+BTS_FAILURE     EQU 0x02 << 6
+BTS_UNKNOW      EQU 0x03 << 6
 
-; Selector
-; выполняет последовательность задачь, пока какая-то из них не вернёт успешное выполнение
-BT_Selector:        macro Offset?
-                    BT_TYPE BT_SELECTOR_TYPE
-                    if ((Offset? - $) & 0xFF) >? 0
-                    DB (Offset? - $) & 0xFF
-                    else
-                    DB #01
-                    endif
-                    endm
+; internal flags of behavior tree
+BTF_ROOT_BIT    EQU 0x06
+BTF_LAST_BIT    EQU 0x07
 
-; Sequence
-; выполняет последовательность задачь, до тех пор, пока какая-то из них вернёт неудачу
-BT_Sequence         macro Offset?
-                    BT_TYPE BT_SEQUENCE_TYPE
-                    if ((Offset? - $) & 0xFF) >? 0
-                    DB (Offset? - $) & 0xFF
-                    else
-                    DB #01
-                    endif
-                    endm
+BTF_NONE        EQU 0x00
+BTF_ROOT        EQU 1 << BTF_ROOT_BIT                                           ; флаг указывающий, что узел является рутом
+BTF_LAST        EQU 1 << BTF_LAST_BIT                                           ; флаг указывающий, что узел последний в списке
 
-BT_Task             macro AddressTask?
-                    BT_TYPE BT_TASK_TYPE
-                    DW AddressTask? & 0xFFFF
-                    endm
-BT_Break            macro
-                    BT_TYPE BT_BREAK_TYPE
-                    endm
+BT_TYPE_MASK    EQU %11000000
+BT_INDEX_MASK   EQU %00111111
+BT_TASK_MASK    EQU %00111111
+BT_STATE_MASK   EQU %11000000
+; -----------------------------------------
+; 
+;   +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
+;   | 15 | 14 | 13 | 12 | 11 | 10 |  9 |  8 |   |  7 |  6 |  5 |  4 |  3 |  2 |  1 |  0 |
+;   +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
+;   | T1 | T0 | P5 | P4 | P3 | P2 | P1 | P0 |   | F1 | F0 | C5 | C4 | C3 | C2 | C1 | C0 |
+;   +----+----+----+----+----+----+----+----+   +----+----+----+----+----+----+----+----+
+;
+;   T0, T1  - node type
+;   F0, F1  - internal flags of behavior tree
+;   C0 - C5 - index child
+;   P0 - P5 - index parent
+;
+; -----------------------------------------
 
-                    endif ; ~ _CORE_MODULE_AI_DEFINITION_
+; Macros
+BT_SELECTOR     macro Parent?, Child?, Flags?
+                DB (Child?  & 0x3F) | Flags?
+                DB (Parent? & 0x3F) | BTT_SELECTOR
+                endm
+BT_SEQUENCE     macro Parent?, Child?, Flags?
+                DB (Child?  & 0x3F) | Flags?
+                DB (Parent? & 0x3F) | BTT_SEQUENCE
+                endm
+BT_TASK         macro Parent?, NTask?, Flags?
+                DB (NTask?  & 0x3F) | Flags?
+                DB (Parent? & 0x3F) | BTT_TASK
+                endm
+
+                endif ; ~ _CORE_MODULE_AI_DEFINITION_

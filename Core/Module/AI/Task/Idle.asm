@@ -10,21 +10,19 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Idle:           LD A, (IX + FUnit.State)
-                LD C, A
-                AND FUSF_IS_IDLE
-                RET NZ                                                          ; сброс флага, выход если юнит не в состоянии idle
+Idle:           CALL Utils.Unit.State.IsIDLE
+                JP NZ, AI.SetBTS_FAILURE                                        ; сброс флага, выход если юнит не в состоянии idle
 
                 ; проверка бита об проведённой разведки после остановки
-                BIT FUSE_RECONNAISSANCE_BIT, C
+                BIT FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)
                 JR Z, .SkipRecon                                                ; пропустить разведку
 
                 ; ---------------------------------------------
                 ; HL - данные разведки (радиус)
                 ; IX - указывает на FUnit
                 ; ---------------------------------------------
-                LD HL, Utils.Tilemap.Radius_5
-                CALL Utils.Tilemap.Reconnaissance
+                LD HL, Utils.Unit.Tilemap.Radius_5
+                CALL Utils.Unit.Tilemap.Reconnaissance
 
                 RES FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)                 ; сброс флага разведки
 
@@ -32,7 +30,6 @@ Idle:           LD A, (IX + FUnit.State)
                 CALL Animation.Idle
 
                 ; успешное выполнение
-                OR A
-                RET
+                JP AI.SetBTS_SUCCESS
 
                 endif ; ~_CORE_MODULE_AI_TASK_IDLE_

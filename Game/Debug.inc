@@ -3,6 +3,7 @@
                         define _DEBUG_FLAGS_INCLUDE_
 ; debug flags
 DISPLAY_COLLISION_FLAG  EQU 0x80
+DRAW_DEBUG_BT_FLAG      EQU 0x40
 
 ; debug color
 DEFAULT_COLOR           EQU BLACK

@@ -11,12 +11,15 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnit.State)                           ; установка состояния перемещения/поворота
+MoveTo:         
+                ; JR$
+                CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
 
                 ; вызов счётчика анимации перемещения
                 CALL Animation.MoveDown
                 CCF
-                RET C                                                           ; время ещё не вышло, но возвращаем успешное перемещение
+                ; RET C                                                           ; время ещё не вышло, но возвращаем успешное перемещение
+                JR C, .Progress
 
                 ; расчёт смещения в структуре FUnit.Offset
                 LD A, IXL
@@ -131,8 +134,7 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnit.State)                           
                 INC (IX + FUnit.Animation)
 
                 ; успешность выполнения
-                SCF
-                RET
+.Progress       JP AI.SetBTS_RUNNING
 
 .Complite       ; ---------------------------------------------
                 ; юнит дошёл до текущего Way Point
@@ -140,23 +142,21 @@ MoveTo:         SET FUSF_MOVE_BIT, (IX + FUnit.State)                           
                 ; IX - pointer to FUnitTargets      (3)
                 ; ---------------------------------------------
 
-                LD HL, Utils.Tilemap.Radius_5
-                CALL Utils.Tilemap.Reconnaissance
+                LD HL, Utils.Unit.Tilemap.Radius_5
+                CALL Utils.Unit.Tilemap.Reconnaissance
 
                 RES FUAF_TURN_MOVE, (IX + FUnit.Flags)                          ; необходимо переинициализировать анимацию перемещения
                 RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
-                RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
+                CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
 
-                ; успешность выполнения
-                SCF
-                RET
+.Success        ; успешность выполнения
+                JP AI.SetBTS_SUCCESS
 
-.Fail           RES FUSF_MOVE_BIT, (IX + FUnit.State)                           ; сброс состояния перемещения/поворота
+.Fail           CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
                 CALL SFX.BEEP.Fail                                              ; неудачая точка назначения
 
                 ; неудачное выполнение
-                OR A                                                            
-                RET
+                JP AI.SetBTS_FAILURE
 
 .Init           ; ---------------------------------------------
                 ; D - dY
@@ -219,8 +219,8 @@ ShiftLocation:  ;
                 DEC L
                 DEC L
                 INC (HL)
-                LD HL, Utils.Tilemap.Radius_3
-                CALL Utils.Tilemap.Reconnaissance
+                LD HL, Utils.Unit.Tilemap.Radius_3
+                CALL Utils.Unit.Tilemap.Reconnaissance
                 EXX
 
                 RET
@@ -237,8 +237,8 @@ ShiftLocation:  ;
                 DEC L
                 DEC L
                 DEC (HL)
-                LD HL, Utils.Tilemap.Radius_3
-                CALL Utils.Tilemap.Reconnaissance
+                LD HL, Utils.Unit.Tilemap.Radius_3
+                CALL Utils.Unit.Tilemap.Reconnaissance
                 EXX
 
                 RET

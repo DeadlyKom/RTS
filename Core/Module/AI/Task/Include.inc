@@ -4,7 +4,7 @@
 
                 module BTT
 
-                include "Attack.asm"
+                include "AttackTo.asm"
                 include "CheckEnemy.asm"
                 include "Idle.asm"
                 include "LookAround.asm"
@@ -14,5 +14,7 @@
                 include "WayPoint.asm"
 
                 endmodule
+
+                include "TaskTable.inc"
 
                 endif ; ~ _CORE_MODULE_AI_TASKS_INCLUDE_

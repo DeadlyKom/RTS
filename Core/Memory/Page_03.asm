@@ -10,6 +10,12 @@ Start:
                 inchob "../../AY/1.$c"      ; #C86E, #08AD (с проигрывателем)
                 inchob "../../AY/2.$m"      ; #D11B, #06C9
                 inchob "../../AY/3.$m"      ; #D7E4, #02CF - не хотит!
+
+                ; ifdef SHOW_DEBUG
+                ; include "../../Utils/CalculateAddressByPixel.asm"
+                ; include "../../Utils/Printf.asm"
+                ; include "../../Utils/ASCII.inc"
+                ; endif
 End:
 
                 endmodule

@@ -22,12 +22,14 @@ CheckRadius:    ; инициализация
                 LD (.BestDistance), A                                           ; установка максимальной дистанции
                 LD A, #B7
                 LD (.Flag), A                                                   ; установка OR A, как неудача поиска
-                LD H, HIGH .TableSquares                                        ; H  - старший байт таблицы квадратов
+                LD HL, .TableSquares                                            ; H  - старший байт таблицы квадратов
                 LD DE, SharedBuffer                                             ; DE - указывает на список проверяемых юнитов (X, Y)
                 LD C, (IX + FUnit.Position.X)
                 LD B, (IX + FUnit.Position.Y)
 
-.NextElement    ; DeltaX
+.NextElement    LD L, LOW .TableSquares                                         ; L - младший байт таблицы квадратов
+
+                ; DeltaX
                 LD A, (DE)
                 SUB C
                 JP P, $+5
@@ -49,6 +51,8 @@ CheckRadius:    ; инициализация
                 SUB B
                 JP P, $+5
                 NEG
+
+                LD L, LOW .TableSquares                                         ; L - младший байт таблицы квадратов
 
                 ; SquaredY = DeltaX * DeltaX
                 ADD A, L
@@ -77,10 +81,10 @@ CheckRadius:    ; инициализация
 
                 ; сохраним текущую позицию цели
                 LD A, (DE)
-                LD (.BestPosition), A
+                LD (.BestPosition+1), A
                 DEC E
                 LD A, (DE)
-                LD (.BestPosition+1), A
+                LD (.BestPosition), A
                 INC E
 
                 ; установка SCF, как успешность поиска

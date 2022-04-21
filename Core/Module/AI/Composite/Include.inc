@@ -5,12 +5,12 @@
                 include "Definition.inc"
                 include "Handler.asm"
 
-                module Composite
+                ; module Composite
                 
                 include "Selector.inc"
                 include "Sequence.inc"
                 include "Task.inc"
 
-                endmodule
+                ; endmodule
 
                 endif ; ~ _CORE_MODULE_AI_COMPOSITE_INCLUDE_

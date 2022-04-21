@@ -166,7 +166,7 @@ GetLastWaypoint:    LD A, (IX + FUnit.Data)
 ;   requires included memory page
 ; -----------------------------------------
 AddUnit:            ; расчёт смещения по индексу юнита
-                    CALL Utils.GetAdrUnit
+                    CALL Utils.Unit.GetAddress
 
 .UnitAddressToIX    ; IX - указывает на структуру FUnit
                     LD (IX + FUnit.Data), C
