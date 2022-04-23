@@ -5,12 +5,12 @@
 
 ; сдвиг необходим для быстрого получить адрес из таблице по типу юнита (GetAdrInTable)
 Infantry                    EQU 0x00 << 1
-Gunner                      EQU 0x01 << 1
-HeavyGunner                 EQU 0x02 << 1
-Sniper                      EQU 0x03 << 1
-Engineer                    EQU 0x04 << 1
-ArmoredCarrier              EQU 0x05 << 1
-Tank                        EQU 0x06 << 1
+Tank                        EQU 0x01 << 1
+Gunner                      EQU 0x02 << 1
+HeavyGunner                 EQU 0x03 << 1
+Sniper                      EQU 0x04 << 1
+Engineer                    EQU 0x05 << 1
+ArmoredCarrier              EQU 0x06 << 1
 
 TYPE_FACTION_BIT            EQU 0x07                                            ; тип фракции (0 - нейтральная, 1 - враждебная)
 NEUTRAL_FACTION             EQU 0x00 << 7                                       ; нейтральная фракция

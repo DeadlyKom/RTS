@@ -4,120 +4,182 @@
 ; -----------------------------------------
 ; копирование спрайта в общий буфер
 ; In:
-;   HL - начальный адрес спрайта (мб со смещением)
+;   HL - адрес спрайта
 ;   BС - размер спрайта (B - ширина в знакоместах, C - высота в пикселях)
+;   A  - FSprite.Page (7 бит, говорит об использовании маски по смещению)
+;   A' - FSprite.Dummy (адрес спрайта + FSprite.Dummy = адрес маски)
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Sprite:             
-                    ADD A, A                                                    ; проверка бита FSSF_MASK_BIT
-                    JP C, .SharedMask
+Sprite:         ; установка смещения в спрайте
+.SkipLine       EQU $+1
+                LD DE, #0000
+                
+                ; проверка бита FSSF_MASK_BIT
+                ADD A, A
+                JP C, SharedMask
 
-                    RestoreHL
-                    EX DE, HL
+                ; модификация адреса спрайта (обрезать спрайт сверху, если необходимо)
+                RL E                                                            ; E *= 2
+                ADD HL, DE
 
-                    ; ---------------------------------------------
-                    ; B - Sx (ширина спрайта в знакоместах)
-                    ; C - Sy (высота спрайта в пикселях)
-                    ; ---------------------------------------------
+                RestoreHL
+                EX DE, HL
 
-                    ; Sx * Sy
-                    XOR A
-.Mult_SySx          ADD A, C
-                    DJNZ .Mult_SySx
+                ; ---------------------------------------------
+                ; B - Sx (ширина спрайта в знакоместах)
+                ; C - Sy (высота спрайта в пикселях)
+                ; ---------------------------------------------
 
-                    ; A = ((-A) << 1) + 144
-                    NEG
-                    ADD A, A
-                    ADD A, 144
-                    
-                    LD L, A
+                ; Sx * Sy
+                XOR A
+.Mult_SySx      ADD A, C
+                DJNZ .Mult_SySx
 
-                    ADD A, 192 - 144
-                    LD (SpriteAdr), A
+                ; A = ((-A) << 1) + 144
+                NEG
+                ADD A, A
+                ADD A, 144
+                
+                LD L, A
+                LD (MemCopy.SpriteAdr), A
 
-                    LD H, B
-                    ADD HL, HL
-                    LD BC, MemCopy._144
-                    ADD HL, BC
-                    LD (.MemCopyJump), HL
-                    LD (MC_ContainerSP), SP
+                LD H, B
+                ADD HL, HL
+                LD BC, MemCopy._144
+                ADD HL, BC
+                LD (.MemCopyJump), HL
+                LD (MemCopy.MC_ContainerSP), SP
 
-                    EX DE, HL
- 
-                    LD E, (HL)
-                    INC HL
-                    LD D, (HL)
-                    INC HL
-                    LD (.ContainerSP_), HL
-                    EX DE, HL
+                EX DE, HL
 
-.ContainerSP_       EQU $+1
-                    LD SP, #0000
+                ; чтение данных спрайта
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                INC HL
+                LD (.ContainerSP_), HL
+                EX DE, HL
 
-.MemCopyJump        EQU $+1
-                    JP #0000
+.ContainerSP_   EQU $+1
+                LD SP, #0000
 
-.SharedMask        ;
+.MemCopyJump    EQU $+1
+                JP #0000
 
-                    RET
+; ---------------------------------------------
+; HL - адрес спрайта
+; DE - смещение в спрайте
+; B  - Sx (ширина спрайта в знакоместах)
+; C  - Sy (высота спрайта в пикселях)
+; A' - FSprite.Dummy (адрес спрайта + FSprite.Dummy = адрес маски)
+; ---------------------------------------------
+SharedMask      ; EX DE, HL                                                       ; сохранение адреса спрайта
+                PUSH HL
 
-; _192_bytes:         RestoreHL
+                ; ---------------------------------------------
+                ; расчёт адреса перехода
+                ; ---------------------------------------------
 
-;                     LD (MC_ContainerSP), SP
-;                     LD E, (HL)
-;                     INC HL
-;                     LD D, (HL)
-;                     INC HL
-;                     LD (.ContainerSP_), HL
-;                     EX DE, HL
-; .ContainerSP_       EQU $+1
-;                     LD SP, #0000
-;                     JP MemCopy._192
+                ; Sx * Sy
+                XOR A
+.Mult_SySx      ADD A, C
+                DJNZ .Mult_SySx
+
+                ; A = (-A) + 72
+                NEG
+                ADD A, 72
+                
+                ; HL = BC = размер спрайта
+                LD L, A
+                LD H, B
+                LD C, A
+
+                ; HL = размер спрайта * 5
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, BC
+                LD BC, MemCopy._72x2
+                ADD HL, BC
+                LD (.MemCopyJump), HL
+
+                ; ---------------------------------------------
+                ; расчёт адресов копирования блока
+                ; ---------------------------------------------
+
+                ; ; востановление адреса спрайта
+                ; EX DE, HL                                                       ; востановление адреса спрайта
+                ; LD B, H
+                ; LD C, L
+                ; LD D, #00
+                ; EX AF, AF'
+                ; LD E, A
+                ; ADD HL, DE
+                ; LD DE, SharedBuffer
+                ; HL - адрес маски
+                ; DE - адрес буфера (начало)
+                ; BС - адрес спрайта
+                ;
+                ; LD A, (BC)
+                ; LDI
+                ; LD (DE), A
+                ; INC DE
+
+                ; EX DE, HL                                                       ; востановление адреса спрайта
+                POP HL
+                ; SBC HL, DE                                                      ; приминить смещение в спрайте
+                LD B, H
+                LD C, L
+                LD D, #00
+                EX AF, AF'
+                LD E, A
+                ADD HL, DE
+                LD DE, SharedBuffer + (3 * 24 * 2) - 1                          ; максимум 3 знакоместа ширина, 24 строки высота, 2 байта = 144 
+
+                ; HL - адрес спрайта
+                ; DE - адрес буфера (конец)
+                ; BС - адрес маски
+
+.MemCopyJump    EQU $+1
+                JP #0000
 MemCopy:
-.Count              defl SharedBuffer + 48
-; ._192               dup 96 - 72
-;                     LD	(.Count), HL
-; .Count              = .Count + 2
-;                     POP HL
-;                     edup
+.Count          defl SharedBuffer
+._144           dup	72
+                LD	(.Count), HL
+.Count          = .Count + 2
+                POP HL
+                edup
+                LD	(.Count), HL
+.MC_ContainerSP EQU $+1
+                LD SP, #0000
+.SpriteAdr      EQU $+1
+                LD HL, SharedBuffer
+                RET
+; ---------------------------------------------
+; копирование данных из двух массивов, чередуя данные
+; In:
+;   HL - адрес спрайта
+;   DE - адрес буфера (конец)
+;   BС - адрес маски
+; Out:
+;   HL - адрес начала спрайта
+; Corrupt:
+; Note:
+; ---------------------------------------------
+._72x2          rept 71
+                LD A, (BC)  ; чтение маски OR
+                LDD         ; копирование в буфер спрайта XOR
+                LD (DE), A  ; запись в буфер маску OR
+                DEC DE
+                endr
 
-._144               dup	72
-                    LD	(.Count), HL
-.Count              = .Count + 2
-                    POP HL
-                    edup
-                    LD	(.Count), HL
-MC_ContainerSP      EQU $+1
-                    LD SP, #0000
-SpriteAdr           EQU $+1
-                    LD HL, SharedBuffer
-                    RET
+                ; 72 копирование
+                LD A, (BC)  ; чтение маски OR
+                LDD         ; копирование в буфер спрайта XOR
+                LD (DE), A  ; запись в буфер маску OR
+                EX DE, HL   ; HL хранит адрес спрайта
 
-                    ; ; копирование в 1 массив 
-                    ; ; SP - адрес спрайта
-                    ; ; HL - буфер
-                    ; ; DE - адрес маски
-                    ; POP BC
-                    ; LD (HL), C
-                    ; INC L
-                    ; LD A, (DE)
-                    ; LD (HL), A
-                    ; INC L
-                    ; INC DE
-                    ; LD (HL), B
-                    ; LD A, (DE)
-                    ; LD (HL), A
-                    ; INC L
-                    ; INC DE
+                RET
 
-                    ; ; HL - спрайт
-                    ; ; DE - буфер
-                    ; ; BC - маска
-                    ; LD A, (BC)
-                    ; LDI
-                    ; LD (DE), A
-                    ; INC DE
-
-                    endif ; ~_MEMORY_COPY_
+                endif ; ~_MEMORY_COPY_

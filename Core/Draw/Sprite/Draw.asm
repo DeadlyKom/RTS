@@ -22,26 +22,29 @@ Draw:           ; ---------------------------------------------
                                                                                 ; D  = старший байт таблицы сдвига
                 LD E, (HL)                                                      ; E = FSprite.Dummy (смещение + Data = адрес маски)
                 INC HL
-                EX DE, HL
-                LD A, (DE)                                                      ; A = FSprite.Page (7 бит, говорит об использовании маски по смещению)
-                INC DE
-                LD L, A                                                         ; сохраним номер страницы с данными 7 бита
 
-                CALL Memory.SetPage
+                ; переключение страницы
+                LD BC, PORT_7FFD
+                LD A, (BC)
+                XOR (HL)
+                AND %11111000
+                XOR (HL)
+                LD (BC), A
+                OUT (C), A
+
+                LD C, (HL)                                                      ; C = FSprite.Page (7 бит, говорит об использовании маски по смещению)
+                INC HL
+                EX DE, HL
+
+                ; чтение адреса спрайта
                 LD A, (DE)
                 EX AF, AF'
                 INC DE
                 LD A, (DE)
                 EXX
-
                 LD H, A
                 EX AF, AF'
                 LD L, A
-
-                ; модификация адреса спрайта
-.SkipLine       EQU $+1
-                LD BC, #0000
-                ADD HL, BC
 
                 ; ---------------------------------------------
 
@@ -50,14 +53,12 @@ Draw:           ; ---------------------------------------------
                 LD BC, #0000
 
                 EXX
-                LD A, E                                                         ; FSprite.Dummy
+                LD A, L                                                         ; FSprite.Dummy
                 EX AF, AF'
-                LD A, L                                                         ; FSprite.Page
+                LD A, C                                                         ; FSprite.Page
                 EXX
 
-                ADD A, A                                                        ; проверка бита FSSF_CUSTOM_BIT
-                CALL NC, MEMCPY.Sprite                                          ; копирование спрайта в буфер
-
+                CALL MEMCPY.Sprite                                              ; копирование спрайта в буфер
                 CALL Memory.InvScrPageToC000
 
                 ; корректировка адреса экран

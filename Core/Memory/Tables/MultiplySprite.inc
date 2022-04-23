@@ -8,7 +8,7 @@ MultiplySprite: ; таблица умножения для спрайтов
 .LengthSprite   defl 1
                 dup 4                                                           ; максимальная длина спрайта в знакоместах
                 dup 32                                                          ; максимальное количество пропускаемых строк спрайта
-                DB (.SkipRow * (.LengthSprite << 1)) & 0xFF
+                DB (.SkipRow * (.LengthSprite << 0)) & 0xFF
 .LengthSprite   = .LengthSprite + 1
                 edup
 .LengthSprite   = 1
