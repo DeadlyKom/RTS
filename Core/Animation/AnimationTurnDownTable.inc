@@ -1,5 +1,5 @@
 
                         DISP #0000
-AnimationTurnDownTable: DW Solder.Down, #FFFF
-                        include "Solder/TurnDown.inc"
+AnimationTurnDownTable: DW Soldier.Down, #FFFF
+                        include "Soldier/TurnDown.inc"
                         ENT

@@ -1,6 +1,6 @@
 
                         DISP #0000
-AnimationMoveTable:     DW Solder.Move, #FFFF
-                        include "Solder/Move.inc"
+AnimationMoveTable:     DW Soldier.Move, #FFFF
+                        include "Soldier/Move.inc"
                         ENT
 

@@ -6,7 +6,8 @@
                 
                 DISP #0000
                 include "BehaviorTable.inc"             ; первая обязательно!
-                include "Solder/Solder.inc"
+                include "Soldier/Infantry.inc"
+                include "Tank/Tank.inc"
                 ENT
 
                 endmodule

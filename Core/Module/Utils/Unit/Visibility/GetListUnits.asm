@@ -27,7 +27,7 @@ GetListUnits:   ; драфтово формируем список юнитов 
                 ; SET_PAGE_UNITS_ARRAY
 
                 ; LD DE, (IX + FUnit.Position)                                    ; получение позиции юнита
-                LD C, (IX + FUnit.Type)                                         ; получение тип юнита
+                LD C, (IX + FUnit.Type)                                         ; получение тип фракции юнита
 
                 LD HL, SharedBuffer                                             ; HL - указывает на временный буфер
                 LD DE, UnitArrayPtr                                             ; DE - указывает на FUnit

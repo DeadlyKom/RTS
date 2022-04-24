@@ -1,7 +1,7 @@
 
-                    ifndef _CORE_AI_BEHAVIOR_SOLDER_
-                    define _CORE_AI_BEHAVIOR_SOLDER_
-BEHAVIOR_SOLDER:    ; 
+                    ifndef _CORE_AI_BEHAVIOR_TANK_
+                    define _CORE_AI_BEHAVIOR_TANK_
+BEHAVIOR_TANK:      ; 
                     BT_SELECTOR     0,          1,    BTF_ROOT                  ; 0 - A
                     BT_SEQUENCE     0,          4,    BTF_NONE                  ; 1 - B
                     BT_SEQUENCE     0,          7,    BTF_NONE                  ; 2 - C
@@ -13,4 +13,4 @@ BEHAVIOR_SOLDER:    ;
                     BT_TASK         2,    BTT_TTO,    BTF_NONE                  ; 8 - I
                     BT_TASK         2,    BTT_ATO,    BTF_LAST                  ; 9 - J
 
-                    endif ; ~ _CORE_MODULE_AI_BEHAVIOR_SOLDER_
+                    endif ; ~ _CORE_AI_BEHAVIOR_TANK_

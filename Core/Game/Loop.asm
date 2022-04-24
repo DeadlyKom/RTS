@@ -40,7 +40,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                LD A, 12
+                LD A, 1
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
@@ -173,6 +173,11 @@ GameLoop:
                 JP .MainLoop
 
 .Array          
+
+                DW #010F    : DB NEUTRAL_FACTION | Tank         ; 0
+
+
+
                 DW #0409    : DB NEUTRAL_FACTION | Infantry    ; 0
                 DW #0508    : DB NEUTRAL_FACTION | Infantry    ; 0
                 DW #0607    : DB NEUTRAL_FACTION | Infantry    ; 0

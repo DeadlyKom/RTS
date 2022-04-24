@@ -7,9 +7,9 @@
                 
                 module MemoryPage_4
 Start:
-                include "Sprite/Solder/Move.inc"
-                include "Sprite/Solder/Attack.inc"
-                include "Sprite/Solder/Dead.inc"
+                include "Sprite/Soldier/Move.inc"
+                include "Sprite/Soldier/Attack.inc"
+                include "Sprite/Soldier/Dead.inc"
                 
                 include "Sprite/Tank/Move.inc"
 

@@ -4,10 +4,7 @@
 
 ; FSprite state flags
 FSSF_MASK_BIT       EQU 0x07                                                    ; используется общая маска (берётся из Dummy)
-; FSSF_CUSTOM_BIT     EQU 0x07                                                    ; кастомный спрайт (может изменяться)
-
 FSSF_MASK           EQU 1 << FSSF_MASK_BIT
-; FSSF_CUSTOM         EQU 1 << FSSF_CUSTOM_BIT
 
 ; -------------------- sprite info --------------------
 
