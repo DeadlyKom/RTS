@@ -82,13 +82,8 @@ SpriteInfo:     ; расчёт только нижнего (верхний не 
                 INC HL
                 LD B, (HL)
                 LD A, (IX + FUnit.Animation)
-                AND FUAF_ANIMATION_MASK
-
-                ; _________убрать
-                CP #03
-                JR NZ, $+3
                 DEC A
-                ; ~_________убрать
+                AND FUAF_ANIMATION_MASK
 
                 LD L, A
                 LD H, #00

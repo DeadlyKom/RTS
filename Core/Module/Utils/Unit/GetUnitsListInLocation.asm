@@ -34,6 +34,14 @@ GetUnitsInLoc:  ; драфтово формируем список юнитов
                 JR NC, $+3
                 INC D
 
+                ; проверка что юнит жив
+                DEC E
+                LD A, (DE)
+                INC E
+                AND UNIT_STATE_MASK
+                CP UNIT_STATE_DEAD << 1
+                JR Z, .NextUnit
+
                 ; сравнение позиций юнитов
                 LD A, (DE)
                 CP C

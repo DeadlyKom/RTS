@@ -12,10 +12,10 @@ Sniper                      EQU 0x04 << 1
 Engineer                    EQU 0x05 << 1
 ArmoredCarrier              EQU 0x06 << 1
 
-TYPE_FACTION_BIT            EQU 0x07                                            ; тип фракции (0 - нейтральная, 1 - враждебная)
-NEUTRAL_FACTION             EQU 0x00 << 7                                       ; нейтральная фракция
-ENEMY_FACTION               EQU 0x01 << 7                                       ; враждебная фракция
-FACTION_MASK                EQU %10000000
+FACTION_TYPE_BIT            EQU 0x07                                            ; тип фракции (0 - нейтральная, 1 - враждебная)
+NEUTRAL_FACTION             EQU 0x00 << FACTION_TYPE_BIT                        ; нейтральная фракция
+ENEMY_FACTION               EQU 0x01 << FACTION_TYPE_BIT                        ; враждебная фракция
+FACTION_TYPE                EQU 1 << FACTION_TYPE_BIT
 IDX_UNIT_TYPE               EQU %00111110
 
 

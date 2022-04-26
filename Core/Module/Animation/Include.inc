@@ -4,12 +4,15 @@
 
                 module Animation
 
+                include "../../Animation/AnimationNumberTable.inc"
+
                 include "BlandIdleTurn.asm"
                 include "BlandTurn.asm"
                 include "BlandMove.asm"
                 include "BlandAttack.asm"
                 include "BlandDead.asm"
                 include "SpriteInfo.asm"
+                include "SwitchAnimation.asm"
 
                 endmodule
 

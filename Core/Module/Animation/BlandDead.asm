@@ -20,11 +20,7 @@ Dead:           ;
                 LD A, #02
                 LD (IX + FUnit.CounterDown), A
 
-                ;
-                LD A, (IX + FUnit.Animation)
-                CP #03
-                ADC A, #00
-                LD (IX + FUnit.Animation), A
+                CALL Animation.IncrementDown
 
                 ; обновление облости
                 CALL Unit.RefUnitOnScr

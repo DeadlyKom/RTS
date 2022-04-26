@@ -47,17 +47,7 @@ Attack:
                 POP IX
 
 
-.L1
-
-
-
-
-
-
-                LD A, (IX + FUnit.Animation)
-                INC A
-                AND %00000001
-                LD (IX + FUnit.Animation), A
+.L1             CALL Animation.IncrementDown
 
                 ; обновление облости
                 CALL Unit.RefUnitOnScr

@@ -131,7 +131,7 @@ MoveTo:
                 CALL Unit.RefUnitOnScr
 
 .Exit           ; завершение работы
-                INC (IX + FUnit.Animation)
+                CALL Animation.IncrementDown
 
                 ; успешность выполнения
 .Progress       JP AI.SetBTS_RUNNING
