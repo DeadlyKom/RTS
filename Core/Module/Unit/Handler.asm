@@ -77,22 +77,41 @@ Handler:        ; включить страницу
 ;                 JR .PreNextUnit
 
 ; .SkipFlash      ;
+
+                ; ---------------------------------------------
+                ; клипинг
+                ; ---------------------------------------------
+
                 CALL Sprite.FastClipping
                 JR C, .PreNextUnit
-                
+
+                ; проверка что юнит составной
+                BIT COMPOSITE_UNIT_BIT, (IX + FUnit.Type)
+                JR Z, .NotComposite                                             ; юнит не является составным
+
                 ; получение адреса хранения информации о спрайте
+                OR A                                                            ; проверка нижней части 
+                CALL Animation.SpriteInfoEx
+                CALL Sprite.PixelClipping
+                JR C, .PreNextUnit
+
+                CALL Sprite.Draw                                                ; отрисовка спрайта
+
+                JR .Visible
+                
+.NotComposite   ; получение адреса хранения информации о спрайте
                 CALL Animation.SpriteInfo
                 CALL Sprite.PixelClipping
                 JR C, .PreNextUnit
 
-                ; подсчёт видимых юнитов
+                CALL Sprite.Draw                                                ; отрисовка спрайта
+
+.Visible        ; подсчёт видимых юнитов
                 ifdef SHOW_VISIBLE_UNITS 
                 LD A, (VisibleUnits)
                 INC A
                 LD (VisibleUnits), A
                 endif
-
-                CALL Sprite.Draw
 
                 ; включить страницу 
                 SET_PAGE_UNITS_ARRAY

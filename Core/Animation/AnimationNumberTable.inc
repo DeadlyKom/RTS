@@ -15,7 +15,7 @@ AnimCountTable: ; InfantrySprite
                 DB (ANIM_NUM_X << 4)              | (ANIM_NUM_X << 0)           ; ..              | ..
 
                 ; TankSprite
-                DB (ANIM_NUM_3 << 4) | (ANIM_NUM_X << 0)                        ; UNIT_STATE_MOVE | UNIT_STATE_IDLE
-                DB (ANIM_NUM_X << 4) | (ANIM_NUM_X << 0)                        ; UNIT_STATE_DEAD | UNIT_STATE_ATTACK
+                DB (ANIM_NUM_3 << 4) | (ANIM_NUM_3 << 0)                        ; UNIT_STATE_MOVE | UNIT_STATE_IDLE
+                DB (ANIM_NUM_3 << 4) | (ANIM_NUM_3 << 0)                        ; UNIT_STATE_DEAD | UNIT_STATE_ATTACK
                 DB (ANIM_NUM_X << 4) | (ANIM_NUM_X << 0)                        ; ..              | ..
                 DB (ANIM_NUM_X << 4) | (ANIM_NUM_X << 0)                        ; ..              | ..

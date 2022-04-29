@@ -163,7 +163,6 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; ~ DRAW VISIBLE UNITS
 
 .SkipShowVisibleUnt ; ---------------------------------
-
 .SwapScreens        ; ********* SWAP SCREENS **********
                     ; swap screens if it's ready
                     CheckFrameFlag SWAP_SCREENS_FLAG
@@ -196,7 +195,6 @@ Handler:            ; ********** HANDLER IM 2 *********
                     ; ~ RENDER
 
 .SkipSwapScreens    ; ---------------------------------
-
 .Keyboard           ; ****** SCAN KEYBOARD KEYS *******
                     ; keyboard handling
                     CALL Handlers.Input.ScanKeyboard
@@ -217,7 +215,6 @@ Handler:            ; ********** HANDLER IM 2 *********
                     CALL Z, Handlers.GamePause.Show
 
 .SkipRenderFinished ; ---------------------------------
-
 .TimeOfDay          ; ********* TIME OF DAY **********
                     ifdef ENABLE_TIME_OF_DAY
 

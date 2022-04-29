@@ -24,7 +24,7 @@ Set:            RET
 ; -----------------------------------------
 SetIDLE:        LD A, (IX + FUnit.State)
                 AND UNIT_STATE_INV_MASK
-                OR UNIT_STATE_IDLE << 1
+                OR UNIT_STATE_IDLE
                 LD (IX + FUnit.State), A
                 RET
 
@@ -38,10 +38,28 @@ SetIDLE:        LD A, (IX + FUnit.State)
 ; Note:
 ; -----------------------------------------
 SetMOVE:        LD A, (IX + FUnit.State)
-                AND UNIT_STATE_INV_MASK
-                OR UNIT_STATE_MOVE << 1
+.Set            AND UNIT_STATE_INV_MASK
+                OR UNIT_STATE_MOVE
                 LD (IX + FUnit.State), A
                 RET
+AddMOVE:        LD C, (IX + FUnit.State)
+                LD A, C
+                XOR UNIT_STATE_ATTACK
+                AND UNIT_STATE_MASK
+                LD A, C
+                JR NZ, SetMOVE.Set
+                AND UNIT_STATE_INV_MASK
+                OR UNIT_STATE_MOVE_ATTACK
+                LD (IX + FUnit.State), A
+                RET
+
+                ; ; проверка что юнит составной
+                ; BIT COMPOSITE_UNIT_BIT, (IX + FUnit.Type)
+                ; JR Z, .NotComposite                                             ; юнит не является составным
+
+                ; BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                ; JR NZ, .IsMoveTo                                                ; счётчик указывает на перемещение
+
 ; -----------------------------------------
 ; установить состояние атаки юнита
 ; In:
@@ -53,7 +71,7 @@ SetMOVE:        LD A, (IX + FUnit.State)
 ; -----------------------------------------
 SetATTACK:      LD A, (IX + FUnit.State)
                 AND UNIT_STATE_INV_MASK
-                OR UNIT_STATE_ATTACK << 1
+                OR UNIT_STATE_ATTACK
                 LD (IX + FUnit.State), A
                 RET
 ; -----------------------------------------
@@ -67,7 +85,7 @@ SetATTACK:      LD A, (IX + FUnit.State)
 ; -----------------------------------------
 SetDEAD:        LD A, (IX + FUnit.State)
                 AND UNIT_STATE_INV_MASK
-                OR UNIT_STATE_DEAD << 1
+                OR UNIT_STATE_DEAD
                 LD (IX + FUnit.State), A
                 RET
 

@@ -11,15 +11,12 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-MoveTo:         
-                ; JR$
-                CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
+MoveTo:         CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
 
                 ; вызов счётчика анимации перемещения
                 CALL Animation.MoveDown
                 CCF
-                ; RET C                                                           ; время ещё не вышло, но возвращаем успешное перемещение
-                JR C, .Progress
+                JR C, .Progress                                                 ; время ещё не вышло, но возвращаем успешное перемещение
 
                 ; расчёт смещения в структуре FUnit.Offset
                 LD A, IXL
@@ -127,14 +124,9 @@ MoveTo:
 .PreExit        ;
                 LD (IX + FUnit.Delta), A
 
-                ; обновление облости
-                CALL Unit.RefUnitOnScr
-
-.Exit           ; завершение работы
-                CALL Animation.IncrementDown
-
-                ; успешность выполнения
-.Progress       JP AI.SetBTS_RUNNING
+                CALL Unit.RefUnitOnScr                                          ; обновление облости
+                CALL Animation.IncrementDown                                    ; увеличение счётчика анимации (нижний)
+.Progress       JP AI.SetBTS_RUNNING                                            ; в процессе выполнения
 
 .Complite       ; ---------------------------------------------
                 ; юнит дошёл до текущего Way Point
@@ -145,14 +137,14 @@ MoveTo:
                 LD HL, Utils.Unit.Tilemap.Radius_5
                 CALL Utils.Unit.Tilemap.Reconnaissance
 
-                RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                          ; необходимо переинициализировать анимацию перемещения
+                RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; необходимо переинициализировать анимацию перемещения
                 RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
-                CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
+                CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
 
 .Success        ; успешность выполнения
                 JP AI.SetBTS_SUCCESS
 
-.Fail           CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
+.Fail           CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
                 CALL SFX.BEEP.Fail                                              ; неудачая точка назначения
 
                 ; неудачное выполнение

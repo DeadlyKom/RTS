@@ -10,13 +10,11 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-TurnTo:         CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
-                BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+TurnTo:         BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 JR NZ, .IsMoveTo                                                ; счётчик указывает на перемещение
 
                 ; расчёт дельты направления
                 CALL Utils.GetDeltaTarget
-                ; JR$
                 ; ---------------------------------------------
                 ; D - dY
                 ; E - dX
@@ -29,20 +27,21 @@ TurnTo:         CALL Utils.Unit.State.SetMOVE                                   
                 JR Z, .Complite                                                 ; если позиция юнита совподает с позицией WayPoint
                                                                                 ; поворот не требуется
 
+                CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
 
                 LD A, (IX + FUnit.Direction)
                 JP Utils.Unit.Turn.Down                                         ; вернёт флаг успешности
 
-.Fail           CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
-
-                ; неудачное выполнение
+.Fail           ; неудачное выполнение
+                CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
                 JP AI.SetBTS_FAILURE
 
 .IsMoveTo       ; счётчик указан на перемещение
-.Complite       ; юнит повернулся до требуемого направления
-                CALL Utils.Unit.State.SetIDLE                                   ; сброс состояния
+                CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
+                JP AI.SetBTS_SUCCESS                                            ; удачное выполнение
 
-                ; удачное выполнение
-                JP AI.SetBTS_SUCCESS
+.Complite       ; юнит повернулся до требуемого направления
+                CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
+                JP AI.SetBTS_SUCCESS                                            ; удачное выполнение
 
                 endif ; ~_CORE_MODULE_AI_TASK_TURN_TO_

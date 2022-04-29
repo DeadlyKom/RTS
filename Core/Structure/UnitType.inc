@@ -13,21 +13,26 @@ Engineer                    EQU 0x05 << 1
 ArmoredCarrier              EQU 0x06 << 1
 
 FACTION_TYPE_BIT            EQU 0x07                                            ; тип фракции (0 - нейтральная, 1 - враждебная)
+COMPOSITE_UNIT_BIT          EQU 0x00                                            ; флаг что юнит является составной (из 2х частей)
+
 NEUTRAL_FACTION             EQU 0x00 << FACTION_TYPE_BIT                        ; нейтральная фракция
 ENEMY_FACTION               EQU 0x01 << FACTION_TYPE_BIT                        ; враждебная фракция
 FACTION_TYPE                EQU 1 << FACTION_TYPE_BIT
+COMPOSITE_UNIT              EQU 1 << COMPOSITE_UNIT_BIT
 IDX_UNIT_TYPE               EQU %00111110
 
 
 ; FUnit.State state flags
 
-UNIT_STATE_IDLE             EQU 0x00
-UNIT_STATE_MOVE             EQU 0x01
-UNIT_STATE_ATTACK           EQU 0x02
-UNIT_STATE_DEAD             EQU 0x03
+UNIT_STATE_IDLE             EQU 0x00 << 1
+UNIT_STATE_MOVE             EQU 0x01 << 1
+UNIT_STATE_ATTACK           EQU 0x02 << 1
+UNIT_STATE_DEAD             EQU 0x03 << 1
+UNIT_STATE_MOVE_ATTACK      EQU 0x04 << 1                                       ; состояние для 2х уровневых юнитов
 
 UNIT_STATE_MASK             EQU %00001110
 UNIT_STATE_INV_MASK         EQU (~UNIT_STATE_MASK) & 0xFF
+UNIT_STATE_MASK_EXTENDED    EQU %00001111
 
 
 FUSF_SELECTED_BIT           EQU 0x00                                            ; объект выбран

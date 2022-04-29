@@ -39,7 +39,7 @@ GetUnitsInLoc:  ; драфтово формируем список юнитов
                 LD A, (DE)
                 INC E
                 AND UNIT_STATE_MASK
-                CP UNIT_STATE_DEAD << 1
+                CP UNIT_STATE_DEAD
                 JR Z, .NextUnit
 
                 ; сравнение позиций юнитов

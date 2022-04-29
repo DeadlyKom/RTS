@@ -24,7 +24,7 @@ Check:          RET
 ; -----------------------------------------
 IsIDLE:         LD A, (IX + FUnit.State)
                 AND UNIT_STATE_MASK
-                CP UNIT_STATE_IDLE << 1
+                CP UNIT_STATE_IDLE
                 RET
 ; -----------------------------------------
 ; проверить что юнит в состояние перемещения
@@ -38,7 +38,7 @@ IsIDLE:         LD A, (IX + FUnit.State)
 ; -----------------------------------------
 IsMOVE:         LD A, (IX + FUnit.State)
                 AND UNIT_STATE_MASK
-                CP UNIT_STATE_MOVE << 1
+                CP UNIT_STATE_MOVE
                 RET
 ; -----------------------------------------
 ; проверить что юнит в состояние мёртв
@@ -52,7 +52,7 @@ IsMOVE:         LD A, (IX + FUnit.State)
 ; -----------------------------------------
 IsDEAD:         LD A, (IX + FUnit.State)
                 AND UNIT_STATE_MASK
-                CP UNIT_STATE_DEAD << 1
+                CP UNIT_STATE_DEAD
                 RET
 ; -----------------------------------------
 ; проверить что юнит в состояние атаки
@@ -66,7 +66,7 @@ IsDEAD:         LD A, (IX + FUnit.State)
 ; -----------------------------------------
 IsATTACK:       LD A, (IX + FUnit.State)
                 AND UNIT_STATE_MASK
-                CP UNIT_STATE_ATTACK << 1
+                CP UNIT_STATE_ATTACK
                 RET
 ; -----------------------------------------
 ; макрос получения состояния юнита
@@ -80,15 +80,15 @@ IsATTACK:       LD A, (IX + FUnit.State)
 ;   |  0 |  0 |  0 |  0 | S2 | S1 | S0 |  0 |
 ;   +----+----+----+----+----+----+----+----+
 ;
-;   S2-S0:
-;       0 - UNIT_STATE_IDLE
-;       1 - UNIT_STATE_MOVE
-;       2 - UNIT_STATE_ATTACK
-;       3 - UNIT_STATE_DEAD
-;       4 -
-;       5 -
-;       6 - 
-;       7 -
+;   S2-S0 - unit state:
+;       000 - UNIT_STATE_IDLE
+;       001 - UNIT_STATE_MOVE
+;       010 - UNIT_STATE_ATTACK
+;       011 - UNIT_STATE_DEAD
+;       100 - UNIT_STATE_MOVE_ATTACK
+;       101 - 
+;       110 - 
+;       111 - 
 ; Corrupt:
 ;   AF
 ; Note:

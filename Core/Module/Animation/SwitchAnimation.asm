@@ -32,7 +32,7 @@ GetDefault:     GetUnitState                                                    
                 ADD A, A
                 ADD A, A
                 XOR C
-                AND IDX_UNIT_TYPE << 1
+                AND IDX_UNIT_TYPE << 2
                 XOR C
                 LD C, A
                 RRA
@@ -65,6 +65,7 @@ GetDefault:     GetUnitState                                                    
                 INC H
                 LD A, (HL)
 
+                ; проверка чётности адресу (если нечётный сдвигаем на 4 бита вправо)
                 RR C
                 RET NC
 

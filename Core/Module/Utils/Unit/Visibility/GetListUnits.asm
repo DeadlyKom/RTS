@@ -43,7 +43,7 @@ GetListUnits:   ; драфтово формируем список юнитов 
                 LD A, (DE)
                 DEC E
                 AND UNIT_STATE_MASK
-                CP UNIT_STATE_DEAD << 1
+                CP UNIT_STATE_DEAD
                 JR Z, .NextUnit                                                ; если тип фракции одинаковый, переход к следующему юниту
 
                 ; переход к FUnit.Position
