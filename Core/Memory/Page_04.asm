@@ -12,6 +12,7 @@ Start:
                 include "Sprite/Soldier/Dead.inc"
                 
                 include "Sprite/Tank/Move.inc"
+                include "Sprite/Tank/Attack.inc"
 
                 ;
 Sprite_Tile_0:        

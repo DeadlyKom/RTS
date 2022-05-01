@@ -91,7 +91,18 @@ Handler:        ; включить страницу
 
                 ; получение адреса хранения информации о спрайте
                 OR A                                                            ; проверка нижней части 
-                CALL Animation.SpriteInfoEx
+                CALL Animation.SpriteInfo.Composite
+                CALL Sprite.PixelClipping
+                JR C, .PreNextUnit
+
+                CALL Sprite.Draw                                                ; отрисовка спрайта
+
+                ; включить страницу 
+                SET_PAGE_UNITS_ARRAY
+
+                ; получение адреса хранения информации о спрайте
+                SCF                                                             ; проверка верхней части 
+                CALL Animation.SpriteInfo.Composite
                 CALL Sprite.PixelClipping
                 JR C, .PreNextUnit
 

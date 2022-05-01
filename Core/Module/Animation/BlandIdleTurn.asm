@@ -10,48 +10,84 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Idle:               ; расчитаем вероятность поворота
-                    CALL Utils.Math.Rand8
-                    ; CP #10                                                      ; чем меньше тем чаще происходит поворот
-                    ; RET NC
-                    EX AF, AF'                                                  ; сохраним рандомное число
-                    
-                    ; уменьшим счётчик поворота
-                    LD A, (IX + FUnit.CounterDown)
-                    LD C, A
-                    AND FUAF_IDLE_COUNT_MASK
-                    SUB FUAF_IDLE_DECREMENT
-                    JR C, .Turn                                                 ; счётчик обнулился
+Idle:           ; расчитаем вероятность поворота
+                CALL Utils.Math.Rand8
+                ; CP #10                                                          ; чем меньше тем чаще происходит поворот
+                ; RET NC
 
-                    ;
-                    LD A, C
-                    SUB FUAF_IDLE_DECREMENT
-                    LD (IX + FUnit.CounterDown), A
+                PUSH AF
+                EX AF, AF'                                                      ; сохраним рандомное число
+                CALL .TryTurnDown
+                POP AF
 
-                    RET
-                    
-.Turn               ; обновим счётчик поворота юнита в состоянии простоя
-                    LD A, C
-                    ; AND FUAF_IDLE_COUNT_MASK_INV                              ; не требуется т.к. тупа перезапишим OR новое значение
-                    OR FUAF_IDLE_COUNT_MASK
-                    LD (IX + FUnit.CounterDown), A
-                    
-                    ; получим текущий поворот
-                    LD A, (IX + FUnit.Direction)
-                    RRA
-                    RRA
-                    RRA
-                    AND DF_DOWN_MASK >> 3
-                    LD C, A                                                     ; сохраним текущий поворот
+                ; проверка что юнит составной
+                BIT COMPOSITE_UNIT_BIT, (IX + FUnit.Type)
+                RET Z                                                           ; юнит не является составным
 
-                    EX AF, AF'                                                  ; востановим рандомное число
-                    RRA
+                EX AF, AF'                                                      ; сохраним рандомное число
 
-                    SBC A, A                                                    ; < 4 = -1, > 4 = 0
-                    CCF
-                    ADC A, #00
+.TryTurnUp      ; проверка верхнего счётчика Idle
+                LD A, (IX + FUnit.CounterUp)
+                LD C, A
+                AND FUAF_IDLE_COUNT_MASK
+                ; SUB FUAF_IDLE_DECREMENT
+                JR Z, .TurnUp                                                   ; счётчик обнулён, вызов смены анимации
 
-                    ; вращение нижней части/всего объекта
-                    JP Animation.TurnDown
+                ; декремент верхнего счётчика Idle
+                LD A, C
+                SUB FUAF_IDLE_DECREMENT
+                LD (IX + FUnit.CounterUp), A
 
-                    endif ; ~_CORE_MODULE_ANIMATION_BLAND_IDLE_TURN_
+                RET
+
+.TryTurnDown    ; проверка нижнего счётчика Idle
+                LD A, (IX + FUnit.CounterDown)
+                LD C, A
+                AND FUAF_IDLE_COUNT_MASK
+                ; SUB FUAF_IDLE_DECREMENT
+                JR Z, .TurnDown                                                 ; счётчик обнулён, вызов смены анимации
+
+                ; декремент нижнего счётчика Idle
+                LD A, C
+                SUB FUAF_IDLE_DECREMENT
+                LD (IX + FUnit.CounterDown), A
+
+                RET
+
+.TurnDown       ; обновим счётчик поворота юнита в состоянии простоя
+                LD A, C
+                OR FUAF_IDLE_COUNT_MASK
+                LD (IX + FUnit.CounterDown), A
+                
+                ; получим текущий поворот
+                LD A, (IX + FUnit.Direction)
+                RRA
+                RRA
+                RRA
+                AND DF_DOWN_MASK >> 3
+                LD C, A                                                         ; сохраним текущий поворот
+
+                ; выбор рандомного направления
+                EX AF, AF'                                                      ; востановим рандомное число
+                RRA
+                SBC A, A                                                        ; < 4 = -1, > 4 = 0
+                CCF
+                ADC A, #00
+
+                JP Animation.TurnDown                                           ; вращение нижней части/всего объекта
+
+.TurnUp         ; обновим счётчик поворота юнита в состоянии простоя
+                LD A, C
+                OR FUAF_IDLE_COUNT_MASK
+                LD (IX + FUnit.CounterUp), A
+                
+                ; выбор рандомного направления
+                EX AF, AF'                                                      ; востановим рандомное число
+                RLA
+                SBC A, A                                                        ; < 4 = -1, > 4 = 0
+                CCF
+                ADC A, #00
+
+                JP Animation.TurnUp                                             ; вращение нижней части/всего объекта
+
+                endif ; ~_CORE_MODULE_ANIMATION_BLAND_IDLE_TURN_

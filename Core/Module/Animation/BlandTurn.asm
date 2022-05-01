@@ -29,13 +29,13 @@ TurnDown:       ; B - направление поворота (-1/1)
                 LD D, (HL)
 
                 ; проверка на инициализацию счётчика после перемещения
-                BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 JR NZ, .Init
 
                 ; проверка на первичную инициализацию (мб вообще убрать её!)
                 LD E, (IX + FUnit.CounterDown)                                  ; получим значение текущего счётчика
                 LD A, E
-                AND FUAF_COUNT_DOWN_MASK
+                AND FUAF_COUNT_MASK
                 JR Z, .Init                                                     ; счётчик равен нулю, проинициализируем его
 
                 ; проверка изменения направления поворота
@@ -46,7 +46,7 @@ TurnDown:       ; B - направление поворота (-1/1)
                 
                 ; обрежим счётчик
                 LD A, E
-                AND FUAF_COUNT_DOWN_MASK
+                AND FUAF_COUNT_MASK
                 LD E, A
 
                 ; вычислим сколько прошло от предыдущей анимациии
@@ -76,7 +76,7 @@ TurnDown:       ; B - направление поворота (-1/1)
                 RET
 
 .Init           ; сброс бита принадлежности
-                RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 
                 ; установка нового счётчика анимации
                 LD A, (HL)                                                      ; A - новый счётчик
@@ -98,8 +98,6 @@ TurnDown:       ; B - направление поворота (-1/1)
                 LD A, E
                 AND %00011111
                 DEC A
-
-                ; DEC (IX + FUnitAnimation.CounterDown)                           ; уменьшим счётчик
                 JR NZ, .Decrement                                               ; чсётчик не нулевой продолжаем отсчёт
 
                 LD A, E
@@ -128,11 +126,56 @@ TurnDown:       ; B - направление поворота (-1/1)
                 LD A, (IX + FUnit.Direction)
                 AND %11000111
                 OR C
+
+                LD C, A
+                LD A, B
+                JP TurnUp.ChangeDirecton
+
+; -----------------------------------------
+; бленд вращение верхней части объекта
+; In:
+;   A  - направление поворота (-1/1)
+;   IX - указывает на структуру FUnit
+; Out:
+; Corrupt:
+; Note:
+;   requires included memory page
+; -----------------------------------------
+TurnUp:         EX AF, AF'                                                      ; сохранение направления поворота (-1/1)
+
+                ; проверка верхнего счётчика
+                LD A, (IX + FUnit.CounterUp)                                    ; получим значение верхнего счётчика
+                LD C, A
+                AND FUAF_COUNT_MASK
+                JR Z, .Turn                                                     ; счётчик обнулён, вызов смены анимации
+
+                ; декремент верхнего счётчика
+                DEC C
+                LD (IX + FUnit.CounterUp), C
+
+                RET
+
+.Turn           ; получение адреса анимации поворота для текущего типа юнита
+                LD HL, (AnimTurnDownTableRef)
+                CALL Utils.Unit.GetAdrInTable                                   ; HL - указывает на текущий FAnimation
+
+                ; обновим счётчик
+                LD A, C
+                AND FUAF_COUNT_MASK_INV
+                OR (HL)
+                LD (IX + FUnit.CounterUp), A
+
+                ; смена направления
+                LD C, (IX + FUnit.Direction)
+                EX AF, AF'                                                      ; востановление направления поворота (-1/1)
+.ChangeDirecton ;
+                ADD A, C
+                XOR C
+                AND DF_UP_MASK
+                XOR C
                 LD (IX + FUnit.Direction), A
 
                 ; обновление облости
-                CALL Unit.RefUnitOnScr
-
-                RET
+                JP Unit.RefUnitOnScr
 
                 endif ; ~_CORE_MODULE_ANIMATION_BLAND_TURN_

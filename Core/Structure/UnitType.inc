@@ -58,6 +58,7 @@ DF_LEFT                     EQU %110                                            
 DF_UP_LEFT                  EQU %111                                            ; направление вверх-влево
 
 DF_DOWN_MASK                EQU %00111000                                       ; маска направления (низ)
+DF_UP_MASK                  EQU %00000111                                       ; маска направления (вверх)
 
 ; FUnit.Data state flags
 FUTF_VALID_WP_BIT           EQU 0x07                                            ; бит отвечающий, что значение Target не хранит корректный Way Point
@@ -90,7 +91,8 @@ FUAF_MOVE_MASK              EQU (~(1 << FUAF_TURN_MOVE_BIT | 1 << FUAF_X_BIT | 1
 FUAF_IDLE_COUNT_MASK        EQU %01100000                                       ; маска счётчика в состоянии простоя юнита
 FUAF_IDLE_DECREMENT         EQU %00100000                                       ; значение декремента счётчика юнита в состоянии простоя
 FUAF_IDLE_COUNT_MASK_INV    EQU (~FUAF_IDLE_COUNT_MASK) & 0xFF
-FUAF_COUNT_DOWN_MASK        EQU %00011111                                       ; маска нижнего счётчика
+FUAF_COUNT_MASK             EQU %00011111                                       ; маска нижнего счётчика
+FUAF_COUNT_MASK_INV         EQU (~FUAF_COUNT_MASK) & 0xFF
 
 ; FAnimationInfo flags
 FAIF_NOT_INTERRUPT          EQU 0x00                                            ; бит невозможности прервать анимацию, она должна проиграться вся

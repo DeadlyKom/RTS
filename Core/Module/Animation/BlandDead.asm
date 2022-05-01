@@ -15,7 +15,7 @@ Dead:           ;
                 
                 ;
                 LD A, (IX + FUnit.CounterDown)                                  ; получим значение текущего счётчика
-                AND FUAF_COUNT_DOWN_MASK
+                AND FUAF_COUNT_MASK
                 JR NZ, .DEC
                 LD A, #02
                 LD (IX + FUnit.CounterDown), A
