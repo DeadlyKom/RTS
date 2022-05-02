@@ -65,7 +65,7 @@ WayPoint:       ; проверка что Way Point валиден
                 ; указан новый WayPoint
                 SET FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; бит валидности Way Point
                 ; необходимо переинициализировать анимацию перемещения
-                RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                          ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
 
 .Successfully   ; успешно найденый Way Point
                 JP AI.SetBTS_SUCCESS

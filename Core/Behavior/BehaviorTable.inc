@@ -1,2 +1,4 @@
 
-BehaviorTable:  DW BEHAVIOR_INFANTRY, BEHAVIOR_TANK, #0000
+BehaviorTable:  DW BEHAVIOR_INFANTRY - $
+                DW BEHAVIOR_TANK - $
+                DW #0000

@@ -15,7 +15,7 @@ Draw:           LD HL, .OffsetByPixel
                 LD BC, (IX + FUnit.Offset)
 
                 LD (HL), C
-                INC L
+                INC HL
                 LD (HL), B
     
                 LD E, (IX + FUnit.Health)                                       ; XP

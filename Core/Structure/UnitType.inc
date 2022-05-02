@@ -78,7 +78,9 @@ FUTF_LOOP                   EQU 1 << FUTF_LOOP_BIT
 FUTF_MASK_OFFSET            EQU 0x07                                            ; маска смещения в массиве последовательностей
 
 ; FUnit.Animation state flags
-FUAF_ANIMATION_MASK         EQU %00000011
+FUAF_ANIM_UP_MASK           EQU %00001100
+FUAF_ANIM_DOWN_MASK         EQU %00000011
+FUAF_ANIM_DOWN_MASK_INV     EQU (~FUAF_ANIM_DOWN_MASK) & 0xFF
 
 ; FUnit.Flags state flags
 FUAF_TURN_MOVE_BIT          EQU 0x00                                            ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)

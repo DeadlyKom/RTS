@@ -75,7 +75,6 @@ GetDefault:     GetUnitState                                                    
                 RRA
 
                 RET
-
 ; -----------------------------------------
 ; переключится на следующую анимацию
 ; In:
@@ -84,7 +83,38 @@ GetDefault:     GetUnitState                                                    
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-IncrementDown:  LD A, (IX + FUnit.Animation)
+IncrementUp:    LD B, (IX + FUnit.Animation)
+                LD A, B
+                SUB %00000100
+                AND FUAF_ANIM_UP_MASK
+                JR NZ, .Set
+
+                CALL GetDefault
+                
+                BIT STOP_INC_BIT, A
+                RET NZ
+
+                ;
+                ADD A, #02 << 2
+
+.Set            ;
+                XOR B
+                AND FUAF_ANIM_UP_MASK
+                XOR B
+                LD (IX + FUnit.Animation), A
+
+                RET
+; -----------------------------------------
+; переключится на следующую анимацию
+; In:
+;   IX - указывает на структуру FUnit
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+IncrementDown:  LD B, (IX + FUnit.Animation)
+                LD A, B
+                AND FUAF_ANIM_DOWN_MASK
                 DEC A
                 JR NZ, .Set
 
@@ -93,9 +123,14 @@ IncrementDown:  LD A, (IX + FUnit.Animation)
                 BIT STOP_INC_BIT, A
                 RET NZ
 
-                AND FUAF_ANIMATION_MASK
+                ;
                 ADD A, #02
-.Set            LD (IX + FUnit.Animation), A
+
+.Set            ;
+                XOR B
+                AND FUAF_ANIM_DOWN_MASK
+                XOR B
+                LD (IX + FUnit.Animation), A
 
                 RET
 ; -----------------------------------------
@@ -108,8 +143,14 @@ IncrementDown:  LD A, (IX + FUnit.Animation)
 ; -----------------------------------------
 Default:        ; получение начальный кадр анимации
                 CALL GetDefault
-                AND FUAF_ANIMATION_MASK
+                AND FUAF_ANIM_DOWN_MASK
                 ADD A, #02
+                ;
+                LD C, A
+                ADD A, A
+                ADD A, A
+                OR C
+                ;
                 LD (IX + FUnit.Animation), A
 
                 RET

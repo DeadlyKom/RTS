@@ -48,7 +48,11 @@
 SpriteInfo:     GetUnitState                                                    ; A - хранит состояние юнита
                 LD C, A
 
-.Down           ; состояние хранится в рег. С
+.Down           ;
+                LD E, (IX + FUnit.Animation)
+
+
+                ; состояние хранится в рег. С
                 LD A, (IX + FUnit.Direction)
                 AND DF_DOWN_MASK
                 JP .Merger
@@ -58,6 +62,11 @@ SpriteInfo:     GetUnitState                                                    
 
                 RR L
                 JR NC, .Down
+
+                LD A, (IX + FUnit.Animation)
+                RRA
+                RRA
+                LD E, A
                 
                 ; состояние хранится в рег. С
                 LD A, (IX + FUnit.Direction)
@@ -87,9 +96,10 @@ SpriteInfo:     GetUnitState                                                    
                 LD C, (HL)
                 INC HL
                 LD B, (HL)
-                LD A, (IX + FUnit.Animation)
+                ; LD A, (IX + FUnit.Animation)
+                LD A, E
                 DEC A
-                AND FUAF_ANIMATION_MASK
+                AND FUAF_ANIM_DOWN_MASK
 
                 LD L, A
                 LD H, #00
