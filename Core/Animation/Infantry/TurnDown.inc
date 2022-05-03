@@ -1,5 +1,5 @@
 
-                        module Soldier
+                        module Infantry
 NormalTurn              EQU 2
 PossabilityTurn_100     EQU NormalTurn
 PossabilityTurn_75      EQU 3;(((NormalTurn * 125) - (NormalTurn * 125 / 100 * 100) > 0) & 0x01) + NormalTurn * 125 / 100         ; NormalTurn * 125 / 100

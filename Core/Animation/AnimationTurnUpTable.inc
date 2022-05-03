@@ -5,7 +5,7 @@ AnimationTurnUpTable:
                 DW Tank.Up - $
                 DW #FFFF
 
-                include "Soldier/TurnUp.inc"
+                include "Infantry/TurnUp.inc"
                 include "Tank/TurnUp.inc"
 
                 ENT
