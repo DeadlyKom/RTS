@@ -79,7 +79,9 @@ FUTF_MASK_OFFSET            EQU 0x07                                            
 
 ; FUnit.Animation state flags
 FUAF_ANIM_UP_MASK           EQU %00001100
+FUAF_ANIM_UP_DECREMENT      EQU %00000100                                       ; значение декремента анимации для верхней части
 FUAF_ANIM_DOWN_MASK         EQU %00000011
+FUAF_ANIM_DOWN_DECREMENT    EQU %00000001                                       ; значение декремента анимации для нижней части
 FUAF_ANIM_DOWN_MASK_INV     EQU (~FUAF_ANIM_DOWN_MASK) & 0xFF
 
 ; FUnit.Flags state flags

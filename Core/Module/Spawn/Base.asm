@@ -31,8 +31,6 @@ Unit:           ; определение адреса добавления но�
 
                 LD (IX + FUnit.Direction), A
                 LD (IX + FUnit.Type), E
-                ; LD A, 1
-                ; LD (IX + FUnit.Animation), A
 
                 ; ---------------------------------------------
                 ; FSpriteLocation                             (2)
@@ -79,10 +77,6 @@ Unit:           ; определение адреса добавления но�
 
                 ; сброс анимации
                 CALL Animation.Default
-                ; LD C, A
-                ; ADD A, A
-                ; ADD A, A
-                ; OR C
  
                 ; итерирование счётчика
                 LD HL, AI_NumUnitsRef

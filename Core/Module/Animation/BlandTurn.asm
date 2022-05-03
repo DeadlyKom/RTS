@@ -166,8 +166,8 @@ TurnDown:       EX AF, AF'                                                      
                 LD A, (IX + FUnit.Direction)
                 AND %11000111
                 OR C
-
                 LD (IX + FUnit.Direction), A
+
                 ; обновление облости
                 JP Unit.RefUnitOnScr
 

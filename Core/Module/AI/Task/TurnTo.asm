@@ -29,6 +29,10 @@ TurnTo:         BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      
 
                 CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
 
+                ; проверка что юнит составной
+                BIT COMPOSITE_UNIT_BIT, (IX + FUnit.Type)
+                JR Z, .NotComposite                                             ; юнит не является составным
+
                 PUSH DE
 
                 ; получение верхнего поворота
@@ -39,22 +43,19 @@ TurnTo:         BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      
 
                 POP DE
 
-                ; получение нижнего поворота
+.NotComposite   ; получение нижнего поворота
                 LD A, (IX + FUnit.Direction)
                 RRA
                 RRA
                 RRA
                 AND DF_DOWN_MASK >> 3
                 CALL Utils.Unit.Turn.GetDirection
-                JP NC, .Successful
+                JR NC, .Complite
 
                 CALL Animation.TurnDown
 
 .Progress       ; в процессе выполнения
                 JP AI.SetBTS_RUNNING
-
-.Successful     ; успешное выполнение
-                JP AI.SetBTS_SUCCESS
 
 .Fail           ; неудачное выполнение
                 CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle

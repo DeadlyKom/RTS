@@ -26,7 +26,7 @@ SetIDLE:        LD A, (IX + FUnit.State)
                 AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_IDLE
                 LD (IX + FUnit.State), A
-                RET
+                JP Animation.Default
 
 ; -----------------------------------------
 ; установить состояние перемещения юнита
@@ -41,7 +41,7 @@ SetMOVE:        LD A, (IX + FUnit.State)
 .Set            AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_MOVE
                 LD (IX + FUnit.State), A
-                RET
+                JP Animation.Default
 AddMOVE:        LD C, (IX + FUnit.State)
                 LD A, C
                 XOR UNIT_STATE_ATTACK
@@ -73,7 +73,7 @@ SetATTACK:      LD A, (IX + FUnit.State)
                 AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_ATTACK
                 LD (IX + FUnit.State), A
-                RET
+                JP Animation.Default
 ; -----------------------------------------
 ; установить состояние атаки мёртв
 ; In:
@@ -87,7 +87,7 @@ SetDEAD:        LD A, (IX + FUnit.State)
                 AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_DEAD
                 LD (IX + FUnit.State), A
-                RET
+                JP Animation.Default
 
                 endmodule
 

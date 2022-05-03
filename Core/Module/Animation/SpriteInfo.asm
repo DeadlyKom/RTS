@@ -51,7 +51,6 @@ SpriteInfo:     GetUnitState                                                    
 .Down           ;
                 LD E, (IX + FUnit.Animation)
 
-
                 ; состояние хранится в рег. С
                 LD A, (IX + FUnit.Direction)
                 AND DF_DOWN_MASK
@@ -98,7 +97,6 @@ SpriteInfo:     GetUnitState                                                    
                 LD B, (HL)
                 ; LD A, (IX + FUnit.Animation)
                 LD A, E
-                DEC A
                 AND FUAF_ANIM_DOWN_MASK
 
                 LD L, A

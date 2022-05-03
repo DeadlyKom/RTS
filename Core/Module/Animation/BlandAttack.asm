@@ -46,7 +46,6 @@ Attack:
 
                 POP IX
 
-
 .L1             ; проверка что юнит составной
                 BIT COMPOSITE_UNIT_BIT, (IX + FUnit.Type)
                 CALL NZ, Animation.IncrementUp                                  ; юнит является составным
@@ -54,8 +53,6 @@ Attack:
                 CALL Z, Animation.IncrementDown                                 ; юнит не является составным
 
                 ; обновление облости
-                CALL Unit.RefUnitOnScr
-
-                RET
+                JP Unit.RefUnitOnScr
 
                 endif ; ~_CORE_MODULE_ANIMATION_BLAND_ATTACK_

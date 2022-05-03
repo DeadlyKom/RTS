@@ -31,7 +31,6 @@ Apply:          ;
                 RET
 
 .SetDEAD        ; уничтожение юнита
-                CALL Utils.Unit.State.SetDEAD
-                JP Animation.Default
+                JP Utils.Unit.State.SetDEAD
 
                 endif ; ~ _CORE_MODULE_UTILS_UNIT_APPLY_DAMAGE_
