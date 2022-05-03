@@ -4,28 +4,18 @@
 
                 module Turn
 ; -----------------------------------------
-; rotation of the bottom of the object/the whole object, 
-; taking into account the current rotation to the required
+; расчёт направления поворота к цели
 ; In:
-;   A  - current turn (FUnitState.Direction)
-;   DE - delta to target (D - dY, E - dX)
+;   A  - текущее значение поворота [0..7]
+;   DE - дельта до цели (D - dY, E - dX)
 ; Out:
+;   A - направление поворота (-1/1)
+;   флаг переполнения Carry сброшен, если поворот соответстует направлению цели
 ; Corrupt:
+;   DE, BC, AF, AF'
 ; Note:
-;   requires included memory page
 ; -----------------------------------------
-Down:           ; JR $
-
-                RRA
-                RRA
-                RRA
-                AND %00000111
-                LD C, A                 ; сохраним текущий поворот
-                
-                ; ---------------------------------------------
-                ; D - dY
-                ; E - dX
-                ; ---------------------------------------------
+GetDirection:   LD C, A
 
                 ; если dY < 0, то A' = 4, иначе 0
                 LD A, D
@@ -95,7 +85,11 @@ Down:           ; JR $
                 ; ---------------------------------------------
 
                 SUB C                   ; A - A'
-                JR Z, .Successful
+                ; JR Z, .Successful
+                ; RET Z                                                           ; выход, направление соответствует направлению к цели (флаг Carry сброшен)
+                JR NZ, $+4
+                OR A
+                RET
 
                 ;
                 LD B, #3F               ; значение по умолчанию (по часовой)        CCF
@@ -120,13 +114,9 @@ Down:           ; JR $
                 CCF
                 ADC A, #00
 
-                CALL Animation.TurnDown
-
-.Progress       ; в процессе выполнения
-                JP AI.SetBTS_RUNNING
-
-.Successful     ; успешное выполнение
-                JP AI.SetBTS_SUCCESS
+                ; выход, направление не соответствует направлению к цели
+                SCF
+                RET
 
                 endmodule
 

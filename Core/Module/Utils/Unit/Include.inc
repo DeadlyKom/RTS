@@ -5,7 +5,7 @@
                 module Unit
 
                 include "Reconnaissance.asm"
-                include "TurnDown.asm"
+                include "CalculateDirectionRotation.asm"
                 include "GetScreenAABB.asm"
                 include "GetAddressInTable.asm"
                 include "GetAddress.asm"

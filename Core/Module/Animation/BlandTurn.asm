@@ -151,7 +151,7 @@ TurnDown:       EX AF, AF'                                                      
                 OR (HL)
                 LD (IX + FUnit.CounterDown), A
 
-                ; проверка первичной инициализации 
+                ; проверка первичной инициализации
                 BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
                 RET NZ
 
@@ -167,9 +167,13 @@ TurnDown:       EX AF, AF'                                                      
                 AND %11000111
                 OR C
 
-                LD C, A
-                LD A, B
-                JP TurnUp.ChangeDirecton
+                LD (IX + FUnit.Direction), A
+                ; обновление облости
+                JP Unit.RefUnitOnScr
+
+                ; LD C, A
+                ; LD A, B
+                ; JP TurnUp.ChangeDirecton
 
 ; -----------------------------------------
 ; бленд вращение верхней части объекта
@@ -178,6 +182,7 @@ TurnDown:       EX AF, AF'                                                      
 ;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
+;  HL, DE, C, AF, AF'
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------

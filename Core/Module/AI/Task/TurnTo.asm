@@ -29,8 +29,32 @@ TurnTo:         BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      
 
                 CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
 
+                PUSH DE
+
+                ; получение верхнего поворота
                 LD A, (IX + FUnit.Direction)
-                JP Utils.Unit.Turn.Down                                         ; вернёт флаг успешности
+                AND DF_UP_MASK
+                CALL Utils.Unit.Turn.GetDirection
+                CALL C, Animation.TurnUp
+
+                POP DE
+
+                ; получение нижнего поворота
+                LD A, (IX + FUnit.Direction)
+                RRA
+                RRA
+                RRA
+                AND DF_DOWN_MASK >> 3
+                CALL Utils.Unit.Turn.GetDirection
+                JP NC, .Successful
+
+                CALL Animation.TurnDown
+
+.Progress       ; в процессе выполнения
+                JP AI.SetBTS_RUNNING
+
+.Successful     ; успешное выполнение
+                JP AI.SetBTS_SUCCESS
 
 .Fail           ; неудачное выполнение
                 CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
