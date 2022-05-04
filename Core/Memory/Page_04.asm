@@ -60,8 +60,10 @@ Sprite_B2_3:
                 incbin "Sprites/Build/Small/Build_2_3.spr"
 
                 ; ************ Health Bar ************
-Sprite_SmallHP:
+Sprite_ShortHP:
                 incbin "Sprites/HealthBar/HealthBarSmall_B.spr"
+Sprite_LongHP:
+                incbin "Sprites/HealthBar/HealthBarLong_B.spr"
 End:
                 endmodule
 SizePage_4:     EQU MemoryPage_4.End - MemoryPage_4.Start

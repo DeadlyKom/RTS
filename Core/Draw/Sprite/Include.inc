@@ -10,6 +10,7 @@
 
                 include "VerticalClipping.asm"
                 include "HorizontalClipping.asm"
+                ; include "PrepareClipping.asm"
 
                 endmodule
 
