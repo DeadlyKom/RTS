@@ -100,6 +100,10 @@ Handler:        ; включить страницу
                 ; включить страницу 
                 SET_PAGE_UNITS_ARRAY
 
+                ; если юнит умер, не рисовать верхнию его часть
+                CALL Utils.Unit.State.IsDEAD                                    ; проверка флага UNIT_STATE_DEAD
+                JR Z, .Visible
+
                 ; получение адреса хранения информации о спрайте
                 SCF                                                             ; проверка верхней части 
                 CALL Animation.SpriteInfo.Composite
