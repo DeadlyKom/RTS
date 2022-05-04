@@ -10,8 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Attack:         
-                ; CALL Utils.Math.Rand8
+Attack:         ; CALL Utils.Math.Rand8
                 ; CP #10                                                        ; чем меньше тем чаще происходит урон
                 ; RET NC
 

@@ -10,8 +10,7 @@
 ; Note:
 ;   requires included memory page
 ; -----------------------------------------
-CheckEnemy:     ; JR$
-                ; получим список юдижайших юнитов
+CheckEnemy:     ; получим список ближайших юнитов
                 CALL Utils.Visibility.GetListUnits
                 JR NC, .None                                                    ; выход нет врагов поблизости
 

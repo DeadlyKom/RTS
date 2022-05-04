@@ -139,7 +139,7 @@ MoveTo:         CALL Utils.Unit.State.SetMOVE                                   
 
                 RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; необходимо переинициализировать анимацию перемещения
                 RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
-                CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
+                ; CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
 
 .Success        ; успешность выполнения
                 JP AI.SetBTS_SUCCESS

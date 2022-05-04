@@ -121,6 +121,7 @@ Armor           DB #00                                                          
 Rank            DB #00                                                          ; 1 byte (ранг)
 Killed          DB #00                                                          ; 1 byte (количество убитых)
 BehaviorTree    FBehaviorTree                                                   ; 2 bytes (состояние дерева поведения)
+CooldownShot    DB #00                                                          ; 1 byte (перезарядка выстрела)
                 ends
 
 UNIT_SIZE       EQU 32                                                          ; размер структуры юнита
