@@ -81,6 +81,13 @@ MapInfo:        ; инициализация перменных (из загру
                 ADD HL, DE
                 ; ********* ~BEHAVIOR **********
 
+.UnitsCharSize  ; *** UNITS CHARACTERISTICS ****
+                LD (UnitsCharRef), HL
+                LD DE, (IX + FMap.UnitsCharSize)
+                LD (FileSystem.Load.MapData.UnitsCharSize), DE                  ; размер характеристик юнитов
+                ADD HL, DE
+                ; *** ~UNITS CHARACTERISTICS ****
+
 .AnimTUpSize    ; ****** ANIMATION TURN UP *****
                 LD (AnimTurnUpTableRef), HL
                 LD DE, (IX + FMap.AnimTUpTableSize)

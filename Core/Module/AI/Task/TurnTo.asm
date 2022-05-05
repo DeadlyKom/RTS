@@ -10,8 +10,8 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-TurnTo:         BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
-                JR NZ, .IsMoveTo                                                ; счётчик указывает на перемещение
+TurnTo:         ;BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; бит принадлежности CounterDown (0 - поворот, 1 - перемещение)
+                ;JR NZ, .IsMoveTo                                                ; счётчик указывает на перемещение
 
                 ; расчёт дельты направления
                 CALL Utils.GetDeltaTarget
@@ -24,18 +24,20 @@ TurnTo:         BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      
                 OR D
                 JR Z, .Complite                                                 ; если позиция юнита совподает с позицией WayPoint
                                                                                 ; поворот не требуется
+                EX DE, HL
+                CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
+                EX DE, HL
+
                 ; проверка что юнит составной
                 BIT COMPOSITE_UNIT_BIT, (IX + FUnit.Type)
                 JR Z, .NotComposite                                             ; юнит не является составным
 
                 PUSH DE
-
                 ; получение верхнего поворота
                 LD A, (IX + FUnit.Direction)
                 AND DF_UP_MASK
                 CALL Utils.Unit.Turn.GetDirection
                 CALL C, Animation.TurnUp
-
                 POP DE
 
 .NotComposite   ; получение нижнего поворота
@@ -47,7 +49,6 @@ TurnTo:         BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      
                 CALL Utils.Unit.Turn.GetDirection
                 JR NC, .Complite
 
-                CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
                 CALL Animation.TurnDown
 
 .Progress       ; в процессе выполнения

@@ -13,6 +13,7 @@ START:          ; метка определения начала блока
                 {0, 0},                                                         ; начальная позиция окна
                 LoadMap.SurfaceSize,                                            ; размер своист тайлов (не более 128 байт)
                 LoadMap.BehaviorSize,                                           ; размер поведения
+                LoadMap.UnitsCharSize,                                          ; размер характеристик юнитов
                 LoadMap.AnimTUpSize,                                            ; размер таблицы анимации поворотов (вверх)
                 LoadMap.AnimTDownSize,                                          ; размер таблицы анимации поворотов (низа)
                 LoadMap.AnimMoveSize,                                           ; размер таблицы анимации перемещения

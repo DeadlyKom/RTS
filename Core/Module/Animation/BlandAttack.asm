@@ -10,7 +10,25 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Attack:         ; CALL Utils.Math.Rand8
+Attack:         CALL Utils.Unit.Shot.Cooldown
+                JP C, Unit.RefUnitOnScr
+
+.ChangeAnim     ; инкремент анимации
+                CALL Animation.Increment
+                JP NC, Unit.RefUnitOnScr
+
+                ; получение адреса характеристик юнита
+                LD HL, (UnitsCharRef)
+                CALL Utils.Unit.GetAdrInTable
+                PUSH HL
+                POP IY
+
+                LD A, (IY + FUnitCharacteristics.Cooldown)
+                LD (IX + FUnit.CooldownShot), A
+                CALL Animation.Default
+
+
+                ; CALL Utils.Math.Rand8
                 ; CP #10                                                        ; чем меньше тем чаще происходит урон
                 ; RET NC
 
@@ -35,8 +53,8 @@ Attack:         ; CALL Utils.Math.Rand8
                 INC E
 
                 ; применить нанесение урона
-                LD C, #0A
-                CALL Utils.Unit.Damage.Apply
+                LD C, (IY + FUnitCharacteristics.Damage)
+                CALL Utils.Unit.Shot.ApplyDamage
 
                 ; переход к следующему юниту
                 EX AF, AF'
@@ -45,12 +63,7 @@ Attack:         ; CALL Utils.Math.Rand8
 
                 POP IX
 
-.L1             ; проверка что юнит составной
-                BIT COMPOSITE_UNIT_BIT, (IX + FUnit.Type)
-                CALL NZ, Animation.IncrementUp                                  ; юнит является составным
-                BIT COMPOSITE_UNIT_BIT, (IX + FUnit.Type)
-                CALL Z, Animation.IncrementDown                                 ; юнит не является составным
-
+.L1             
                 ; обновление облости
                 JP Unit.RefUnitOnScr
 

@@ -1,7 +1,28 @@
 
                 ifndef _CORE_MODULE_ANIMATION_SWITCH_ANIMATION_
                 define _CORE_MODULE_ANIMATION_SWITCH_ANIMATION_
+; -----------------------------------------
+; установка начального кадра анимации
+; In:
+;   IX - указывает на структуру FUnit
+; Out:
+; Corrupt:
+;   DE, C, AF
+; Note:
+; -----------------------------------------
+Default:        ; получение начальный кадр анимации
+                CALL GetDefault
+                AND FUAF_ANIM_DOWN_MASK
+                
+                ; дублирование состояние для верхней анимации (мб излишне)
+                LD C, A
+                ADD A, A
+                ADD A, A
+                OR C
+                ;
+                LD (IX + FUnit.Animation), A
 
+                RET
 ; -----------------------------------------
 ; получение начальный кадр анимации
 ; In:
@@ -22,6 +43,7 @@
 ;            * 10 - четыре анимации
 ;            * 11 - количество анимации не определено
 ; Corrupt:
+;   DE, C, AF
 ; Note:
 ; -----------------------------------------
 GetDefault:     GetUnitState                                                    ;   A  - хранит состояние юнита
@@ -58,12 +80,12 @@ GetDefault:     GetUnitState                                                    
                 ;           6 - 
                 ;           7 -
 
-                LD HL, AnimCountTable
-                ADD A, L
-                LD L, A
+                LD DE, AnimCountTable
+                ADD A, E
+                LD E, A
                 JR NC, $+3
-                INC H
-                LD A, (HL)
+                INC D
+                LD A, (DE)
 
                 ; проверка чётности адресу (если нечётный сдвигаем на 4 бита вправо)
                 RR C
@@ -80,36 +102,21 @@ GetDefault:     GetUnitState                                                    
 ; In:
 ;   IX - указывает на структуру FUnit
 ; Out:
+;   включенный флаг переполнения Carry сигнализирует, завершения цикла анимации
 ; Corrupt:
+;   DE, BC, AF
 ; Note:
 ; -----------------------------------------
-IncrementUp:    LD B, (IX + FUnit.Animation)
-                LD A, B
-                AND FUAF_ANIM_UP_MASK
-                SUB FUAF_ANIM_UP_DECREMENT
-                JR NC, .Set
-
-                ; получение первой анимации
-                CALL GetDefault
-                BIT STOP_INC_BIT, A
-                RET NZ                                                          ; выход если установлен флаг конечного инкремента анимации
-
-                ; A << 2
-                ADD A, A
-                ADD A, A
-
-.Set            XOR B
-                AND FUAF_ANIM_UP_MASK
-                XOR B
-                LD (IX + FUnit.Animation), A
-
-                RET
+Increment:      BIT COMPOSITE_UNIT_BIT, (IX + FUnit.Type)
+                JR NZ, Animation.IncrementUp                                    ; юнит является составным
 ; -----------------------------------------
 ; переключится на следующую анимацию
 ; In:
 ;   IX - указывает на структуру FUnit
 ; Out:
+;   включенный флаг переполнения Carry сигнализирует, завершения цикла анимации
 ; Corrupt:
+;   DE, BC, AF
 ; Note:
 ; -----------------------------------------
 IncrementDown:  LD B, (IX + FUnit.Animation)
@@ -121,6 +128,7 @@ IncrementDown:  LD B, (IX + FUnit.Animation)
                 ; получение первой анимации
                 CALL GetDefault
                 BIT STOP_INC_BIT, A
+                SCF
                 RET NZ                                                          ; выход если установлен флаг конечного инкремента анимации
 
 .Set            XOR B
@@ -128,27 +136,40 @@ IncrementDown:  LD B, (IX + FUnit.Animation)
                 XOR B
                 LD (IX + FUnit.Animation), A
 
+                OR A
                 RET
 ; -----------------------------------------
-; установка начального кадра анимации
+; переключится на следующую анимацию
 ; In:
 ;   IX - указывает на структуру FUnit
 ; Out:
+;   включенный флаг переполнения Carry сигнализирует, завершения цикла анимации
 ; Corrupt:
+;   DE, BC, AF
 ; Note:
 ; -----------------------------------------
-Default:        ; получение начальный кадр анимации
+IncrementUp:    LD B, (IX + FUnit.Animation)
+                LD A, B
+                AND FUAF_ANIM_UP_MASK
+                SUB FUAF_ANIM_UP_DECREMENT
+                JR NC, .Set
+
+                ; получение первой анимации
                 CALL GetDefault
-                AND FUAF_ANIM_DOWN_MASK
-                
-                ; дублирование состояние для верхней анимации (мб излишне)
-                LD C, A
+                BIT STOP_INC_BIT, A
+                SCF
+                RET NZ                                                          ; выход если установлен флаг конечного инкремента анимации
+
+                ; A << 2
                 ADD A, A
                 ADD A, A
-                OR C
-                ;
+
+.Set            XOR B
+                AND FUAF_ANIM_UP_MASK
+                XOR B
                 LD (IX + FUnit.Animation), A
 
+                OR A
                 RET
 
                 endif ; ~_CORE_MODULE_ANIMATION_SWITCH_ANIMATION_

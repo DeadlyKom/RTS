@@ -13,8 +13,8 @@
                 include "RNG/Rand8.asm"
 
                 ; unit/visibility
-                include "Unit/Visibility/CheckRadius.asm"
                 include "Unit/Visibility/GetListUnits.asm"
+                include "Unit/Visibility/CheckRadius.asm"
 
                 ; convert
                 include "Convert/ToTilemap.asm"

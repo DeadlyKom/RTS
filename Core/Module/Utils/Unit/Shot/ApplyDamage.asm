@@ -10,8 +10,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Apply:          ;
-                LD A, (IX + FUnit.Armor)
+ApplyDamage:    LD A, (IX + FUnit.Armor)
                 SUB C
                 JR NC, .SaveArmor
 
@@ -22,7 +21,12 @@ Apply:          ;
                 JR C, .SetDEAD                                                  ; уничтожение юнита
                 LD (IX + FUnit.Health), A
 
-                LD A, #20
+                ; получение адреса характеристик юнита
+                LD HL, (UnitsCharRef)
+                CALL Utils.Unit.GetAdrInTable
+                PUSH HL
+                POP IY
+                LD A, (IY + FUnitCharacteristics.Armor)
 
                 SET FUAF_FLASH_BIT, (IX + FUnit.Flags)                          ; включить мерцание
 

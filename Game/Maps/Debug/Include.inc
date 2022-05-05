@@ -12,24 +12,21 @@ START:          ; начало блока
 Surface:        ; ********** SURFACE **********
                 include "SurfaceProperty.inc"
 .End            ; ********* ~SURFACE **********
-
-
 Behavior:       ; ********* BEHAVIOR **********
                 include "../../../Core/Behavior/Include.inc"
 Behavior.End:   ; ********* ~BEHAVIOR *********
-
-
+UnitsChar:      ; *** UNITS CHARACTERISTICS ****
+                include "../../../Core/UnitCharacteristics/Include.inc"
+UnitsChar.End:  ; *** ~UNITS CHARACTERISTICS ****
 AnimTUp:        ; ****** ANIMATION TURN UP ******
                 include "../../../Core/Animation/AnimationTurnUpTable.inc"
 AnimTUp.End:    ; ****** ~ANIMATION TURN UP ******
 AnimTDown:      ; ***** ANIMATION TURN DOWN *****
                 include "../../../Core/Animation/AnimationTurnDownTable.inc"
-AnimTDown.End:  ; ***** !ANIMATION TURN DOWN *****
+AnimTDown.End:  ; ***** ANIMATION TURN DOWN *****
 AnimMove:       ; ******* ANIMATION MOVE ********
                 include "../../../Core/Animation/AnimationMoveTable.inc"
 AnimMove.End:   ; ******* ~ANIMATION MOVE ********
-
-
 Map:            ; ********** MAP **********
                 include "Map.asm"
 .End            ; ********* ~MAP **********
@@ -39,6 +36,7 @@ END:            ; конец блока
 SIZE:           EQU END - START
 
 SurfaceSize     EQU Surface.End - Surface
+UnitsCharSize   EQU UnitsChar.End - UnitsChar
 BehaviorSize    EQU Behavior.End - Behavior
 AnimTUpSize     EQU AnimTUp.End - AnimTUp
 AnimTDownSize:  EQU AnimTDown.End - AnimTDown

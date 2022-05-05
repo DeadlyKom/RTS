@@ -27,6 +27,13 @@ MapData:        ; копирование данных в область пере
                 LD A, UnitDataPage                                              ; страница поведения юнитов
                 CALL FileSystem.SequentialRead
 
+                ; копирование характеристик юнитов
+                LD DE, (UnitsCharRef)                                           ; адрес характеристик юнитов
+.UnitsCharSize  EQU $+1
+                LD BC, #0000                                                    ; размер поведения юнитов
+                LD A, UnitDataPage                                              ; страница поведения юнитов
+                CALL FileSystem.SequentialRead
+
                 ; копирование таблицы анимации поворотов (вверх)
                 LD DE, (AnimTurnUpTableRef)                                     ; адрес таблицы анимации поворотов (вверх)
 .AnimTUpSize    EQU $+1

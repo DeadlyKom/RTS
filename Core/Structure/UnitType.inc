@@ -11,6 +11,7 @@ HeavyGunner                 EQU 0x03 << 1
 Sniper                      EQU 0x04 << 1
 Engineer                    EQU 0x05 << 1
 ArmoredCarrier              EQU 0x06 << 1
+UNITS_TYPE_NUM              EQU 2                                               ; количество типов юнитов
 
 FACTION_TYPE_BIT            EQU 0x07                                            ; тип фракции (0 - нейтральная, 1 - враждебная)
 COMPOSITE_UNIT_BIT          EQU 0x00                                            ; флаг что юнит является составной (из 2х частей)

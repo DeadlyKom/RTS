@@ -9,6 +9,7 @@ Size                FMapSize 0, 0                                               
 StartLocation       FLocation 0, 0                                              ; координаты центра экрана
 SurfacePropertySize DB #00                                                      ; длина свойств тайлов в байтах
 BehaviorSize        DW #0000                                                    ; длина поведения в байтах
+UnitsCharSize       DW #0000                                                    ; длина характеристик юнитов в байтах
 AnimTUpTableSize    DW #0000                                                    ; длина таблицы анимации поворотов (вверх)
 AnimTDownTableSize  DW #0000                                                    ; длина таблицы анимации поворотов (низа)
 AnimMoveTableSize   DW #0000                                                    ; длина таблицы анимации перемещения

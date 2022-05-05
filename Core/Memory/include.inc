@@ -39,6 +39,7 @@ SetMemPage_FileSystem       EQU Memory.SetPage1                                 
 ; data
 UnitDataPage                EQU 0                                               ; страница данных о юнитах
                                                                                 ; поведение ИИ
+                                                                                ; характеристики юнитов
 MemPage_UnitArray           EQU Memory.SetPage0                                 ; страница массива юнитов
 
                             include "Macro.inc"

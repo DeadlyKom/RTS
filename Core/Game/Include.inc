@@ -19,6 +19,8 @@ AnimTurnUpTable:    DW #0000                                                    
 AnimTurnDownTable:  DW #0000                                                    ; адрес таблицы анимации поворотов (низа)
 AnimMoveTable:      DW #0000                                                    ; адрес таблицы анимации перемещения
 
+; unit
+UnitsChar           DW #0000                                                    ; адрес таблицы характеристик юнитов
 
 ; TilemapAddress:     DW #0000
 ; AddressTable:       DW #0000

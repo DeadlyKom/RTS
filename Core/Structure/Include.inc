@@ -8,6 +8,7 @@
                 include "Render.inc"
                 include "Sprite.inc"
                 include "BehaviorTree.inc"
+                include "Damage.inc"
                 include "Unit.inc"
                 include "Input.inc"
                 include "SurfaceProperty.inc"
