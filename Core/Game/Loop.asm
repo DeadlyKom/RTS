@@ -40,7 +40,7 @@ GameLoop:
                 CALL Utils.WaypointsSequencer.AddWaypoint
                 JR NC, $
 
-                LD A, 1
+                LD A, 8
                 LD HL, .Array
 
 .LoopSpawn      PUSH AF
@@ -61,7 +61,6 @@ GameLoop:
 ;                 LD A, E
 ;                 EX AF, AF'
 ;                 LD D, FUSE_RECONNAISSANCE | FUSF_RENDER
-;                 LD E, #00
 ;                 CALL Spawn.Unit
 ;                 EX AF, AF'
                 
@@ -174,30 +173,32 @@ GameLoop:
 
 .Array          
 
-                DW #010F    : DB NEUTRAL_FACTION | Tank         ; 0
+                DW #0906    : DB PLAYER_FACTION | COMPOSITE_UNIT | Tank        ; 0
+                DW #0A05    : DB PLAYER_FACTION | COMPOSITE_UNIT | Tank        ; 0
+                ; ; DW #0409    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #080A    : DB ENEMY_FACTION_A   | COMPOSITE_UNIT | Tank        ; 0
 
 
-
-                DW #0409    : DB NEUTRAL_FACTION | Infantry    ; 0
-                DW #0508    : DB NEUTRAL_FACTION | Infantry    ; 0
-                DW #0607    : DB NEUTRAL_FACTION | Infantry    ; 0
-                DW #0708    : DB NEUTRAL_FACTION | Infantry    ; 0
-                DW #0807    : DB NEUTRAL_FACTION | Infantry    ; 0
-                DW #090A    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #0409    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #0508    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #0607    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #0708    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #0807    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #090A    : DB PLAYER_FACTION | Infantry    ; 0
                 
-                ; DW #1217    : DB NEUTRAL_FACTION | Infantry    ; 0
-                ; DW #1317    : DB NEUTRAL_FACTION | Infantry    ; 0
-                ; DW #1417    : DB NEUTRAL_FACTION | Infantry    ; 0
-                ; DW #1517    : DB NEUTRAL_FACTION | Infantry    ; 0
-                ; DW #1617    : DB NEUTRAL_FACTION | Infantry    ; 0
-                ; DW #1717    : DB NEUTRAL_FACTION | Infantry    ; 0
+                ; DW #1217    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #1317    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #1417    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #1517    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #1617    : DB PLAYER_FACTION | Infantry    ; 0
+                ; DW #1717    : DB PLAYER_FACTION | Infantry    ; 0
 
-                DW #070B    : DB ENEMY_FACTION   | Infantry    ; 1
-                DW #080A    : DB ENEMY_FACTION   | Infantry    ; 1
-                DW #080C    : DB ENEMY_FACTION   | Infantry    ; 1
-                DW #0909    : DB ENEMY_FACTION   | Infantry    ; 1
-                DW #090B    : DB ENEMY_FACTION   | Infantry    ; 1
-                DW #0A05    : DB ENEMY_FACTION   | Infantry    ; 1
+                DW #0714    : DB ENEMY_FACTION_A   | Infantry    ; 1
+                DW #0813    : DB ENEMY_FACTION_A   | Infantry    ; 1
+                DW #0815    : DB ENEMY_FACTION_A   | Infantry    ; 1
+                DW #0912    : DB ENEMY_FACTION_A   | Infantry    ; 1
+                DW #0913    : DB ENEMY_FACTION_A   | Infantry    ; 1
+                DW #0A12    : DB ENEMY_FACTION_A   | Infantry    ; 1
 
                 DW #0202    : DB #00    ; 1
                 DW #1517    : DB #00    ; 2

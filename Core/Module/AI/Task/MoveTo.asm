@@ -124,6 +124,7 @@ MoveTo:         CALL Utils.Unit.State.SetMOVE                                   
 .PreExit        ;
                 LD (IX + FUnit.Delta), A
 
+                SET FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)                 ; необходимо произвести разведку
                 CALL Unit.RefUnitOnScr                                          ; обновление облости
                 CALL Animation.IncrementDown                                    ; увеличение счётчика анимации (нижний)
 .Progress       JP AI.SetBTS_RUNNING                                            ; в процессе выполнения
@@ -131,11 +132,9 @@ MoveTo:         CALL Utils.Unit.State.SetMOVE                                   
 .Complite       ; ---------------------------------------------
                 ; юнит дошёл до текущего Way Point
                 ; ---------------------------------------------
-                ; IX - pointer to FUnitTargets      (3)
-                ; ---------------------------------------------
 
                 LD HL, Utils.Unit.Tilemap.Radius_5
-                CALL Utils.Unit.Tilemap.Reconnaissance
+                CALL Utils.Unit.Tilemap.ConstReconnaissance
 
                 RES FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                      ; необходимо переинициализировать анимацию перемещения
                 RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
@@ -212,7 +211,7 @@ ShiftLocation:  ;
                 DEC L
                 INC (HL)
                 LD HL, Utils.Unit.Tilemap.Radius_3
-                CALL Utils.Unit.Tilemap.Reconnaissance
+                CALL Utils.Unit.Tilemap.ConstReconnaissance
                 EXX
 
                 RET
@@ -230,7 +229,7 @@ ShiftLocation:  ;
                 DEC L
                 DEC (HL)
                 LD HL, Utils.Unit.Tilemap.Radius_3
-                CALL Utils.Unit.Tilemap.Reconnaissance
+                CALL Utils.Unit.Tilemap.ConstReconnaissance
                 EXX
 
                 RET

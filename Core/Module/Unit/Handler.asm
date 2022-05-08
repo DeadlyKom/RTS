@@ -24,7 +24,6 @@ Handler:        ; включить страницу
                 JP Z, .Exit
                 LD (.ProcessedUnits), A
 
-                ; JR$
                 LD IX, UnitArrayPtr
 
                 ifndef ENABLE_FORCE_DRAW_UNITS
@@ -46,6 +45,21 @@ Handler:        ; включить страницу
                 endif
 
 .Loop           ; PUSH DE                                                         ; save current address UnitsArray
+
+                ; ---------------------------------------------
+                ; проверка видимости юнита под туманом войны
+                ; ---------------------------------------------
+                LD DE, (IX + FUnit.Position)
+                SET_PAGE_TILEMAP                                                ; включение страницы с тайловой картой
+                CALL Utils.Tilemap.GetAddressTilemap
+                LD A, (HL)
+                ADD A, A
+                EX AF, AF'
+                SET_PAGE_UNITS_ARRAY                                            ; включение страницы массива юнитов
+                EX AF, AF'
+                JR C, .PreNextUnit                                              ; юнит не видим
+
+                ; ---------------------------------------------
 
                 ifndef ENABLE_FORCE_DRAW_UNITS
                 ; проврка на перерисовку текущего юнита

@@ -14,11 +14,17 @@ ArmoredCarrier              EQU 0x06 << 1
 UNITS_TYPE_NUM              EQU 2                                               ; количество типов юнитов
 
 FACTION_TYPE_BIT            EQU 0x07                                            ; тип фракции (0 - нейтральная, 1 - враждебная)
+FACTION_SUBTYPE_BIT         EQU 0x06
 COMPOSITE_UNIT_BIT          EQU 0x00                                            ; флаг что юнит является составной (из 2х частей)
 
-NEUTRAL_FACTION             EQU 0x00 << FACTION_TYPE_BIT                        ; нейтральная фракция
-ENEMY_FACTION               EQU 0x01 << FACTION_TYPE_BIT                        ; враждебная фракция
+PLAYER_FACTION              EQU 0x00 << FACTION_SUBTYPE_BIT                     ; фракция игрока
+NEUTRAL_FACTION             EQU 0x01 << FACTION_SUBTYPE_BIT                     ; нейтральная фракция
+ENEMY_FACTION_A             EQU 0x02 << FACTION_SUBTYPE_BIT                     ; враждебная фракция А
+ENEMY_FACTION_B             EQU 0x03 << FACTION_SUBTYPE_BIT                     ; враждебная фракция Б
+
 FACTION_TYPE                EQU 1 << FACTION_TYPE_BIT
+FACTION_SUBTYPE             EQU 1 << FACTION_SUBTYPE_BIT
+FACTION_MASK                EQU %11000000
 COMPOSITE_UNIT              EQU 1 << COMPOSITE_UNIT_BIT
 IDX_UNIT_TYPE               EQU %00111110
 

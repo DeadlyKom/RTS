@@ -55,6 +55,13 @@ ScanKeyboard:       SetTilemapFlag ACCELERATE_CURSOR_FLAG
                     LD DE, InputMode_0_9
                     CALL Handlers.Input.JumpHandlerNum
 
+                    ; выбор рамкой
+                    LD A, VK_CAPS_SHIFT
+                    CALL Input.CheckKeyState
+                    JR NZ, .SkipSelRectKeybord
+                    ResetInputFlag SELECTION_RECT_FLAG
+
+.SkipSelRectKeybord ; обработка нажатий
                     LD DE, InputMode_CH_SP
                     CALL Handlers.Input.JumpHandlerCH_SP
 
@@ -86,12 +93,15 @@ InputMouseMode:     JR NZ, .Processing              ; skip released
 
                     ; ***** InputJoyMode *****
 InputJoyMode:       JR NZ, .Processing              ; skip released
+                    EX AF, AF'
+                    CP 01                           ; released key VK_KEMPSTON_A
+                    JP Z, ReleasSelecting
 .NotProcessing      SCF
                     RET
 
 .Processing         EX AF, AF'
-                    ; CP 01                           ; key VK_KEMPSTON_A
-                    ; JP Z, Pathfinding
+                    CP 01                           ; key VK_KEMPSTON_A
+                    JP Z, PressSelecting
                     CP 02                           ; key VK_KEMPSTON_B
                     JP Z, Pathfinding
                     ; CP 03                           ; key VK_KEMPSTON_С
@@ -163,11 +173,16 @@ DrawStateBT:        SwapDebugFlag DRAW_DEBUG_BT_FLAG
 
                     ; **** InputMode_CH_SP *****
 InputMode_CH_SP:    JR NZ, .Processing              ; skip released
+                    EX AF, AF'
+                    CP 00                           ; released key VK_CAPS_SHIFT
+                    JP Z, ReleasSelecting
 .NotProcessing      SCF
                     RET
 
 .Processing         EX AF, AF'
-                    CP 09                           ; VK_SPACE
+                    CP 00                           ; key VK_CAPS_SHIFT
+                    JP Z, PressSelecting
+                    CP 09                           ; key VK_SPACE
                     JP Z, Pathfinding
                     JR .NotProcessing
 

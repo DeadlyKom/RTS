@@ -5,6 +5,7 @@
 ; -----------------------------------------
 ; проверка врага в радиусе действия
 ; In:
+;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ; Note:
@@ -14,13 +15,25 @@ CheckEnemy:     ; получим список ближайших юнитов
                 CALL Utils.Visibility.GetListUnits
                 JR NC, .None                                                    ; выход нет врагов поблизости
 
-                LD A, 5 * 5                                                     ; радиус видимости
-                CALL Utils.Visibility.CheckRadius
+                ; радиус видимости
+
+                ; получение адреса характеристик юнита
+                LD HL, (UnitsCharRef)
+                CALL Utils.Unit.GetAdrInTable
+                PUSH HL
+                POP IY
+                LD A, (IY + FUnitCharacteristics.Distance)
+                DEC A
+                CALL Utils.Visibility.CheckRadiusA
                 JR NC, .None
 
                 ; DE - позиция ближайшего юнита из массива
                 LD (IX + FUnit.Target), DE
-                
+
+                ; проведение разведки после остановки
+                SET FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)                 ; необходимо произвести разведку
+                CALL Utils.Unit.Tilemap.Reconnaissance
+
                 ; установка флагов валидности значения Target
                 LD A, (IX + FUnit.Data)
                 OR FUTF_INSERT | FUTF_ENEMY                                     ; произведена временная вставка значения в Target и хранят позицию цели для атаки

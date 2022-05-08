@@ -11,7 +11,49 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Reconnaissance: LD DE, (IX + FUnit.Position)
+Reconnaissance: ; проверка бита об проведённой разведки после остановки
+                BIT FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)
+                RET Z                                                           ; пропустить разведку
+
+                RES FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)                 ; сброс флага разведки
+
+.Force          ; получение адреса характеристик юнита
+                LD HL, (UnitsCharRef)
+                CALL Utils.Unit.GetAdrInTable
+                PUSH HL
+                POP IY
+                LD A, (IY + FUnitCharacteristics.Distance)
+
+; -----------------------------------------
+; рекогносцировка
+; In:
+;   A  - радиус обзора в тайлах
+;   IX - указывает на структуру FUnit
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+ReconRadius:    LD HL, Table
+                ADD A, A
+                ADD A, L
+                LD L, A
+                JR NC, $+3
+                INC H
+                LD A, (HL)
+                INC HL
+                LD H, (HL)
+                LD L, A
+
+; -----------------------------------------
+; рекогносцировка
+; In:
+;   IX - указывает на структуру FUnit
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+ConstReconnaissance:
+                LD DE, (IX + FUnit.Position)
                 
                 SET_PAGE_TILEMAP
 
@@ -101,6 +143,16 @@ Reconnaissance: LD DE, (IX + FUnit.Position)
 .Exit           SET_PAGE_UNITS_ARRAY
                 
                 RET
+Table:          DW Radius_0                                                     ; 0
+                DW Radius_1                                                     ; 1
+                DW Radius_2                                                     ; 1
+                DW Radius_3                                                     ; 1
+                DW Radius_4                                                     ; 2
+                DW Radius_5                                                     ; 3
+                DW Radius_6                                                     ; 4
+                DW Radius_7                                                     ; 5
+Radius_0        DB 2, 0,0, #FF
+Radius_1        DB 1, 0,1,1,0, #FF
 Radius_2        DB 2, 0,1,2,1,0, #FF
 Radius_3        DB 3, 0,2,2,3,2,2,0, #FF
 Radius_4        DB 3, 0,2,3,4,3,2,0, #FF

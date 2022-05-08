@@ -9,7 +9,22 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-RefUnitOnScr:   ; определение AABB выбранного юнита
+RefUnitOnScr:   ; ---------------------------------------------
+                ; проверка видимости юнита под туманом войны
+                ; ---------------------------------------------
+                LD DE, (IX + FUnit.Position)
+                SET_PAGE_TILEMAP                                                ; включение страницы с тайловой картой
+                CALL Utils.Tilemap.GetAddressTilemap
+                LD A, (HL)
+                ADD A, A
+                EX AF, AF'
+                SET_PAGE_UNITS_ARRAY                                            ; включение страницы массива юнитов
+                EX AF, AF'
+                RET C                                                           ; юнит не видим
+
+                ; ---------------------------------------------
+
+                ; определение AABB выбранного юнита
                 CALL Utils.Unit.AABB.GetScreen
                 RET C
 
@@ -21,9 +36,9 @@ RefUnitOnScr:   ; определение AABB выбранного юнита
                 ; ---------------------------------------------
 
                 ; пометим что юнита необходимо обноить
-                LD A, FUSF_RENDER
-                OR (IX + FUnit.State)
-                LD (IX + FUnit.State), A
+                ; LD A, FUSF_RENDER
+                ; OR (IX + FUnit.State)
+                ; LD (IX + FUnit.State), A
 
                 JP Tilemap.TileUpdate
 

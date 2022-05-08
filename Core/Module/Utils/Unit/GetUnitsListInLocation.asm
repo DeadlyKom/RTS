@@ -10,9 +10,12 @@
 ;   BC - координаты тайла (B - y, C - x)
 ; Out:
 ; Corrupt:
+;   DE, AF, AF'
 ; Note:
 ; -----------------------------------------
 GetUnitsInLoc:  ; драфтово формируем список юнитов
+
+                PUSH HL
 
                 ;
                 XOR A
@@ -70,6 +73,8 @@ GetUnitsInLoc:  ; драфтово формируем список юнитов
 
 .ListSize       EQU $+1
                 LD A, #00
+
+                POP HL
 
                 OR A
                 JR Z, .Fail

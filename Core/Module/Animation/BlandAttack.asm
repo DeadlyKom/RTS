@@ -20,20 +20,16 @@ Attack:         CALL Utils.Unit.Shot.Cooldown
                 ; получение адреса характеристик юнита
                 LD HL, (UnitsCharRef)
                 CALL Utils.Unit.GetAdrInTable
-                PUSH HL
-                POP IY
-
-                LD A, (IY + FUnitCharacteristics.Cooldown)
+                LD A, (HL)                                                      ; FUnitCharacteristics.Cooldown
+                INC HL
                 LD (IX + FUnit.CooldownShot), A
                 CALL Animation.Default
 
-
                 ; CALL Utils.Math.Rand8
-                ; CP #10                                                        ; чем меньше тем чаще происходит урон
+                ; CP #10                                                        ; чем меньше тем реже происходит урон
                 ; RET NC
 
-                LD C, (IX + FUnit.Target.X)
-                LD B, (IX + FUnit.Target.Y)
+                LD BC, (IX + FUnit.Target)
                 CALL Utils.Unit.Tile.GetUnitsInLoc
                 ; CALL NC, $                                                      ; добавить VFX
                 JP NC, .L1
@@ -53,7 +49,10 @@ Attack:         CALL Utils.Unit.Shot.Cooldown
                 INC E
 
                 ; применить нанесение урона
-                LD C, (IY + FUnitCharacteristics.Damage)
+                LD C, (HL)                                                      ; FUnitCharacteristics.Weapon
+                INC HL
+                LD B, (HL)                                                      ; FUnitCharacteristics.Damage
+                DEC HL
                 CALL Utils.Unit.Shot.ApplyDamage
 
                 ; переход к следующему юниту

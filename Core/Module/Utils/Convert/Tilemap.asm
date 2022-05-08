@@ -12,7 +12,7 @@
 ; Corrupt:
 ;   HL, AF
 ; Note:
-;   requires included memory page
+;   требуется установить страницу карты
 ; -----------------------------------------
 GetAddressTilemap:  LD L, D
                     LD H, HIGH TilemapTableAddress

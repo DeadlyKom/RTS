@@ -3,6 +3,11 @@
                 define _CORE_MODULE_UTILS_CHECK_RADIUS_
 
                 module Visibility
+
+CheckRadiusA:   LD HL, CheckRadius.TableSquares
+                ADD A, L
+                LD L, A
+                LD A, (HL)
 ; -----------------------------------------
 ; проверка видимости юнитов из списка
 ; In:

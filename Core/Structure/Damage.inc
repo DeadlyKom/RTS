@@ -30,13 +30,13 @@ NaturalAcid     DB #00                                                          
 
 ; структура характеристик юнита
                 struct FUnitCharacteristics
-Weapon:         DB #00                                                          ; тип урона
-Damage:         DB #00                                                          ; величина урона
+Cooldown        DB #00                                                          ; перезарядка       [0]
+Weapon:         DB #00                                                          ; тип урона         [1]
+Damage:         DB #00                                                          ; величина урона    [2]
 Armor:          DB #00                                                          ; броня
-ResistanceBit:  DB #00                                                          ; устойчивость, включеные биты отвечает за имунитет
+ResistanceBits: DB #00                                                          ; устойчивость, включеные биты отвечает за имунитет
 Resistance:     FResistance                                                     ; величины устойчивости к урону
 Distance:       DB #00                                                          ; дистанция
-Cooldown        DB #00                                                          ; перезарядка
 
                 ends
 

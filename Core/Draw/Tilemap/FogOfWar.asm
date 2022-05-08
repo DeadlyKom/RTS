@@ -13,9 +13,9 @@ FOW:            ; initialize execute blocks
                 LD DE, RenderBuffer
                 LD BC, BypassFOW
                 LD (Display.ContainerSP), SP
-                PUSH AF                                                 ; SP -= 2
+                PUSH AF                                                         ; SP -= 2
                 LD (DisplayRowFOW.ContainerSP), SP
-                POP AF                                                  ; SP += 2
+                POP AF                                                          ; SP += 2
                 RestoreDE
                 JP Display.DrawRows
 
@@ -33,7 +33,7 @@ FOW:            ; initialize execute blocks
 ; Corrupt:
 ;   SP, HL, DE, BC, HL', DE', BC'
 ; -----------------------------------------
-DisplayRowFOW:  ;
+DisplayRowFOW:  ; проверка пропуска тайла
                 EX DE, HL
                 SLA (HL)
                 JP NC, .NextTile_

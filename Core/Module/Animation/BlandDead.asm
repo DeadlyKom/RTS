@@ -29,9 +29,7 @@ Dead:           ;
                 CALL Animation.IncrementDown
 
                 ; обновление облости
-                CALL Unit.RefUnitOnScr
-
-                RET
+                JP Unit.RefUnitOnScr
 
 .DEC            DEC (IX + FUnit.CounterDown)
                 RET

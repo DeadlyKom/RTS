@@ -14,8 +14,7 @@
 ; -----------------------------------------
 GetTileInfo:    ;
 .BufferStart    EQU $+1
-                LD HL, #0000     
-                ; JR$
+                LD HL, #0000
 
                 ; X = (Coord.x - BufferStart.x) & 0x0F
                 LD A, E

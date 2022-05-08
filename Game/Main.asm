@@ -13,14 +13,14 @@
                 define ENABLE_FOW                                               ; разрешить туман войны
                 define ENABLE_CLS                                               ; разрешить очистить 2 экрана перед стартом
                 define ENABLE_FORCE_DRAW_UNITS                                  ; разрешить принудительное обновление унитов
-                ; define ENABLE_FILL_FOW                                          ; разрешить заполнение туманом всю карту
+                define ENABLE_FILL_FOW                                          ; разрешить заполнение туманом всю карту
                 ; define ENABLE_TIME_OF_DAY                                       ; разрешить смену дня и ночи
                 define ENABLE_DEBUG_NETWORK                                     ; разрешить отладку по сети
 
                 ; define SHOW_DEBUG_BORDER                                        ; разрешить отображать на бордюре время выполнение
                 ; define SHOW_DEBUG_BORDER_INTERRUPT                              ; отображение на бордюре время прерывания
                 ; define SHOW_DEBUG_BORDER_TILEMAP                                ; отображение на бордюре время отображения бэкграунда карты
-                define SHOW_DEBUG_BORDER_SCROLL_PREPARE                         ; отображение на бордюре время операции подготовки нового участка тайловой карты
+                ; define SHOW_DEBUG_BORDER_SCROLL_PREPARE                         ; отображение на бордюре время операции подготовки нового участка тайловой карты
                 ; define SHOW_DEBUG_BORDER_DRAW_UNITS                             ; отображение на бордюре время отображения юнитов
                 ; define SHOW_DEBUG_BORDER_FOW                                    ; отображение на бордюре время отображения тумана войны
                 ; define SHOW_DEBUG_BORDER_CURSOR                                 ; отображение на бордюре время отображения курсора

@@ -4,13 +4,14 @@
 
                 module Tank
 Characteristics FUnitCharacteristics {
-                GUNSHOT_LARGE,
-                0x80,
-                0xA0,
+                0x20                                                            ; Cooldown
+                RES_EPS_SBIT,                                                   ; Weapon
+                0x80,                                                           ; Damage
+                0xB0,                                                           ; Armor
                 RES_MHB | RES_GSS_IMMUNE | RES_GSL | RES_EPS | RES_EPL | RES_ERL_IMMUNE | RES_ERE | RES_NTA,
-                { 1, 0, 0, 10, 1, 2, 3, 6 }
-                0x05,
-                0x20 }
+                { 1, 0, 0, 10, 1, 2, 3, 6 },                                    ; Resistance
+                0x07                                                            ; Distance
+                }
 
                 endmodule
 

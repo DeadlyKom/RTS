@@ -4,20 +4,34 @@
 ; -----------------------------------------
 ; нанесение урона юниту
 ; In:
-;   C  - значение урона
+;   B  - величина урона FUnitCharacteristics.Damage
+;   C  - тип урона      FUnitCharacteristics.Weapon
 ;   IX - указывает на структуру FUnit
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-ApplyDamage:    LD A, (IX + FUnit.Armor)
-                SUB C
+ApplyDamage:    ; получение адреса характеристик юнита
+                LD HL, (UnitsCharRef)
+                CALL Utils.Unit.GetAdrInTable
+                PUSH HL
+                POP IY
+
+                ; проверка устойчивость к применяемому типу урона
+                LD A, C
+                LD (.BIT), A
+.BIT            EQU $+3
+                BIT 0, (IY + FUnitCharacteristics.ResistanceBits)
+                RET NZ                                                          ; выход, т.к. у юнита имунитет к этому типу урона
+
+                LD A, (IX + FUnit.Armor)
+                SUB B
                 JR NC, .SaveArmor
 
                 NEG
-                LD C, A
+                LD B, A
                 LD A, (IX + FUnit.Health)
-                SUB C
+                SUB B
                 JR C, .SetDEAD                                                  ; уничтожение юнита
                 LD (IX + FUnit.Health), A
 

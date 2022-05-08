@@ -13,18 +13,13 @@
 Idle:           CALL Utils.Unit.State.IsIDLE
                 JP NZ, AI.SetBTS_FAILURE                                        ; сброс флага, выход если юнит не в состоянии idle
 
-                ; проверка бита об проведённой разведки после остановки
-                BIT FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)
-                JR Z, .SkipRecon                                                ; пропустить разведку
+                ; проверка бита фракции (разведка только для игрока)
+                LD A, (IX + FUnit.Type)
+                AND FACTION_MASK
+                JR NZ, .SkipRecon
 
-                ; ---------------------------------------------
-                ; HL - данные разведки (радиус)
-                ; IX - указывает на FUnit
-                ; ---------------------------------------------
-                LD HL, Utils.Unit.Tilemap.Radius_5
+                ; проведение разведки после остановки
                 CALL Utils.Unit.Tilemap.Reconnaissance
-
-                RES FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)                 ; сброс флага разведки
 
 .SkipRecon      ; вызов счётчика анимации простоя
                 CALL Animation.Idle
