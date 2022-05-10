@@ -5,12 +5,12 @@
                 module Utils
 
                 include "DeltaBetweenLocationAndTarget.asm"     ; remove ?
-                
-                ; units
-                include "Unit/Include.inc"
 
                 ; RNG
                 include "RNG/Rand8.asm"
+                
+                ; units
+                include "Unit/Include.inc"
 
                 ; unit/visibility
                 include "Unit/Visibility/GetListUnits.asm"
