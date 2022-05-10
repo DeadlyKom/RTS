@@ -5,15 +5,8 @@
                 module Unit
 
                 include "Reconnaissance.asm"
-                include "CalculateDirectionRotation.asm"
-                include "GetScreenAABB.asm"
-                include "GetAddressInTable.asm"
                 include "GetAddress.asm"
                 include "GetIndex.asm"
-                include "GetUnitsListInLocation.asm"
-                include "Shot/Include.inc"
-                include "State/CheckState.asm"
-                include "State/SetState.asm"
 
                 endmodule
 

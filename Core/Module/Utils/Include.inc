@@ -12,10 +12,6 @@
                 ; units
                 include "Unit/Include.inc"
 
-                ; unit/visibility
-                include "Unit/Visibility/GetListUnits.asm"
-                include "Unit/Visibility/CheckRadius.asm"
-
                 ; convert
                 include "Tilemap/Include.inc"
 

@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_PATHFINDING_BASE_
                 define _CORE_MODULE_PATHFINDING_BASE_
 Begin:          ; добавим новые юниты в очередь поиска пути
-
+                
                 ; проверим что очередь не пустая
                 CALL Pathfinding.Queue.IsEmpty
                 JR C, .Allow                                                    ; если очередь пуста, продолжим работу

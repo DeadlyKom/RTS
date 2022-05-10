@@ -91,40 +91,53 @@ DisplayTileRow: ;
                 LD A, (HL)                                                      ; read tile index
                 EXX
 
-                ifdef DEBUG
-                EX AF, AF'
-                CheckDebugFlag DISPLAY_COLLISION_FLAG
-                JR Z, .DrawTile
+;                 ifdef DEBUG
+;                 EX AF, AF'
+;                 CheckDebugFlag DISPLAY_COLLISION_FLAG
+;                 JR Z, .DrawTile
 
-                ; calculation sprite address
-                LD A, HIGH SurfacePropertyPtr
-                LD H, A
-                EX AF, AF'
-                AND %01111111
-                LD L, A
-                PUSH BC
-                ; toggle to memory page with tile sprites
-                CALL Memory.SetPage1
+;                 ; calculation sprite address
+;                 LD A, HIGH SurfacePropertyPtr
+;                 LD H, A
+;                 EX AF, AF'
+;                 AND %01111111
+;                 LD L, A
+;                 PUSH BC
+;                 ; toggle to memory page with tile sprites
+;                 CALL Memory.SetPage1
 
-                LD A, (HL)
-                AND %01111111
-                ADD A, A
-                LD H,  HIGH MemoryPage_7.DebugSpritesTable
-                LD L, A
+;                 LD A, (HL)
+;                 AND %01111111
+;                 ADD A, A
+;                 LD H,  HIGH MemoryPage_7.DebugSpritesTable
+;                 LD L, A
 
-                ; toggle to memory page with tile sprites
-                CALL Memory.SetPage7
-                POP BC
-                LD E, (HL)
-                INC L
-                LD D, (HL)
-                EX DE, HL                                                       ; HL - address current sprite
+;                 ; toggle to memory page with tile sprites
+;                 CALL Memory.SetPage7
+;                 POP BC
+;                 LD E, (HL)
+;                 INC L
+;                 LD D, (HL)
+;                 EX DE, HL                                                       ; HL - address current sprite
 
-                JR .Draw
-.DrawTile       EX AF, AF'
+;                 JR .Draw
+; .DrawTile       EX AF, AF'
+;                 ; calculation sprite address
+;                 ADD A, A                                                        ; shift left (7 bit - fog of war)
+
+;                 ifdef ENABLE_FOW
+;                 JP C, .NextTile                                                 ; move to next column (if 7 bit is set)
+;                 endif
+;                 LD H, HIGH MemoryPage_7.SpritesTable
+;                 LD L, A
+;                 LD E, (HL)
+;                 INC L
+;                 LD D, (HL)
+;                 EX DE, HL                                                       ; HL - address current sprite
+;                 else
+
                 ; calculation sprite address
                 ADD A, A                                                        ; shift left (7 bit - fog of war)
-
                 ifdef ENABLE_FOW
                 JP C, .NextTile                                                 ; move to next column (if 7 bit is set)
                 endif
@@ -134,20 +147,7 @@ DisplayTileRow: ;
                 INC L
                 LD D, (HL)
                 EX DE, HL                                                       ; HL - address current sprite
-                else
-
-                ; calculation sprite address
-                ADD A, A                                                        ; shift left (7 bit - fog of war)
-                ifdef ENABLE_FOW
-                JP C, .NextTile                                                 ; move to next column (if 7 bit is set)
-                endif
-                LD H, HIGH MemoryPage_7.SpritesTable
-                LD L, A
-                LD E, (HL)
-                INC L
-                LD D, (HL)
-                EX DE, HL                                                       ; HL - address current sprite
-                endif
+                ; endif
 .Draw
                 ; protection data corruption during interruption
                 LD E, (HL)
