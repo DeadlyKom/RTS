@@ -16,7 +16,7 @@ MoveDown:       ; получение адреса анимации переме�
                 CALL Utils.Unit.GetAdrInTable
 
                 ; получить проходимость тайла
-                CALL Utils.Surface.GetPassability
+                CALL Utils.Tilemap.Surface.GetPassability
                 ADD A, L
                 LD L, A
                 JR NC, $+3

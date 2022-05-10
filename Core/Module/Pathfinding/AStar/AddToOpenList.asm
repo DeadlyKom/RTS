@@ -98,9 +98,7 @@ AddToOpenList:  ; set return address
                 INC H                                                           ; HL - pointer to FPFInfo.F_Cost+1                  (9)
                 LD (HL), D
 
-                ; TrickleUp(FPFInfo.OpenListIdx);
                 JP TrickleUp                                                    ; A = FPFInfo.OpenListIdx
-                ; RET
                 
 .InOpenList     ; already on openlist
                 LD A, L                                                         ; save low byte of pointer to structure
@@ -127,11 +125,9 @@ AddToOpenList:  ; set return address
 
                 ; F_Cost >= FPFInfo.F_Cost
                 SBC HL, DE                                                      ; F_Cost - FPFInfo.F_Cost
-                ; EXX ; ??
                 RET NC                                                          ; return if F_Cost >= FPFInfo.F_Cost
                                                                                 ; new cost is worse, don't change anything
                 ; new item is better => replace
-                ; EXX ; ??
                 ADD HL, DE                                                      ; HL = F_Cost
                 EX DE, HL
                 LD L, A
@@ -151,7 +147,6 @@ AddToOpenList:  ; set return address
 
                 ; calculate value G_Cost
                 EX DE, HL
-                ; OR A ; ??
                 SBC HL, BC                                                      ; HL = G_Cost
                 EX DE, HL
 
@@ -167,7 +162,7 @@ AddToOpenList:  ; set return address
                 LD H, HIGH PathfindingBuffer | FPFInfo.ParentCoord
                 ; CALL .SetParentCoord                                            ; HL - pointer to FPFInfo.OpenListIdx               (3)
                 ; ---------------------------------------------
-                ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)
+                ; HL - pointer to FPFInfo.ParentCoord.X     (1)
                 ; BC - perent tile position (B - y, C - x)
                 ; ---------------------------------------------
                 ; FPFInfo.ParentCoord.X - BufferStart.X
@@ -181,22 +176,7 @@ AddToOpenList:  ; set return address
                 ; get value FPFInfo.OpenListIdx
                 LD A, (HL)                                                      ; A = FPFInfo.OpenListIdx
                 
-; .JumpTrickleUp  ; TrickleUp(FPFInfo.OpenListIdx);
-;                 LD HL, #0000
-;                 PUSH HL
+                ; TrickleUp(FPFInfo.OpenListIdx);
                 JP TrickleUp.DE                                                 ; A = FPFInfo.OpenListIdx
-
-; .SetParentCoord ; ---------------------------------------------
-;                 ; HL - pointer to FPFInfo.ParentCoord.X                                                             (1)
-;                 ; BC - perent tile position (B - y, C - x)
-;                 ; ---------------------------------------------
-;                 ; FPFInfo.ParentCoord.X - BufferStart.X
-;                 LD (HL), C
-;                 INC H                                                           ; HL - pointer to FPFInfo.ParentCoord.Y             (2)
-                
-;                 ; FPFInfo.ParentCoord.Y - BufferStart.Y
-;                 LD (HL), B
-;                 INC H                                                           ; HL - pointer to FPFInfo.OpenListIdx               (3)
-;                 RET
 
                 endif ; ~ _CORE_MODULE_PATHFINDING_ASTAR_ADD_TO_OPEN_LIST_

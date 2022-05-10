@@ -54,7 +54,7 @@ GameLoop:
 
                 PUSH HL
 
-                LD D, FUSE_RECONNAISSANCE | FUSF_RENDER
+                LD D, FUSE_RECONNAISSANCE
                 CALL Spawn.Unit
                 JR .Next
 

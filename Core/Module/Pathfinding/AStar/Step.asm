@@ -306,8 +306,6 @@ Step:
 .BufferEnd      EQU $+1
                 LD BC, #0000
 
-                ; JR$
-
                 ; Position.x < BufferStart.x
                 LD A, E
                 SUB L
@@ -329,7 +327,7 @@ Step:
                 RET C
 
                 CALL Utils.Tilemap.GetAddressTilemap                            ; HL - pointer to the tile address
-                CALL Utils.Surface.GetProperty                                  ; A  - tile property
+                CALL Utils.Tilemap.Surface.GetProperty                          ; A  - tile property
 
                 ; ---------------------------------------------
                 ; tile property

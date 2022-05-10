@@ -35,7 +35,8 @@ SetIDLE:        LD C, (IX + FUnit.State)
                 AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_IDLE
                 LD (IX + FUnit.State), A
-                JP Animation.Default
+                RET
+                ; JP Animation.Default
 
 ; -----------------------------------------
 ; установить состояние перемещения юнита

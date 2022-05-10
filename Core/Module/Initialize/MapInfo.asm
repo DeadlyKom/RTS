@@ -43,20 +43,22 @@ MapInfo:        ; инициализация перменных (из загру
                 ; расчёт ограничения движения карты по горизонтали
                 LD A, (HL)
                 LD (Tilemap.MoveDown.Increment), A
+                LD (TilemapVisibleRightClampRef), A
                 NEG                                                             ; X = -X
                 LD (Tilemap.MoveUp.Decrement), A
                 ADD A, #10                                                      ; -X += 16
-                LD (Tilemap.MoveRight.Clamp), A
-                LD (TilemapRightClampRef), A
+                LD (TilemapMoveRightClampRef), A
+                LD (TilemapMEMCPYRightClampRef), A
 
                 INC HL                                                          ; move to Y
 
                 ; расчёт ограничения движения карты по вертикали
                 LD A, (HL)
+                LD (TilemapVisibleBottomClampRef), A
                 ADD A, #F4                                                      ; -(Y - 12)
                 NEG
-                LD (Tilemap.MoveDown.Clamp), A
-                LD (TilemapBottomClampRef), A
+                LD (TilemapMoveBottomClampRef), A
+                LD (TilemapMEMCPYBottomClampRef), A
 
                 ; расчёт количество тайлов на экране TilemapWidth * TilesOnScreenY
                 LD HL, #0000

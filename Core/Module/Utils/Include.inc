@@ -17,15 +17,11 @@
                 include "Unit/Visibility/CheckRadius.asm"
 
                 ; convert
-                include "Convert/ToTilemap.asm"
-                include "Convert/Tilemap.asm"
+                include "Tilemap/Include.inc"
 
                 ; waypoint
                 include "Waypoint/Waypoint.asm"
                 include "Waypoint/WaypointsSequencer.asm"
-
-                ; surface
-                include "Surface/SurfaceProperty.asm"
 
                 ; chunk array
                 include "ChunkArray/Include.inc"

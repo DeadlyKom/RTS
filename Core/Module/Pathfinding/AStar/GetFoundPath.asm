@@ -11,7 +11,7 @@
 GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
 .BestCoord      EQU $+1
                 LD DE, #0000
-                ; JR$
+
                 ; FCoord NextCoord = GetMapData(CurrentCoord).ParentCoord;
                 CALL GetTileInfo
                 LD L, A

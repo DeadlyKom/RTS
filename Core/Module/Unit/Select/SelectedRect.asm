@@ -208,11 +208,6 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
 .Next           ; ---------------------------------------------
 .SET_RES        EQU $+3
                 SET FUSF_SELECTED_BIT, (IX + FUnit.State)
-                
-                ; пометим что юнита необходимо обноить
-                LD A, FUSF_RENDER
-                OR (IX + FUnit.State)
-                LD (IX + FUnit.State), A
 
                 ; очистка юнита
                 PUSH HL

@@ -63,13 +63,11 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
 
                 ; HL = GetMapData(OpenList[Parent]).f
                 CALL GetTileInfo
-                ; PUSH BC                                                         ; save New_f
                 LD L, A
                 LD H, HIGH PathfindingBuffer | FPFInfo.F_Cost
                 LD C, (HL)
                 INC H
                 LD B, (HL)
-                ; POP HL
 
                 ; GetMapData(OpenList[Parent]).f > New_f
 .New_f          EQU $+1
@@ -84,7 +82,6 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
 		        ; OpenList[Current] = OpenList[Parent];
 .CurrentIndex   EQU $+1
                 LD A, #00
-                ; CALL OpenList.SetElement
                 LD L, A
                 LD H, HIGH PathfindingOpenListBuffer
                 LD (HL), E
@@ -113,7 +110,6 @@ TrickleUp:      ; FCoord Bottom = OpenList[OpenListIndex]
 .Exit           ; OpenList[Current] = Bottom;
                 POP DE
                 LD A, (.CurrentIndex)
-                ; CALL OpenList.SetElement
                 LD L, A
                 LD H, HIGH PathfindingOpenListBuffer
                 LD (HL), E

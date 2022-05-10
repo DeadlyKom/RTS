@@ -26,63 +26,14 @@ Handler:        ; включить страницу
 
                 LD IX, UnitArrayPtr
 
-                ifndef ENABLE_FORCE_DRAW_UNITS
-                ; проверка на перерисовку всех юнитов принудительно
-                LD HL, FrameUnitsFlagRef
-                SRA (HL)
-                LD A, #7F                               ; #3F для AND
-                LD HL, #C312                            ; LD (DE), A : JP
-                LD BC, .Force
-                JR C, .Modify                           ; включим пропуск проверки обновления юнита
-                LD A, #C0                               ; #C0 для AND
-                LD HL, #00CA | (LOW  .PreNextUnit << 8) ; JP Z,. PreNextUnit
-                LD BC, #EB00 | (HIGH .PreNextUnit << 0) ; EX DE, HL
-
-.Modify         ; модификация кода
-                LD (.ModifyCode + 0), A
-                LD (.ModifyCode + 1), HL
-                LD (.ModifyCode + 3), BC
-                endif
-
-.Loop           ; PUSH DE                                                         ; save current address UnitsArray
-
-                ; ---------------------------------------------
+.Loop           ; ---------------------------------------------
                 ; проверка видимости юнита под туманом войны
                 ; ---------------------------------------------
                 LD DE, (IX + FUnit.Position)
                 SET_PAGE_TILEMAP                                                ; включение страницы с тайловой картой
-                CALL Utils.Tilemap.GetAddressTilemap
-                LD A, (HL)
-                ADD A, A
-                EX AF, AF'
-                SET_PAGE_UNITS_ARRAY                                            ; включение страницы массива юнитов
-                EX AF, AF'
-                JR C, .PreNextUnit                                              ; юнит не видим
+                CALL Utils.Tilemap.IsVisibleUnit
+                JP C, .PreNextUnit                                              ; юнит не видим
 
-                ; ---------------------------------------------
-
-                ifndef ENABLE_FORCE_DRAW_UNITS
-                ; проврка на перерисовку текущего юнита
-                LD A, (DE)
-.ModifyCode     EQU $+1
-                AND %11000000
-                JP Z, .PreNextUnit
-
-                ; сброс состояния обновления спрайта юнита
-                EX DE, HL
-                LD A, (HL)
-                LD E, A
-                AND %0011111
-                LD D, A
-                LD A, E
-                RRA
-                AND %11000000
-                OR D
-                LD (HL), A
-                EX DE, HL
-                endif
-
-.Force          ;
                 ; BIT FUAF_FLASH_BIT, (IX + FUnit.Flags)
                 ; JR Z, .SkipFlash
 

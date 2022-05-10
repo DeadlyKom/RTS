@@ -114,9 +114,14 @@ CursorPositionRef           EQU Mouse.Position                                  
 CursorPositionX             EQU Mouse.PositionX                                 ; указатель на позицию курсора оси X
 CursorPositionY             EQU Mouse.PositionY                                 ; указатель на позицию курсора оси Y
 
-TilemapBottomClampRef       EQU MEMCPY.Tilemap.BottomClamp                      ; ограничения при определении нижней границы карты
+; tilemap clamps (right/bottom)
+TilemapMEMCPYBottomClampRef EQU MEMCPY.Tilemap.BottomClamp                      ; ограничения при определении нижней границы карты
+TilemapMoveBottomClampRef   EQU Tilemap.MoveDown.BottomClamp                    ; ограничение при перемещении карты нижней границы карты
+TilemapVisibleBottomClampRef EQU Utils.Tilemap.IsVisibleUnit.BottomClamp        ;
 TilemapBottomOffsetRef      EQU MEMCPY.Tilemap.BottomOffset                     ; смещение до нижней границы карты
-TilemapRightClampRef        EQU MEMCPY.Tilemap.RightClamp                       ; ограничения при определении правой границы карты
+TilemapMEMCPYRightClampRef  EQU MEMCPY.Tilemap.RightClamp                       ; ограничения при определении правой границы карты
+TilemapMoveRightClampRef    EQU Tilemap.MoveRight.Clamp                         ; ограничение при перемещении карты правой границы карты
+TilemapVisibleRightClampRef EQU Utils.Tilemap.IsVisibleUnit.RightClamp          ;
 
 ; Keys
 VirtualKeysRef              EQU Game.VK_Keys                                    ; Up, Down, Left, Right

@@ -34,11 +34,11 @@ GetHeuristics:  ;
                 LD L, A
 
                 ; Delta = (dX - dY)
-                SUB H               ; dX - dY
-                JP P, .dX_more_dY   ; jump if dX > dY   { A = dY * Cost_45 + (dX - dY) * Cost_90 }
-                                    ; else              { A = dX * Cost_45 + (dY - dX) * Cost_90 }
+                SUB H                                                           ; dX - dY
+                JP P, .dX_more_dY                                               ; jump if dX > dY   { A = dY * Cost_45 + (dX - dY) * Cost_90 }
+                                                                                ; else              { A = dX * Cost_45 + (dY - dX) * Cost_90 }
 
-                NEG                 ; Delta = (dY - dX)
+                NEG                                                             ; Delta = (dY - dX)
 
                 ; replace dY with dX
                 EX AF, AF'

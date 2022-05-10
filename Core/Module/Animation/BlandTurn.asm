@@ -139,7 +139,7 @@ TurnDown:       EX AF, AF'                                                      
                 ; получение адреса анимации поворота для текущего типа юнита
                 LD HL, (AnimTurnDownTableRef)
                 CALL Utils.Unit.GetAdrInTable                                   ; HL - указывает на текущий FAnimation
-                CALL Utils.Surface.GetPassability
+                CALL Utils.Tilemap.Surface.GetPassability
                 ADD A, L
                 LD L, A
                 JR NC, $+3

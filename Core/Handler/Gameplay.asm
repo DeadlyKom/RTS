@@ -116,8 +116,8 @@ InputMode_0_9:      JR NZ, .Processing              ; skip released
                     RET
 
 .Processing         EX AF, AF'
-                    CP 01                           ; key 1
-                    JP Z, ToggleCollision
+                    ; CP 01                           ; key 1
+                    ; JP Z, ToggleCollision
                     CP 02                           ; key 2
                     JP Z, AIPause
                     CP 03                           ; key 3

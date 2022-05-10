@@ -11,7 +11,12 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Reconnaissance: ; проверка бита об проведённой разведки после остановки
+Reconnaissance: ; проверка бита фракции (разведка только для игрока)
+                LD A, (IX + FUnit.Type)
+                AND FACTION_MASK
+                RET NZ
+
+                ; проверка бита об проведённой разведки после остановки
                 BIT FUSE_RECONNAISSANCE_BIT, (IX + FUnit.State)
                 RET Z                                                           ; пропустить разведку
 

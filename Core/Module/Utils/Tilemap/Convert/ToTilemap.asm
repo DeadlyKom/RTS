@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_MOUSE_CONVERT_
-                define _CORE_MODULE_UTILS_MOUSE_CONVERT_
+                ifndef _CORE_MODULE_UTILS_TILEMAP_MOUSE_CONVERT_
+                define _CORE_MODULE_UTILS_TILEMAP_MOUSE_CONVERT_
 
                 module Mouse
 ; -----------------------------------------
@@ -42,4 +42,4 @@ ToTilemap:      ; initialize
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_UTILS_MOUSE_CONVERT_
+                endif ; ~ _CORE_MODULE_UTILS_TILEMAP_MOUSE_CONVERT_

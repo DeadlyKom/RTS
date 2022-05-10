@@ -1,7 +1,7 @@
 
                             ifndef _STRUCTURE_UNIT_TYPE_
                             define _STRUCTURE_UNIT_TYPE_
-; FUnitType.Type unit types
+; FUnit.Type
 
 ; сдвиг необходим для быстрого получить адрес из таблице по типу юнита (GetAdrInTable)
 Infantry                    EQU 0x00 << 1
@@ -28,9 +28,7 @@ FACTION_MASK                EQU %11000000
 COMPOSITE_UNIT              EQU 1 << COMPOSITE_UNIT_BIT
 IDX_UNIT_TYPE               EQU %00111110
 
-
-; FUnit.State state flags
-
+; FUnit.State
 UNIT_STATE_IDLE             EQU 0x00 << 1
 UNIT_STATE_MOVE             EQU 0x01 << 1
 UNIT_STATE_ATTACK           EQU 0x02 << 1
@@ -45,16 +43,13 @@ UNIT_STATE_MASK_EXTENDED    EQU %00001111
 FUSF_SELECTED_BIT           EQU 0x00                                            ; объект выбран
 FUSF_REGENERATION_BIT       EQU 0x04                                            ; объект в состоянии регенерации
 FUSE_RECONNAISSANCE_BIT     EQU 0x05                                            ; объект провёл разведку
-FUSF_RENDER_BIT_0           EQU 0x06                                            ; объект необходимо обновить (экран 0)
-FUSF_RENDER_BIT_1           EQU 0x07                                            ; объект необходимо обновить (экран 1)
 
 FUSF_SELECTED               EQU 1 << FUSF_SELECTED_BIT
 FUSF_REGENERATION           EQU 1 << FUSF_REGENERATION_BIT
 FUSE_RECONNAISSANCE         EQU 1 << FUSE_RECONNAISSANCE_BIT
-FUSF_RENDER                 EQU 1 << FUSF_RENDER_BIT_0 | 1 << FUSF_RENDER_BIT_1
 
 
-; direction flags
+; FUnit.Direction
 DF_UP                       EQU %000                                            ; направление вверх
 DF_UP_RIGHT                 EQU %001                                            ; направление вверх-вправо
 DF_RIGHT                    EQU %010                                            ; направление вправо

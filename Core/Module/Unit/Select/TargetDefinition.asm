@@ -9,7 +9,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DefineTarget:   CALL Utils.Mouse.ToTilemap
+DefineTarget:   CALL Utils.Tilemap.Mouse.ToTilemap
                 RET
 
                 endif ; ~ _CORE_MODULE_UNIT_TARGET_DEFINITION_

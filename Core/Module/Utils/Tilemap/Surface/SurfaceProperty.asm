@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_SURFACE_PROPERTY_
-                define _CORE_MODULE_UTILS_SURFACE_PROPERTY_
+                ifndef _CORE_MODULE_UTILS_TILEMAP_SURFACE_PROPERTY_
+                define _CORE_MODULE_UTILS_TILEMAP_SURFACE_PROPERTY_
 
                 module Surface
 ; -----------------------------------------
@@ -85,4 +85,4 @@ GetPassability: EXX
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_UTILS_SURFACE_PROPERTY_
+                endif ; ~ _CORE_MODULE_UTILS_TILEMAP_SURFACE_PROPERTY_

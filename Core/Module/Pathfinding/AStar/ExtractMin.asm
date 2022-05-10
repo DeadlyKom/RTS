@@ -86,8 +86,6 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 JR C, .PreExit
                 JR Z, .PreExit
 
-                ; PUSH DE                                                         ; save Top_f
-
                 ; BYTE LeftChild = (Current << 1) + 1;
                 LD A, C
                 ADD A, A
@@ -108,8 +106,6 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 EX AF, AF'                                                      ; save RightChild
 
                 ; WORD Left_f = GetMapData(OpenList[LeftChild]).f;
-                ; LD A, E
-                ; CALL OpenList.GetElement
                 LD L, E
                 LD H, HIGH PathfindingOpenListBuffer
                 LD E, (HL)
@@ -125,7 +121,6 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
 
                 ; WORD Right_f = GetMapData(OpenList[RightChild]).f;
                 EX AF, AF'                                                      ; restore RightChild
-                ; CALL OpenList.GetElement
                 LD L, A
                 LD H, HIGH PathfindingOpenListBuffer
                 LD E, (HL)
@@ -206,7 +201,6 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
                 EX AF, AF'                                                      ; restort LeftChild
 
 .Top_f          ; if (Top_f <= SmallerChild_f) { break; }
-                ; POP DE                                                          ; restore Top_f
                 LD DE, #0000
                 ; ---------------------------------------------
                 ; HL = SmallerChild_f
@@ -220,7 +214,6 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
 
                 ; shift child up
                 ; OpenList[Current] = OpenList[SmallerChild];
-                ; CALL OpenList.GetElement
                 LD L, A
                 LD H, HIGH PathfindingOpenListBuffer
                 LD E, (HL)
@@ -250,7 +243,6 @@ ExtractMin:     ; FCoord Ret = OpenList[0]
 
                 ; OpenList[Current] = Top;
                 LD L, C
-                ; CALL OpenList.SetElement.SetL
                 LD H, HIGH PathfindingOpenListBuffer
                 LD (HL), E
                 INC H

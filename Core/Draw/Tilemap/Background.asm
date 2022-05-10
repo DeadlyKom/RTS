@@ -82,7 +82,9 @@ ForceScreen:    ; LD HL, RenderBuffer
 ; -----------------------------------------
 DisplayTileRow: ;
                 EX DE, HL
-                SLA (HL)
+                ; SLA (HL)
+                LD A, (HL)
+                ADD A, A
                 JP NC, .NextTile_
 
                 INC H
