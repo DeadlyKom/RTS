@@ -51,19 +51,18 @@ TurnTo:         ;BIT FUAF_TURN_MOVE_BIT, (IX + FUnit.Flags)                     
 
                 CALL Animation.TurnDown
 
-.Progress       ; в процессе выполнения
-                JP AI.SetBTS_RUNNING
+.Progress       JP AI.SetBTS_RUNNING                                            ; в процессе выполнения
 
 .Fail           ; неудачное выполнение
                 CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
-                JP AI.SetBTS_FAILURE
+                JP AI.SetBTS_FAILURE                                            ; неудачное выполнение
 
 .IsMoveTo       ; счётчик указан на перемещение
                 ; CALL Utils.Unit.State.SetMOVE                                   ; установка состояния перемещения/поворота
-                JP AI.SetBTS_SUCCESS                                            ; удачное выполнение
+                JP AI.SetBTS_SUCCESS                                            ; успешное выполнение
 
 .Complite       ; юнит повернулся до требуемого направления
                 ; CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
-                JP AI.SetBTS_SUCCESS                                            ; удачное выполнение
+                JP AI.SetBTS_SUCCESS                                            ; успешное выполнение
 
                 endif ; ~_CORE_MODULE_AI_TASK_TURN_TO_

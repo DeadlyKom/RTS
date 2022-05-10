@@ -44,7 +44,7 @@ Handler:            ; ********** HANDLER IM 2 *********
 
 .AI_TickCounter     ; ******** AI TICK COUNTER *********
                     CheckAIFlag AI_UPDATE_FLAG
-                    CALL NZ, AI.Tick
+                    CALL NZ, Jump.AI.Tick
                     ; ~ AI TICK COUNTER
 
 .Cursor             ; ************* CURSOR *************

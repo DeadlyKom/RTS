@@ -45,7 +45,7 @@ GoToNextChild:  ;
 
                 LD A, BTS_UNKNOW
                 LD C, E
-                JP AI.SetState.Prepared_C
+                JP SetState.Prepared_C
 
 ; -----------------------------------------
 ; запуск первого дочернего узла

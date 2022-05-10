@@ -3,7 +3,6 @@
                 define _CORE_MODULE_INCLUDE_
 
                 include "Utils/Include.inc"
-                include "AI/Include.inc"
                 include "Animation/Include.inc"
                 include "Pathfinding/Include.inc"
                 include "Spawn/Include.inc"

@@ -18,8 +18,6 @@ Idle:           CALL Utils.Unit.State.IsIDLE
 
                 ; вызов счётчика анимации простоя
                 CALL Animation.Idle
-
-                ; успешное выполнение
-                JP AI.SetBTS_SUCCESS
+                JP AI.SetBTS_SUCCESS                                            ; успешное выполнение
 
                 endif ; ~_CORE_MODULE_AI_TASK_IDLE_

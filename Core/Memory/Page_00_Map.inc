@@ -15,8 +15,11 @@ WaypointsSequenceSize       EQU 256 * 8                                         
 WaypointArrayPtr            EQU WaypointsSequencePtr + WaypointsSequenceSize    ; адрес массива Way Point'ов
 WaypointArraySize           EQU 256 * FWayPoint                                 ; размер массива Way Point'ов
 
+UnitCodePtr                 EQU WaypointArrayPtr + WaypointArraySize            ; начальный адрес расположения кода рыботы с юнитами
 ; AI
-GameModeDataPtr             EQU WaypointArrayPtr + WaypointArraySize            ; начальный адрес режима игры
+GameModeDataPtr             EQU UnitCodePtr + UnitCodeSize                      ; начальный адрес режима игры
                                                                                 ; поведение юнитов
+
+Size                        EQU UNITS_STRUCTURE_SIZE + ChunksArrayForUnitsSize + WaypointsSequenceSize + WaypointArraySize
 
                             endif ; ~_CORE_MEMORY_PAGE_MAP_00_

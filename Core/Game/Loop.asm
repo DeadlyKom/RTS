@@ -162,7 +162,7 @@ GameLoop:
                 endif
 
                 CheckAIFlag (AI_UPDATE_FLAG | GAME_PAUSE_FLAG)
-                CALL Z, AI.Behavior
+                CALL Z, Jump.AI.Behavior
 
                 ifdef ENABLE_BEHAVIOR_TREE_STATE
                 CheckDebugFlag DRAW_DEBUG_BT_FLAG

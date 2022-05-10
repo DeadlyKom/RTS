@@ -140,14 +140,11 @@ MoveTo:         CALL Utils.Unit.State.SetMOVE                                   
                 RES FUTF_VALID_WP_BIT, (IX + FUnit.Data)                        ; сброс текущего Way Point
                 ; CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
 
-.Success        ; успешность выполнения
-                JP AI.SetBTS_SUCCESS
+.Success        JP AI.SetBTS_SUCCESS                                            ; успешное выполнение
 
 .Fail           CALL Utils.Unit.State.SetIDLE                                   ; установка состояния юнита в Idle
                 CALL SFX.BEEP.Fail                                              ; неудачая точка назначения
-
-                ; неудачное выполнение
-                JP AI.SetBTS_FAILURE
+                JP AI.SetBTS_FAILURE                                            ; неудачное выполнение
 
 .Init           ; ---------------------------------------------
                 ; D - dY

@@ -44,6 +44,7 @@ MemPage_UnitArray           EQU Memory.SetPage0                                 
 
                             include "Macro.inc"
                             include "../Module/AI/Composite/Definition.inc"
+                            include "../Module/AI/Task/TaskIndixes.inc"
 
                             include "Page_00.asm"
                             include "Page_01.asm"

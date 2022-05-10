@@ -5,13 +5,13 @@
                 include "Page_00_Map.inc"
 
                 MMU 3, 0
-                ORG Page_0
-                    
-                module MemoryPage_0
-Start:
-                RET
-End:
-                endmodule
-SizePage_0:     EQU MemoryPage_6.End - MemoryPage_6.Start
+                ORG UnitCodePtr
+
+MemoryPage_0_Start:
+                include "../Module/AI/Include.inc"
+MemoryPage_0_End:
+
+UnitCodeSize:   EQU MemoryPage_0_End - MemoryPage_0_Start
+SizePage_0:     EQU Size + UnitCodeSize
 
                 endif ; ~_CORE_MEMORY_PAGE_00_

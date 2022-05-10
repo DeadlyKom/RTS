@@ -112,7 +112,7 @@ EndBasic:
                         display "Boot  :  ", /A, Boot.Basic, " = [ ", /D, Boot.EndBasic - Boot.Basic, " bytes ]"
                         display "Page 0:  ", /A, Page_0, " = busy [ ", /D, SizePage_0, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_0 - Page_0 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_0 - Page_0 & 0x3FFF) * 100 / #4000, " % occupied", "\t arrays for working with units"
                         display "Page 1:  ", /A, Page_1, " = busy [ ", /D, SizePage_1, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_1 - Page_1 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_1 - Page_1 & 0x3FFF) * 100 / #4000, " % occupied", "\t map & map data"
-                        display "Page 2:  ", /A, Page_2, " = busy [ ", /D, SizePage_2, " bytes ]", "\t /    RAM space [ ", /D, 0x3D00 - SizePage_2 - Page_2 & 0x3FFF, " + 768 bytes ]     \t |  ", /D, (SizePage_2 - Page_2 & 0x3FFF) * 100 / #4000, " % occupied", "\t code + buffers"
+                        display "Page 2:  ", /A, Page_2, " = busy [ ", /D, SizePage_2, " bytes ]", "\t /    RAM space [ ", /D, 0x3D00 - SizePage_2 - Page_2 & 0x3FFF, " + 768 bytes ]      |  ", /D, (SizePage_2 - Page_2 & 0x3FFF) * 100 / #4000, " % occupied", "\t code + buffers"
                         display "Page 3:  ", /A, Page_3, " = busy [ ", /D, SizePage_3, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_3 - Page_3 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_3 - Page_3 & 0x3FFF) * 100 / #4000, " % occupied", "\t music"
                         display "Page 4:  ", /A, Page_4, " = busy [ ", /D, SizePage_4, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_4 - Page_4 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_4 - Page_4 & 0x3FFF) * 100 / #4000, " % occupied", "\t graphic #01"
                         display "Page 5:  ", /A, Page_5, " = busy [ ", /D, SizePage_5, " bytes ]", "\t /    RAM space [ ", /D, 0x4000 - SizePage_5 - Page_5 & 0x3FFF, " bytes ]     \t |  ", /D, (SizePage_5 - Page_5 & 0x3FFF) * 100 / #4000, " % occupied", "\t sprite table"
@@ -126,6 +126,8 @@ EndBasic:
                         display "Chunk of Array rot Units : \t", /A, ChunksArrayForUnitsPtr, " = busy [ ", /D, ChunksArrayForUnitsSize, " bytes ]"
                         display "Waypoints Sequence : \t\t", /A, WaypointsSequencePtr, " = busy [ ", /D, WaypointsSequenceSize, " bytes ]"
                         display "Waypoint Array : \t\t", /A, WaypointArrayPtr, " = busy [ ", /D, WaypointArraySize, " bytes  ]"
+                        display "Code : \t\t\t", /A, UnitCodePtr, " = busy [ ", /D, UnitCodeSize, " bytes  ]"
+                        display "Game Mode Data : \t\t", /A, GameModeDataPtr, " = busy [ ", /D, 0, " bytes  ]"
                         display "\t\t\t---------------------------------------------------------------------------------------------------------"
 RealPage0               EQU UNITS_STRUCTURE_SIZE + WaypointsSequenceSize + WaypointArraySize
                         display "Total Size : \t\t\t",  "\t\t\t\t    ", "\t /    RAM space [ ", /D, 0x4000 - RealPage0, " bytes ]     \t |  ",  /D, RealPage0 * 100 / #4000, " % occupied"

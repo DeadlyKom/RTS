@@ -39,10 +39,10 @@ CheckEnemy:     ; получим список ближайших юнитов
                 OR FUTF_INSERT | FUTF_ENEMY                                     ; произведена временная вставка значения в Target и хранят позицию цели для атаки
                 LD (IX + FUnit.Data), A
 
-                JP AI.SetBTS_SUCCESS
+                JP AI.SetBTS_SUCCESS                                            ; успешное выполнение
 
 .None           CALL Utils.Unit.State.SetIDLE 
-                JP AI.SetBTS_FAILURE
+                JP AI.SetBTS_FAILURE                                            ; неудачное выполнение
 
                 endif ; ~_CORE_MODULE_AI_TASK_CHECK_ENEMY_
  

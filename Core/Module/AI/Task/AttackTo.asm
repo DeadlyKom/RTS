@@ -12,6 +12,6 @@
 ;   requires included memory page
 ; -----------------------------------------
 AttackTo:       CALL Utils.Unit.State.SetATTACK                                 ; установка состояния атаки
-                JP AI.SetBTS_SUCCESS
+                JP AI.SetBTS_SUCCESS                                               ; успешное выполнение
 
                 endif ; ~_CORE_MODULE_AI_TASK_ATTACK_
