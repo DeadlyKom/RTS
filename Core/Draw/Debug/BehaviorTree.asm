@@ -10,7 +10,7 @@ DrawStateBT:    ; проверка на наличие юнитов в маси�
                 LD A, (MemoryPageRef)
                 LD (.RestoreMemPage), A
 
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
                 ; JR$
                 LD DE, #55AA

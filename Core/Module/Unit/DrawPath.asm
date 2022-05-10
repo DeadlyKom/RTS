@@ -79,7 +79,7 @@ DrawPath:       LD IXH, D
                 ;   DE  - (D - y, E - x) end point      (E)
                 CALL Memory.SetPage7
                 CALL DrawLine
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
                 RET
 

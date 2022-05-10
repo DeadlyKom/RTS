@@ -18,7 +18,7 @@ RefUnitOnScr:   ; ---------------------------------------------
                 LD A, (HL)
                 ADD A, A
                 EX AF, AF'
-                SET_PAGE_UNITS_ARRAY                                            ; включение страницы массива юнитов
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
                 EX AF, AF'
                 RET C                                                           ; юнит не видим
 

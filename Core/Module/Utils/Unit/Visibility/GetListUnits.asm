@@ -18,17 +18,12 @@ GetListUnits:   ; драфтово формируем список юнитов 
                 LD A, (AI_NumUnitsRef)
                 OR A
                 JR Z, .Fail
-                ; LD (CheckRadius.SizeList), A
+
                 LD B, A
                 XOR A                                                           ; обнулим счётчик элементов в массиве
                 EX AF, AF'                                                      ; сохраним счётчик элементов
-                
-                ; включить страницу
-                ; SET_PAGE_UNITS_ARRAY
 
-                ; LD DE, (IX + FUnit.Position)                                    ; получение позиции юнита
                 LD C, (IX + FUnit.Type)                                         ; получение тип фракции юнита
-
                 LD HL, SharedBuffer                                             ; HL - указывает на временный буфер
                 LD DE, UnitArrayPtr                                             ; DE - указывает на FUnit
 

@@ -9,7 +9,7 @@ GameLoop:
                 ; CALL Utils.ChunkArray.Insert
 
                 ; add unit
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
                 ;
                 CALL Utils.WaypointsSequencer.Create

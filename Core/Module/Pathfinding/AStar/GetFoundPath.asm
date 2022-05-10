@@ -39,9 +39,6 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
 
                 ; Path.push_front(CurrentCoord);
                 PUSH HL                                                         ; push CurrentCoord
-                ; EX AF, AF'
-                ; INC A                                                           ; one coord in stack
-                ; EX AF, AF'
 
                 ; FCoord PrevDiff = CurrentCoord - NextCoord;
                 OR A
@@ -98,8 +95,7 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
                 JR .While
 
 .PreExit        PUSH DE                                                         ; сохраним CurrentCoord 
-.Exit           ; включить страницу массива юнитов
-                SET_PAGE_UNITS_ARRAY
+.Exit           SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
                 ; создать цепочку waypoints
                 CALL Utils.WaypointsSequencer.Create
@@ -110,7 +106,6 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
                 LD IX, #0000
                 LD C, FUTF_VALID_IDX | FUTF_INSERT | FUTF_MASK_OFFSET
                 CALL Utils.WaypointsSequencer.AddUnit.UnitAddressToIX
-
 
 .NextWaypoint   EX AF, AF'
                 DEC A

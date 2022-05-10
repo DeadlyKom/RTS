@@ -15,8 +15,7 @@ ScanRectSelect: ; проверка на наличие юнитов в масс�
                 RET Z
                 LD (.ProcessedUnits), A
 
-                ; включить страницу
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
                 ; single selected
                 LD HL, SelectRectStartRef

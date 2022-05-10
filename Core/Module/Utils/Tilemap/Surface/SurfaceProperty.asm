@@ -76,7 +76,7 @@ GetPassability: EXX
 
                 ; включить страницу массива юнитов
                 EX AF, AF'
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
                 EX AF, AF'
 
                 EXX

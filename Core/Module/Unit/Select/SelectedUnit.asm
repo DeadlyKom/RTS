@@ -19,8 +19,7 @@ InitSelected:   ; получим значение из очереди
                 CALL Utils.Unit.GetAddress
                 LD (FoundPathToUnitRef), IX
 
-                ; включить страницу массива юнитов
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
                 
                 ; проверим что объект выбран
                 BIT FUSF_SELECTED_BIT, (IX + FUnit.State)                       ; объект выбран

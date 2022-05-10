@@ -65,7 +65,7 @@ IsVisibleUnit:  ; ---------------------------------------------
                 CALL .IsHidden
                 RET NC
 
-.IsVisible      SET_PAGE_UNITS_ARRAY                                            ; включение страницы массива юнитов
+.IsVisible      SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
                 OR A
                 RET
 
@@ -75,7 +75,7 @@ IsVisibleUnit:  ; ---------------------------------------------
                 ADD A, A
                 CCF
                 RET C
-                SET_PAGE_UNITS_ARRAY                                            ; включение страницы массива юнитов
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
                 CALL Unit.RefUnitOnScr.SkipIsVisible
                 OR A
                 RET

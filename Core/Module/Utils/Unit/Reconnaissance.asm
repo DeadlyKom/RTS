@@ -145,7 +145,7 @@ ConstReconnaissance:
                 CP C
                 JP C, .Loop
 
-.Exit           SET_PAGE_UNITS_ARRAY
+.Exit           SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
                 
                 RET
 Table:          DW Radius_0                                                     ; 0

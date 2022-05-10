@@ -9,8 +9,7 @@
 ; Corrupt:
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-Handler:        ; включить страницу
-                SET_PAGE_UNITS_ARRAY
+Handler:        SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
                 ; инициализация
                 ifdef SHOW_VISIBLE_UNITS
@@ -62,8 +61,7 @@ Handler:        ; включить страницу
 
                 CALL Sprite.Draw                                                ; отрисовка спрайта
 
-                ; включить страницу 
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
                 ; если юнит умер, не рисовать верхнию его часть
                 CALL Utils.Unit.State.IsDEAD                                    ; проверка флага UNIT_STATE_DEAD
@@ -93,8 +91,7 @@ Handler:        ; включить страницу
                 LD (VisibleUnits), A
                 endif
 
-                ; включить страницу 
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
                 ; ; отрисовка линии пути
                 ; LD A, (DE)                  ; DE = FUnitState
@@ -121,7 +118,7 @@ Handler:        ; включить страницу
                 CALL Memory.SetPage7
                 CALL DrawRectangle.Custom
 
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
                 endif
 
                 ; ---------------------------------------------
@@ -141,8 +138,7 @@ Handler:        ; включить страницу
 .PreNextUnit    ; ---------------------------------------------
                 ; всё же, спрайт за пределами экрана
                 ; ---------------------------------------------
-                ; включить страницу 
-                SET_PAGE_UNITS_ARRAY
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
 .NextUnit       ; переход к следующему юниту
                 LD DE, UNIT_SIZE
