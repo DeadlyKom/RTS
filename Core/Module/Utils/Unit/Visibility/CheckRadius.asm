@@ -3,11 +3,6 @@
                 define _CORE_MODULE_UTILS_CHECK_RADIUS_
 
                 module Visibility
-
-CheckRadiusA:   LD HL, CheckRadius.TableSquares
-                ADD A, L
-                LD L, A
-                LD A, (HL)
 ; -----------------------------------------
 ; проверка видимости юнитов из списка
 ; In:
@@ -21,35 +16,37 @@ CheckRadiusA:   LD HL, CheckRadius.TableSquares
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-CheckRadius:    ; инициализация
+CheckRadius:    LD H, HIGH CheckRadius.TableSquares                             ; H  - старший байт таблицы квадратов
+                ADD A, LOW CheckRadius.TableSquares
+                LD L, A
+                LD A, (HL)
+
+                ; инициализация
                 LD (.DistSquared), A                                            ; сохранение максимальной дистанции
                 LD A, #FF
                 LD (.BestDistance), A                                           ; установка максимальной дистанции
                 LD A, #B7
                 LD (.Flag), A                                                   ; установка OR A, как неудача поиска
-                LD HL, .TableSquares                                            ; H  - старший байт таблицы квадратов
                 LD DE, SharedBuffer                                             ; DE - указывает на список проверяемых юнитов (X, Y)
                 LD C, (IX + FUnit.Position.X)
                 LD B, (IX + FUnit.Position.Y)
 
-.NextElement    LD L, LOW .TableSquares                                         ; L - младший байт таблицы квадратов
-
-                ; DeltaX
+.NextElement    ; DeltaX
                 LD A, (DE)
-                INC E                                                           ; переход к значению Y
                 SUB C
                 JP P, $+5
                 NEG
+
+                INC E                                                           ; переход к значению Y
 
                 CP #10                                                          ; в таблице нет значения 16 и более
                 JR NC, .More                                                    ; переход, если дистанция очень большая (результат больше байта)
 
                 ; SquaredX = DeltaX * DeltaX
-                ADD A, L
+                ADD A, LOW .TableSquares
                 LD L, A
                 LD A, (HL)
                 EX AF, AF'                                                      ; сохраним результат SquaredX
-
 
                 ; DeltaY
                 LD A, (DE)
@@ -57,10 +54,11 @@ CheckRadius:    ; инициализация
                 JP P, $+5
                 NEG
 
-                LD L, LOW .TableSquares                                         ; L - младший байт таблицы квадратов
+                CP #10                                                          ; в таблице нет значения 16 и более
+                JR NC, .More                                                    ; переход, если дистанция очень большая (результат больше байта)
 
                 ; SquaredY = DeltaX * DeltaX
-                ADD A, L
+                ADD A, LOW .TableSquares
                 LD L, A
                 LD L, (HL)
                 EX AF, AF'                                                      ; востановим результат SquaredX
@@ -86,10 +84,10 @@ CheckRadius:    ; инициализация
 
                 ; сохраним текущую позицию цели
                 LD A, (DE)
-                LD (.BestPosition+1), A
+                LD (.BestPosition+1), A ; Y
                 DEC E
                 LD A, (DE)
-                LD (.BestPosition), A
+                LD (.BestPosition), A   ; X
                 INC E
 
                 ; установка SCF, как успешность поиска
@@ -98,7 +96,7 @@ CheckRadius:    ; инициализация
 
 .More           INC E                                                           ; переход к следующему значению X, следующего юнита
 .SizeList       EQU $+1
-                LD A, #01                                                       ; размер списка юнитов
+                LD A, #00                                                       ; размер списка юнитов
                 DEC A
                 LD (.SizeList), A
                 JR NZ, .NextElement

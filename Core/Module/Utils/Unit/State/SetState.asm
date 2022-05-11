@@ -60,8 +60,7 @@ SetMOVE:        LD C, (IX + FUnit.State)
 .Set            AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_MOVE
                 LD (IX + FUnit.State), A
-                RET
-                ; JP Animation.Default
+                JP Animation.Default
 
 ; AddMOVE:        LD C, (IX + FUnit.State)
 ;                 LD A, C

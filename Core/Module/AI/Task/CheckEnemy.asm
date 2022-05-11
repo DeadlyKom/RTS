@@ -24,7 +24,7 @@ CheckEnemy:     ; получим список ближайших юнитов
                 POP IY
                 LD A, (IY + FUnitCharacteristics.Distance)
                 DEC A
-                CALL Utils.Visibility.CheckRadiusA
+                CALL Utils.Visibility.CheckRadius
                 JR NC, .None
 
                 ; DE - позиция ближайшего юнита из массива

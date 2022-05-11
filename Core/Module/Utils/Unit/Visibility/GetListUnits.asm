@@ -35,7 +35,7 @@ GetListUnits:   ; драфтово формируем список юнитов 
 
                 ; проверка что юнит живой
                 INC E
-                LD A, (DE)
+                LD A, (DE)                                                      ; LD A, (IX + FUnit.State)
                 DEC E
                 AND UNIT_STATE_MASK
                 CP UNIT_STATE_DEAD
@@ -46,11 +46,11 @@ GetListUnits:   ; драфтово формируем список юнитов 
                 INC E
 
                 ; сохраним позицию юнита
-                LD A, (DE)
+                LD A, (DE)  ; X
                 LD (HL), A
                 INC E
                 INC L
-                LD A, (DE)
+                LD A, (DE)  ; Y
                 LD (HL), A
                 DEC E
                 INC L
