@@ -36,6 +36,7 @@ CheckRadius:    ; инициализация
 
                 ; DeltaX
                 LD A, (DE)
+                INC E                                                           ; переход к значению Y
                 SUB C
                 JP P, $+5
                 NEG
@@ -49,7 +50,6 @@ CheckRadius:    ; инициализация
                 LD A, (HL)
                 EX AF, AF'                                                      ; сохраним результат SquaredX
 
-                INC E                                                           ; переход к значению Y
 
                 ; DeltaY
                 LD A, (DE)

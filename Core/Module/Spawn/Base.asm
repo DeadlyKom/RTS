@@ -8,7 +8,7 @@
 ;   DE  - spawn parameters      (E - type unit, D - ?)
 ;   BC  - unit spawn position   (C - x,         B - y)
 ; Out:
-;   IX  - адрес юнита           FUnitState (1)
+;   IX  - адрес юнита
 ; Corrupt:
 ;   IX
 ; Note:
@@ -21,7 +21,6 @@ Unit:           ; определение адреса добавления но�
                 ; ---------------------------------------------
                 ; FUnitState                                (1)
                 ; ---------------------------------------------
-                ; LD DE,  FUSE_RECONNAISSANCE | FUSF_RENDER ; | FUSF_SELECTED
                 LD (IX + FUnit.State), D
 
                 ; рандом направления

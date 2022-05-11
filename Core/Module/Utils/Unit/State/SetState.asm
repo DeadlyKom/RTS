@@ -60,8 +60,8 @@ SetMOVE:        LD C, (IX + FUnit.State)
 .Set            AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_MOVE
                 LD (IX + FUnit.State), A
-                ; JP Animation.Default
                 RET
+                ; JP Animation.Default
 
 ; AddMOVE:        LD C, (IX + FUnit.State)
 ;                 LD A, C
@@ -102,8 +102,8 @@ SetATTACK:      ; проверка установки этого же состо
                 AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_ATTACK
                 LD (IX + FUnit.State), A
-                ; JP Animation.Default
-                RET
+                JP Animation.Default
+                ; RET
 ; -----------------------------------------
 ; установить состояние атаки мёртв
 ; In:
@@ -125,8 +125,8 @@ SetDEAD:        ; проверка установки этого же состо
                 AND UNIT_STATE_INV_MASK
                 OR UNIT_STATE_DEAD
                 LD (IX + FUnit.State), A
-                ; JP Animation.Default
                 RET
+                ; JP Animation.Default
 
                 endmodule
 
