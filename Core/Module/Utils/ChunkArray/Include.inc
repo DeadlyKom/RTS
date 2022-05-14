@@ -11,6 +11,7 @@ CHUNK_SIZE      EQU 1 << CHUNK_SHIFT
                 include "Insert.asm"
                 include "Remove.asm"
                 include "Move.asm"
+                include "Request.asm"
 
                 endmodule
 

@@ -2,14 +2,19 @@
                 ifndef _CORE_GAME_LOOP_
                 define _CORE_GAME_LOOP_
 
-GameLoop:
-                ; JR$
+GameLoop:       ; add unit
+                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
+
                 ; CALL Utils.ChunkArray.Init
+                ; LD A, 1
+                ; LD HL, UnitsObjectArrayPtr
                 ; LD DE, #0000
                 ; CALL Utils.ChunkArray.Insert
+                ; LD A, 1
+                ; LD HL, UnitsObjectArrayPtr
+                ; LD DE, #0001
+                ; CALL Utils.ChunkArray.Remove
 
-                ; add unit
-                SET_PAGE_UNITS_ARRAY                                            ; включить страницу массива юнитов
 
                 ;
                 CALL Utils.WaypointsSequencer.Create
