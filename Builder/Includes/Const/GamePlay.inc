@@ -1,6 +1,6 @@
 
-                                ifndef _GAME_PLAY_FLAGS_INCLUDE_
-                                define _GAME_PLAY_FLAGS_INCLUDE_
+                                ifndef _CONST_GAME_PLAY_FLAGS_
+                                define _CONST_GAME_PLAY_FLAGS_
 
                                 ; активный false
 PATHFINDING_QUERY_FLAG          EQU 0x80                                        ; запрос начать поиск пути
@@ -10,4 +10,4 @@ PATHFINDING_REQUEST_AI_FLAG     EQU 0x10                                        
 ACTIVATE_PAUSE_MENU_GAME_FLAG   EQU 0x08                                        ; флаг активации пауза игры
 SHOW_PAUSE_MENU_GAME_FLAG       EQU 0x04                                        ; отображается меню паузы игры
 
-                                endif ; ~_GAME_PLAY_FLAGS_INCLUDE_
+                                endif ; ~_CONST_GAME_PLAY_FLAGS_

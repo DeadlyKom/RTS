@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_TRDOS_CONFIG_INCLUDE_
-                define _CORE_MODULE_TRDOS_CONFIG_INCLUDE_
+                ifndef _CONFIG_TRDOS_INCLUDE_
+                define _CONFIG_TRDOS_INCLUDE_
 
                 module TRDOS
 SECTOR_SIZE     EQU #0100                                                       ; размер сектора
@@ -40,4 +40,4 @@ CUR_TRK:        EQU #5CF5                                                       
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_TRDOS_CONFIG_INCLUDE_
+                endif ; ~ _CONFIG_TRDOS_INCLUDE_

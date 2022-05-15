@@ -1,6 +1,6 @@
 
-                    ifndef _FRAME_FLAGS_INCLUDE_
-                    define _FRAME_FLAGS_INCLUDE_
+                    ifndef _CONST_FRAME_FLAGS_
+                    define _CONST_FRAME_FLAGS_
 
                     ; активное значение false
 SWAP_SCREENS_FLAG   EQU 0x80                                                    ; разрешить смену экран
@@ -9,4 +9,4 @@ RESTORE_CURSOR      EQU 0x20                                                    
 DELAY_RENDER_FLAG   EQU 0x10                                                    ; отсрочить отрисовку экрана
 FORCE_FOW_FLAG      EQU 0x08
 
-                    endif ; ~_FRAME_FLAGS_INCLUDE_
+                    endif ; ~_CONST_FRAME_FLAGS_

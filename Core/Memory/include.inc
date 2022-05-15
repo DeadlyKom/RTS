@@ -12,13 +12,13 @@ Page_1.TilemapTableAdr      EQU Page_1.SurfaceProperty + SurfecePropertySize    
 Page_1.FileSystemPtr        EQU Page_1.TilemapTableAdr + TilemapTableSize       ; [Bank 03] адрес блока работы с загрузкой/сохранением
 
 Page_2:                     EQU #8000                                           ; Bank 02
-Page_2.SharedBuffer         EQU #BD00                                           ; Bank 02 (адрес общего буфера)                     - 256 байт
-Page_2.RenderBuffer         EQU #BE00                                           ; Bank 02 (адрес буфера обновлений)                 - 192 байта                     [64] заняты буфером выбора и WayPoint'ами
-Page_2.TilemapBuffer        EQU #BF00                                           ; Bank 02 (адрес тайловой карты буфера)             - 256 байт
+; Page_2.SharedBuffer         EQU #BD00                                           ; Bank 02 (адрес общего буфера)                     - 256 байт
+; Page_2.RenderBuffer         EQU #BE00                                           ; Bank 02 (адрес буфера обновлений)                 - 192 байта                     [64] заняты буфером выбора и WayPoint'ами
+; Page_2.TilemapBuffer        EQU #BF00                                           ; Bank 02 (адрес тайловой карты буфера)             - 256 байт
 
 Page_3:                     EQU #C000                                           ; Bank 03
 Page_4:                     EQU #C000                                           ; Bank 03
-Page_5:                     EQU #4000 + #1B00 + #0500                           ; Bank 01 (Screen 0) (пропуск экрана и 0x500 байт данных для TR DOS)
+; Page_5:                     EQU #4000 + #1B00 + #0500                           ; Bank 01 (Screen 0) (пропуск экрана и 0x500 байт данных для TR DOS)
 Page_5.PathfindingBuffer    EQU #4000                                           ; Bank 01 (Screen 0) (временный массив)             - размер константа PFWinBufSize
 Page_5.PathfindingOLBuffer  EQU #4A00                                           ; Bank 01 (Screen 0) (временный массив)             - максимальный размер 512 байт
 Page_6:                     EQU #C000                                           ; Bank 03
@@ -33,14 +33,14 @@ Page_7.TileSprites:         EQU #F000                                           
 
 ; file system
 TilemapPage                 EQU 1                                               ; страница тайловой карты
-FileSystemPage              EQU 1                                               ; страницы файловой системы
-SetMemPage_Tilemap          EQU Memory.SetPage1                                 ; страница тайловой карты
-SetMemPage_FileSystem       EQU Memory.SetPage1                                 ; страница файловой системы
+; FileSystemPage              EQU 1                                               ; страницы файловой системы
+; SetMemPage_Tilemap          EQU Memory.SetPage1                                 ; страница тайловой карты
+; SetMemPage_FileSystem       EQU Memory.SetPage1                                 ; страница файловой системы
 ; data
 UnitDataPage                EQU 0                                               ; страница данных о юнитах
                                                                                 ; поведение ИИ
                                                                                 ; характеристики юнитов
-MemPage_UnitArray           EQU Memory.SetPage0                                 ; страница массива юнитов
+; MemPage_UnitArray           EQU Memory.SetPage0                                 ; страница массива юнитов
 
                             include "Macro.inc"
                             include "../Module/AI/Composite/Definition.inc"

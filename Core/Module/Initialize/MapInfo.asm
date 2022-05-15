@@ -7,7 +7,7 @@ MapInfo:        ; инициализация перменных (из загру
 
 .CopyMapName    ; ********** MAP NAME **********
                 LD HL, SharedBuffer
-                LD DE, FileSystem.FileNameMap
+                LD DE, FileSystem.FileName
                 LD BC, #0009
                 LDIR
                 ; ********** ~MAP NAME *********
@@ -73,47 +73,47 @@ MapInfo:        ; инициализация перменных (из загру
                 
 .SurfPropSize   ; ****** SURFACE PROPERTY ******
                 LD A, (IX + FMap.SurfacePropertySize)
-                LD (FileSystem.Load.MapData.SurfPropSize), A
+                LD (FileSystem.Load.Map.MapData.SurfPropSize), A
                 ; ****** ~SURFACE PROPERTY *****
 
 .BehaviorSize   ; ********** BEHAVIOR **********
                 LD HL, GameModeDataPtr
                 LD DE, (IX + FMap.BehaviorSize)
-                LD (FileSystem.Load.MapData.BehaviorSize), DE                   ; размер поведения
+                LD (FileSystem.Load.Map.MapData.BehaviorSize), DE               ; размер поведения
                 ADD HL, DE
                 ; ********* ~BEHAVIOR **********
 
 .UnitsCharSize  ; *** UNITS CHARACTERISTICS ****
                 LD (UnitsCharRef), HL
                 LD DE, (IX + FMap.UnitsCharSize)
-                LD (FileSystem.Load.MapData.UnitsCharSize), DE                  ; размер характеристик юнитов
+                LD (FileSystem.Load.Map.MapData.UnitsCharSize), DE              ; размер характеристик юнитов
                 ADD HL, DE
                 ; *** ~UNITS CHARACTERISTICS ****
 
 .AnimTUpSize    ; ****** ANIMATION TURN UP *****
                 LD (AnimTurnUpTableRef), HL
                 LD DE, (IX + FMap.AnimTUpTableSize)
-                LD (FileSystem.Load.MapData.AnimTUpSize), DE                    ; размер таблицы анимации поворотов (вверх)
+                LD (FileSystem.Load.Map.MapData.AnimTUpSize), DE                ; размер таблицы анимации поворотов (вверх)
                 ADD HL, DE
                 ; ***** ~ANIMATION TURN UP *****
 
 .AnimTDownSize  ; ***** ANIMATION TURN DOWN ****
                 LD (AnimTurnDownTableRef), HL
                 LD DE, (IX + FMap.AnimTDownTableSize)
-                LD (FileSystem.Load.MapData.AnimTDownpSize), DE                 ; размер таблицы анимации поворотов (низа)
+                LD (FileSystem.Load.Map.MapData.AnimTDownpSize), DE             ; размер таблицы анимации поворотов (низа)
                 ADD HL, DE
                 ; **** ~ANIMATION TURN DOWN ****
 
 .AnimMoveSize   ; ******* ANIMATION MOVE *******
                 LD (AnimMoveTableRef), HL
                 LD DE, (IX + FMap.AnimMoveTableSize)
-                LD (FileSystem.Load.MapData.AnimMoveSize), DE                   ; размер таблицы анимации перемещения
+                LD (FileSystem.Load.Map.MapData.AnimMoveSize), DE               ; размер таблицы анимации перемещения
                 ; ADD HL, DE
                 ; ****** ~ANIMATION MOVE *******
 
 .TilemapSize    ; ******** TILEMAP SIZE ********
                 LD HL, (IX + FMap.MapSize)
-                LD (FileSystem.Load.MapData.TilemapSize), HL                    ; размер тайловой карты
+                LD (FileSystem.Load.Map.MapData.TilemapSize), HL                ; размер тайловой карты
                 ; ******** TILEMAP SIZE ********
                 
                 RET

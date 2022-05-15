@@ -4,8 +4,8 @@
 
                 module Load
 
-                include "MapInfo.asm"
-                include "MapData.asm"
+                include "Game/Include.inc"
+                include "Map/Include.inc"
 
                 endmodule
 

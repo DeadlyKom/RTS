@@ -14,8 +14,8 @@ MapInfo:        ; подготовим номер слота
                 LD (.SlotInfo), A
 
                 ; копирование данных в область переменных
-                LD HL, FileSystem.FileNameInfo
-                CALL FileSystem.FindFile
+                LD HL, FileNameInfo
+                CALL FileSystem.Core.FindFile
                 RET C
 
                 ; производим загрузку файла

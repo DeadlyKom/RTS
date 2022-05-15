@@ -6,7 +6,7 @@
 
                 include "MemCopy.asm"
                 ; include "MemCopyFastLDIR.asm"
-                include "MemCopyPages.asm"
+                ; include "MemCopyPages.asm"
                 include "Tilemap.asm"
 
                 endmodule
@@ -17,10 +17,10 @@
 
                 endmodule
 
-                module Memory
+                ; module Memory
 
-                include "MemorySwitch.asm"
+                ; include "MemorySwitch.asm"
                 
-                endmodule
+                ; endmodule
 
                 endif ; ~_MEMORY_OPERATIONS_INCLUDE_

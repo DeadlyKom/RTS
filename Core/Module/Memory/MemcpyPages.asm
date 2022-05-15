@@ -1,8 +1,11 @@
 
                 ifndef _MEMORY_COPY_PAGES_
                 define _MEMORY_COPY_PAGES_
+
+                module Memcpy
+Begin:          EQU $
 ; -----------------------------------------
-; копирование данных между страничек
+; копирование данных между страниц
 ; In:
 ;   A  - страница исходного кода
 ;   A' - страница назначения
@@ -14,13 +17,17 @@
 ; Note:
 ; копирование из общего буфера SharedBuffer
 ; -----------------------------------------
-BetweenPages:   PUSH AF
+Pages:          PUSH AF
                 EX AF, AF'
                 PUSH BC
-                CALL Memory.SetPage
+                CALL SetPage
                 POP BC
                 LDIR
                 POP AF
-                JP Memory.SetPage
+                JP SetPage
+
+                display " - Memcpy Pages : \t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+
+                endmodule
 
                 endif ; ~_MEMORY_COPY_PAGES_

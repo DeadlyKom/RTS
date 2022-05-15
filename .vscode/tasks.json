@@ -12,7 +12,7 @@
                 "--fullpath",
                 "--sld=RTS.sld",
                 // "--syntax=F",
-                "Game/Main.asm"
+                "Builder/Main.asm"
             ],
             "problemMatcher": {
                 "owner": "c",

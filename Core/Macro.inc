@@ -1,64 +1,7 @@
 
                         ifndef _MACRO_INCLUDE_
                         define _MACRO_INCLUDE_
-; -----------------------------------------
-;
-; In:
-; Out:
-; Corrupt:
-;   BC, AF
-; -----------------------------------------
-Disable_128k_Basic      macro
-                        LD SP, (#5C3D)                                  ; ERR_SP
-                        LD HL, #1303                                    ; MAIN_4
-                        EX (SP), HL
-                        RES 4, (IY + 1)
-                        LD BC, PORT_7FFD
-                        LD A, %00010000
-                        LD (MemoryPageRef), A
-                        OUT (C), A
-                        endm
-; -----------------------------------------
-;
-; In:
-; Out:
-; Corrupt:
-;   BC, AF
-; -----------------------------------------
-SeMemoryPage            macro Page?, ID?
-                        LD A, (MemoryPageRef)
-                        AND %11111000
-                        OR Page?
-                        LD (MemoryPageRef), A
-                        LD BC, PORT_7FFD
-                        OUT (C), A
-                        ifdef DEBUG_PAGE_ID
-                        LD A, ID?
-                        LD (MemoryPageIDRef), A
-                        endif
-                        endm
-; -----------------------------------------
-;
-; In:
-;   A - page
-; Out:
-; Corrupt:
-;   BC, AF
-; -----------------------------------------
-SeMemoryPage_A          macro ID?
-                        AND %00000111
-                        LD C, A
-                        LD A, (MemoryPageRef)
-                        AND %11111000
-                        OR C
-                        LD (MemoryPageRef), A
-                        LD BC, PORT_7FFD
-                        OUT (C), A
-                        ifdef DEBUG_PAGE_ID
-                        LD A, ID?
-                        LD (MemoryPageIDRef), A
-                        endif
-                        endm
+
 SwapScreens             macro
                         LD A, (MemoryPageRef)
                         XOR %00001000
@@ -125,18 +68,6 @@ ZX_COLOR_IPB            macro Inc?, Paper?, Bright?
                         endm
 ZX_COLOR_IP             macro Inc?, Paper?
                         DB ((0 << 7) | (0 << 6) | (Paper? << 3) | Inc?)
-                        endm
-RestoreHL:              macro
-                        LD A, #E5
-                        LD (Interrupt.Handler.RestoreRegister), A
-                        endm
-RestoreDE:              macro
-                        LD A, #D5
-                        LD (Interrupt.Handler.RestoreRegister), A
-                        endm
-RestoreBC:              macro
-                        LD A, #C5
-                        LD (Interrupt.Handler.RestoreRegister), A
                         endm
 
                         ; ---------------------------------------------

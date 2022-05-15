@@ -38,7 +38,7 @@ SequentialRead: ; подготовка чтения данных
                 ; обнулим смещение
                 LD HL, SharedBuffer
                 LD (.SharedBuffer), HL
-                JR .SkipaAjustment
+                JR .SkipAjustment
 
 .SkipReadSector ; чтение сектора не требуется
 
@@ -51,7 +51,7 @@ SequentialRead: ; подготовка чтения данных
                 ADD HL, BC
                 LD (.SharedBuffer), HL
 
-.SkipaAjustment ; пропустить корректировку смещения в буфере
+.SkipAjustment  ; пропустить корректировку смещения в буфере
 .SizeBlok       EQU $+1
                 LD DE, #0000
 
@@ -92,7 +92,7 @@ SequentialRead: ; подготовка чтения данных
                 LD A, #00
                 EX AF, AF'
                 LD A, FileSystemPage
-                JP MEMCPY.BetweenPages
+                JP MemcpyPages
 ; -----------------------------------------
 ; чтение текущего сектора во временный буфер
 ; In:

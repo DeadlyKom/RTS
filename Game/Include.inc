@@ -2,39 +2,37 @@
                             ifndef _GAME_INCLUDE_
                             define _GAME_INCLUDE_
 
-                            include "../LUA/Include.inc"
-
-                            include "../Config.inc"
-                            include "../TRDOSConfig.inc"
-                            include "AI.inc"
-                            include "Color.inc"
-                            include "Debug.inc"
-                            include "Frame.inc"
-                            include "Gameplay.inc"
-                            include "Hardware.inc"
-                            include "Input.inc"
-                            include "Mouse.inc"
-                            include "SurfaceProperty.inc"
-                            include "TilemapMove.inc"
-                            include "../Core/Macro.inc"
+;                             include "../Config.inc"
+;                             include "../TRDOSConfig.inc"
+;                             include "AI.inc"
+;                             include "Color.inc"
+;                             include "Debug.inc"
+;                             include "Frame.inc"
+;                             include "Gameplay.inc"
+;                             include "Hardware.inc"
+;                             include "Input.inc"
+;                             include "Mouse.inc"
+;                             include "SurfaceProperty.inc"
+;                             include "TilemapMove.inc"
+;                             ; include "../Core/Macro.inc"
                     
-                            define MAJOR 1
-                            define MINOR 2
-                            define BUILD 1
+;                             define MAJOR 1
+;                             define MINOR 2
+;                             define BUILD 1
 
-                            define TRD_FILENAME "Torn Metal.trd"                ; имя образа TRD
-                            define MAP_INFO_FILENAME "MapsInfo.C"               ; имя файла информации о карте
-                            define MAP_FILENAME "Map.C"                         ; имя файла карте
-StackTop                    EQU Page_5                                          ; расположение стека
-MemoryPageRef               EQU PORT_7FFD;                                      ; адрес хранения номера странички
-InterruptVectorAddress      EQU #8181                                           ; адрес вектора прерывания
+;                             define TRD_FILENAME "Torn Metal.trd"                ; имя образа TRD
+;                             define MAP_INFO_FILENAME "MapsInfo.C"               ; имя файла информации о карте
+;                             define MAP_FILENAME "Map.C"                         ; имя файла карте
+; StackTop                    EQU Page_5                                          ; расположение стека
+; MemoryPageRef               EQU PORT_7FFD;                                      ; адрес хранения номера странички
+; InterruptVectorAddress      EQU #8181                                           ; адрес вектора прерывания
 
 ; file system
 FileSystemPtr               EQU Page_1.FileSystemPtr                            ; адрес блока работы с загрузкой/сохранением
 
 ;
-SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
-SharedBufferSize            EQU 256                                             ; размер общего буфера
+; SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
+; SharedBufferSize            EQU 256                                             ; размер общего буфера
 RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
 SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
 SizeSelectedBuffer          EQU 32                                              ; размер буфера выделенных юнитов

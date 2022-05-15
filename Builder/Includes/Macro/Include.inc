@@ -1,0 +1,9 @@
+
+                ifndef _MACRO_INCLUDE_
+                define _MACRO_INCLUDE_
+
+                include "Basic.inc"
+                include "Memory.inc"
+                include "Interrupt.inc"
+
+                endif ; ~_MACRO_INCLUDE_
