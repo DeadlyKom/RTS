@@ -6,9 +6,11 @@
 
                 display "Packing..."
 
-                include "Bootloader/Pack.inc"                                   ; упаковка загрузчика
+                include "Bootloader/Pack.inc"                                   ; упаковка boot загрузчика
                 include "Kernel/Pack.inc"                                       ; упаковка кернеля
                 include "FileSystem/Pack.inc"                                   ; упаковка файловой системы
+                include "Loader/Pack.inc"                                       ; упаковка загрузчика
+                include "Menu/Pack.inc"                                         ; упаковка меню
 
                 display "-------------------------------------------------------------------------------------------------------------------------------"
 

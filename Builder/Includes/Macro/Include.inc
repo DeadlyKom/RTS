@@ -3,6 +3,7 @@
                 define _MACRO_INCLUDE_
 
                 include "Basic.inc"
+                include "Screen.inc"
                 include "Memory.inc"
                 include "Interrupt.inc"
 

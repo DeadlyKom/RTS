@@ -26,7 +26,7 @@ Pages:          PUSH AF
                 POP AF
                 JP SetPage
 
-                display " - Memcpy Pages : \t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - Memcpy Pages : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                 endmodule
 

@@ -13,7 +13,7 @@
 
                 module MEMSET
                 
-                include "MemSet.asm"
+                ; include "MemSet.asm"
 
                 endmodule
 

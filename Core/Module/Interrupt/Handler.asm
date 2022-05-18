@@ -56,7 +56,7 @@ Handler:        ; ********** HANDLER IM 2 *********
 
 .RestoreMemPage ; ****** RESTORE MEMORY PAGE ******
                 LD A, #00
-                ; CALL Memory.SetPage
+                CALL SetPage
                 ; ~ RESTORE MEMORY PAGE
 
 .RestoreReg     ; ******** RESTORE REGISTERS ******

@@ -6,12 +6,12 @@
                 ORG #4000
                 module Bootloader
 
-                display "\'Bootloader\' :\t---------------------------------------------------------------------------------------------------------"
+                display "\'Bootloader\' :\t\t---------------------------------------------------------------------------------------------------------"
 Begin:          EQU $
                 include "Basic.asm"
 Size:           EQU $ - Begin
 
-                savetrd TRD_FILENAME, "boot.B", Basic, Size
+                savetrd TRD_FILENAME, BootNameTRD, Begin, Size
 
                 endmodule
 

@@ -6,7 +6,7 @@
 Begin:          EQU $
                 include "Handler.asm"
 
-                display " - Interrupt : \t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - Interrupt : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                 endmodule
 

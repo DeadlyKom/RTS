@@ -10,6 +10,8 @@
                 include "Buffer.inc"
                 include "FileSystem.inc"
                 include "Interrupt.inc"
+                include "FilesName.inc"
+                include "MainMenu.inc"
                 include "SharedMemoryMap.inc"
                 include "MemoryMap.inc"
 

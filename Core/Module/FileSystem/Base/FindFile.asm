@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_FILE_SYSTEM_FIND_FILE_
-                define _CORE_MODULE_FILE_SYSTEM_FIND_FILE_
+                ifndef _CORE_MODULE_FILE_SYSTEM_BASE_FIND_FILE_
+                define _CORE_MODULE_FILE_SYSTEM_BASE_FIND_FILE_
 ; -----------------------------------------
 ; поиск файла в каталоге
 ; In:
@@ -38,5 +38,4 @@ FindFile:       ; копирование данных в область пере
                 OR A
                 RET
                 
-
-                endif ; ~ _CORE_MODULE_FILE_SYSTEM_FIND_FILE_
+                endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_FIND_FILE_

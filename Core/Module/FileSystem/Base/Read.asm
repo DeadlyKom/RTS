@@ -1,12 +1,12 @@
 
-                ifndef _CORE_MODULE_FILE_SYSTEM_READ_
-                define _CORE_MODULE_FILE_SYSTEM_READ_      
+                ifndef _CORE_MODULE_FILE_SYSTEM_BASE_READ_
+                define _CORE_MODULE_FILE_SYSTEM_BASE_READ_      
 ; -----------------------------------------
 ; последовательное чтение даннх из файла
 ; In:
 ;   A  - страница
 ;   DE - адрес назначения
-;   BC - длина блока
+;   BC - длина блока (в байтах)
 ; Out:
 ; Corrupt:
 ; Note:
@@ -107,4 +107,4 @@ ReadSector:     LD HL, SharedBuffer
                 LD C, TRDOS.RD_SECTORS
                 JP TRDOS.EXE_CMD
 
-                endif ; ~ _CORE_MODULE_FILE_SYSTEM_READ_
+                endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_READ_

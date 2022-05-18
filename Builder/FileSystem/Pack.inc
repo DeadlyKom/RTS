@@ -5,17 +5,17 @@
                 include "FileSystem.inc"
 
                 MMU 3, FileSystemPage                                           ; 3 bank, FileSystemPage (1) page
-                ORG FileSystem
+                ORG Adr.FileSystem
                 module FileSystem
 
-                display "\'FileSystem\' :\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\'FileSystem\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 Begin:          EQU $
-                include "../../Core/Module/FileSystem/Include.inc"
+                include "../../Core/Module/FileSystem/Base/Include.inc"
 
 Size:           EQU $ - Begin
-SizeInSectors   EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
+SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 
-                savetrd TRD_FILENAME, "FS.#", Begin, Size
+                savetrd TRD_FILENAME, FileSystemNameTRD, Begin, Size
 
                 endmodule
 

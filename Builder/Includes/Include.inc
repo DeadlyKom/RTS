@@ -5,6 +5,7 @@
                 include "Macro/Include.inc"       
                 include "Config/Include.inc"
                 include "Const/Include.inc"
+                include "Struct/Include.inc"
 
                 ; version build
                 define BUILD 1

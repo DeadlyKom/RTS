@@ -1,7 +1,7 @@
 
                 ifndef _BUILDER_KERNEL_
                 define _BUILDER_KERNEL_
-; memory
+; memory switch page
 SetPage         EQU Kernel.Memory.SetPage
 SetPage0        EQU Kernel.Memory.SetPage0
 SetPage1        EQU Kernel.Memory.SetPage1
@@ -13,5 +13,29 @@ SetPage7        EQU Kernel.Memory.SetPage7
 ScrPageToC000   EQU Kernel.Memory.ScrPageToC000
 ScrPageToC000_  EQU Kernel.Memory.ScrPageToC000_
 MemcpyPages     EQU Kernel.Memcpy.Pages
+
+; memory set
+SafeFill_Screen EQU Kernel.Memset.SafeFill_Screen
+SafeFill_4096   EQU Kernel.Memset.SafeFill_4096
+SafeFill_2048   EQU Kernel.Memset.SafeFill_2048
+SafeFill_768    EQU Kernel.Memset.SafeFill_768
+SafeFill_256    EQU Kernel.Memset.SafeFill_256
+SafeFill_192    EQU Kernel.Memset.SafeFill_192
+SafeFill_128    EQU Kernel.Memset.SafeFill_128
+SafeFill_32     EQU Kernel.Memset.SafeFill_32
+
+; interrupt
+RestoreRegister EQU Kernel.Interrupt.Handler.RestoreRegister
+ReturnAddress   EQU Kernel.Interrupt.Handler.ReturnAddress
+
+; draw
+DrawSprite      EQU Kernel.Attribute.DrawSprite
+
+; load modules
+LoadModule
+.Loader         EQU Kernel.Module.Loader
+
+; functions
+Func
 
                 endif ; ~_BUILDER_KERNEL_

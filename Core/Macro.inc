@@ -50,25 +50,7 @@ AdjustHighScreenByte_D  macro
                         OR D
                         LD D, A
                         endm
-CLS_4000                macro
-                        LD DE, #0000
-                        LD HL, #4000 + #1800
-                        CALL MEMSET.SafeFill_Screen
-                        endm
-CLS_C000                macro
-                        LD DE, #0000
-                        LD HL, #C000 + #1800
-                        CALL MEMSET.SafeFill_Screen
-                        endm
-ZX_COLOR_IPBF           macro Inc?, Paper?, Bright?, Flash?
-                        DB ((Flash? << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)
-                        endm
-ZX_COLOR_IPB            macro Inc?, Paper?, Bright?
-                        DB ((0 << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)
-                        endm
-ZX_COLOR_IP             macro Inc?, Paper?
-                        DB ((0 << 7) | (0 << 6) | (Paper? << 3) | Inc?)
-                        endm
+
 
                         ; ---------------------------------------------
                         ; frame flags

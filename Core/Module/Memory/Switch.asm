@@ -5,10 +5,13 @@
                 module Memory
 Begin:          EQU $
 ; -----------------------------------------
+; установка страницы в 3 банк памяти (#C000-#FFFF)
 ; In:
-;   A - page
+;   A - номер страницы памяти
+; Out:
 ; Corrupt:
 ;   BC, AF, AF'
+; Note:
 ; -----------------------------------------
 SetPage:        EX AF, AF'
                 LD BC, PORT_7FFD
@@ -89,7 +92,7 @@ ScrPageToC000_: LD BC, PORT_7FFD
                 OUT (C), A
                 RET
 
-                display " - Memory Switch : \t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - Memory Switch : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                 endmodule
 

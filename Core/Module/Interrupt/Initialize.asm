@@ -16,7 +16,7 @@ Initialize:     ; **** INITIALIZE HANDLER IM 2 ****
                 LD HL, IntTable
                 LD DE, IntTable + 1
                 LD BC, IntTableSize - 1
-                LD (HL), HIGH Interrupt
+                LD (HL), HIGH Adr.Interrupt
                 LDIR
                 
                 ; очистка стека прерывания
@@ -27,13 +27,12 @@ Initialize:     ; **** INITIALIZE HANDLER IM 2 ****
                 LDIR
 
                 ; задание вектора прерывания
-                LD A, HIGH Interrupt - 1
+                LD A, HIGH Adr.Interrupt - 1
                 LD I, A
                 IM 2
 
                 EI
                 HALT
-                RET
                 ; ~ INITIALIZE HANDLER IM 2
 
                 endmodule

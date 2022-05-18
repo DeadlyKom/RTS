@@ -1,6 +1,6 @@
 
-                ifndef _MEMORY_MACRO_INCLUDE_
-                define _MEMORY_MACRO_INCLUDE_
+                ifndef _MACRO_MEMORY_
+                define _MACRO_MEMORY_
 ; -----------------------------------------
 ; установить страницу памяти в банк 03
 ; In:
@@ -29,4 +29,4 @@ SET_PAGE_FILE_SYS macro
                 CALL SetPage1
                 endm
 
-                endif ; ~_MEMORY_MACRO_INCLUDE_
+                endif ; ~_MACRO_MEMORY_
