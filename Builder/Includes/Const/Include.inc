@@ -11,6 +11,7 @@
                 include "FileSystem.inc"
                 include "Interrupt.inc"
                 include "FilesName.inc"
+                include "Loader.inc"
                 include "MainMenu.inc"
                 include "SharedMemoryMap.inc"
                 include "MemoryMap.inc"

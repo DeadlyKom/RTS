@@ -2,7 +2,7 @@
                 ifndef _BUILDER_LOADER_PACK_
                 define _BUILDER_LOADER_PACK_
 
-                MMU 1, 5                                                        ; 1 bank, 5 page
+                MMU 1, Page.Loader                                              ; 1 bank, Page.Loader page
                 ORG Adr.Loader
                 module Loader
 
@@ -12,7 +12,7 @@
 Begin:          EQU $
                 include "../../Core/Module/Loader/Include.inc"
 Size:           EQU $ - Begin
-SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
+SizeInSectors:  EQU (Size >> 8) + ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01)
 
                 savetrd TRD_FILENAME, LoaderNameTRD, Begin, Size
 

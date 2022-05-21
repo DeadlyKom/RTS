@@ -1,12 +1,38 @@
 
                 ifndef _CORE_MODULE_FILE_SYSTEM_BASE_READ_
-                define _CORE_MODULE_FILE_SYSTEM_BASE_READ_      
+                define _CORE_MODULE_FILE_SYSTEM_BASE_READ_
 ; -----------------------------------------
-; последовательное чтение даннх из файла
+; последовательное чтение даннх из файла (первичный запуск)
 ; In:
 ;   A  - страница
 ;   DE - адрес назначения
 ;   BC - длина блока (в байтах)
+;   IX - указывает на структуру переменных файловой системы FVariables
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+PrimaryRead:    LD HL, #0000
+                LD (SequentialRead.SectorSize), HL
+                
+                ; инициализация последовательного чтения файла
+                LD HL, (TRDOS.FIRST_S)
+                LD (TRDOS.CUR_SEC), HL
+
+                ; размер файла
+                LD BC, (TRDOS.SIZE_B)
+
+                ; инициализация TR-DOS
+                XOR A
+                LD (TRDOS.ERROR), A
+
+; -----------------------------------------
+; последовательное чтение даннх из файла (послудующий запуск)
+; In:
+;   A  - страница
+;   DE - адрес назначения
+;   BC - длина блока (в байтах)
+;   IX - указывает на структуру переменных файловой системы FVariables
 ; Out:
 ; Corrupt:
 ; Note:
@@ -25,7 +51,13 @@ SequentialRead: ; подготовка чтения данных
 .Continue       ; продолжение чтения
                 CALL ReadSector                                                 ; чтения одного сектора
 
-                ; корректировка смещения адреса назначения
+                ; вызов функции обновления прогресса
+                LD HL, .ProgressRET
+                PUSH HL                                                         ; сохранить адрес возврата
+                LD HL, (IX + FVariables.FuncProgress)
+                JP (HL)
+
+.ProgressRET    ; корректировка смещения адреса назначения
                 LD HL, (.Destination)
 .OffsetDest     EQU $+1
                 LD DE, (.SectorSize)
@@ -35,6 +67,7 @@ SequentialRead: ; подготовка чтения данных
                 ; обновим размер буфера
                 LD HL, SharedBufferSize
                 LD (.SectorSize), HL
+
                 ; обнулим смещение
                 LD HL, SharedBuffer
                 LD (.SharedBuffer), HL
@@ -50,6 +83,8 @@ SequentialRead: ; подготовка чтения данных
                 LD BC, SharedBuffer
                 ADD HL, BC
                 LD (.SharedBuffer), HL
+
+                ; добавить вызов функции обновления прогресса
 
 .SkipAjustment  ; пропустить корректировку смещения в буфере
 .SizeBlok       EQU $+1
@@ -103,8 +138,10 @@ SequentialRead: ; подготовка чтения данных
 ; -----------------------------------------
 ReadSector:     LD HL, SharedBuffer
                 LD DE, (TRDOS.CUR_SEC)
-                LD B, #01                                                       ; один сектор == SharedBufferSize
-                LD C, TRDOS.RD_SECTORS
-                JP TRDOS.EXE_CMD
+                LD BC, (0x01 << 8) | TRDOS.RD_SECTORS                           ; один сектор == SharedBufferSize
+                CALL TRDOS.EXE_CMD
+                RET
+
+                display " - PrimaryRead : \t\t", /A, PrimaryRead, " = busy [ ", /D, $ - PrimaryRead, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_READ_

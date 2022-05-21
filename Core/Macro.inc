@@ -264,34 +264,34 @@ SetAllHardwareFlags     macro
                         ; debug flags
                         ; ---------------------------------------------
 CheckDebugFlag          macro Flag?
-                        ifdef DEBUG
+                        ifdef _DEBUG
                         LD A, (DebugStateRef)
                         AND Flag?
                         endif
                         endm
 SetDebugFlag            macro Flag?
-                        ifdef DEBUG
+                        ifdef _DEBUG
                         LD A, (DebugStateRef)
                         OR Flag?
                         LD (DebugStateRef), A
                         endif
                         endm
 ResetDebugFlag          macro Flag?
-                        ifdef DEBUG
+                        ifdef _DEBUG
                         LD A, (DebugStateRef)
                         AND ((~Flag?) & 0xFF)
                         LD (DebugStateRef), A
                         endif
                         endm
 SwapDebugFlag           macro Flag?
-                        ifdef DEBUG
+                        ifdef _DEBUG
                         LD A, (DebugStateRef)
                         XOR Flag?
                         LD (DebugStateRef), A
                         endif
                         endm
 ResetAllDebugFlags      macro
-                        ifdef DEBUG
+                        ifdef _DEBUG
                         XOR A
                         LD (DebugStateRef), A
                         endif
@@ -299,7 +299,7 @@ ResetAllDebugFlags      macro
 
                         ; ---------------------------------------------
 ToDo                    macro Metod?, Message?
-                        ifdef DEBUG
+                        ifdef _DEBUG
                         display "/*********"
                         display "ToDo : ", Metod?, " - (", Message?, ")"
                         display "**********/"

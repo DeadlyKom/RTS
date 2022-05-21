@@ -31,7 +31,7 @@ GoToNextChild:  ;
 
                 LD E, A
                 
-                ifdef DEBUG
+                ifdef _DEBUG
                 ; проверка переполнения (дебаг онли)
                 LD A, E
                 OR BT_STATE_MASK

@@ -4,7 +4,7 @@
 
                 module Main
 Begin:          EQU $
-Main:           RET
+Main:           JR$
 
                 display " - Main : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 

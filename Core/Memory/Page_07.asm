@@ -7,7 +7,7 @@
                     
                     module MemoryPage_7
 Start:
-                    ifdef DEBUG
+                    ifdef _DEBUG
 
                     ORG Page_7.DebugTileTable
 DebugSpritesTable:  DW COL_00_0,    COL_00_1,   COL_00_2,   COL_00_3            ; 0   - 3

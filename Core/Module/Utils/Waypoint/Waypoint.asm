@@ -163,7 +163,7 @@ Remove:             LD L, A
                     DEC (HL)
                     JR Z, .DecreaseCounter
 
-                    ifdef DEBUG
+                    ifdef _DEBUG
                     JR $                                                        ; ошибка!
                     else
                     RET

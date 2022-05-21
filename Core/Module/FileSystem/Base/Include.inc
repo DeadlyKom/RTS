@@ -4,10 +4,13 @@
 
                 module Base
 Begin:          EQU $
+                include "Setup.asm"
+                include "Shutdown.asm"
                 include "Read.asm"
                 include "FindFile.asm"
+Variables:      FVariables                                                      ; переменные для работы с файлами
 
-                display " - Base : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - FVariables : \t\t", /A, FVariables, " = busy [ ", /D, $ - FVariables, " bytes  ]"
 
                 endmodule
 

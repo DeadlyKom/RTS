@@ -4,7 +4,7 @@
 
                 DEVICE ZXSPECTRUM128
 
-                define DEBUG                                                    ; включить отладочный код
+                define _DEBUG                                                   ; включить отладочный код
                 define SHOW_DEBUG                                               ; отображение дебажной информации
 
                 ; define ENABLE_MUSIC                                             ; разрешить музыку

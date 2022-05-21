@@ -44,20 +44,22 @@ StartBoot:      DI
 
                 ; -----------------------------------------
                 ; запуск загрузчика
-                ; -----------------------------------------
-.Loader         EQU $
-                ; расчёт текущего адрес
+                ; ----------------------------------------- 
+                ; расчёт адреса .FileArray
+                LD HL, .FileArray-$
                 LD BC, (ReturnAddress)
-                LD IX, .FileArray-.Loader
-                ADD IX, BC
-                
+                ADD HL, BC
+
                 ; адрес запуска
-                LD HL, Adr.MainMenu
-                PUSH HL
+                LD BC, Adr.MainMenu
+                PUSH BC
 
                 ; количество загружаемых файлов
                 LD A, .FileNum
                 PUSH AF
+
+                ; сохранение адреса .FileArray
+                PUSH HL
 
                 ; вызов загрузчика пакета файлов
                 JP LoadModule.Loader
@@ -65,14 +67,9 @@ StartBoot:      DI
 .FileArray      ; путь файла главного меню
                 FFileArea {
                 {{MainMenuName}, SystemExt },
-                (MainMenuPage << FILE_PAGE_SHIFT) | FILE_ARCHIVE,
+                Page.MainMenu | FILE_ARCHIVE,
                 Adr.MainMenu }
 
-                ; путь файла
-                FFileArea {
-                {{MainMenuName}, SystemExt },
-                MainMenuPage << FILE_PAGE_SHIFT,
-                Adr.MainMenu }
 .FileNum        EQU ($-.FileArray) / FFileArea
 EndBoot:        DB #0D                                                          ; конец строки
                 DB #00, #14                                                     ; номер строки 20

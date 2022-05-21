@@ -4,7 +4,7 @@
 ; -----------------------------------------
 ; поиск файла в каталоге
 ; In:
-;   HL - указывает на имя файла (длина имени 9 байт)
+;   HL - указывает на имя файла (длина имени 8 байт и расширение 1 байт)
 ; Out:
 ;   флаг переполнения Carry сброшен при успешном поиске
 ; Corrupt:
@@ -24,18 +24,16 @@ FindFile:       ; копирование данных в область пере
 
                 ; неудачный выход
                 SCF
-                RET
+.RET            RET
 
 .InitFile       ; по найденому файлу проинициализируем информацию о расположении файла
                 LD C, TRDOS.RD_FILE_INFO
                 CALL TRDOS.EXE_CMD
 
-                ; инициализация последовательного чтения файла
-                LD HL, (TRDOS.FIRST_S)
-                LD (TRDOS.CUR_SEC), HL
-
                 ; успешное выполнение
                 OR A
                 RET
+
+                display " - FindFile : \t\t", /A, FindFile, " = busy [ ", /D, $ - FindFile, " bytes  ]"
                 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_FIND_FILE_

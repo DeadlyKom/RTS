@@ -62,7 +62,7 @@ HardwareStateRef            EQU Game.HardwareFlags                              
 FrameUnitsFlagRef           EQU Game.FrameUnitsFlag                             ; флаг обновления юнитов принудительно (необходим для скролинга)
 
 ; debug
-                            ifdef DEBUG
+                            ifdef _DEBUG
 DebugStateRef               EQU Game.DebugFlags                                 ; указатель на флаги необходимые для отладки
 
                             endif

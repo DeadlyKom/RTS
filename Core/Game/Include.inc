@@ -55,7 +55,7 @@ VK_KeyLeft:         DB VK_A
 VK_KeyRight:        DB VK_D
 VK_KeySelect:       DB VK_SPACE
 
-                    ifdef DEBUG
+                    ifdef _DEBUG
 DebugFlags:         DB #00
 
                     endif

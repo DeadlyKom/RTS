@@ -4,7 +4,6 @@
 
 ; bank 01 (#4000 - #7FFF)
 StackTop        EQU MemBank_01                                                  ; расположение стека
-Adr.Loader      EQU MemBank_01                                                  ; адрес загрузчика
 MemoryPageRef   EQU PORT_7FFD                                                   ; адрес хранения номера странички
 
 ; bank 02 (#8000 - #BFFF)

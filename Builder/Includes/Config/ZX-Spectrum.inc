@@ -19,4 +19,9 @@ PAGE_5          EQU 0x05
 PAGE_6          EQU 0x06
 PAGE_7          EQU 0x07
 
+                module BASIC
+ERR_NR          EQU #5C3A                                                       ; рег IY
+
+                endmodule
+
                 endif ; ~_CONFIG_ZX_SPECTRUM_

@@ -54,6 +54,29 @@ Handler:        ; ********** HANDLER IM 2 *********
 ;                 endif
 ;                 ; ~ PLAY MUSIC
 
+; .TRDOS          ; *********** HAS TR-DOS **********
+;                 ; проверка адреса возврата меньше 16384
+;                 LD DE, (.ReturnAddress)
+;                 LD A, D
+;                 AND %11000000
+;                 JR NZ, .NotTRDOS
+
+;                 ; проверка выполнения команд TR-DOS из BASIC
+;                 LD A, (TRDOS.MESS_FLAG)
+;                 INC A
+;                 JR Z, .NotTRDOS
+
+;                 ; корректировка перехода в TR-DOS
+;                 LD HL, TRDOS.EXE_RET
+;                 LD (.ReturnAddress), HL
+;                 LD HL, (.Container_SP)
+;                 DEC HL
+;                 LD (HL), D
+;                 DEC HL
+;                 LD (HL), E
+;                 LD (.Container_SP), HL
+; .NotTRDOS       ; ~ HAS TR-DOS
+
 .RestoreMemPage ; ****** RESTORE MEMORY PAGE ******
                 LD A, #00
                 CALL SetPage

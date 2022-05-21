@@ -91,7 +91,7 @@ DisplayTileRow: ;
                 LD A, (HL)                                                      ; read tile index
                 EXX
 
-;                 ifdef DEBUG
+;                 ifdef _DEBUG
 ;                 EX AF, AF'
 ;                 CheckDebugFlag DISPLAY_COLLISION_FLAG
 ;                 JR Z, .DrawTile
