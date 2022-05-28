@@ -2,7 +2,7 @@
                 ifndef _BUILDER_FILE_SYSTEM_PACK_
                 define _BUILDER_FILE_SYSTEM_PACK_
 
-                MMU 3, FileSystemPage                                           ; 3 bank, FileSystemPage (1) page
+                MMU 3, Page.FileSystem                                          ; 3 bank, Page.FileSystem (1) page
                 ORG Adr.FileSystem
                 module FileSystem
 

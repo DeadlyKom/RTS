@@ -10,7 +10,7 @@ Begin:          EQU $
                 include "FindFile.asm"
 Variables:      FVariables                                                      ; переменные для работы с файлами
 
-                display " - FVariables : \t\t", /A, FVariables, " = busy [ ", /D, $ - FVariables, " bytes  ]"
+                display " - FVariables : \t\t", /A, Variables, " = busy [ ", /D, $ - Variables, " bytes  ]"
 
                 endmodule
 

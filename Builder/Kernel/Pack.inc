@@ -16,10 +16,12 @@ Begin:          EQU $
                 include "../../Core/Module/Memory/MemcpyPages.asm"
                 include "../../Core/Module/Draw/Attribute/PixelAddress.asm"
                 include "../../Core/Module/Draw/Attribute/PixelAttribute.asm"
-                include "../../Core/Module/Draw/Attribute/DrawChar.asm"
+                include "../../Core/Module/Draw/Attribute/DrawCharBoundary.asm"
                 include "../../Core/Module/Draw/Attribute/DrawSprite.asm"
                 include "Functions/Include.inc"
                 include "Modules/Include.inc"
+
+                include "../../Core/Module/Tables/ShiftTable.inc"               ; таблица сдвигов (3584 байт)
 Size:           EQU $ - Begin
 SizeInSectors   EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 

@@ -4,7 +4,7 @@
 
                 define ProgressX        16
                 define ProgressY        179
-                define LoadProgress     #4000 + (((ProgressY >> 3) & 0x18) << 8) + ((ProgressY & 0x07) << 8) + ((ProgressY & 0x38) << 2) + (ProgressX >> 3)
+                define LoadProgress     #C000 + (((ProgressY >> 3) & 0x18) << 8) + ((ProgressY & 0x07) << 8) + ((ProgressY & 0x38) << 2) + (ProgressX >> 3)
                 define ProgressLength   64
 
                 include "Saver.asm"

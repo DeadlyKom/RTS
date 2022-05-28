@@ -11,6 +11,7 @@
 Shutdown:
 .TR_DOS         DI
                 IM 2
+                EI
                 RET
 
                 display " - Shutdown : \t\t", /A, Shutdown, " = busy [ ", /D, $ - Shutdown, " bytes  ]"

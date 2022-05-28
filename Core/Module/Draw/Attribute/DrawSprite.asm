@@ -20,7 +20,7 @@ DrawSprite:     CALL PixelAddress
                 LD B, C
 
 .Box_1          PUSH DE
-                CALL DrawChar
+                CALL DrawCharBoundary
                 POP DE
                 INC E
                 DJNZ .Box_1

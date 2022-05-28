@@ -126,7 +126,7 @@ SequentialRead: ; подготовка чтения данных
 .Page           EQU $+1
                 LD A, #00
                 EX AF, AF'
-                LD A, FileSystemPage
+                LD A, Page.FileSystem
                 JP MemcpyPages
 ; -----------------------------------------
 ; чтение текущего сектора во временный буфер
@@ -142,6 +142,6 @@ ReadSector:     LD HL, SharedBuffer
                 CALL TRDOS.EXE_CMD
                 RET
 
-                display " - PrimaryRead : \t\t", /A, PrimaryRead, " = busy [ ", /D, $ - PrimaryRead, " bytes  ]"
+                display " - Read : \t\t\t", /A, PrimaryRead, " = busy [ ", /D, $ - PrimaryRead, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_READ_

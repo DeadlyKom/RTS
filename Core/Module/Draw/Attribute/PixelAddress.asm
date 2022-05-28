@@ -14,14 +14,14 @@
 ; -----------------------------------------
 PixelAddress:   LD A, D
                 RRCA
-                RRCA  
+                RRCA
                 RRCA
                 AND #E0
                 ADD A, E
                 LD E, A
                 LD A, D
                 AND #18
-                OR A, #40
+                OR #C0
                 LD D, A
                 RET
 

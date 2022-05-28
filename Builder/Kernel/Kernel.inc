@@ -30,6 +30,7 @@ ReturnAddress   EQU Kernel.Interrupt.Handler.ReturnAddress
 
 ; draw
 DrawSprite      EQU Kernel.Attribute.DrawSprite
+ShiftTable      EQU Kernel.Tables.ShiftTable
 
 ; load modules
 LoadModule

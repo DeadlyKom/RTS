@@ -17,7 +17,7 @@ PixelAttribute: LD A, D
                 RRA
                 RRA
                 AND #03
-                ADD A, #58
+                ADD A, #D8
                 LD D, A
                 RET
 

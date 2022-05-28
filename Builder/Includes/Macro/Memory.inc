@@ -2,7 +2,7 @@
                 ifndef _MACRO_MEMORY_
                 define _MACRO_MEMORY_
 ; -----------------------------------------
-; установить страницу памяти в банк 03
+; включение страницы памяти в банк 03
 ; In:
 ; Out:
 ; Corrupt:
@@ -16,17 +16,24 @@ SetPage:        macro Page?
                 LD (BC), A
                 OUT (C), A
                 endm
-; включить страницу масива юнитов
+; включение страницы масива юнитов
 SET_PAGE_UNITS_ARRAY macro
                 CALL SetPage0
                 endm
-; включить страницу тайловой карты
+; включение страницы тайловой карты
 SET_PAGE_TILEMAP macro 
                 CALL SetPage1
                 endm
-; включить страницу файловой системы
+; включение страницы файловой системы
 SET_PAGE_FILE_SYS macro
-                CALL SetPage1
+                CALL FileSystemFunc
                 endm
-
+; включение страницы первого экрана
+SET_SCREEN_BASE macro
+                CALL SetPage5
+                endm
+; включение страницы второго экрана
+SET_SCREEN_SHADOW macro
+                CALL SetPage7
+                endm
                 endif ; ~_MACRO_MEMORY_

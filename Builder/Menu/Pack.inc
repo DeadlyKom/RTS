@@ -2,8 +2,8 @@
                 ifndef _BUILDER_MENU_PACK_
                 define _BUILDER_MENU_PACK_
 
-                MMU 1, 5                                                        ; 1 bank, 5 page
-                ORG #4000
+                MMU 1, Page.MainMenu                                            ; 1 bank, Page.MainMenu (5) page
+                ORG Adr.MainMenu
                 module Menu
 
                 display "\'Menu\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t\t-------------------------------------------------"

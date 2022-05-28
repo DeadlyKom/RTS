@@ -69,6 +69,42 @@ StartBoot:      DI
                 {{MainMenuName}, SystemExt },
                 Page.MainMenu | FILE_ARCHIVE,
                 Adr.MainMenu }
+                 FFileArea {
+                {{MainMenuName}, SystemExt },
+                Page.MainMenu | FILE_ARCHIVE,
+                Adr.MainMenu }
+                 FFileArea {
+                {{MainMenuName}, SystemExt },
+                Page.MainMenu | FILE_ARCHIVE,
+                Adr.MainMenu }
+                 FFileArea {
+                {{MainMenuName}, SystemExt },
+                Page.MainMenu | FILE_ARCHIVE,
+                Adr.MainMenu }
+                 FFileArea {
+                {{MainMenuName}, SystemExt },
+                Page.MainMenu | FILE_ARCHIVE,
+                Adr.MainMenu }
+                 FFileArea {
+                {{MainMenuName}, SystemExt },
+                Page.MainMenu | FILE_ARCHIVE,
+                Adr.MainMenu }
+                 FFileArea {
+                {{MainMenuName}, SystemExt },
+                Page.MainMenu | FILE_ARCHIVE,
+                Adr.MainMenu }
+                 FFileArea {
+                {{MainMenuName}, SystemExt },
+                Page.MainMenu | FILE_ARCHIVE,
+                Adr.MainMenu }
+                 FFileArea {
+                {{MainMenuName}, SystemExt },
+                Page.MainMenu | FILE_ARCHIVE,
+                Adr.MainMenu }
+                 FFileArea {
+                {{MainMenuName}, SystemExt },
+                Page.MainMenu | FILE_ARCHIVE,
+                Adr.MainMenu }
 
 .FileNum        EQU ($-.FileArray) / FFileArea
 EndBoot:        DB #0D                                                          ; конец строки

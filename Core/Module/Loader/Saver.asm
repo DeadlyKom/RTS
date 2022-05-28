@@ -22,8 +22,9 @@ Saver:          ; -----------------------------------------
                 BORDER BLACK
 
                 ; подготовка экрана
-                CLS_4000
-                ATTR_4000_IP WHITE, BLACK
+                SET_SCREEN_BASE
+                CLS_C000
+                ATTR_C000_IP WHITE, BLACK
 
                 ; отрисовка надпись Loading
                 LD HL, Loader.LoadingSprAttr
@@ -119,7 +120,7 @@ Saver:          ; -----------------------------------------
                 ADD HL, BC
                 DEC (IX + FVariables.NumFilesPackage.High)
                 JR NZ, .LoadLoop
-                
+
                 RET
 
                 display " - Saver : \t\t\t", /A, Saver, " = busy [ ", /D, $ - Saver, " bytes  ]"

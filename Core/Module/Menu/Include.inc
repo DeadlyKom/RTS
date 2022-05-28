@@ -11,4 +11,6 @@
 
                 endmodule
 
+                include "../Draw/Monochrome/DrawString.asm"
+
                 endif ; ~ _CORE_MODULE_MENU_INCLUDE_

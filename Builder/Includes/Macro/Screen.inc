@@ -15,6 +15,11 @@ ATTR_4000_IP    macro Inc?, Paper?
                 LD DE, (((Paper? << 3) | Inc?) << 8) | ((Paper? << 3) | Inc?)
                 CALL SafeFill_768
                 endm
+ATTR_C000_IP    macro Inc?, Paper?
+                LD HL, #C000 + #1800 + #0300
+                LD DE, (((Paper? << 3) | Inc?) << 8) | ((Paper? << 3) | Inc?)
+                CALL SafeFill_768
+                endm
 CLS_C000        macro
                 LD HL, #C000 + #1800
                 LD DE, #0000
@@ -31,6 +36,14 @@ DrawSpriteATTR  macro Sprite?, X?, Y?, Width?, Height?
                 LD DE, (Y? << 8) | X?
                 LD BC, (Height? << 8) | Width?
                 CALL DrawSprite
+                endm
+
+SwapScreens     macro
+                LD BC, PORT_7FFD
+                LD A, (BC)
+                XOR %00001000
+                LD (BC), A
+                OUT (C), A
                 endm
 ZX_COLOR_IPBF   macro Inc?, Paper?, Bright?, Flash?
                 DB ((Flash? << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)
