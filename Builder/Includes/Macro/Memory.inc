@@ -28,6 +28,10 @@ SET_PAGE_TILEMAP macro
 SET_PAGE_FILE_SYS macro
                 CALL FileSystemFunc
                 endm
+; включение страницы локализации
+SET_PAGE_LOCALIZATION macro
+                CALL LocalizationFunc
+                endm
 ; включение страницы первого экрана
 SET_SCREEN_BASE macro
                 CALL SetPage5

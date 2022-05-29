@@ -5,12 +5,11 @@
                 module Menu
 
                 include "Main.asm"
+                include "MainLoadText.asm"
                 include "StartGame.asm"
                 include "ResumeGame.asm"
                 include "Options.asm"
 
                 endmodule
-
-                include "../Draw/Monochrome/DrawString.asm"
 
                 endif ; ~ _CORE_MODULE_MENU_INCLUDE_

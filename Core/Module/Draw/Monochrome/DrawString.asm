@@ -1,10 +1,10 @@
 
-                ifndef _CORE_MODULE_DRAW_MONOCHROME_DRAW_CHAR_
-                define _CORE_MODULE_DRAW_MONOCHROME_DRAW_CHAR_
+                ifndef _CORE_MODULE_DRAW_MONOCHROME_DRAW_STRING_
+                define _CORE_MODULE_DRAW_MONOCHROME_DRAW_STRING_
 
                 module Monochrome
 ; -----------------------------------------
-; построение строки в буфере
+; отображение строки в буфере
 ; In:
 ;   HL - адрес текста
 ; Out:
@@ -13,10 +13,6 @@
 ; -----------------------------------------
 DrawString:     ;
                 PUSH HL
-                LD HL, .TestFont
-                LD DE, #C000
-                LD BC, 394
-                LDIR
                 LD HL, SharedBuffer
                 LD (HL), L
                 LD DE, SharedBuffer+1
@@ -39,23 +35,23 @@ DrawString:     ;
                 INC HL
                 PUSH HL
 
-.AddChar        LD H, HIGH .ASCII_Info
+.AddChar        LD H, HIGH ASCII_Info
                 LD L, A
                 ADD A, A
                 ADD A, L
-                ADD A, LOW .ASCII_Info
+                ADD A, LOW ASCII_Info
                 LD L, A
                 JR NC, $+3
                 INC H
 
                 ; чтение данных о символе
-                LD B, (HL)  ; size (width/height)
+                LD B, (HL)                                                      ; size (height/width)
                 INC HL
 
                 ; расчёт адреса спрайта символа
-                LD E, (HL)  ; high address
+                LD E, (HL)                                                      ; high address
                 INC HL
-                LD L, (HL)  ; low address
+                LD L, (HL)                                                      ; low address
                 LD A, E
                 OR #C0
                 LD H, A
@@ -153,10 +149,6 @@ DrawString:     ;
                 LD C, A
                 INC C   ; 1 пиксель между символами
                 JP .StringLoop
-
-.ASCII_Info     incbin "../../Sprites/Fonts/En/ASCII_Table.bin"
-.TestFont       incbin "../../Sprites/Fonts/En/ASCII.spr"
-
 NotShift:       LD A, B
                 AND #0F
                 ADD A, E
@@ -198,8 +190,8 @@ NotShift:       LD A, B
                 LD A, E
                 JP .ColumLoop
 
-                display " - Construct Text : \t\t", /A, DrawString, " = busy [ ", /D, $ - DrawString, " bytes  ]"
+                display " - Draw String to Buffer : \t", /A, DrawString, " = busy [ ", /D, $ - DrawString, " bytes  ]"
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_MONOCHROME_DRAW_CHAR_
+                endif ; ~ _CORE_MODULE_DRAW_MONOCHROME_DRAW_STRING_

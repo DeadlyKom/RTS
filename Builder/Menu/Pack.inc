@@ -6,7 +6,7 @@
                 ORG Adr.MainMenu
                 module Menu
 
-                display "\'Menu\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t\t-------------------------------------------------"
+                display "\'Menu\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 Begin:          EQU $
                 include "../../Core/Module/Menu/Include.inc"
 Size:           EQU $ - Begin

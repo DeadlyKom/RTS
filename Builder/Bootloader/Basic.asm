@@ -64,44 +64,14 @@ StartBoot:      DI
                 ; вызов загрузчика пакета файлов
                 JP LoadModule.Loader
 
-.FileArray      ; путь файла главного меню
+.FileArray      ; путь файла модуля языка
                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
-                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
-                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
-                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
-                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
-                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
-                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
-                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
-                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
-                 FFileArea {
+                {{LanguageName}, SystemExt },
+                Page.Module.Language | FILE_ARCHIVE,
+                Adr.Module.Language }
+
+                ; путь файла главного меню
+                FFileArea {
                 {{MainMenuName}, SystemExt },
                 Page.MainMenu | FILE_ARCHIVE,
                 Adr.MainMenu }

@@ -2,12 +2,21 @@
                 ifndef _CORE_MODULE_MENU_MAIN_
                 define _CORE_MODULE_MENU_MAIN_
 
-                module Main
-
                 include "Sprites/Menu/Main/Compress.inc"
-Begin:          EQU $
-Main:           LD HL, .Text
-                CALL Menu.Monochrome.DrawString
+Main:           
+
+                LD A, LANGUAGE_EN
+                CALL Functions.ChangeLanguage
+
+                LD A, LANGUAGE_EN
+                CALL MainLoadText
+
+                LD HL, Adr.MainMenuText
+                LD (LocalizationRef), HL
+
+                LD A, Language.Text.Menu.Options
+                CALL Functions.TextToBuffer
+
                 LD HL, SharedBuffer
                 LD DE, #4000
                 LD BC, 32
@@ -75,15 +84,9 @@ Main:           LD HL, .Text
                 ; DB #2B, #2C, #2D, #2E, #2F, #30, #31, #32, #33, #34, #00
                 ; DB #35, #36, #37, #38, #39, #3A, #3B, #3C, #3D, #3E, #3F, #40, #41, #42, #43, #44, #00
                 ; DB #45, #46, #47, #48, #49, #4A, #4B, #4C, #4D, #4E, #00
-
-                ; DB #22, #39, #40, #40, #43, #01, #31, #43, #46, #40, #38, #02, #01, #04, #13, #11, #13, #13, #01, #06, #1D, #07, #22, #0F, #22, #00
-                DB #1B, #40, #40, #01, #4D, #43, #49, #46, #01, #36, #35, #47, #39, #01, #35, #46, #39, #01, #36, #39, #40, #43, #42, #3B, #01, #48, #43, #01, #49, #47, #08, #08, #08, #00
-
 PlanetSprAttr  incbin "../../../Sprites/Menu/Main/Compressed/Planet.ar.spr"
 Atmosphere7SprAttr  incbin "../../../Sprites/Menu/Main/Compressed/Atmosphere7.ar.spr"
 
-                display " - Main : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
-
-                endmodule
+                display " - Main : \t\t\t", /A, Main, " = busy [ ", /D, $ - Main, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_

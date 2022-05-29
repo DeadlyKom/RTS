@@ -6,7 +6,7 @@
                 ORG Adr.Loader
                 module Loader
 
-                display "\'Loader\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t\t-------------------------------------------------"
+                display "\'Loader\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 
                 include "../../Sprites/Menu/Loader/Compress.inc"
 Begin:          EQU $

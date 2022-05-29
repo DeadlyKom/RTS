@@ -5,6 +5,7 @@
 ; bank 01 (#4000 - #7FFF)
 StackTop        EQU MemBank_01                                                  ; расположение стека
 MemoryPageRef   EQU PORT_7FFD                                                   ; адрес хранения номера странички
+LocalizationRef EQU #7FFE                                                       ; адрес хранения указателя таблицы текста локализации
 
 ; bank 02 (#8000 - #BFFF)
 IntTable        EQU MemBank_02                                                  ; таблица прерываний 257 байт

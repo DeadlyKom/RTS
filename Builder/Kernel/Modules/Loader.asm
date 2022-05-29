@@ -1,8 +1,6 @@
 
                 ifndef _BUILDER_KERNEL_MODULE_LOADER_
                 define _BUILDER_KERNEL_MODULE_LOADER_
-
-                module Module
 ; -----------------------------------------
 ; поиск файла в каталоге
 ; In:
@@ -38,8 +36,6 @@ Loader:         ; инициализация
 
 .FileName       FFile { {LoaderName}, SystemExt }                               ; имя загрузчика
 
-                display " - Functions : \t\t", /A, Loader, " = busy [ ", /D, $ - Loader, " bytes  ]"
-
-                endmodule
+                display "\t - Loader : \t\t", /A, Loader, " = busy [ ", /D, $ - Loader, " bytes  ]"
 
                 endif ; ~_BUILDER_KERNEL_MODULE_LOADER_

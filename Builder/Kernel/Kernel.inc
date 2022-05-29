@@ -34,9 +34,12 @@ ShiftTable      EQU Kernel.Tables.ShiftTable
 
 ; load modules
 LoadModule
-.Loader         EQU Kernel.Module.Loader
+.Loader         EQU Kernel.Modules.Loader
 
 ; functions
-Func
+Functions
+.ChangeLanguage EQU Kernel.Functions.ChangeLanguage                             ; загрузка языковых шрифтов
+.TextToBuffer   EQU Kernel.Functions.TextToBuffer
+.StringToBuffer EQU Kernel.Functions.StringToBuffer
 
                 endif ; ~_BUILDER_KERNEL_
