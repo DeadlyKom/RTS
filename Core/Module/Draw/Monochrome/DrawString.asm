@@ -35,14 +35,15 @@ DrawString:     ;
                 INC HL
                 PUSH HL
 
-.AddChar        LD H, HIGH ASCII_Info
-                LD L, A
+.AddChar        ; расчёт адреса спрайта символа
+                LD E, A
                 ADD A, A
-                ADD A, L
-                ADD A, LOW ASCII_Info
                 LD L, A
-                JR NC, $+3
-                INC H
+                LD H, #00
+                LD D, H
+                ADD HL, DE
+                LD DE, ASCII_Info
+                ADD HL, DE
 
                 ; чтение данных о символе
                 LD B, (HL)                                                      ; size (height/width)

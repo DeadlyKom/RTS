@@ -42,6 +42,6 @@ MainLoadText:   ; инициализация
                 FFile { {MainTextSpName}, SystemExt }                           ; имя файла испанского языка главного меню
                 FFile { {MainTextEnName}, SystemExt }                           ; имя файла английского языка главного меню
 
-                display " - Main Load Text : \t\t\t", /A, MainLoadText, " = busy [ ", /D, $ - MainLoadText, " bytes  ]"
+                display " - Main Load Text : \t\t", /A, MainLoadText, " = busy [ ", /D, $ - MainLoadText, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_LOAD_TEXT_

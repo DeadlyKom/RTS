@@ -8,6 +8,7 @@
                 include "Const.inc"
 
                 include "English.inc"
+                include "Russian.inc"
 
                 endmodule
 
