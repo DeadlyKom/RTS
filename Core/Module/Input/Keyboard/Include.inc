@@ -2,13 +2,11 @@
                     ifndef _INPUT_KEYBOARD_INCLUDE_
                     define _INPUT_KEYBOARD_INCLUDE_
 
-                    include "VirtualKeysTable.inc"
-
                     module Keyboard
-            
+Begin:              EQU $
+
                     include "SpectrumVirtualKeys.inc"
                     include "CheckKeyState.asm"
-                
 VirtualKeysTable:   DB (SVK_CAPS_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_CS_V
                     DB (SVK_Z << 3) | INSTRUCTION_BIT, HalfRow_CS_V
                     DB (SVK_X << 3) | INSTRUCTION_BIT, HalfRow_CS_V
@@ -56,6 +54,8 @@ VirtualKeysTable:   DB (SVK_CAPS_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_CS_V
                     DB (SVK_M << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
                     DB (SVK_SYMBOL_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
                     DB (SVK_SPACE << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
+
+                    display "\t - Keybord : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                     endmodule
 

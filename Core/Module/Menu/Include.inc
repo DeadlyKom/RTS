@@ -4,8 +4,8 @@
 
                 module Menu
 
-                include "Main.asm"
-                include "MainLoadText.asm"
+                include "Main/Include.inc"
+
                 include "StartGame.asm"
                 include "ResumeGame.asm"
                 include "Options.asm"

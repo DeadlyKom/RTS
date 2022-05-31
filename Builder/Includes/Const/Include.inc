@@ -2,6 +2,7 @@
                 ifndef _CONST_INCLUDES_
                 define _CONST_INCLUDES_
 
+                include "Config.inc"
                 include "Color.inc"
                 include "Frame.inc"
                 include "Gameplay.inc"

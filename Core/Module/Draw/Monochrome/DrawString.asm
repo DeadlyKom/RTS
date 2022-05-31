@@ -8,19 +8,15 @@
 ; In:
 ;   HL - адрес текста
 ; Out:
+;   С  - длина строки в пикселах
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
 DrawString:     ;
-                PUSH HL
-                LD HL, SharedBuffer
-                LD (HL), L
-                LD DE, SharedBuffer+1
-                LD BC, SharedBufferSize-1
-                LDIR
-                POP HL
-
                 EXX
+                LD HL, SharedBuffer + 0x100
+                LD DE, #0000
+                CALL SafeFill_256
                 LD D, HIGH SharedBuffer
                 EXX
 

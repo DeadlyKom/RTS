@@ -20,6 +20,11 @@ ATTR_C000_IP    macro Inc?, Paper?
                 LD DE, (((Paper? << 3) | Inc?) << 8) | ((Paper? << 3) | Inc?)
                 CALL SafeFill_768
                 endm
+ATTR_C000_IPB   macro Inc?, Paper?,  Bright?
+                LD HL, #C000 + #1800 + #0300
+                LD DE, ((((0 << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)) << 8) | (((0 << 7) | (Bright? << 6) | (Paper? << 3) | Inc?))
+                CALL SafeFill_768
+                endm
 CLS_C000        macro
                 LD HL, #C000 + #1800
                 LD DE, #0000

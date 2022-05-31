@@ -26,10 +26,38 @@ SafeFill_32     EQU Kernel.Memset.SafeFill_32
 
 ; interrupt
 RestoreRegister EQU Kernel.Interrupt.Handler.RestoreRegister
+UserInterrupt   EQU Kernel.Interrupt.Handler.UserInterrupt
+Interrupt_RET   EQU Kernel.Interrupt.Handler.RET
 ReturnAddress   EQU Kernel.Interrupt.Handler.ReturnAddress
+TickCounterRef  EQU Kernel.Interrupt.Handler.TickCounterPtr                     ; счётчик тиков 1/50
+; input
+Kempston
+.CheckKeyState  EQU Kernel.Kempston.CheckKeyState
+Keyboard
+.CheckKeyState  EQU Kernel.Keyboard.CheckKeyState
+Mouse
+.CheckKeyState  EQU Kernel.Mouse.CheckKeyState
+.PositionX      EQU Kernel.Mouse.PositionX
+.PositionY      EQU Kernel.Mouse.PositionY
+.PositionFlag   EQU Kernel.Mouse.PositionFlag
+.SVK_LBUTTON    EQU Kernel.Mouse.SVK_LBUTTON
+.SVK_RBUTTON    EQU Kernel.Mouse.SVK_RBUTTON
+.SVK_MBUTTON    EQU Kernel.Mouse.SVK_MBUTTON
+
+Cursor
+.MoveUp         EQU Kernel.Input.Cursor.MoveUp
+.MoveDown       EQU Kernel.Input.Cursor.MoveDown
+.MoveLeft       EQU Kernel.Input.Cursor.MoveLeft
+.MoveRight      EQU Kernel.Input.Cursor.MoveRight
+
+; math
+Math.Rand8      EQU Kernel.Math.Rand8
 
 ; draw
+PixelAddress    EQU Kernel.Attribute.PixelAddress
+PixelAttribute  EQU Kernel.Attribute.PixelAttribute
 DrawSprite      EQU Kernel.Attribute.DrawSprite
+DrawCharBoundary EQU Kernel.Attribute.DrawCharBoundary
 ShiftTable      EQU Kernel.Tables.ShiftTable
 
 ; load modules

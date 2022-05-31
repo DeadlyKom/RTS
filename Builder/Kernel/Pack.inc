@@ -3,6 +3,9 @@
                 define _BUILDER_KERNEL_PACK_
 
                 include "Kernel.inc"
+                include "../../Core/Module/Input/Mouse/VirtualKeys.inc"
+                include "../../Core/Module/Input/Keyboard/VirtualKeys.inc"
+                include "../../Core/Module/Input/Kempston/VirtualKeys.inc"
 
                 MMU 2, 2                                                        ; 2 bank, 2 page
                 ORG Adr.Interrupt
@@ -18,6 +21,8 @@ Begin:          EQU $
                 include "../../Core/Module/Draw/Attribute/PixelAttribute.asm"
                 include "../../Core/Module/Draw/Attribute/DrawCharBoundary.asm"
                 include "../../Core/Module/Draw/Attribute/DrawSprite.asm"
+                include "../../Core/Module/Input/Include.inc"
+                include "../../Core/Module/Math/RNG/Rand8.asm"
                 include "Functions/Include.inc"
                 include "Modules/Include.inc"
 

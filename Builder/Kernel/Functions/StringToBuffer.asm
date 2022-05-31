@@ -5,6 +5,7 @@
 ; In:
 ;   A - ID сообщения
 ; Out:
+;   E - длина строки в пикселах
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
@@ -26,6 +27,7 @@ TextToBuffer:   ; расчёт адреса сообщения
 
                 SET_PAGE_LOCALIZATION                                           ; включение страницы локализации
                 CALL Language.Monochrome.DrawString
+                LD E, C                                                         ; копирование длины строки в пикселах
 
                 ; востановление предыдущей страницы
 .RestoreMemPage EQU $+1
@@ -45,6 +47,7 @@ StringToBuffer: ; сохранеие текущей страницы
 
                 SET_PAGE_LOCALIZATION                                           ; включение страницы локализации
                 CALL Language.Monochrome.DrawString
+                LD E, C                                                         ; копирование длины строки в пикселах
 
                 ; востановление предыдущей страницы
 .RestoreMemPage EQU $+1

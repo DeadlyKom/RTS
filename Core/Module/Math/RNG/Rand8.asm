@@ -86,6 +86,8 @@ Rand8:          LD HL, .Table
                 error "whole table must be within single 256 byte block"
                 endif
 
+                display " - RNG : \t\t\t", /A, Rand8, " = busy [ ", /D, $ - Rand8, " bytes  ]"
+
                 endmodule
 
                 endif ; ~_MATH_RAND_8

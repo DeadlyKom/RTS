@@ -3,6 +3,15 @@
                 define _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_CHAR_BOUNDARY_
 
                 module Attribute
+; -----------------------------------------
+; отрисовка знакоместа с атрибутами
+; In:
+;   HL - адрес спрайта
+;   DE - адрес экрана пикселей
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
 DrawCharBoundary: dup  7
                 LD A, (HL)
                 LD (DE), A

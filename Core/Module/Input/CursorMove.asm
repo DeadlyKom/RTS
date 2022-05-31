@@ -38,19 +38,19 @@ MoveDown:           LD HL, Mouse.PositionY
 .SetMaxLocationY    LD A, #BF                               ; фиксируем значение
                     JR SetMouseLocationY
 
-InitAcceleration:   LD A, (MinCursorSpeedRef)
+InitAcceleration:   LD A, (CursorSpeedMinRef)
 .Set                LD (Speed), A
                     NEG
                     LD (NegSpeed), A
                     RET
-AccelerateCursor:   LD HL, MaxCursorSpeedRef
+AccelerateCursor:   LD HL, CursorSpeedMaxRef
                     LD A, (Speed)
                     INC A
                     CP (HL)
                     RET NC
 
                     JR InitAcceleration.Set
-DecelerateCursor:   LD HL, MinCursorSpeedRef
+DecelerateCursor:   LD HL, CursorSpeedMinRef
                     LD A, (Speed)
                     DEC A
                     CP (HL)

@@ -3,9 +3,6 @@
                 define _CONST_LANGUAGE_
 
                 define LocalizationFunc SetPage6
-LANGUAGE_RU     EQU 0x01
-LANGUAGE_SP     EQU 0x02
-LANGUAGE_EN     EQU 0x03
 
                 module Page
                 module Module

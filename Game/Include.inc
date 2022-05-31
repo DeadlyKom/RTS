@@ -44,13 +44,13 @@ BypassFOW                   EQU Page_7.BypassFOW                                
 AI_MIN_UPDATE_FREQ          EQU 1                                               ; скорость обновления ИИ (минимальная)
 AI_MAX_UPDATE_FREQ          EQU 4                                               ; скорость обновления ИИ (максимальная)
 TimeOfDayChangeRate         EQU 50 * 60                                         ; скорость смены времени дня
-TickCounterRef              EQU Interrupt.Handler.TickCounterPtr                ; счётчик тиков 1/50
+; TickCounterRef              EQU Interrupt.Handler.TickCounterPtr                ; счётчик тиков 1/50
 
-; cursor speed
-MIN_CURSOR_SPEED            EQU 3                                               ; минимальная дефолтная скорость курсора
-MAX_CURSOR_SPEED            EQU 24                                              ; максимальная дефолтная скорость курсора
-MinCursorSpeedRef           EQU Game.MinCursorSpeed                             ; минимальная скорость курсора
-MaxCursorSpeedRef           EQU Game.MaxCursorSpeed                             ; максимальная скорость курсора
+; ; cursor speed
+; MIN_CURSOR_SPEED            EQU 3                                               ; минимальная дефолтная скорость курсора
+; MAX_CURSOR_SPEED            EQU 24                                              ; максимальная дефолтная скорость курсора
+; MinCursorSpeedRef           EQU Game.MinCursorSpeed                             ; минимальная скорость курсора
+; MaxCursorSpeedRef           EQU Game.MaxCursorSpeed                             ; максимальная скорость курсора
 
 ; flags
 FrameStateRef               EQU Game.FrameFlags                                 ; указатель на флаги состояний (frame)

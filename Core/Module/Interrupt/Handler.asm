@@ -43,10 +43,10 @@ Handler:        ; ********** HANDLER IM 2 *********
                 INC HL
                 LD (.TickCounterPtr), HL
 
-.UserInterrupt  ; ********* USER INTERRUPT ********
+                ; ********* USER INTERRUPT ********
 
-                ; SwapScreens
-
+.UserInterrupt  EQU $+1
+                CALL .RET
                 ; ~ USER INTERRUPT
 
 ; .Music          ; *********** PLAY MUSIC **********
@@ -55,29 +55,6 @@ Handler:        ; ********** HANDLER IM 2 *********
 ;                 CALL Game.PlayMusic
 ;                 endif
 ;                 ; ~ PLAY MUSIC
-
-; .TRDOS          ; *********** HAS TR-DOS **********
-;                 ; проверка адреса возврата меньше 16384
-;                 LD DE, (.ReturnAddress)
-;                 LD A, D
-;                 AND %11000000
-;                 JR NZ, .NotTRDOS
-
-;                 ; проверка выполнения команд TR-DOS из BASIC
-;                 LD A, (TRDOS.MESS_FLAG)
-;                 INC A
-;                 JR Z, .NotTRDOS
-
-;                 ; корректировка перехода в TR-DOS
-;                 LD HL, TRDOS.EXE_RET
-;                 LD (.ReturnAddress), HL
-;                 LD HL, (.Container_SP)
-;                 DEC HL
-;                 LD (HL), D
-;                 DEC HL
-;                 LD (HL), E
-;                 LD (.Container_SP), HL
-; .NotTRDOS       ; ~ HAS TR-DOS
 
 .RestoreMemPage ; ****** RESTORE MEMORY PAGE ******
                 LD A, #00
@@ -105,5 +82,6 @@ Handler:        ; ********** HANDLER IM 2 *********
 .ReturnAddress  EQU $+1
                 JP #0000
                 ; ~ HANDLER IM 2
+.RET            RET
 
                 endif ; ~ _CORE_MODULE_INTERRUPT_HANDLER_

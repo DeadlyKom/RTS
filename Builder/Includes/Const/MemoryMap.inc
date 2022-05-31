@@ -3,7 +3,8 @@
                 define _CONST_MEMORY_MAP_
 
 ; bank 01 (#4000 - #7FFF)
-StackTop        EQU MemBank_01                                                  ; расположение стека
+StackTop        EQU MemBank_01_DOS                                              ; расположение стека
+GameConfigRef   EQU #5B00                                                       ; адрес хранения FConfig
 MemoryPageRef   EQU PORT_7FFD                                                   ; адрес хранения номера странички
 LocalizationRef EQU #7FFE                                                       ; адрес хранения указателя таблицы текста локализации
 

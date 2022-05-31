@@ -4,6 +4,7 @@
 
                 module VFX
 
+                include "Text/Fadein.asm"
 
                 endmodule
 
