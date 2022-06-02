@@ -43,13 +43,13 @@ DrawSpriteATTR  macro Sprite?, X?, Y?, Width?, Height?
                 CALL DrawSprite
                 endm
 
-SwapScreens     macro
-                LD BC, PORT_7FFD
-                LD A, (BC)
-                XOR %00001000
-                LD (BC), A
-                OUT (C), A
-                endm
+; SwapScreens     macro
+;                 LD BC, PORT_7FFD
+;                 LD A, (BC)
+;                 XOR %00001000
+;                 LD (BC), A
+;                 OUT (C), A
+;                 endm
 ZX_COLOR_IPBF   macro Inc?, Paper?, Bright?, Flash?
                 DB ((Flash? << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)
                 endm
@@ -58,6 +58,10 @@ ZX_COLOR_IPB    macro Inc?, Paper?, Bright?
                 endm
 ZX_COLOR_IP     macro Inc?, Paper?
                 DB ((0 << 7) | (0 << 6) | (Paper? << 3) | Inc?)
+                endm
+
+SET_PAGE_VISIBLE_SCREEN macro
+                CALL ScrPageToC000
                 endm
 
                 endif ; ~_MACRO_SCREEN_

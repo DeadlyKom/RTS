@@ -8,7 +8,7 @@
 ; Note:
 ; -----------------------------------------
 INT_Handler:    ; инициализация
-                SwapScreens
+                SWAP_SCREEN
                 JP VFX.Text.Fadein_Tick
 
                 display " - Main Interrupt : \t\t", /A, INT_Handler, " = busy [ ", /D, $ - INT_Handler, " bytes  ]"

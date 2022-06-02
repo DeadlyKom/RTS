@@ -73,6 +73,14 @@ SetPage7:       LD BC, PORT_7FFD
                 LD (BC), A
                 OUT (C), A
                 RET
+; -----------------------------------------
+; установка страницы видимого экрана
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; Note:
+; -----------------------------------------
 ScrPageToC000:  LD BC, PORT_7FFD
                 LD A, (BC)
                 AND PAGE_MASK_INV
@@ -82,12 +90,34 @@ ScrPageToC000:  LD BC, PORT_7FFD
                 LD (BC), A
                 OUT (C), A
                 RET
+; -----------------------------------------
+; установка страницы не видимого экрана
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; Note:
+; -----------------------------------------
 ScrPageToC000_: LD BC, PORT_7FFD
                 LD A, (BC)
                 AND PAGE_MASK_INV
                 BIT SCREEN_BIT, A
                 JR NZ, SetPage5.OR
                 OR PAGE_7
+                LD (BC), A
+                OUT (C), A
+                RET
+; -----------------------------------------
+; переключение экранов
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; Note:
+; -----------------------------------------
+SwapScreens:    LD BC, PORT_7FFD
+                LD A, (BC)
+                XOR SCREEN_MASK
                 LD (BC), A
                 OUT (C), A
                 RET

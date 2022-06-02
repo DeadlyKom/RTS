@@ -48,15 +48,20 @@ Fadein:         CALL PixelAddress
                 PUSH DE
                 OR A    ; сброс флага переполнения
 .RowLoop        LD A, (HL)
+                LD (DE), A
                 EXX
 
 .ProcedureA     EQU $+0
 .ProcedureB     EQU $+1
                 NOP
                 NOP
-
                 EXX
+
+                ; отображение копии на первом экране
+                RES 7, D
                 LD (DE), A
+                SET 7, D
+
                 INC L
                 INC E
                 DEC C
@@ -88,24 +93,30 @@ Fadein:         CALL PixelAddress
                 JR NZ, .ColumLoop
 
                 RET
-NextVFX:        CALL Math.Rand8
-                CP #2F                                                          ; чем меньше тем реже происходит поворот
+
+NextVFX:        
+.Func           EQU $+1
+                CALL Fadein_Tick.RET
+
+                CALL Math.Rand8
+                CP #2F                                                          ; чем меньше тем реже происходит смена эффекта
                 JR C, .GenerateVFX
+                LD C, #00
                 RRA
-                ADC A, #00
+                ADC A, C
                 RRA
-                ADC A, #00
+                ADC A, C
                 RRA
-                ADC A, #00
+                ADC A, C
                 RRA
-                ADC A, #00
+                ADC A, C
                 LD HL, Fadein_Tick.TableDefault
                 LD (Fadein.Count), HL
                 LD (Fadein_Tick.TicksCount), A
                 RET
 
 .GenerateVFX    AND #03
-                ADD A, A
+SetVFX:         ADD A, A
                 ADD A, A
                 
                 LD L, A
@@ -122,16 +133,33 @@ NextVFX:        CALL Math.Rand8
                 LD D, (HL)
                 LD (Fadein_Tick.Timeline), DE
                 LD A, (DE)
+                DEC A
                 LD (Fadein_Tick.CurTimeline), A
                 LD (Fadein_Tick.TicksCount), A
                 RET
 
 .Table          DW Roll_A, Roll_A.Timeline
-                DW Glitch, Glitch.Timeline
-                DW Roll_A, Roll_A.Timeline
+                DW Glitch_A, Glitch_A.Timeline
+                DW Glitch_B, Glitch_B.Timeline
                 DW Roll_B, Roll_A.Timeline
+                DW Fadeout, Fadeout.Timeline
+SetDefault:     ; отключение функторов
+                LD HL, Fadein_Tick.RET
+                LD (Fadein_Tick.FuncUpdate), HL
+                LD (NextVFX.Func), HL
+                
+                ; отключение эффектов
+                LD HL, Fadein_Tick.TableDefault
+                LD (Fadein.Count), HL
+                LD A, #01
+                LD (Fadein_Tick.TicksCount), A
+                LD (Fadein_Tick.CurTimeline), A
+                RET
 
 Fadein_Tick:    ; 
+                ;
+.FuncUpdate     EQU $+1
+                CALL .RET
 
                 ; уменьшение счётчика прерываний
                 LD HL, .TicksCount
@@ -166,7 +194,7 @@ Fadein_Tick:    ;
                 ADD HL, DE
                 LD (Fadein.Count), HL
                 
-                RET
+.RET            RET
 
 .TicksCount     DB #01
 .CurTimeline    DB #01
@@ -178,6 +206,7 @@ Fadein_Tick:    ;
                 ; RLA     ; #17
                 ; RRCA    ; #0F
                 ; RLCA    ; #07
+
 .TableDefault   DB #00, #00
                 DB #00, #00
                 DB #00, #00
@@ -186,8 +215,55 @@ Fadein_Tick:    ;
                 DB #00, #00
                 DB #00, #00
                 DB #00, #00
+Fadeout:        DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
 
-Glitch:         ; 2.5 (glitch)
+                DB #E6, #00
+                DB #17, #17
+                DB #E6, #00
+                DB #E6, #00
+                DB #1F, #1F
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+
+                DB #00, #00
+                DB #1F, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #F6, #33
+                DB #E6, #00
+                DB #00, #00
+                DB #E6, #00
+
+                DB #00, #00
+                DB #00, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #17, #00
+                DB #E6, #00
+                DB #F6, #22
+                DB #E6, #00
+
+                DB #00, #00
+                DB #00, #00
+                DB #E6, #55
+                DB #1F, #00
+                DB #EE, #88
+                DB #E6, #AA
+                DB #00, #00
+                DB #00, #00
+
+.Timeline       ; (Fadeout)
+                DB #06
+                DB #03, #03, #03, #03, #03
+Glitch_A:         ; 2.5 (glitch)
                 DB #00, #00
                 DB #00, #00
                 DB #00, #00
@@ -248,8 +324,71 @@ Glitch:         ; 2.5 (glitch)
                 DB #00, #00
 
 .Timeline       ; 2.0 (glitch)
-                DB #06
+                DB #07
                 DB #0F, #04, #04, #04, #04, #05
+Glitch_B:       ; 2.5 (glitch)
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+
+                ; 2.4 (glitch)
+                DB #00, #00
+                DB #00, #00
+                DB #1F, #00
+                DB #17, #17
+                DB #17, #00
+                DB #00, #00
+                DB #1F, #00
+                DB #00, #00
+
+                ; 2.3 (glitch)
+                DB #00, #00
+                DB #E6, #00
+                DB #E6, #06
+                DB #1F, #1F
+                DB #E6, #2A
+                DB #EE, #18
+                DB #E6, #00
+                DB #00, #00
+
+                ; 2.2 (glitch)
+                DB #00, #00
+                DB #00, #00
+                DB #17, #00
+                DB #EE, #2A
+                DB #00, #00
+                DB #17, #17
+                DB #00, #00
+                DB #00, #00
+                
+                ; 2.1 (glitch)
+                DB #00, #00
+                DB #E6, #54
+                DB #F6, #33
+                DB #E6, #55
+                DB #EE, #2A
+                DB #E6, #54
+                DB #E6, #2A
+                DB #00, #00
+
+                ; 2.0 (glitch)
+                DB #00, #00
+                DB #00, #00
+                DB #1F, #00
+                DB #00, #00
+                DB #1F, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+
+.Timeline       ; 2.0 (glitch)
+                DB #07
+                DB #0F, #04, #03, #04, #03, #04
 Roll_A:         ; 1.2 (roll)
                 DB #00, #00
                 DB #00, #00
@@ -281,9 +420,8 @@ Roll_A:         ; 1.2 (roll)
                 DB #00, #00
 
 .Timeline       ; 1.0 (roll)
-                DB #03
+                DB #04
                 DB #0F, #04, #05
-
 Roll_B:         ; 1.1 (roll)
                 DB #00, #00
                 DB #00, #00
@@ -305,7 +443,7 @@ Roll_B:         ; 1.1 (roll)
                 DB #00, #00
 
 .Timeline       ; 1.0 (roll)
-                DB #02
+                DB #03
                 DB #0F, #05
  
                 display " - VFX Fadein Text : \t\t", /A, Fadein, " = busy [ ", /D, $ - Fadein, " bytes  ]"

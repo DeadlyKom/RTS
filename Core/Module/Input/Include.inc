@@ -10,6 +10,7 @@
                 module Input
 Begin:          EQU $
 
+                include "Input.asm"
                 include "CheckKeyState.asm"
                 include "CursorMove.asm"
 

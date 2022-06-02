@@ -12,6 +12,7 @@ SetPage6        EQU Kernel.Memory.SetPage6
 SetPage7        EQU Kernel.Memory.SetPage7
 ScrPageToC000   EQU Kernel.Memory.ScrPageToC000
 ScrPageToC000_  EQU Kernel.Memory.ScrPageToC000_
+SwapScreens     EQU Kernel.Memory.SwapScreens
 MemcpyPages     EQU Kernel.Memcpy.Pages
 
 ; memory set
@@ -31,6 +32,9 @@ Interrupt_RET   EQU Kernel.Interrupt.Handler.RET
 ReturnAddress   EQU Kernel.Interrupt.Handler.ReturnAddress
 TickCounterRef  EQU Kernel.Interrupt.Handler.TickCounterPtr                     ; счётчик тиков 1/50
 ; input
+Input
+.CheckKeyState  EQU Kernel.Input.CheckKeyState
+.JumpDefaulKeys EQU Kernel.Input.JumpDefaulKeys
 Kempston
 .CheckKeyState  EQU Kernel.Kempston.CheckKeyState
 Keyboard

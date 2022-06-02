@@ -40,4 +40,8 @@ SET_SCREEN_BASE macro
 SET_SCREEN_SHADOW macro
                 CALL SetPage7
                 endm
+; переключение страницы экрана
+SWAP_SCREEN     macro
+                CALL SwapScreens
+                endm
                 endif ; ~_MACRO_MEMORY_
