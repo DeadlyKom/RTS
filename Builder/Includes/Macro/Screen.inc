@@ -64,4 +64,8 @@ SET_PAGE_VISIBLE_SCREEN macro
                 CALL ScrPageToC000
                 endm
 
+SET_PAGE_SHADOW_SCREEN macro
+                CALL ScrPageToC000_
+                endm
+
                 endif ; ~_MACRO_SCREEN_

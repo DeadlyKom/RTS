@@ -24,7 +24,7 @@ DrawCharBoundary: dup  7
                 CALL PixelAttribute
                 LD A, (HL)
                 LD (DE), A
-                INC HL
+                ; INC HL
                 RET
 
                 display " - Draw Char Boundary : \t", /A, DrawCharBoundary, " = busy [ ", /D, $ - DrawCharBoundary, " bytes  ]"

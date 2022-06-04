@@ -14,16 +14,8 @@ Main:           ; загрузка языка
                 ; инициализация таблицы текста
                 LD HL, Adr.MainMenuText
                 LD (LocalizationRef), HL
-
-                ; сброс выбора
-                LD A, Menu.Num-1
-                LD (Menu.Current), A
-                XOR A
-                LD (Menu.Flag), A
-                DEC A
-                LD (.Flag), A
        
-                ; подготовка экрана 1
+.Reset         ; подготовка экрана 1
                 SET_SCREEN_BASE
                 CLS_C000
                 ATTR_C000_IPB RED, BLACK, 1
@@ -33,74 +25,104 @@ Main:           ; загрузка языка
                 CLS_C000
                 ATTR_C000_IPB RED, BLACK, 0
 
+                ; инициализация VFX
+                LD IY, VFX.Text.Variables
+                LD HL, UpdateTextVFX
+                LD (IY + VFX.Text.FTextVFX.FrameComplited), HL
+                LD HL, FadeinNextText
+                LD (IY + VFX.Text.FTextVFX.VFX_Complited), HL
+
                 ; отрисовка меню
                 LD HL, Menu
-                LD B, (HL)
-                INC HL
-
-.Loop           LD (UpdateVFX.Selected), HL
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                INC HL
                 LD A, (HL)
-                INC HL
-                PUSH HL
-                PUSH BC
-                PUSH DE
-
-                CALL Functions.TextToBuffer
-                LD A, E
-                LD (UpdateVFX.Length), A
-                LD C, E
-                POP DE
-                CALL VFX.Text.Fadein
-                
-                POP BC
-                POP HL
-                DJNZ .Loop
-
-                ;
-                LD HL, Update
-                LD (VFX.Text.NextVFX.Func), HL
-
-                LD HL, UpdateVFX
-                LD (VFX.Text.Fadein_Tick.FuncUpdate), HL
+                CALL SetMenuText
+                CALL SetFadeinVFX
 
                 SetUserHendler INT_Handler
 
-.MainLoop       ;
-                LD A, (.Flag)
-                OR A
-                JP Z, Main
+.Loop           HALT
 
-                ; обработка ввода
-                LD DE, InputDefault
-                CALL Input.JumpDefaulKeys
+                LD HL, Menu.Flag
+                BIT NEXT_FADEIN_BIT, (HL)
+                CALL NZ, PreFadeinText
 
-                JR .MainLoop
-.Flag           DB #FF
+                LD HL, Menu.Flag
+                BIT ALL_FADEIN_BIT, (HL)
+                JP NZ, Select
 
-UpdateVFX:      ;
-.Length         EQU $+1
-                LD C, #00
-.Selected       EQU $+1
-                LD HL, #0000
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                PUSH DE
-                CALL VFX.Text.Fadein
+                JR .Loop
+
+UpdateTextVFX:  ;
+.Coord          EQU $+1
+                LD DE, #0000
+                CALL VFX.Text.Render
+
+                LD HL, Menu.Flag
+                BIT DRAW_CURSOR_BIT, (HL)
+                RET Z
+
+                ; сброс флага перерисовка флага
+                RES DRAW_CURSOR_BIT, (HL)
+
+                ; очиста курсора
+.OldCoord       EQU $+1
+                LD DE, #0000
+                DEC E
+                CALL PixelAddress
+                XOR A
+                dup  7
+                LD (DE), A
+                INC D
+                edup
+                LD (DE), A
 
                 ; вывод курсора
-                POP DE
+                LD DE, (.Coord)
                 DEC E
                 CALL PixelAddress
                 LD HL, SelectCursor
-                CALL DrawCharBoundary
-                RET
+                JP DrawCharBoundary
 
-Menu:           DB .Num
+; A - номер меню
+SetMenuText:    ; установка выбранного меню
+                LD (Menu.Current), A
+
+                ; сохранить позицию курсора
+                LD HL, (UpdateTextVFX.Coord)
+                LD (UpdateTextVFX.OldCoord), HL
+
+.NotUpdate      ; расчёт информации о меню
+                LD HL, Menu.First
+                LD D, #00
+                LD E, A
+                ADD A, A
+                ADD A, E
+                LD E, A
+                ADD HL, DE
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                INC HL
+                LD (UpdateTextVFX.Coord), DE
+
+                ; копирование текста в буфер
+                LD A, (HL)
+                CALL Functions.TextToBuffer
+
+                ; округление длины текста до знакоместа
+                LD A, E
+                LD B, #00
+                RRA
+                ADC A, B
+                RRA
+                ADC A, B
+                RRA
+                ADC A, B
+                AND %00011111
+                LD (IY + VFX.Text.FTextVFX.Length), A
+
+                RET
+Menu:           DB .Num-1
 .First          ; текст в "настройки"
                 DW #1413
                 DB Language.Text.Menu.Options
@@ -111,120 +133,8 @@ Menu:           DB .Num
                 DW #1213
                 DB Language.Text.Menu.NewGame
 .Num            EQU ($-Menu-1) / 3
-.Current        DB .Num-1
-.Flag           DB #00
-
-                ; ***** InputDefault *****
-InputDefault:   JR NZ, .Processing                                              ; skip released
-                EX AF, AF'
-.NotProcessing  SCF
-                RET
-
-.Processing     EX AF, AF'
-                CP DEFAULT_UP
-                JP Z, PressUp
-                CP DEFAULT_DOWN
-                JP Z, PressDown
-                CP DEFAULT_SELECT
-                JP Z, PressSelect
-                JR .NotProcessing
-
-PressUp:        LD HL, Menu.Current
-                LD A, (HL)
-                CP Menu.Num-1
-                RET Z
-                LD C, A
-
-                ; 
-                INC HL
-                LD A, (HL)
-                OR A
-                RET NZ
-                LD (HL), #FF
-                DEC HL
-
-                INC C
-                LD (HL), C
-                RET
-PressDown:      LD HL, Menu.Current
-                LD A, (HL)
-                OR A
-                RET Z
-                LD C, A
-
-                ; 
-                INC HL
-                LD A, (HL)
-                OR A
-                RET NZ
-                LD (HL), #FF
-                DEC HL
-                
-                DEC C
-                LD (HL), C
-                RET
-PressSelect:    LD HL, Menu.Flag
-                LD A, (HL)
-                OR A
-                RET NZ
-                LD (HL), #FF
-
-                LD HL, PressSelect.Next
-                LD (VFX.Text.NextVFX.Func), HL
-                LD A, 4
-                JP VFX.Text.SetVFX
-
-.Next           CALL VFX.Text.SetDefault
-                SET_PAGE_VISIBLE_SCREEN
-                XOR A
-                LD (Main.Flag), A
-                RET
-                ; JP Main
-
-Update:         LD A, (Menu.Flag)
-                OR A
-                RET Z
-
-                LD HL, (UpdateVFX.Selected)
-                PUSH HL
-
-                LD A, (Menu.Current)
-                LD HL, Menu.First
-                LD E, A
-                ADD A, A
-                ADD A, E
-                LD E, A
-                LD D, #00
-                ADD HL, DE
-
-                LD (UpdateVFX.Selected), HL
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                INC HL
-                LD A, (HL)
-                CALL Functions.TextToBuffer
-                LD A, E
-                LD (UpdateVFX.Length), A
-
-                POP HL
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                DEC E
-
-                CALL PixelAddress
-                XOR A
-                dup  7
-                LD (DE), A
-                INC D
-                edup
-                LD (DE), A
-
-                LD (Menu.Flag), A
-
-                RET
-
+.Current        DB .Num-1                                                       ; 1 (порядок)
+.Flag           DB #00                                                          ; 2 (порядок)
 
 
                 ; ; отрисовка надпись
@@ -250,7 +160,7 @@ SelectCursor:   DB %00000000
                 DB %01100000
                 DB %01000000
                 DB %00000000
-                ZX_COLOR_IPB RED, BLACK, 0
+                ZX_COLOR_IPB RED, BLACK, 1
 
                 display " - Main : \t\t\t", /A, Main, " = busy [ ", /D, $ - Main, " bytes  ]"
 

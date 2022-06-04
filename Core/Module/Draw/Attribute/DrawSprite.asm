@@ -21,6 +21,7 @@ DrawSprite:     CALL PixelAddress
 
 .Box_1          PUSH DE
                 CALL DrawCharBoundary
+                INC HL
                 POP DE
                 INC E
                 DJNZ .Box_1

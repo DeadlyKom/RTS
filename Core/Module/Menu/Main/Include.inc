@@ -4,9 +4,14 @@
 
                 module Main
 
+                include "Const.inc"
                 include "Main.asm"
+                include "Fadein.asm"
+                include "Fadeout.asm"
                 include "MainLoadText.asm"
                 include "InterruptHandler.asm"
+                include "Select.asm"
+                include "Input.asm"
                 include "../../VFX/Include.inc"
 
                 endmodule

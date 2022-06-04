@@ -13,7 +13,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Fadein:         CALL PixelAddress
+Fade:           CALL PixelAddress
                 LD HL, SharedBuffer
 
                 ; округление 
@@ -111,7 +111,7 @@ NextVFX:
                 RRA
                 ADC A, C
                 LD HL, Fadein_Tick.TableDefault
-                LD (Fadein.Count), HL
+                LD (Fade.Count), HL
                 LD (Fadein_Tick.TicksCount), A
                 RET
 
@@ -143,6 +143,7 @@ SetVFX:         ADD A, A
                 DW Glitch_B, Glitch_B.Timeline
                 DW Roll_B, Roll_A.Timeline
                 DW Fadeout, Fadeout.Timeline
+                DW Fadein, Fadein.Timeline
 SetDefault:     ; отключение функторов
                 LD HL, Fadein_Tick.RET
                 LD (Fadein_Tick.FuncUpdate), HL
@@ -150,7 +151,7 @@ SetDefault:     ; отключение функторов
                 
                 ; отключение эффектов
                 LD HL, Fadein_Tick.TableDefault
-                LD (Fadein.Count), HL
+                LD (Fade.Count), HL
                 LD A, #01
                 LD (Fadein_Tick.TicksCount), A
                 LD (Fadein_Tick.CurTimeline), A
@@ -192,7 +193,7 @@ Fadein_Tick:    ;
 .Table          EQU $+1
                 LD DE, #0000
                 ADD HL, DE
-                LD (Fadein.Count), HL
+                LD (Fade.Count), HL
                 
 .RET            RET
 
@@ -215,6 +216,91 @@ Fadein_Tick:    ;
                 DB #00, #00
                 DB #00, #00
                 DB #00, #00
+Fadein:         
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #17, #00
+                DB #F6, #FF
+
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #00, #00
+                DB #1F, #00
+                DB #F6, #FF
+                DB #E6, #00
+
+                DB #00, #00
+                DB #00, #00
+                DB #1F, #00
+                DB #17, #17
+                DB #17, #00
+                DB #F6, #FF
+                DB #E6, #00
+                DB #E6, #00
+
+                DB #00, #00
+                DB #17, #00
+                DB #17, #17
+                DB #1F, #00
+                DB #F6, #FF
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+
+                DB #1F, #00
+                DB #1F, #1F
+                DB #17, #00
+                DB #F6, #FF
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+
+                DB #17, #17
+                DB #1F, #00
+                DB #F6, #FF
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+
+                DB #1F, #1F
+                DB #F6, #FF
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+
+                DB #F6, #FF
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+                DB #E6, #00
+
+.Timeline       ; (Fadeout)
+                DB #0A
+                DB #04, #03, #03, #03, #03, #03, #03, #03, #03, #03
 Fadeout:        DB #E6, #00
                 DB #E6, #00
                 DB #E6, #00
@@ -263,7 +349,7 @@ Fadeout:        DB #E6, #00
 .Timeline       ; (Fadeout)
                 DB #06
                 DB #03, #03, #03, #03, #03
-Glitch_A:         ; 2.5 (glitch)
+Glitch_A:       ; 2.5 (glitch)
                 DB #00, #00
                 DB #00, #00
                 DB #00, #00
@@ -284,14 +370,14 @@ Glitch_A:         ; 2.5 (glitch)
                 DB #00, #00
 
                 ; 2.3 (glitch)
-                DB #00, #00
-                DB #E6, #00
-                DB #E6, #00
-                DB #00, #00
-                DB #E6, #00
-                DB #E6, #00
-                DB #E6, #00
-                DB #00, #00
+                DB #00, #00     ; #10
+                DB #E6, #00     ; #60, #00
+                DB #E6, #00     ; #00
+                DB #00, #00     ; #10
+                DB #E6, #00     ; #60, #00
+                DB #E6, #00     ; #00
+                DB #E6, #00     ; #00
+                DB #00, #00     ; #10
 
                 ; 2.2 (glitch)
                 DB #00, #00
@@ -304,14 +390,14 @@ Glitch_A:         ; 2.5 (glitch)
                 DB #00, #00
                 
                 ; 2.1 (glitch)
-                DB #00, #00
-                DB #E6, #00
-                DB #E6, #00
-                DB #E6, #00
-                DB #00, #00
-                DB #E6, #00
-                DB #00, #00
-                DB #00, #00
+                DB #00, #00     ; #10
+                DB #E6, #00     ; #60, #00
+                DB #E6, #00     ; #00
+                DB #E6, #00     ; #00
+                DB #00, #00     ; #10
+                DB #E6, #00     ; #60, #00
+                DB #00, #00     ; #10
+                DB #00, #00     ; #00
 
                 ; 2.0 (glitch)
                 DB #00, #00
@@ -446,7 +532,7 @@ Roll_B:         ; 1.1 (roll)
                 DB #03
                 DB #0F, #05
  
-                display " - VFX Fadein Text : \t\t", /A, Fadein, " = busy [ ", /D, $ - Fadein, " bytes  ]"
+                display " - Text Fadein VFX : \t\t", /A, Fade, " = busy [ ", /D, $ - Fade, " bytes  ]"
 
                 endmodule
 
