@@ -2,6 +2,7 @@
                 ifndef _CONST_SHARED_MEMORY_MAP_
                 define _CONST_SHARED_MEMORY_MAP_
 
+MemBank_01_SCR  EQU #4000                                                       ; Bank 01 (Screen 0)
 MemBank_01      EQU #4000 + #1B00                                               ; Bank 01 (Screen 0) (пропуск экрана)
 MemBank_01_DOS  EQU MemBank_01 + #0500                                          ; Bank 01 (Screen 0) (пропуск экрана и 0x500 байт данных для TR DOS)
 MemBank_02      EQU #8000                                                       ; Bank 02 (16384 байт)

@@ -51,7 +51,7 @@ StartBoot:      DI
                 ADD HL, BC
 
                 ; адрес запуска
-                LD BC, Adr.MainMenu
+                LD BC, Adr.Module.Main
                 PUSH BC
 
                 ; количество загружаемых файлов
@@ -70,11 +70,23 @@ StartBoot:      DI
                 Page.Module.Language | FILE_ARCHIVE,
                 Adr.Module.Language }
 
-                ; путь файла главного меню
+                ; путь файла работы с меню
                 FFileArea {
-                {{MainMenuName}, SystemExt },
-                Page.MainMenu | FILE_ARCHIVE,
-                Adr.MainMenu }
+                {{MenuCoreName}, SystemExt },
+                Page.Core | FILE_ARCHIVE,
+                Adr.Module.Core }
+
+                ; путь файла "опций"
+                FFileArea {
+                {{MenuOptionsName}, SystemExt },
+                Page.Options | FILE_ARCHIVE,
+                Adr.Module.Options }
+
+                ; путь файла "главного меню"
+                FFileArea {
+                {{MenuMainName}, SystemExt },
+                Page.Main | FILE_ARCHIVE,
+                Adr.Module.Main }
 
 .FileNum        EQU ($-.FileArray) / FFileArea
 EndBoot:        DB #0D                                                          ; конец строки

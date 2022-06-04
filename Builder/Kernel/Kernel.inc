@@ -11,6 +11,7 @@ SetPage5        EQU Kernel.Memory.SetPage5
 SetPage6        EQU Kernel.Memory.SetPage6
 SetPage7        EQU Kernel.Memory.SetPage7
 ScrPageToC000   EQU Kernel.Memory.ScrPageToC000
+ScrFromPageC000 EQU Kernel.Memory.ScrFromPageC000
 ScrPageToC000_  EQU Kernel.Memory.ScrPageToC000_
 SwapScreens     EQU Kernel.Memory.SwapScreens
 MemcpyPages     EQU Kernel.Memcpy.Pages

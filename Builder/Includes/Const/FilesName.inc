@@ -27,14 +27,20 @@
                 define FontEnNameTRD     "Font En.#"                            ; имя шрифта английского языка
 
                 ; text
-                define MainTextRuName    "Main Ru"                              ; имя файла русского языка главного меню
-                define MainTextRuNameTRD "Main Ru.#"                            ; имя файла русского языка главного меню
-                define MainTextSpName    "Main Sp"                              ; имя файла испанского языка главного меню
-                define MainTextSpNameTRD "Main Sp.#"                            ; имя файла испанского языка главного меню
-                define MainTextEnName    "Main En"                              ; имя файла английского языка главного меню
-                define MainTextEnNameTRD "Main En.#"                            ; имя файла английского языка главного меню
+                define MenuTextRuName       "Menu Ru"                           ; имя файла русского языка меню
+                define MenuTextRuNameTRD    "Menu Ru.#"                         ; имя файла русского языка меню
+                define MenuTextSpName       "Menu Sp"                           ; имя файла испанского языка меню
+                define MenuTextSpNameTRD    "Menu Sp.#"                         ; имя файла испанского языка меню
+                define MenuTextEnName       "Menu En"                           ; имя файла английского языка меню
+                define MenuTextEnNameTRD    "Menu En.#"                         ; имя файла английского языка меню
                 
-                define MainMenuName      "Main"                                 ; имя главного меню
-                define MainMenuNameTRD   "Main.#"                               ; имя главного меню
+                define MenuCoreName         "M.Core"                            ; имя файла основных функций работы с меню
+                define MenuCoreNameTRD      "M.Core.#"                          ; имя файла основных функций работы с меню
+
+                define MenuMainName         "M.Main"                            ; имя файла "главного меню"
+                define MenuMainNameTRD      "M.Main.#"                          ; имя файла "главного меню"
+
+                define MenuOptionsName      "M.Option"                          ; имя файла "меню настроек"
+                define MenuOptionsNameTRD   "M.Option.#"                        ; имя файла "меню настроек"
 
                 endif ; ~_CONST_FILES_NAME_

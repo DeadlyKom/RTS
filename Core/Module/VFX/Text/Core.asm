@@ -6,16 +6,17 @@
 ; In:
 ;   HL - адрес таблицы VFX
 ;   C  - номер VFX из таблицы
-;   IY - указывает на структуру FTextVFX
+;   IY - указывает на структуру FTVFX
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-SetTextVFX:     ; установка длительности первого фрейма
+@SetVFX_Text:   ; установка длительности первого фрейма
                 LD A, #01
-.CustomFrame    LD (IY + FTextVFX.TickCounter), A
+@SetVFX_Custom: LD (IY + FTVFX.TickCounter), A
 
                 ; расчёт адреса VFX
+                LD HL, VFX.Table                                                ; таблица эффектов
                 LD B, #00
                 LD A, C
                 ADD A, A
@@ -26,14 +27,14 @@ SetTextVFX:     ; установка длительности первого ф�
                 INC HL
                 LD D, (HL)
                 INC HL
-                LD (IY + FTextVFX.Shader), DE
+                LD (IY + FTVFX.Shader), DE
                 LD E, (HL)
                 INC HL
                 LD D, (HL)
-                LD (IY + FTextVFX.FrameTiming), DE
+                LD (IY + FTVFX.FrameTiming), DE
                 LD A, (DE)
-                LD (IY + FTextVFX.FrameCounter), A
-                LD (IY + FTextVFX.Flags), #00
+                LD (IY + FTVFX.FrameCounter), A
+                LD (IY + FTVFX.Flags), #00
                 RET
 
                 endif ; ~ _CORE_MODULE_VFX_TEXT_RENDER_CORE_

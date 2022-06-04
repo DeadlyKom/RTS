@@ -1,20 +1,14 @@
 
-                ifndef _BUILDER_MENU_PACK_
-                define _BUILDER_MENU_PACK_
+                ifndef _BUILDER_MENU_PACK_MENU_
+                define _BUILDER_MENU_PACK_MENU_
 
-                MMU 1, Page.MainMenu                                            ; 1 bank, Page.MainMenu (5) page
-                ORG Adr.MainMenu
                 module Menu
 
-                display "\'Menu\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
-Begin:          EQU $
-                include "../../Core/Module/Menu/Include.inc"
-Size:           EQU $ - Begin
-SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
-
-                savetrd TRD_FILENAME, MainMenuNameTRD, Begin, Size
+                include "Core/Pack.inc"
+                include "Options/Pack.inc"
+                include "Main/Pack.inc"
 
                 endmodule
 
-                endif ; ~ _BUILDER_MENU_PACK_
+                endif ; ~ _BUILDER_MENU_PACK_MENU_
 

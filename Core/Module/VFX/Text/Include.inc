@@ -6,15 +6,17 @@
 
                 include "Const.inc"
                 include "Variables.inc"
+
+                display " - Text Render VFX : \t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
 Begin:          EQU $
                 include "Core.asm"
                 include "Render.asm"
                 include "RenderTick.asm"
-Variables:      FTextVFX
+@VariablesVFX:  FTVFX
+Size:           EQU $-Begin
 
                 include "VFX.asm"
 
-                display " - Text New Render VFX : \t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
                 endmodule
 
                 endif ; ~ _CORE_MODULE_VFX_TEXT_RENDER_INCLUDE_

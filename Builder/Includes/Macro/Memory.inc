@@ -40,8 +40,13 @@ SET_SCREEN_BASE macro
 SET_SCREEN_SHADOW macro
                 CALL SetPage7
                 endm
+; включить экран находящийся в 3 банке (5 или 7 страница)
+SET_SCREEN_C000 macro
+                CALL ScrFromPageC000
+                endm
 ; переключение страницы экрана
 SWAP_SCREEN     macro
                 CALL SwapScreens
                 endm
+
                 endif ; ~_MACRO_MEMORY_

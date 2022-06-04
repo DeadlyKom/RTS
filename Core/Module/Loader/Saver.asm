@@ -17,12 +17,9 @@
 Saver:          ; -----------------------------------------
                 ; загрузочный экран
                 ; -----------------------------------------
-                
-                ; бордюр чёрного цвета
-                BORDER BLACK
 
                 ; подготовка экрана
-                SET_SCREEN_BASE
+                SET_SCREEN_SHADOW
                 CLS_C000
                 ATTR_C000_IP WHITE, BLACK
 
@@ -37,6 +34,9 @@ Saver:          ; -----------------------------------------
                 LD DE, SharedBuffer
                 CALL Loader.Decompressor.Forward
                 DrawSpriteATTR SharedBuffer, 1, 22, 10, 1
+
+                ; переключение экране на теневой экран
+                SET_SCREEN_C000
 
                 ; -----------------------------------------
                 ; инициализация

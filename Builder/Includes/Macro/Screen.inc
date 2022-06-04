@@ -15,6 +15,11 @@ ATTR_4000_IP    macro Inc?, Paper?
                 LD DE, (((Paper? << 3) | Inc?) << 8) | ((Paper? << 3) | Inc?)
                 CALL SafeFill_768
                 endm
+ATTR_4000_IPB   macro Inc?, Paper?,  Bright?
+                LD HL, #4000 + #1800 + #0300
+                LD DE, ((((0 << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)) << 8) | (((0 << 7) | (Bright? << 6) | (Paper? << 3) | Inc?))
+                CALL SafeFill_768
+                endm
 ATTR_C000_IP    macro Inc?, Paper?
                 LD HL, #C000 + #1800 + #0300
                 LD DE, (((Paper? << 3) | Inc?) << 8) | ((Paper? << 3) | Inc?)

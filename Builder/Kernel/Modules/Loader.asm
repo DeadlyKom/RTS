@@ -12,7 +12,11 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Loader:         ; инициализация
+Loader:         ; подготовка
+                BORDER BLACK                                                    ; бордюр чёрного цвета
+                ATTR_4000_IPB BLACK, BLACK, 1
+
+                ; инициализация
                 SET_PAGE_FILE_SYS                                               ; включить страницу файловой системы
                 CALL FileSystem.Base.Setup                                      ; инициализация файловой системы
 

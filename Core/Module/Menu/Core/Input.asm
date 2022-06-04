@@ -1,9 +1,9 @@
 
-                ifndef _CORE_MODULE_MENU_MAIN_INPUT_
-                define _CORE_MODULE_MENU_MAIN_INPUT_
+                ifndef _CORE_MODULE_MENU_CORE_INPUT_
+                define _CORE_MODULE_MENU_CORE_INPUT_
 
                 ; ***** InputDefault *****
-InputDefault:   JR NZ, .Processing                                              ; skip released
+@InputDefault:  JR NZ, .Processing                                              ; skip released
                 EX AF, AF'
 .NotProcessing  SCF
                 RET
@@ -11,16 +11,20 @@ InputDefault:   JR NZ, .Processing                                              
 .Processing     EX AF, AF'
                 CP DEFAULT_UP
                 JP Z, PressUp
+                
                 CP DEFAULT_DOWN
                 JP Z, PressDown
+
                 CP DEFAULT_SELECT
                 JP Z, PressSelect
+
                 JR .NotProcessing
-PressUp:        LD HL, Menu.Current
+PressUp:        LD HL, MenuVariables.NumberOptions
                 LD A, (HL)
-                CP Menu.Num-1
+                INC HL
+                CP (HL)
                 RET Z
-                LD C, A
+                LD C, (HL)
 
                 ; проверка ранее установленного флага CHANGE_BIT
                 INC HL
@@ -32,7 +36,7 @@ PressUp:        LD HL, Menu.Current
                 INC C
                 LD (HL), C
                 RET
-PressDown:      LD HL, Menu.Current
+PressDown:      LD HL, MenuVariables.Current
                 LD A, (HL)
                 OR A
                 RET Z
@@ -49,7 +53,8 @@ PressDown:      LD HL, Menu.Current
                 LD (HL), C
 
                 RET
-PressSelect:    LD HL, Menu.Flag
+PressSelect:    LD HL, MenuVariables.Flags
+
                 ; проверка ранее установленного флага SELECT_BIT
                 BIT SELECT_BIT, (HL)
                 RET NZ
@@ -57,4 +62,6 @@ PressSelect:    LD HL, Menu.Flag
 
                 RET
 
-                endif ; ~ _CORE_MODULE_MENU_MAIN_INPUT_
+                display " - Input Default : \t\t", /A, InputDefault, " = busy [ ", /D, $ - InputDefault, " bytes  ]"
+
+                endif ; ~ _CORE_MODULE_MENU_CORE_INPUT_

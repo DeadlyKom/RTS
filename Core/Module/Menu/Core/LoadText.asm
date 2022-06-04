@@ -13,7 +13,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-MainLoadText:   ; инициализация
+@LoadText:      ; инициализация
                 EX AF, AF'                                                      ; сохранён номер языка
                 SET_PAGE_FILE_SYS                                               ; включить страницу файловой системы
                 CALL FileSystem.Base.Setup                                      ; инициализация файловой системы
@@ -34,14 +34,14 @@ MainLoadText:   ; инициализация
                 RET C                                                           ; выход если файл не найден
 
                 ; загрузка модуля
-                LD A, Page.MainMenu                                             ; страница 
-                LD DE, Adr.MainMenuText                                         ; адрес текста главного меню
+                LD A, Page.Main                                                 ; страница 
+                LD DE, Adr.Module.Text                                          ; адрес текста меню
                 JP FileSystem.Base.PrimaryRead
 
-.FileName       FFile { {MainTextRuName}, SystemExt }                           ; имя файла русского языка главного меню
-                FFile { {MainTextSpName}, SystemExt }                           ; имя файла испанского языка главного меню
-                FFile { {MainTextEnName}, SystemExt }                           ; имя файла английского языка главного меню
+.FileName       FFile { {MenuTextRuName}, SystemExt }                           ; имя файла русского языка меню
+                FFile { {MenuTextSpName}, SystemExt }                           ; имя файла испанского языка меню
+                FFile { {MenuTextEnName}, SystemExt }                           ; имя файла английского языка меню
 
-                display " - Main Load Text : \t\t", /A, MainLoadText, " = busy [ ", /D, $ - MainLoadText, " bytes  ]"
+                display " - Load Text : \t\t", /A, LoadText, " = busy [ ", /D, $ - LoadText, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_LOAD_TEXT_

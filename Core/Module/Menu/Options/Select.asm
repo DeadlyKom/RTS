@@ -1,7 +1,6 @@
 
-                ifndef _CORE_MODULE_MENU_MAIN_SELECT_
-                define _CORE_MODULE_MENU_MAIN_SELECT_
-
+                ifndef _CORE_MODULE_MENU_OPTIONS_SELECT_
+                define _CORE_MODULE_MENU_OPTIONS_SELECT_
 ChangeMenu:     RET
 SelectMenu:     ; установка функции обработчика завершения эффекта
                 LD HL, Selected
@@ -31,4 +30,4 @@ Selected:       ; проверка ранее установленного фл�
 
                 display " - Select : \t\t\t", /A, Select, " = busy [ ", /D, $ - Select, " bytes  ]"
 
-                endif ; ~ _CORE_MODULE_MENU_MAIN_SELECT_
+                endif ; ~ _CORE_MODULE_MENU_OPTIONS_SELECT_

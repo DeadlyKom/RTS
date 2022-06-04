@@ -6,31 +6,33 @@
 ;   IY - указывает на структуру FTextVFX
 ; Out:
 ;   выставляется флаги:
-;       - FRAME_COMPLITED, переход к следующему фрейму
+;       - VFX_FRAME_COMPLITED, переход к следующему фрейму
+;       - VFX_COMPLITED, эффект проигрался полностью
+;       - VFX_PLAYING, эффект проигрывается
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-RenderTick:     ; уменьшение счётчика прерываний
-                DEC (IY + FTextVFX.TickCounter)
+@RenderTickVFX: ; уменьшение счётчика прерываний
+                DEC (IY + FTVFX.TickCounter)
                 RET NZ
 
                 ; установка флагов (VFX_COMPLITED устанавливается преждевременно)
-                LD (IY + FTextVFX.Flags), VFX_COMPLITED
+                LD (IY + FTVFX.Flags), VFX_COMPLITED
 
                 ; уменьшить счётчик фреймов
-                DEC (IY + FTextVFX.FrameCounter)
+                DEC (IY + FTVFX.FrameCounter)
                 RET Z
 
-                ; установка флага FRAME_COMPLITED
-                LD (IY + FTextVFX.Flags), FRAME_COMPLITED | PLAYING_VFX
+                ; установка флага VFX_FRAME_COMPLITED и VFX_PLAYING
+                LD (IY + FTVFX.Flags), VFX_FRAME_COMPLITED | VFX_PLAYING
 
                 ; установка нового счётчика прерываний
-                LD HL, (IY + FTextVFX.FrameTiming)
+                LD HL, (IY + FTVFX.FrameTiming)
                 LD D, #00
-                LD E, (IY + FTextVFX.FrameCounter)
+                LD E, (IY + FTVFX.FrameCounter)
                 ADD HL, DE
                 LD A, (HL)
-                LD (IY + FTextVFX.TickCounter), A
+                LD (IY + FTVFX.TickCounter), A
 
                 RET
 

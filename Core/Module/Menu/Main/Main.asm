@@ -2,20 +2,20 @@
                 ifndef _CORE_MODULE_MENU_MAIN_
                 define _CORE_MODULE_MENU_MAIN_
 
-                include "Sprites/Menu/Main/Compress.inc"
+                ; include "Sprites/Menu/Main/Compress.inc"
 Main:           ; загрузка языка
                 LD A, LANGUAGE_DEFAULT
                 CALL Functions.ChangeLanguage
 
                 ; загрузка текста главного меню
                 LD A, LANGUAGE_DEFAULT
-                CALL MainLoadText
+                CALL LoadText
 
                 ; инициализация таблицы текста
-                LD HL, Adr.MainMenuText
+                LD HL, Adr.Module.Text
                 LD (LocalizationRef), HL
        
-.Reset         ; подготовка экрана 1
+.Reset          ; подготовка экрана 1
                 SET_SCREEN_BASE
                 CLS_C000
                 ATTR_C000_IPB RED, BLACK, 1
@@ -26,15 +26,27 @@ Main:           ; загрузка языка
                 ATTR_C000_IPB RED, BLACK, 0
 
                 ; инициализация VFX
-                LD IY, VFX.Text.Variables
+                LD IY, VariablesVFX
                 LD HL, UpdateTextVFX
-                LD (IY + VFX.Text.FTextVFX.FrameComplited), HL
+                LD (IY + FTVFX.FrameComplited), HL
                 LD HL, FadeinNextText
-                LD (IY + VFX.Text.FTextVFX.VFX_Complited), HL
+                LD (IY + FTVFX.VFX_Complited), HL
+
+                ; инициализация переменных работы с меню
+                LD HL, ChangeMenu
+                LD (MenuVariables.Changed), HL
+                LD HL, SelectMenu
+                LD (MenuVariables.Selected), HL
+                LD HL, MainMenu
+                LD (MenuVariables.Options), HL
+                XOR A
+                LD (MenuVariables.Current), A
+                LD (MenuVariables.Flags), A
 
                 ; отрисовка меню
-                LD HL, Menu
+                LD HL, MainMenu
                 LD A, (HL)
+                LD (MenuVariables.NumberOptions), A
                 CALL SetMenuText
                 CALL SetFadeinVFX
 
@@ -42,87 +54,16 @@ Main:           ; загрузка языка
 
 .Loop           HALT
 
-                LD HL, Menu.Flag
-                BIT NEXT_FADEIN_BIT, (HL)
+                LD HL, MenuVariables.Flags
+                BIT NEXT_FADE_BIT, (HL)
                 CALL NZ, PreFadeinText
 
-                LD HL, Menu.Flag
-                BIT ALL_FADEIN_BIT, (HL)
+                LD HL, MenuVariables.Flags
+                BIT ALL_FADE_BIT, (HL)
                 JP NZ, Select
 
                 JR .Loop
-
-UpdateTextVFX:  ;
-.Coord          EQU $+1
-                LD DE, #0000
-                CALL VFX.Text.Render
-
-                LD HL, Menu.Flag
-                BIT DRAW_CURSOR_BIT, (HL)
-                RET Z
-
-                ; сброс флага перерисовка флага
-                RES DRAW_CURSOR_BIT, (HL)
-
-                ; очиста курсора
-.OldCoord       EQU $+1
-                LD DE, #0000
-                DEC E
-                CALL PixelAddress
-                XOR A
-                dup  7
-                LD (DE), A
-                INC D
-                edup
-                LD (DE), A
-
-                ; вывод курсора
-                LD DE, (.Coord)
-                DEC E
-                CALL PixelAddress
-                LD HL, SelectCursor
-                JP DrawCharBoundary
-
-; A - номер меню
-SetMenuText:    ; установка выбранного меню
-                LD (Menu.Current), A
-
-                ; сохранить позицию курсора
-                LD HL, (UpdateTextVFX.Coord)
-                LD (UpdateTextVFX.OldCoord), HL
-
-.NotUpdate      ; расчёт информации о меню
-                LD HL, Menu.First
-                LD D, #00
-                LD E, A
-                ADD A, A
-                ADD A, E
-                LD E, A
-                ADD HL, DE
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-                INC HL
-                LD (UpdateTextVFX.Coord), DE
-
-                ; копирование текста в буфер
-                LD A, (HL)
-                CALL Functions.TextToBuffer
-
-                ; округление длины текста до знакоместа
-                LD A, E
-                LD B, #00
-                RRA
-                ADC A, B
-                RRA
-                ADC A, B
-                RRA
-                ADC A, B
-                AND %00011111
-                LD (IY + VFX.Text.FTextVFX.Length), A
-
-                RET
-Menu:           DB .Num-1
+MainMenu:       DB .Num-1
 .First          ; текст в "настройки"
                 DW #1413
                 DB Language.Text.Menu.Options
@@ -132,10 +73,7 @@ Menu:           DB .Num-1
                 ; текст в "новая игра"
                 DW #1213
                 DB Language.Text.Menu.NewGame
-.Num            EQU ($-Menu-1) / 3
-.Current        DB .Num-1                                                       ; 1 (порядок)
-.Flag           DB #00                                                          ; 2 (порядок)
-
+.Num            EQU ($-MainMenu-1) / 3
 
                 ; ; отрисовка надпись
                 ; LD HL, PlanetSprAttr
@@ -151,16 +89,6 @@ Menu:           DB .Num-1
 
 ; PlanetSprAttr  incbin "../../../../Sprites/Menu/Main/Compressed/Planet.ar.spr"
 ; Atmosphere7SprAttr  incbin "../../../../Sprites/Menu/Main/Compressed/Atmosphere7.ar.spr"
-
-SelectCursor:   DB %00000000
-                DB %00000000
-                DB %01000000
-                DB %00100000
-                DB %01010000
-                DB %01100000
-                DB %01000000
-                DB %00000000
-                ZX_COLOR_IPB RED, BLACK, 1
 
                 display " - Main : \t\t\t", /A, Main, " = busy [ ", /D, $ - Main, " bytes  ]"
 

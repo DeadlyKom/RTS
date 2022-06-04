@@ -11,14 +11,14 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Render:         CALL PixelAddress                                               ; DE - адрес экрана
+@RenderVFX:     CALL PixelAddress                                               ; DE - адрес экрана
 
                 LD B, #08                                                       ; высота в пикселах
-                LD C, (IY + FTextVFX.Length)                                    ; ширина в знакоместах
+                LD C, (IY + FTVFX.Length)                                       ; ширина в знакоместах
                 LD HL, SharedBuffer
 
                 EXX
-                LD HL, (IY + FTextVFX.Shader)
+                LD HL, (IY + FTVFX.Shader)
                 LD DE, .TMP
                 EXX
                 
@@ -43,7 +43,7 @@ Render:         CALL PixelAddress                                               
                 DJNZ .ColumLoop
 
                 EXX
-                LD (IY + FTextVFX.Shader), HL
+                LD (IY + FTVFX.Shader), HL
                 EXX
 
                 RET
