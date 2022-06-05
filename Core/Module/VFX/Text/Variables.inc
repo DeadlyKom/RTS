@@ -9,7 +9,7 @@ Length:         DB #00                                                          
 FrameCounter:   DB #00                                                          ; счётчик фреймов                   (tmp)
 TickCounter:    DB #00                                                          ; счётчик тиков                     (tmp)
 Flags:          DB #00                                                          ; флаги
-FrameComplited: DW #0000                                                        ; адрес функции FRAME_COMPLITED
+FrameComplited: DW #0000                                                        ; адрес функции VFX_FRAME_COMPLITED
 VFX_Complited:  DW #0000                                                        ; адрес функции VFX_COMPLITED
 
                 ends

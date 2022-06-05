@@ -11,13 +11,17 @@
                 LD HL, FadeinNextText
                 LD (IY + FTVFX.VFX_Complited), HL
                 
-                ; инициализация переменных работы с меню
-                LD HL, ChangeMenu
+                ; инициализация переменных работы с настройками
+                LD HL, ChangeOption
                 LD (MenuVariables.Changed), HL
-                LD HL, SelectMenu
+                LD HL, SelectedOption
                 LD (MenuVariables.Selected), HL
+                LD HL, CanSelectedOption
+                LD (MenuVariables.CanSelected), HL
                 LD HL, OptionsMenu
                 LD (MenuVariables.Options), HL
+                LD HL, SuboptionsMenu
+                LD (MenuVariables.SuboptionsFunc), HL
                 XOR A
                 LD (MenuVariables.Current), A
                 LD (MenuVariables.Flags), A
@@ -40,16 +44,24 @@
                 JP NZ, Select
 
                 JR .Loop
+
+LanguageCoord   EQU #0A03
 OptionsMenu:    DB .Num-1
-.First          ; текст в "настройки"
-                DW #1413
-                DB Language.Text.Menu.Options
-                ; текст в "продолжить"
-                DW #1313
-                DB Language.Text.Menu.Continue
-                ; текст в "новая игра"
-                DW #1213
-                DB Language.Text.Menu.NewGame
+.First          ; текст в "вернутся"
+                DW #0E03
+                DB Language.Text.Menu.Back
+                ; текст в "скорость курсора"
+                DW #0D03
+                DB Language.Text.Menu.CursorSpeed
+                ; текст в "скорость игры"
+                DW #0C03
+                DB Language.Text.Menu.GameSpeed
+                ; текст в "управление"
+                DW #0B03
+                DB Language.Text.Menu.Control
+                ; текст в "язык"
+                DW LanguageCoord
+                DB Language.Text.Menu.Language
 .Num            EQU ($-OptionsMenu-1) / 3
 
                 display " - Options : \t\t\t", /A, Options, " = busy [ ", /D, $ - Options, " bytes  ]"

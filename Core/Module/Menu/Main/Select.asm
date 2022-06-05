@@ -21,8 +21,13 @@ SelectMenu:     ; установка функции обработчика за�
 
 .Loop           LD HL, MenuVariables.Flags
                 BIT JUMP_BIT, (HL)
-                JP NZ, Options
-                JR .Loop
+                JP Z, .Loop
+
+                LD A, (MenuVariables.Current)
+                CP MENU_OPTIONS
+                JP Z, Options
+
+                JR $
 Selected:       ; проверка ранее установленного флага SELECT_BIT
                 LD HL, MenuVariables.Flags
                 SET JUMP_BIT, (HL)

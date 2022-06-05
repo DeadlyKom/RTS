@@ -3,7 +3,9 @@
                 define _BUILDER_KERNEL_MODULE_STRING_TO_BUFFER_
 ; -----------------------------------------
 ; In:
-;   A - ID сообщения
+;   A  - ID сообщения
+;   A' - если флаг переполнения Carry установлен, первичное отображение
+;   иначе в A' хранится смещение
 ; Out:
 ;   E - длина строки в пикселах
 ; Corrupt:
@@ -26,8 +28,16 @@ TextToBuffer:   ; расчёт адреса сообщения
                 LD (.RestoreMemPage), A
 
                 SET_PAGE_LOCALIZATION                                           ; включение страницы локализации
-                CALL Language.Monochrome.DrawString
-                LD E, C                                                         ; копирование длины строки в пикселах
+                ; проверка на первичное отображение
+                EX AF, AF
+                JR C, .Primary
+
+                LD C, A
+                CALL Language.Monochrome.DrawString.Custom
+                JR .Continue
+
+.Primary        CALL Language.Monochrome.DrawString
+.Continue       LD E, C                                                         ; копирование длины строки в пикселах
 
                 ; востановление предыдущей страницы
 .RestoreMemPage EQU $+1

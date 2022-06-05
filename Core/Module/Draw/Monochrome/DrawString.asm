@@ -12,15 +12,20 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawString:     ;
+DrawString:     ; очистка общего буфера
                 EXX
                 LD HL, SharedBuffer + 0x100
                 LD DE, #0000
                 CALL SafeFill_256
-                LD D, HIGH SharedBuffer
                 EXX
 
+                ; смещение в буфере (попиксельно)
                 LD C, #00
+
+.Custom         ; вывод строки без очистки буфера + задаётся своё смещение в регистре C
+                EXX
+                LD D, HIGH SharedBuffer
+                EXX
 
 .StringLoop     LD A, (HL)
                 OR A

@@ -3,19 +3,26 @@
                 define _CORE_MODULE_MENU_MAIN_
 
                 ; include "Sprites/Menu/Main/Compress.inc"
-Main:           ; загрузка языка
-                LD A, LANGUAGE_DEFAULT
+Main:           SET_LANGUAGE LANGUAGE_DEFAULT
+
+@Main.Load      ; вернутся в главное меню и загрузить язык
+
+                ; загрузка языка
+                LD A, (ConfigOptions)
+                AND LANGUAGE_MASK
                 CALL Functions.ChangeLanguage
 
                 ; загрузка текста главного меню
-                LD A, LANGUAGE_DEFAULT
+                LD A, (ConfigOptions)
+                AND LANGUAGE_MASK
                 CALL LoadText
 
                 ; инициализация таблицы текста
                 LD HL, Adr.Module.Text
                 LD (LocalizationRef), HL
-       
-.Reset          ; подготовка экрана 1
+@Main.Back      ; вернутся в главное меню
+
+                ; подготовка экрана 1
                 SET_SCREEN_BASE
                 CLS_C000
                 ATTR_C000_IPB RED, BLACK, 1
@@ -37,11 +44,13 @@ Main:           ; загрузка языка
                 LD (MenuVariables.Changed), HL
                 LD HL, SelectMenu
                 LD (MenuVariables.Selected), HL
+                LD HL, CanSelected
+                LD (MenuVariables.CanSelected), HL
                 LD HL, MainMenu
                 LD (MenuVariables.Options), HL
-                XOR A
-                LD (MenuVariables.Current), A
-                LD (MenuVariables.Flags), A
+
+                ; сброс
+                CALL Reset
 
                 ; отрисовка меню
                 LD HL, MainMenu

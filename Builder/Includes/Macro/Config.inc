@@ -5,8 +5,17 @@
 ; работа со структурой FConfig
 SET_LANGUAGE    macro Language?
                 LD A, (ConfigOptions)
-                AND LANGUAGE_MASK
-                OR (Language? & 0x03)
+                LD C, Language?
+                XOR C
+                AND LANGUAGE_MASK_INV
+                XOR C
+                LD (ConfigOptions), A
+                endm
+SET_LANGUAGE_A  macro
+                LD A, (ConfigOptions)
+                XOR C
+                AND LANGUAGE_MASK_INV
+                XOR C
                 LD (ConfigOptions), A
                 endm
 

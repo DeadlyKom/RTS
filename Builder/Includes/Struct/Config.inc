@@ -19,7 +19,7 @@ KeyDown         DB VK_S                                                         
 KeyLeft         DB VK_A                                                         ; клавиша по умолчанию "Влево"
 KeyRight        DB VK_D                                                         ; клавиша по умолчанию "Вправо"
 KeySelect       DB VK_SPACE                                                     ; клавиша по умолчанию "Выбор"
-
+KeyDeselect     DB VK_SYMBOL_SHIFT                                              ; клавиша по умолчанию "Отмена"
                 ends
 
                 endif ; ~_STRUCT_CONFIG_

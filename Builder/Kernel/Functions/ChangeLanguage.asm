@@ -25,7 +25,15 @@ ChangeLanguage: ; инициализация
                 ; поиск файла в каталоге
                 LD HL, .FileName - FFile
                 EX AF, AF'                                                      ; востановлен номер языка
-                LD B, A
+
+                ; проверим валидность загружаемого языка
+                AND LANGUAGE_MASK
+                JR NZ, .IsValid
+
+                ; установка дефолтного языка
+                LD A, LANGUAGE_DEFAULT
+
+.IsValid        LD B, A
                 LD DE, FFile
 
 .FileNameLoop   ADD HL, DE
@@ -38,9 +46,9 @@ ChangeLanguage: ; инициализация
                 LD DE, Adr.Fonts                                                ; адрес загрузчика шрифта
                 JP FileSystem.Base.PrimaryRead
 
-.FileName       FFile { {FontRuName}, SystemExt }                               ; имя шрифта русского языка
+.FileName       FFile { {FontEnName}, SystemExt }                               ; имя шрифта английского языка
+                FFile { {FontRuName}, SystemExt }                               ; имя шрифта русского языка
                 FFile { {FontSpName}, SystemExt }                               ; имя шрифта испанского языка
-                FFile { {FontEnName}, SystemExt }                               ; имя шрифта английского языка
 
                 display "\t - Change Language : \t", /A, ChangeLanguage, " = busy [ ", /D, $ - ChangeLanguage, " bytes  ]"
 

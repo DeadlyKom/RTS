@@ -15,6 +15,12 @@
                 CP DEFAULT_DOWN
                 JP Z, PressDown
 
+                CP DEFAULT_LEFT
+                JP Z, PressLeft
+
+                CP DEFAULT_RIGHT
+                JP Z, PressRight
+
                 CP DEFAULT_SELECT
                 JP Z, PressSelect
 
@@ -23,43 +29,68 @@ PressUp:        LD HL, MenuVariables.NumberOptions
                 LD A, (HL)
                 INC HL
                 CP (HL)
-                RET Z
+                JR Z, InputDefault.NotProcessing                                ; обработка клавиши не произведена
                 LD C, (HL)
 
                 ; проверка ранее установленного флага CHANGE_BIT
                 INC HL
                 BIT CHANGE_BIT, (HL)
-                RET NZ
+                JR NZ, InputDefault.NotProcessing                                ; обработка клавиши не произведена
                 SET CHANGE_BIT, (HL)
                 DEC HL
 
                 INC C
                 LD (HL), C
+
+                OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET
 PressDown:      LD HL, MenuVariables.Current
                 LD A, (HL)
                 OR A
-                RET Z
+                JR Z, InputDefault.NotProcessing                                ; обработка клавиши не произведена
                 LD C, A
 
                 ; проверка ранее установленного флага CHANGE_BIT
                 INC HL
                 BIT CHANGE_BIT, (HL)
-                RET NZ
+                JR NZ, InputDefault.NotProcessing                                ; обработка клавиши не произведена
                 SET CHANGE_BIT, (HL)
                 DEC HL
                 
                 DEC C
                 LD (HL), C
 
+                OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET
-PressSelect:    LD HL, MenuVariables.Flags
-
-                ; проверка ранее установленного флага SELECT_BIT
+PressLeft:      ; проверка ранее установленного флага SELECT_BIT
+                LD HL, MenuVariables.Flags
+                BIT CHANGE_BIT, (HL)
+                JR NZ, InputDefault.NotProcessing                               ; обработка клавиши не произведена
+                SET CHANGE_BIT, (HL)
+                SET OPTION_BIT, (HL)
+                INC HL
+                LD (HL), SUBOPTION_LEFT
+                
+                OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
+                RET
+PressRight:     ; проверка ранее установленного флага SELECT_BIT
+                LD HL, MenuVariables.Flags
+                BIT CHANGE_BIT, (HL)
+                JR NZ, InputDefault.NotProcessing                               ; обработка клавиши не произведена
+                SET CHANGE_BIT, (HL)
+                SET OPTION_BIT, (HL)
+                INC HL
+                LD (HL), SUBOPTION_RIGHT
+                
+                OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
+                RET
+PressSelect:    ; проверка ранее установленного флага SELECT_BIT
+                LD HL, MenuVariables.Flags
                 BIT SELECT_BIT, (HL)
-                RET NZ
+                JR NZ, InputDefault.NotProcessing                               ; обработка клавиши не произведена
                 SET SELECT_BIT, (HL)
 
+                OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET
 
                 display " - Input Default : \t\t", /A, InputDefault, " = busy [ ", /D, $ - InputDefault, " bytes  ]"

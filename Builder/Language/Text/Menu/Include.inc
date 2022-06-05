@@ -10,11 +10,8 @@
                 include "English.inc"
                 include "Russian.inc"
 
-                if English.Size >? Russian.Size
-Size:           EQU English.Size
-                else
-Size:           EQU Russian.Size
-                endif
+                display "Max Length Language: ", /D, Size
+Size:           EQU English.Size >? Russian.Size
 
                 endmodule
 

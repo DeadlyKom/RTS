@@ -1,0 +1,29 @@
+NEW GAME
+CONTINUE
+OPTIONS
+Language
+< Russian >
+  Spanish >
+< English  
+Control
+KEMPSTON
+Classic
+8 Button
+Mouse
+Left-handed
+Right-handed
+Keyboard
+Up
+Down
+Left
+Right
+Select
+Deselect
+Speed scroll
+Menu/Pause
+Game speed
+   Slow   >
+< Normal >
+<  Fast     
+Cursor speed
+Back

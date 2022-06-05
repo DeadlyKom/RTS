@@ -25,7 +25,14 @@
                 ; поиск файла в каталоге
                 LD HL, .FileName - FFile
                 EX AF, AF'                                                      ; востановлен номер языка
-                LD B, A
+                ; проверим валидность загружаемого языка
+                AND LANGUAGE_MASK
+                JR NZ, .IsValid
+
+                ; установка дефолтного языка
+                LD A, LANGUAGE_DEFAULT
+
+.IsValid        LD B, A
                 LD DE, FFile
 
 .FileNameLoop   ADD HL, DE
@@ -38,9 +45,9 @@
                 LD DE, Adr.Module.Text                                          ; адрес текста меню
                 JP FileSystem.Base.PrimaryRead
 
-.FileName       FFile { {MenuTextRuName}, SystemExt }                           ; имя файла русского языка меню
+.FileName       FFile { {MenuTextEnName}, SystemExt }                           ; имя файла английского языка меню
+                FFile { {MenuTextRuName}, SystemExt }                           ; имя файла русского языка меню
                 FFile { {MenuTextSpName}, SystemExt }                           ; имя файла испанского языка меню
-                FFile { {MenuTextEnName}, SystemExt }                           ; имя файла английского языка меню
 
                 display " - Load Text : \t\t", /A, LoadText, " = busy [ ", /D, $ - LoadText, " bytes  ]"
 
