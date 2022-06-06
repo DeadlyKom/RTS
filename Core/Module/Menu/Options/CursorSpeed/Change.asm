@@ -35,9 +35,7 @@ ReqChangeCS:    LD HL, MenuVariables.AddFlags
                 RET Z
                 INC (HL)
                 
-                ; отрисовка меню
-                LD A, (MenuVariables.Current)
-                JP SetMenuText
+                JP RefreshMenuText
 
 .Right          LD HL, OptionsCursorSpeed.Current
                 LD A, (HL)
@@ -45,9 +43,7 @@ ReqChangeCS:    LD HL, MenuVariables.AddFlags
                 RET Z
                 DEC (HL)
 
-                ; отрисовка меню
-                LD A, (MenuVariables.Current)
-                JP SetMenuText
+                JP RefreshMenuText
 
 OptionsCursorSpeed ; текст в "быстрая скорость"
                 DB 0x10 * 8

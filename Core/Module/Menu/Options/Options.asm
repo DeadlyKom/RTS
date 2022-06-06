@@ -1,22 +1,15 @@
 
                 ifndef _CORE_MODULE_MENU_OPTIONS_
                 define _CORE_MODULE_MENU_OPTIONS_
-@Options:       
-.Reset          SET_SCREEN_SHADOW
-
-                ; инициализация VFX
-                LD IY, VariablesVFX
-                LD HL, UpdateTextVFX
-                LD (IY + FTVFX.FrameComplited), HL
-                LD HL, FadeinNextText
-                LD (IY + FTVFX.VFX_Complited), HL
+@MenuOptions:   ; сброс
+                CALL ResetOptions
                 
                 ; инициализация переменных работы с настройками
-                LD HL, ChangeOption
+                LD HL, Changed
                 LD (MenuVariables.Changed), HL
-                LD HL, SelectedOption
+                LD HL, Selected
                 LD (MenuVariables.Selected), HL
-                LD HL, CanSelectedOption
+                LD HL, CanSelected
                 LD (MenuVariables.CanSelected), HL
                 LD HL, OptionsMenu
                 LD (MenuVariables.Options), HL
@@ -28,12 +21,7 @@
 
                 ; отрисовка меню
                 LD HL, OptionsMenu
-                LD A, (HL)
-                LD (MenuVariables.NumberOptions), A
-                CALL SetMenuText
-                CALL SetFadeinVFX
-
-                SetUserHendler INT_Handler
+                CALL SetFirstOption
 
 .Loop           HALT
 
@@ -43,10 +31,9 @@
 
                 LD HL, MenuVariables.Flags
                 BIT ALL_FADE_BIT, (HL)
-                JP NZ, Select
+                JP NZ, SelectHandler
 
                 JR .Loop
-
 LanguageCoord   EQU #0A02
 OptionsMenu:    DB .Num-1
 .First          ; текст в "вернутся"
@@ -66,6 +53,6 @@ OptionsMenu:    DB .Num-1
                 DB Language.Text.Menu.Language
 .Num            EQU ($-OptionsMenu-1) / 3
 
-                display " - Options : \t\t\t", /A, Options, " = busy [ ", /D, $ - Options, " bytes  ]"
+                display " - Options : \t\t\t", /A, MenuOptions, " = busy [ ", /D, $ - MenuOptions, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_

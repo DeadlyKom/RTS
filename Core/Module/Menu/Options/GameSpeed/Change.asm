@@ -35,9 +35,7 @@ ReqChangeGS:    LD HL, MenuVariables.AddFlags
                 RET Z
                 INC (HL)
                 
-                ; отрисовка меню
-                LD A, (MenuVariables.Current)
-                JP SetMenuText
+                JP RefreshMenuText
 
 .Right          LD HL, OptionsGameSpeed.Current
                 LD A, (HL)
@@ -45,9 +43,7 @@ ReqChangeGS:    LD HL, MenuVariables.AddFlags
                 RET Z
                 DEC (HL)
 
-                ; отрисовка меню
-                LD A, (MenuVariables.Current)
-                JP SetMenuText
+                JP RefreshMenuText
 
 OptionsGameSpeed; текст в "быстрая скорость"
                 DB 0x10 * 8

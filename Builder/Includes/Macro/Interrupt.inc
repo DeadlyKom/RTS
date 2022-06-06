@@ -14,7 +14,7 @@ RestoreBC:      macro
                 LD (RestoreRegister), A
                 endm
 SetUserHendler: macro Func?
-                HALT
+                ; HALT
                 LD HL, Func?
                 LD (UserInterrupt), HL
                 endm

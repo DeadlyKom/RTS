@@ -32,6 +32,9 @@
                 LD HL, SelectCursor
                 JP DrawCharBoundary
 
+; обновить текущее меню
+@RefreshMenuText: LD A, (MenuVariables.Current)
+
 ; A - номер меню
 @SetMenuText:   ; установка выбранного меню
                 LD (MenuVariables.Current), A
@@ -82,12 +85,9 @@ GetLength:      ; округление длины текста до знаком
                 LD (IY + FTVFX.Length), A
 
                 RET
-@Select:        ; инициализация VFX
-                LD HL, UpdateTextVFX
-                LD (IY + FTVFX.FrameComplited), HL
+@SelectHandler: ; подготовка смены рандомных VFX
                 LD HL, NextTextVFX
                 LD (IY + FTVFX.VFX_Complited), HL
-
                 ; отрисовка меню
                 LD HL, (MenuVariables.Options)
                 LD A, (HL)
@@ -116,6 +116,7 @@ GetLength:      ; округление длины текста до знаком
                 LD DE, InputDefault
                 CALL Input.JumpDefaulKeys
                 JR .Loop
+
 NextTextVFX:    ; ожидание применения следующего эффекта
 .WaitNextVFX    EQU $+1
                 LD A, #01
@@ -149,6 +150,7 @@ NextTextVFX:    ; ожидание применения следующего э�
                 LD A, #01
 SetDefaultVFX:  LD C, VFX_DEFAULT                                               ; номер эффекта
                 JP SetVFX_Custom                                                ; установка эффекта
+
 OnChange:       ; проверка флага VFX_PLAYING
                 BIT VFX_PLAYING_BIT, (IY + FTVFX.Flags)
                 RET NZ
@@ -178,6 +180,7 @@ OnChange:       ; проверка флага VFX_PLAYING
 
                 LD HL, MenuVariables.Changed
                 JR Jump
+
 OnSelect:       ; проверка флага VFX_PLAYING
                 BIT VFX_PLAYING_BIT, (IY + FTVFX.Flags)
                 RET NZ
@@ -197,9 +200,15 @@ OnSelect:       ; проверка флага VFX_PLAYING
 
 .Continue       RET C
 
+                ; обновить опцию перед fadeout'ом
                 LD A, #01
                 LD C, VFX_FADEOUT                                               ; номер эффекта
                 CALL SetVFX_Custom
+
+                ; сброс функции обработчика подменю
+                LD HL, #0000
+                LD (MenuVariables.SuboptionsFunc), HL
+                CALL RefreshMenuText                                            ; отрисовка меню
                 
                 LD HL, MenuVariables.Selected
 Jump:           LD E, (HL)
@@ -208,12 +217,17 @@ Jump:           LD E, (HL)
                 EX DE, HL
                 JP (HL)
 
-@CanSelected:   OR A
+@CanBeSelected: OR A
                 RET
-@CantSelected:  SCF
+@CantBeSelected SCF
                 RET
 
-@Reset:         SET_SCREEN_SHADOW
+@ResetOptions:  ; инициализация VFX (эффект faidin)
+                LD IY, VariablesVFX
+                LD HL, UpdateTextVFX
+                LD (IY + FTVFX.FrameComplited), HL
+                LD HL, FadeinNextText
+                LD (IY + FTVFX.VFX_Complited), HL
 
                 ; инициализация меню
                 XOR A
@@ -226,11 +240,59 @@ Jump:           LD E, (HL)
 
                 ; включить отображение курсора
                 LD HL, MenuVariables.Flags
-                SET DRAW_CURSOR_BIT, (HL)
+                RES DRAW_CURSOR_BIT, (HL)
 
                 ; установка дефолтного эффекта
                 LD A, #01                                                       ; длительности первого фрейма
                 JP SetDefaultVFX                                                ; установка эффекта
+
+; HL - адрес массива опций
+@SetFirstOption LD A, (HL)
+                LD (MenuVariables.NumberOptions), A
+                CALL SetMenuText
+                CALL SetFadeinVFX
+
+                SetUserHendler INT_Handler
+                RET
+
+; ожидание события завершений Faidout'а
+; A - на входе номер выбранного меню
+@WaitEvent:     ; установка функции обработчика завершения эффекта
+                LD HL, .OnComplited
+                LD (IY + FTVFX.VFX_Complited), HL
+
+                ; удалить из стека адрес выхода
+                HALT
+                POP HL
+                EX (SP), HL
+
+                ; подготовка экрана 1
+                SET_SCREEN_BASE
+                CLS_C000
+                ATTR_C000_IPB RED, BLACK, 1
+
+                ; подготовка экрана 2
+                SET_SCREEN_SHADOW
+                CLS_C000
+                ATTR_C000_IPB RED, BLACK, 0
+
+                LD HL, MenuVariables.Flags
+
+.Loop           ; ожидание завершения faidout'а
+                BIT JUMP_BIT, (HL)
+                JP Z, .Loop
+
+                DEC HL
+                LD A, (HL)
+
+                RET
+
+.OnComplited    ; установка флага разрешения перехода в выбранное меню
+                LD HL, MenuVariables.Flags
+                SET JUMP_BIT, (HL)
+                OffUserHendler
+
+                RET
 
                 display " - Core : \t\t\t", /A, UpdateTextVFX, " = busy [ ", /D, $ - UpdateTextVFX, " bytes  ]"
 

@@ -1,6 +1,7 @@
 
                 ifndef _CORE_MODULE_MENU_OPTIONS_SELECT_
                 define _CORE_MODULE_MENU_OPTIONS_SELECT_
+Begin:          EQU $
 ; -----------------------------------------
 ; обработчик смены опции вверх/вниз или влево/вправо
 ; In:
@@ -9,14 +10,13 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-ChangeOption:   ; выбор внутри опции (влево/вправо)
+Changed:        ; выбор внутри опции (влево/вправо)
                 LD HL, MenuVariables.Flags
                 BIT OPTION_BIT, (HL)
                 RET Z
 
                 ; сброс флага запроса смены
                 RES OPTION_BIT, (HL)
-SelectingOption ; выбор внутри опции (влево/вправо)
 
                 ; проверка выбора доступных опций
                 LD A, (MenuVariables.Current)
@@ -44,17 +44,16 @@ SelectingOption ; выбор внутри опции (влево/вправо)
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-CanSelectedOption:
-                ; проверка выбора доступных опций
+CanSelected:    ; проверка выбора доступных опций
                 LD A, (MenuVariables.Current)
                 CP OPTIONS_LANGUAGE
-                JP Z, CantSelected
+                JP Z, CantBeSelected
                 CP OPTIONS_GAME_SPEED
-                JP Z, CantSelected
+                JP Z, CantBeSelected
                 CP OPTIONS_CURSOR_SPEED
-                JP Z, CantSelected
+                JP Z, CantBeSelected
 
-                JP CanSelected
+                JP CanBeSelected
 ; -----------------------------------------
 ; обработчик выбора опции (нажат выбор опции)
 ; In:
@@ -62,7 +61,7 @@ CanSelectedOption:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-SelectedOption: ; проверка выбора доступных опций
+Selected:       ; проверка выбора доступных опций
                 LD A, (MenuVariables.Current)
                 CP OPTIONS_LANGUAGE
                 RET Z
@@ -71,43 +70,15 @@ SelectedOption: ; проверка выбора доступных опций
                 CP OPTIONS_CURSOR_SPEED
                 RET Z
 
-                CALL Reset
+                CALL WaitEvent
 
-                ; установка функции обработчика завершения эффекта
-                LD HL, .Handler
-                LD (IY + FTVFX.VFX_Complited), HL
-
-                POP AF                                                          ; удалить из стека адрес выхода
-                HALT
-                
-                ; подготовка экрана 1
-                SET_SCREEN_BASE
-                CLS_C000
-                ATTR_C000_IPB RED, BLACK, 1
-
-                ; подготовка экрана 2
-                SET_SCREEN_SHADOW
-                CLS_C000
-                ATTR_C000_IPB RED, BLACK, 0
-
-.Loop           LD HL, MenuVariables.Flags
-                BIT JUMP_BIT, (HL)
-                JP Z, .Loop
-
-                LD A, (MenuVariables.Current)
-                CP OPTIONS_CONTROL
-                JP Z, Options
+                ; CP OPTIONS_CONTROL
+                ; JP Z, MenuControl
 
                 CP OPTIONS_BACK
                 JP Z, ApplyOptions
 
                 JR $
-
-.Handler:       ; выбрана опция (нажат выбор опции)
-                LD HL, MenuVariables.Flags
-                SET JUMP_BIT, (HL)
-                OffUserHendler
-                RET
 ApplyOptions:   ; установка языка
                 LD A, (OptionsLanguage.Current)
                 INC A                                                           ; язык начинается с 1
@@ -119,8 +90,8 @@ ApplyOptions:   ; установка языка
 
                 SET_LANGUAGE_A
 
-                JP @Main.Load
+                JP @MenuMain
 
-                display " - Select : \t\t\t", /A, Select, " = busy [ ", /D, $ - Select, " bytes  ]"
+                display " - Select : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_SELECT_

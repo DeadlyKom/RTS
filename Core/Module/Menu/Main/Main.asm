@@ -5,7 +5,7 @@
                 ; include "Sprites/Menu/Main/Compress.inc"
 Main:           SET_LANGUAGE LANGUAGE_DEFAULT
 
-@Main.Load      ; вернутся в главное меню и загрузить язык
+@MenuMain       ; вернутся в главное меню и загрузить язык
 
                 ; загрузка языка
                 LD A, (ConfigOptions)
@@ -20,7 +20,6 @@ Main:           SET_LANGUAGE LANGUAGE_DEFAULT
                 ; инициализация таблицы текста
                 LD HL, Adr.Module.Text
                 LD (LocalizationRef), HL
-@Main.Back      ; вернутся в главное меню
 
                 ; подготовка экрана 1
                 SET_SCREEN_BASE
@@ -31,35 +30,24 @@ Main:           SET_LANGUAGE LANGUAGE_DEFAULT
                 SET_SCREEN_SHADOW
                 CLS_C000
                 ATTR_C000_IPB RED, BLACK, 0
+@Main.Back      ; вернутся в главное меню
 
-                ; инициализация VFX
-                LD IY, VariablesVFX
-                LD HL, UpdateTextVFX
-                LD (IY + FTVFX.FrameComplited), HL
-                LD HL, FadeinNextText
-                LD (IY + FTVFX.VFX_Complited), HL
+                ; сброс
+                CALL ResetOptions
 
                 ; инициализация переменных работы с меню
-                LD HL, ChangeMenu
+                LD HL, Changed
                 LD (MenuVariables.Changed), HL
-                LD HL, SelectMenu
+                LD HL, Selected
                 LD (MenuVariables.Selected), HL
-                LD HL, CanSelected
+                LD HL, CanBeSelected
                 LD (MenuVariables.CanSelected), HL
                 LD HL, MainMenu
                 LD (MenuVariables.Options), HL
 
-                ; сброс
-                CALL Reset
-
                 ; отрисовка меню
                 LD HL, MainMenu
-                LD A, (HL)
-                LD (MenuVariables.NumberOptions), A
-                CALL SetMenuText
-                CALL SetFadeinVFX
-
-                SetUserHendler INT_Handler
+                CALL SetFirstOption
 
 .Loop           HALT
 
@@ -69,7 +57,7 @@ Main:           SET_LANGUAGE LANGUAGE_DEFAULT
 
                 LD HL, MenuVariables.Flags
                 BIT ALL_FADE_BIT, (HL)
-                JP NZ, Select
+                JP NZ, SelectHandler
 
                 JR .Loop
 MainMenu:       DB .Num-1
