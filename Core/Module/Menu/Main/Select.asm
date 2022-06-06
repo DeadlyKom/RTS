@@ -4,9 +4,10 @@
 
 ChangeMenu:     RET
 SelectMenu:     ; установка функции обработчика завершения эффекта
-                LD HL, Selected
+                LD HL, OnComplited
                 LD (IY + FTVFX.VFX_Complited), HL
 
+                POP AF                                                          ; удалить из стека адрес выхода
                 HALT
                 
                 ; подготовка экрана 1
@@ -19,7 +20,8 @@ SelectMenu:     ; установка функции обработчика за�
                 CLS_C000
                 ATTR_C000_IPB RED, BLACK, 0
 
-.Loop           LD HL, MenuVariables.Flags
+.Loop           ; ожидание завершения faidout'а
+                LD HL, MenuVariables.Flags
                 BIT JUMP_BIT, (HL)
                 JP Z, .Loop
 
@@ -28,10 +30,10 @@ SelectMenu:     ; установка функции обработчика за�
                 JP Z, Options
 
                 JR $
-Selected:       ; проверка ранее установленного флага SELECT_BIT
+OnComplited:    ; установка флага разрешения перехода в выбранное меню
                 LD HL, MenuVariables.Flags
                 SET JUMP_BIT, (HL)
-
+                OffUserHendler
                 RET
 
                 display " - Select : \t\t\t", /A, Select, " = busy [ ", /D, $ - Select, " bytes  ]"

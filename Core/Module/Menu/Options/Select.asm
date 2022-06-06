@@ -77,6 +77,7 @@ SelectedOption: ; проверка выбора доступных опций
                 LD HL, .Handler
                 LD (IY + FTVFX.VFX_Complited), HL
 
+                POP AF                                                          ; удалить из стека адрес выхода
                 HALT
                 
                 ; подготовка экрана 1
@@ -105,7 +106,7 @@ SelectedOption: ; проверка выбора доступных опций
 .Handler:       ; выбрана опция (нажат выбор опции)
                 LD HL, MenuVariables.Flags
                 SET JUMP_BIT, (HL)
-
+                OffUserHendler
                 RET
 ApplyOptions:   ; установка языка
                 LD A, (OptionsLanguage.Current)

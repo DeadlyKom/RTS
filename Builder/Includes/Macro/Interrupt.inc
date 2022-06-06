@@ -19,7 +19,7 @@ SetUserHendler: macro Func?
                 LD (UserInterrupt), HL
                 endm
 OffUserHendler: macro
-                HALT
+                ; HALT
                 LD HL, Interrupt_RET
                 LD (UserInterrupt), HL
                 endm

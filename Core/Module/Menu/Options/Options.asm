@@ -33,6 +33,8 @@
                 CALL SetMenuText
                 CALL SetFadeinVFX
 
+                SetUserHendler INT_Handler
+
 .Loop           HALT
 
                 LD HL, MenuVariables.Flags
@@ -45,19 +47,19 @@
 
                 JR .Loop
 
-LanguageCoord   EQU #0A03
+LanguageCoord   EQU #0A02
 OptionsMenu:    DB .Num-1
 .First          ; текст в "вернутся"
                 DW #0E03
                 DB Language.Text.Menu.Back
                 ; текст в "скорость курсора"
-                DW #0D03
+                DW #0D02
                 DB Language.Text.Menu.CursorSpeed
                 ; текст в "скорость игры"
-                DW #0C03
+                DW #0C02
                 DB Language.Text.Menu.GameSpeed
                 ; текст в "управление"
-                DW #0B03
+                DW #0B02
                 DB Language.Text.Menu.Control
                 ; текст в "язык"
                 DW LanguageCoord

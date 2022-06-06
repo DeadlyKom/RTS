@@ -83,7 +83,6 @@ GetLength:      ; округление длины текста до знаком
 
                 RET
 @Select:        ; инициализация VFX
-                ; LD IY, VariablesVFX
                 LD HL, UpdateTextVFX
                 LD (IY + FTVFX.FrameComplited), HL
                 LD HL, NextTextVFX
@@ -106,12 +105,12 @@ GetLength:      ; округление длины текста до знаком
                 ; проверка флага смены меню
                 LD HL, MenuVariables.Flags
                 BIT CHANGE_BIT, (HL)
-                CALL NZ, ChangeMenu
+                CALL NZ, OnChange
 
                 ; проверка флага выбора меню
                 LD HL, MenuVariables.Flags
                 BIT SELECT_BIT, (HL)
-                CALL NZ, SelectMenu
+                CALL NZ, OnSelect
 
                 ; обработка ввода
                 LD DE, InputDefault
@@ -125,7 +124,7 @@ NextTextVFX:    ; ожидание применения следующего э�
 
                 ; генерация эффекта/время до следующего эффекта
                 CALL Math.Rand8
-                CP #2F                                                          ; чем меньше тем реже происходит смена эффекта
+                CP #3F                                                          ; чем меньше тем реже происходит смена эффекта
                 JR NC, .Wait
 
 .SetVFX         ; генерация эффекта
@@ -143,18 +142,18 @@ NextTextVFX:    ; ожидание применения следующего э�
                 ADC A, B
                 RRA
                 ADC A, B
-                ; RRA
-                ; ADC A, B
+                RRA
+                ADC A, B
                 INC A
 .SetWait        LD (.WaitNextVFX), A
                 LD A, #01
 SetDefaultVFX:  LD C, VFX_DEFAULT                                               ; номер эффекта
                 JP SetVFX_Custom                                                ; установка эффекта
-ChangeMenu:     ; проверка флага PLAYING_VFX
+OnChange:       ; проверка флага VFX_PLAYING
                 BIT VFX_PLAYING_BIT, (IY + FTVFX.Flags)
                 RET NZ
 
-                ; сброс флага PLAYING_VFX
+                ; сброс флага VFX_PLAYING
                 RES VFX_PLAYING_BIT, (IY + FTVFX.Flags)
 
                 ; проверка отсутсвие флага необходимости обновить курсор
@@ -179,24 +178,24 @@ ChangeMenu:     ; проверка флага PLAYING_VFX
 
                 LD HL, MenuVariables.Changed
                 JR Jump
-SelectMenu:     ; проверка флага PLAYING_VFX
+OnSelect:       ; проверка флага VFX_PLAYING
                 BIT VFX_PLAYING_BIT, (IY + FTVFX.Flags)
                 RET NZ
 
-                ; сброс флага запроса смены
+                ; сброс флага выбора
                 RES SELECT_BIT, (HL)
 
-                ; сброс флага PLAYING_VFX
+                ; сброс флага VFX_PLAYING
                 RES VFX_PLAYING_BIT, (IY + FTVFX.Flags)
 
                 ; проверка доступности выбора опции
-                LD HL, .Callback
+                LD HL, .Continue
                 PUSH HL
 
                 LD HL, MenuVariables.CanSelected
                 JR Jump
 
-.Callback       RET C
+.Continue       RET C
 
                 LD A, #01
                 LD C, VFX_FADEOUT                                               ; номер эффекта
