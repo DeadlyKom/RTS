@@ -45,8 +45,9 @@ StartBoot:      DI
                 ; -----------------------------------------
                 ; запуск загрузчика
                 ; ----------------------------------------- 
+.Address        EQU $
                 ; расчёт адреса .FileArray
-                LD HL, .FileArray-$
+                LD HL, .FileArray-.Address
                 LD BC, (ReturnAddress)
                 ADD HL, BC
 
@@ -61,9 +62,18 @@ StartBoot:      DI
                 ; сохранение адреса .FileArray
                 PUSH HL
 
+                ; установка дефолтной конфигурации
+                LD HL, .DefaultConfig-.Address
+                LD BC, (ReturnAddress)
+                ADD HL, BC
+                LD DE, GameConfigRef
+                LD BC, FConfig
+                LDIR
+
                 ; вызов загрузчика пакета файлов
                 JP LoadModule.Loader
 
+.DefaultConfig  FConfig
 .FileArray      ; путь файла модуля языка
                 FFileArea {
                 {{LanguageName}, SystemExt },

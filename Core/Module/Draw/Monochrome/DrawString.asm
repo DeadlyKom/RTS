@@ -22,7 +22,38 @@ DrawString:     ; очистка общего буфера
                 ; смещение в буфере (попиксельно)
                 LD C, #00
 
-.Custom         ; вывод строки без очистки буфера + задаётся своё смещение в регистре C
+.Custom         ;
+                LD A, C
+                OR A
+                JR Z, .NotAlign
+
+                PUSH HL
+                CALL GetLength
+                POP HL
+
+;                 PUSH BC
+;                 EXX
+;                 POP BC
+;                 LD H, HIGH SharedBuffer
+;                 LD A, C
+;                 RRA
+;                 RRA
+;                 RRA
+;                 AND %0001111
+;                 LD L, A
+;                 LD C, B
+;                 LD A, #08
+; .CLS_Column     EX AF, AF'
+; .CLS_Row        LD (HL), #00
+;                 INC L
+;                 DJNZ .CLS_Row
+;                 LD B, C
+;                 EX AF, AF'
+;                 DEC A
+;                 JR NZ, .CLS_Column
+;                 EXX
+
+.NotAlign       ; вывод строки без очистки буфера + задаётся своё смещение в регистре C
                 EXX
                 LD D, HIGH SharedBuffer
                 EXX
@@ -76,7 +107,7 @@ DrawString:     ; очистка общего буфера
                 LD A, C
                 AND #07
                 LD E, A
-                JP Z, NotShift ; нет смещения
+                JP Z, NotShift                                                  ; нет смещения
 
                 ; расчёт адреса таблицы смещения
                 EXX
@@ -191,6 +222,54 @@ NotShift:       LD A, B
                 INC HL
                 LD A, E
                 JP .ColumLoop
+
+GetLength:      LD B, #00
+
+.StringLoop     LD A, (HL)
+                OR A
+                JR NZ, .Next
+
+                LD A, B
+                SRL A
+                NEG
+                ADD A, C
+                LD C, A
+
+                ; округление
+                LD A, B
+                LD B, #00
+                RRA
+                ADC A, B
+                RRA
+                ADC A, B
+                RRA
+                ADC A, B
+                AND %00011111
+                LD B, A
+                RET
+
+.Next           DEC A
+
+                INC HL
+                PUSH HL
+
+.AddChar        ; расчёт адреса спрайта символа
+                LD E, A
+                ADD A, A
+                LD L, A
+                LD H, #00
+                LD D, H
+                ADD HL, DE
+                LD DE, ASCII_Info
+                ADD HL, DE
+
+                ; чтение данных о символе
+                LD A, (HL)                                                      ; size (height/width)
+                AND #0F
+                ADD A, B
+                LD B, A
+                POP HL
+                JR .StringLoop
 
                 display " - Draw String to Buffer : \t", /A, DrawString, " = busy [ ", /D, $ - DrawString, " bytes  ]"
 

@@ -6,6 +6,7 @@
                 include "Variables.inc"
 
                 include "Core.asm"
+                include "CoreSuboption.asm"
                 include "Input.asm"
                 include "Fadein.asm"
                 include "Fadeout.asm"

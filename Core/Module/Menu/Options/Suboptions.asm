@@ -3,13 +3,16 @@
                 define _CORE_MODULE_MENU_OPTIONS_SUBOPTIONS_
 
 SuboptionsMenu: LD A, (MenuVariables.Current)
-                CP OPTIONS_LANGUAGE
+                CP OPTION_LANGUAGE
                 JP Z, Language
 
-                CP OPTIONS_GAME_SPEED
+                CP OPTION_CONTROL
+                JP Z, ControlHelp
+
+                CP OPTION_GAME_SPEED
                 JP Z, GameSpeed
 
-                CP OPTIONS_CURSOR_SPEED
+                CP OPTION_CURSOR_SPEED
                 JP Z, CursorSpeed
 
                 RET

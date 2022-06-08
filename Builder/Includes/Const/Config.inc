@@ -12,5 +12,11 @@ LANGUAGE_DEFAULT    EQU LANGUAGE_EN
 ConfigOptions       EQU GameConfigRef + FConfig.Options                         ; флаги опций
 CursorSpeedMinRef   EQU GameConfigRef + FConfig.SpeedCursorMin                  ; минимальная скорость курсора
 CursorSpeedMaxRef   EQU GameConfigRef + FConfig.SpeedCursorMax                  ; максимальная скорость курсора
+DefaultKeyUpRef     EQU GameConfigRef + FConfig.KeyUp                           ; клавиша по умолчанию "Вверх"
+DefaultKeyDownRef   EQU GameConfigRef + FConfig.KeyDown                         ; клавиша по умолчанию "Вниз"
+DefaultKeyLeftRef   EQU GameConfigRef + FConfig.KeyLeft                         ; клавиша по умолчанию "Влево"
+DefaultKeyRightRef  EQU GameConfigRef + FConfig.KeyRight                        ; клавиша по умолчанию "Вправо"
+DefaultKeySelectRef EQU GameConfigRef + FConfig.KeySelect                       ; клавиша по умолчанию "Выбор"
+DefaultKeyDeselectRef EQU GameConfigRef + FConfig.KeyDeselect                   ; клавиша по умолчанию "Отмена"
 
                     endif ; ~_CONST_CONFIG_

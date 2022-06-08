@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_MENU_OPTIONS_SELECT_
-                define _CORE_MODULE_MENU_OPTIONS_SELECT_
+                ifndef _CORE_MODULE_MENU_OPTIONS_CONTROL_SELECT_
+                define _CORE_MODULE_MENU_OPTIONS_CONTROL_SELECT_
 ; -----------------------------------------
 ; обработчик смены опции вверх/вниз или влево/вправо
 ; In:
@@ -19,17 +19,15 @@ Changed:        ; выбор внутри опции (влево/вправо)
 
                 ; проверка выбора доступных опций
                 LD A, (MenuVariables.Current)
-                CP OPTION_BACK
+
+                CP OPTIONS_BACK
                 RET Z
 
-                CP OPTION_LANGUAGE
-                JP Z, ReqChangeLang
-                CP OPTION_CONTROL
-                JP Z, ReqChangeCH
-                CP OPTION_GAME_SPEED
-                JP Z, ReqChangeGS
-                CP OPTION_CURSOR_SPEED
-                JP Z, ReqChangeCS
+                CP OPTIONS_KEMPSTON
+                JP Z, ReqChangeKEMPSTON
+
+                CP OPTIONS_MOUSE
+                JP Z, ReqChangeMouse
 
                 RET
 
@@ -42,12 +40,12 @@ Changed:        ; выбор внутри опции (влево/вправо)
 ; -----------------------------------------
 CanSelected:    ; проверка выбора доступных опций
                 LD A, (MenuVariables.Current)
-                CP OPTION_LANGUAGE
+                CP OPTIONS_KEMPSTON
                 JP Z, CantBeSelected
-                CP OPTION_GAME_SPEED
+                CP OPTIONS_MOUSE
                 JP Z, CantBeSelected
-                CP OPTION_CURSOR_SPEED
-                JP Z, CantBeSelected
+                ; CP OPTIONS_KEYBOARD
+                ; JP Z, CantBeSelected
 
                 JP CanBeSelected
 ; -----------------------------------------
@@ -59,35 +57,33 @@ CanSelected:    ; проверка выбора доступных опций
 ; -----------------------------------------
 Selected:       ; проверка выбора доступных опций
                 LD A, (MenuVariables.Current)
-                CP OPTION_LANGUAGE
+                CP OPTIONS_MOUSE
                 RET Z
-                CP OPTION_GAME_SPEED
-                RET Z
-                CP OPTION_CURSOR_SPEED
+                CP OPTIONS_KEMPSTON
                 RET Z
 
                 CALL WaitEvent
 
-                CP OPTION_CONTROL
-                JP Z, MenuControl
+                CP OPTIONS_KEYBOARD
+                JP Z, MenuControlKey
 
-                CP OPTION_BACK
-                JP Z, ApplyOptions
+                CP OPTIONS_BACK
+                JP Z, ApplyControl
 
                 JR $
-ApplyOptions:   ; установка языка
-                LD A, (OptionsLanguage.Current)
-                INC A                                                           ; язык начинается с 1
-                LD C, A
-                LD A, (ConfigOptions)
-                AND LANGUAGE_MASK
-                CP C
-                JP Z, @Main.Back
+ApplyControl:   ; установка языка
+                ; LD A, (OptionsLanguage.Current)
+                ; INC A                                                           ; язык начинается с 1
+                ; LD C, A
+                ; LD A, (ConfigOptions)
+                ; AND LANGUAGE_MASK
+                ; CP C
+                ; JP Z, @MenuOptions
 
-                SET_LANGUAGE_A
+                ; SET_LANGUAGE_A
 
-                JP @MenuMain
+                JP @MenuOptions
 
-                display " - Options Select : \t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
+                display " - Control Select : \t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
 
-                endif ; ~ _CORE_MODULE_MENU_OPTIONS_SELECT_
+                endif ; ~ _CORE_MODULE_MENU_OPTIONS_CONTROL_SELECT_

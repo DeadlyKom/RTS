@@ -1,7 +1,7 @@
 
-                ifndef _CORE_MODULE_MENU_OPTIONS_
-                define _CORE_MODULE_MENU_OPTIONS_
-@MenuOptions:   ; сброс
+                ifndef _CORE_MODULE_MENU_OPTIONS_COTROL_
+                define _CORE_MODULE_MENU_OPTIONS_COTROL_
+@MenuControl:   ; сброс
                 CALL ResetOptions
                 
                 ; инициализация переменных работы с настройками
@@ -11,16 +11,16 @@
                 LD (MenuVariables.Selected), HL
                 LD HL, CanSelected
                 LD (MenuVariables.CanSelected), HL
-                LD HL, OptionsMenu
+                LD HL, ControlMenu
                 LD (MenuVariables.Options), HL
-                LD HL, SuboptionsMenu
+                LD HL, SuboptionsControl
                 LD (MenuVariables.SuboptionsFunc), HL
                 XOR A
                 LD (MenuVariables.Current), A
                 LD (MenuVariables.Flags), A
 
                 ; отрисовка меню
-                LD HL, OptionsMenu
+                LD HL, ControlMenu
                 CALL SetFirstOption
 
 .Loop           HALT
@@ -34,25 +34,21 @@
                 JP NZ, SelectHandler
 
                 JR .Loop
-LanguageCoord   EQU #0A02
-OptionsMenu:    DB .Num-1
+ControlMenu:    DB .Num-1
 .First          ; текст в "вернутся"
                 DW #0F03
                 DB Language.Text.Menu.Back
-                ; текст в "скорость курсора"
+                ; текст в "клавиатура"
                 DW #0D02
-                DB Language.Text.Menu.CursorSpeed
-                ; текст в "скорость игры"
+                DB Language.Text.Menu.Keyboard
+                ; текст в "мышь"
                 DW #0C02
-                DB Language.Text.Menu.GameSpeed
-                ; текст в "управление"
+                DB Language.Text.Menu.Mouse
+                ; текст в "KEMPSTON"
                 DW #0B02
-                DB Language.Text.Menu.Control
-                ; текст в "язык"
-                DW LanguageCoord
-                DB Language.Text.Menu.Language
-.Num            EQU ($-OptionsMenu-1) / 3
+                DB Language.Text.Menu.Kempston
+.Num            EQU ($-ControlMenu-1) / 3
 
-                display " - Options : \t\t\t", /A, MenuOptions, " = busy [ ", /D, $ - MenuOptions, " bytes  ]"
+                display " - Control : \t\t\t", /A, MenuControl, " = busy [ ", /D, $ - MenuControl, " bytes  ]"
 
-                endif ; ~ _CORE_MODULE_MENU_OPTIONS_
+                endif ; ~ _CORE_MODULE_MENU_OPTIONS_COTROL_

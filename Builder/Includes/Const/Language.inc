@@ -16,12 +16,12 @@ English         EQU Module.Language
 
                 module Adr
 Fonts           EQU MemBank_03
-FontsMaxSize    EQU 512
+FontsMaxSize    EQU 638
 Russian         EQU Fonts
 Spanish         EQU Fonts
 English         EQU Fonts
 Table           EQU Fonts + FontsMaxSize
-TableSize       EQU 96 * 3
+TableSize       EQU 118 * 3
 
                 module Module
 Language        EQU Adr.Table + Adr.TableSize                                   ; адрес модуля языка

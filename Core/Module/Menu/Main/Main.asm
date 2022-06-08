@@ -4,6 +4,7 @@
 
                 ; include "Sprites/Menu/Main/Compress.inc"
 Main:           SET_LANGUAGE LANGUAGE_DEFAULT
+                
 
 @MenuMain       ; вернутся в главное меню и загрузить язык
 

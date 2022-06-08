@@ -20,6 +20,7 @@ KeyLeft         DB VK_A                                                         
 KeyRight        DB VK_D                                                         ; клавиша по умолчанию "Вправо"
 KeySelect       DB VK_SPACE                                                     ; клавиша по умолчанию "Выбор"
 KeyDeselect     DB VK_SYMBOL_SHIFT                                              ; клавиша по умолчанию "Отмена"
+KeyMenu         DB VK_ENTER                                                     ; клавиша по умолчанию "меню/пауза"
                 ends
 
                 endif ; ~_STRUCT_CONFIG_
