@@ -254,7 +254,7 @@ Jump:           LD E, (HL)
 
 ; HL - адрес массива опций
 @SetFirstOption LD A, (HL)
-                LD (MenuVariables.NumberOptions), A
+                LD (MenuVariables.OptionsMax), A
                 CALL SetOption
                 CALL SetFadeinVFX
 

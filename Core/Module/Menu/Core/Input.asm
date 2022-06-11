@@ -30,12 +30,12 @@
                 JP Z, PressSelect
 
                 JR .NotProcessing
-PressUp:        LD HL, MenuVariables.NumberOptions
+PressUp:        LD HL, MenuVariables.OptionsMax
                 LD A, (HL)
+                INC HL
                 INC HL
                 CP (HL)
                 JR Z, InputDefault.NotProcessing                                ; обработка клавиши не произведена
-                LD C, (HL)
 
                 ; проверка ранее установленного флага CHANGE_BIT
                 INC HL
@@ -44,16 +44,15 @@ PressUp:        LD HL, MenuVariables.NumberOptions
                 SET CHANGE_BIT, (HL)
                 DEC HL
 
-                INC C
-                LD (HL), C
+                INC (HL)
 
                 OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET
-PressDown:      LD HL, MenuVariables.Current
+PressDown:      LD HL, MenuVariables.OptionsMin
                 LD A, (HL)
-                OR A
-                JR Z, InputDefault.NotProcessing                                ; обработка клавиши не произведена
-                LD C, A
+                INC HL
+                CP (HL)
+                JR NC, InputDefault.NotProcessing                                ; обработка клавиши не произведена
 
                 ; проверка ранее установленного флага CHANGE_BIT
                 INC HL
@@ -62,8 +61,7 @@ PressDown:      LD HL, MenuVariables.Current
                 SET CHANGE_BIT, (HL)
                 DEC HL
                 
-                DEC C
-                LD (HL), C
+                DEC (HL)
 
                 OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET

@@ -15,6 +15,9 @@
 .ToNextFadein   DEC HL                                                          ; переход к Menu.Current
                 DEC (HL)
                 LD A, (HL)
+                DEC HL
+                CP (HL)
+                INC HL
                 INC HL                                                          ; переход к Menu.Flag
                 JR NZ, .NotAllFadein
 
