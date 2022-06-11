@@ -1,7 +1,6 @@
 
                     ifndef _INPUT_KEYBOARD_CHECK_KEY_STATE_
                     define _INPUT_KEYBOARD_CHECK_KEY_STATE_
-
 ; -----------------------------------------
 ; проверить состояние клавиши
 ; In :

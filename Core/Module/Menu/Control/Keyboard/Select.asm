@@ -93,16 +93,10 @@ RedefineKeys:   ; проиграть при переходе новый эффе
                 LD L, A
                 LD (HL), WAIT_INPUT_KEY
                 INC A
-                CALL RefreshMenuText
-                CALL WaitVFX
+                CALL RefreshCurrentOption
 
-                ; ожидание отпускание ранее нажатой клавиши
-                CALL WaitReleasedKey
-
-                ; ожидание нажатия клавиши
-.WaitPressedKey HALT
-                CALL GetPressedKey
-                JR NC, .WaitPressedKey
+                CALL Keyboard.WaitReleasedKey                                   ; ожидание отпускание ранее нажатой клавиши
+                CALL Keyboard.WaitPressedKey                                    ; ожидание нажатия клавиши
 
                 ; установка нажатой клавиши
                 LD A, (MenuVariables.Current)
@@ -113,8 +107,7 @@ RedefineKeys:   ; проиграть при переходе новый эффе
                 LD D, L
                 PUSH DE
                 INC A
-                CALL RefreshMenuText
-                CALL WaitVFX
+                CALL RefreshCurrentOption
 
                 ; проверка коллизии клавиш
                 POP DE
@@ -142,93 +135,18 @@ RedefineKeys:   ; проиграть при переходе новый эффе
                 LD A, L
                 INC A
 
-                ; выключить отображение курсора
-                LD HL, MenuVariables.Flags
-                RES DRAW_CURSOR_BIT, (HL)
-
-                CALL GetTextCoord
-                PUSH BC
-
-                CALL ASD
-                CALL WaitVFX
-                ; CALL WaitEventVFX
-
-                POP BC
-                CALL SetTextCoord
+                CALL RefreshOption
 
                 ; -----------------------------------------
                 ; обновление изменённого меню
                 ; -----------------------------------------
                 CALL RNDTextVFX                                                 ; проиграть новый эффект
                 POP AF
-                CALL SetMenuText
+                CALL SetOption
                 CALL WaitVFX
 
 .Break          ; ожидание отпускание ранее нажатой клавиши
-                JP WaitReleasedKey
-
-; ожидание завершения VFX
-WaitVFX:        HALT
-                BIT VFX_PLAYING_BIT, (IY + FTVFX.Flags)
-                JP Z, WaitVFX
-                RET
-WaitEventVFX:   PUSH HL
-
-                LD HL, (IY + FTVFX.VFX_Complited)
-                PUSH HL
-
-                ; установка функции обработчика завершения эффекта
-                LD HL, .OnComplited
-                LD (IY + FTVFX.VFX_Complited), HL
-
-                LD HL, MenuVariables.Flags
-                RES JUMP_BIT, (HL)
-
-.WaitLoop       ; ожидание завершения VFX
-                HALT
-                BIT JUMP_BIT, (HL)
-                JP Z, .WaitLoop
-
-                POP HL
-                LD (IY + FTVFX.VFX_Complited), HL
-                POP HL
-
-                RET
-
-.OnComplited    ; установка флага разрешения перехода в выбранное меню
-                LD HL, MenuVariables.Flags
-                SET JUMP_BIT, (HL)
-                RET
-
-; -----------------------------------------
-; получить Virtual Key нажатой клавиши  
-; In:
-; Out:
-;   если была нажата клавиша флаг переполнения Carry установлен,
-;   регистре E хранится Virtual Key, в противном случае флаг cброшен
-; Corrupt:
-;   DE, BC, AF, AF'
-; Note:
-;   SerdjukSVS (C)
-; -----------------------------------------
-GetPressedKey:  LD DE, #0500
-                LD BC, #FEFE
-.NextPort       IN A, (C)
-                CPL
-.NextBit        RRA
-                RET C
-                INC E
-                DEC D
-                JR NZ, .NextBit
-                RLC B
-                RET NC
-                LD D, #05
-                JR .NextPort
-
-WaitReleasedKey HALT
-                CALL GetPressedKey
-                RET NC
-                JR WaitReleasedKey
+                JP Keyboard.WaitReleasedKey
 
                 display " - Keyboard Select : \t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
 

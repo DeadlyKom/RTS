@@ -20,7 +20,7 @@
 
                 SET LAST_FADE_BIT, (HL)
 .NotAllFadein   SET NEXT_FADE_BIT, (HL)
-                JP SetMenuText.NotUpdate
+                JP SetOption.NotUpdate
 
                 display " - Fadein Text : \t\t", /A, PreFadeinText, " = busy [ ", /D, $ - PreFadeinText, " bytes  ]"
 

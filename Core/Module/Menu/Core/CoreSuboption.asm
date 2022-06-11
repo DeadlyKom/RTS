@@ -115,31 +115,26 @@
 .Update         ; обновление опции "применить", если необходимо
                 EX DE, HL
                 BIT SUBOPTION_APPLY_BIT, (HL)
-                JP Z, RefreshMenuText
+                JP Z, RefreshCurrentOption
 
-                CALL RefreshMenuText
-
-; обновление опции "применить"
-RefreshApply:   ; выключить отображение курсора
+                ; CALL RefreshMenuText
+@RefreshCurrentOption
+                LD A, (MenuVariables.Current)
+; обновление опции 
+; A - номер опции
+@RefreshOption: ; выключить отображение курсора
                 LD HL, MenuVariables.Flags
                 RES DRAW_CURSOR_BIT, (HL)
 
                 LD BC, (UpdateTextVFX.Coord)
                 PUSH BC
 
-                XOR A
-                CALL ASD
+                CALL SetOption.Transient
                 CALL WaitVFX
 
                 POP BC
                 LD (UpdateTextVFX.Coord), BC
 
-                RET
-
-; ожидание завершения VFX
-WaitVFX:        HALT
-                BIT VFX_PLAYING_BIT, (IY + FTVFX.Flags)
-                JP Z, WaitVFX
                 RET
 
                 display " - Core Suboption : \t\t", /A, Suboption, " = busy [ ", /D, $ - Suboption, " bytes  ]"

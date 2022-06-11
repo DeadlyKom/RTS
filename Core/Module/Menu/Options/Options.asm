@@ -24,9 +24,6 @@ ApplyCoord      EQU #1113
                 LD (MenuVariables.Options), HL
                 LD HL, SuboptionsMenu
                 LD (MenuVariables.SuboptionsFunc), HL
-                XOR A
-                LD (MenuVariables.Current), A
-                LD (MenuVariables.Flags), A
 
                 ; отрисовка меню
                 LD HL, OptionsMenu

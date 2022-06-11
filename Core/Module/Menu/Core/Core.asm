@@ -32,26 +32,17 @@
                 LD HL, SelectCursor
                 JP DrawCharBoundary
 
-@GetTextCoord:  LD BC, (UpdateTextVFX.Coord)
-                RET
-@SetTextCoord:  LD (UpdateTextVFX.Coord), BC
-                RET
-@ASD            ; установка выбранного меню
-                LD (MenuVariables.Current), A
-                JR SetMenuText.NotUpdate
-
-; обновить текущее меню
-@RefreshMenuText: LD A, (MenuVariables.Current)
-
 ; A - номер меню
-@SetMenuText:   ; установка выбранного меню
-                LD (MenuVariables.Current), A
-
-                ; сохранить позицию курсора
+@SetOption:     ; сохранить позицию курсора
                 LD HL, (UpdateTextVFX.Coord)
                 LD (UpdateTextVFX.OldCoord), HL
 
-.NotUpdate      ; расчёт информации о опции
+@SetOption.Transient:
+                ; установка выбранного меню
+                LD (MenuVariables.Current), A
+
+@SetOption.NotUpdate
+                ; расчёт информации о опции
                 LD HL, (MenuVariables.Options)
                 INC HL
                 LD D, #00
@@ -71,7 +62,7 @@
                 EX AF, AF'
                 LD A, (HL)
                 CALL Functions.TextToBuffer
-Suboptions:     ; расчёт информации о подопции
+Suboptions:     ; проверка адреса и переход если он установлен
                 LD HL, (MenuVariables.SuboptionsFunc)
                 LD A, H
                 OR L
@@ -99,7 +90,7 @@ GetLength:      ; округление длины текста до знаком
                 ; отрисовка меню
                 LD HL, (MenuVariables.Options)
                 LD A, (HL)
-                CALL SetMenuText
+                CALL SetOption
 
                 ; включить отображение курсора
                 LD HL, MenuVariables.Flags
@@ -179,7 +170,7 @@ OnChange:       ; проверка флага VFX_PLAYING
                 ; становка нового выбранного меню
                 DEC HL
                 LD A, (HL)
-                CALL SetMenuText
+                CALL SetOption
 
                 ; проиграть при переходе новый эффект
                 CALL RNDTextVFX
@@ -220,7 +211,7 @@ OnSelect:       ; проверка флага VFX_PLAYING
                 PUSH HL
                 LD HL, #0000
                 LD (MenuVariables.SuboptionsFunc), HL
-                CALL RefreshMenuText                                            ; отрисовка меню
+                CALL RefreshCurrentOption
                 POP HL
                 LD (MenuVariables.SuboptionsFunc), HL
                 
@@ -247,8 +238,9 @@ Jump:           LD E, (HL)
                 XOR A
                 LD (MenuVariables.Current), A
                 LD (MenuVariables.Flags), A
+                LD (MenuVariables.AddFlags), A
                 
-                ; сброс функции обработчика подменю
+                ; ; сброс функции обработчика подменю
                 LD HL, #0000
                 LD (MenuVariables.SuboptionsFunc), HL
 
@@ -263,7 +255,7 @@ Jump:           LD E, (HL)
 ; HL - адрес массива опций
 @SetFirstOption LD A, (HL)
                 LD (MenuVariables.NumberOptions), A
-                CALL SetMenuText
+                CALL SetOption
                 CALL SetFadeinVFX
 
                 SetUserHendler INT_Handler
@@ -271,11 +263,7 @@ Jump:           LD E, (HL)
 
 ; ожидание события завершений Faidout'а
 ; A - на входе номер выбранного меню
-@WaitEvent:     ; установка функции обработчика завершения эффекта
-                LD HL, .OnComplited
-                LD (IY + FTVFX.VFX_Complited), HL
-
-                ; удалить из стека адрес выхода
+@WaitEvent:     ; удалить из стека адрес выхода
                 HALT
                 POP HL
                 EX (SP), HL
@@ -290,24 +278,48 @@ Jump:           LD E, (HL)
                 CLS_C000
                 ATTR_C000_IPB RED, BLACK, 0
 
+                CALL WaitEventVFX
+                OffUserHendler
+
+                LD A, (MenuVariables.Current)
+
+                RET
+
+@WaitEventVFX:  PUSH HL
+
+                LD HL, (IY + FTVFX.VFX_Complited)
+                PUSH HL
+
+                ; установка функции обработчика завершения эффекта
+                LD HL, .OnComplited
+                LD (IY + FTVFX.VFX_Complited), HL
+
                 LD HL, MenuVariables.Flags
+                RES JUMP_BIT, (HL)
 
-.Loop           ; ожидание завершения faidout'а
+.WaitLoop       ; ожидание завершения VFX
+                HALT
                 BIT JUMP_BIT, (HL)
-                JP Z, .Loop
+                JP Z, .WaitLoop
 
-                DEC HL
-                LD A, (HL)
+                POP HL
+                LD (IY + FTVFX.VFX_Complited), HL
+
+                POP HL
 
                 RET
 
 .OnComplited    ; установка флага разрешения перехода в выбранное меню
                 LD HL, MenuVariables.Flags
                 SET JUMP_BIT, (HL)
-                OffUserHendler
-
                 RET
 
+; ожидание завершения VFX
+@WaitVFX:       HALT
+                BIT VFX_PLAYING_BIT, (IY + FTVFX.Flags)
+                JP Z, WaitVFX
+                RET
+    
                 display " - Core : \t\t\t", /A, UpdateTextVFX, " = busy [ ", /D, $ - UpdateTextVFX, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_CORE_

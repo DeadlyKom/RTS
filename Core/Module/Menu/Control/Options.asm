@@ -15,9 +15,6 @@
                 LD (MenuVariables.Options), HL
                 LD HL, SuboptionsControl
                 LD (MenuVariables.SuboptionsFunc), HL
-                XOR A
-                LD (MenuVariables.Current), A
-                LD (MenuVariables.Flags), A
 
                 ; отрисовка меню
                 LD HL, ControlMenu

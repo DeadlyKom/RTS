@@ -7,6 +7,7 @@ Begin:              EQU $
 
                     include "SpectrumVirtualKeys.inc"
                     include "CheckKeyState.asm"
+                    include "PressedKey.asm"
 VirtualKeysTable:   DB (SVK_CAPS_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_CS_V
                     DB (SVK_Z << 3) | INSTRUCTION_BIT, HalfRow_CS_V
                     DB (SVK_X << 3) | INSTRUCTION_BIT, HalfRow_CS_V

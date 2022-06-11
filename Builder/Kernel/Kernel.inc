@@ -40,6 +40,9 @@ Kempston
 .CheckKeyState  EQU Kernel.Kempston.CheckKeyState
 Keyboard
 .CheckKeyState  EQU Kernel.Keyboard.CheckKeyState
+.GetPressedKey  EQU Kernel.Keyboard.GetPressedKey
+.WaitPressedKey EQU Kernel.Keyboard.WaitPressedKey
+.WaitReleasedKey EQU Kernel.Keyboard.WaitReleasedKey
 Mouse
 .CheckKeyState  EQU Kernel.Mouse.CheckKeyState
 .PositionX      EQU Kernel.Mouse.PositionX

@@ -14,14 +14,12 @@ RestoreBC:      macro
                 LD (RestoreRegister), A
                 endm
 SetUserHendler: macro Func?
-                ; HALT
-                LD HL, Func?
-                LD (UserInterrupt), HL
+                LD BC, Func?
+                LD (UserInterrupt), BC
                 endm
 OffUserHendler: macro
-                ; HALT
-                LD HL, Interrupt_RET
-                LD (UserInterrupt), HL
+                LD BC, Interrupt_RET
+                LD (UserInterrupt), BC
                 endm
 
                 endif ; ~_MACRO_INTERRUPT_
