@@ -35,7 +35,7 @@
 
                 JR .Loop
 ControlMenu:    DB .Num-1
-.First          ; текст в "вернутся"
+                ; текст в "вернутся"
                 DW #0F03
                 DB Language.Text.Menu.Back
                 ; текст в "клавиатура"

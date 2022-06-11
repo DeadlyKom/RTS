@@ -14,7 +14,7 @@
                 ; проверка флага VFX_COMPLITED
                 BIT VFX_COMPLITED_BIT, (IY + FTVFX.Flags)
                 JR Z, .NotComplited
-                LD HL, (IY +FTVFX.VFX_Complited)
+                LD HL, (IY + FTVFX.VFX_Complited)
                 JP (HL)
 
 .NotComplited   ; проверка флага FRAME_COMPLITED

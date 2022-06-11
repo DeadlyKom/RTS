@@ -31,29 +31,29 @@ VirtualKeysTable:   DB (SVK_CAPS_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_CS_V
                     DB (SVK_4 << 3) | INSTRUCTION_BIT, HalfRow_1_5
                     DB (SVK_5 << 3) | INSTRUCTION_BIT, HalfRow_1_5
 
-                    DB (SVK_6 << 3) | INSTRUCTION_BIT, HalfRow_6_0
-                    DB (SVK_7 << 3) | INSTRUCTION_BIT, HalfRow_6_0
-                    DB (SVK_8 << 3) | INSTRUCTION_BIT, HalfRow_6_0
-                    DB (SVK_9 << 3) | INSTRUCTION_BIT, HalfRow_6_0
                     DB (SVK_0 << 3) | INSTRUCTION_BIT, HalfRow_6_0
+                    DB (SVK_9 << 3) | INSTRUCTION_BIT, HalfRow_6_0
+                    DB (SVK_8 << 3) | INSTRUCTION_BIT, HalfRow_6_0
+                    DB (SVK_7 << 3) | INSTRUCTION_BIT, HalfRow_6_0
+                    DB (SVK_6 << 3) | INSTRUCTION_BIT, HalfRow_6_0
 
-                    DB (SVK_Y << 3) | INSTRUCTION_BIT, HalfRow_Y_P
-                    DB (SVK_U << 3) | INSTRUCTION_BIT, HalfRow_Y_P
-                    DB (SVK_I << 3) | INSTRUCTION_BIT, HalfRow_Y_P
-                    DB (SVK_O << 3) | INSTRUCTION_BIT, HalfRow_Y_P
                     DB (SVK_P << 3) | INSTRUCTION_BIT, HalfRow_Y_P
+                    DB (SVK_O << 3) | INSTRUCTION_BIT, HalfRow_Y_P
+                    DB (SVK_I << 3) | INSTRUCTION_BIT, HalfRow_Y_P
+                    DB (SVK_U << 3) | INSTRUCTION_BIT, HalfRow_Y_P
+                    DB (SVK_Y << 3) | INSTRUCTION_BIT, HalfRow_Y_P
 
-                    DB (SVK_H << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
-                    DB (SVK_J << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
-                    DB (SVK_K << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
-                    DB (SVK_L << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
                     DB (SVK_ENTER << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
+                    DB (SVK_L << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
+                    DB (SVK_K << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
+                    DB (SVK_J << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
+                    DB (SVK_H << 3) | INSTRUCTION_BIT, HalfRow_H_ENT
 
-                    DB (SVK_B << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
-                    DB (SVK_N << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
-                    DB (SVK_M << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
-                    DB (SVK_SYMBOL_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
                     DB (SVK_SPACE << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
+                    DB (SVK_SYMBOL_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
+                    DB (SVK_M << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
+                    DB (SVK_N << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
+                    DB (SVK_B << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
 
                     display "\t - Keybord : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 

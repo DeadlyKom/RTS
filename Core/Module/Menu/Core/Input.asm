@@ -8,7 +8,12 @@
 .NotProcessing  SCF
                 RET
 
-.Processing     EX AF, AF'
+.Processing     ; сброс флагов смены опций
+                XOR A
+                LD (MenuVariables.AddFlags), A
+
+                ; опрос нажатой клавиши
+                EX AF, AF'
                 CP DEFAULT_UP
                 JP Z, PressUp
                 

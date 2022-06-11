@@ -48,6 +48,7 @@ TextToBuffer:   ; расчёт адреса сообщения
 ; In:
 ;   HL - адрес текста
 ; Out:
+;   E - длина строки в пикселах
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
@@ -56,7 +57,10 @@ StringToBuffer: ; сохранеие текущей страницы
                 LD (.RestoreMemPage), A
 
                 SET_PAGE_LOCALIZATION                                           ; включение страницы локализации
-                CALL Language.Monochrome.DrawString
+                
+                EX AF, AF
+                LD C, A
+                CALL Language.Monochrome.DrawString.Custom
                 LD E, C                                                         ; копирование длины строки в пикселах
 
                 ; востановление предыдущей страницы

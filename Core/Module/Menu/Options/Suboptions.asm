@@ -9,6 +9,12 @@ SuboptionsMenu: LD A, (MenuVariables.Current)
                 CP OPTION_CONTROL
                 JP Z, ControlHelp
 
+                CP OPTION_AUDIO
+                JP Z, AudiolHelp
+
+                CP OPTION_GRAPHICS
+                JP Z, GraphicsHelp
+
                 CP OPTION_GAME_SPEED
                 JP Z, GameSpeed
 

@@ -14,6 +14,7 @@ OPTION_DOWN         EQU 0x07
 OPTION_UP           EQU 0x08
 
 OPTION_KEY_NUM      EQU 0x08
+WAIT_INPUT_KEY      EQU VK_NONE + 1
 
                 include "Options.asm"
                 include "Select.asm"

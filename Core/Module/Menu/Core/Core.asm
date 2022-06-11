@@ -32,6 +32,14 @@
                 LD HL, SelectCursor
                 JP DrawCharBoundary
 
+@GetTextCoord:  LD BC, (UpdateTextVFX.Coord)
+                RET
+@SetTextCoord:  LD (UpdateTextVFX.Coord), BC
+                RET
+@ASD            ; установка выбранного меню
+                LD (MenuVariables.Current), A
+                JR SetMenuText.NotUpdate
+
 ; обновить текущее меню
 @RefreshMenuText: LD A, (MenuVariables.Current)
 
@@ -58,7 +66,7 @@
                 INC HL
                 LD (UpdateTextVFX.Coord), DE
 
-                ; копирование текста в буфер
+.AnyText        ; копирование текста в буфер
                 SCF                                                             ; первичное отображение
                 EX AF, AF'
                 LD A, (HL)
@@ -69,8 +77,8 @@ Suboptions:     ; расчёт информации о подопции
                 OR L
                 JR Z, GetLength
 
-                LD DE, GetLength
-                PUSH DE
+                LD BC, GetLength
+                PUSH BC
                 JP (HL)
 GetLength:      ; округление длины текста до знакоместа
                 LD A, E
@@ -117,6 +125,9 @@ GetLength:      ; округление длины текста до знаком
                 CALL Input.JumpDefaulKeys
                 JR .Loop
 
+@RNDTextVFX:    CALL Math.Rand8
+                JP NextTextVFX.SetVFX
+
 NextTextVFX:    ; ожидание применения следующего эффекта
 .WaitNextVFX    EQU $+1
                 LD A, #01
@@ -148,7 +159,7 @@ NextTextVFX:    ; ожидание применения следующего э�
                 INC A
 .SetWait        LD (.WaitNextVFX), A
                 LD A, #01
-SetDefaultVFX:  LD C, VFX_DEFAULT                                               ; номер эффекта
+@SetDefaultVFX: LD C, VFX_DEFAULT                                               ; номер эффекта
                 JP SetVFX_Custom                                                ; установка эффекта
 
 OnChange:       ; проверка флага VFX_PLAYING
@@ -171,8 +182,7 @@ OnChange:       ; проверка флага VFX_PLAYING
                 CALL SetMenuText
 
                 ; проиграть при переходе новый эффект
-                CALL Math.Rand8
-                CALL NextTextVFX.SetVFX
+                CALL RNDTextVFX
 
                 ; установка флага перерисовка курсора
                 LD HL, MenuVariables.Flags
@@ -206,9 +216,13 @@ OnSelect:       ; проверка флага VFX_PLAYING
                 CALL SetVFX_Custom
 
                 ; сброс функции обработчика подменю
+                LD HL, (MenuVariables.SuboptionsFunc)
+                PUSH HL
                 LD HL, #0000
                 LD (MenuVariables.SuboptionsFunc), HL
                 CALL RefreshMenuText                                            ; отрисовка меню
+                POP HL
+                LD (MenuVariables.SuboptionsFunc), HL
                 
                 LD HL, MenuVariables.Selected
 Jump:           LD E, (HL)

@@ -31,28 +31,6 @@ DrawString:     ; очистка общего буфера
                 CALL GetLength
                 POP HL
 
-;                 PUSH BC
-;                 EXX
-;                 POP BC
-;                 LD H, HIGH SharedBuffer
-;                 LD A, C
-;                 RRA
-;                 RRA
-;                 RRA
-;                 AND %0001111
-;                 LD L, A
-;                 LD C, B
-;                 LD A, #08
-; .CLS_Column     EX AF, AF'
-; .CLS_Row        LD (HL), #00
-;                 INC L
-;                 DJNZ .CLS_Row
-;                 LD B, C
-;                 EX AF, AF'
-;                 DEC A
-;                 JR NZ, .CLS_Column
-;                 EXX
-
 .NotAlign       ; вывод строки без очистки буфера + задаётся своё смещение в регистре C
                 EXX
                 LD D, HIGH SharedBuffer

@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_MENU_CORE_SUBOPTION_
                 define _CORE_MODULE_MENU_CORE_SUBOPTION_
 
-; A - номер меню
+; A  - номер меню
 ; HL - адрес массива подопций
 @Suboption:     ; расчёт информации о опции
                 LD D, #00
@@ -18,11 +18,75 @@
                 LD A, (HL)
                 JP Functions.TextToBuffer
 
+; вывод подопции кастомного текста
+;   A' - если флаг переполнения Carry установлен, первичное отображение
+;   иначе в A' хранится смещение
+@SuboptionText: ;
+                LD A, (HL)
+                INC HL
+                EX AF, AF'
+                LD A, (HL)
+
+                ;
+                LD HL, .Buffer
+                LD DE, .Buffer+1
+                LD BC, .BufferSize - 1
+                LD (HL), #01
+                LDIR
+
+                ; расчёт адреса сообщения
+                LD HL, (LocalizationRef)
+                ADD A, A
+                ADD A, L
+                LD L, A
+                JR NC, $+3
+                INC H
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                ADD HL, DE
+
+                ; расчёт длины строки
+                XOR A
+                LD BC, .BufferSize
+                CPIR
+                RET NZ
+
+.Found          DEC HL
+                DEC HL
+                INC C
+                LD D, H
+                LD E, L
+                
+                LD A, .BufferSize
+                SUB C
+                LD C, A
+                PUSH BC
+
+                LD A, .BufferSize >> 1
+                SRL C
+                SUB C
+                LD C, A
+                OR A
+
+                LD HL, .Buffer + .BufferSize - 1
+                SBC HL, BC
+                EX DE, HL
+                POP BC
+                LDDR
+
+                LD HL, .Buffer
+                JP Functions.StringToBuffer
+
+.Buffer         DS 20, 0
+.BufferSize     EQU 19
+
 ; B  - максимальное значение
 ; DE - указатель на текущую подопцию
 @ReqChange:     LD HL, MenuVariables.AddFlags
                 LD A, (HL)
                 LD (HL), #00
+                AND SUBOPTION_CHANGE_MASK
 
                 CP SUBOPTION_LEFT
                 JR Z, .Left
@@ -38,8 +102,8 @@
 
                 EX DE, HL
                 INC (HL)
-                
-                JP RefreshMenuText
+
+                JR .Update
 
 .Right          LD A, (DE)
                 OR A
@@ -48,7 +112,35 @@
                 EX DE, HL
                 DEC (HL)
 
-                JP RefreshMenuText
+.Update         ; обновление опции "применить", если необходимо
+                EX DE, HL
+                BIT SUBOPTION_APPLY_BIT, (HL)
+                JP Z, RefreshMenuText
+
+                CALL RefreshMenuText
+
+; обновление опции "применить"
+RefreshApply:   ; выключить отображение курсора
+                LD HL, MenuVariables.Flags
+                RES DRAW_CURSOR_BIT, (HL)
+
+                LD BC, (UpdateTextVFX.Coord)
+                PUSH BC
+
+                XOR A
+                CALL ASD
+                CALL WaitVFX
+
+                POP BC
+                LD (UpdateTextVFX.Coord), BC
+
+                RET
+
+; ожидание завершения VFX
+WaitVFX:        HALT
+                BIT VFX_PLAYING_BIT, (IY + FTVFX.Flags)
+                JP Z, WaitVFX
+                RET
 
                 display " - Core Suboption : \t\t", /A, Suboption, " = busy [ ", /D, $ - Suboption, " bytes  ]"
 

@@ -62,7 +62,7 @@ Main:           SET_LANGUAGE LANGUAGE_DEFAULT
 
                 JR .Loop
 MainMenu:       DB .Num-1
-.First          ; текст в "настройки"
+                ; текст в "настройки"
                 DW #1413
                 DB Language.Text.Menu.Options
                 ; текст в "продолжить"

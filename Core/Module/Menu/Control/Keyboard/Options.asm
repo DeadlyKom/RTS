@@ -35,7 +35,7 @@
 
                 JR .Loop
 ControlKeys:    DB .Num-1
-.First          ; текст в "вернутся"
+                ; текст в "вернутся"
                 DW #1403
                 DB Language.Text.Menu.Back
                 ; текст в "меню/пауза"

@@ -9,20 +9,28 @@ SuboptionsControl
 
 .Loop           CP C
                 JR Z, .Set
-                INC HL
+                DEC HL
                 DEC C
                 DJNZ .Loop
 
                 RET
 
 .Set            LD A, (HL)
-                ADD A, Language.Text.Menu.KEY_CAPS_SHIFT
+                CP VK_NONE
+                JR C, .IsValid
+
+                ; символ '-' или '?' если отсутствует клавиша
+                SUB VK_NONE
+                ADD A, Language.Text.Menu.KEY_NONE
+                
+.IsValid        ADD A, Language.Text.Menu.KEY_CAPS_SHIFT
                 LD (OptionsKeys.ID_Keys), A
+
                 XOR A
                 LD HL, OptionsKeys
-                JP Suboption
+                JP SuboptionText
 
-OptionsKeys:    DB 0x16 * 8
+OptionsKeys:    DB 0x15 * 8
 .ID_Keys        DB Language.Text.Menu.KEY_CAPS_SHIFT
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_SUBOPTIONS_CONTROL_KEYBOARD_

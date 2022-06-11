@@ -13,8 +13,6 @@ NumberOptions:  DB #00                                                          
 Current:        DB #00                                                          ; текущая опция в меню                  (2)
 Flags:          DB #00                                                          ; флаги                                 (3)
 AddFlags:       DB #00                                                          ; дополнительные флаги                  (4)
-; NumSuboptions:  DB #00
-; CurSuboptions:  DB #00
 
                 ends
 

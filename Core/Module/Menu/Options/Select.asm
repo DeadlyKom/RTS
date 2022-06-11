@@ -26,6 +26,10 @@ Changed:        ; выбор внутри опции (влево/вправо)
                 JP Z, ReqChangeLang
                 CP OPTION_CONTROL
                 JP Z, ReqChangeCH
+                CP OPTION_AUDIO
+                JP Z, ReqChangeAudio
+                CP OPTION_GRAPHICS
+                JP Z, ReqChangeGraphics
                 CP OPTION_GAME_SPEED
                 JP Z, ReqChangeGS
                 CP OPTION_CURSOR_SPEED
@@ -70,8 +74,9 @@ Selected:       ; проверка выбора доступных опций
 
                 CP OPTION_CONTROL
                 JP Z, MenuControl
-
                 CP OPTION_BACK
+                JP Z, MenuMain
+                CP OPTION_APPLY
                 JP Z, ApplyOptions
 
                 JR $
@@ -86,7 +91,7 @@ ApplyOptions:   ; установка языка
 
                 SET_LANGUAGE_A
 
-                JP @MenuMain
+                JP MenuMain
 
                 display " - Options Select : \t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
 
