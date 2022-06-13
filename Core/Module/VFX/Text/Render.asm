@@ -1,6 +1,32 @@
 
                 ifndef _CORE_MODULE_VFX_TEXT_RENDER_
                 define _CORE_MODULE_VFX_TEXT_RENDER_
+@ClearVFX:      CALL PixelAddress                                               ; DE - адрес экрана
+                EX DE, HL
+
+                LD B, #08                                                       ; высота в пикселах
+                LD C, (IY + FTVFX.Length)                                       ; ширина в знакоместах
+.ColumLoop      LD A, C
+
+.Loop           LD (HL), #00
+                RES 7, H
+                LD (HL), #00
+                SET 7, H
+                INC L
+                DEC A
+                JR NZ, .Loop
+
+                ; следующая строка экрана
+                INC H
+
+                ; переход к началу
+                LD A, L
+                SUB C
+                LD L, A
+
+                DJNZ .ColumLoop
+                RET
+
 ; -----------------------------------------
 ; скролл текста
 ; In:

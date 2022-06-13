@@ -25,6 +25,10 @@ ApplyCoord      EQU #1113
                 LD HL, SuboptionsMenu
                 LD (MenuVariables.SuboptionsFunc), HL
 
+				; ограничение доступных опций
+                LD A, #01
+                LD (MenuVariables.OptionsMin), A
+
                 ; отрисовка меню
                 LD HL, OptionsMenu
                 CALL SetFirstOption

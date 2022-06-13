@@ -28,9 +28,9 @@
                 LD A, (HL)
 
                 ;
-                LD HL, .Buffer
-                LD DE, .Buffer+1
-                LD BC, .BufferSize - 1
+                LD HL, Buffer
+                LD DE, Buffer+1
+                LD BC, BufferSize - 1
                 LD (HL), #01
                 LDIR
 
@@ -48,7 +48,7 @@
 
                 ; расчёт длины строки
                 XOR A
-                LD BC, .BufferSize
+                LD BC, BufferSize
                 CPIR
                 RET NZ
 
@@ -58,28 +58,25 @@
                 LD D, H
                 LD E, L
                 
-                LD A, .BufferSize
+                LD A, BufferSize
                 SUB C
                 LD C, A
                 PUSH BC
 
-                LD A, .BufferSize >> 1
+                LD A, BufferSize >> 1
                 SRL C
                 SUB C
                 LD C, A
                 OR A
 
-                LD HL, .Buffer + .BufferSize - 1
+                LD HL, Buffer + BufferSize - 1
                 SBC HL, BC
                 EX DE, HL
                 POP BC
                 LDDR
 
-                LD HL, .Buffer
+                LD HL, Buffer
                 JP Functions.StringToBuffer
-
-.Buffer         DS 20, 0
-.BufferSize     EQU 19
 
 ; B  - максимальное значение
 ; DE - указатель на текущую подопцию
@@ -112,12 +109,15 @@
                 EX DE, HL
                 DEC (HL)
 
-.Update         ; обновление опции "применить", если необходимо
-                EX DE, HL
-                BIT SUBOPTION_APPLY_BIT, (HL)
-                JP Z, RefreshCurrentOption
+.Update         LD BC, .Continue
+                PUSH BC
 
-                ; CALL RefreshMenuText
+                EX DE, HL
+                LD HL, (MenuVariables.CompareFunc)
+                JP (HL)
+
+.Continue       
+
 @RefreshCurrentOption
                 LD A, (MenuVariables.Current)
 ; обновление опции 
@@ -136,6 +136,41 @@
                 LD (UpdateTextVFX.Coord), BC
 
                 RET
+
+@ShowApply:     ; снятие ограничений доступных опций
+                XOR A
+                LD (MenuVariables.OptionsMin), A
+
+                ; обновить опцию "применить"
+                LD A, (MenuVariables.Current)
+                PUSH AF
+                LD A, #01                                                       ; длительности первого фрейма
+                CALL SetDefaultVFX                                              ; установка эффекта
+                XOR A
+                CALL RefreshOption
+                POP AF
+                JP RefreshOption
+
+@HiddenApply:   ; огранчение количество доступных опций
+                LD A, #01
+                LD (MenuVariables.OptionsMin), A
+
+                ; расчёт позиции и размера строки для очистки
+                XOR A
+                CALL GetCoordOption
+                PUSH DE
+                INC HL
+                LD A, (HL)
+                CALL Functions.GetTextLength
+                LD A, E
+                LD (IY + FTVFX.Length), A
+                POP DE
+                CALL ClearVFX
+
+                RET
+
+Buffer          DS 20, 0
+BufferSize      EQU 19
 
                 display " - Core Suboption : \t\t", /A, Suboption, " = busy [ ", /D, $ - Suboption, " bytes  ]"
 

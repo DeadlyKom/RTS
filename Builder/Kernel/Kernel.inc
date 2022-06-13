@@ -32,6 +32,7 @@ UserInterrupt   EQU Kernel.Interrupt.Handler.UserInterrupt
 Interrupt_RET   EQU Kernel.Interrupt.Handler.RET
 ReturnAddress   EQU Kernel.Interrupt.Handler.ReturnAddress
 TickCounterRef  EQU Kernel.Interrupt.Handler.TickCounterPtr                     ; счётчик тиков 1/50
+
 ; input
 Input
 .CheckKeyState  EQU Kernel.Input.CheckKeyState
@@ -51,7 +52,6 @@ Mouse
 .SVK_LBUTTON    EQU Kernel.Mouse.SVK_LBUTTON
 .SVK_RBUTTON    EQU Kernel.Mouse.SVK_RBUTTON
 .SVK_MBUTTON    EQU Kernel.Mouse.SVK_MBUTTON
-
 Cursor
 .MoveUp         EQU Kernel.Input.Cursor.MoveUp
 .MoveDown       EQU Kernel.Input.Cursor.MoveDown
@@ -76,6 +76,7 @@ LoadModule
 Functions
 .ChangeLanguage EQU Kernel.Functions.ChangeLanguage                             ; загрузка языковых шрифтов
 .TextToBuffer   EQU Kernel.Functions.TextToBuffer
+.GetTextLength  EQU Kernel.Functions.GetTextLength
 .StringToBuffer EQU Kernel.Functions.StringToBuffer
 
                 endif ; ~_BUILDER_KERNEL_

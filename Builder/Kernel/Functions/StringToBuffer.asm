@@ -43,10 +43,45 @@ TextToBuffer:   ; расчёт адреса сообщения
 .RestoreMemPage EQU $+1
                 LD A, #00
                 JP SetPage
+; -----------------------------------------
+; получить длину строки в пикселах
+; In:
+;   A  - ID сообщения
+;   HL - адрес текста
+; Out:
+;   E - длина строки в пикселах
+; Corrupt:
+; Note:
+; -----------------------------------------
+GetTextLength:  ; расчёт адреса сообщения
+                LD HL, (LocalizationRef)
+                ADD A, A
+                ADD A, L
+                LD L, A
+                JR NC, $+3
+                INC H
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                ADD HL, DE
 
+                ; сохранеие текущей страницы
+                LD A, (MemoryPageRef)
+                LD (.RestoreMemPage), A
+
+                SET_PAGE_LOCALIZATION                                           ; включение страницы локализации
+
+                CALL Language.Monochrome.GetLength
+                LD E, B                                                         ; копирование длины строки в пикселах
+
+                ; востановление предыдущей страницы
+.RestoreMemPage EQU $+1
+                LD A, #00
+                JP SetPage
 ; -----------------------------------------
 ; In:
 ;   HL - адрес текста
+;   A' - смещение
 ; Out:
 ;   E - длина строки в пикселах
 ; Corrupt:

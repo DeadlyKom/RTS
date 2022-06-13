@@ -43,17 +43,7 @@
 
 @SetOption.NotUpdate
                 ; расчёт информации о опции
-                LD HL, (MenuVariables.Options)
-                INC HL
-                LD D, #00
-                LD E, A
-                ADD A, A
-                ADD A, E
-                LD E, A
-                ADD HL, DE
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
+                CALL GetCoordOption
                 INC HL
                 LD (UpdateTextVFX.Coord), DE
 
@@ -66,12 +56,12 @@ Suboptions:     ; проверка адреса и переход если он 
                 LD HL, (MenuVariables.SuboptionsFunc)
                 LD A, H
                 OR L
-                JR Z, GetLength
+                JR Z, SetLength
 
-                LD BC, GetLength
+                LD BC, SetLength
                 PUSH BC
                 JP (HL)
-GetLength:      ; округление длины текста до знакоместа
+SetLength:      ; округление длины текста до знакоместа
                 LD A, E
                 LD B, #00
                 RRA
@@ -83,6 +73,19 @@ GetLength:      ; округление длины текста до знаком
                 AND %00011111
                 LD (IY + FTVFX.Length), A
 
+                RET
+GetCoordOption: ; расчёт информации о опции
+                LD HL, (MenuVariables.Options)
+                INC HL
+                LD D, #00
+                LD E, A
+                ADD A, A
+                ADD A, E
+                LD E, A
+                ADD HL, DE
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
                 RET
 @SelectHandler: ; подготовка смены рандомных VFX
                 LD HL, NextTextVFX

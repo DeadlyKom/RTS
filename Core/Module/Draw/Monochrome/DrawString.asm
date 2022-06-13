@@ -200,7 +200,16 @@ NotShift:       LD A, B
                 INC HL
                 LD A, E
                 JP .ColumLoop
-
+; -----------------------------------------
+; получение длины строки
+; In:
+;   HL - адрес строки
+; Out:
+;   B  - длина строки в пикселах
+;   C  -
+; Corrupt:
+; Note:
+; -----------------------------------------
 GetLength:      LD B, #00
 
 .StringLoop     LD A, (HL)
@@ -245,6 +254,7 @@ GetLength:      LD B, #00
                 LD A, (HL)                                                      ; size (height/width)
                 AND #0F
                 ADD A, B
+                INC A
                 LD B, A
                 POP HL
                 JR .StringLoop
