@@ -7,6 +7,7 @@
 
                 include "Core.asm"
                 include "CoreSuboption.asm"
+                include "ClearScreen.asm"
                 include "Input.asm"
                 include "Fadein.asm"
                 include "Fadeout.asm"

@@ -74,7 +74,7 @@ LoadModule
 
 ; functions
 Functions
-.ChangeLanguage EQU Kernel.Functions.ChangeLanguage                             ; загрузка языковых шрифтов
+.LoadFont       EQU Kernel.Functions.LoadFont                                   ; загрузка языковых шрифтов
 .TextToBuffer   EQU Kernel.Functions.TextToBuffer
 .GetTextLength  EQU Kernel.Functions.GetTextLength
 .StringToBuffer EQU Kernel.Functions.StringToBuffer

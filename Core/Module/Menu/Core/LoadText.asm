@@ -1,6 +1,21 @@
 
                 ifndef _CORE_MODULE_MENU_MAIN_LOAD_TEXT_
                 define _CORE_MODULE_MENU_MAIN_LOAD_TEXT_
+
+@SetLanguage:   ; загрузка языка
+                LD A, (ConfigOptions)
+                AND LANGUAGE_MASK
+                CALL Functions.LoadFont
+
+                ; загрузка текста главного меню
+                LD A, (ConfigOptions)
+                AND LANGUAGE_MASK
+                CALL LoadText
+
+                ; инициализация таблицы текста
+                LD HL, Adr.Module.Text
+                LD (LocalizationRef), HL
+                RET
 ; -----------------------------------------
 ; смена языка
 ; In:

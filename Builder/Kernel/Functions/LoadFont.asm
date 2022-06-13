@@ -2,7 +2,7 @@
                 ifndef _BUILDER_KERNEL_MODULE_CHANGE_LANGUAGE_
                 define _BUILDER_KERNEL_MODULE_CHANGE_LANGUAGE_
 ; -----------------------------------------
-; смена языка
+; загрузка шрифта
 ; In:
 ;   A - номер языка
 ;       0 - русский
@@ -13,7 +13,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-ChangeLanguage: ; инициализация
+LoadFont:       ; инициализация
                 EX AF, AF'                                                      ; сохранён номер языка
                 SET_PAGE_FILE_SYS                                               ; включить страницу файловой системы
                 CALL FileSystem.Base.Setup                                      ; инициализация файловой системы
@@ -50,6 +50,6 @@ ChangeLanguage: ; инициализация
                 FFile { {FontRuName}, SystemExt }                               ; имя шрифта русского языка
                 FFile { {FontSpName}, SystemExt }                               ; имя шрифта испанского языка
 
-                display "\t - Change Language : \t", /A, ChangeLanguage, " = busy [ ", /D, $ - ChangeLanguage, " bytes  ]"
+                display "\t - Load Font : \t", /A, LoadFont, " = busy [ ", /D, $ - LoadFont, " bytes  ]"
 
                 endif ; ~_BUILDER_KERNEL_MODULE_CHANGE_LANGUAGE_

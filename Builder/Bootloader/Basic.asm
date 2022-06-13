@@ -73,7 +73,19 @@ StartBoot:      DI
                 ; вызов загрузчика пакета файлов
                 JP LoadModule.Loader
 
-.DefaultConfig  FConfig
+.DefaultConfig  FConfig {
+                VK_ENTER,
+                VK_CAPS_SHIFT,
+                VK_SYMBOL_SHIFT,
+                VK_SPACE,
+                VK_D,
+                VK_A,
+                VK_S,
+                VK_W,
+                0,
+                0,
+                LANGUAGE_DEFAULT
+                }
 .FileArray      ; путь файла модуля языка
                 FFileArea {
                 {{LanguageName}, SystemExt },

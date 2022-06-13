@@ -239,6 +239,7 @@ Jump:           LD E, (HL)
 
                 ; инициализация меню
                 XOR A
+                LD (MenuVariables.OptionsMin), A
                 LD (MenuVariables.Current), A
                 LD (MenuVariables.Flags), A
                 LD (MenuVariables.AddFlags), A

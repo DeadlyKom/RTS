@@ -75,7 +75,7 @@ Selected:       ; проверка выбора доступных опций
                 CP OPTION_CONTROL
                 JP Z, MenuControl
                 CP OPTION_BACK
-                JP Z, MenuMain
+                JP Z, Main.Back
                 CP OPTION_APPLY
                 JP Z, ApplyOptions
 
@@ -90,8 +90,9 @@ ApplyOptions:   ; установка языка
                 JP Z, @Main.Back
 
                 SET_LANGUAGE_A
+                CALL SetLanguage
 
-                JP MenuMain
+                JP MenuOptions
 
                 display " - Options Select : \t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
 

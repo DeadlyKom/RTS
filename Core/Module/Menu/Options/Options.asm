@@ -10,8 +10,9 @@ GameSpeedCoord  EQU #0E02
 CursorSpeedCoord EQU #0F02
 BackCoord       EQU #1105
 ApplyCoord      EQU #1113
-@MenuOptions:   ; сброс
-                CALL ResetOptions
+@MenuOptions:   ; подготовка
+                CALL CLS                                                        ; очистка экранов
+                CALL ResetOptions                                               ; сброс опций
                 
                 ; инициализация переменных работы с настройками
                 LD HL, Changed

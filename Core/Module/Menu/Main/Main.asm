@@ -4,37 +4,12 @@
 
                 ; include "Sprites/Menu/Main/Compress.inc"
 Main:           SET_LANGUAGE LANGUAGE_DEFAULT
-                
-
-@MenuMain       ; вернутся в главное меню и загрузить язык
-
-                ; загрузка языка
-                LD A, (ConfigOptions)
-                AND LANGUAGE_MASK
-                CALL Functions.ChangeLanguage
-
-                ; загрузка текста главного меню
-                LD A, (ConfigOptions)
-                AND LANGUAGE_MASK
-                CALL LoadText
-
-                ; инициализация таблицы текста
-                LD HL, Adr.Module.Text
-                LD (LocalizationRef), HL
-
-                ; подготовка экрана 1
-                SET_SCREEN_BASE
-                CLS_C000
-                ATTR_C000_IPB RED, BLACK, 1
-
-                ; подготовка экрана 2
-                SET_SCREEN_SHADOW
-                CLS_C000
-                ATTR_C000_IPB RED, BLACK, 0
+                CALL SetLanguage
 @Main.Back      ; вернутся в главное меню
 
-                ; сброс
-                CALL ResetOptions
+                ; подготовка
+                CALL CLS                                                        ; очистка экранов
+                CALL ResetOptions                                               ; сброс опций
 
                 ; инициализация переменных работы с меню
                 LD HL, Changed
