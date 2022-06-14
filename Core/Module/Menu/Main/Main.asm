@@ -11,6 +11,18 @@ Main:           SET_LANGUAGE LANGUAGE_DEFAULT
                 CALL CLS                                                        ; очистка экранов
                 CALL ResetOptions                                               ; сброс опций
 
+                ;
+                HALT
+                SET_SCREEN_BASE
+                LD HL, SprA
+                CALL DrawStencilSpr
+
+                HALT
+                SET_SCREEN_SHADOW
+                LD HL, SprB
+                CALL DrawStencilSpr
+                HALT
+
                 ; инициализация переменных работы с меню
                 LD HL, Changed
                 LD (MenuVariables.Changed), HL
@@ -62,6 +74,20 @@ MainMenu:       DB .Num-1
 
 ; PlanetSprAttr  incbin "../../../../Sprites/Menu/Main/Compressed/Planet.ar.spr"
 ; Atmosphere7SprAttr  incbin "../../../../Sprites/Menu/Main/Compressed/Atmosphere7.ar.spr"
+SprA:           incbin "Core/Module/Sprites/Menu/Main/NubulaA0.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaA1.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaA2.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaA3.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaA4.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaA5.spr"
+                DW #0000
+SprB:           incbin "Core/Module/Sprites/Menu/Main/NubulaB0.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaB1.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaB2.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaB3.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaB4.spr"
+                incbin "Core/Module/Sprites/Menu/Main/NubulaB5.spr"
+                DW #0000
 
                 display " - Main : \t\t\t", /A, Main, " = busy [ ", /D, $ - Main, " bytes  ]"
 
