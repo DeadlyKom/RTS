@@ -65,6 +65,7 @@ Math.Rand8      EQU Kernel.Math.Rand8
 PixelAddress    EQU Kernel.Attribute.PixelAddress
 PixelAttribute  EQU Kernel.Attribute.PixelAttribute
 DrawSprite      EQU Kernel.Attribute.DrawSprite
+DrawStencilSpr  EQU Kernel.Attribute.DrawStencilSpr
 DrawCharBoundary EQU Kernel.Attribute.DrawCharBoundary
 ShiftTable      EQU Kernel.Tables.ShiftTable
 
