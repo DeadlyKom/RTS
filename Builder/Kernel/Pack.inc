@@ -21,6 +21,7 @@ Begin:          EQU $
                 include "../../Core/Module/Draw/Attribute/PixelAttribute.asm"
                 include "../../Core/Module/Draw/Attribute/DrawCharBoundary.asm"
                 include "../../Core/Module/Draw/Attribute/DrawSprite.asm"
+                include "../../Core/Module/Draw/Attribute/DrawStencilSprite.asm"
                 include "../../Core/Module/Input/Include.inc"
                 include "../../Core/Module/Math/RNG/Rand8.asm"
                 include "Functions/Include.inc"
