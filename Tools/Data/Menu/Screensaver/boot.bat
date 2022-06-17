@@ -1,2 +1,2 @@
-Converter.exe Planet.ini
+Converter.exe TM.ini
 pause

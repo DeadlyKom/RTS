@@ -10,6 +10,10 @@
 ; -----------------------------------------
 Tick:           CALL Update
 
+                LD A, (TickCounterRef)
+                AND #0F
+                RET NZ
+
                 ; увеличение здёзд на экране
                 LD A, (StarCounter)
                 CP StarsMax

@@ -38,17 +38,22 @@ Generate:       ; генерация скорости звезды
                 EXX
                 CALL Math.Rand8
                 LD D, A
-                LD E, #CC
+                LD E, #AA
                 CALL Math.Div8x8
                 EXX
-                ADD A, #33
-                LD (HL), A
+                ADD A, #55
+                ; JR NC, .Less
+
+;                 ; установка максимального значения
+;                 SBC A, A
+.Less           LD (HL), A
                 INC HL
 
                 ; позиция звезды по горизонтали
                 XOR A
                 LD (HL), A
                 INC HL
+                LD (HL), A
 
                 LD A, (StarFlags)
                 ADD A, A
@@ -57,16 +62,34 @@ Generate:       ; генерация скорости звезды
                 CALL Math.Rand8
                 CPL
                 EXX
+                LD (HL), A
 
-.SkipRND_X      LD (HL), A
-                INC HL
+.SkipRND_X      INC HL
 
                 ; генерация позиция звезды по вертикали
                 EXX
-                CALL Math.Rand8
-                LD D, A
-                LD E, 192
-                CALL Math.Div8x8
+.Generate       CALL Math.Rand8
+
+                LD C, #01
+
+                EX AF, AF'
+                LD A, (StarFlags)
+                BIT STAR_CLS_BIT, A
+                JR Z, .LLL1
+                LD C, #00
+.LLL1           EX AF, AF'
+
+                OR C
+                CP 191
+                JR NC, .Generate
+
+                LD H, HIGH SharedBuffer
+                LD L, A
+
+                SLA (HL)
+                JR C, .Generate
+
+                LD (HL), #FF
                 EXX
 
                 LD D, A

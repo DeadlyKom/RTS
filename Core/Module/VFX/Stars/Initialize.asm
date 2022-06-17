@@ -12,10 +12,10 @@ Initialize:     ;
                 XOR A
                 LD (StarCounter), A
 
-                LD A, #FF
+                LD A, STAR_INIT
                 LD (StarFlags), A
 
-                LD B, 50
+                LD B, 16
 .Loop           CALL Add
                 DJNZ .Loop
 

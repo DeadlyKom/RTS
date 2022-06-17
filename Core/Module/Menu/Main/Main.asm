@@ -5,8 +5,6 @@
                 ; include "Sprites/Menu/Main/Compress.inc"
 Main:           CALL Screensaver.Begin
 
-
-
                 SET_LANGUAGE LANGUAGE_DEFAULT
                 CALL SetLanguage
 @Main.Back      ; вернутся в главное меню
@@ -14,6 +12,13 @@ Main:           CALL Screensaver.Begin
                 ; подготовка
                 CALL CLS                                                        ; очистка экранов
                 CALL ResetOptions                                               ; сброс опций
+
+                ; 
+                LD HL, Planet
+                CALL DrawStencilSpr
+                SET_SCREEN_BASE
+                LD HL, Planet
+                CALL DrawStencilSpr
 
                 ; инициализация переменных работы с меню
                 LD HL, Changed
@@ -51,6 +56,10 @@ MainMenu:       DB .Num-1
                 DW #1213
                 DB Language.Text.Menu.NewGame
 .Num            EQU ($-MainMenu-1) / 3
+
+
+Planet:         incbin "Core/Module/Sprites/Main/Planet.spr"
+                DW #0000
 
                 ; ; отрисовка надпись
                 ; LD HL, PlanetSprAttr

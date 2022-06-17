@@ -5,7 +5,10 @@
                 module Screensaver
 
                 include "Begin.asm"
+                include "Timeline.asm"
                 include "Core/Module/VFX/Stars/Include.inc"
+
+Flags:          DB #00
 
                 endmodule
 

@@ -16,17 +16,31 @@ Update:         LD HL, StarsArray
                 LD B, A
 
 .Loop           LD A, (HL)                                                      ; HL - FStar.Speed
+                OR A
+                JP Z, .Destroyed
+
+                LD C, A
                 INC HL                                                          ; HL - FStar.X
 
                 ADD A, (HL)
                 LD (HL), A
+                JR NC, .NotOverflow_
 
+                INC HL
+                INC (HL)
+                JR Z, .Overflow
+
+                DEC HL
+.NotOverflow_   LD A, C
+                ADD A, (HL)
+                LD (HL), A
                 INC HL
                 JR NC, .NotOverflow
                 INC (HL)
                 JR NZ, .NotOverflow
 
-                ; затересть значение
+; достижение правого края
+.Overflow       ; затересть значение
                 INC HL
                 LD E, (HL)
                 INC HL
@@ -34,14 +48,14 @@ Update:         LD HL, StarsArray
                 INC HL
                 XOR A
                 LD (DE), A
-                DEC HL
-                DEC HL
-                DEC HL
 
-                DEC HL
-                DEC HL
-                CALL Generate
-                JR .Next
+                LD DE, -FStar
+                ADD HL, DE
+
+                LD A, (StarFlags)
+                BIT STAR_DESTROY_BIT, A
+                JR Z, .ASSS
+                JR .Destroy
 
 .NotOverflow    LD C, (HL)                                                      ; старший X
                 INC HL
@@ -50,9 +64,28 @@ Update:         LD HL, StarsArray
                 LD E, (HL)
                 INC HL
                 LD D, (HL)
-                XOR A
+
+                LD A, (StarFlags)
+                BIT STAR_BIT, A
+                JR Z, .L2
+
+                ; проверка 
+                SET 7, D
+                LD A, (DE)
+                RES 7, D
+                OR A
+                JR Z, .L2
                 LD (DE), A
 
+                ; DEC H
+                ; LD (DE), A
+                ; INC H
+
+                JR .L3
+
+.L2             XOR A
+                LD (DE), A
+.L3
                 ; 
                 LD A, C
                 CPL
@@ -77,8 +110,28 @@ Update:         LD HL, StarsArray
                 XOR E
                 LD E, A
 
-                EX AF, AF'
+                LD A, (StarFlags)
+                BIT STAR_BIT, A
+                JR Z, .L1
+
+                ;
+                SET 7, D
+                LD A, (DE)
+                RES 7, D
+                OR A
+                JR Z, .L1
+
                 LD (DE), A
+                DEC H
+                RRCA
+                LD (DE), A
+                INC H
+                JR .LA
+
+.L1             EX AF, AF'
+                LD (DE), A
+
+.LA
                 DEC HL
                 LD (HL), E
                 INC HL
@@ -87,5 +140,13 @@ Update:         LD HL, StarsArray
 .Next           DJNZ .Loop
 
                 RET
+
+.ASSS           CALL Generate
+                JR .Next
+                
+.Destroy        LD (HL), #00
+.Destroyed      LD DE, FStar
+                ADD HL, DE
+                JR .Next
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_UPDATE_
