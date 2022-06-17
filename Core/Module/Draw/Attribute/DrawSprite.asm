@@ -13,7 +13,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawSprite:     CALL PixelAddress
+DrawSprite:     CALL PixelAddressC
     
 .Box_0          PUSH DE
                 PUSH BC

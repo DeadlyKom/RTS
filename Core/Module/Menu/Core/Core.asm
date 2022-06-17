@@ -17,7 +17,7 @@
 .OldCoord       EQU $+1
                 LD DE, #0000
                 DEC E
-                CALL PixelAddress
+                CALL PixelAddressC
                 XOR A
                 dup  7
                 LD (DE), A
@@ -28,7 +28,7 @@
                 ; вывод курсора
                 LD DE, (.Coord)
                 DEC E
-                CALL PixelAddress
+                CALL PixelAddressC
                 LD HL, SelectCursor
                 JP DrawCharBoundary
 

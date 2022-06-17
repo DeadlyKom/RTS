@@ -3,9 +3,9 @@
                 define _BUILDER_KERNEL_PACK_
 
                 include "Kernel.inc"
-                include "../../Core/Module/Input/Mouse/VirtualKeys.inc"
-                include "../../Core/Module/Input/Keyboard/VirtualKeys.inc"
-                include "../../Core/Module/Input/Kempston/VirtualKeys.inc"
+                include "Core/Module/Input/Mouse/VirtualKeys.inc"
+                include "Core/Module/Input/Keyboard/VirtualKeys.inc"
+                include "Core/Module/Input/Kempston/VirtualKeys.inc"
 
                 MMU 2, 2                                                        ; 2 bank, 2 page
                 ORG Adr.Interrupt
@@ -13,17 +13,18 @@
 
                 display "\'Kernel\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 Begin:          EQU $
-                include "../../Core/Module/Interrupt/Include.inc"
-                include "../../Core/Module/Memory/Switch.asm"
-                include "../../Core/Module/Memory/MemSet.asm"
-                include "../../Core/Module/Memory/MemcpyPages.asm"
-                include "../../Core/Module/Draw/Attribute/PixelAddress.asm"
-                include "../../Core/Module/Draw/Attribute/PixelAttribute.asm"
-                include "../../Core/Module/Draw/Attribute/DrawCharBoundary.asm"
-                include "../../Core/Module/Draw/Attribute/DrawSprite.asm"
-                include "../../Core/Module/Draw/Attribute/DrawStencilSprite.asm"
-                include "../../Core/Module/Input/Include.inc"
-                include "../../Core/Module/Math/RNG/Rand8.asm"
+                include "Core/Module/Interrupt/Include.inc"
+                include "Core/Module/Memory/Switch.asm"
+                include "Core/Module/Memory/MemSet.asm"
+                include "Core/Module/Memory/MemcpyPages.asm"
+                include "Core/Module/Draw/Attribute/PixelAddress.asm"
+                include "Core/Module/Draw/Attribute/PixelAttribute.asm"
+                include "Core/Module/Draw/Attribute/DrawCharBoundary.asm"
+                include "Core/Module/Draw/Attribute/DrawSprite.asm"
+                include "Core/Module/Draw/Attribute/DrawStencilSprite.asm"
+                include "Core/Module/Input/Include.inc"
+                include "Core/Module/Math/RNG/Rand8.asm"
+                include "Core/Module/Math/Div/Div8x8.asm"
                 include "Functions/Include.inc"
                 include "Modules/Include.inc"
 

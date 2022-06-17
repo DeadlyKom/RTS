@@ -13,7 +13,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Fade:           CALL PixelAddress
+Fade:           CALL PixelAddressC
                 LD HL, SharedBuffer
 
                 ; округление 

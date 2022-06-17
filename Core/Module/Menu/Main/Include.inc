@@ -9,6 +9,7 @@ MENU_OPTIONS    EQU 0x00
 
                 include "Main.asm"
                 include "Select.asm"
+                include "Screensaver/Include.inc"
 
                 endmodule
 

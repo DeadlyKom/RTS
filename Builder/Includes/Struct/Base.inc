@@ -7,6 +7,11 @@ Low             DB #00
 High            DB #00
 				ends
 
+				struct FAddress
+Low             DB #00
+High            DB #00
+				ends
+
 				struct FSize
 Width           DB #00
 Height          DB #00            

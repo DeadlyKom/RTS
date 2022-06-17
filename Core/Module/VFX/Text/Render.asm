@@ -1,7 +1,7 @@
 
                 ifndef _CORE_MODULE_VFX_TEXT_RENDER_
                 define _CORE_MODULE_VFX_TEXT_RENDER_
-@ClearVFX:      CALL PixelAddress                                               ; DE - адрес экрана
+@ClearVFX:      CALL PixelAddressC                                             ; DE - адрес экрана
                 EX DE, HL
 
                 LD B, #08                                                       ; высота в пикселах
@@ -37,7 +37,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-@RenderVFX:     CALL PixelAddress                                               ; DE - адрес экрана
+@RenderVFX:     CALL PixelAddressC                                             ; DE - адрес экрана
 
                 LD B, #08                                                       ; высота в пикселах
                 LD C, (IY + FTVFX.Length)                                       ; ширина в знакоместах

@@ -143,6 +143,20 @@ SwapScreens:    LD BC, PORT_7FFD
                 LD (BC), A
                 OUT (C), A
                 RET
+; -----------------------------------------
+; отображение первого экрана
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; Note:
+; -----------------------------------------
+ShowBaseScreen: LD BC, PORT_7FFD
+                LD A, (BC)
+                AND SCRIIN_MASK_INV
+                LD (BC), A
+                OUT (C), A
+                RET
 
                 display " - Memory Switch : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 

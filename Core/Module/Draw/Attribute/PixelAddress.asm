@@ -12,7 +12,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-PixelAddress:   LD A, D
+PixelAddressC:  LD A, D
                 RRCA
                 RRCA
                 RRCA
@@ -24,8 +24,50 @@ PixelAddress:   LD A, D
                 OR #C0
                 LD D, A
                 RET
-
-                display " - Pixel Address : \t\t", /A, PixelAddress, " = busy [ ", /D, $ - PixelAddress, " bytes  ]"
+; -----------------------------------------
+; расчёт экраного адреса
+; In :
+;   DE - координаты в пикселах (D - y, E - x)
+; Out :
+;   BC - адрес экрана
+;   A  - номер бита
+; Corrupt :
+;   BC, AF
+; Time :
+;   128cc
+; -----------------------------------------
+PixelAddressP:  LD A, D
+                RRA
+                RRA
+                RRA
+                XOR D
+                AND %00011000
+                XOR D
+                AND %00011111
+                OR #C0
+                EX AF, AF'
+                LD A, D
+                ADD A, A
+                ADD A, A
+                LD D, A
+                LD A, E
+                RRA
+                RRA
+                RRA
+                XOR D
+                AND %00011111
+                XOR D
+                EX AF, AF'
+                LD D, A
+                LD A, E
+                CPL
+                AND %00000111
+                EX AF, AF'
+                LD E, A
+                EX AF, AF'
+                RET
+ 
+                display " - Pixel Address : \t\t", /A, PixelAddressC, " = busy [ ", /D, $ - PixelAddressC, " bytes  ]"
 
                 endmodule
 

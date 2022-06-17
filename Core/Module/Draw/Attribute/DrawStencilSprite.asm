@@ -25,7 +25,7 @@ DrawStencilSpr: LD E, (HL)
                 LD B, (HL)
                 INC HL
 
-                CALL PixelAddress
+                CALL PixelAddressC
     
 .Box_0          PUSH DE
                 PUSH BC

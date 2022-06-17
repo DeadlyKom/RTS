@@ -48,5 +48,9 @@ SET_SCREEN_C000 macro
 SWAP_SCREEN     macro
                 CALL SwapScreens
                 endm
+; отображение первого экрана
+SHOW_BASE_SCREEN macro
+                CALL ShowBaseScreen
+                endm
 
                 endif ; ~_MACRO_MEMORY_

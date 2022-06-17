@@ -3,7 +3,11 @@
                 define _CORE_MODULE_MENU_MAIN_
 
                 ; include "Sprites/Menu/Main/Compress.inc"
-Main:           SET_LANGUAGE LANGUAGE_DEFAULT
+Main:           CALL Screensaver.Begin
+
+
+
+                SET_LANGUAGE LANGUAGE_DEFAULT
                 CALL SetLanguage
 @Main.Back      ; вернутся в главное меню
 

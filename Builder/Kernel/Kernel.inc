@@ -14,6 +14,7 @@ ScrPageToC000   EQU Kernel.Memory.ScrPageToC000
 ScrFromPageC000 EQU Kernel.Memory.ScrFromPageC000
 ScrPageToC000_  EQU Kernel.Memory.ScrPageToC000_
 SwapScreens     EQU Kernel.Memory.SwapScreens
+ShowBaseScreen  EQU Kernel.Memory.ShowBaseScreen
 MemcpyPages     EQU Kernel.Memcpy.Pages
 
 ; memory set
@@ -59,10 +60,13 @@ Cursor
 .MoveRight      EQU Kernel.Input.Cursor.MoveRight
 
 ; math
-Math.Rand8      EQU Kernel.Math.Rand8
+Math
+.Rand8          EQU Kernel.Math.Rand8
+.Div8x8         EQU Kernel.Math.Div8x8
 
 ; draw
-PixelAddress    EQU Kernel.Attribute.PixelAddress
+PixelAddressC  EQU Kernel.Attribute.PixelAddressC
+PixelAddressP  EQU Kernel.Attribute.PixelAddressP
 PixelAttribute  EQU Kernel.Attribute.PixelAttribute
 DrawSprite      EQU Kernel.Attribute.DrawSprite
 DrawStencilSpr  EQU Kernel.Attribute.DrawStencilSpr
