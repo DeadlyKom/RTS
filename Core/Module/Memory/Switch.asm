@@ -153,7 +153,21 @@ SwapScreens:    LD BC, PORT_7FFD
 ; -----------------------------------------
 ShowBaseScreen: LD BC, PORT_7FFD
                 LD A, (BC)
-                AND SCRIIN_MASK_INV
+                AND SCREEN_MASK_INV
+                LD (BC), A
+                OUT (C), A
+                RET
+; -----------------------------------------
+; отображение первого экрана
+; In:
+; Out:
+; Corrupt:
+;   BC, AF
+; Note:
+; -----------------------------------------
+ShowShadowScreen: LD BC, PORT_7FFD
+                LD A, (BC)
+                OR SCREEN_MASK
                 LD (BC), A
                 OUT (C), A
                 RET

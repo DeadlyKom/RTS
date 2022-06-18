@@ -24,7 +24,7 @@ Begin:          EQU $
 
 @StarFlags      DB #00
 @StarCounter:   DB #00
-@StarsArray:    DS 256 * 5, 0
+@StarsArray:    DS 128 * 5, 0
 
                 display " - Stars : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 

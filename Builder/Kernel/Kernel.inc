@@ -15,6 +15,7 @@ ScrFromPageC000 EQU Kernel.Memory.ScrFromPageC000
 ScrPageToC000_  EQU Kernel.Memory.ScrPageToC000_
 SwapScreens     EQU Kernel.Memory.SwapScreens
 ShowBaseScreen  EQU Kernel.Memory.ShowBaseScreen
+ShowShadowScreen EQU Kernel.Memory.ShowShadowScreen
 MemcpyPages     EQU Kernel.Memcpy.Pages
 
 ; memory set

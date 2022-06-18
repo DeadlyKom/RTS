@@ -31,6 +31,7 @@ Main:           CALL Screensaver.Begin
                 LD (MenuVariables.Options), HL
 
                 ; отрисовка меню
+                SET_SCREEN_SHADOW
                 LD HL, MainMenu
                 CALL SetFirstOption
 

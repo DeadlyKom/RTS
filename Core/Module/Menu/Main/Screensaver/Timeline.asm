@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_MENU_MAIN_SCREENSAVER_TIMELINE_
                 define _CORE_MODULE_MENU_MAIN_SCREENSAVER_TIMELINE_
 
-Timeline_Tick:  CALL Stars.Tick
+Timeline_Tick:  ; CALL Stars.Tick
 
 .Timeline       EQU $+1
                 LD HL, .TimelineTable
@@ -13,7 +13,7 @@ Timeline_Tick:  CALL Stars.Tick
                 LD HL, (TickCounterRef)
                 OR A
                 SBC HL, DE
-                RET C
+                JP C, Stars.Tick
 
                 LD HL, (.Timeline)
                 INC HL
@@ -29,11 +29,13 @@ Timeline_Tick:  CALL Stars.Tick
 .TimelineTable  DW 10 * 50
                 DW ShowTM
                 DW 25 * 50
-                DW ShowTM_ATTR
+                DW ShowTM_ATTR_1
+                DW 25 * 50 + 4
+                DW ShowTM_ATTR_2
+                DW 25 * 50 + 8
+                DW ShowTM_ATTR_3
                 DW 35 * 50
                 DW HiddenTM_ATTR
-                DW 50 * 50
-                DW PreDestroyStars
                 DW 51 * 50
                 DW DestroyStars
                 DW 58 * 50
@@ -42,15 +44,25 @@ Timeline_Tick:  CALL Stars.Tick
 ShowTM:         LD HL, StarFlags
                 LD (HL), Stars.STAR
                 RET
-ShowTM_ATTR:    ;
+ShowTM_ATTR_1:  ;
+                SET_SCREEN_SHADOW
+                SHOW_SHADOW_SCREEN
+                ATTR_C000_IPB BLUE, WHITE, 1
+                BORDER WHITE
+                RET
+ShowTM_ATTR_2:  ;
+                ATTR_C000_IPB BLUE, WHITE, 0
+                RET
+ShowTM_ATTR_3:  ;
                 SET_SCREEN_BASE
+                SHOW_BASE_SCREEN
+                ATTR_4000_IPB BLUE, BLACK, 1
+                BORDER BLACK
                 LD HL, Torn
                 JP DrawStencilSpr
 HiddenTM_ATTR:  LD HL, StarFlags
                 LD (HL), Stars.STAR_CLS
                 ATTR_4000_IPB BLUE, BLACK, 1
-                RET
-PreDestroyStars CLS_4000
                 RET
 DestroyStars:   LD HL, StarFlags
                 LD (HL), Stars.STAR_CLS | Stars.STAR_DESTROY
@@ -59,6 +71,5 @@ Finish:         LD HL, Flags
                 LD (HL), #FF
                 CLS_4000
                 RET
-            
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_SCREENSAVER_TIMELINE_

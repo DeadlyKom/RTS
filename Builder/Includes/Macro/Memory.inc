@@ -52,5 +52,8 @@ SWAP_SCREEN     macro
 SHOW_BASE_SCREEN macro
                 CALL ShowBaseScreen
                 endm
-
+; отображение теневого экрана
+SHOW_SHADOW_SCREEN macro
+                CALL ShowShadowScreen
+                endm
                 endif ; ~_MACRO_MEMORY_

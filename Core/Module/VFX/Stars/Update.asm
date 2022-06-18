@@ -8,17 +8,20 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Update:         LD HL, StarsArray
+Update:         ; инициализация
+                LD HL, StarsArray
                 LD A, (StarCounter)
                 OR A
                 RET Z
 
                 LD B, A
 
-.Loop           LD A, (HL)                                                      ; HL - FStar.Speed
+.Loop           ; обработка данных звезды
+                LD A, (HL)                                                      ; HL - FStar.Speed
                 OR A
                 JP Z, .Destroyed
 
+                ; приращение скорости звезды к положению на экране
                 LD C, A
                 INC HL                                                          ; HL - FStar.X
 
@@ -54,7 +57,7 @@ Update:         LD HL, StarsArray
 
                 LD A, (StarFlags)
                 BIT STAR_DESTROY_BIT, A
-                JR Z, .ASSS
+                JR Z, .Generate
                 JR .Destroy
 
 .NotOverflow    LD C, (HL)                                                      ; старший X
@@ -65,28 +68,19 @@ Update:         LD HL, StarsArray
                 INC HL
                 LD D, (HL)
 
+                ; проверка отображения только звёзд
                 LD A, (StarFlags)
                 BIT STAR_BIT, A
-                JR Z, .L2
+                LD A, #00
+                JR Z, .DrawStar
 
-                ; проверка 
+                ; копирование данных с теневого экрана 
                 SET 7, D
                 LD A, (DE)
                 RES 7, D
-                OR A
-                JR Z, .L2
-                LD (DE), A
+.DrawStar       LD (DE), A
 
-                ; DEC H
-                ; LD (DE), A
-                ; INC H
-
-                JR .L3
-
-.L2             XOR A
-                LD (DE), A
-.L3
-                ; 
+                ; получение спрайта звезды по горизонтали
                 LD A, C
                 CPL
                 AND #07
@@ -96,11 +90,11 @@ Update:         LD HL, StarsArray
                 OR #C7
                 LD (.BIT), A
                 XOR A
-.BIT            EQU $+1                                                         ; SET n, C
+.BIT            EQU $+1                                                         ; SET n, A
                 DB #CB, #00
                 EX AF, AF'
 
-                ;
+                ; конверсия позиции звезды по горизонтали в знакоместа
                 LD A, C
                 RRA
                 RRA
@@ -110,28 +104,31 @@ Update:         LD HL, StarsArray
                 XOR E
                 LD E, A
 
+                ; проверка отображения только звёзд
                 LD A, (StarFlags)
                 BIT STAR_BIT, A
-                JR Z, .L1
+                JR Z, .Star
 
-                ;
+                ; проверка копирования данных теневого экрана
                 SET 7, D
                 LD A, (DE)
                 RES 7, D
                 OR A
-                JR Z, .L1
+                JR Z, .Star                                                     ; в теневом экране нет данных для копирования
 
-                LD (DE), A
-                DEC H
+                ; добавление искажения картинки
+                LD C, A
                 RRCA
+                RRCA
+                OR C
                 LD (DE), A
-                INC H
-                JR .LA
+                JR .SetScreenAdr
 
-.L1             EX AF, AF'
+.Star           ; отображение звезды
+                EX AF, AF'
                 LD (DE), A
 
-.LA
+.SetScreenAdr   ; сохранение адреса экрана
                 DEC HL
                 LD (HL), E
                 INC HL
@@ -141,7 +138,7 @@ Update:         LD HL, StarsArray
 
                 RET
 
-.ASSS           CALL Generate
+.Generate       CALL Generate
                 JR .Next
                 
 .Destroy        LD (HL), #00
