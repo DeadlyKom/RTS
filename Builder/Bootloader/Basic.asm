@@ -110,6 +110,18 @@ StartBoot:      DI
                 Page.Main | FILE_ARCHIVE,
                 Adr.Module.Main }
 
+                ; путь файла "новая игра"
+                FFileArea {
+                {{MenuNewGameName}, SystemExt },
+                Page.NewGame | FILE_ARCHIVE,
+                Adr.Module.NewGame }
+
+                ; путь файла графические файлы для "новая игра"
+                FFileArea {
+                {{MenuNewGameGraphicsAName}, GraphicsExt },
+                Page.MenuGraphics.A | FILE_ARCHIVE,
+                Adr.Module.MenuGraphics.A }
+
 .FileNum        EQU ($-.FileArray) / FFileArea
 EndBoot:        DB #0D                                                          ; конец строки
                 DB #00, #14                                                     ; номер строки 20

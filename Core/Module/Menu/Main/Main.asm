@@ -1,9 +1,8 @@
 
                 ifndef _CORE_MODULE_MENU_MAIN_
                 define _CORE_MODULE_MENU_MAIN_
-
-                ; include "Sprites/Menu/Main/Compress.inc"
-Main:           CALL Screensaver.Begin
+Main:           ;CALL Screensaver.Begin
+                ;CALL Keyboard.WaitReleasedKey                                   ; ожидание отпускание ранее нажатой клавиши
 
                 SET_LANGUAGE LANGUAGE_DEFAULT
                 CALL SetLanguage
@@ -58,24 +57,8 @@ MainMenu:       DB .Num-1
                 DB Language.Text.Menu.NewGame
 .Num            EQU ($-MainMenu-1) / 3
 
-
 Planet:         incbin "Core/Module/Sprites/Main/Planet.spr"
                 DW #0000
-
-                ; ; отрисовка надпись
-                ; LD HL, PlanetSprAttr
-                ; LD DE, #DB00
-                ; CALL Loader.Decompressor.Forward
-                ; DrawSpriteATTR #DB00, 11, 6, 11, 11
-
-                ; ; отрисовка надпись
-                ; LD HL, Atmosphere7SprAttr
-                ; LD DE, #DB00
-                ; CALL Loader.Decompressor.Forward
-                ; DrawSpriteATTR #DB00, 11, 8, 6, 5
-
-; PlanetSprAttr  incbin "../../../../Sprites/Menu/Main/Compressed/Planet.ar.spr"
-; Atmosphere7SprAttr  incbin "../../../../Sprites/Menu/Main/Compressed/Atmosphere7.ar.spr"
 
                 display " - Main : \t\t\t", /A, Main, " = busy [ ", /D, $ - Main, " bytes  ]"
 

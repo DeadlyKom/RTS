@@ -8,7 +8,9 @@
 
                 display "\'Loader\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 
+                ifdef _REBUILD
                 include "../../Sprites/Menu/Loader/Compress.inc"
+                endif
 Begin:          EQU $
                 include "../../Core/Module/Loader/Include.inc"
 Size:           EQU $ - Begin

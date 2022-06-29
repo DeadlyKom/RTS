@@ -6,9 +6,9 @@
                 ORG Adr.Module.Options
                 module Options
 
-                display "\' Menu - Options\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\' Menu - Options\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 Begin:          EQU $
-                include "../../../Core/Module/Menu/Options/Include.inc"
+                include "Core/Module/Menu/Options/Include.inc"
 Size:           EQU $ - Begin
 SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 

@@ -45,7 +45,7 @@ Keyboard
 .CheckKeyState  EQU Kernel.Keyboard.CheckKeyState
 .GetPressedKey  EQU Kernel.Keyboard.GetPressedKey
 .WaitPressedKey EQU Kernel.Keyboard.WaitPressedKey
-.WaitReleasedKey EQU Kernel.Keyboard.WaitReleasedKey
+.WaitReleasedKey EQU Kernel.Keyboard.WaitReleasedKey                            ; ожидание отпускание ранее нажатой клавиши
 Mouse
 .CheckKeyState  EQU Kernel.Mouse.CheckKeyState
 .PositionX      EQU Kernel.Mouse.PositionX
@@ -64,6 +64,11 @@ Cursor
 Math
 .Rand8          EQU Kernel.Math.Rand8
 .Div8x8         EQU Kernel.Math.Div8x8
+
+; decompressor
+Decompressor
+.Forward        EQU Kernel.Decompressor.Forward
+.Backward       EQU Kernel.Decompressor.Backward
 
 ; draw
 PixelAddressC  EQU Kernel.Attribute.PixelAddressC

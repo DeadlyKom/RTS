@@ -9,10 +9,8 @@
 
                 include "Saver.asm"
                 include "Progress.asm"
-                include "../Decompressor/Forward.asm"
-                include "../Decompressor/Backward.asm"
-                include "../Math/Div/DivFix8x8.asm"
-LoadingSprAttr  incbin "../../../Sprites/Menu/Loader/Compressed/Loading.ar.spr"
-ProgressSprAttr incbin "../../../Sprites/Menu/Loader/Compressed/Progress.ar.spr"
+                include "Core/Module/Math/Div/DivFix8x8.asm"
+LoadingSprAttr  incbin "Sprites/Menu/Loader/Compressed/Loading.ar.spr"
+ProgressSprAttr incbin "Sprites/Menu/Loader/Compressed/Progress.ar.spr"
 
                 endif ; ~ _CORE_MODULE_LOADER_INCLUDE_

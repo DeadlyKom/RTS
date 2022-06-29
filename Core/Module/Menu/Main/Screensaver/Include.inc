@@ -5,6 +5,7 @@
                 module Screensaver
 
                 include "Begin.asm"
+                include "Skip.asm"
                 include "Timeline.asm"
                 include "Core/Module/VFX/Stars/Include.inc"
 

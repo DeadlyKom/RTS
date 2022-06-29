@@ -4,6 +4,8 @@
 
 Timeline_Tick:  ; CALL Stars.Tick
 
+                CALL CheckSkip
+
 .Timeline       EQU $+1
                 LD HL, .TimelineTable
                 LD E, (HL)
@@ -22,7 +24,7 @@ Timeline_Tick:  ; CALL Stars.Tick
                 INC HL
                 LD D, (HL)
                 INC HL
-                LD (Timeline_Tick.Timeline), HL
+                LD (.Timeline), HL
                 EX DE, HL   
                 JP (HL)
 
@@ -40,7 +42,6 @@ Timeline_Tick:  ; CALL Stars.Tick
                 DW DestroyStars
                 DW 58 * 50
                 DW Finish
-
 ShowTM:         LD HL, StarFlags
                 LD (HL), Stars.STAR
                 RET
@@ -69,7 +70,6 @@ DestroyStars:   LD HL, StarFlags
                 RET
 Finish:         LD HL, Flags
                 LD (HL), #FF
-                CLS_4000
-                RET
+                JP CLS
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_SCREENSAVER_TIMELINE_

@@ -146,7 +146,7 @@ RedefineKeys:   ; проиграть при переходе новый эффе
                 CALL WaitVFX
 
 .Break          ; ожидание отпускание ранее нажатой клавиши
-                JP Keyboard.WaitReleasedKey
+                JP Keyboard.WaitReleasedKey 
 
                 display " - Keyboard Select : \t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
 

@@ -29,6 +29,8 @@ WaitPressedKey: HALT
                 CALL GetPressedKey
                 RET C
                 JR WaitPressedKey
+                
+; ожидание отпускание ранее нажатой клавиши
 WaitReleasedKey HALT
                 CALL GetPressedKey
                 RET NC

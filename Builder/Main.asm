@@ -4,6 +4,7 @@
 
                 DEVICE ZXSPECTRUM128
 
+                ; define _REBUILD                                                 ; полная пересборка
                 define _DEBUG                                                   ; включить отладочный код
                 define SHOW_DEBUG                                               ; отображение дебажной информации
 

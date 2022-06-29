@@ -25,10 +25,12 @@ Begin:          EQU $
                 include "Core/Module/Input/Include.inc"
                 include "Core/Module/Math/RNG/Rand8.asm"
                 include "Core/Module/Math/Div/Div8x8.asm"
+                include "Core/Module/Decompressor/Forward.asm"
+                include "Core/Module/Decompressor/Backward.asm"
                 include "Functions/Include.inc"
                 include "Modules/Include.inc"
 
-                include "../../Core/Module/Tables/ShiftTable.inc"               ; таблица сдвигов (3584 байт)
+                include "Core/Module/Tables/ShiftTable.inc"                     ; таблица сдвигов (3584 байт)
 Size:           EQU $ - Begin
 SizeInSectors   EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 

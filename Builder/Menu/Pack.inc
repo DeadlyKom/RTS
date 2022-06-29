@@ -7,6 +7,8 @@
                 include "Core/Pack.inc"
                 include "Options/Pack.inc"
                 include "Main/Pack.inc"
+                include "NewGame/Pack.inc"
+                include "Graphics/Pack.inc"
 
                 endmodule
 

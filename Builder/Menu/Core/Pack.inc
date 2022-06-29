@@ -6,9 +6,9 @@
                 ORG Adr.Module.Core
                 module Core
 
-                display "\'Menu - Core\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\'Menu - Core\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 Begin:          EQU $
-                include "../../../Core/Module/Menu/Core/Include.inc"
+                include "Core/Module/Menu/Core/Include.inc"
 Size:           EQU $ - Begin
 SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 

@@ -6,7 +6,6 @@
 ; проверить состояние виртуальной клавиши
 ; In :
 ;   A  - virtual code
-;   HL - return address
 ; Out :
 ;   флаг Z сброшен, если кнопка отжата
 ; Corrupt :

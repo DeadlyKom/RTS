@@ -3,6 +3,7 @@
                 define _CONST_FILES_NAME_
 
                 define SystemExt         '#'
+                define GraphicsExt       'D'
                 
                 define BootNameTRD       "boot.B"
                 
@@ -42,5 +43,11 @@
 
                 define MenuOptionsName      "M.Option"                          ; имя файла "меню настроек"
                 define MenuOptionsNameTRD   "M.Option.#"                        ; имя файла "меню настроек"
+
+                define MenuNewGameName      "M.NGame"                           ; имя файла "меню новая игры"
+                define MenuNewGameNameTRD   "M.NGame.#"                         ; имя файла "меню новая игры"
+
+                define MenuNewGameGraphicsAName     "M.NGameA"                  ; имя файла графики для меню
+                define MenuNewGameGraphicsANameTRD  "M.NGameA.D"                ; имя файла графики для меню
 
                 endif ; ~_CONST_FILES_NAME_
