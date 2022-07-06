@@ -4,6 +4,8 @@
 
                 include "Config.inc"
                 include "Base.inc"
+                include "Sprite.inc"
+                include "Animation.inc"
                 include "Files.inc"
                 include "FileSystemVaribles.inc"
 

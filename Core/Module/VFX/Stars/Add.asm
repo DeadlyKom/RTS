@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_ADD_
-                define _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_ADD_
+                ifndef _CORE_MODULE_VFX_STARS_ADD_
+                define _CORE_MODULE_VFX_STARS_ADD_
 ; -----------------------------------------
 ; добавление звезды в массив
 ; In:
@@ -104,4 +104,4 @@ Generate:       ; генерация скорости звезды
 
                 RET
 
-                endif ; ~ _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_ADD_
+                endif ; ~ _CORE_MODULE_VFX_STARS_ADD_

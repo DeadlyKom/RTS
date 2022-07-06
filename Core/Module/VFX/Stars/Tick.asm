@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_TICK_
-                define _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_TICK_
+                ifndef _CORE_MODULE_VFX_STARS_TICK_
+                define _CORE_MODULE_VFX_STARS_TICK_
 ; -----------------------------------------
 ; тик звёзд
 ; In:
@@ -21,4 +21,4 @@ Tick:           CALL Update
 
                 RET
 
-                endif ; ~ _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_TICK_
+                endif ; ~ _CORE_MODULE_VFX_STARS_TICK_

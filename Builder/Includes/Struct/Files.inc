@@ -19,7 +19,7 @@ File            FFile                                                           
 ;   P2-P0 - [2-0]   - номер страницы
 ;
 Info            DB #00                                                          ; данные файла
-Address         DW FValue                                                       ; адрес расположения файла
+Address         DW #0000                                                        ; адрес расположения файла
                 ends
 
                 endif ; ~_STRUCT_FILES_

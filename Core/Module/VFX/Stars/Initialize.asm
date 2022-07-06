@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_INITIALIZE_
-                define _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_INITIALIZE_
+                ifndef _CORE_MODULE_VFX_STARS_INITIALIZE_
+                define _CORE_MODULE_VFX_STARS_INITIALIZE_
 ; -----------------------------------------
 ; инициализация звёзд
 ; In:
@@ -24,4 +24,4 @@ Initialize:     ;
 
                 RET
 
-                endif ; ~ _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_INITIALIZE_
+                endif ; ~ _CORE_MODULE_VFX_STARS_INITIALIZE_

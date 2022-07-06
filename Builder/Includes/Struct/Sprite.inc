@@ -6,6 +6,14 @@
 FSSF_MASK_BIT       EQU 0x07                                                    ; используется общая маска (берётся из Dummy)
 FSSF_MASK           EQU 1 << FSSF_MASK_BIT
 
+; -------------------- sprite data --------------------
+
+                    struct FSpriteData
+Page                DB #00                                                      ; номер страницы
+Data                DW #0000                                                    ; адрес спрайта (#C000 - #FFFF)
+
+                    ends
+
 ; -------------------- sprite info --------------------
 
                     struct FSpriteInfo
@@ -15,14 +23,14 @@ Width               DB #00                                                      
 OffsetX             DB #00                                                      ; смещение спрайта по горизонтали (в пикселах)
 
                     ends
-                    
-; -------------------- Sprite --------------------
+  
+; -------------------- sprite --------------------
 
                     struct FSprite
 Info                FSpriteInfo
 Dummy               DB #00                                                      ; смещение + Data = адрес маски
 Page                DB #00                                                      ; 7 бит, говорит об использовании маски по смещению
-Data                DW #0000                                                    ; адрес спрайта
+Data                DW #0000                                                    ; адрес спрайта (#C000 - #FFFF)
 
                     ends
 

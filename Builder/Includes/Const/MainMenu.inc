@@ -40,6 +40,20 @@ MenuGraphics:
 .Interact_9     EQU MemBank_03 + Menu.MenuGraphics.Interact_9
 .Interact_10    EQU MemBank_03 + Menu.MenuGraphics.Interact_10
 
+; анимация 1 фрейма (левая)
+.Cooler_1_0     EQU MemBank_03 + Menu.MenuGraphics.Cooler_1_0
+.Cooler_1_1     EQU MemBank_03 + Menu.MenuGraphics.Cooler_1_1
+.Cooler_1_2     EQU MemBank_03 + Menu.MenuGraphics.Cooler_1_2
+.Cooler_2_0     EQU MemBank_03 + Menu.MenuGraphics.Cooler_2_0
+.Cooler_2_1     EQU MemBank_03 + Menu.MenuGraphics.Cooler_2_1
+.Cooler_2_2     EQU MemBank_03 + Menu.MenuGraphics.Cooler_2_2
+.Monitor_0      EQU MemBank_03 + Menu.MenuGraphics.Monitor_0
+.Monitor_1      EQU MemBank_03 + Menu.MenuGraphics.Monitor_1
+.Monitor_2      EQU MemBank_03 + Menu.MenuGraphics.Monitor_2
+.Storage_0      EQU MemBank_03 + Menu.MenuGraphics.Storage_0
+.Storage_1      EQU MemBank_03 + Menu.MenuGraphics.Storage_1
+.Storage_2      EQU MemBank_03 + Menu.MenuGraphics.Storage_2
+
                 endmodule
                 endmodule
 

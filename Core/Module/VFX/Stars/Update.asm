@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_UPDATE_
-                define _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_UPDATE_
+                ifndef _CORE_MODULE_VFX_STARS_UPDATE_
+                define _CORE_MODULE_VFX_STARS_UPDATE_
 ; -----------------------------------------
 ; обновление позиции звёзд
 ; In:
@@ -146,4 +146,4 @@ Update:         ; инициализация
                 ADD HL, DE
                 JR .Next
 
-                endif ; ~ _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_UPDATE_
+                endif ; ~ _CORE_MODULE_VFX_STARS_UPDATE_

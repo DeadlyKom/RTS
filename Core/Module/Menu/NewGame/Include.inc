@@ -5,6 +5,10 @@
                 module NewGame
 
                 include "ChangeMission.asm"
+                include "Input.asm"
+                include "Room/Include.inc"
+                include "Animation/Include.inc"
+                include "Core/Module/VFX/Hologram/Include.inc"
 
                 endmodule
 

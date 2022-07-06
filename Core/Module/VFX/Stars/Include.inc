@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_INCLUDE_
-                define _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_INCLUDE_
+                ifndef _CORE_MODULE_VFX_STARS_INCLUDE_
+                define _CORE_MODULE_VFX_STARS_INCLUDE_
 
                 module Stars
 STAR_INIT_BIT   EQU 0x07
@@ -30,4 +30,4 @@ Begin:          EQU $
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_INCLUDE_
+                endif ; ~ _CORE_MODULE_VFX_STARS_INCLUDE_

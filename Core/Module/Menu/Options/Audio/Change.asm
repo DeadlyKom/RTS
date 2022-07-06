@@ -1,7 +1,7 @@
 
                 ifndef _CORE_MODULE_MENU_OPTIONS_CHANGE_AUDIO_
                 define _CORE_MODULE_MENU_OPTIONS_CHANGE_AUDIO_
-AudiolHelp:    LD A, (TextAudioHelp.Current)
+AudiolHelp:     LD A, (TextAudioHelp.Current)
                 LD HL, TextAudioHelp
                 JP Suboption
 

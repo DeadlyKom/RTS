@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_STRUCT_
-                define _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_STRUCT_
+                ifndef _CORE_MODULE_VFX_STARS_STRUCT_
+                define _CORE_MODULE_VFX_STARS_STRUCT_
 
                 struct FStar
 Speed           DB #00
@@ -9,4 +9,4 @@ Screen          FAddress
 
                 ends
 
-                endif ; ~ _CORE_MODULE_MENU_MAIN_SCREENSAVER_STARS_STRUCT_
+                endif ; ~ _CORE_MODULE_VFX_STARS_STRUCT_
