@@ -6,11 +6,11 @@
                 CALL ResetOptions                                               ; сброс опций
 
                 ;
-                SetUserHendler Room.TickFrame
+                SetUserHendler .TickFrame
 
                 ; инициализация комнаты
                 CALL Room.Initialize
-                
+
 .Loop           HALT
 
                 LD HL, Room.Flags
@@ -21,5 +21,8 @@
                 LD DE, InputNewGame
                 CALL Input.JumpDefaulKeys
                 JR .Loop
+
+.TickFrame      CALL Room.TickFrame
+                JP Animation.Core.TickFrame
 
                 endif ; ~ _CORE_MODULE_MENU_START_GAME_

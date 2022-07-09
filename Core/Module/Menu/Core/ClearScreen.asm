@@ -10,6 +10,7 @@
                 SET_SCREEN_SHADOW
                 CLS_C000
                 ATTR_C000_IPB RED, BLACK, 0
+                RET
 
                 display " - Clear Screen : \t\t", /A, CLS, " = busy [ ", /D, $ - CLS, " bytes  ]"
 

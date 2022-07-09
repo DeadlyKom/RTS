@@ -27,13 +27,13 @@ Saver:          ; -----------------------------------------
                 LD HL, Loader.LoadingSprAttr
                 LD DE, SharedBuffer
                 CALL Decompressor.Forward
-                DrawSpriteATTR SharedBuffer, 2, 20, 8, 2
+                DrawSpriteOneATTR SharedBuffer, 2, 20, 8, 2
 
                 ; отображение прогресса
                 LD HL, Loader.ProgressSprAttr
                 LD DE, SharedBuffer
                 CALL Decompressor.Forward
-                DrawSpriteATTR SharedBuffer, 1, 22, 10, 1
+                DrawSpriteOneATTR SharedBuffer, 1, 22, 10, 1
 
                 ; переключение экране на теневой экран
                 SET_SCREEN_C000

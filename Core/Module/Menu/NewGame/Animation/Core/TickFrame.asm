@@ -2,21 +2,12 @@
                 ifndef _CORE_MODULE_MENU_MAIN_NEW_GAME_ANIMATION_CORE_TICK_FRAME_
                 define _CORE_MODULE_MENU_MAIN_NEW_GAME_ANIMATION_CORE_TICK_FRAME_
 TickFrame:      ;
-                ; LD HL, Flags
-                ; BIT COUNTDOWN_BIT, (HL)
-                ; RET Z
-                ; RES COMPLETED_BIT, (HL)
+                LD A, (Room.Number)
+                CP Room.ROTATE
+                RET Z
 
-                ; ; уменьшение счётчика продолжительности одного кадра
-                ; LD HL, FrameCounter
-                ; DEC (HL)
-                ; RET NZ
-                ; LD (HL), DELAY_FRAME
-
-                ; ;
-                ; LD HL, Flags
-                ; RES COUNTDOWN_BIT, (HL)
-                ; SET COMPLETED_BIT, (HL)
+                CP Room.LEFT
+                JP Z, Room.Left.Tick
 
                 RET
 

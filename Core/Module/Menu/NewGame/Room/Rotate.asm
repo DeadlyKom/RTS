@@ -24,12 +24,17 @@ NextFrame:      LD HL, Flags
                 JP P, .IsPositive
 
                 INC (HL)
+
+                LD A, Room.LEFT
+                LD (Room.Number), A
+
                 RET
 
 .IsPositive     ; ограничение
                 LD A, (HL)
 
                 CP FRAME_CENTER
+                LD A, Room.CENTER
                 JR Z, StopRotate
 
                 JR SetCountdown
@@ -41,17 +46,30 @@ NextFrame:      LD HL, Flags
                 JR NZ, .IsLess
 
                 DEC (HL)
+
+                LD A, Room.RIGHT
+                LD (Room.Number), A
+
                 RET
 
                 ; ограничение
 .IsLess         CP FRAME_CENTER
+                LD A, Room.CENTER
                 JR Z, StopRotate
                 
-SetCountdown:   LD HL, Flags
+SetCountdown:   ;
+                LD A, Room.ROTATE
+                LD (Room.Number), A
+
+                ;
+                LD HL, Flags
                 SET COUNTDOWN_BIT, (HL)
+                
                 JP DrawFrame
 
-StopRotate:     LD HL, Flags
+StopRotate:     LD (Room.Number), A
+
+                LD HL, Flags
                 RES REQ_ROTATE_BIT, (HL)
                 JP DrawFrame
 

@@ -32,7 +32,7 @@ DrawStencilSpr: LD E, (HL)
                 LD B, C
 
 .Box_1          PUSH DE
-                CALL DrawCharBoundary
+                CALL DrawCharOne
                 INC HL
                 POP DE
                 INC E

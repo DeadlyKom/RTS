@@ -17,6 +17,7 @@ SwapScreens     EQU Kernel.Memory.SwapScreens
 ShowBaseScreen  EQU Kernel.Memory.ShowBaseScreen
 ShowShadowScreen EQU Kernel.Memory.ShowShadowScreen
 MemcpyPages     EQU Kernel.Memcpy.Pages
+FastLDIR        EQU Kernel.Memcpy.FastLDIR
 
 ; memory set
 SafeFill_Screen EQU Kernel.Memset.SafeFill_Screen
@@ -71,12 +72,14 @@ Decompressor
 .Backward       EQU Kernel.Decompressor.Backward
 
 ; draw
-PixelAddressC  EQU Kernel.Attribute.PixelAddressC
-PixelAddressP  EQU Kernel.Attribute.PixelAddressP
+PixelAddressC   EQU Kernel.Attribute.PixelAddressC
+PixelAddressP   EQU Kernel.Attribute.PixelAddressP
 PixelAttribute  EQU Kernel.Attribute.PixelAttribute
-DrawSprite      EQU Kernel.Attribute.DrawSprite
+DrawSpriteOne   EQU Kernel.Attribute.DrawSpriteOne
+DrawSpriteTwo   EQU Kernel.Attribute.DrawSpriteTwo
 DrawStencilSpr  EQU Kernel.Attribute.DrawStencilSpr
-DrawCharBoundary EQU Kernel.Attribute.DrawCharBoundary
+DrawCharOne     EQU Kernel.Attribute.DrawCharOne
+DrawCharTwo     EQU Kernel.Attribute.DrawCharTwo
 ShiftTable      EQU Kernel.Tables.ShiftTable
 
 ; load modules

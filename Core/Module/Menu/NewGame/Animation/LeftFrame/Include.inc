@@ -5,6 +5,7 @@
                 module Left
 
                 include "AnimTable.inc"
+                include "Tick.asm"
 
                 endmodule
 

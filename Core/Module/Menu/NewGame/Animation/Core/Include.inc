@@ -5,6 +5,7 @@
                 module Core
 
                 include "TickFrame.asm"
+                include "DrawFrame.asm"
 
                 endmodule
 

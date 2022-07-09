@@ -41,11 +41,11 @@ ATTR_C000       macro Color?
                 CALL SafeFill_768
                 endm
 
-DrawSpriteATTR  macro Sprite?, X?, Y?, Width?, Height?
+DrawSpriteOneATTR  macro Sprite?, X?, Y?, Width?, Height?
                 LD HL, Sprite?
                 LD DE, (Y? << 8) | X?
                 LD BC, (Height? << 8) | Width?
-                CALL DrawSprite
+                CALL DrawSpriteOne
                 endm
 
 ; SwapScreens     macro

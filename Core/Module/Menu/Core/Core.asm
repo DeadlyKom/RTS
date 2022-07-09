@@ -30,7 +30,7 @@
                 DEC E
                 CALL PixelAddressC
                 LD HL, SelectCursor
-                JP DrawCharBoundary
+                JP DrawCharOne
 
 ; A - номер меню
 @SetOption:     ; сохранить позицию курсора

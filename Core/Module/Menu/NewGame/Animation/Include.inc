@@ -6,6 +6,7 @@
 
                 include "Core/Include.inc"
                 include "LeftFrame/Include.inc"
+; Flags:          DB #00
 
                 endmodule
 

@@ -8,6 +8,7 @@
                 include "Input.asm"
                 include "Room/Include.inc"
                 include "Animation/Include.inc"
+                include "Message/Include.inc"
                 include "Core/Module/VFX/Hologram/Include.inc"
 
                 endmodule

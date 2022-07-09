@@ -17,6 +17,7 @@ Begin:          EQU $
                 include "Core/Module/Memory/Switch.asm"
                 include "Core/Module/Memory/MemSet.asm"
                 include "Core/Module/Memory/MemcpyPages.asm"
+                include "Core/Module/Memory/MemCopyFastLDIR.asm"
                 include "Core/Module/Draw/Attribute/PixelAddress.asm"
                 include "Core/Module/Draw/Attribute/PixelAttribute.asm"
                 include "Core/Module/Draw/Attribute/DrawCharBoundary.asm"

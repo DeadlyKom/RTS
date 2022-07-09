@@ -4,7 +4,7 @@
 
                 module Attribute
 ; -----------------------------------------
-; отрисовка знакоместа с атрибутами
+; отрисовка знакоместа с атрибутами (в одном экране)
 ; In:
 ;   HL - адрес спрайта
 ;   DE - адрес экрана пикселей
@@ -12,7 +12,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawCharBoundary: dup  7
+DrawCharOne:    dup  7
                 LD A, (HL)
                 LD (DE), A
                 INC HL
@@ -24,10 +24,33 @@ DrawCharBoundary: dup  7
                 CALL PixelAttribute
                 LD A, (HL)
                 LD (DE), A
-                ; INC HL
+                RET
+DrawCharTwo:    PUSH BC
+                LD B, D
+                RES 7, B
+                LD C, E
+                dup  7
+                LD A, (HL)
+                LD (DE), A
+                LD (BC), A
+                INC HL
+                INC D
+                INC B
+                edup
+                LD A, (HL)
+                LD (DE), A
+                LD (BC), A
+                INC HL
+                CALL PixelAttribute
+                LD A, (HL)
+                LD (DE), A
+                RES 7, D
+                LD (DE), A
+                SET 7, D
+                POP BC
                 RET
 
-                display " - Draw Char Boundary : \t", /A, DrawCharBoundary, " = busy [ ", /D, $ - DrawCharBoundary, " bytes  ]"
+                display " - Draw Char : \t\t", /A, DrawCharOne, " = busy [ ", /D, $ - DrawCharOne, " bytes  ]"
 
                 endmodule
 

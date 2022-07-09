@@ -42,24 +42,28 @@ Cooler_1_1:     EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Cooler_1_1.spr"
 Cooler_1_2:     EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Cooler_1_2.spr"
+Cooler_1_Size:  EQU $ - Cooler_1_2 - MemBank_03
 Cooler_2_0:     EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Cooler_2_0.spr"
 Cooler_2_1:     EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Cooler_2_1.spr"
 Cooler_2_2:     EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Cooler_2_2.spr"
+Cooler_2_Size:  EQU $ - Cooler_2_2 - MemBank_03
 Monitor_0:      EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Monitor_0.spr"
 Monitor_1:      EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Monitor_1.spr"
 Monitor_2:      EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Monitor_2.spr"
+Monitor_Size:   EQU $ - Monitor_2 - MemBank_03
 Storage_0:      EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Storage_0.spr"
 Storage_1:      EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Storage_1.spr"
 Storage_2:      EQU $ - Begin
                 incbin "Core/Module/Sprites/Main/NewGame/Original/Anim Frame 1/Storage_2.spr"
+Storage_Size:   EQU $ - Storage_2 - MemBank_03
 Size:           EQU $ - Begin
 SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 

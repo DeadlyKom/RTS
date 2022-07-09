@@ -15,20 +15,24 @@ StorageTable:   FSpriteData { Page.MenuGraphics.A, Adr.Module.MenuGraphics.Stora
                 FSpriteData { Page.MenuGraphics.A, Adr.Module.MenuGraphics.Storage_2 }
 
 Cooler1Anim:    FStaticAnimation {
-                {0, 0}, {3, 2},
+                {14, 19}, {3, 2},
+                Menu.MenuGraphics.Cooler_1_Size,
                 Cooler1Table,
-                0, 3, 6, 6 }
+                0, 3, 10, 5 }
 Cooler2Anim:    FStaticAnimation {
-                {0, 0}, {3, 1},
+                {18, 18}, {3, 1},
+                Menu.MenuGraphics.Cooler_2_Size,
                 Cooler2Table,
-                0, 3, 6, 6 }
+                2, 3, 10, 6 }
 MonitorAnim:    FStaticAnimation {
-                {0, 0}, {2, 1},
+                {9, 12}, {2, 1},
+                Menu.MenuGraphics.Monitor_Size,
                 MonitorTable,
-                0, 3, 6, 6 }
+                1, 3, 10, 7 }
 StorageAnim:    FStaticAnimation {
-                {0, 0}, {2, 2},
+                {13, 11}, {2, 2},
+                Menu.MenuGraphics.Storage_Size,
                 StorageTable,
-                0, 3, 6, 6 }
+                2, 3, 10, 8 }
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_NEW_GAME_ANIMATION_LEFT_ANIM_TABLE_

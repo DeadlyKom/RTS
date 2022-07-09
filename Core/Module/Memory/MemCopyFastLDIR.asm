@@ -1,6 +1,8 @@
 
                 ifndef _MEMORY_COPY_FAST_LDIR_
                 define _MEMORY_COPY_FAST_LDIR_
+
+                module Memcpy
 ; -----------------------------------------
 ; копирование данных
 ; In:
@@ -29,5 +31,9 @@ FastLDIR:       LD A, B
                 JP PE, .Loop
 
                 RET
+
+                endmodule
+
+                display " - Memcpy Fast LDIR : \t", /A, FastLDIR, " = busy [ ", /D, $ - FastLDIR, " bytes  ]"
 
                 endif ; ~_MEMORY_COPY_FAST_LDIR_
