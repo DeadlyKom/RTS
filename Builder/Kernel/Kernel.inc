@@ -92,5 +92,6 @@ Functions
 .TextToBuffer   EQU Kernel.Functions.TextToBuffer
 .GetTextLength  EQU Kernel.Functions.GetTextLength
 .StringToBuffer EQU Kernel.Functions.StringToBuffer
+.DrawCharToScr  EQU Kernel.Functions.DrawCharToScr
 
                 endif ; ~_BUILDER_KERNEL_

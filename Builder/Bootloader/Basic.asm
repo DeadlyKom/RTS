@@ -110,17 +110,17 @@ StartBoot:      DI
                 Page.Main | FILE_ARCHIVE,
                 Adr.Module.Main }
 
-                ; путь файла "новая игра"
+                ; путь файла "капитанский мостик"
                 FFileArea {
-                {{MenuNewGameName}, SystemExt },
-                Page.NewGame | FILE_ARCHIVE,
-                Adr.Module.NewGame }
+                {{CaptainBridgeName}, SystemExt },
+                Page.CaptainBridge | FILE_ARCHIVE,
+                /*Adr.Module.CaptainBridge*/ #C000 }
 
-                ; путь файла графические файлы для "новая игра"
+                ; путь файла графические файлы для "капитанский мостик"
                 FFileArea {
-                {{MenuNewGameGraphicsAName}, GraphicsExt },
-                Page.MenuGraphics.A | FILE_ARCHIVE,
-                Adr.Module.MenuGraphics.A }
+                {{CaptainBridgeGraphicsAName}, GraphicsExt },
+                Page.Graphics.A | FILE_ARCHIVE,
+                Adr.Module.Graphics.A }
 
 .FileNum        EQU ($-.FileArray) / FFileArea
 EndBoot:        DB #0D                                                          ; конец строки

@@ -6,7 +6,7 @@
 
                 module Page
                 module Module
-Language        EQU 0x06                                                        ; страница загрузчика
+Language        EQU 0x06                                                        ; страница
 
                 endmodule
 Russian         EQU Module.Language

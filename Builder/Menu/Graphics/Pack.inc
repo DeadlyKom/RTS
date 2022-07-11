@@ -2,9 +2,9 @@
                 ifndef _BUILDER_MENU_PACK_MENU_GRAPHICS_
                 define _BUILDER_MENU_PACK_MENU_GRAPHICS_
 
-                MMU 3, Page.MenuGraphics.A                                      ; 3 bank, Page.MenuGraphics.A (0) page
-                ORG Adr.Module.MenuGraphics.A
-                module MenuGraphics
+                MMU 3, Page.Graphics.A                                      ; 3 bank, Page.MenuGraphics.A (0) page
+                ORG Adr.Module.Graphics.A
+                module Graphics
 
                 display "\'Menu - Graphics\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 
@@ -67,7 +67,7 @@ Storage_Size:   EQU $ - Storage_2 - MemBank_03
 Size:           EQU $ - Begin
 SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 
-                savetrd TRD_FILENAME, MenuNewGameGraphicsANameTRD, Begin, Size
+                savetrd TRD_FILENAME, CaptainBridgeGraphicsANameTRD, Begin, Size
 
                 endmodule
 

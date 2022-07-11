@@ -10,7 +10,7 @@
                 include "English.inc"
                 include "Russian.inc"
 
-                display "Max Length Language: ", /D, Size
+                display "Menu -> Max Length Language: ", /D, Size
 Size:           EQU English.Size >? Russian.Size
 
                 endmodule

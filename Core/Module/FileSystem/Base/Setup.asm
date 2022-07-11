@@ -6,6 +6,7 @@
 ; In:
 ; Out:
 ; Corrupt:
+;   BC, IY, AF
 ; Note:
 ; -----------------------------------------
 Setup:          ; настройка дефолтных переменных TR-DOS
@@ -25,8 +26,8 @@ Setup:          ; настройка дефолтных переменных TR-
 .FileSystem     LD IX, FileSystem.Base.Variables                                ; адрес переменных FileSystem
 
                 ; установка дефолтного адрес функции прогресса (RET)
-                LD HL, FileSystem.Base.FindFile.RET
-                LD (IX + FVariables.FuncProgress), HL
+                LD BC, FileSystem.Base.FindFile.RET
+                LD (IX + FVariables.FuncProgress), BC
 
                 RET
 

@@ -5,6 +5,7 @@
                 module Text
 
                 include "Menu/Include.inc"
+                include "Message/Include.inc"
 
                 endmodule
 

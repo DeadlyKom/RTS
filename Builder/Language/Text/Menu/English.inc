@@ -3,7 +3,7 @@
                 define _BUILDER_LANGUAGE_PACK_TEXT_MENU_ENGLISH_
 
                 MMU 1, Page.Core                                                ; 1 bank, Page.Core page
-                ORG Adr.Module.Text
+                ORG Adr.Module.MenuText
                 module English
 
                 display "\'Menu Text EN\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"

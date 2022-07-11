@@ -6,7 +6,7 @@
 Begin:          EQU $
                 include "Struct.inc"
 
-                display " - Hologram : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - Hologram : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                 endmodule
 

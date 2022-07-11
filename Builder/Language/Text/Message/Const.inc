@@ -1,0 +1,8 @@
+
+                ifndef _BUILDER_LANGUAGE_PACK_TEXT_MESSAGE_ENGLISH_CONST_
+                define _BUILDER_LANGUAGE_PACK_TEXT_MESSAGE_ENGLISH_CONST_
+
+Message_0       EQU 0x00
+
+                endif ; ~ _BUILDER_LANGUAGE_PACK_TEXT_MESSAGE_ENGLISH_CONST_
+

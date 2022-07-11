@@ -3,7 +3,7 @@
                 define _BUILDER_LANGUAGE_PACK_TEXT_MENU_RUSSIAN_
 
                 MMU 1, Page.Core                                                ; 1 bank, Page.Core page
-                ORG Adr.Module.Text
+                ORG Adr.Module.MenuText
                 module Russian
 
                 display "\'Menu Text RU\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"

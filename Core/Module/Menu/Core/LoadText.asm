@@ -7,40 +7,78 @@
                 AND LANGUAGE_MASK
                 CALL Functions.LoadFont
 
-                ; загрузка текста главного меню
-                LD A, (ConfigOptions)
-                AND LANGUAGE_MASK
-                CALL LoadText
+                ; -----------------------------------------
+                ; загрузка текста "главного меню"
+                ; -----------------------------------------
+                LD HL, MainMenu.Functor
+                LD DE, MainMenu.Filename
+                CALL FindLoadText
+                JR C, $                                                         ; файл не найден
+
+                ; -----------------------------------------
+                ; загрузка текста "командного мостика"
+                ; -----------------------------------------
+                LD HL, CapBridge.Functor
+                LD DE, CapBridge.Filename
+                CALL FindLoadText
+                JR C, $                                                         ; файл не найден
 
                 ; инициализация таблицы текста
-                LD HL, Adr.Module.Text
+                LD HL, Adr.Module.MenuText
                 LD (LocalizationRef), HL
                 RET
+
+MainMenu:       ; -----------------------------------------
+                ; загрузка текста "главного меню"
+                ; -----------------------------------------
+.Functor        ; функция загрузки
+                LD A, Page.Main                                                 ; страница 
+                LD DE, Adr.Module.MenuText                                      ; адрес текста
+                JP FileSystem.Base.PrimaryRead
+
+.Filename       FFile { {MenuTextEnName}, SystemExt }                           ; имя файла английского языка меню
+                FFile { {MenuTextRuName}, SystemExt }                           ; имя файла русского языка меню
+                FFile { {MenuTextSpName}, SystemExt }                           ; имя файла испанского языка меню
+CapBridge:      ; -----------------------------------------
+                ; загрузка текста "командного мостика"
+                ; -----------------------------------------             
+.Functor        ; функция загрузки
+                LD A, Page.CaptainBridge                                        ; страница 
+                LD DE, (Adr.Module.MsgText - Adr.Module.CaptainBridge) | #C000  ; адрес текста
+                JP FileSystem.Base.PrimaryRead
+
+.Filename       FFile { {MsgTextEnName}, SystemExt }                            ; имя файла английского языка меню
+                FFile { {MsgTextRuName}, SystemExt }                            ; имя файла русского языка меню
+                FFile { {MsgTextSpName}, SystemExt }                            ; имя файла испанского языка меню
 ; -----------------------------------------
-; смена языка
+; поиск загружаемого языка
 ; In:
 ;   A - номер языка
 ;       0 - русский
 ;       1 - испанский
 ;       2 - английский
+;   HL - адрес функции загрузки
+;   DE - адрес массива файлов локализации
 ; Out:
 ;   флаг переполнения Carry сброшен при успешном поиске
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-@LoadText:      ; инициализация
-                EX AF, AF'                                                      ; сохранён номер языка
+@FindLoadText:  ; инициализация
                 SET_PAGE_FILE_SYS                                               ; включить страницу файловой системы
                 CALL FileSystem.Base.Setup                                      ; инициализация файловой системы
 
                 ; адрес завершения работы с файловой системой
-                LD HL, FileSystem.Base.Shutdown
+                LD BC, FileSystem.Base.Shutdown   
+                PUSH BC
                 PUSH HL
 
                 ; поиск файла в каталоге
-                LD HL, .FileName - FFile
-                EX AF, AF'                                                      ; востановлен номер языка
+                LD HL, -FFile
+                ADD HL, DE
+
                 ; проверим валидность загружаемого языка
+                LD A, (ConfigOptions)
                 AND LANGUAGE_MASK
                 JR NZ, .IsValid
 
@@ -53,17 +91,8 @@
 .FileNameLoop   ADD HL, DE
                 DJNZ .FileNameLoop
                 CALL FileSystem.Base.FindFile
-                RET C                                                           ; выход если файл не найден
+                RET
 
-                ; загрузка модуля
-                LD A, Page.Main                                                 ; страница 
-                LD DE, Adr.Module.Text                                          ; адрес текста меню
-                JP FileSystem.Base.PrimaryRead
-
-.FileName       FFile { {MenuTextEnName}, SystemExt }                           ; имя файла английского языка меню
-                FFile { {MenuTextRuName}, SystemExt }                           ; имя файла русского языка меню
-                FFile { {MenuTextSpName}, SystemExt }                           ; имя файла испанского языка меню
-
-                display " - Load Text : \t\t", /A, LoadText, " = busy [ ", /D, $ - LoadText, " bytes  ]"
+                display " - Load Text : \t\t", /A, SetLanguage, " = busy [ ", /D, $ - SetLanguage, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_LOAD_TEXT_

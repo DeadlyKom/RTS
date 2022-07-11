@@ -1,0 +1,2 @@
+Localization.exe Localization.ini
+pause

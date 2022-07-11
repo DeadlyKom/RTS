@@ -34,6 +34,13 @@
                 define MenuTextSpNameTRD    "Menu Sp.#"                         ; имя файла испанского языка меню
                 define MenuTextEnName       "Menu En"                           ; имя файла английского языка меню
                 define MenuTextEnNameTRD    "Menu En.#"                         ; имя файла английского языка меню
+
+                define MsgTextRuName        "Msg Ru"                            ; имя файла русского языка сообщений
+                define MsgTextRuNameTRD     "Msg Ru.#"                          ; имя файла русского языка сообщений
+                define MsgTextSpName        "Msg Sp"                            ; имя файла испанского языка сообщений
+                define MsgTextSpNameTRD     "Msg Sp.#"                          ; имя файла испанского языка сообщений
+                define MsgTextEnName        "Msg En"                            ; имя файла английского языка сообщений
+                define MsgTextEnNameTRD     "Msg En.#"                          ; имя файла английского языка сообщений
                 
                 define MenuCoreName         "M.Core"                            ; имя файла основных функций работы с меню
                 define MenuCoreNameTRD      "M.Core.#"                          ; имя файла основных функций работы с меню
@@ -44,10 +51,10 @@
                 define MenuOptionsName      "M.Option"                          ; имя файла "меню настроек"
                 define MenuOptionsNameTRD   "M.Option.#"                        ; имя файла "меню настроек"
 
-                define MenuNewGameName      "M.NGame"                           ; имя файла "меню новая игры"
-                define MenuNewGameNameTRD   "M.NGame.#"                         ; имя файла "меню новая игры"
+                define CaptainBridgeName                "M.CB"                  ; имя файла "капитанский мостик"
+                define CaptainBridgeNameTRD             "M.CB.#"                ; имя файла "капитанский мостик"
 
-                define MenuNewGameGraphicsAName     "M.NGameA"                  ; имя файла графики для меню
-                define MenuNewGameGraphicsANameTRD  "M.NGameA.D"                ; имя файла графики для меню
+                define CaptainBridgeGraphicsAName       "M.CBG"                 ; имя файла графики для "капитанский мостик"
+                define CaptainBridgeGraphicsANameTRD    "M.CBG.D"               ; имя файла графики для "капитанский мостик"
 
                 endif ; ~_CONST_FILES_NAME_

@@ -13,7 +13,7 @@
                 
                 display "\'Language\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 Begin:          EQU $
-                include "../../Core/Module/Language/Include.inc"
+                include "Core/Module/Language/Include.inc"
 Size:           EQU $ - Begin
 SizeInSectors:  EQU (Size >> 8) + ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01)
 

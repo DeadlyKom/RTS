@@ -9,9 +9,22 @@ Selected:       CALL WaitEvent
                 JP Z, MenuOptions
 
                 CP MENU_NEW_GAME
-                JP Z, NewGame
+                JP Z, .CapBridge
 
                 JR $
+
+; переход к меню "капитанский мостик"
+.CapBridge      ; инициализация
+                CALL CLS                                                        ; очистка экранов
+                CALL ResetOptions                                               ; сброс опций
+
+                LD A, Page.CaptainBridge
+                CALL SetPage
+                LD HL, #C000
+                LD DE, Adr.Module.CaptainBridge
+                LD BC, Menu.CaptainBridge.Size + Language.Text.Message.Size
+                PUSH DE
+                JP FastLDIR
 
                 display " - Select : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 

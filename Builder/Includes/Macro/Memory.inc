@@ -32,6 +32,9 @@ SET_PAGE_FILE_SYS macro
 SET_PAGE_LOCALIZATION macro
                 CALL LocalizationFunc
                 endm
+SET_PAGE_LOCALIZATION_JP macro
+                JP LocalizationFunc
+                endm
 ; включение страницы первого экрана
 SET_SCREEN_BASE macro
                 CALL SetPage5
