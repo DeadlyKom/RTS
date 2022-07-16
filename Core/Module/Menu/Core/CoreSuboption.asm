@@ -161,7 +161,7 @@
                 PUSH DE
                 INC HL
                 LD A, (HL)
-                CALL Functions.GetTextLength
+                CALL Functions.StringLength
                 LD A, E
                 LD (IY + FTVFX.Length), A
                 POP DE

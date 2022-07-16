@@ -4,7 +4,7 @@
 @ClearVFX:      CALL PixelAddressC                                              ; DE - адрес экрана
                 EX DE, HL
 
-                LD B, #08                                                       ; высота в пикселах
+                LD B, #08                                                       ; высота в пикселях
                 LD C, (IY + FTVFX.Length)                                       ; ширина в знакоместах
 .ColumLoop      LD A, C
 
@@ -39,7 +39,7 @@
 ; -----------------------------------------
 @RenderVFX:     CALL PixelAddressC                                             ; DE - адрес экрана
 
-                LD B, #08                                                       ; высота в пикселах
+                LD B, #08                                                       ; высота в пикселях
                 LD C, (IY + FTVFX.Length)                                       ; ширина в знакоместах
                 LD HL, SharedBuffer
 

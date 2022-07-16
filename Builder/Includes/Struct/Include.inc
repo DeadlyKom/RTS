@@ -9,4 +9,6 @@
                 include "Files.inc"
                 include "FileSystemVaribles.inc"
 
+                include "Dialog.inc"
+
                 endif ; ~_STRUCT_INCLUDE_

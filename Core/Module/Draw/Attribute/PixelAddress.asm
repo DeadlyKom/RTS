@@ -27,10 +27,10 @@ PixelAddressC:  LD A, D
 ; -----------------------------------------
 ; расчёт экраного адреса
 ; In :
-;   DE - координаты в пикселах (D - y, E - x)
+;   DE - координаты в пикселях (D - y, E - x)
 ; Out :
 ;   DE - адрес экрана
-;   A  - номер бита
+;   A  - номер бита (CPL)/ смещение от левого края
 ; Corrupt :
 ;   DE, AF
 ; Time :
@@ -60,7 +60,7 @@ PixelAddressP:  LD A, D
                 EX AF, AF'
                 LD D, A
                 LD A, E
-                CPL
+                ; CPL
                 AND %00000111
                 EX AF, AF'
                 LD E, A

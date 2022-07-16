@@ -1,7 +1,12 @@
-Greetings Cap aboard the battle shuttle.
-We have received all necessary orders...
-You are now on the captain's bridge.
-Here you can get the information you are interested in,
-on the right is the information panel,
-in front of you is the main control desk,
-a little to the left you can see information about the planet.
+Hi Cap, welcome aboard the combat shuttle.
+Now we are on the captain's bridge and all the information that we have is flowing into the control panel and is available to you, use it wisely.
+To the right is an information panel, directly to the main control panel, as well as in what orbit of the planet we are.
+Your assignment order does not contain information about your combat experience ...
+Can you clarify it?
+It was business.
+Experienced.
+Oh let me think...
+There is one task, it will help you remember what it is like to be the commander of a combat shuttle.
+May the 8-bit gods help us.
+Understood, familiarize yourself with the available tasks and proceed to their implementation.
+Yeah.

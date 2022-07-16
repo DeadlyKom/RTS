@@ -27,15 +27,33 @@ InputCapBridge: JR NZ, .Processing                                              
 
                 JR .NotProcessing
 
-PressLeft:      CALL Room.LeftRotate
-
-                OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
+Processed:      OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET
+
+PressLeft:      CALL GetDialog
+                JR Z, .NotDialog
+                
+                ; -----------------------------------------
+                ; обработка клавиши (диалог включен)
+                ; -----------------------------------------
+                CALL Dialog.GetWaitInput
+                JR NZ, Processed
+                
+                ; диалог в состоянии ожидания нажатия клавиши
+                CALL DisableInput
+                CALL Dialog.ClearArrow
+                JP Dialog.SetScroll
+
+.NotDialog      ; -----------------------------------------
+                ; обработка клавиши (диалог отключен)
+                ; -----------------------------------------
+                CALL Room.LeftRotate
+
+                JR Processed
 
 PressRight:     CALL Room.RightRotate
 
-                OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
-                RET
+                JR Processed
 
                 display " - Input : \t\t\t", /A, InputCapBridge, " = busy [ ", /D, $ - InputCapBridge, " bytes  ]"
 

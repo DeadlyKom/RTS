@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_CAPTAIN_BRIDGE_MESSAGE_CALLOUT_
-                define _CORE_MODULE_CAPTAIN_BRIDGE_MESSAGE_CALLOUT_
+                ifndef _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CALLOUT_
+                define _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CALLOUT_
 
 BACKGROUND      EQU ((0 << 7) | (0 << 6) | (CYAN << 3) | BLACK)
 ; -----------------------------------------
@@ -213,4 +213,4 @@ SetATTR:        EX AF, AF'
 
                 display " - DrawCallout : \t\t", /A, DrawCallout, " = busy [ ", /D, $ - DrawCallout, " bytes  ]"
 
-                endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_MESSAGE_CALLOUT_
+                endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CALLOUT_

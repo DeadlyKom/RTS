@@ -8,7 +8,7 @@
 ; In:
 ;   HL - адрес строки
 ; Out:
-;   С  - длина строки в пикселах
+;   С  - длина строки в пикселях
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
@@ -28,7 +28,7 @@ DrawString:     ; очистка общего буфера
                 JR Z, .NotAlign
 
                 PUSH HL
-                CALL GetLength
+                CALL StringLength
                 POP HL
 
 .NotAlign       ; вывод строки без очистки буфера + задаётся своё смещение в регистре C
@@ -200,64 +200,6 @@ NotShift:       LD A, B
                 INC HL
                 LD A, E
                 JP .ColumLoop
-; -----------------------------------------
-; получение длины строки
-; In:
-;   HL - адрес строки
-; Out:
-;   B  - длина строки в пикселах
-;   C  -
-; Corrupt:
-; Note:
-; -----------------------------------------
-GetLength:      LD B, #00
-
-.StringLoop     LD A, (HL)
-                OR A
-                JR NZ, .Next
-
-                LD A, B
-                SRL A
-                NEG
-                ADD A, C
-                LD C, A
-
-                ; округление
-                LD A, B
-                LD B, #00
-                RRA
-                ADC A, B
-                RRA
-                ADC A, B
-                RRA
-                ADC A, B
-                AND %00011111
-                LD B, A
-                RET
-
-.Next           DEC A
-
-                INC HL
-                PUSH HL
-
-.AddChar        ; расчёт адреса спрайта символа
-                LD E, A
-                ADD A, A
-                LD L, A
-                LD H, #00
-                LD D, H
-                ADD HL, DE
-                LD DE, ASCII_Info
-                ADD HL, DE
-
-                ; чтение данных о символе
-                LD A, (HL)                                                      ; size (height/width)
-                AND #0F
-                ADD A, B
-                INC A
-                LD B, A
-                POP HL
-                JR .StringLoop
 
                 display " - Draw String to Buffer : \t", /A, DrawString, " = busy [ ", /D, $ - DrawString, " bytes  ]"
 

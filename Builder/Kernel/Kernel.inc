@@ -90,7 +90,8 @@ LoadModule
 Functions
 .LoadFont       EQU Kernel.Functions.LoadFont                                   ; загрузка языковых шрифтов
 .TextToBuffer   EQU Kernel.Functions.TextToBuffer
-.GetTextLength  EQU Kernel.Functions.GetTextLength
+.StringLength   EQU Kernel.Functions.StringLength
+.WordLength     EQU Kernel.Functions.WordLength
 .StringToBuffer EQU Kernel.Functions.StringToBuffer
 .DrawCharToScr  EQU Kernel.Functions.DrawCharToScr
 

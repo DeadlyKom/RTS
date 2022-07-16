@@ -15,9 +15,10 @@
 PixelAttribute: LD A, D
                 RRA
                 RRA
+                AND #06
+                ADD A, #B0
+                RL D
                 RRA
-                AND #03
-                ADD A, #D8
                 LD D, A
                 RET
 

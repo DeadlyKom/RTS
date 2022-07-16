@@ -18,4 +18,6 @@
                 include "SharedMemoryMap.inc"
                 include "MemoryMap.inc"
 
+                include "Dialog.inc"
+
                 endif ; ~_CONST_INCLUDES_

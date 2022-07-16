@@ -9,8 +9,8 @@
                 display "\'Spanish Fonts\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t\t-------------------------------------------------"
 Begin:          EQU $
 
-                ; incbin "../../Core/Module/Sprites/Fonts/En/ASCII_Table.bin"
-                ; incbin "../../Core/Module/Sprites/Fonts/En/ASCII.spr"
+                ; incbin "Core/Module/Sprites/Fonts/En/ASCII_Table.bin"
+                ; incbin "Core/Module/Sprites/Fonts/En/ASCII.spr"
                 DB #00
                 
 Size:           EQU $ - Begin
