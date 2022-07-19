@@ -47,6 +47,7 @@ Keyboard
 .GetPressedKey  EQU Kernel.Keyboard.GetPressedKey
 .WaitPressedKey EQU Kernel.Keyboard.WaitPressedKey
 .WaitReleasedKey EQU Kernel.Keyboard.WaitReleasedKey                            ; ожидание отпускание ранее нажатой клавиши
+.AnyKeyPressed  EQU Kernel.Keyboard.AnyKeyPressed                               ; проверка нажатия какая либо клавиши
 Mouse
 .CheckKeyState  EQU Kernel.Mouse.CheckKeyState
 .PositionX      EQU Kernel.Mouse.PositionX
@@ -77,6 +78,7 @@ PixelAddressP   EQU Kernel.Attribute.PixelAddressP
 PixelAttribute  EQU Kernel.Attribute.PixelAttribute
 DrawSpriteOne   EQU Kernel.Attribute.DrawSpriteOne
 DrawSpriteTwo   EQU Kernel.Attribute.DrawSpriteTwo
+DrawSpriteMono  EQU Kernel.Monochrome.DrawSpriteMono
 DrawStencilSpr  EQU Kernel.Attribute.DrawStencilSpr
 DrawCharOne     EQU Kernel.Attribute.DrawCharOne
 DrawCharTwo     EQU Kernel.Attribute.DrawCharTwo

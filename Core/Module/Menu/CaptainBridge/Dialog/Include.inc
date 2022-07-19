@@ -11,6 +11,7 @@
                 include "Initialize.asm"
                 include "NextWord.asm"
                 include "NextMessage.asm"
+                include "NextDialog.asm"
                 include "Tick.asm"
                 include "DrawChar.asm"
                 include "DrawCallout.asm"

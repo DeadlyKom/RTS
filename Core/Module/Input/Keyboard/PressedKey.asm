@@ -36,4 +36,12 @@ WaitReleasedKey HALT
                 RET NC
                 JR WaitReleasedKey
 
+; проверка нажатия любой клавиши
+; если флаг нуля установлен, нажата
+AnyKeyPressed:  XOR A
+                IN A, (#FE)
+                CPL
+                AND %00011111
+                RET
+
                 endif ; ~_INPUT_KEYBOARD_PRESSED_KEY_STATE_

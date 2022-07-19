@@ -40,7 +40,9 @@ DrawCharToScr:  ; добавление смещение к строке
                 LD B, (HL)                                                      ; size (height/width)
                 INC HL
 
+                ; -----------------------------------------
                 ; расчёт адреса спрайта символа
+                ; -----------------------------------------
                 LD A, (HL)                                                      ; high address
                 PUSH AF
                 INC HL
@@ -48,160 +50,44 @@ DrawCharToScr:  ; добавление смещение к строке
                 OR #C0
                 LD H, A
 
-                ; расчёт адреса экрана
-                PUSH DE
-                ;
-                LD A, B
-                AND #0F
-                INC A
-                ADD A, E
-                LD E, A
-                ;
-                EXX
-                POP DE
+                ; -----------------------------------------
+                ; корректировка символа по высоте
+                ; -----------------------------------------
                 POP AF
                 RLCA
                 RLCA
                 AND #03
                 ADD A, D
                 LD D, A
-                CALL PixelAddressP                                              ; DE - адрес экрана
-                LD C, E                                                         ; сохранение смещения по горизонтали
-                RES 7, D                                                        ; коррекция адреса основного экрана
-                JP Z, .NotShift                                                 ; нет смещения
-                
-                LD B, A
-                ; расчёт адреса таблицы смещения
-                DEC A
-                ADD A, A
-                ADD A, HIGH ShiftTable
-                LD H, A
-                LD A, B
-                EXX
-                LD C, A
 
-                ; A = отрицательная ширина символа
+                ;
                 LD A, B
                 AND #0F
-                CP #09
-                JR C, $+3
-                ADD A, A
-                ADD A, C
-                NEG
                 LD C, A
-
-.ColumLoop      EX AF, AF'
-
-.RowLoop        LD A, (HL)
-                EXX
-                LD L, A
-                LD A, (DE)
-                OR (HL)
-                LD (DE), A
-
-                EX AF, AF'
-                ADD A, #08
-                JP P, .NextRow
-                EX AF, AF'
-
-                INC H
-                INC E
-
-                LD A, (DE)
-                OR (HL)
-                LD (DE), A
-                
-                DEC H
-
-                EX AF, AF'
-                ADD A, #08
-                JP P, .NextRow
-                EX AF, AF'
-
-                EXX
-                INC HL
-
-                JP .RowLoop
-
-.NextRow        LD E, C                                                         ; востановление смещения по горизонтали
-
-                ; classic method "DOWN_DE" 25/59
-                INC D
-                LD A, D
-                AND #07
-                JP NZ, $+13
-                LD A, E
-                SUB #E0
-                LD E, A
-                LD C, A                                                         ; сохранение смещения по горизонтали
-                SBC A, A
-                AND #F8
-                ADD A, D
-                LD D, A
-
-                EXX
-
+                PUSH AF
                 LD A, B
-                SUB #10
-                RET C
-                LD B, A
-
-                INC HL
-                LD A, C
-                JP .ColumLoop
-
-.NotShift:      EXX
-                LD A, B
+                RRA
+                RRA
+                RRA
+                RRA
                 AND #0F
-                NEG
-                LD C, A
-
-.ColumLoopNS    EX AF, AF'
-
-.RowLoopNS      LD A, (HL)
-                EXX
-                LD L, A
-                LD A, (DE)
-                OR L
-                LD (DE), A
-
-                EX AF, AF'
-                ADD A, #08
-                JP P, .NextRowNS
-                EX AF, AF'
-
-                INC E
-                EXX
-                INC HL
-
-                JP .RowLoopNS
-
-.NextRowNS      LD E, C                                                         ; востановление смещения по горизонтали
-
-                ; classic method "DOWN_DE" 25/59
-                INC D
-                LD A, D
-                AND #07
-                JP NZ, $+13
-                LD A, E
-                SUB #E0
-                LD E, A
-                LD C, A                                                         ; сохранение смещения по горизонтали
-                SBC A, A
-                AND #F8
-                ADD A, D
-                LD D, A
-
-                EXX
-
-                LD A, B
-                SUB #10
-                RET C
+                INC A
                 LD B, A
+                
 
-                INC HL
-                LD A, C
-                JP .ColumLoopNS
+                ; -----------------------------------------
+                ; отрисовка спрайта без атрибутами
+                ; In:
+                ;   HL - адрес спрайта
+                ;   DE - координаты в пикселях (D - y, E - x)
+                ;   BC - размер (B - y, C - x)
+                ; Out:
+                ; Corrupt:
+                ; Note:
+                ; -----------------------------------------
+                CALL DrawSpriteMono
+                POP BC
+                RET
 
                 display " - Draw Char : \t\t", /A, DrawCharToScr, " = busy [ ", /D, $ - DrawCharToScr, " bytes  ]"
 

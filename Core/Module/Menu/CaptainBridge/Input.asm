@@ -11,49 +11,131 @@ InputCapBridge: JR NZ, .Processing                                              
 .Processing     ; опрос нажатой клавиши
                 EX AF, AF'
                 CP DEFAULT_UP
-                JP Z, $
+                JP Z, PressedUp
                 
                 CP DEFAULT_DOWN
-                JP Z, $
+                JP Z, PressedDown
 
                 CP DEFAULT_LEFT
-                JP Z, PressLeft
+                JP Z, PressedLeft
 
                 CP DEFAULT_RIGHT
-                JP Z, PressRight
+                JP Z, PressedRight
 
                 CP DEFAULT_SELECT
-                JP Z, $
+                JP Z, PressedSelect
 
                 JR .NotProcessing
 
 Processed:      OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET
 
-PressLeft:      CALL GetDialog
-                JR Z, .NotDialog
                 
+PressedUp:      ; -----------------------------------------
+                ;
                 ; -----------------------------------------
-                ; обработка клавиши (диалог включен)
+                
+                ; проверка отображения диалога
+                CALL GetDialog
+                JR Z, .NotDialog
+
+                ; проверка состояния "выбора"
+                CALL Dialog.GetWaitSelect
+                JR Z, .Pressed
+
+                ; обработка состояния "следующее сообщение"
+                JR DialogWaitDown
+
+.NotDialog      ; обработка клавиши (диалог отключен)
+                JR Processed
+
+.Pressed        ; обработка клавиши (нажата вверх)
+                JR$
+PressedDown:    ; -----------------------------------------
+                ;
                 ; -----------------------------------------
-                CALL Dialog.GetWaitInput
+                
+                ; проверка отображения диалога
+                CALL GetDialog
+                JR Z, .NotDialog
+
+                ; проверка состояния "выбора"
+                CALL Dialog.GetWaitSelect
+                JR Z, .Pressed
+
+                ; обработка состояния "следующее сообщение"
+                JR DialogWaitDown
+
+.NotDialog      ; обработка клавиши (диалог отключен)
+                JR Processed
+
+.Pressed        ; обработка клавиши (нажата вниз)
+                JR$
+PressedLeft:    ; -----------------------------------------
+                ;
+                ; -----------------------------------------
+                
+                ; проверка отображения диалога
+                CALL GetDialog
+                JR Z, .NotDialog
+
+                ; проверка состояния "выбора"
+                CALL Dialog.GetWaitSelect
+                JR NZ, DialogWaitDown                                           ; обработка состояния "следующее сообщение"
+                JR Processed
+
+.NotDialog      ; обработка клавиши (диалог отключен)
+                JR Processed
+
+.Pressed        ; обработка клавиши (нажата вниз)
+                JR$
+PressedRight:   ; -----------------------------------------
+                ;
+                ; -----------------------------------------
+                
+                ; проверка отображения диалога
+                CALL GetDialog
+                JR Z, .NotDialog
+
+                ; проверка состояния "выбора"
+                CALL Dialog.GetWaitSelect
+                JR NZ, DialogWaitDown                                           ; обработка состояния "следующее сообщение"
+                JR Processed
+
+.NotDialog      ; обработка клавиши (диалог отключен)
+                JR Processed
+
+.Pressed        ; обработка клавиши (нажата вниз)
+                JR$
+PressedSelect:  ; -----------------------------------------
+                ;
+                ; -----------------------------------------
+                
+                ; проверка отображения диалога
+                CALL GetDialog
+                JR Z, .NotDialog
+
+                ; проверка состояния "выбора"
+                CALL Dialog.GetWaitSelect
+                JR NZ, DialogWaitDown                                           ; обработка состояния "следующее сообщение"
+                JR Processed
+
+.NotDialog      ; обработка клавиши (диалог отключен)
+                JR Processed
+
+.Pressed        ; обработка клавиши (нажата вниз)
+                JR$
+
+DialogWaitDown: ; -----------------------------------------
+                ; стрелка вниз
+                ; -----------------------------------------
+                CALL Dialog.GetWaitDown
                 JR NZ, Processed
                 
                 ; диалог в состоянии ожидания нажатия клавиши
                 CALL DisableInput
-                CALL Dialog.ClearArrow
+                CALL Dialog.ClearArrowDown
                 JP Dialog.SetScroll
-
-.NotDialog      ; -----------------------------------------
-                ; обработка клавиши (диалог отключен)
-                ; -----------------------------------------
-                CALL Room.LeftRotate
-
-                JR Processed
-
-PressRight:     CALL Room.RightRotate
-
-                JR Processed
 
                 display " - Input : \t\t\t", /A, InputCapBridge, " = busy [ ", /D, $ - InputCapBridge, " bytes  ]"
 

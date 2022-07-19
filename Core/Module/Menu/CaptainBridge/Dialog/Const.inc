@@ -15,6 +15,6 @@ START_ARROW_POS EQU MemBank_01_SCR + /*Y*/ ((ArrowY & 0xC0) << 5) + ((ArrowY & 0
                 define ScrollX 1                                                ; в знакоместах
                 define ScrollY 11                                               ; в пикселях
 START_SCROLL    EQU MemBank_01_SCR + /*Y*/ (((ScrollY >> 3) & 0x18) << 8) + ((ScrollY & 0x07) << 8) + ((ScrollY & 0x38) << 2) + /*X*/ScrollX
-SCROLLABLE_LINES EQU 18                                                          ; количество скролируемых линий
+SCROLLABLE_LINES EQU 18                                                         ; количество скролируемых линий
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CONST_

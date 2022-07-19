@@ -21,28 +21,13 @@ Initialize:     LD (LocalizationRef), DE
                 LD (IY + FDialogVariable.RowLength), ROW_LENGTH
                 LD (IY + FDialogVariable.Rows), NUMBER_ROWS
 
-                ; инициализация диалога
-                LD C, (HL)                                                      ; /*length*/
-                LD A, FLAGS_MASK
-                AND C
-                LD (IY + FDialogVariable.DlgFlags), A
-                LD A, FLAGS_MASK_INV
-                AND C
-                LD (IY + FDialogVariable.NumberMsgID), A
-                INC HL                                                          ; /*indexes*/
-                LD (IY + FDialogVariable.Dialog), HL
-                LD B, #00
-                LD C, A
-                LD A, (HL)
-                ADD HL, BC                                                      ; /*offset*/
-                LD (IY + FDialogVariable.Payload), HL
-                LD (IY + FDialogVariable.Print.MessageID), A
+                CALL .Dialog                                                    ; инициализация диалога
 
                 ; инициализация позиции вывода диалога
                 LD DE, START_CUR_POS
                 LD (IY + FDialogVariable.Print.CursorPosition), DE
 
-                ; инициализация продолжительность анимаций печати
+                ; инициализация продолжительность анимации печати
                 LD A, (IY + FDialogVariable.Print.DurationPrint)
                 LD (IY + FDialogVariable.Print.Countdown), A
 
@@ -59,5 +44,26 @@ Initialize:     LD (LocalizationRef), DE
                 LD (IY + FDialogVariable.Print.MessageOffset), A
 
                 JP NextWord
+
+.Dialog         ; инициализация диалога
+                LD C, (HL)                                                      ; /*length*/
+                LD A, FLAGS_MASK
+                AND C
+                ; сохранение старшего бита (ранее установленного)
+                RL (IY + FDialogVariable.DlgFlags)
+                RRA
+                LD (IY + FDialogVariable.DlgFlags), A
+                LD A, FLAGS_MASK_INV
+                AND C
+                LD (IY + FDialogVariable.CounterMsgID), A
+                INC HL                                                          ; /*indexes*/
+                LD (IY + FDialogVariable.Dialog), HL
+                LD B, #00
+                LD C, A
+                LD A, (HL)
+                ADD HL, BC                                                      ; /*offset*/
+                LD (IY + FDialogVariable.Payload), HL
+                LD (IY + FDialogVariable.Print.MessageID), A
+                RET
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_INITIALIZE_

@@ -12,7 +12,6 @@
 ; Out:
 ; Corrupt:
 ; Note:
-;   окно должно находится в 3 банке
 ; -----------------------------------------
 DrawSpriteOne:  CALL PixelAddressC
     

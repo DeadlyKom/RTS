@@ -11,8 +11,10 @@
 Tick:           LD A, (IY + FDialogVariable.State)
                 CP PRINTED_MSG
                 JR Z, .AnimMessage
-                CP WAITING_INPUT
-                JR Z, .AnimArrow
+                CP WAITING_DOWN
+                JR Z, .AnimArrowDown
+                CP WAITING_SELECT
+                JR Z, .AnimArrowRight
                 CP SCROLL_MSG
                 JR Z, .AnimScroll
                 RET
@@ -20,10 +22,16 @@ Tick:           LD A, (IY + FDialogVariable.State)
 .AnimMessage    ; -----------------------------------------
                 ; анимация вывода сообщения
                 ; -----------------------------------------
+                
+                ; опрос нажатия любой клавиши
+                CALL Keyboard.AnyKeyPressed
+                JR NZ, .PressedAnyKey
 
                 ; уменьшение счётчика
                 DEC (IY + FDialogVariable.Print.Countdown)
                 RET NZ
+
+.PressedAnyKey  ; нажата любая клавиша
 
                 ; установка обратного счётчика
                 LD A, (IY + FDialogVariable.Print.DurationPrint)
@@ -41,8 +49,8 @@ Tick:           LD A, (IY + FDialogVariable.State)
 
                 RET
 
-.AnimArrow      ; -----------------------------------------
-                ; анимация вывода прыгающей стрелки
+.AnimArrowDown  ; -----------------------------------------
+                ; анимация вывода прыгающей стрелки (вниз)
                 ; -----------------------------------------
 
                 ; уменьшение счётчика
@@ -54,7 +62,22 @@ Tick:           LD A, (IY + FDialogVariable.State)
 
                 ; отображение стрелки
                 CALL Menu.CaptainBridge.CapBridge.EnableInput
-                JP DrawArrow
+                JP DrawArrowDown
+
+.AnimArrowRight ; -----------------------------------------
+                ; анимация вывода прыгающей стрелки (вправо)
+                ; -----------------------------------------
+
+                ; уменьшение счётчика
+                DEC (IY + FDialogVariable.Arrow.Countdown)
+                RET NZ
+
+                ; установка обратного счётчика
+                LD (IY + FDialogVariable.Arrow.Countdown), DURATION_ARROW
+
+                ; отображение стрелки
+                CALL Menu.CaptainBridge.CapBridge.EnableInput
+                JP DrawArrowSelect
 
 .AnimScroll     ; -----------------------------------------
                 ; анимация скрола
@@ -74,13 +97,6 @@ Tick:           LD A, (IY + FDialogVariable.State)
 
                 ; установка обратного счётчика
                 LD (IY + FDialogVariable.Scroll.RowCounter), SCROLLABLE_LINES
-
-                ; ; перенос курсор в начало области вывода
-                ; LD (IY + FDialogVariable.Print.CursorPosition.X), START_CUR_POS & 0xFF
-
-                ; ; инициализация доступной области вывода сообщений
-                ; LD (IY + FDialogVariable.RowLength), ROW_LENGTH
-                ; LD (IY + FDialogVariable.Rows), 1
 
                 JP SetPrinted
 
