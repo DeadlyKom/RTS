@@ -16,7 +16,7 @@
 DrawSpriteMono: ; -----------------------------------------
                 ; расчёт счётчика по горизонтали
                 ; -----------------------------------------
-                ; округление длины текста до знакоместа
+                ; округление ширины до знакоместа
                 LD A, C
                 LD C, #00
                 RRA
@@ -41,7 +41,15 @@ DrawSpriteMono: ; -----------------------------------------
                 CALL PixelAddressP                                              ; DE - адрес экрана
                 LD C, E                                                         ; сохранение смещения по горизонтали
                 RES 7, D                                                        ; коррекция адреса основного экрана
-                JP Z, .NotShift                                                 ; нет смещения
+
+                ; -----------------------------------------
+                ; определение функтора вывода
+                ; -----------------------------------------
+                EXX
+                LD DE, Shift
+                JR NZ, .IsShift
+                LD DE, NotShift
+.IsShift        EXX
 
                 ; -----------------------------------------
                 ; расчёт адреса таблицы смещения
@@ -52,15 +60,49 @@ DrawSpriteMono: ; -----------------------------------------
                 LD H, A
                 EXX
 
-                ; -----------------------------------------
-.ColumLoop      LD A, C
+.ColumLoop      ; -----------------------------------------
+                LD A, C
+.RowLoop        ; -----------------------------------------
                 EX AF, AF'
+                LD A, (HL)
+                INC HL
+                EX DE, HL
+                JP (HL)
+.Continue       EXX
+                
+                EX AF, AF'
+                DEC A
+                JP P, .RowLoop
 
-.RowLoop        LD A, (HL)
+.NextRow        ; -----------------------------------------
+                EXX
+                LD E, C                                                         ; востановление смещения по горизонтали
+
+                ; -----------------------------------------
+                ; classic method "DOWN_DE" 25/59
+                ; -----------------------------------------
+                INC D
+                LD A, D
+                AND #07
+                JP NZ, $+13
+                LD A, E
+                SUB #E0
+                LD E, A
+                LD C, A                                                         ; сохранение смещения по горизонтали
+                SBC A, A
+                AND #F8
+                ADD A, D
+                LD D, A
+
+                EXX
+                DJNZ .ColumLoop
+
+                RET
+Shift:          EX DE, HL
                 EXX
                 LD L, A
                 LD A, (DE)
-                XOR (HL)
+                OR (HL)
                 LD (DE), A
 
                 INC H
@@ -71,86 +113,16 @@ DrawSpriteMono: ; -----------------------------------------
                 LD (DE), A
                 
                 DEC H
-
-                EX AF, AF'
-                DEC A
-                JP M, .NextRow
-                EX AF, AF'
-
-                EXX
-                INC HL
-
-                JP .RowLoop
-
-.NextRow        LD E, C                                                         ; востановление смещения по горизонтали
-
-                ; classic method "DOWN_DE" 25/59
-                INC D
-                LD A, D
-                AND #07
-                JP NZ, $+13
-                LD A, E
-                SUB #E0
-                LD E, A
-                LD C, A                                                         ; сохранение смещения по горизонтали
-                SBC A, A
-                AND #F8
-                ADD A, D
-                LD D, A
-
-                EXX
-
-                DEC B
-                RET Z
-
-                INC HL
-                JP .ColumLoop
-
-.NotShift       EXX
-.ColumLoopNS    LD A, C
-                EX AF, AF'
-
-.RowLoopNS      LD A, (HL)
+                JP DrawSpriteMono.Continue
+NotShift:       EX DE, HL
                 EXX
                 LD L, A
                 LD A, (DE)
-                XOR L
+                OR L
                 LD (DE), A
 
-                EX AF, AF'
-                DEC A
-                JP M, .NextRowNS
-                EX AF, AF'
-
                 INC E
-                EXX
-                INC HL
-
-                JP .RowLoopNS
-
-.NextRowNS      LD E, C                                                         ; востановление смещения по горизонтали
-
-                ; classic method "DOWN_DE" 25/59
-                INC D
-                LD A, D
-                AND #07
-                JP NZ, $+13
-                LD A, E
-                SUB #E0
-                LD E, A
-                LD C, A                                                         ; сохранение смещения по горизонтали
-                SBC A, A
-                AND #F8
-                ADD A, D
-                LD D, A
-
-                EXX
-
-                DEC B
-                RET Z
-
-                INC HL
-                JP .ColumLoopNS
+                JP DrawSpriteMono.Continue
 
                 display " - Draw Sprite Monochrome: \t", /A, DrawSpriteMono, " = busy [ ", /D, $ - DrawSpriteMono, " bytes  ]"
 
