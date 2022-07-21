@@ -160,7 +160,9 @@ ChoiseSelect:   ; расчёт адреса диалога в зависимос
 
                 ; отключить бит обработки выбора
                 RES CHOICE_BIT, (IY + FDialogVariable.DlgFlags)
-                CALL ClearArrowSelect
+                ; очистка текущего курсора
+                LD B, (IY + FDialogVariable.CurSelectionNum)
+                CALL ClearArrowSelect.B
                 JP SetScroll
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CORE_

@@ -49,7 +49,7 @@ DrawArrowSelect ; расчёт высоты в зависимости от ко�
                 DB %11100000, %11100000
 ClearArrowSelect:
                 LD B, (IY + FDialogVariable.OldSelectionNum)
-                CALL CalcHeightSel
+.B              CALL CalcHeightSel
                 LD HL, .Arrow
                 LD BC, #0705
                 JP DrawSpriteORXOR
