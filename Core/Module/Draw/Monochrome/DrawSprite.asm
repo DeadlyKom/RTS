@@ -4,6 +4,46 @@
 
                 module Monochrome
 ; -----------------------------------------
+; отрисовка спрайта без атрибутами (OR & XOR)
+; In:
+;   HL - адрес спрайта
+;   DE - координаты в пикселях (D - y, E - x)
+;   BC - размер (B - y, C - x)
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+DrawSpriteOR:   ; -----------------------------------------
+                ; инициализация
+                ; ----------------------------------------
+                EXX
+                LD HL, Shift_OR
+                LD (DrawSpriteMono.Shift), HL
+                LD HL, NotShift_OR
+                LD (DrawSpriteMono.NotShift), HL
+                EXX
+                JR DrawSpriteMono
+; -----------------------------------------
+; отрисовка спрайта без атрибутами (OR)
+; In:
+;   HL - адрес спрайта
+;   DE - координаты в пикселях (D - y, E - x)
+;   BC - размер (B - y, C - x)
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+DrawSpriteORXOR:; -----------------------------------------
+                ; инициализация
+                ; ---------------------------------------- 
+                EXX
+                LD HL, Shift_OR_XOR
+                LD (DrawSpriteMono.Shift), HL
+                LD HL, NotShift_OR_XOR
+                LD (DrawSpriteMono.NotShift), HL
+                EXX
+                JR DrawSpriteMono
+; -----------------------------------------
 ; отрисовка спрайта без атрибутами
 ; In:
 ;   HL - адрес спрайта
@@ -46,9 +86,11 @@ DrawSpriteMono: ; -----------------------------------------
                 ; определение функтора вывода
                 ; -----------------------------------------
                 EXX
-                LD DE, Shift
+.Shift          EQU $+1
+                LD DE, #0000
                 JR NZ, .IsShift
-                LD DE, NotShift
+.NotShift       EQU $+1
+                LD DE, #0000
 .IsShift        EXX
 
                 ; -----------------------------------------
@@ -98,7 +140,7 @@ DrawSpriteMono: ; -----------------------------------------
                 DJNZ .ColumLoop
 
                 RET
-Shift:          EX DE, HL
+Shift_OR:       EX DE, HL
                 EXX
                 LD L, A
                 LD A, (DE)
@@ -114,11 +156,68 @@ Shift:          EX DE, HL
                 
                 DEC H
                 JP DrawSpriteMono.Continue
-NotShift:       EX DE, HL
+NotShift_OR:    EX DE, HL
                 EXX
                 LD L, A
                 LD A, (DE)
                 OR L
+                LD (DE), A
+
+                INC E
+                JP DrawSpriteMono.Continue
+Shift_OR_XOR:   EX DE, HL
+                EXX
+                LD L, A
+                LD A, (DE)
+                OR (HL)
+                LD B, A
+                EXX
+                LD A, (HL)
+                INC HL
+                EXX
+
+                PUSH DE
+
+                ; A (xor), L (or), B (value)
+                LD E, A
+                LD A, B
+                LD B, L
+                LD L, E
+                ; A (value), L (xor), B (or)
+
+                POP DE
+
+                XOR (HL)
+                LD (DE), A
+
+                ; swap L (xor) and B (or)
+                LD A, L
+                LD L, B
+                LD B, A
+
+                INC H
+                INC E
+
+                LD A, (DE)
+                OR (HL)
+                LD L, B
+                XOR (HL)
+                LD (DE), A
+                
+                DEC H
+                JP DrawSpriteMono.Continue
+NotShift_OR_XOR: 
+                EX DE, HL
+                EXX
+                LD L, A
+                LD A, (DE)
+                OR L
+                LD L, A
+                EXX
+                LD A, (HL)
+                INC HL
+                EXX
+                XOR L
                 LD (DE), A
 
                 INC E

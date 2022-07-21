@@ -25,7 +25,9 @@ SetScroll:      LD (IY + FDialogVariable.State), SCROLL_MSG
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-InvokeFunc:     JR$
+InvokeFunc:     ; выключение диалогов
+                CALL Menu.CaptainBridge.CapBridge.ResetDialog
+                CALL Menu.CaptainBridge.CapBridge.EnableInput
                 RET
 ; -----------------------------------------
 ; вызов выбора
@@ -91,5 +93,74 @@ InvokeChoice:   ; уменьшение счётчика выводимых со�
                 LD (IY + FDialogVariable.Choice.Payload), HL
 
                 JR InvokeSelect.SkipScroll
+; -----------------------------------------
+; переход к следующему выбору
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+ChoiceNext:     LD A, (IY + FDialogVariable.CurSelectionNum)
+                INC A
+                CP (IY + FDialogVariable.Choice.Number)
+                RET NC
+                LD (IY + FDialogVariable.CurSelectionNum), A
+                DEC A
+                LD (IY + FDialogVariable.OldSelectionNum), A
+                JP ClearArrowSelect
+; -----------------------------------------
+; переход к предыдущему выбору
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+ChoicePrev:     LD A, (IY + FDialogVariable.CurSelectionNum)
+                OR A
+                RET Z
+                LD (IY + FDialogVariable.OldSelectionNum), A
+                DEC (IY + FDialogVariable.CurSelectionNum)
+                JP ClearArrowSelect
+; -----------------------------------------
+; переход к выбраному выбору
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+ChoiseSelect:   ; расчёт адреса диалога в зависимости от выбора
+                LD B, #00
+                LD A, (IY + FDialogVariable.Choice.Number)
+                DEC A
+                SUB (IY + FDialogVariable.CurSelectionNum)
+                LD C, A
+                LD HL, (IY + FDialogVariable.Choice.Payload)
+                SBC HL, BC
+
+                ; расчёт адреса варианта ответа
+                LD C, (HL)  
+                ADD HL, BC
+
+                ; проверка завершения диалога
+                LD A, (HL)
+                CP END_DIALOG
+                RET Z                                                           ; завершение диалога
+
+                INC HL
+                ; переход к реакии выбора варианта
+                LD C, A
+                LD B, #00
+                ADD HL, BC
+                LD C, (HL)  
+                ADD HL, BC
+
+                ; переход к следующему диалогу
+                CALL Initialize.Dialog
+                CALL NextMsg.Initialize
+
+                ; отключить бит обработки выбора
+                RES CHOICE_BIT, (IY + FDialogVariable.DlgFlags)
+                CALL ClearArrowSelect
+                JP SetScroll
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CORE_

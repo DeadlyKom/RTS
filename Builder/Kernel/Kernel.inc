@@ -79,6 +79,8 @@ PixelAttribute  EQU Kernel.Attribute.PixelAttribute
 DrawSpriteOne   EQU Kernel.Attribute.DrawSpriteOne
 DrawSpriteTwo   EQU Kernel.Attribute.DrawSpriteTwo
 DrawSpriteMono  EQU Kernel.Monochrome.DrawSpriteMono
+DrawSpriteOR    EQU Kernel.Monochrome.DrawSpriteOR
+DrawSpriteORXOR EQU Kernel.Monochrome.DrawSpriteORXOR
 DrawStencilSpr  EQU Kernel.Attribute.DrawStencilSpr
 DrawCharOne     EQU Kernel.Attribute.DrawCharOne
 DrawCharTwo     EQU Kernel.Attribute.DrawCharTwo

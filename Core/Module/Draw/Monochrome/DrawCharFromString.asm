@@ -85,7 +85,7 @@ DrawCharToScr:  ; добавление смещение к строке
                 ; Corrupt:
                 ; Note:
                 ; -----------------------------------------
-                CALL DrawSpriteMono
+                CALL DrawSpriteOR
                 POP BC
                 RET
 

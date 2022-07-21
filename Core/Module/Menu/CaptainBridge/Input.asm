@@ -50,7 +50,7 @@ PressedUp:      ; -----------------------------------------
                 JR Processed
 
 .Pressed        ; обработка клавиши (нажата вверх)
-                JR$
+                JP Dialog.ChoicePrev
 PressedDown:    ; -----------------------------------------
                 ;
                 ; -----------------------------------------
@@ -70,7 +70,7 @@ PressedDown:    ; -----------------------------------------
                 JR Processed
 
 .Pressed        ; обработка клавиши (нажата вниз)
-                JR$
+                JP Dialog.ChoiceNext
 PressedLeft:    ; -----------------------------------------
                 ;
                 ; -----------------------------------------
@@ -85,7 +85,8 @@ PressedLeft:    ; -----------------------------------------
                 JR Processed
 
 .NotDialog      ; обработка клавиши (диалог отключен)
-                JR Processed
+                JP Room.LeftRotate
+                ; JR Processed
 
 .Pressed        ; обработка клавиши (нажата вниз)
                 JR$
@@ -103,7 +104,8 @@ PressedRight:   ; -----------------------------------------
                 JR Processed
 
 .NotDialog      ; обработка клавиши (диалог отключен)
-                JR Processed
+                JP Room.RightRotate
+                ; JR Processed
 
 .Pressed        ; обработка клавиши (нажата вниз)
                 JR$
@@ -117,14 +119,16 @@ PressedSelect:  ; -----------------------------------------
 
                 ; проверка состояния "выбора"
                 CALL Dialog.GetWaitSelect
-                JR NZ, DialogWaitDown                                           ; обработка состояния "следующее сообщение"
-                JR Processed
+                JR Z, .Pressed
+
+                ; обработка состояния "следующее сообщение"
+                JR DialogWaitDown
 
 .NotDialog      ; обработка клавиши (диалог отключен)
                 JR Processed
 
 .Pressed        ; обработка клавиши (нажата вниз)
-                JR$
+                JP Dialog.ChoiseSelect
 
 DialogWaitDown: ; -----------------------------------------
                 ; стрелка вниз

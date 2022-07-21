@@ -24,8 +24,8 @@ Tick:           LD A, (IY + FDialogVariable.State)
                 ; -----------------------------------------
                 
                 ; опрос нажатия любой клавиши
-                CALL Keyboard.AnyKeyPressed
-                JR NZ, .PressedAnyKey
+                ; CALL Keyboard.AnyKeyPressed
+                ; JR NZ, .PressedAnyKey
 
                 ; уменьшение счётчика
                 DEC (IY + FDialogVariable.Print.Countdown)
@@ -34,9 +34,8 @@ Tick:           LD A, (IY + FDialogVariable.State)
 .PressedAnyKey  ; нажата любая клавиша
 
                 ; установка обратного счётчика
-                LD A, (IY + FDialogVariable.Print.DurationPrint)
-                LD (IY + FDialogVariable.Print.Countdown), A
-
+                LD (IY + FDialogVariable.Print.Countdown), DURATION_PRINT
+.NextDraw
                 ; отобразить символ
                 CALL DrawChar
                 RET C                                                           ; выход, если конеч строки
@@ -45,8 +44,13 @@ Tick:           LD A, (IY + FDialogVariable.State)
 
                 ; уменьшение счётчика отображаемого символа
                 DEC (IY + FDialogVariable.WordLength)
-                JP Z, NextWord
+                CALL Z, NextWord
+                RET C                                                           ; выход, если конеч строки
 
+                ; опрос нажатия любой клавиши
+                CALL Keyboard.AnyKeyPressed
+                JR NZ, .NextDraw
+        
                 RET
 
 .AnimArrowDown  ; -----------------------------------------

@@ -8,7 +8,6 @@ CursorPosition: FLocation                                                       
 MessageID       DB #00                                                          ; ID сообщения
 MessageOffset   DB #00                                                          ; смещение в сообщении
 Countdown:      DB #00                                                          ; обратный счётчик продолжительности печати
-DurationPrint:  DB DURATION_PRINT                                               ; продолжительность анимаций печати (1/50)
 
                 ends
 
@@ -37,6 +36,8 @@ RowLength:      DB #00                                                          
 WordLength:     DB #00                                                          ; длина отоброжаемого слова
 Rows:           DB #00                                                          ; доступное количество строк для отображения сообщения
 State:          DB #00                                                          ; состояние отображение диалогов
+CurSelectionNum DB #00                                                          ; номер текущего выбора
+OldSelectionNum DB #00                                                          ; номер текущего выбора
 
 ; переменные диалога
 DlgFlags:       DB #00                                                          ; флаги диалога

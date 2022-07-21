@@ -2,7 +2,7 @@
                 ifndef _DIALOG_CONST_
                 define _DIALOG_CONST_
 DURATION_PRINT  EQU 3                                                           ; продолжительность отображения символа (1/50)
-DURATION_ARROW  EQU 8                                                           ; продолжительность смены кадра прыгающей стрелки (1/50)
+DURATION_ARROW  EQU 10                                                          ; продолжительность смены кадра прыгающей стрелки (1/50)
 DURATION_SCROLL EQU 1                                                           ; продолжительность смены кадра скрола (1/50)
 
 

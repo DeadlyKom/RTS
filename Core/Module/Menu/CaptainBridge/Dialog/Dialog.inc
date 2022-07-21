@@ -6,7 +6,7 @@ CHOICE_BIT      EQU 0x07                                                        
 
 FUNCTION_BIT    EQU 0x07
 SELECT_BIT      EQU 0x06
-FUNCTION        EQU 1 << FUNCTION_BIT
+FUNCTION_ACTION EQU 1 << FUNCTION_BIT
 SELECT          EQU 1 << SELECT_BIT
 
 
@@ -34,11 +34,11 @@ Dialog_0:
                 DB /*indexes*/  6
                 DB /*offset*/   .VeteranFinal-$
 .RecruitFinal   ; реакция выбора варианта "новичок"
-                DB /*length*/   3 | FUNCTION
+                DB /*length*/   3 | FUNCTION_ACTION
                 DB /*indexes*/  7, 8, 9
                 DW /*func*/     $                        
 .VeteranFinal   ; реакция выбора варианта "ветеран"
-                DB /*length*/   2 | FUNCTION
+                DB /*length*/   2 | FUNCTION_ACTION
                 DB /*indexes*/  10, 11
                 DW /*func*/     $
 .End            DB END_DIALOG

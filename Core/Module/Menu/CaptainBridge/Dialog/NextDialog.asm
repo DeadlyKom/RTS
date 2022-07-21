@@ -19,8 +19,10 @@ EndDialog:      ; обработка флагов
                 ADD A, A                                                        ; SELECT_BIT
                 JP C, InvokeSelect
 
-                ; проверка завершения диалога
+                ; адрес текущего диалога
                 LD HL, (IY + FDialogVariable.Payload)
+
+.Continue       ; проверка завершения диалога
                 LD A, (HL)
                 CP END_DIALOG
                 RET Z                                                           ; завершение диалога

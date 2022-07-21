@@ -28,8 +28,7 @@ Initialize:     LD (LocalizationRef), DE
                 LD (IY + FDialogVariable.Print.CursorPosition), DE
 
                 ; инициализация продолжительность анимации печати
-                LD A, (IY + FDialogVariable.Print.DurationPrint)
-                LD (IY + FDialogVariable.Print.Countdown), A
+                LD (IY + FDialogVariable.Print.Countdown), DURATION_PRINT
 
                 ; инициализация продолжительности анимации прыгающей стрелки
                 LD (IY + FDialogVariable.Arrow.Countdown), DURATION_ARROW
@@ -42,6 +41,7 @@ Initialize:     LD (LocalizationRef), DE
                 XOR A
                 LD (IY + FDialogVariable.Arrow.Animation), A
                 LD (IY + FDialogVariable.Print.MessageOffset), A
+                LD (IY + FDialogVariable.CurSelectionNum), A
 
                 JP NextWord
 

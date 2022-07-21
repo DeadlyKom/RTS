@@ -14,7 +14,7 @@ Scroll:
 
                 LD B, 35
                 
-.L1             LD C, #FF
+.L1             LD C, H ; LD C, #FF
 
                 rept ROW_LENGTH_CHR
                 LDI
@@ -39,8 +39,8 @@ Scroll:
                 AND #F8
                 ADD A, H
                 LD H, A
-.Next 
-                DJNZ .L1
+
+.Next           DJNZ .L1
 
                 RET
 
