@@ -17,11 +17,6 @@
                 LD DE, Adr.Module.MsgText
                 CALL Dialog.Initialize
 
-                ; отображение выноски
-                LD HL, #4021
-                LD BC, #031C
-                CALL Dialog.DrawCallout
-
                 ; включение диалогов
                 CALL SetDialog
 

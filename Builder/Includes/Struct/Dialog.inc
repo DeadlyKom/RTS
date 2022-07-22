@@ -27,11 +27,17 @@ Counter:        DB #00                                                          
 Payload:        DW #0000                                                        ; адрес данных (смещение вариантов)
                 ends
 
+                struct FDialogFade
+Countdown:      DB #00                                                          ; обратный счётчик
+RowLength:      DB #00                                                          ; длина отображаемых рядов        
+                ends
+
                 struct FDialogVariable
 Print:          FPrintedTextVFX
 Arrow:          FDialogArrow
 Scroll:         FDialogScroll
 Choice:         FDialogChoice
+Fade:           FDialogFade
 RowLength:      DB #00                                                          ; доступная длина строки для отображения сообщения
 WordLength:     DB #00                                                          ; длина отоброжаемого слова
 Rows:           DB #00                                                          ; доступное количество строк для отображения сообщения
@@ -41,7 +47,7 @@ OldSelectionNum DB #00                                                          
 
 ; переменные диалога
 DlgFlags:       DB #00                                                          ; флаги диалога
-CounterMsgID:  DB #00                                                           ; счётчик ID сообщений
+CounterMsgID:   DB #00                                                          ; счётчик ID сообщений
 Dialog:         DW #0000                                                        ; адрес последовательностей ID сообщений
 Payload:        DW #0000                                                        ; адрес данных (смещение/функтор)
                 ends

@@ -15,7 +15,7 @@ Initialize:     LD (LocalizationRef), DE
                 ; адрес переменных работы с диалогом
                 LD IY, Variables
 
-                LD (IY + FDialogVariable.State), PRINTED_MSG
+                LD (IY + FDialogVariable.State), OPEN_DLG
 
                 ; инициализация доступной области вывода сообщений
                 LD (IY + FDialogVariable.RowLength), ROW_LENGTH
@@ -32,6 +32,9 @@ Initialize:     LD (LocalizationRef), DE
 
                 ; инициализация продолжительности анимации прыгающей стрелки
                 LD (IY + FDialogVariable.Arrow.Countdown), DURATION_ARROW
+
+                ; инициализация продолжительности анимации появления/скрытия
+                LD (IY + FDialogVariable.Fade.Countdown), DURATION_FADE
 
                 ; инициализация скролла
                 LD (IY + FDialogVariable.Scroll.Countdown), DURATION_SCROLL

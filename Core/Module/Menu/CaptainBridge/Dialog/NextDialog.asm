@@ -14,7 +14,7 @@ EndDialog:      ; обработка флагов
                 JP C, InvokeChoice                                              ; CHOICE_BIT
 
                 ADD A, A                                                        ; FUNCTION_BIT
-                CALL C, InvokeFunc
+                JP C, InvokeFunc
 
                 ADD A, A                                                        ; SELECT_BIT
                 JP C, InvokeSelect

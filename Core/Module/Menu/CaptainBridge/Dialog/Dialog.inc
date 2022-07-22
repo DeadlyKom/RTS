@@ -36,11 +36,11 @@ Dialog_0:
 .RecruitFinal   ; реакция выбора варианта "новичок"
                 DB /*length*/   3 | FUNCTION_ACTION
                 DB /*indexes*/  7, 8, 9
-                DW /*func*/     $                        
+                DW /*func*/     Menu.CaptainBridge.CapBridge.Recruit                        
 .VeteranFinal   ; реакция выбора варианта "ветеран"
                 DB /*length*/   2 | FUNCTION_ACTION
                 DB /*indexes*/  10, 11
-                DW /*func*/     $
+                DW /*func*/     Menu.CaptainBridge.CapBridge.Veteran
 .End            DB END_DIALOG
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_

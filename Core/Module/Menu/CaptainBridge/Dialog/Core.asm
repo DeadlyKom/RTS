@@ -2,6 +2,8 @@
                 ifndef _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CORE_
                 define _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CORE_
 
+; SetOpenDialog:  LD (IY + FDialogVariable.State), OPEN_DLG
+;                 RET
 SetPrinted:     LD (IY + FDialogVariable.State), PRINTED_MSG
                 RET
 GetWaitDown:    LD A, (IY + FDialogVariable.State)
@@ -14,8 +16,9 @@ GetWaitSelect:  LD A, (IY + FDialogVariable.State)
                 RET
 SetWaitSelect:  LD (IY + FDialogVariable.State), WAITING_SELECT
                 RET
-
 SetScroll:      LD (IY + FDialogVariable.State), SCROLL_MSG
+                RET
+SetCloseDialog: LD (IY + FDialogVariable.State), CLOSE_DLG
                 RET
 
 ; -----------------------------------------
@@ -25,10 +28,13 @@ SetScroll:      LD (IY + FDialogVariable.State), SCROLL_MSG
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-InvokeFunc:     ; выключение диалогов
-                CALL Menu.CaptainBridge.CapBridge.ResetDialog
-                CALL Menu.CaptainBridge.CapBridge.EnableInput
-                RET
+InvokeFunc:     ; вызов функции обработчика
+                LD HL, (IY + FDialogVariable.Payload)
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                EX DE, HL
+                JP (HL)
 ; -----------------------------------------
 ; вызов выбора
 ; In:
@@ -164,5 +170,28 @@ ChoiseSelect:   ; расчёт адреса диалога в зависимос
                 LD B, (IY + FDialogVariable.CurSelectionNum)
                 CALL ClearArrowSelect.B
                 JP SetScroll
+; -----------------------------------------
+; открытие диалога
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+Open:           ; отображение выноски
+                LD HL, SCREEN_CALLOUT
+                LD BC, CALLOUT_SIZE
+                CALL DrawCallout
+                JP SetPrinted
+; -----------------------------------------
+; закрытие диалога
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+Close:          ; выключение диалогов
+                CALL Menu.CaptainBridge.CapBridge.ResetDialog
+                CALL Menu.CaptainBridge.CapBridge.EnableInput
+                RET
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CORE_

@@ -8,14 +8,23 @@ NUMBER_ROWS     EQU 4                                                           
 ROW_HEGHT       EQU #09                                                         ; высота строки
 START_CUR_POS   EQU #0A0A + 3                                                   ; начальное положение курсора
 
+                ; выноска
+                define CalloutX 1                                               ; в знакоместах
+                define CalloutY 1 * 8                                           ; в пикселях
+SCREEN_CALLOUT  EQU MemBank_01_SCR + /*Y*/ (((CalloutY >> 3) & 0x18) << 8) + ((CalloutY & 0x07) << 8) + ((CalloutY & 0x38) << 2) + /*X*/CalloutX
+CALLOUT_SIZE    EQU #031C                                                       ; размеры выноски (B - y (+ 2 вверх/низ), C - x (-2 лево/право))
+
+                ; стрелка вниз
                 define ArrowDownX 30 * 8                                        ; в пикселях
                 define ArrowDownY 41                                            ; в пикселях
 START_ARROW_DOWN EQU /*Y*/(ArrowDownY << 8)| /*X*/ArrowDownX                    ; координаты стрелки перехода к следующим сообщениям
 
+                ; стрелка вправо
                 define ArrowRightX 13                                           ; в пикселях
                 define ArrowRightY 11                                           ; в пикселях
 START_ARROW_RIGHT EQU /*Y*/(ArrowRightY << 8)| /*X*/ArrowRightX                 ; координаты стрелки выбора
 
+                ; скролл
                 define ScrollX 1                                                ; в знакоместах
                 define ScrollY 11                                               ; в пикселях
 START_SCROLL    EQU MemBank_01_SCR + /*Y*/ (((ScrollY >> 3) & 0x18) << 8) + ((ScrollY & 0x07) << 8) + ((ScrollY & 0x38) << 2) + /*X*/ScrollX

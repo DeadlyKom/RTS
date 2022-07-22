@@ -17,6 +17,7 @@
                 include "DrawCallout.asm"
                 include "DrawArrow.asm"
                 include "Scroll.asm"
+                include "Fade.asm"
 Variables:      FDialogVariable
 
                 endmodule

@@ -9,6 +9,8 @@
 ; Note:
 ; -----------------------------------------
 Tick:           LD A, (IY + FDialogVariable.State)
+                CP OPEN_DLG
+                JR Z, .AnimOpen
                 CP PRINTED_MSG
                 JR Z, .AnimMessage
                 CP WAITING_DOWN
@@ -17,7 +19,26 @@ Tick:           LD A, (IY + FDialogVariable.State)
                 JR Z, .AnimArrowRight
                 CP SCROLL_MSG
                 JR Z, .AnimScroll
+                CP CLOSE_DLG
+                JR Z, .AnimClose
                 RET
+.AnimOpen       ; -----------------------------------------
+                ; анимация открытия диалога
+                ; -----------------------------------------
+                ; уменьшение счётчика
+                DEC (IY + FDialogVariable.Fade.Countdown)
+                RET NZ
+
+                ; установка обратного счётчика
+                LD (IY + FDialogVariable.Fade.Countdown), DURATION_FADE
+
+                ; увеличение количество видимых рядов
+                LD A, (IY + FDialogVariable.Fade.RowLength)
+                ; CP ROW_LENGTH_CHR - 2
+                CP ROW_LENGTH_CHR >> 1
+                JP NC, Open
+                INC (IY + FDialogVariable.Fade.RowLength)
+                JP FadeIn
 
 .AnimMessage    ; -----------------------------------------
                 ; анимация вывода сообщения
@@ -103,5 +124,10 @@ Tick:           LD A, (IY + FDialogVariable.State)
                 LD (IY + FDialogVariable.Scroll.RowCounter), SCROLLABLE_LINES
 
                 JP SetPrinted
+
+.AnimClose      ; -----------------------------------------
+                ; анимация закрытия диалога
+                ; -----------------------------------------
+                JP Close
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_TICK_
