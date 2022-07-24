@@ -26,7 +26,7 @@ REQ_ROTATE_BIT  EQU 0x04                                                        
 Flags:          DB #00                                                          ; флаги работы с фреймами
 Frame:          DB #00                                                          ; текущий фрейм
 FrameCounter:   DB DELAY_FRAME                                                  ; счётчик продолжительности одного фрейма
-@Room.Number:   DB Room.LEFT                                                    ; номер активной комнаты
+Number:         DB Room.LEFT                                                    ; номер активной комнаты
 
 Size:           EQU $-Begin
 

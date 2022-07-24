@@ -26,7 +26,7 @@ NextFrame:      LD HL, Flags
                 INC (HL)
 
                 LD A, Room.LEFT
-                LD (Room.Number), A
+                LD (Number), A
 
                 RET
 
@@ -48,7 +48,7 @@ NextFrame:      LD HL, Flags
                 DEC (HL)
 
                 LD A, Room.RIGHT
-                LD (Room.Number), A
+                LD (Number), A
 
                 RET
 
@@ -59,7 +59,7 @@ NextFrame:      LD HL, Flags
                 
 SetCountdown:   ;
                 LD A, Room.ROTATE
-                LD (Room.Number), A
+                LD (Number), A
 
                 ;
                 LD HL, Flags
@@ -67,7 +67,7 @@ SetCountdown:   ;
                 
                 JP DrawFrame
 
-StopRotate:     LD (Room.Number), A
+StopRotate:     LD (Number), A
 
                 LD HL, Flags
                 RES REQ_ROTATE_BIT, (HL)

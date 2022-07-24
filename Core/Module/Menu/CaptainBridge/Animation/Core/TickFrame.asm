@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_CAPTAIN_BRIDGE_ANIMATION_CORE_TICK_FRAME_
                 define _CORE_MODULE_CAPTAIN_BRIDGE_ANIMATION_CORE_TICK_FRAME_
 TickFrame:      ;
-                LD A, (Room.Number)
+                LD A, (Menu.CaptainBridge.CapBridge.Room.Number)
                 CP Room.ROTATE
                 RET Z
 
