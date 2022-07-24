@@ -9,18 +9,22 @@ SetPrinted:     LD (IY + FDialogVariable.State), PRINTED_MSG
 GetWaitDown:    LD A, (IY + FDialogVariable.State)
                 CP WAITING_DOWN
                 RET
-SetWaitDown:    LD (IY + FDialogVariable.State), WAITING_DOWN
+SetWaitDown:    LD (IY + FDialogVariable.CallbackWait), HL
+                LD (IY + FDialogVariable.State), WAITING_DOWN
                 RET
 GetWaitSelect:  LD A, (IY + FDialogVariable.State)
                 CP WAITING_SELECT
                 RET
+                
 SetWaitSelect:  LD (IY + FDialogVariable.State), WAITING_SELECT
                 RET
 SetScroll:      LD (IY + FDialogVariable.State), SCROLL_MSG
                 RET
 SetCloseDialog: LD (IY + FDialogVariable.State), CLOSE_DLG
                 RET
-
+InvokeCallbakWait:
+                LD HL, (IY + FDialogVariable.CallbackWait)
+                JP (HL)
 ; -----------------------------------------
 ; вызов функции
 ; In:
@@ -166,6 +170,7 @@ ChoiseSelect:   ; расчёт адреса диалога в зависимос
 
                 ; отключить бит обработки выбора
                 RES CHOICE_BIT, (IY + FDialogVariable.DlgFlags)
+                
                 ; очистка текущего курсора
                 LD B, (IY + FDialogVariable.CurSelectionNum)
                 CALL ClearArrowSelect.B
@@ -177,7 +182,10 @@ ChoiseSelect:   ; расчёт адреса диалога в зависимос
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Open:           ; отображение выноски
+Open:           ; инициализация для закрытия выноски
+                LD (IY + FDialogVariable.Fade.RowLength), ROW_LENGTH_CHR+1
+
+                ; отображение выноски
                 LD HL, SCREEN_CALLOUT
                 LD BC, CALLOUT_SIZE
                 CALL DrawCallout

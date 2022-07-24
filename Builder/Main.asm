@@ -8,6 +8,7 @@
                 define _DEBUG                                                   ; включить отладочный код
                 define SHOW_DEBUG                                               ; отображение дебажной информации
 
+                ; define ENABLE_SCREENSAVER                                       ; включить заставку
                 ; define ENABLE_MUSIC                                             ; разрешить музыку
                 define ENABLE_MOUSE                                             ; разрешить мышь
                 define ENABLE_KEMSTON_JOYSTICK_SEGA                             ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)

@@ -18,6 +18,8 @@ Compare:        EX DE, HL
                 DEC A
                 CP (HL)
                 JP Z, HiddenApply
+                ; CALL ApplyLanguadge
+                ; JP MenuOptions
                 JP ShowApply
 
 OptionsLanguage ; текст в "английский"

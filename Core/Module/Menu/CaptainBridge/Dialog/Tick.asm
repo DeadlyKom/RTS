@@ -34,11 +34,10 @@ Tick:           LD A, (IY + FDialogVariable.State)
 
                 ; увеличение количество видимых рядов
                 LD A, (IY + FDialogVariable.Fade.RowLength)
-                ; CP ROW_LENGTH_CHR - 2
-                CP ROW_LENGTH_CHR >> 1
+                CP ROW_LENGTH_CHR
                 JP NC, Open
                 INC (IY + FDialogVariable.Fade.RowLength)
-                JP FadeIn
+                JP Fadein
 
 .AnimMessage    ; -----------------------------------------
                 ; анимация вывода сообщения
@@ -128,6 +127,16 @@ Tick:           LD A, (IY + FDialogVariable.State)
 .AnimClose      ; -----------------------------------------
                 ; анимация закрытия диалога
                 ; -----------------------------------------
-                JP Close
+                ; уменьшение счётчика
+                DEC (IY + FDialogVariable.Fade.Countdown)
+                RET NZ
+
+                ; установка обратного счётчика
+                LD (IY + FDialogVariable.Fade.Countdown), DURATION_FADE
+
+                ; увеличение количество видимых рядов
+                DEC (IY + FDialogVariable.Fade.RowLength)
+                JP M, Close 
+                JP Fadeout
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_TICK_

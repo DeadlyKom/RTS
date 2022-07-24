@@ -67,6 +67,7 @@ NextWord:       ; получить длину слова в строке
                 LD (IY + FDialogVariable.Rows), 2
 
                 SCF                                                             ; флаг переноса установлен (конец строки)
+                LD HL, SetScroll                                                ; после нажатия (вызывать функцию SetScroll)
                 JP SetWaitDown
 
 GetLengthWord:  ; получить длину слова в строке

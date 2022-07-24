@@ -139,7 +139,7 @@ DialogWaitDown: ; -----------------------------------------
                 ; диалог в состоянии ожидания нажатия клавиши
                 CALL DisableInput
                 CALL Dialog.ClearArrowDown
-                JP Dialog.SetScroll
+                JP Dialog.InvokeCallbakWait
 
                 display " - Input : \t\t\t", /A, InputCapBridge, " = busy [ ", /D, $ - InputCapBridge, " bytes  ]"
 

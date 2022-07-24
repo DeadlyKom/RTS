@@ -1,8 +1,10 @@
 
                 ifndef _CORE_MODULE_MENU_MAIN_
                 define _CORE_MODULE_MENU_MAIN_
-Main:           ;CALL Screensaver.Begin
-                ;CALL Keyboard.WaitReleasedKey                                   ; ожидание отпускание ранее нажатой клавиши
+Main:           ifdef ENABLE_SCREENSAVER
+                CALL Screensaver.Begin
+                CALL Keyboard.WaitReleasedKey                                   ; ожидание отпускание ранее нажатой клавиши
+                endif
 
                 SET_LANGUAGE LANGUAGE_DEFAULT
                 CALL SetLanguage

@@ -12,6 +12,8 @@ Shutdown:
 .TR_DOS         DI
                 IM 2
                 EI
+.ContainerIY    EQU $+2
+                LD IY, #0000
                 RET
 
                 display " - Shutdown : \t\t", /A, Shutdown, " = busy [ ", /D, $ - Shutdown, " bytes  ]"

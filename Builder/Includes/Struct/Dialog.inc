@@ -50,6 +50,7 @@ DlgFlags:       DB #00                                                          
 CounterMsgID:   DB #00                                                          ; счётчик ID сообщений
 Dialog:         DW #0000                                                        ; адрес последовательностей ID сообщений
 Payload:        DW #0000                                                        ; адрес данных (смещение/функтор)
+CallbackWait:   DW #0000                                                        ; адрес обработчика после ожидания нажатия (вывод стрелки вниз)
                 ends
 
                 endif ; ~ _DIALOG_STRUCT_

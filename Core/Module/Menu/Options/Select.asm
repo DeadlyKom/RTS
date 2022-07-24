@@ -94,6 +94,16 @@ ApplyOptions:   ; установка языка
 
                 JP MenuOptions
 
+; ApplyLanguadge: LD A, (OptionsLanguage.Current)
+;                 INC A                                                           ; язык начинается с 1
+;                 LD C, A
+;                 LD A, (ConfigOptions)
+;                 AND LANGUAGE_MASK
+;                 CP C
+;                 RET Z
+;                 SET_LANGUAGE_A
+;                 JP SetLanguage
+
                 display " - Options Select : \t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_SELECT_
