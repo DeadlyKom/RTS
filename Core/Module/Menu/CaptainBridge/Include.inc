@@ -12,6 +12,7 @@
                 include "Room/Include.inc"
                 include "Animation/Include.inc"
                 include "Dialog/Include.inc"
+                include "Core/Module/FileSystem/Game/LoadAndLaunch.asm"         ; загрузчик игры
 
                 ; include "Core/Module/VFX/Hologram/Include.inc"
 

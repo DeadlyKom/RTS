@@ -4,7 +4,6 @@
 
                 module Load
 
-                include "Game/Include.inc"
                 include "Map/Include.inc"
 
                 endmodule

@@ -1,13 +1,33 @@
 
                 ifndef _CORE_MODULE_MENU_MAIN_
                 define _CORE_MODULE_MENU_MAIN_
-Main:           ifdef ENABLE_SCREENSAVER
+Main:           ; -----------------------------------------
+                ; включить заставку
+                ; -----------------------------------------
+                ifdef ENABLE_SCREENSAVER
                 CALL Screensaver.Begin
                 CALL Keyboard.WaitReleasedKey                                   ; ожидание отпускание ранее нажатой клавиши
                 endif
+                ; -----------------------------------------
 
                 SET_LANGUAGE LANGUAGE_DEFAULT
                 CALL SetLanguage
+
+                ; -----------------------------------------
+                ; включить сразу запуск игры
+                ; -----------------------------------------
+                ifdef ENABLE_START_GAME
+                LD HL, Menu.CaptainBridge.CapBridge.Game.LoadAndLaunch
+                PUSH HL
+                LD A, Page.CaptainBridge
+                CALL SetPage
+                LD HL, #C000
+                LD DE, Adr.Module.CaptainBridge
+                LD BC, Menu.CaptainBridge.Size + Language.Text.Message.Size
+                JP FastLDIR
+                endif
+                ; -----------------------------------------
+
 @Main.Back      ; вернутся в главное меню
 
                 ; подготовка

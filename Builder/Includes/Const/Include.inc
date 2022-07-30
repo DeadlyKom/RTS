@@ -17,6 +17,7 @@
                 include "MainMenu.inc"
                 include "SharedMemoryMap.inc"
                 include "MemoryMap.inc"
+                include "GameMM.inc"
 
                 include "Dialog.inc"
 

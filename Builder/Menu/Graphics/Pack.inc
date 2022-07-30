@@ -2,7 +2,7 @@
                 ifndef _BUILDER_MENU_PACK_MENU_GRAPHICS_
                 define _BUILDER_MENU_PACK_MENU_GRAPHICS_
 
-                MMU 3, Page.Graphics.A                                      ; 3 bank, Page.MenuGraphics.A (0) page
+                MMU 3, Page.Graphics.A                                          ; 3 bank, Page.MenuGraphics.A (0) page
                 ORG Adr.Module.Graphics.A
                 module Graphics
 

@@ -39,10 +39,14 @@
                 BIT ENABLE_INPUT_BIT, (HL)
                 JR Z, .Loop                                                     ; опрос ввода запрещён
 
-                ; обработка 
+                ; проверка интерактивности
                 BIT INTERACT_BIT, (HL)
-                CALL NZ, Menu.CaptainBridge.CapBridge.Room.Interact
+                JR Z, .NotInteract
+                
+                RES INTERACT_BIT, (HL)                                          ; сброс флага обработки интерактивности
+                CALL Menu.CaptainBridge.CapBridge.Room.Interact
 
+.NotInteract    ; 
                 LD DE, InputCapBridge
                 CALL Input.JumpDefaulKeys
                 JR .Loop
@@ -74,9 +78,9 @@ ResetDialog:    LD HL, Flags
 SetInteract:    LD HL, Flags
                 SET INTERACT_BIT, (HL)
                 RET
-ResetInteract:  LD HL, Flags
-                RES INTERACT_BIT, (HL)
-                RET
+; ResetInteract:  LD HL, Flags
+;                 RES INTERACT_BIT, (HL)
+;                 RET
 
                 display " - Captain Bridge : \t\t", /A, CapBridge, " = busy [ ", /D, $ - CapBridge, " bytes  ]"
 

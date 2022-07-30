@@ -86,6 +86,7 @@ StartBoot:      DI
                 0,
                 LANGUAGE_DEFAULT
                 }
+                
 .FileArray      ; путь файла модуля языка
                 FFileArea {
                 {{LanguageName}, SystemExt },

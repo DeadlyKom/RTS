@@ -13,11 +13,22 @@ Interact:       ; определение направление
                 CP LEFT
                 RET Z
                 CP CENTER
-                JR Z, $
+                JR Z, GameLaunch
                 CP RIGHT
                 RET Z
 
                 OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET
+
+; -----------------------------------------
+; запуск игры
+; In:
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+GameLaunch:     POP AF                                                          ; удаление адреса возврата
+                OffUserHendler                                                  ; отключение обработчика прерываний
+                JP Menu.CaptainBridge.CapBridge.Game.LoadAndLaunch
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_ROOM_INTERACT_

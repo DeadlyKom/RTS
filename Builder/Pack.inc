@@ -6,9 +6,10 @@
 
                 display "Packing..."
 
-                include "Bootloader/Pack.inc"                                   ; упаковка boot загрузчика
-                include "Kernel/Pack.inc"                                       ; упаковка кернеля
-                include "FileSystem/Pack.inc"                                   ; упаковка файловой системы
+                include "Bootloader/Pack.inc"                                   ; упаковка boot загрузчика      (1)
+                include "Kernel/Pack.inc"                                       ; упаковка кернеля              (2)
+                include "FileSystem/Pack.inc"                                   ; упаковка файловой системы     (3)
+                include "Game/Pack.inc"                                         ; упаковка игрового кода
                 include "Language/Pack.inc"                                     ; упаковка языков
                 include "Loader/Pack.inc"                                       ; упаковка загрузчика
                 include "Menu/Pack.inc"                                         ; упаковка меню
