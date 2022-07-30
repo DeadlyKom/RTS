@@ -25,7 +25,7 @@ NextFrame:      LD HL, Flags
 
                 INC (HL)
 
-                LD A, Room.LEFT
+                LD A, LEFT
                 LD (Number), A
 
                 RET
@@ -34,7 +34,7 @@ NextFrame:      LD HL, Flags
                 LD A, (HL)
 
                 CP FRAME_CENTER
-                LD A, Room.CENTER
+                LD A, CENTER
                 JR Z, StopRotate
 
                 JR SetCountdown
@@ -47,18 +47,18 @@ NextFrame:      LD HL, Flags
 
                 DEC (HL)
 
-                LD A, Room.RIGHT
+                LD A, RIGHT
                 LD (Number), A
 
                 RET
 
                 ; ограничение
 .IsLess         CP FRAME_CENTER
-                LD A, Room.CENTER
+                LD A, CENTER
                 JR Z, StopRotate
                 
 SetCountdown:   ;
-                LD A, Room.ROTATE
+                LD A, ROTATE
                 LD (Number), A
 
                 ;

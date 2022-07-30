@@ -9,6 +9,7 @@
                 define SHOW_DEBUG                                               ; отображение дебажной информации
 
                 ; define ENABLE_SCREENSAVER                                       ; включить заставку
+                ; define ENABLE_INITIAL_DIALOG                                    ; включить начальный диалог
                 ; define ENABLE_MUSIC                                             ; разрешить музыку
                 define ENABLE_MOUSE                                             ; разрешить мышь
                 define ENABLE_KEMSTON_JOYSTICK_SEGA                             ; разрешить использовать расширенный Кемстон Джойстик (SEGA 8 bits)
@@ -16,7 +17,7 @@
                 define ENABLE_CLS                                               ; разрешить очистить 2 экрана перед стартом
                 define ENABLE_FILL_FOW                                          ; разрешить заполнение туманом всю карту
                 ; define ENABLE_TIME_OF_DAY                                       ; разрешить смену дня и ночи
-                define ENABLE_DEBUG_NETWORK                                     ; разрешить отладку по сети
+                ; define ENABLE_DEBUG_NETWORK                                     ; разрешить отладку по сети
 
                 ; define SHOW_DEBUG_BORDER                                        ; разрешить отображать на бордюре время выполнение
                 ; define SHOW_DEBUG_BORDER_INTERRUPT                              ; отображение на бордюре время прерывания

@@ -12,7 +12,7 @@
                 include "../../Sprites/Menu/Loader/Compress.inc"
                 endif
 Begin:          EQU $
-                include "../../Core/Module/Loader/Include.inc"
+                include "Core/Module/Loader/Include.inc"
 Size:           EQU $ - Begin
 SizeInSectors:  EQU (Size >> 8) + ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01)
 

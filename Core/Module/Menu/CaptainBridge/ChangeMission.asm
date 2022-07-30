@@ -7,18 +7,26 @@
                 ; инициализация комнаты
                 CALL Room.Initialize
 
+                ; -----------------------------------------
+                ifdef ENABLE_INITIAL_DIALOG
+                ; -----------------------------------------
+                ; включить первичный диалог
+                ; -----------------------------------------
                 ; инициализация ввода
-                CALL DisableInput
-
-; -----------------------------------------
-
+                ; CALL DisableInput
                 ; инициализация эффекта печатья текста
                 LD HL, Dialog.Dialog_0
                 LD DE, Adr.Module.MsgText
                 CALL Dialog.Initialize
-
                 ; включение диалогов
                 CALL SetDialog
+                else
+                ; -----------------------------------------
+                ; выключен первичный диалог
+                ; -----------------------------------------
+                CALL EnableInput
+                endif
+                ; -----------------------------------------
 
 .Loop           HALT
 
@@ -27,9 +35,13 @@
                 CALL NZ, Room.NextFrame
 
                 ; обработка ввода
-                LD A, (Flags)
-                BIT ENABLE_INPUT_BIT, A
+                LD HL, Flags
+                BIT ENABLE_INPUT_BIT, (HL)
                 JR Z, .Loop                                                     ; опрос ввода запрещён
+
+                ; обработка 
+                BIT INTERACT_BIT, (HL)
+                CALL NZ, Menu.CaptainBridge.CapBridge.Room.Interact
 
                 LD DE, InputCapBridge
                 CALL Input.JumpDefaulKeys
@@ -58,6 +70,12 @@ SetDialog:      LD HL, Flags
                 RET
 ResetDialog:    LD HL, Flags
                 RES DLG_ENABLE_BIT, (HL)
+                RET
+SetInteract:    LD HL, Flags
+                SET INTERACT_BIT, (HL)
+                RET
+ResetInteract:  LD HL, Flags
+                RES INTERACT_BIT, (HL)
                 RET
 
                 display " - Captain Bridge : \t\t", /A, CapBridge, " = busy [ ", /D, $ - CapBridge, " bytes  ]"

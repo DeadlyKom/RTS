@@ -3,10 +3,10 @@
                 define _CORE_MODULE_CAPTAIN_BRIDGE_ANIMATION_CORE_TICK_FRAME_
 TickFrame:      ;
                 LD A, (Menu.CaptainBridge.CapBridge.Room.Number)
-                CP Room.ROTATE
+                CP Menu.CaptainBridge.CapBridge.Room.ROTATE
                 RET Z
 
-                CP Room.LEFT
+                CP Menu.CaptainBridge.CapBridge.Room.LEFT
                 JP Z, Room.Left.Tick
 
                 RET

@@ -30,7 +30,6 @@ InputCapBridge: JR NZ, .Processing                                              
 Processed:      OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET
 
-                
 PressedUp:      ; -----------------------------------------
                 ;
                 ; -----------------------------------------
@@ -125,6 +124,7 @@ PressedSelect:  ; -----------------------------------------
                 JR DialogWaitDown
 
 .NotDialog      ; обработка клавиши (диалог отключен)
+                CALL SetInteract
                 JR Processed
 
 .Pressed        ; обработка клавиши (нажата вниз)
