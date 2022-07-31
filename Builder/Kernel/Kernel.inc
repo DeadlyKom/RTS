@@ -82,6 +82,7 @@ DrawSpriteMono  EQU Kernel.Monochrome.DrawSpriteMono
 DrawSpriteOR    EQU Kernel.Monochrome.DrawSpriteOR
 DrawSpriteORXOR EQU Kernel.Monochrome.DrawSpriteORXOR
 DrawStencilSpr  EQU Kernel.Attribute.DrawStencilSpr
+DrawTileRows    EQU Kernel.Tilemap.DrawTileRows
 DrawCharOne     EQU Kernel.Attribute.DrawCharOne
 DrawCharTwo     EQU Kernel.Attribute.DrawCharTwo
 ShiftTable      EQU Kernel.Tables.ShiftTable

@@ -68,7 +68,7 @@ SequentialRead: ; подготовка чтения данных
                 LD (.Destination), HL
 
                 ; обновим размер буфера
-                LD HL, SharedBufferSize
+                LD HL, SharedBufSize
                 LD (.SectorSize), HL
 
                 ; обнулим смещение
@@ -80,7 +80,7 @@ SequentialRead: ; подготовка чтения данных
 
                 ; корректировка смещения в буфере
                 EX DE, HL
-                LD HL, SharedBufferSize
+                LD HL, SharedBufSize
                 OR A 
                 SBC HL, DE
                 LD BC, SharedBuffer

@@ -9,7 +9,7 @@
 ; Note:
 ; -----------------------------------------
 GameLoop:       
-.Loop
+.Loop           CALL DrawTileRows
                 JP .Loop
 
                 endif ; ~_MODULE_GAME_LOOP_

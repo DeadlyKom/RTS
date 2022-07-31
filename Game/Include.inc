@@ -71,10 +71,10 @@ AI_UpdateFrequencyRef       EQU Game.AI_UpdateFreq                              
 AI_NumUnitsRef              EQU Game.AI_NumUnits                                ; число юнитов
 
 ; Tilemap
-TilemapPtr                  EQU #C000                                           ; адрес тайловой карты
-TilemapMaxSize              EQU 8192                                            ; максимально доступный размер для карты
-TilesOnScreenX              EQU 16                                              ; количество тайлов на экране по горизонтали
-TilesOnScreenY              EQU 12                                              ; количество тайлов на экране по вертикали
+; TilemapPtr                  EQU #C000                                           ; адрес тайловой карты
+; TilemapMaxSize              EQU 8192                                            ; максимально доступный размер для карты
+; TilesOnScreenX              EQU 16                                              ; количество тайлов на экране по горизонтали
+; TilesOnScreenY              EQU 12                                              ; количество тайлов на экране по вертикали
 TilemapRef                  EQU Game.TilemapPtr                                 ; указатель на адрес тайловой карты
 TilemapSizeRef              EQU Game.TilemapSize                                ; указатель на адрес размера карты
 TilemapWidth                EQU Game.TilemapSize.X                              ; ширина тайловой карты (структура FMapSize)

@@ -47,14 +47,22 @@ DrawSpriteOneATTR  macro Sprite?, X?, Y?, Width?, Height?
                 LD BC, (Height? << 8) | Width?
                 CALL DrawSpriteOne
                 endm
-
-; SwapScreens     macro
-;                 LD BC, PORT_7FFD
-;                 LD A, (BC)
-;                 XOR %00001000
-;                 LD (BC), A
-;                 OUT (C), A
-;                 endm
+; -----------------------------------------
+; расчёт адреса скрытого экрана
+; In:
+; Out:
+;   Reg? - если отображается первый экран равен #С0, иначе #40 
+; Corrupt:
+;   AF
+; Note:
+; -----------------------------------------
+HiddenScreenAdr macro Reg?
+                LD A, (MemoryPageRef)
+                AND SCREEN_MASK
+                LD Reg?, #C0
+                JR Z, $+4
+                LD Reg?, #40
+                endm
 ZX_COLOR_IPBF   macro Inc?, Paper?, Bright?, Flash?
                 DB ((Flash? << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)
                 endm

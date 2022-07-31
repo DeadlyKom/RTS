@@ -25,6 +25,8 @@ Begin:          EQU $
                 ; include "Core/Module/Draw/Monochrome/DrawSpriteTest.asm"
                 include "Core/Module/Draw/Monochrome/DrawSprite.asm"
                 include "Core/Module/Draw/Attribute/DrawStencilSprite.asm"
+                include "Core/Module/Draw/Tilemap/DrawRow.asm"                  ; Game
+                include "Core/Module/Draw/Tilemap/DrawTileRows.asm"             ; Game
                 include "Core/Module/Input/Include.inc"
                 include "Core/Module/Math/RNG/Rand8.asm"
                 include "Core/Module/Math/Div/Div8x8.asm"
