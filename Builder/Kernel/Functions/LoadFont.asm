@@ -46,9 +46,9 @@ LoadFont:       ; инициализация
                 LD DE, Adr.Fonts                                                ; адрес загрузчика шрифта
                 JP FileSystem.Base.PrimaryRead
 
-.FileName       FFile { {FontEnName}, SystemExt }                               ; имя шрифта английского языка
-                FFile { {FontRuName}, SystemExt }                               ; имя шрифта русского языка
-                FFile { {FontSpName}, SystemExt }                               ; имя шрифта испанского языка
+.FileName       FFile { {FontEnName}, FontExt }                                 ; имя шрифта английского языка
+                FFile { {FontRuName}, FontExt }                                 ; имя шрифта русского языка
+                FFile { {FontSpName}, FontExt }                                 ; имя шрифта испанского языка
 
                 display "\t - Load Font : \t\t", /A, LoadFont, " = busy [ ", /D, $ - LoadFont, " bytes  ]"
 

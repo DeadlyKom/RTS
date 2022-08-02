@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_FILE_SYSTEM_BASE_VARIABLES_
-                define _CORE_MODULE_FILE_SYSTEM_BASE_VARIABLES_
+                ifndef _STRUCT_FILE_SYSTEM_
+                define _STRUCT_FILE_SYSTEM_
 
                 struct FVariables
 ; PackageAddress  FValue                                                          ; переменная для загрузки списка файла,
@@ -17,4 +17,4 @@ ProgressStep    FValue                                                          
                                                                                 ; хранит значение приращения прогресса в виде Fix8.8
                 ends
 
-                endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_VARIABLES_
+                endif ; ~ _STRUCT_FILE_SYSTEM_

@@ -2,6 +2,10 @@
                 ifndef _STRUCT_FILES_
                 define _STRUCT_FILES_
 
+                struct FFileName
+Name            TEXT 8, {"", 32}                                                ; имя файла
+                ends
+
                 struct FFile
 Name            TEXT 8, {"", 32}                                                ; имя файла
 Extension       DB 'X'                                                          ; расширение файла

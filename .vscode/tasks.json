@@ -11,6 +11,9 @@
                 "--sym=RTS.labels",
                 "--fullpath",
                 "--sld=RTS.sld",
+                "--color=on",
+                "--nologo",
+                "--msg=war",
                 // "--syntax=F",
                 "Builder/Main.asm"
             ],

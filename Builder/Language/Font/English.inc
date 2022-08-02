@@ -16,7 +16,9 @@ Begin:          EQU $
 Size:           EQU $ - Begin
 SizeInSectors:  EQU (Size >> 8) + ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01)
 
+                OPT -Wno-trdext                                                 ; disable "trdext"
                 savetrd TRD_FILENAME, FontEnNameTRD, Begin, Size
+                OPT -Wtrdext                                                    ; re-enable "trdext"
 
                 endmodule
 

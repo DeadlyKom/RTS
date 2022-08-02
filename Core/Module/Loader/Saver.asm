@@ -104,13 +104,17 @@ Saver:          ; -----------------------------------------
 .LoadLoop       ; поиск файла в каталоге 
                 PUSH HL
                 CALL FileSystem.Base.FindFile
-                JR C, .LoadNextFile                                             ; файла нет на диске, переход к следующему       
+                JR C, .LoadNextFile                                             ; файла нет на диске, переход к следующему
 
                 ; загрузка файла
                 EX (SP), IY
-                LD A, (IY + FFileArea.Info)                                     ; страница свойств поверхности
-                LD DE, (IY + FFileArea.Address)                                 ; адрес загрузчика
-                LD BC, (TRDOS.SIZE_B)                                           ; размер свойств поверхности
+
+                LD A, (IY + FFileArea.File.Extension)
+                CALL DrawExtension
+
+                LD A, (IY + FFileArea.Info)                                     ; страница
+                LD DE, (IY + FFileArea.Address)                                 ; адрес загрузки
+                LD BC, (TRDOS.SIZE_B)                                           ; размер файла в байтах
                 EX (SP), IY
                 CALL FileSystem.Base.PrimaryRead
 
@@ -122,6 +126,43 @@ Saver:          ; -----------------------------------------
                 JR NZ, .LoadLoop
 
                 RET
+DrawExtension:  EX AF, AF'
+                LD A, (MemoryPageRef)
+                PUSH AF
+                LD HL, .RET
+                PUSH HL
+
+                SET_SCREEN_SHADOW
+                EX AF, AF'
+                
+                LD BC, #02E0 + 2
+                CALL Loader.Console.At2
+                
+                CP SystemExt
+                LD BC, .System
+                JP Z, Loader.Console.Log
+
+                CP GraphicsExt
+                LD BC, .Graphics
+                JP Z, Loader.Console.Log
+
+                CP CodeExt
+                LD BC, .Code
+                JP Z, Loader.Console.Log
+
+                CP LevelsExt
+                LD BC, .Levels
+                JP Z, Loader.Console.Log
+
+                RET
+
+.RET            POP AF
+                JP SetPage
+
+.System         BYTE " System \0"
+.Graphics       BYTE "Graphics\0"
+.Code           BYTE "  Code  \0"
+.Levels         BYTE " Levels \0"
 
                 display " - Saver : \t\t\t", /A, Saver, " = busy [ ", /D, $ - Saver, " bytes  ]"
 

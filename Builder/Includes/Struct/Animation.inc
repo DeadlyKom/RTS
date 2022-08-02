@@ -1,6 +1,6 @@
 
-				ifndef _STRUCTURE_ANIMATION_
-				define _STRUCTURE_ANIMATION_
+				ifndef _STRUCT_ANIMATION_
+				define _STRUCT_ANIMATION_
 
 				struct FStaticAnimation
 Location:       FLocation                                                       ; позиция на экране
@@ -14,4 +14,4 @@ Duration:       DB #00                                                          
 
 				ends
 
-				endif ; ~_STRUCTURE_ANIMATION_
+				endif ; ~_STRUCT_ANIMATION_

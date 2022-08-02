@@ -10,6 +10,7 @@
                 include "Saver.asm"
                 include "Progress.asm"
                 include "Core/Module/Math/Div/DivFix8x8.asm"
+                include "Utils/Console.asm"
 LoadingSprAttr  incbin "Sprites/Menu/Loader/Compressed/Loading.ar.spr"
 ProgressSprAttr incbin "Sprites/Menu/Loader/Compressed/Progress.ar.spr"
 

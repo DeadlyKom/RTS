@@ -11,7 +11,6 @@
                 ifdef _REBUILD
                 include "Core/Module/Sprites/Main/NewGame/Compress.inc"
                 endif
-
 Begin:          EQU $
 
 Interact_1:     EQU $ - Begin
@@ -67,7 +66,9 @@ Storage_Size:   EQU $ - Storage_2 - MemBank_03
 Size:           EQU $ - Begin
 SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 
+                OPT -Wno-trdext                                                 ; disable "trdext"
                 savetrd TRD_FILENAME, CaptainBridgeGraphicsANameTRD, Begin, Size
+                OPT -Wtrdext                                                    ; re-enable "trdext"
 
                 endmodule
 

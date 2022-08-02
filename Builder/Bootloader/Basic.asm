@@ -19,7 +19,7 @@ StartBoot:      DI
                 LD SP, StackTop
 
                 ; -----------------------------------------
-                ; загрузка кернела
+                ; загрузка кернеля
                 ; -----------------------------------------
                 LD HL, Adr.Kernel                                               ; установка адреса загрузки
                 LD DE, (TRDOS.CUR_SEC)                                          ; загружаем позицию головки дисковода из системной переменн
@@ -89,31 +89,31 @@ StartBoot:      DI
                 
 .FileArray      ; путь файла модуля языка
                 FFileArea {
-                {{LanguageName}, SystemExt },
+                {{LanguageName}, LanguageExt },
                 Page.Module.Language | FILE_ARCHIVE,
                 Adr.Module.Language }
 
                 ; путь файла работы с меню
                 FFileArea {
-                {{MenuCoreName}, SystemExt },
+                {{MenuCoreName}, CodeExt },
                 Page.Core | FILE_ARCHIVE,
                 Adr.Module.Core }
 
                 ; путь файла "опций"
                 FFileArea {
-                {{MenuOptionsName}, SystemExt },
+                {{MenuOptionsName}, CodeExt },
                 Page.Options | FILE_ARCHIVE,
                 Adr.Module.Options }
 
                 ; путь файла "главного меню"
                 FFileArea {
-                {{MenuMainName}, SystemExt },
+                {{MenuMainName}, CodeExt },
                 Page.Main | FILE_ARCHIVE,
                 Adr.Module.Main }
 
                 ; путь файла "капитанский мостик"
                 FFileArea {
-                {{CaptainBridgeName}, SystemExt },
+                {{CaptainBridgeName}, CodeExt },
                 Page.CaptainBridge | FILE_ARCHIVE,
                 /*Adr.Module.CaptainBridge*/ #C000 }
 

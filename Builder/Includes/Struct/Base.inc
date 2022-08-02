@@ -1,6 +1,6 @@
 
-				ifndef _STRUCTURE_BASE_
-				define _STRUCTURE_BASE_
+				ifndef _STRUCT_BASE_
+				define _STRUCT_BASE_
 
 				struct FValue
 Low             DB #00
@@ -42,4 +42,4 @@ Counter         DB #00                                                      	; �
 Location        FLocation 0, 0                                              	; позиция
 				ends
 
-				endif ; ~_STRUCTURE_BASE_
+				endif ; ~_STRUCT_BASE_

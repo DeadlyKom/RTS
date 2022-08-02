@@ -36,9 +36,9 @@ MainMenu:       ; -----------------------------------------
                 LD DE, Adr.Module.MenuText                                      ; адрес текста
                 JP FileSystem.Base.PrimaryRead
 
-.Filename       FFile { {MenuTextEnName}, SystemExt }                           ; имя файла английского языка меню
-                FFile { {MenuTextRuName}, SystemExt }                           ; имя файла русского языка меню
-                FFile { {MenuTextSpName}, SystemExt }                           ; имя файла испанского языка меню
+.Filename       FFile { {MenuTextEnName}, TextExt }                             ; имя файла английского языка меню
+                FFile { {MenuTextRuName}, TextExt }                             ; имя файла русского языка меню
+                FFile { {MenuTextSpName}, TextExt }                             ; имя файла испанского языка меню
 CapBridge:      ; -----------------------------------------
                 ; загрузка текста "командного мостика"
                 ; -----------------------------------------             
@@ -47,9 +47,9 @@ CapBridge:      ; -----------------------------------------
                 LD DE, (Adr.Module.MsgText - Adr.Module.CaptainBridge) | #C000  ; адрес текста
                 JP FileSystem.Base.PrimaryRead
 
-.Filename       FFile { {MsgTextEnName}, SystemExt }                            ; имя файла английского языка меню
-                FFile { {MsgTextRuName}, SystemExt }                            ; имя файла русского языка меню
-                FFile { {MsgTextSpName}, SystemExt }                            ; имя файла испанского языка меню
+.Filename       FFile { {MsgTextEnName}, TextExt }                              ; имя файла английского языка меню
+                FFile { {MsgTextRuName}, TextExt }                              ; имя файла русского языка меню
+                FFile { {MsgTextSpName}, TextExt }                              ; имя файла испанского языка меню
 ; -----------------------------------------
 ; поиск загружаемого языка
 ; In:

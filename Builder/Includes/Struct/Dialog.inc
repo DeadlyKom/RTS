@@ -1,7 +1,7 @@
 
                 
-                ifndef _DIALOG_STRUCT_
-                define _DIALOG_STRUCT_
+                ifndef _STRUCT_DIALOG_
+                define _STRUCT_DIALOG_
 
                 struct FPrintedTextVFX
 CursorPosition: FLocation                                                       ; положение курсора
@@ -53,4 +53,4 @@ Payload:        DW #0000                                                        
 CallbackWait:   DW #0000                                                        ; адрес обработчика после ожидания нажатия (вывод стрелки вниз)
                 ends
 
-                endif ; ~ _DIALOG_STRUCT_
+                endif ; ~ _STRUCT_DIALOG_

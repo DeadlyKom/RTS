@@ -3,7 +3,6 @@
                 define _MEMORY_COPY_PAGES_
 
                 module Memcpy
-Begin:          EQU $
 ; -----------------------------------------
 ; копирование данных между страниц
 ; In:
@@ -26,7 +25,7 @@ Pages:          PUSH AF
                 POP AF
                 JP SetPage
 
-                display " - Memcpy Pages : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - Memcpy Pages : \t\t", /A, Pages, " = busy [ ", /D, $ - Pages, " bytes  ]"
 
                 endmodule
 

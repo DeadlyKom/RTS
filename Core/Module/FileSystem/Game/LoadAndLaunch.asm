@@ -37,7 +37,7 @@ LoadAndLaunch:  ; адрес запуска
                 ; вызов загрузчика пакета файлов
                 JP LoadModule.Loader
 
-.FileArray      ; путь файла графические файлы для "капитанский мостик"
+.FileArray      ; путь файла кода игры
                 FFileArea {
                 {{GameName}, CodeExt },
                 Page.Game.First | FILE_ARCHIVE,
