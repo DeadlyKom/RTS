@@ -7,7 +7,7 @@
                 display " - Functions : \t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
 Begin:          EQU $
                 include "LoadFont.asm"
-                include "LevelInfo.asm"
+                include "LoadLevel.asm"
                 include "String.asm"
 Size:           EQU $ - Begin
 

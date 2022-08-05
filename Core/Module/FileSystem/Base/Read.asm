@@ -11,7 +11,21 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-PrimaryRead:    EX AF, AF'
+PrimaryRead:    ; размер файла
+                LD BC, (TRDOS.SIZE_B)
+                
+; -----------------------------------------
+; последовательное чтение даннх из файла (первичный запуск)
+; In:
+;   A  - страница
+;   DE - адрес назначения
+;   BC - длина блока (в байтах)
+;   IX - указывает на структуру переменных файловой системы FVariables
+; Out:
+; Corrupt:
+; Note:
+; -----------------------------------------
+.SetSize        EX AF, AF'
 
                 LD HL, #0000
                 LD (SequentialRead.SectorSize), HL
@@ -19,9 +33,6 @@ PrimaryRead:    EX AF, AF'
                 ; инициализация последовательного чтения файла
                 LD HL, (TRDOS.FIRST_S)
                 LD (TRDOS.CUR_SEC), HL
-
-                ; размер файла
-                LD BC, (TRDOS.SIZE_B)
 
                 ; инициализация TR-DOS
                 XOR A

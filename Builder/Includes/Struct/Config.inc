@@ -24,6 +24,7 @@ SpeedCursorMax  DB #00                                                          
 ;   S0    - [4]     - звук
 ;
 Options         DB #00
+LevelSlot       DB #00                                                          ; номер слота уровня
                 ends
 
                 endif ; ~_STRUCT_CONFIG_

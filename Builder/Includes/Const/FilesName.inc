@@ -10,6 +10,7 @@
                 define TextExt                          'T'
                 define CodeExt                          'C'
                 define LevelsExt                        'M'
+                define TilemapExt                       'I'
                 
                 define BootNameTRD                      "boot.B"
                 
@@ -68,5 +69,19 @@
 
                 define CaptainBridgeGraphicsAName       "M.CBG"                 ; имя файла графики для "капитанский мостик"
                 define CaptainBridgeGraphicsANameTRD    "M.CBG.G"               ; имя файла графики для "капитанский мостик"
+
+                ; Tilemap
+                define TilemapTestName                  "Test"                  ; имя файла тайловой карты "Test"
+                define TilemapTestNameTRD               "Test.I"                ; имя файла с расширением тайловой карты "Test"
+
+                define TilemapTutorialName              "Tutorial"              ; имя файла тайловой карты "Tutorial"
+                define TilemapTutorialNameTRD           "Tutorial.I"            ; имя файла с расширением тайловой карты "Tutorial"
+
+                ; Graphics
+                define TilemapPack_1_Name               "Pack1"                 ; имя файла графики тайловой карты "Пакет 1"
+                define TilemapPack_1_NameTRD            "Pack1.G"               ; имя файла с расширением графики тайловой карты "Пакет 1"
+
+                define TilemapPack_2_Name               "Pack2"                 ; имя файла графики тайловой карты "Пакет 2"
+                define TilemapPack_2_NameTRD            "Pack2.G"               ; имя файла с расширением графики тайловой карты "Пакет 2"
 
                 endif ; ~_CONST_FILES_NAME_

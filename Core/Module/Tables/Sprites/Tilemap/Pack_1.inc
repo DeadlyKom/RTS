@@ -1,8 +1,7 @@
 
-                ifndef _CORE_MODULE_TABLE_SPRITE_TILEMAP_MAP_TEST_
-                define _CORE_MODULE_TABLE_SPRITE_TILEMAP_MAP_TEST_
+                ifndef _CORE_MODULE_TABLE_SPRITE_TILEMAP_PACK_1_
+                define _CORE_MODULE_TABLE_SPRITE_TILEMAP_PACK_1_
                 
-                module TilemapSprite
                 align 256
 Table:          DW .L1,                     #0000,                          #0000,                          #0000                           ;   0 - 3
                 DW #0000,                   #0000,                          #0000,                          #0000                           ;   4 - 7
@@ -37,10 +36,7 @@ Table:          DW .L1,                     #0000,                          #000
                 DW #0000,                   #0000,                          #0000,                          #0000                           ; 120 - 123
                 DW #0000,                   #0000,                          #0000,                          #0000                           ; 124 - 127
 
-                align
-
 .L1             EQU $
                 incbin "Core/Module/Sprites/Tilemap/Ground/Tile_0.spr"
-                endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_TILEMAP_DRAW_ROWS_
+                endif ; ~ _CORE_MODULE_TABLE_SPRITE_TILEMAP_PACK_1_

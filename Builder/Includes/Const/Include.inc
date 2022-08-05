@@ -12,11 +12,11 @@
 
                 include "Interrupt.inc"
                 include "FileSystem.inc"
+                include "Loader.inc"
 
                 include "Memory.inc"
                 include "MemoryMap.inc"
                 include "GameMM.inc"
-                include "Loader.inc"
 
                 include "SharedBuffer.inc"
                 include "RenderBuffer.inc"

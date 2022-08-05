@@ -29,6 +29,6 @@ Interact:       ; определение направление
 ; -----------------------------------------
 GameLaunch:     POP AF                                                          ; удаление адреса возврата
                 OffUserHendler                                                  ; отключение обработчика прерываний
-                JP Menu.CaptainBridge.CapBridge.Game.LoadAndLaunch
+                JP Functions.LaunchLevel
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_ROOM_INTERACT_

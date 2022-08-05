@@ -84,7 +84,8 @@ StartBoot:      DI
                 VK_W,
                 0,
                 0,
-                LANGUAGE_DEFAULT
+                LANGUAGE_DEFAULT,                                               ; флаги
+                1                                                               ; слот уровня
                 }
                 
 .FileArray      ; путь файла модуля языка

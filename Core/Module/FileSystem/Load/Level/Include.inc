@@ -5,7 +5,8 @@
                 module Level
 
                 include "LevelInfo.asm"
-                ; include "MapData.asm"
+                include "LevelData.asm"
+                include "LoadAndLaunch.asm"
 
                 endmodule
 

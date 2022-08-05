@@ -8,7 +8,8 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-EntryPoint:     CALL Initialize
+EntryPoint:     HALT
+                CALL Initialize
                 JP GameLoop
 
                 endif ; ~_MODULE_GAME_ENTRY_POINT_

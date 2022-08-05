@@ -138,12 +138,28 @@ DrawExtension:  EX AF, AF'
                 LD BC, #02E0 + 2
                 CALL Loader.Console.At2
                 
+                CP KernelExt
+                LD BC, .Kernel
+                JP Z, Loader.Console.Log
+
                 CP SystemExt
                 LD BC, .System
                 JP Z, Loader.Console.Log
 
                 CP GraphicsExt
                 LD BC, .Graphics
+                JP Z, Loader.Console.Log
+
+                CP LanguageExt
+                LD BC, .Language
+                JP Z, Loader.Console.Log
+
+                CP FontExt
+                LD BC, .Font
+                JP Z, Loader.Console.Log
+
+                CP TextExt
+                LD BC, .Text
                 JP Z, Loader.Console.Log
 
                 CP CodeExt
@@ -154,15 +170,24 @@ DrawExtension:  EX AF, AF'
                 LD BC, .Levels
                 JP Z, Loader.Console.Log
 
+                CP TilemapExt
+                LD BC, .Tilemap
+                JP Z, Loader.Console.Log
+
                 RET
 
 .RET            POP AF
                 JP SetPage
 
+.Kernel         BYTE " Kernel \0"
 .System         BYTE " System \0"
 .Graphics       BYTE "Graphics\0"
+.Language       BYTE "Language\0"
+.Font           BYTE "  Font  \0"
+.Text           BYTE "  Text  \0"
 .Code           BYTE "  Code  \0"
 .Levels         BYTE " Levels \0"
+.Tilemap        BYTE "Tilemap \0"
 
                 display " - Saver : \t\t\t", /A, Saver, " = busy [ ", /D, $ - Saver, " bytes  ]"
 

@@ -22,7 +22,7 @@ SET_PAGE_UNITS_ARRAY macro
                 endm
 ; включение страницы тайловой карты
 SET_PAGE_TILEMAP macro 
-                CALL SetPage1
+                CALL TilemapSetPage
                 endm
 ; включение страницы файловой системы
 SET_PAGE_FILE_SYS macro

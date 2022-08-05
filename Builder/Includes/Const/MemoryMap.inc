@@ -7,6 +7,7 @@ StackTop        EQU MemBank_01_DOS                                              
 GameConfigRef   EQU #5B00                                                       ; адрес хранения FConfig
 MemoryPageRef   EQU PORT_7FFD                                                   ; адрес хранения номера странички
 LocalizationRef EQU #7FFE                                                       ; адрес хранения указателя таблицы текста локализации
+LoaderBuffer    EQU Adr.Loader + Adr.Loader.Size                                ; адрес буфера загрузчика
 
 ; bank 02 (#8000 - #BFFF)
 IntTable        EQU MemBank_02                                                  ; таблица прерываний 257 байт

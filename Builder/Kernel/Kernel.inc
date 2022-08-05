@@ -94,6 +94,7 @@ LoadModule
 ; functions
 Functions
 .LoadFont       EQU Kernel.Functions.LoadFont                                   ; загрузка языковых шрифтов
+.LaunchLevel    EQU Kernel.Functions.LaunchLevel                                ; запуск уровня
 .TextToBuffer   EQU Kernel.Functions.TextToBuffer
 .StringLength   EQU Kernel.Functions.StringLength
 .WordLength     EQU Kernel.Functions.WordLength

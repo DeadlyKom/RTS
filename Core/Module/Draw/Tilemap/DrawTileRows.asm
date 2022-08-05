@@ -84,8 +84,6 @@ DrawTileRows:   ; инициализация
 
                 RET
 
-                include "Core/Module/Tables/Sprites/Tilemap/Map_Test.inc"
-
                 display " - Draw Tile Rows: \t\t", /A, DrawTileRows, " = busy [ ", /D, $ - DrawTileRows, " bytes  ]"
 
                 endmodule

@@ -4,7 +4,8 @@
 
                 module TRDOS
 SECTOR_SIZE     EQU #0100                                                       ; размер сектора
-FILE_LENGTH     EQU 0x09                                                        ; размер имени файла + расширение
+FILENAME_LENGTH EQU 0x08                                                        ; размер имени файла
+FILE_LENGTH     EQU FILENAME_LENGTH + 1                                         ; размер имени файла + расширение
 EXE_CMD:        EQU #3D13                                                       ; выполнить команду TR-DOS, содержащую в регистре C
 EXE_RET:        EQU #3D2F                                                       ; выполнение подпрограмм TR-DOS, адресуемых через стек
 

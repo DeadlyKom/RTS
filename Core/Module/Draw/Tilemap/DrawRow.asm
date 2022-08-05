@@ -51,7 +51,7 @@ DrawRow:        ; инициализация
                 ; -----------------------------------------
 
                 ; расчёт адреса спрайта тайла (без учёта анимации)
-                LD H, HIGH TilemapSprite.Table
+                LD H, HIGH Adr.Tilemap.SpriteTable
                 LD L, A
                 LD C, (HL)
                 INC L

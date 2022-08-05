@@ -13,6 +13,8 @@
                 include "Language/Pack.inc"                                     ; упаковка языков
                 include "Loader/Pack.inc"                                       ; упаковка загрузчика
                 include "Menu/Pack.inc"                                         ; упаковка меню
+                include "Level/Pack.inc"                                        ; упаковка уровней
+                include "Graphics/Pack.inc"                                     ; упаковка спрайтов
 
                 display "-------------------------------------------------------------------------------------------------------------------------------"
 

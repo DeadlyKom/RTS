@@ -17,8 +17,9 @@ Main:           ; -----------------------------------------
                 ; включить сразу запуск игры
                 ; -----------------------------------------
                 ifdef ENABLE_START_GAME
-                LD HL, Menu.CaptainBridge.CapBridge.Game.LoadAndLaunch
+                LD HL, Functions.LaunchLevel
                 PUSH HL
+                ; копирование кода в рабочую область
                 LD A, Page.CaptainBridge
                 CALL SetPage
                 LD HL, #C000

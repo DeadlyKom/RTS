@@ -28,5 +28,6 @@ DefaultKeyMenu      EQU GameConfigRef + FConfig.KeyMenu                         
 CursorSpeedMinRef   EQU GameConfigRef + FConfig.SpeedCursorMin                  ; минимальная скорость курсора
 CursorSpeedMaxRef   EQU GameConfigRef + FConfig.SpeedCursorMax                  ; максимальная скорость курсора
 ConfigOptions       EQU GameConfigRef + FConfig.Options                         ; флаги опций
+LevelSlotRef        EQU GameConfigRef + FConfig.LevelSlot                       ; номер слота уровня
 
                     endif ; ~_CONST_CONFIG_
