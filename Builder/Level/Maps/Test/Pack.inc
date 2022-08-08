@@ -11,6 +11,7 @@
 Begin:          EQU $
 
                 include "Map.asm"
+                include "Surface.inc"
 
 Size:           EQU $ - Begin
 SizeInSectors:  EQU (Size >> 8) + ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01)

@@ -6,6 +6,7 @@
 
                 include "LevelInfo.asm"
                 include "LevelData.asm"
+                include "PostInitialize.asm"
                 include "LoadAndLaunch.asm"
 
                 endmodule

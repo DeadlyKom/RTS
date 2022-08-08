@@ -10,6 +10,7 @@ SetPage4        EQU Kernel.Memory.SetPage4
 SetPage5        EQU Kernel.Memory.SetPage5
 SetPage6        EQU Kernel.Memory.SetPage6
 SetPage7        EQU Kernel.Memory.SetPage7
+; ReadByteToPage  EQU Kernel.Memory.ReadByteToPage
 ScrPageToC000   EQU Kernel.Memory.ScrPageToC000
 ScrFromPageC000 EQU Kernel.Memory.ScrFromPageC000
 ScrPageToC000_  EQU Kernel.Memory.ScrPageToC000_
@@ -95,6 +96,7 @@ LoadModule
 Functions
 .LoadFont       EQU Kernel.Functions.LoadFont                                   ; загрузка языковых шрифтов
 .LaunchLevel    EQU Kernel.Functions.LaunchLevel                                ; запуск уровня
+.AnimTile       EQU Kernel.Functions.AnimTile                                   ; анимация тайлов
 .TextToBuffer   EQU Kernel.Functions.TextToBuffer
 .StringLength   EQU Kernel.Functions.StringLength
 .WordLength     EQU Kernel.Functions.WordLength

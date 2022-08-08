@@ -2,8 +2,8 @@
                 ifndef _BUILDER_FILE_SYSTEM_PACK_
                 define _BUILDER_FILE_SYSTEM_PACK_
 
-                MMU 3, Page.FileSystem                                          ; 3 bank, Page.FileSystem (1) page
-                ORG Adr.FileSystem
+                MMU 3, Page.Module.FileSystem                                   ; 3 bank, Page.Module.FileSystem (1) page
+                ORG Adr.Module.FileSystem
                 module FileSystem
 
                 display "\'FileSystem\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"

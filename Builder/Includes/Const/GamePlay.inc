@@ -10,4 +10,8 @@ PATHFINDING_REQUEST_AI_FLAG     EQU 0x10                                        
 ACTIVATE_PAUSE_MENU_GAME_FLAG   EQU 0x08                                        ; флаг активации пауза игры
 SHOW_PAUSE_MENU_GAME_FLAG       EQU 0x04                                        ; отображается меню паузы игры
 
+
+
+DURATION_TILE_ANIM  EQU 0x10                                                    ; период одновления тайловой анимаций (1/50)
+
                                 endif ; ~_CONST_GAME_PLAY_FLAGS_

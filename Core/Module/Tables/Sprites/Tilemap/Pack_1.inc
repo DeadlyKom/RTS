@@ -37,6 +37,9 @@ Table:          DW .L1,                     #0000,                          #000
                 DW #0000,                   #0000,                          #0000,                          #0000                           ; 124 - 127
 
 .L1             EQU $
-                incbin "Core/Module/Sprites/Tilemap/Ground/Tile_0.spr"
+                incbin "Core/Module/Sprites/Tilemap/Ground/Sand_1.spr"
+                incbin "Core/Module/Sprites/Tilemap/Ground/Sand_2.spr"
+                incbin "Core/Module/Sprites/Tilemap/Ground/Sand_3.spr"
+                incbin "Core/Module/Sprites/Tilemap/Ground/Sand_4.spr"
 
                 endif ; ~ _CORE_MODULE_TABLE_SPRITE_TILEMAP_PACK_1_

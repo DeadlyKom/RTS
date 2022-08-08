@@ -7,6 +7,7 @@
 
                 include "Sprite.inc"
                 include "Animation.inc"
+                include "Surface.inc"
 
                 include "Files.inc"
                 include "FileSystemVaribles.inc"

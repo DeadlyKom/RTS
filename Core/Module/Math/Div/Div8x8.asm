@@ -12,7 +12,7 @@
 ;   D - division result
 ;   A - remainder
 ; Corrupt :
-;   B, F
+;   B, AF
 ; Note:
 ;   https://www.smspower.org/Development/DivMod
 ; -----------------------------------------

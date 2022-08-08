@@ -17,8 +17,11 @@
                 define KernelName                       "Kernel"
                 define KernelNameTRD                    "Kernel.#"
 
-                define GameName                         "Game"                  ; имя файла игрового кода
-                define GameNameTRD                      "Game.C"                ; имя файла игрового кода с расширением 
+                define GameFirstName                    "GameA"                 ; имя файла игрового кода
+                define GameFirstNameTRD                 "GameA.C"               ; имя файла игрового кода с расширением
+
+                define GameSecondName                   "GameB"                 ; имя файла игрового кода
+                define GameSecondNameTRD                "GameB.C"               ; имя файла игрового кода с расширением
 
                 define LevelsName                       "Levels"                ; имя файла массива уровней
                 define LevelsNameTRD                    "Levels.M"              ; имя файла массива уровней уровней с расширением

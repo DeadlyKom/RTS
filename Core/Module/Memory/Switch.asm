@@ -73,6 +73,41 @@ SetPage7:       LD BC, PORT_7FFD
                 LD (BC), A
                 OUT (C), A
                 RET
+; ; -----------------------------------------
+; ; чтение байта из указанной страницы
+; ; In:
+; ;   A  - номер страницы памяти
+; ;   HL - адрес чтения
+; ; Out:
+; ;   E  - прочитанный байт
+; ; Corrupt:
+; ;   E, BC, AF
+; ; Note:
+; ; -----------------------------------------
+; ReadByteToPage: EX AF, AF'
+;                 LD BC, PORT_7FFD
+;                 LD A, (BC)
+;                 LD C, A
+;                 EX AF, AF'
+;                 XOR C
+;                 AND PAGE_MASK
+;                 XOR C
+;                 LD C, LOW PORT_7FFD
+;                 LD (BC), A
+;                 OUT (C), A
+
+;                 LD E, (HL)
+
+;                 LD C, A
+;                 EX AF, AF'
+;                 XOR C
+;                 AND PAGE_MASK
+;                 XOR C
+;                 LD C, LOW PORT_7FFD
+;                 LD (BC), A
+;                 OUT (C), A
+
+;                 RET
 ; -----------------------------------------
 ; установка страницы видимого экрана
 ; In:

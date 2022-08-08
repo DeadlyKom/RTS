@@ -31,7 +31,8 @@ DrawRow:        ; инициализация
 
                 LD A, (HL)
                 ADD A, A
-                JR C, SkipRender
+                JR NC, SkipRender
+                ; RES 7, (HL)
                 EX AF, AF'
                 
                 INC H                                                           ; переход к буферу тайловой карта (TilemapBuffer)
@@ -59,7 +60,7 @@ DrawRow:        ; инициализация
 
                 ; корректировка адреса (для анимации)
                 EX AF, AF'
-                AND TILE_ANIM_MASK
+                AND TILE_ANIM_MASK << 1
                 ADD A, C
                 LD L, A
                 JR NC, $+3

@@ -17,6 +17,6 @@ Adr.Interrupt   EQU #8181                                                       
 Adr.Kernel      EQU Adr.Interrupt                                               ; адрес блока кернела
 
 ; bank 03 (#С000 - #СFFF)
-Adr.FileSystem  EQU MemBank_03 + BankSize - FileSystem.Size                     ; адрес блока файловой системы
+
 
                 endif ; ~_CONST_MEMORY_MAP_

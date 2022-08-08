@@ -32,6 +32,10 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
                 LD HL, Adr.Module.Game.First
                 PUSH HL
 
+                ; адрес запуска инициализации
+                LD HL, PostInitialize
+                PUSH HL
+
                 ; количество загружаемых файлов
                 LD A, .FileNum
                 PUSH AF
@@ -61,11 +65,17 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
                 Page.Tilemap.Sprite | FILE_ARCHIVE,
                 Adr.Tilemap.SpriteTable }
 
-                ; путь файла "код игры"
+                ; путь файла "код игры" (1)
                 FFileArea {
-                {{GameName}, CodeExt },
+                {{GameFirstName}, CodeExt },
                 Page.Game.First | FILE_ARCHIVE,
                 Adr.Module.Game.First }
+
+                ; путь файла "код игры" (2)
+                FFileArea {
+                {{GameSecondName}, CodeExt },
+                Page.Game.Second | FILE_ARCHIVE,
+                Adr.Module.Game.Second }
 
 .FileNum        EQU ($-.FileArray) / FFileArea
 

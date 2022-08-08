@@ -9,6 +9,7 @@ Begin:          EQU $
                 include "LoadFont.asm"
                 include "LoadLevel.asm"
                 include "String.asm"
+                include "AnimTile.asm"
 Size:           EQU $ - Begin
 
                 endmodule

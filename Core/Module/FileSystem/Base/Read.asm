@@ -140,7 +140,7 @@ SequentialRead: ; подготовка чтения данных
 .Page           EQU $+1
                 LD A, #00
                 EX AF, AF'
-                LD A, Page.FileSystem
+                LD A, Page.Module.FileSystem
                 JP MemcpyPages
 ; -----------------------------------------
 ; чтение текущего сектора во временный буфер
