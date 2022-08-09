@@ -1,14 +1,34 @@
 
                 ifndef _CORE_MODULE_TABLE_SPRITE_TILEMAP_PACK_1_
                 define _CORE_MODULE_TABLE_SPRITE_TILEMAP_PACK_1_
-                
+
+; структура данных тайла
+;
+;      7    6    5    4    3    2    1    0
+;   +----+----+----+----+----+----+----+----+
+;   | V  | T2 | T1 | T0 | G3 | G2 | G1 | G0 |
+;   +----+----+----+----+----+----+----+----+
+;
+;   V       [7]     - флаг необхимости обновления тайла
+;   T2 - T0 [6..4]  - разновидность поверхности
+;       000 - жидкая поверхность
+;       001 - твёрдая поверхность
+;       010 - высота/возвышенность
+;       011 - 2х уровнева поверхность (2х проходный рендер)
+;       100 - ...
+;
+;   G3 - G0 [3..0]  - тип графики (не для всех типов имеет смысл)
+;
+;   Все кроме старшего бита, являются ID тайла
+;
+
                 align 256
-Table:          DW .L1,                     #0000,                          #0000,                          #0000                           ;   0 - 3
-                DW #0000,                   #0000,                          #0000,                          #0000                           ;   4 - 7
-                DW #0000,                   #0000,                          #0000,                          #0000                           ;   8 - 11
-                DW #0000,                   #0000,                          #0000,                          #0000                           ;  12 - 15
-                DW #0000,                   #0000,                          #0000,                          #0000                           ;  16 - 19
-                DW #0000,                   #0000,                          #0000,                          #0000                           ;  20 - 23
+Table:          DW Water,                   #0000,                          #0000,                          Coast_0011                      ;   0 - 3
+                DW #0000,                   #0000,                          Coast_0110,                     Coast_0111                      ;   4 - 7
+                DW #0000,                   Coast_1001,                     #0000,                          Coast_1011                      ;   8 - 11
+                DW Coast_1100,              Coast_1101,                     Coast_1110,                     #0000                           ;  12 - 15
+                DW Ground_0,                Ground_1,                       Ground_2,                       Ground_3                        ;  16 - 19
+                DW Ground_4,                Ground_5,                       Ground_6,                       Ground_7                        ;  20 - 23
                 DW #0000,                   #0000,                          #0000,                          #0000                           ;  24 - 27
                 DW #0000,                   #0000,                          #0000,                          #0000                           ;  28 - 31
                 DW #0000,                   #0000,                          #0000,                          #0000                           ;  32 - 35
@@ -35,11 +55,5 @@ Table:          DW .L1,                     #0000,                          #000
                 DW #0000,                   #0000,                          #0000,                          #0000                           ; 116 - 119
                 DW #0000,                   #0000,                          #0000,                          #0000                           ; 120 - 123
                 DW #0000,                   #0000,                          #0000,                          #0000                           ; 124 - 127
-
-.L1             EQU $
-                incbin "Core/Module/Sprites/Tilemap/Ground/Sand_1.spr"
-                incbin "Core/Module/Sprites/Tilemap/Ground/Sand_2.spr"
-                incbin "Core/Module/Sprites/Tilemap/Ground/Sand_3.spr"
-                incbin "Core/Module/Sprites/Tilemap/Ground/Sand_4.spr"
 
                 endif ; ~ _CORE_MODULE_TABLE_SPRITE_TILEMAP_PACK_1_

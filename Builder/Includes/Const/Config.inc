@@ -17,6 +17,9 @@ INPUT_MOUSE         EQU 0x03
 SOUND_AY            EQU 0x00
 SOUND_GS            EQU 0x01
 
+
+ANIMATED_TILES      EQU 0x08                                                    ; количество анимированных тайлов
+
 DefaultKeyUpRef     EQU GameConfigRef + FConfig.KeyUp                           ; клавиша по умолчанию "Вверх"
 DefaultKeyDownRef   EQU GameConfigRef + FConfig.KeyDown                         ; клавиша по умолчанию "Вниз"
 DefaultKeyLeftRef   EQU GameConfigRef + FConfig.KeyLeft                         ; клавиша по умолчанию "Влево"

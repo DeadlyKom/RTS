@@ -15,6 +15,10 @@ AnimTile        ; установка обртного счётчика
                 CALL TileSampling
                 RET
 
+.Size           DB #00
+.Array          FAnimTile = $
+                DS FAnimTile * ANIMATED_TILES
+
 ;                 ; инициализация
 ;                 LD HL, .Counter
 ;                 LD DE, RenderBuffer

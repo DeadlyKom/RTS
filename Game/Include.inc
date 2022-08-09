@@ -39,7 +39,7 @@ SizeSelectedBuffer          EQU 32                                              
 MaskSelectedBuffer          EQU SizeSelectedBuffer - 1                          ; маска буфера выделенных юнитов
 WaypointsSequenceBitmapPtr  EQU Page_2.RenderBuffer + 0xE0                      ; адрес битовой карты последовательностей Way Point'ов (32 байта)                   [32]
 SizeWaypointsSequenceBitmap EQU 32                                              ; размер битовой карты последовательностей Way Point'ов
-TilemapBuffer               EQU Page_2.TilemapBuffer                            ; адрес тайловой карты буфера (256 байт)
+; TilemapBuffer               EQU Page_2.TilemapBuffer                            ; адрес тайловой карты буфера (256 байт)
 BypassFOW                   EQU Page_7.BypassFOW                                ; адресс таблицы обхода FOW
 AI_MIN_UPDATE_FREQ          EQU 1                                               ; скорость обновления ИИ (минимальная)
 AI_MAX_UPDATE_FREQ          EQU 4                                               ; скорость обновления ИИ (максимальная)
@@ -75,15 +75,15 @@ AI_NumUnitsRef              EQU Game.AI_NumUnits                                
 ; TilemapMaxSize              EQU 8192                                            ; максимально доступный размер для карты
 ; TilesOnScreenX              EQU 16                                              ; количество тайлов на экране по горизонтали
 ; TilesOnScreenY              EQU 12                                              ; количество тайлов на экране по вертикали
-TilemapRef                  EQU Game.TilemapPtr                                 ; указатель на адрес тайловой карты
+; TilemapRef                  EQU Game.TilemapPtr                                 ; указатель на адрес тайловой карты
 TilemapSizeRef              EQU Game.TilemapSize                                ; указатель на адрес размера карты
 TilemapWidth                EQU Game.TilemapSize.X                              ; ширина тайловой карты (структура FMapSize)
 TilemapWidth_NEG            EQU Game.TilemapSize_NEG.X                          ; ширина тайловой карты (отрецательное значение)
 TilemapHeight               EQU Game.TilemapSize.Y                              ; высота тайловой карты (структура FMapSize)
 TilemapHeight_NEG           EQU Game.TilemapSize_NEG.Y                          ; высота тайловой карты (отрецательное значение)
 TilemapOffsetRef            EQU Game.TilemapOffset                              ; указатель смещения тайловой карты
-TilemapOffsetWidth          EQU Game.TilemapOffset.X                            ; смещение в тайловой карте по горизонтали (структура FLocation)
-TilemapOffsetHeight         EQU Game.TilemapOffset.Y                            ; смещение в тайловой карте по вертикали (структура FLocation)
+; TilemapOffsetWidth          EQU Game.TilemapOffset.X                            ; смещение в тайловой карте по горизонтали (структура FLocation)
+; TilemapOffsetHeight         EQU Game.TilemapOffset.Y                            ; смещение в тайловой карте по вертикали (структура FLocation)
 TilemapTableAddress         EQU Page_1.TilemapTableAdr                          ; адрес таблицы тайловой карты, для расчёта адреса используя пизиции тайла X и Y (не использовать умножение)
 TilemapTableSize            EQU 512                                             ; размер таблицы тайлов карты для расчёта адреса используя пизиции тайла X и Y (не использовать умножение)
 
@@ -104,8 +104,8 @@ AnimTurnUpTableRef          EQU Game.AnimTurnUpTable                            
 AnimTurnDownTableRef        EQU Game.AnimTurnDownTable                          ; адрес таблицы анимации поворотов (низ)
 AnimMoveTableRef            EQU Game.AnimMoveTable                              ; адрес таблицы анимации перемещения
 
-TopRowOffsetFOW             EQU MemoryPage_7.FOW.ROW_UP                         ; смещение в буфере верхней строки FOW
-BottomRowOffsetFOW          EQU MemoryPage_7.FOW.ROW_DOWN                       ; смещение в буфере нижней строки FOW
+; TopRowOffsetFOW             EQU MemoryPage_7.FOW.ROW_UP                         ; смещение в буфере верхней строки FOW
+; BottomRowOffsetFOW          EQU MemoryPage_7.FOW.ROW_DOWN                       ; смещение в буфере нижней строки FOW
 
 CursorFlagRef               EQU Mouse.PositionFlag                              ; флаг обновления позиции курсора (если #FF изменилось положение)
 CursorPositionRef           EQU Mouse.Position                                  ; указатель на позицию курсора

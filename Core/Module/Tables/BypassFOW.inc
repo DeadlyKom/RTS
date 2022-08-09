@@ -1,10 +1,10 @@
 
                 module FOW
-IDX_UP          EQU -TilesOnScreenX
-IDX_DOWN        EQU TilesOnScreenX
-ROW_UP          EQU TilesOnScreenX * TilesOnScreenY             ; 192
-ROW_DOWN        EQU ROW_UP + TilesOnScreenX                     ; 192 + 16 = 208
-ROW_0           EQU ROW_DOWN + TilesOnScreenX                   ; 208 + 16 = 224
+IDX_UP          EQU -SCREEN_TILE_X
+IDX_DOWN        EQU SCREEN_TILE_X
+ROW_UP          EQU SCREEN_TILE_X * SCREEN_TILE_Y                               ; 192               смещение в буфере верхней строки FOW 
+ROW_DOWN        EQU ROW_UP + SCREEN_TILE_X                                      ; 192 + 16 = 208    смещение в буфере нижней строки FOW
+ROW_0           EQU ROW_DOWN + SCREEN_TILE_X                    ; 208 + 16 = 224
 ROW_1           EQU ROW_0 + 2                                   ; 224 + 2  = 226
 ROW_2           EQU ROW_1 + 2                                   ; 226 + 2  = 228
 ROW_3           EQU ROW_2 + 2                                   ; 228 + 2  = 230
@@ -18,7 +18,7 @@ ROW_A           EQU ROW_9 + 2                                   ; 242 + 2  = 244
 ROW_B           EQU ROW_A + 2                                   ; 244 + 2  = 246
 
                 align 256
-
+Table:          EQU $
 Idx             defl 0
 IdxRow          defl 2
 
@@ -60,6 +60,8 @@ Idx             = Idx + 1
 Idx             = Idx + 1
                 edup
 
-                DB Idx - 1, ROW_B + 1,              Idx + IDX_UP, (Idx & 0x0F) + ROW_DOWN           
+                DB Idx - 1, ROW_B + 1,              Idx + IDX_UP, (Idx & 0x0F) + ROW_DOWN
+
+                display " - Bypass FOW : \t\t", /A, Table, " = busy [ ", /D, $ - Table, " bytes  ]"
 
                 endmodule

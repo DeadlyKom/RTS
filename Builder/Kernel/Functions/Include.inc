@@ -10,6 +10,7 @@ Begin:          EQU $
                 include "LoadLevel.asm"
                 include "String.asm"
                 include "AnimTile.asm"
+                include "MemcpyTilemap.asm"
 Size:           EQU $ - Begin
 
                 endmodule

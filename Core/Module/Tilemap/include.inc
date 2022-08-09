@@ -13,6 +13,9 @@
                 ;
                 include "Convert/GetAddress.asm"
 
+                ; memcpy
+                include "Core/Module/Memory/MemcpyTilemap.asm"
+
                 endmodule
 
                 endif ; ~_MODULE_TILEMAP_INCLUDE_

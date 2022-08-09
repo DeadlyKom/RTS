@@ -12,11 +12,11 @@
 ;
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
-;   | D  | A  | D1 | D0 | C3 | C2 | C1 | C0 |
+;   | !A | D  | D1 | D0 | C3 | C2 | C1 | C0 |
 ;   +----+----+----+----+----+----+----+----+
 ;
-;   D       [7]     - разрушаемый
-;   A       [6]     - тайл с анимацией
+;   A       [7]     - 0 - анимируемый тайл, 1 - тайл не анимируется (инвертный)
+;   D       [6]     - разрушаемый
 ;   D1, D0  [0..1]  - коэффициент замедления
 ;   C3 - C0 [0..3]  - флаги коллизии
 ;
@@ -85,7 +85,7 @@ GetProperty:    LD A, (HL)                                                      
 
 ;                 RET
 
-                display " - Surface Property : \t\t", /A, GetProperty, " = busy [ ", /D, $ - GetProperty, " bytes  ]"
+                display " - Surface Property : \t", /A, GetProperty, " = busy [ ", /D, $ - GetProperty, " bytes  ]"
 
                 endmodule
 

@@ -8,7 +8,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameLoop:       
+GameLoop:       SET_SCREEN_SHADOW
 .Loop           CALL DrawTileRows
                 JP .Loop
 

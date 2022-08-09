@@ -37,7 +37,16 @@ Data:           ; -----------------------------------------
                 INC HL
                 LD B, (HL)
                 INC HL
-                LD (Game.Tilemap.Size), BC
+                LD (PostInitialize.TilmapSize), BC
+
+                ; -----------------------------------------
+                ; расчёт адрес расположения стартовой локации FLevelInfo.StartFaction_A
+                ; -----------------------------------------
+                LD E, (HL)
+                INC HL
+                LD D, (HL)
+                INC HL
+                LD (PostInitialize.StartLocation), DE
 
                 PUSH HL                                                         ; сохранение
 
@@ -46,7 +55,6 @@ Data:           ; -----------------------------------------
                 ; -----------------------------------------
                 LD HL, Adr.Tilemap.AdrTable
                 LD DE, Adr.Tilemap.Map
-                PUSH DE
                 LD A, B
                 LD B, #00
 
@@ -65,9 +73,9 @@ Data:           ; -----------------------------------------
 
                 ; сохранение адреса границы карты (хранятся свойства тайлов)
                 LD (PostInitialize.Surface), DE
-
+  
                 POP HL                                                          ; восстановление
-                
+
                 RET
 
                 display " - Load Level Data : \t\t", /A, Data, " = busy [ ", /D, $ - Data, " bytes  ]"

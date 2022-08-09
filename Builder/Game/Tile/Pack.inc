@@ -2,7 +2,7 @@
                 ifndef _BUILDER_GAME_TILE_PACK_
                 define _BUILDER_GAME_TILE_PACK_
 
-                MMU 1, Page.Game.Second                                         ; 1 bank, Page.Game.Second (1) page
+                MMU 3, Page.Game.Second                                         ; 3 bank, Page.Game.Second (1) page
                 ORG Adr.Module.Game.Second
                 module Game
 

@@ -4,9 +4,9 @@
 
                 module Page
                 module Module
-GameFirst       EQU 0x05                                                        ; первая страница игрового кода
-GameSecond      EQU 0x01                                                        ; вторая страница игрового кода
-GameThird       EQU 0x00                                                        ; третий страница игрового кода
+GameFirst       EQU 0x05                                                        ; модуль "основной блок"
+GameSecond      EQU 0x01                                                        ; модуль "работа с тайлами"
+GameThird       EQU 0x07                                                        ; модуль "таблица"
 
                 endmodule
 Game:
@@ -24,10 +24,9 @@ ModuleTile      EQU Adr.Module.FileSystem - Game.SizeSecond
 Game:
 .First          EQU Adr.EntryPoint                                              ; адрес модуля "основной блок"
 .Second         EQU Adr.ModuleTile                                              ; адрес модуля "работы с тайлами"
-.Third          EQU Adr.EntryPoint
+.Third          EQU Adr.Tilemap.BypassFOW                                       ; адрес модуля "таблиц"
 
                 endmodule
-
                 endmodule
 
                 endif ; ~_CONST_GAME_MEMORY_MAP_

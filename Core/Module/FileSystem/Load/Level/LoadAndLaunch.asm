@@ -65,17 +65,23 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
                 Page.Tilemap.Sprite | FILE_ARCHIVE,
                 Adr.Tilemap.SpriteTable }
 
-                ; путь файла "код игры" (1)
+                ; путь файла модуля "основной блок"     (1)
                 FFileArea {
                 {{GameFirstName}, CodeExt },
                 Page.Game.First | FILE_ARCHIVE,
                 Adr.Module.Game.First }
 
-                ; путь файла "код игры" (2)
+                ; путь файла модуля "работы с тайлами"  (2)
                 FFileArea {
                 {{GameSecondName}, CodeExt },
                 Page.Game.Second | FILE_ARCHIVE,
                 Adr.Module.Game.Second }
+
+                ; путь файла модуля "таблиц"            (3)
+                FFileArea {
+                {{GameThirdName}, CodeExt },
+                Page.Game.Third | FILE_ARCHIVE,
+                Adr.Module.Game.Third }
 
 .FileNum        EQU ($-.FileArray) / FFileArea
 
