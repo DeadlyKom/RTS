@@ -5,7 +5,7 @@
 ; выборка тайла участка карты находящиеся в рендер буфере
 ; In:
 ; Out:
-;   A  - количество анимаций тайла
+;   E  - количество анимаций тайла
 ;   A' - смещение в буфере найденого тайла
 ;   флаг переполнения Carry сброшен при успешном поиске анимированного тайла
 ; Corrupt:
@@ -36,11 +36,24 @@ TileSampling:   ; рандомная выборка в пределах буфе
                 RET C                                                           ; выход, если тайл не анимируемый
 
                 ; чтение дополнительных данных свойств
-                SET 7, L
+                SET 7, L                                                        ; переход к данным FSurfaceExtra
                 LD A, (HL)
-                AND %00000011
-                
-                RET
+                AND SPE_ANIM_MASK
+
+                ; получение фактического значения количества анимаций (ключ-значение)
+                LD E, SPE_ANIM_VAL_0 + 1
+                RET Z                                                           ; SPE_ANIM_KEY_0
+
+                LD E, SPE_ANIM_VAL_1 + 1
+                DEC A
+                RET Z                                                           ; SPE_ANIM_KEY_1
+
+                LD E, SPE_ANIM_VAL_2 + 1
+                DEC A
+                RET Z                                                           ; SPE_ANIM_KEY_2
+
+                LD E, SPE_ANIM_VAL_3 + 1
+                RET                                                             ; SPE_ANIM_KEY_3
 
                 display " - Tile Sampling : \t\t", /A, TileSampling, " = busy [ ", /D, $ - TileSampling, " bytes  ]"
 

@@ -33,7 +33,7 @@ FileSystemPtr               EQU Page_1.FileSystemPtr                            
 ;
 ; SharedBuffer                EQU Page_2.SharedBuffer                             ; адрес общего буфера (256 байт)
 ; SharedBufferSize            EQU 256                                             ; размер общего буфера
-RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
+; RenderBuffer                EQU Page_2.RenderBuffer                             ; адрес буфера обновлений (192 байта)                                               [64]  free
 SelectedBufferFirst         EQU Page_2.RenderBuffer + 0xC0                      ; адрес буфера выделенных юнитов (32 байта)                                         [32]
 SizeSelectedBuffer          EQU 32                                              ; размер буфера выделенных юнитов
 MaskSelectedBuffer          EQU SizeSelectedBuffer - 1                          ; маска буфера выделенных юнитов

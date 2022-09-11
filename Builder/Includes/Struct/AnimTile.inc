@@ -3,9 +3,8 @@
 				define _STRUCT_ANIM_TILE_
 
 				struct FAnimTile
-Offset:         DB #00                                                          ; смещение в буфере
-FrameCount:     DB #00                                                          ; количество кадров анимации
-Countdown:      DB #00                                                          ; обратный счётчик продолжительности
+Offset:         DB #FF                                                          ; смещение в буфере
+AnimFrames:     DB #FF                                                          ; количество кадров анимации
 
 				ends
 

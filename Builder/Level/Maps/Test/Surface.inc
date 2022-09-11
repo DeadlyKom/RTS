@@ -3,260 +3,517 @@
                 define _TILEMAP_TEST_SURFACE_
 
                 ; 0 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 1 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 2 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 3 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 4 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 5 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 6 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 7 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 8 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 9 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 10 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 11 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 12 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 13 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 14 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 15 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 16 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 17 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 18 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 19 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 20 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 21 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 22 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 23 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 24 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 25 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 26 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 27 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 28 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 29 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 30 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 31 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE    |   SCF_NOT_ANIM
                 ; 32 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 33 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 34 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 35 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 36 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 37 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 38 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 39 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 40 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 41 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 42 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 43 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 44 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 45 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 46 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 47 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 48 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 49 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 50 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 51 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 52 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 53 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 54 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 55 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 56 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 57 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 58 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 59 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 60 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 61 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 62 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 63 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 64 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 65 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 66 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 67 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 68 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 69 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 70 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 71 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 72 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 73 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 74 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 75 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 76 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 77 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 78 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 79 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 80 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 81 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 82 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 83 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 84 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 85 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 86 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 87 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 88 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 89 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 90 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 91 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 92 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 93 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 94 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 95 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 96 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 97 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 98 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 99 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 100 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 101 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 102 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 103 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 104 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 105 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 106 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 107 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 108 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 109 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 110 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 111 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 112 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 113 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 114 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 115 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 116 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 117 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 118 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 119 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 120 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 121 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 122 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 123 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 124 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 125 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 126 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
                 ; 127 (-)
-                FSurface SDR_0_PERCENT  |   SCF_NONE
+                FSurfaceBase SDR_0_PERCENT  |   SCF_NONE
+
+                ; 0 (-)
+                FSurfaceExtra SCF_ANIM_0x02
+                ; 1 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 2 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 3 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 4 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 5 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 6 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 7 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 8 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 9 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 10 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 11 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 12 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 13 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 14 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 15 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 16 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 17 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 18 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 19 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 20 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 21 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 22 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 23 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 24 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 25 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 26 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 27 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 28 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 29 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 30 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 31 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 32 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 33 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 34 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 35 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 36 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 37 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 38 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 39 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 40 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 41 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 42 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 43 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 44 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 45 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 46 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 47 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 48 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 49 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 50 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 51 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 52 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 53 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 54 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 55 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 56 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 57 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 58 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 59 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 60 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 61 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 62 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 63 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 64 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 65 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 66 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 67 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 68 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 69 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 70 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 71 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 72 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 73 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 74 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 75 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 76 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 77 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 78 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 79 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 80 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 81 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 82 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 83 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 84 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 85 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 86 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 87 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 88 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 89 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 90 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 91 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 92 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 93 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 94 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 95 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 96 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 97 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 98 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 99 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 100 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 101 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 102 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 103 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 104 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 105 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 106 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 107 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 108 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 109 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 110 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 111 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 112 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 113 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 114 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 115 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 116 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 117 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 118 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 119 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 120 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 121 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 122 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 123 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 124 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 125 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 126 (-)
+                FSurfaceExtra SCF_ANIM_None
+                ; 127 (-)
+                FSurfaceExtra SCF_ANIM_None
 
                 endif ; ~_TILEMAP_TEST_SURFACE_

@@ -14,6 +14,9 @@ Interrupt:
                 DEC (HL)
                 CALL Z, Functions.AnimTile
 
+                ; SET_PAGE_TILEMAP
+                ; CALL Tilemap.AnimTile.Sampling
+
                 RET
 
                 endif ; ~ _CORE_MODULE_GAME_INTERRUPT_

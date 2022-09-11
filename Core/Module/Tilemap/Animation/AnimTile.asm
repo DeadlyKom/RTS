@@ -9,69 +9,90 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-AnimTile        ; установка обртного счётчика
+AnimTile:       ; установка обртного счётчика
                 LD (HL), DURATION_TILE_ANIM
+                
+                ; проверка наличие в буфере анимированных тайлов
+                LD A, (.Size)
+                OR A
+                CALL M, Sampling                                                ; если в массиве есть свободное место, произвести выборку тайла
 
-                CALL TileSampling
+                ; пройтись по всем анимациям
+                LD A, (.Size)
+                ADD A, ANIMATED_TILES
+                RET Z                                                           ; выход в массиве нет анимированных тайлов
+
+                ; инициализация поиска элемента
+                LD HL, .Array
+                LD D, HIGH RenderBuffer
+                LD B, A
+                LD C, %01110000
+
+.Loop           ; поиск валидного элемента
+                LD E, (HL)                                                      ; чтение FAnimTile.Offset
+                INC HL
+
+                BIT 7, (HL)
+                JR NZ, .NextElement                                             ; старший бит, элемент не валидный
+
+                DEC (HL)
+                JP M, .DecNextElement                                           ; счётчик обнулён, элемент не валидный
+
+                LD A, (HL)
+                ADD A, A
+                ADD A, A
+                ADD A, A
+                ADD A, A
+
+                EX DE, HL
+                XOR (HL)
+                AND C
+                XOR (HL)
+                LD (HL), A
+                EX DE, HL
+
+.NextElement    INC HL
+                DJNZ .Loop
+
                 RET
 
-.Size           DB #00
-.Array          FAnimTile = $
-                DS FAnimTile * ANIMATED_TILES
+.DecNextElement ; уменьшение счётчика
+                LD A, (.Size)
+                DEC A
+                LD (.Size), A
+                JR .NextElement
 
-;                 ; инициализация
-;                 LD HL, .Counter
-;                 LD DE, RenderBuffer
-;                 LD B, RenderBufSize
-;                 LD C, RENDER_INC
+.Array:         FAnimTile = $
+                DS FAnimTile * ANIMATED_TILES, #FF
+.Size:          DB -ANIMATED_TILES                                              ; количество свободных элементов
 
-; .Loop           ; основной цикл обновления рендер буфера
-;                 LD A, (DE)
-;                 ADD A, A
-;                 JR C, .NextCell
-;                 JR Z, .Sampling
+Sampling:       ; выборка тайла для анимации
+                CALL TileSampling
+                RET C                                                           ; выход, не получилось найти анимированный тайл
 
-;                 RRA
-;                 ADD A, C
-;                 BIT RENDER_INC_BIT, A
-;                 JR Z, .SetUpdate
-                
-;                 INC (HL)
-;                 XOR A
+                ; поиск свободной ячейки
+                LD HL, AnimTile.Array
+                LD B, ANIMATED_TILES
+                LD A, #FF
 
-; .SetUpdate      ; установка обновления тайла
-;                 OR RENDER_TILE
-;                 LD (DE), A
+.NextLoop       INC HL
+                CP (HL)
+                JR Z, .SetSampling 
+                INC HL
+                DJNZ .NextLoop
+                RET
 
-; .NextCell       INC E
-;                 DJNZ .Loop
+.SetSampling    ; сохранение данных
+                LD (HL), E
+                DEC HL
+                EX AF, AF'
+                LD (HL), A  ; FAnimTile.Offset
 
-;                 RET
+                ; увеличение счётчика
+                LD HL, AnimTile.Size
+                INC (HL)
 
-; .Sampling       
-; .Counter        EQU $+1
-;                 LD A, #08
-;                 DEC A
-;                 JP M, .NextCell
-
-;                 EXX
-;                 CALL Math.Rand8
-;                 EXX
-
-;                 CP #0F                                                          ; чем меньше тем реже
-;                 JR NC, .NextCell
-
-;                 CP #10                                                          ; чем меньше тем реже
-;                 JR NC, .L1
-;                 DEC (HL)
-;                 LD A, %00010000
-;                 JR .SetUpdate
-
-; .L1             CP #10                                                          ; чем меньше тем реже
-;                 JR NC, .NextCell
-;                 DEC (HL)
-;                 LD A, %00110000
-;                 JR .SetUpdate
+                RET
 
                 display " - Anim Tile : \t\t", /A, AnimTile, " = busy [ ", /D, $ - AnimTile, " bytes  ]"
 

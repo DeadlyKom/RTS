@@ -2,10 +2,8 @@
                 ifndef _CORE_MODULE_TABLE_GRAPHICS_TILEMAP_PACK_1_
                 define _CORE_MODULE_TABLE_GRAPHICS_TILEMAP_PACK_1_
 Water:          incbin "Core/Module/Sprites/Tilemap/Pack 1/Water/Water.spr"
-                incbin "Core/Module/Sprites/Tilemap/Pack 1/Water/WaterReflections_1_0.spr"
                 incbin "Core/Module/Sprites/Tilemap/Pack 1/Water/WaterReflections_1_1.spr"
-                incbin "Core/Module/Sprites/Tilemap/Pack 1/Water/WaterReflections_2_0.spr"
-                incbin "Core/Module/Sprites/Tilemap/Pack 1/Water/WaterReflections_2_1.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Water/WaterReflections_1_0.spr"
 Coast_0011:     incbin "Core/Module/Sprites/Tilemap/Pack 1/Coast/Coast_3.spr"
 Coast_0110:     incbin "Core/Module/Sprites/Tilemap/Pack 1/Coast/Coast_1.spr"
 Coast_0111:     incbin "Core/Module/Sprites/Tilemap/Pack 1/Coast/Coast_0.spr"
