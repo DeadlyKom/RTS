@@ -2,10 +2,11 @@
                 ifndef _CONST_INCLUDES_
                 define _CONST_INCLUDES_
 
+                include "Game.inc"
                 include "Config.inc"
                 include "Color.inc"
                 include "GameScreen.inc"
-                include "Frame.inc"
+                include "Render.inc"
                 include "Gameplay.inc"
                 include "Hardware.inc"
                 include "Input.inc"

@@ -6,7 +6,7 @@
                 ORG Adr.Module.Game.Second
                 module Game
 
-                display "\'Game Second\' :\t\t\t-------------------- [ ", /D, SizeSecond, " bytes / ", /D, SizeInSectorsS, " sector(s) ] \t-------------------------------------------------"
+                display "\'Game Second\' :\t\t-------------------- [ ", /D, SizeSecond, " bytes / ", /D, SizeInSectorsS, " sector(s) ] \t-------------------------------------------------"
 
 BeginSecond:    EQU $
                 include "Core/Module/Tilemap/include.inc"

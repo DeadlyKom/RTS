@@ -7,5 +7,6 @@
                 include "Screen.inc"
                 include "Memory.inc"
                 include "Interrupt.inc"
+                include "Flags.inc"
 
                 endif ; ~_MACRO_INCLUDE_

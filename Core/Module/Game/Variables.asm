@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_GAME_VARIABLES_
                 define _CORE_MODULE_GAME_VARIABLES_
 
-                module Tilemap
+                module Tilemap                                                  ; возможно перенести в область переменных структуры FGame
 Size:           FMapSize 0, 0                                                   ; размер карты
 SizeNEG:        FMapSize 0, 0                                                   ; размер карты (отрицательные значения)
 Offset:         FLocation 0, 0                                                  ; смещения тайловой карты

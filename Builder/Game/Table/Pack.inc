@@ -6,7 +6,7 @@
                 ORG Adr.Module.Game.Third
                 module Game
 
-                display "\'Game Third\' :\t\t\t-------------------- [ ", /D, SizeThird, " bytes / ", /D, SizeInSectorsT, " sector(s) ] \t-------------------------------------------------"
+                display "\'Game Third\' :\t\t-------------------- [ ", /D, SizeThird, " bytes / ", /D, SizeInSectorsT, " sector(s) ] \t-------------------------------------------------"
 
 BeginThird:     EQU $
                 include "Core/Module/Tables/BypassFOW.inc"                      ; таблица обхода FOW

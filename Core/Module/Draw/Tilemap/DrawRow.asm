@@ -31,7 +31,7 @@ DrawRow:        ; инициализация
 
                 LD A, (HL)
                 ADD A, A
-                JR C, SkipRender
+                JR NC, SkipRender
                 ; RES 7, (HL)
                 EX AF, AF'
                 

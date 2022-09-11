@@ -42,4 +42,8 @@ Counter         DB #00                                                      	; �
 Location        FLocation 0, 0                                              	; позиция
 				ends
 
+				struct FFlags
+				DB #00
+				ends
+
 				endif ; ~_STRUCT_BASE_

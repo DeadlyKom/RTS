@@ -4,6 +4,7 @@
 
                 include "Base.inc"
                 include "Config.inc"
+                include "Game.inc"
 
                 include "Sprite.inc"
                 include "Animation.inc"

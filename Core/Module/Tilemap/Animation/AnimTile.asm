@@ -28,14 +28,23 @@ AnimTile:       ; установка обртного счётчика
                 LD B, A
                 LD C, %01110000
 
-.Loop           ; поиск валидного элемента
+.Loop           LD A, B
+                INC A
+
+.SearchValid    ; поиск валидного элемента
                 LD E, (HL)                                                      ; чтение FAnimTile.Offset
                 INC HL
 
                 BIT 7, (HL)
-                JR NZ, .NextElement                                             ; старший бит, элемент не валидный
+                JR Z, .ValidElement
+                INC HL
 
-                DEC (HL)
+                DEC A
+                JR NZ, .SearchValid
+
+                RET
+
+.ValidElement   DEC (HL)
                 JP M, .DecNextElement                                           ; счётчик обнулён, элемент не валидный
 
                 LD A, (HL)
@@ -48,6 +57,7 @@ AnimTile:       ; установка обртного счётчика
                 XOR (HL)
                 AND C
                 XOR (HL)
+                OR #03                                                          ; полный цикл обновления тайла
                 LD (HL), A
                 EX DE, HL
 

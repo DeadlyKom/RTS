@@ -16,9 +16,9 @@ Initialize:     ; -----------------------------------------
                 CALL Functions.MemcpyTilemap
 
                 ; ; set update all visible screen
-                ; LD HL, RenderBuffer + 0xC0
-                ; LD DE, WORD_RENDER_ALL_FLAGS
-                ; CALL MEMSET.SafeFill_192
+                LD HL, RenderBuffer + 0xC0
+                LD DE, #8383
+                CALL SafeFill_192
 
                 ; -----------------------------------------
                 ; очистка экранов

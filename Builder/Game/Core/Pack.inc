@@ -6,7 +6,7 @@
                 ORG Adr.Module.Game.First
                 module Game
 
-                display "\'Game First\' :\t\t\t-------------------- [ ", /D, SizeFirst, " bytes / ", /D, SizeInSectorsF, " sector(s) ] \t-------------------------------------------------"
+                display "\'Game First\' :\t\t-------------------- [ ", /D, SizeFirst, " bytes / ", /D, SizeInSectorsF, " sector(s) ] \t-------------------------------------------------"
 
 BeginFirst:     EQU $
                 include "Core/Module/Game/include.inc"

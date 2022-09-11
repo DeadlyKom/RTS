@@ -9,13 +9,14 @@
 ; Note:
 ; -----------------------------------------
 Interrupt:      
-.AnimTiles      ; ******* Animation Tiles *******
+.AnimTiles      ; ********** Animation Tiles **********
                 LD HL, Tilemap.Animation.Countdown
                 DEC (HL)
                 CALL Z, Functions.AnimTile
 
-                ; SET_PAGE_TILEMAP
-                ; CALL Tilemap.AnimTile.Sampling
+.SwapScreens    ; ********** Swap Screens **********
+                POP_RENDER_FLAG FINISHED_BIT
+                CALL NZ, SwapScreens
 
                 RET
 

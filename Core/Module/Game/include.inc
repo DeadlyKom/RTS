@@ -5,6 +5,7 @@
                 include "EntryPoint.asm"
                 include "Initialize.asm"
                 include "Loop.asm"
+                include "Render.asm"
                 include "Interrupt.asm"
                 include "Variables.asm"
 

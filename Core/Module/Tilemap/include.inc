@@ -12,6 +12,7 @@
 
                 ;
                 include "Convert/GetAddress.asm"
+                include "Control/ShiftRenderBuffer.asm"
 
                 ; memcpy
                 include "Core/Module/Memory/MemcpyTilemap.asm"

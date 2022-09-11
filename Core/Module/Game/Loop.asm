@@ -9,7 +9,9 @@
 ; Note:
 ; -----------------------------------------
 GameLoop:       SET_SCREEN_SHADOW
-.Loop           CALL DrawTileRows
+
+.Loop           CHECK_RENDER_FLAG FINISHED_BIT
+                CALL Z, Render
                 JP .Loop
 
                 endif ; ~_MODULE_GAME_LOOP_
