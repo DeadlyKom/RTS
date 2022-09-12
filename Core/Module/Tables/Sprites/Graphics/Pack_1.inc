@@ -22,4 +22,19 @@ Ground_5:       incbin "Core/Module/Sprites/Tilemap/Pack 1/Ground/Sand_5.spr"
 Ground_6:       incbin "Core/Module/Sprites/Tilemap/Pack 1/Ground/Sand_6.spr"
 Ground_7:       incbin "Core/Module/Sprites/Tilemap/Pack 1/Ground/Sand_7.spr"
 
+Foliage_0:      incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Foliage_0_1.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Foliage_0_2.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Foliage_0_1.spr"
+
+Foliage_1:      incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Foliage_1_1.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Foliage_1_2.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Foliage_1_1.spr"
+
+Dracunculus:    incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Dracunculus_0.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Dracunculus_5.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Dracunculus_4.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Dracunculus_3.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Dracunculus_2.spr"
+                incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Dracunculus_1.spr"
+
                 endif ; ~ _CORE_MODULE_TABLE_GRAPHICS_TILEMAP_PACK_1_

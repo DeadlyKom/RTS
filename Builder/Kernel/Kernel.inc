@@ -97,6 +97,7 @@ Functions
 .LoadFont       EQU Kernel.Functions.LoadFont                                   ; загрузка языковых шрифтов
 .LaunchLevel    EQU Kernel.Functions.LaunchLevel                                ; запуск уровня
 .AnimTile       EQU Kernel.Functions.AnimTile                                   ; анимация тайлов
+; .Sampling       EQU Kernel.Functions.Sampling                                   ; выборка анимации тайлов
 .ShiftRenderBuf EQU Kernel.Functions.ShiftRenderBuf                             ; сдвиг буфера рендера
 .MemcpyTilemap  EQU Kernel.Functions.MemcpyTilemap                              ; копирование видимой части тайловой карты в буфер
 .TextToBuffer   EQU Kernel.Functions.TextToBuffer
