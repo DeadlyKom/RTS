@@ -36,6 +36,12 @@ Begin:          EQU $
                 include "Modules/Include.inc"
 
                 include "Core/Module/Tables/ShiftTable.inc"                     ; таблица сдвигов (3584 байт)
+
+                ; отладочная
+                ifdef _DEBUG
+                include "Core/Module/Utils/Debug/Console.asm"
+                include "Core/Module/Utils/Debug/FPS_Counter.asm"
+                endif
 Size:           EQU $ - Begin
 SizeInSectors   EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 

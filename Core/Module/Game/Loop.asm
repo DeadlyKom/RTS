@@ -8,10 +8,10 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-GameLoop:       SET_SCREEN_SHADOW
+GameLoop:       SHOW_BASE_SCREEN
 
 .Loop           CHECK_RENDER_FLAG FINISHED_BIT
-                CALL Z, Render
+                CALL Z, Render.Level
                 JP .Loop
 
                 endif ; ~_MODULE_GAME_LOOP_

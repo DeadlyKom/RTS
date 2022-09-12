@@ -16,7 +16,13 @@ Interrupt:
 
 .SwapScreens    ; ********** Swap Screens **********
                 POP_RENDER_FLAG FINISHED_BIT
-                CALL NZ, SwapScreens
+                CALL NZ, Render.Swap
+
+                ifdef _DEBUG
+.Debug_FPS      ; ********** Swap Screens **********
+                CALL FPS_Counter.Tick
+                
+                endif
 
                 RET
 

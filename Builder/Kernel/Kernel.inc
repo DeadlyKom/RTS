@@ -105,4 +105,19 @@ Functions
 .StringToBuffer EQU Kernel.Functions.StringToBuffer
 .DrawCharToScr  EQU Kernel.Functions.DrawCharToScr
 
+; debug
+                ifdef _DEBUG
+Console:
+.DrawChar       EQU Kernel.Console.DrawChar
+.DrawByte       EQU Kernel.Console.DrawByte
+.SetCursor      EQU Kernel.Console.SetCursor
+.SetScreenAdr   EQU Kernel.Console.SetScreenAdr
+.SetAttribute   EQU Kernel.Console.SetAttribute
+FPS_Counter:
+.Tick           EQU Kernel.FPS_Counter.Tick
+.Frame          EQU Kernel.FPS_Counter.Frame
+.Render         EQU Kernel.FPS_Counter.Render
+
+                endif
+
                 endif ; ~_BUILDER_KERNEL_

@@ -59,11 +59,16 @@ DrawSpriteOneATTR  macro Sprite?, X?, Y?, Width?, Height?
 HiddenScreenAdr macro Reg?
                 LD A, (MemoryPageRef)
                 AND SCREEN_MASK
-                ; LD Reg?, #C0
-                LD Reg?, #40
-                JR Z, $+4
-                ; LD Reg?, #40
                 LD Reg?, #C0
+                JR Z, $+4
+                LD Reg?, #40
+                endm
+HiddenScreenAdr_ macro Reg?
+                LD A, (MemoryPageRef)
+                AND SCREEN_MASK
+                SET 7, Reg?
+                JR Z, $+4
+                RES 7, Reg?
                 endm
 ZX_COLOR_IPBF   macro Inc?, Paper?, Bright?, Flash?
                 DB ((Flash? << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)
