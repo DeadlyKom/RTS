@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_DRAW_MONOCHROME_DRAW_STRING_
-                define _CORE_MODULE_DRAW_MONOCHROME_DRAW_STRING_
+                ifndef _CORE_MODULE_DRAW_STRING_
+                define _CORE_MODULE_DRAW_STRING_
 
                 module Monochrome
 ; -----------------------------------------
@@ -205,4 +205,4 @@ NotShift:       LD A, B
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_MONOCHROME_DRAW_STRING_
+                endif ; ~ _CORE_MODULE_DRAW_STRING_

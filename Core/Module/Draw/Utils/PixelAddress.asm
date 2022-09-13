@@ -1,8 +1,8 @@
 
-                ifndef _CORE_MODULE_DRAW_ATTRIBUTE_PIXEL_ADDRESS_
-                define _CORE_MODULE_DRAW_ATTRIBUTE_PIXEL_ADDRESS_
+                ifndef _CORE_MODULE_DRAW_UTILS_PIXEL_ADDRESS_
+                define _CORE_MODULE_DRAW_UTILS_PIXEL_ADDRESS_
 
-                module Attribute
+                module Utils
 ; -----------------------------------------
 ; расчёт экраного адреса
 ; In:
@@ -71,4 +71,4 @@ PixelAddressP:  LD A, D
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_ATTRIBUTE_PIXEL_ADDRESS_
+                endif ; ~ _CORE_MODULE_DRAW_UTILS_PIXEL_ADDRESS_

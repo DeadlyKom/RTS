@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_STENCIL_SPRITE_
-                define _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_STENCIL_SPRITE_
+                ifndef _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_STENCIL_SPRITE_
+                define _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_STENCIL_SPRITE_
 
                 module Attribute
 ; -----------------------------------------
@@ -10,6 +10,7 @@
 ; Out:
 ; Corrupt:
 ; Note:
+;   данные о спрайте находятся в самом спрайте
 ; -----------------------------------------
 DrawStencilSpr: LD E, (HL)
                 INC HL
@@ -56,4 +57,4 @@ DrawStencilSpr: LD E, (HL)
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_STENCIL_SPRITE_
+                endif ; ~ _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_STENCIL_SPRITE_

@@ -1,8 +1,8 @@
 
-                ifndef _CORE_MODULE_DRAW_ATTRIBUTE_PIXEL_ATTRIBUTE_
-                define _CORE_MODULE_DRAW_ATTRIBUTE_PIXEL_ATTRIBUTE_
+                ifndef _CORE_MODULE_DRAW_UTILS_PIXEL_ATTRIBUTE_
+                define _CORE_MODULE_DRAW_UTILS_PIXEL_ATTRIBUTE_
 
-                module Attribute
+                module Utils
 ; -----------------------------------------
 ; конверсия экраного адреса в адрес атрибутов
 ; In:
@@ -27,4 +27,4 @@ PixelAttribute: LD A, D
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_ATTRIBUTE_PIXEL_ATTRIBUTE_
+                endif ; ~ _CORE_MODULE_DRAW_UTILS_PIXEL_ATTRIBUTE_

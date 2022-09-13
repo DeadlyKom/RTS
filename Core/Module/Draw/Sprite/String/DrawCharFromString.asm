@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_DRAW_MONOCHROME_DRAW_CHAR_FROM_STRING_
-                define _CORE_MODULE_DRAW_MONOCHROME_DRAW_CHAR_FROM_STRING_
+                ifndef _CORE_MODULE_DRAW_DRAW_CHAR_FROM_STRING_
+                define _CORE_MODULE_DRAW_DRAW_CHAR_FROM_STRING_
 
                 module Monochrome
 ; -----------------------------------------
@@ -74,7 +74,6 @@ DrawCharToScr:  ; добавление смещение к строке
                 INC A
                 LD B, A
                 
-
                 ; -----------------------------------------
                 ; отрисовка спрайта без атрибутами
                 ; In:
@@ -93,4 +92,4 @@ DrawCharToScr:  ; добавление смещение к строке
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_MONOCHROME_DRAW_CHAR_FROM_STRING_
+                endif ; ~ _CORE_MODULE_DRAW_DRAW_CHAR_FROM_STRING_

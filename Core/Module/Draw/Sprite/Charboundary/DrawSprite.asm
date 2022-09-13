@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_SPRITE_
-                define _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_SPRITE_
+                ifndef _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_SPRITE_
+                define _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_SPRITE_
 
                 module Attribute
 ; -----------------------------------------
@@ -81,4 +81,4 @@ DrawSpriteTwo:  CALL PixelAddressC
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_SPRITE_
+                endif ; ~ _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_SPRITE_

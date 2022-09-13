@@ -18,15 +18,19 @@ Begin:          EQU $
                 include "Core/Module/Memory/MemSet.asm"
                 include "Core/Module/Memory/MemcpyPages.asm"
                 include "Core/Module/Memory/MemCopyFastLDIR.asm"
-                include "Core/Module/Draw/Attribute/PixelAddress.asm"
-                include "Core/Module/Draw/Attribute/PixelAttribute.asm"
-                include "Core/Module/Draw/Attribute/DrawCharBoundary.asm"
-                include "Core/Module/Draw/Attribute/DrawSprite.asm"
-                ; include "Core/Module/Draw/Monochrome/DrawSpriteTest.asm"
-                include "Core/Module/Draw/Monochrome/DrawSprite.asm"
-                include "Core/Module/Draw/Attribute/DrawStencilSprite.asm"
+                ; utils
+                include "Core/Module/Draw/Utils/PixelAddress.asm"
+                include "Core/Module/Draw/Utils/PixelAttribute.asm"
+                ; draw
+                include "Core/Module/Draw/Sprite/Charboundary/DrawCharboundary.asm"
+                include "Core/Module/Draw/Sprite/Charboundary/DrawSprite.asm"
+                include "Core/Module/Draw/Sprite/Charboundary/DrawStencilSprite.asm"
+                ; tilemap
                 include "Core/Module/Draw/Tilemap/DrawRow.asm"                  ; Game
                 include "Core/Module/Draw/Tilemap/DrawTileRows.asm"             ; Game
+
+                include "Core/Module/Draw/Old/DrawSprite.asm"                   ; ??
+                
                 include "Core/Module/Input/Include.inc"
                 include "Core/Module/Math/RNG/Rand8.asm"
                 include "Core/Module/Math/Div/Div8x8.asm"

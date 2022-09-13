@@ -74,9 +74,9 @@ Decompressor
 .Backward       EQU Kernel.Decompressor.Backward
 
 ; draw
-PixelAddressC   EQU Kernel.Attribute.PixelAddressC
-PixelAddressP   EQU Kernel.Attribute.PixelAddressP
-PixelAttribute  EQU Kernel.Attribute.PixelAttribute
+PixelAddressC   EQU Kernel.Utils.PixelAddressC
+PixelAddressP   EQU Kernel.Utils.PixelAddressP
+PixelAttribute  EQU Kernel.Utils.PixelAttribute
 DrawSpriteOne   EQU Kernel.Attribute.DrawSpriteOne
 DrawSpriteTwo   EQU Kernel.Attribute.DrawSpriteTwo
 DrawSpriteMono  EQU Kernel.Monochrome.DrawSpriteMono

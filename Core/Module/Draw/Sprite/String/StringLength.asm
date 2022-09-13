@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_DRAW_MONOCHROME_STRING_LENGTH_
-                define _CORE_MODULE_DRAW_MONOCHROME_STRING_LENGTH_
+                ifndef _CORE_MODULE_DRAW_STRING_LENGTH_
+                define _CORE_MODULE_DRAW_STRING_LENGTH_
 
                 module Monochrome
 ; -----------------------------------------
@@ -125,4 +125,4 @@ WordLength:     ; инициализация
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_MONOCHROME_STRING_LENGTH_
+                endif ; ~ _CORE_MODULE_DRAW_STRING_LENGTH_

@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_CHAR_BOUNDARY_
-                define _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_CHAR_BOUNDARY_
+                ifndef _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_CHAR_BOUNDARY_
+                define _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_CHAR_BOUNDARY_
 
                 module Attribute
 ; -----------------------------------------
@@ -55,4 +55,4 @@ DrawCharTwo:    PUSH BC
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_ATTRIBUTE_DRAW_CHAR_BOUNDARY_
+                endif ; ~ _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_CHAR_BOUNDARY_
