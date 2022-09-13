@@ -6,7 +6,7 @@
                 ORG Adr.Tilemap.Map
                 module Tilemap
 
-                display "\'Tilemap - Test\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\'Tilemap - Test\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Tilemap.Map, "]\t-------------------------------------------------"
 
 Begin:          EQU $
 

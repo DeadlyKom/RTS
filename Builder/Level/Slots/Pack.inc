@@ -6,7 +6,7 @@
                 ORG RenderBuffer
                 module Slot
 
-                display "\'Level Slots\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\'Level Slots\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, 2, "]\t-------------------------------------------------"
 
 Begin:          EQU $
                 include "Slots.inc"

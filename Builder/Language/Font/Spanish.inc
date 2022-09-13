@@ -6,7 +6,7 @@
                 ORG Adr.Spanish
                 module Spanish
 
-                display "\'Spanish Fonts\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t\t-------------------------------------------------"
+                display "\'Spanish Fonts\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]    [", /D, Page.Spanish, "]\t-------------------------------------------------"
 Begin:          EQU $
 
                 ; incbin "Core/Module/Sprites/Fonts/En/ASCII_Table.bin"

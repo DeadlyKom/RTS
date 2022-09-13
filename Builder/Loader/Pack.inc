@@ -6,7 +6,7 @@
                 ORG Adr.Loader
                 module Loader
 
-                display "\'Loader\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\'Loader\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Loader, "]\t-------------------------------------------------"
 
                 ifdef _REBUILD
                 include "../../Sprites/Menu/Loader/Compress.inc"

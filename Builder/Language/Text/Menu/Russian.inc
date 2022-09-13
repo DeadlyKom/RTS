@@ -6,7 +6,7 @@
                 ORG Adr.Module.MenuText
                 module Russian
 
-                display "\'Menu Text RU\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\'Menu Text RU\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Core, "]\t-------------------------------------------------"
 Begin:          EQU $
 
                 incbin "Ru/MenuRU_RU_Table.bin"

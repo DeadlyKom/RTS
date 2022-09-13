@@ -17,7 +17,6 @@ Graphics:
 .A              EQU Module.Graphics_A
                 endmodule
 
-
                 module Adr
 Menu:           EQU MemBank_01_DOS
 CaptainBridge:  EQU MemBank_01_DOS

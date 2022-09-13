@@ -11,9 +11,10 @@
                 ORG Adr.Interrupt
                 module Kernel
 
-                display "\'Kernel\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\'Kernel\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [2]\t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/Interrupt/Include.inc"
+                ; memory
                 include "Core/Module/Memory/Switch.asm"
                 include "Core/Module/Memory/MemSet.asm"
                 include "Core/Module/Memory/MemcpyPages.asm"
@@ -30,7 +31,7 @@ Begin:          EQU $
                 include "Core/Module/Draw/Tilemap/DrawTileRows.asm"             ; Game
 
                 include "Core/Module/Draw/Old/DrawSprite.asm"                   ; ??
-                
+
                 include "Core/Module/Input/Include.inc"
                 include "Core/Module/Math/RNG/Rand8.asm"
                 include "Core/Module/Math/Div/Div8x8.asm"

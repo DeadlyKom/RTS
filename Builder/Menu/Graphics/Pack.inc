@@ -6,7 +6,7 @@
                 ORG Adr.Module.Graphics.A
                 module Graphics
 
-                display "\'Menu - Graphics\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\'Menu - Graphics\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Graphics.A, "]\t-------------------------------------------------"
 
                 ifdef _REBUILD
                 include "Core/Module/Sprites/Main/NewGame/Compress.inc"
