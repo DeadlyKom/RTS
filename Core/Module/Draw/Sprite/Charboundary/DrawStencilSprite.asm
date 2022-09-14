@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_STENCIL_SPRITE_
                 define _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_STENCIL_SPRITE_
 
-                module Attribute
+                module Charboundary
 ; -----------------------------------------
 ; отрисовка спрайта с атрибутами
 ; In:

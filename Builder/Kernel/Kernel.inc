@@ -73,19 +73,23 @@ Decompressor
 .Forward        EQU Kernel.Decompressor.Forward
 .Backward       EQU Kernel.Decompressor.Backward
 
-; draw
+; draw 
 PixelAddressC   EQU Kernel.Utils.PixelAddressC
 PixelAddressP   EQU Kernel.Utils.PixelAddressP
 PixelAttribute  EQU Kernel.Utils.PixelAttribute
-DrawSpriteOne   EQU Kernel.Attribute.DrawSpriteOne
-DrawSpriteTwo   EQU Kernel.Attribute.DrawSpriteTwo
+
+DrawSpriteOne   EQU Kernel.Charboundary.DrawSpriteOne
+DrawSpriteTwo   EQU Kernel.Charboundary.DrawSpriteTwo
+DrawCharOne     EQU Kernel.Charboundary.DrawCharOne
+DrawCharTwo     EQU Kernel.Charboundary.DrawCharTwo
+DrawStencilSpr  EQU Kernel.Charboundary.DrawStencilSpr
+
 DrawSpriteMono  EQU Kernel.Monochrome.DrawSpriteMono
 DrawSpriteOR    EQU Kernel.Monochrome.DrawSpriteOR
 DrawSpriteORXOR EQU Kernel.Monochrome.DrawSpriteORXOR
-DrawStencilSpr  EQU Kernel.Attribute.DrawStencilSpr
+
 DrawTileRows    EQU Kernel.Tilemap.DrawTileRows
-DrawCharOne     EQU Kernel.Attribute.DrawCharOne
-DrawCharTwo     EQU Kernel.Attribute.DrawCharTwo
+
 ShiftTable      EQU Kernel.Tables.ShiftTable
 
 ; load modules

@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_CHAR_BOUNDARY_
                 define _CORE_MODULE_DRAW_CHARBOUNDARY_DRAW_CHAR_BOUNDARY_
 
-                module Attribute
+                module Charboundary
 ; -----------------------------------------
 ; отрисовка знакоместа с атрибутами (в одном экране)
 ; In:

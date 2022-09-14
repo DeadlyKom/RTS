@@ -11,6 +11,8 @@
                 ORG Adr.Interrupt
                 module Kernel
 
+                assert SizeInSectors <= 0x4000, page overflow
+
                 display "\'Kernel\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [2]\t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/Interrupt/Include.inc"
@@ -26,6 +28,7 @@ Begin:          EQU $
                 include "Core/Module/Draw/Sprite/Charboundary/DrawCharboundary.asm"
                 include "Core/Module/Draw/Sprite/Charboundary/DrawSprite.asm"
                 include "Core/Module/Draw/Sprite/Charboundary/DrawStencilSprite.asm"
+                include "Core/Module/Draw/Sprite/Shift/DrawSprite.asm"
                 ; tilemap
                 include "Core/Module/Draw/Tilemap/DrawRow.asm"                  ; Game
                 include "Core/Module/Draw/Tilemap/DrawTileRows.asm"             ; Game
