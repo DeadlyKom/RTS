@@ -67,7 +67,7 @@ PixelAddressP:  LD A, D
                 EX AF, AF'
                 RET
  
-                display " - Pixel Address : \t\t", /A, PixelAddressC, " = busy [ ", /D, $ - PixelAddressC, " bytes  ]"
+                display " - Pixel Address : \t\t\t", /A, PixelAddressC, " = busy [ ", /D, $ - PixelAddressC, " bytes  ]"
 
                 endmodule
 

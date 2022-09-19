@@ -148,6 +148,6 @@ RedefineKeys:   ; проиграть при переходе новый эффе
 .Break          ; ожидание отпускание ранее нажатой клавиши
                 JP Keyboard.WaitReleasedKey 
 
-                display " - Keyboard Select : \t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
+                display " - Keyboard Select : \t\t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_CONTROL_KEYBOARD_SELECT_

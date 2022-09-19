@@ -99,7 +99,7 @@ GetFoundPath:   ; FCoord CurrentCoord = BestCoord;
 
                 ; создать цепочку waypoints
                 CALL Utils.WaypointsSequencer.Create
-                JR C, $
+                DEBUG_BREAK_POINT_C
 
                 ; инициализация юнита
 .UnitIdx        EQU $+2

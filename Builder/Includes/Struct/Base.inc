@@ -25,16 +25,16 @@ Y               DB #00
 				struct FMapSize
 X               DB #00
 Y               DB #00
-				ends
+                ends
 
-				struct FLocation
+ 				struct FLocation
 X               DB #00
 Y               DB #00            
 				ends
 
 				struct FLocation16
-X               DW #0000
-Y               DW #0000
+X               FValue
+Y               FValue
 				ends
 
 				struct FWayPoint

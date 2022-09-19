@@ -77,7 +77,7 @@ DrawSpriteTwo:  CALL PixelAddressC
 .Box_2          DJNZ .Box_0
                 RET
 
-                display " - Draw Sprite : \t\t", /A, DrawSpriteOne, " = busy [ ", /D, $ - DrawSpriteOne, " bytes  ]"
+                display " - Draw Sprite : \t\t\t", /A, DrawSpriteOne, " = busy [ ", /D, $ - DrawSpriteOne, " bytes  ]"
 
                 endmodule
 

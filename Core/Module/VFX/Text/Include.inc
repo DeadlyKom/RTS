@@ -7,7 +7,7 @@
                 include "Const.inc"
                 include "Variables.inc"
 
-                display " - Text Render VFX : \t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
+                display " - Text Render VFX : \t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
 Begin:          EQU $
                 include "Core.asm"
                 include "Render.asm"

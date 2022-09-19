@@ -14,9 +14,7 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
                 ; загрузка информации об уровне
                 ; -----------------------------------------
                 CALL Info
-                ifdef _DEBUG
-                JR C, $                                                         ; произошла ошибка
-                endif
+                DEBUG_BREAK_POINT_C                                             ; произошла ошибка
 
                 ; -----------------------------------------
                 ; инициализация уровня
@@ -85,6 +83,6 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
 
 .FileNum        EQU ($-.FileArray) / FFileArea
 
-                display " - Load Level : \t\t", /A, Data, " = busy [ ", /D, $ - Data, " bytes  ]"
+                display " - Load Level : \t\t\t", /A, Data, " = busy [ ", /D, $ - Data, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_LOAD_AND_LAUNCH_LEVEL_

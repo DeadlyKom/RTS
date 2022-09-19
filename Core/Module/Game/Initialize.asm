@@ -12,7 +12,7 @@ Initialize:     ; -----------------------------------------
                 ; инициализация видимой части карты
                 ; -----------------------------------------
                 ; копирование видимой части тайловой карты в буфер
-                LD HL, (Game.Tilemap.CachedAddress)
+                LD HL, (GameVar.TilemapCachedAdr)
                 CALL Functions.MemcpyTilemap
 
                 ; ; set update all visible screen

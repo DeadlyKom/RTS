@@ -6,7 +6,7 @@
                 ORG Adr.Module.MsgText
                 module Russian
 
-                display "\'Message Text RU\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Core, "]\t-------------------------------------------------"
+                display "\'Message Text RU\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Core, "]\t-------------------------------------------------"
 Begin:          EQU $
 
                 incbin "Ru/MessageRU_RU_Table.bin"

@@ -6,7 +6,7 @@
                 ORG Adr.Module.MenuText
                 module English
 
-                display "\'Menu Text EN\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Core, "]\t-------------------------------------------------"
+                display "\'Menu Text EN\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Core, "]\t-------------------------------------------------"
 Begin:          EQU $
 
                 incbin "En/MenuEN_EN_Table.bin"

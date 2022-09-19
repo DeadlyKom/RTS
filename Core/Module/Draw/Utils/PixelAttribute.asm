@@ -23,7 +23,7 @@ PixelAttribute: LD A, D
                 LD D, A
                 RET
 
-                display " - Pixel Attribute : \t\t", /A, PixelAttribute, " = busy [ ", /D, $ - PixelAttribute, " bytes  ]"
+                display " - Pixel Attribute : \t\t\t", /A, PixelAttribute, " = busy [ ", /D, $ - PixelAttribute, " bytes  ]"
 
                 endmodule
 

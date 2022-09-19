@@ -6,7 +6,7 @@
                 ORG Adr.Module.Options
                 module Options
 
-                display "\'Menu - Options\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Options, "] \t-------------------------------------------------"
+                display "\'Menu - Options\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Options, "] \t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/Menu/Options/Include.inc"
 Size:           EQU $ - Begin

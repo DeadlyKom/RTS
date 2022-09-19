@@ -26,6 +26,6 @@ Selected:       CALL WaitEvent
                 PUSH DE
                 JP FastLDIR
 
-                display " - Select : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - Select : \t\t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_SELECT_

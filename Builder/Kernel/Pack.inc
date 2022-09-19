@@ -13,7 +13,7 @@
 
                 assert SizeInSectors <= 0x4000, page overflow
 
-                display "\'Kernel\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [2]\t-------------------------------------------------"
+                display "\'Kernel\' :\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [2]\t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/Interrupt/Include.inc"
                 ; memory
@@ -28,18 +28,22 @@ Begin:          EQU $
                 include "Core/Module/Draw/Sprite/Charboundary/DrawCharboundary.asm"
                 include "Core/Module/Draw/Sprite/Charboundary/DrawSprite.asm"
                 include "Core/Module/Draw/Sprite/Charboundary/DrawStencilSprite.asm"
-                include "Core/Module/Draw/Sprite/Shift/DrawSprite.asm"
+                include "Core/Module/Draw/Sprite/Pixel/Include.inc"
                 ; tilemap
                 include "Core/Module/Draw/Tilemap/DrawRow.asm"                  ; Game
                 include "Core/Module/Draw/Tilemap/DrawTileRows.asm"             ; Game
-
-                include "Core/Module/Draw/Old/DrawSprite.asm"                   ; ??
-
-                include "Core/Module/Input/Include.inc"
+                ; math
                 include "Core/Module/Math/RNG/Rand8.asm"
                 include "Core/Module/Math/Div/Div8x8.asm"
+                include "Core/Module/Math/BoundVolume/IntersectsSpriteScreen.asm"
+                ; decompressor
                 include "Core/Module/Decompressor/Forward.asm"
                 include "Core/Module/Decompressor/Backward.asm"
+
+                include "Core/Module/Draw/Old/DrawSprite.asm"                   ; ??
+        
+                include "Core/Module/Input/Include.inc"
+                
                 include "Functions/Include.inc"
                 include "Modules/Include.inc"
 

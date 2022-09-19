@@ -26,6 +26,6 @@
                 LD HL, (IY + FTVFX.FrameComplited)
                 JP (HL)
 
-                display " - Main Interrupt : \t\t", /A, INT_Handler, " = busy [ ", /D, $ - INT_Handler, " bytes  ]"
+                display " - Main Interrupt : \t\t\t", /A, INT_Handler, " = busy [ ", /D, $ - INT_Handler, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_INTERRUPT_HANDLER_

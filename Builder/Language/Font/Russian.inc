@@ -6,7 +6,7 @@
                 ORG Adr.Russian
                 module Russian
 
-                display "\'Russian Fonts\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Russian, "]\t-------------------------------------------------"
+                display "\'Russian Fonts\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Russian, "]\t-------------------------------------------------"
 Begin:          EQU $
 
                 incbin "Core/Module/Sprites/Fonts/Ru/ASCII.spr"

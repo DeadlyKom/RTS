@@ -40,6 +40,6 @@ ShiftRenderBuf: ;
 
                 RET
 
-                display " - Shift Render Buffer: \t", /A, ShiftRenderBuf, " = busy [ ", /D, $ - ShiftRenderBuf, " bytes  ]"
+                display " - Shift Render Buffer: \t\t", /A, ShiftRenderBuf, " = busy [ ", /D, $ - ShiftRenderBuf, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_TILEMAP_SHIFT_RENDER_BUFFER_

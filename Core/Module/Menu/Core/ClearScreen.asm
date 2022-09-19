@@ -12,6 +12,6 @@
                 ATTR_C000_IPB RED, BLACK, 0
                 RET
 
-                display " - Clear Screen : \t\t", /A, CLS, " = busy [ ", /D, $ - CLS, " bytes  ]"
+                display " - Clear Screen : \t\t\t", /A, CLS, " = busy [ ", /D, $ - CLS, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_CLEAR_SCREEN_

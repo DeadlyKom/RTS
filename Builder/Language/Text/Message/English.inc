@@ -6,7 +6,7 @@
                 ORG Adr.Module.MsgText
                 module English
 
-                display "\'Message Text EN\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Core, "]\t-------------------------------------------------"
+                display "\'Message Text EN\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Core, "]\t-------------------------------------------------"
 Begin:          EQU $
 
                 incbin "En/MessageEN_EN_Table.bin"

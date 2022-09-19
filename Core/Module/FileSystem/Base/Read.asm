@@ -156,6 +156,6 @@ ReadSector:     LD HL, SharedBuffer
                 CALL TRDOS.EXE_CMD
                 RET
 
-                display " - Read : \t\t\t", /A, PrimaryRead, " = busy [ ", /D, $ - PrimaryRead, " bytes  ]"
+                display " - Read : \t\t\t\t", /A, PrimaryRead, " = busy [ ", /D, $ - PrimaryRead, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_READ_

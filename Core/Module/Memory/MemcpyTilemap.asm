@@ -17,7 +17,7 @@ EDGE_WORD_VALUE     EQU #0000
 ; -----------------------------------------
 Buffer:             ;
                     LD (.ContainerSP), SP
-                    LD A, (Game.Tilemap.Size.X)
+                    LD A, (GameVar.TilemapSize + FMapSize.X)
                     LD E, A
                     LD D, #00
                     
@@ -52,11 +52,11 @@ Buffer:             ;
                     edup
 
 .Top                ; top
-                    LD A, (Game.Tilemap.Offset.Y)
+                    LD A, (GameVar.TilemapOffset + FLocation.Y)
                     OR A
                     JP Z, .TopEdge
 
-                    LD HL, (Game.Tilemap.CachedAddress)
+                    LD HL, (GameVar.TilemapCachedAdr)
                     SBC HL, DE
 
                     LD SP, HL
@@ -85,13 +85,13 @@ Buffer:             ;
                     PUSH HL
                     
 .Bottom             ; bottom
-                    LD HL, Game.Tilemap.Offset.Y
+                    LD HL, GameVar.TilemapOffset + FLocation.Y
 .BottomClamp        EQU $+1
                     LD A, #00
                     ADD A, (HL)
                     JP C, .BottomEdge
 
-                    LD HL, (Game.Tilemap.CachedAddress)
+                    LD HL, (GameVar.TilemapCachedAdr)
 .BottomOffset       EQU $+1
                     LD BC, #0000
                     ADD HL, BC
@@ -122,11 +122,11 @@ Buffer:             ;
                     PUSH HL
 
 .Left               ; left
-                    LD A, (Game.Tilemap.Offset.Y)
+                    LD A, (GameVar.TilemapOffset + FLocation.Y)
                     OR A
                     JP Z, .LeftEdge
 
-                    LD HL, (Game.Tilemap.CachedAddress)
+                    LD HL, (GameVar.TilemapCachedAdr)
                     DEC HL
                     LD A, (HL)
                     LD (TilemapBuffer + Game.FOW.ROW_0 + 0), A
@@ -165,13 +165,13 @@ Buffer:             ;
                     LD (TilemapBuffer + Game.FOW.ROW_B + 0), A
 
 .Right              ; right
-                    LD HL, Game.Tilemap.Offset.Y
+                    LD HL, GameVar.TilemapOffset + FLocation.Y
 .RightClamp         EQU $+1
                     LD A, #00
                     ADD A, (HL)
                     JP C, .RightEdge
 
-                    LD HL, (Game.Tilemap.CachedAddress)
+                    LD HL, (GameVar.TilemapCachedAdr)
                     LD BC, SCREEN_TILE_X
                     ADD HL, BC
                     LD A, (HL)
@@ -259,7 +259,7 @@ Buffer:             ;
                     LD (TilemapBuffer + Game.FOW.ROW_B + 1), A
                     JP .Exit
 
-                    display " - Memory Copy Tilemap : \t", /A, Buffer, " = busy [ ", /D, $ - Buffer, " bytes  ]"
+                    display " - Memory Copy Tilemap : \t\t", /A, Buffer, " = busy [ ", /D, $ - Buffer, " bytes  ]"
 
                     endmodule
 

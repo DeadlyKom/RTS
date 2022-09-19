@@ -4,7 +4,7 @@
 
                 module Animation
 
-                display " - Animation : \t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
+                display " - Animation : \t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
 Begin:          EQU $
                 include "Core/Include.inc"
                 include "LeftFrame/Include.inc"

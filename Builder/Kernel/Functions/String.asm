@@ -128,6 +128,6 @@ JumpToString:   ; инициализация функции обработчик
                 LD A, #00
                 JP SetPage
 
-                display "\t - Text To Buffer : \t", /A, TextToBuffer, " = busy [ ", /D, $ - TextToBuffer, " bytes  ]"
+                display "\t - Text To Buffer : \t\t", /A, TextToBuffer, " = busy [ ", /D, $ - TextToBuffer, " bytes  ]"
 
                 endif ; ~_BUILDER_KERNEL_MODULE_STRING_TO_BUFFER_

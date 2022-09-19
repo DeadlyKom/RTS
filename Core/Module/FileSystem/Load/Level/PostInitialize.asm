@@ -22,7 +22,7 @@ PostInitialize: ; -----------------------------------------
                 ; -----------------------------------------
 .TilmapSize     EQU $+1
                 LD HL, #0000
-                LD (Game.Tilemap.Size), HL
+                LD (GameVar.TilemapSize), HL
 
                 ; -----------------------------------------
                 ; расчёт адрес расположения стартовой локации
@@ -30,10 +30,10 @@ PostInitialize: ; -----------------------------------------
 .StartLocation  EQU $+1
                 LD DE, #0000
                 CALL Game.Tilemap.GetAdrTilemap
-                LD (Game.Tilemap.CachedAddress), HL
+                LD (GameVar.TilemapCachedAdr), HL
 
                 RET          
 
-                display " - Load Level Post : \t\t", /A, PostInitialize, " = busy [ ", /D, $ - PostInitialize, " bytes  ]"
+                display " - Load Level Post : \t\t\t", /A, PostInitialize, " = busy [ ", /D, $ - PostInitialize, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_LOAD_LEVEL_POST_

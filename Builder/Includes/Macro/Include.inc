@@ -9,4 +9,6 @@
                 include "Interrupt.inc"
                 include "Flags.inc"
 
+                include "Debug.inc"
+
                 endif ; ~_MACRO_INCLUDE_

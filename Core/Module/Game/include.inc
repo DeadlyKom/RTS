@@ -7,6 +7,5 @@
                 include "Loop.asm"
                 include "Render.asm"
                 include "Interrupt.asm"
-                include "Variables.asm"
 
                 endif ; ~_MODULE_GAME_INCLUDE_

@@ -4,7 +4,7 @@
 
                 module Functions
 
-                display " - Functions : \t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
+                display " - Functions : \t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
 Begin:          EQU $
                 include "LoadFont.asm"
                 include "LoadLevel.asm"

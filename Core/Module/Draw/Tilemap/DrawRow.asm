@@ -161,7 +161,7 @@ DrawRow:        ; инициализация
                 DJNZ .Loop
                 RET
 
-                display " - Draw Row: \t\t\t", /A, SkipRender, " = busy [ ", /D, $ - SkipRender, " bytes  ]"
+                display " - Draw Row: \t\t\t\t", /A, SkipRender, " = busy [ ", /D, $ - SkipRender, " bytes  ]"
 
                 endmodule
 

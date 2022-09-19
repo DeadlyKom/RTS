@@ -6,7 +6,7 @@
                 ORG Adr.English
                 module English
 
-                display "\'English Fonts\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.English, "]\t-------------------------------------------------"
+                display "\'English Fonts\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.English, "]\t-------------------------------------------------"
 Begin:          EQU $
 
                 incbin "Core/Module/Sprites/Fonts/En/ASCII.spr"

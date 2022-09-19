@@ -13,7 +13,7 @@
 ; -----------------------------------------
 BuildPath:          ; создать цепочку waypoints
                     CALL Utils.WaypointsSequencer.Create
-                    JR C, $
+                    DEBUG_BREAK_POINT_C
 
                     ; инициализация юнита
                     LD HL, UnitArrayPtr

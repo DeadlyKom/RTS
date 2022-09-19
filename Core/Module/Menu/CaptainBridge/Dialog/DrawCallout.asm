@@ -211,6 +211,6 @@ SetATTR:        EX AF, AF'
                 EX AF, AF'
                 RET
 
-                display " - DrawCallout : \t\t", /A, DrawCallout, " = busy [ ", /D, $ - DrawCallout, " bytes  ]"
+                display " - DrawCallout : \t\t\t", /A, DrawCallout, " = busy [ ", /D, $ - DrawCallout, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_CALLOUT_

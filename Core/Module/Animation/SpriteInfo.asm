@@ -54,7 +54,7 @@ SpriteInfo:     GetUnitState                                                    
                 ; состояние хранится в рег. С
                 LD A, (IX + FUnit.Direction)
                 AND DF_DOWN_MASK
-                JP .Merger
+                JP .Merge
 
 .Composite      ; конверсия состояния для нижнего/верхнего спрайта
                 CALL Utils.Unit.State.GetState                                  ; A - хранит состояние юнита
@@ -75,7 +75,7 @@ SpriteInfo:     GetUnitState                                                    
                 ADD A, A        ; << 1
                 ADD A, A        ; << 1
 
-.Merger         ; слияние состояния и направоление
+.Merge          ; слияние состояния и направление
                 ADD A, A        ; << 1
                 OR C
                 ADD A, A        ; << 1

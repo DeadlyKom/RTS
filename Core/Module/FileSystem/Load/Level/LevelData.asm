@@ -78,6 +78,6 @@ Data:           ; -----------------------------------------
 
                 RET
 
-                display " - Load Level Data : \t\t", /A, Data, " = busy [ ", /D, $ - Data, " bytes  ]"
+                display " - Load Level Data : \t\t\t", /A, Data, " = busy [ ", /D, $ - Data, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_LOAD_LEVEL_DATA_

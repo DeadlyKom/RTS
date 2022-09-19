@@ -50,6 +50,6 @@ LoadFont:       ; инициализация
                 FFile { {FontRuName}, FontExt }                                 ; имя шрифта русского языка
                 FFile { {FontSpName}, FontExt }                                 ; имя шрифта испанского языка
 
-                display "\t - Load Font : \t\t", /A, LoadFont, " = busy [ ", /D, $ - LoadFont, " bytes  ]"
+                display "\t - Load Font : \t\t\t", /A, LoadFont, " = busy [ ", /D, $ - LoadFont, " bytes  ]"
 
                 endif ; ~_BUILDER_KERNEL_MODULE_CHANGE_LANGUAGE_

@@ -91,6 +91,6 @@ Fadeout:        DB #10, #00, #60, #55, #20, #80, #88, #60, #AA, #10, #00        
                 ; RRA     ; #1F         2, 3
                 ; RLA     ; #17         4, 5 - не обновляет
 
-                display "\t- VFX : \t\t", /A, Table, " = busy [ ", /D, $ - Table, " bytes  ]"
+                display "\t- VFX : \t\t\t", /A, Table, " = busy [ ", /D, $ - Table, " bytes  ]"
 
                 endmodule

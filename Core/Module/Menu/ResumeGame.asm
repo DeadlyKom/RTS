@@ -6,7 +6,7 @@
 Begin:          EQU $
 ResumeGame:     RET
 
-                display " - Resume Game : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - Resume Game : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                 endmodule
 

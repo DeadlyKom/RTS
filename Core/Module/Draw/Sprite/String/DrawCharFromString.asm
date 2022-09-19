@@ -88,7 +88,7 @@ DrawCharToScr:  ; добавление смещение к строке
                 POP BC
                 RET
 
-                display " - Draw Char : \t\t", /A, DrawCharToScr, " = busy [ ", /D, $ - DrawCharToScr, " bytes  ]"
+                display " - Draw Char : \t\t\t", /A, DrawCharToScr, " = busy [ ", /D, $ - DrawCharToScr, " bytes  ]"
 
                 endmodule
 

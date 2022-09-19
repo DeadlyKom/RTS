@@ -10,7 +10,7 @@
 ; -----------------------------------------
 Interrupt:      
 .AnimTiles      ; ********** Animation Tiles **********
-                LD HL, Tilemap.Animation.Countdown
+                LD HL, GameVar.TilemapCountdown
                 DEC (HL)
                 CALL Z, Functions.AnimTile
 

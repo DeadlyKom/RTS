@@ -42,6 +42,6 @@ AdrTilemap:     macro
                 LD L, A
                 endm
 
-                display " - Get Address Tilemap : \t", /A, GetAdrTilemap, " = busy [ ", /D, $ - GetAdrTilemap, " bytes  ]"
+                display " - Get Address Tilemap : \t\t", /A, GetAdrTilemap, " = busy [ ", /D, $ - GetAdrTilemap, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_UTILS_TILEMAP_GET_ADDRESS_

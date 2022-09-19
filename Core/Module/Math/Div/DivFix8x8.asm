@@ -48,7 +48,7 @@ DivFix8x8:      EX AF, AF'                                                      
                 JR NZ, .Loop
                 RET
 
-                display " - Divide Fix 8x8 : \t\t", /A, DivFix8x8, " = busy [ ", /D, $ - DivFix8x8, " bytes  ]"
+                display " - Divide Fix 8x8 : \t\t\t", /A, DivFix8x8, " = busy [ ", /D, $ - DivFix8x8, " bytes  ]"
 
                 endmodule
 

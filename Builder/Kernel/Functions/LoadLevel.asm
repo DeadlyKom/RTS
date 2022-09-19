@@ -12,6 +12,6 @@ LaunchLevel:    ; инициализация
                 SET_PAGE_FILE_SYS                                               ; включить страницу файловой системы
                 JP FileSystem.Level.LaunchLevel
 
-                display "\t - Launch Level : \t", /A, LaunchLevel, " = busy [ ", /D, $ - LaunchLevel, " bytes  ]"
+                display "\t - Launch Level : \t\t", /A, LaunchLevel, " = busy [ ", /D, $ - LaunchLevel, " bytes  ]"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_LOAD_LEVEL_INFO_

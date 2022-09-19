@@ -76,9 +76,7 @@ Saver:          ; -----------------------------------------
                 ADD A, (IX + FVariables.PackageSizeSec)
                 LD (IX + FVariables.PackageSizeSec), A
 
-                ifdef _DEBUG
-                JR C, $                                                         ; произошло переполнение
-                endif
+                DEBUG_BREAK_POINT_C                                             ; произошло переполнение
 
 .NextFile       ; переход к следующему файлу в массиве
                 POP HL
@@ -189,7 +187,7 @@ DrawExtension:  EX AF, AF'
 .Levels         BYTE " Levels \0"
 .Tilemap        BYTE "Tilemap \0"
 
-                display " - Saver : \t\t\t", /A, Saver, " = busy [ ", /D, $ - Saver, " bytes  ]"
+                display " - Saver : \t\t\t\t", /A, Saver, " = busy [ ", /D, $ - Saver, " bytes  ]"
 
                 endmodule
 

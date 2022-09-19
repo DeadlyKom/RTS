@@ -13,7 +13,7 @@
 ;   HL, DE, AF
 ; Note:
 ; -----------------------------------------
-DrawCharOne:    dup  7
+DrawCharOne:    dup 7
                 LD A, (HL)
                 LD (DE), A
                 INC HL
@@ -26,11 +26,12 @@ DrawCharOne:    dup  7
                 LD A, (HL)
                 LD (DE), A
                 RET
+
 DrawCharTwo:    PUSH BC
                 LD B, D
                 RES 7, B
                 LD C, E
-                dup  7
+                dup 7
                 LD A, (HL)
                 LD (DE), A
                 LD (BC), A
@@ -51,7 +52,7 @@ DrawCharTwo:    PUSH BC
                 POP BC
                 RET
 
-                display " - Draw Char : \t\t", /A, DrawCharOne, " = busy [ ", /D, $ - DrawCharOne, " bytes  ]"
+                display " - Draw Char : \t\t\t", /A, DrawCharOne, " = busy [ ", /D, $ - DrawCharOne, " bytes  ]"
 
                 endmodule
 

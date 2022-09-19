@@ -46,6 +46,6 @@ ControlMenu:    DB .Num-1
                 DB Language.Text.Menu.Kempston
 .Num            EQU ($-ControlMenu-1) / 3
 
-                display " - Control : \t\t\t", /A, MenuControl, " = busy [ ", /D, $ - MenuControl, " bytes  ]"
+                display " - Control : \t\t\t\t", /A, MenuControl, " = busy [ ", /D, $ - MenuControl, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_COTROL_

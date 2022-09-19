@@ -85,7 +85,7 @@ GetProperty:    LD A, (HL)                                                      
 
 ;                 RET
 
-                display " - Surface Property : \t", /A, GetProperty, " = busy [ ", /D, $ - GetProperty, " bytes  ]"
+                display " - Surface Property : \t\t", /A, GetProperty, " = busy [ ", /D, $ - GetProperty, " bytes  ]"
 
                 endmodule
 

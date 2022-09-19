@@ -207,7 +207,7 @@ ShowShadowScreen: LD BC, PORT_7FFD
                 OUT (C), A
                 RET
 
-                display " - Memory Switch : \t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - Memory Switch : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                 endmodule
 

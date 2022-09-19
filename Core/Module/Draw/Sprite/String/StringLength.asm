@@ -121,7 +121,7 @@ WordLength:     ; инициализация
                 SBC HL, BC
                 RET
 
-                display " - String Length : \t\t", /A, StringLength, " = busy [ ", /D, $ - StringLength, " bytes  ]"
+                display " - String Length : \t\t\t", /A, StringLength, " = busy [ ", /D, $ - StringLength, " bytes  ]"
 
                 endmodule
 

@@ -40,6 +40,6 @@ Loader:         ; подготовка
 
 .FileName       FFile { {LoaderName}, SystemExt }                               ; имя загрузчика
 
-                display "\t - Loader : \t\t", /A, Loader, " = busy [ ", /D, $ - Loader, " bytes  ]"
+                display "\t - Loader : \t\t\t", /A, Loader, " = busy [ ", /D, $ - Loader, " bytes  ]"
 
                 endif ; ~_BUILDER_KERNEL_MODULE_LOADER_

@@ -34,6 +34,6 @@ Setup:          ; сохранение IY
 
                 RET
 
-                display " - Setup : \t\t\t", /A, Setup, " = busy [ ", /D, $ - Setup, " bytes  ]"
+                display " - Setup : \t\t\t\t", /A, Setup, " = busy [ ", /D, $ - Setup, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_SETUP_

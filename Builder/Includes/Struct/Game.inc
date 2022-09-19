@@ -3,7 +3,13 @@
                 define _STRUCT_GAME_
 
                 struct FGame
-Render          FFlags                                                          ; флаги отрисовки
+Size:           FMapSize 0, 0                                                   ; размер карты
+SizeNEG:        FMapSize 0, 0                                                   ; размер карты (отрицательные значения)
+Offset:         FLocation 0, 0                                                  ; смещения тайловой карты
+CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты
+Countdown:      DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
+
+Render          FFlags 0                                                        ; флаги отрисовки
 
                 ends
 

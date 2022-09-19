@@ -13,7 +13,7 @@
                 LD HL, MainMenu.Functor
                 LD DE, MainMenu.Filename
                 CALL FindLoadText
-                JR C, $                                                         ; файл не найден
+                DEBUG_BREAK_POINT_C                                             ; файл не найден
 
                 ; -----------------------------------------
                 ; загрузка текста "командного мостика"
@@ -21,7 +21,7 @@
                 LD HL, CapBridge.Functor
                 LD DE, CapBridge.Filename
                 CALL FindLoadText
-                JR C, $                                                         ; файл не найден
+                DEBUG_BREAK_POINT_C                                             ; файл не найден
 
                 ; инициализация таблицы текста
                 LD HL, Adr.Module.MenuText
@@ -93,6 +93,6 @@ CapBridge:      ; -----------------------------------------
                 CALL FileSystem.Base.FindFile
                 RET
 
-                display " - Load Text : \t\t", /A, SetLanguage, " = busy [ ", /D, $ - SetLanguage, " bytes  ]"
+                display " - Load Text : \t\t\t", /A, SetLanguage, " = busy [ ", /D, $ - SetLanguage, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_LOAD_TEXT_

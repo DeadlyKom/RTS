@@ -6,7 +6,7 @@
                 ORG Adr.Module.CaptainBridge
                 module CaptainBridge
 
-                display "\'Menu - Captain Bridge\' :\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.CaptainBridge, "]\t-------------------------------------------------"
+                display "\'Menu - Captain Bridge\' :\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.CaptainBridge, "]\t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/Menu/CaptainBridge/Include.inc"
 Size:           EQU $ - Begin

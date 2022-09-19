@@ -62,6 +62,6 @@ Idx             = Idx + 1
 
                 DB Idx - 1, ROW_B + 1,              Idx + IDX_UP, (Idx & 0x0F) + ROW_DOWN
 
-                display " - Bypass FOW : \t\t", /A, Table, " = busy [ ", /D, $ - Table, " bytes  ]"
+                display " - Bypass FOW : \t\t\t", /A, Table, " = busy [ ", /D, $ - Table, " bytes  ]"
 
                 endmodule

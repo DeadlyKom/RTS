@@ -22,6 +22,6 @@ FadeoutNextText: LD HL, MenuVariables.Flags
 .NotAllFadeout  SET NEXT_FADE_BIT, (HL)
                 JP SetOption.NotUpdate
 
-                display " - Fadeout Text : \t\t", /A, PreFadeoutText, " = busy [ ", /D, $ - PreFadeoutText, " bytes  ]"
+                display " - Fadeout Text : \t\t\t", /A, PreFadeoutText, " = busy [ ", /D, $ - PreFadeoutText, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_FADEOUT_

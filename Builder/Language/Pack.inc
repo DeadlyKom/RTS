@@ -11,7 +11,7 @@
                 module Language
 
                 
-                display "\'Language\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Module.Language, "]\t-------------------------------------------------"
+                display "\'Language\' :\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Module.Language, "]\t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/Language/Include.inc"
 Size:           EQU $ - Begin
