@@ -1,21 +1,22 @@
 
-                            ifndef _STRUCTURE_UNIT_TYPE_
-                            define _STRUCTURE_UNIT_TYPE_
+                            ifndef _CONST_STRUCTURE_UNIT_TYPE_
+                            define _CONST_STRUCTURE_UNIT_TYPE_
+UNITS_TYPE_NUM              EQU 2                                               ; количество типов юнитов
+
 ; FUnit.Type
 
 ; сдвиг необходим для быстрого получить адрес из таблице по типу юнита (GetAdrInTable)
-Infantry                    EQU 0x00 << 1
-Tank                        EQU 0x01 << 1
-Gunner                      EQU 0x02 << 1
-HeavyGunner                 EQU 0x03 << 1
-Sniper                      EQU 0x04 << 1
-Engineer                    EQU 0x05 << 1
-ArmoredCarrier              EQU 0x06 << 1
-UNITS_TYPE_NUM              EQU 2                                               ; количество типов юнитов
+UNIT_INFANTRY               EQU 0x00 << 1
+UNIT_TANK                   EQU 0x01 << 1
+UNIT_GUNNER                 EQU 0x02 << 1
+UNIT_HEAVY_GUNNER           EQU 0x03 << 1
+UNIT_SNIPER                 EQU 0x04 << 1
+UNIT_ENGINEER               EQU 0x05 << 1
+UNIT_ARMORED_CARRIER        EQU 0x06 << 1
 
 FACTION_TYPE_BIT            EQU 0x07                                            ; тип фракции (0 - нейтральная, 1 - враждебная)
 FACTION_SUBTYPE_BIT         EQU 0x06
-COMPOSITE_UNIT_BIT          EQU 0x00                                            ; флаг что юнит является составной (из 2х частей)
+COMPOSITE_UNIT_BIT          EQU 0x00                                            ; флаг композитный юнит
 
 PLAYER_FACTION              EQU 0x00 << FACTION_SUBTYPE_BIT                     ; фракция игрока
 NEUTRAL_FACTION             EQU 0x01 << FACTION_SUBTYPE_BIT                     ; нейтральная фракция
@@ -27,6 +28,10 @@ FACTION_SUBTYPE             EQU 1 << FACTION_SUBTYPE_BIT
 FACTION_MASK                EQU %11000000
 COMPOSITE_UNIT              EQU 1 << COMPOSITE_UNIT_BIT
 IDX_UNIT_TYPE               EQU %00111110
+
+
+
+
 
 ; FUnit.State
 UNIT_STATE_IDLE             EQU 0x00 << 1
@@ -104,4 +109,4 @@ FUAF_COUNT_MASK_INV         EQU (~FUAF_COUNT_MASK) & 0xFF
 FAIF_NOT_INTERRUPT          EQU 0x00                                            ; бит невозможности прервать анимацию, она должна проиграться вся
 FAIF_END                    EQU 0x07                                            ; бит последний кадр
 
-                            endif ; ~_STRUCTURE_UNIT_TYPE_
+                            endif ; ~_CONST_STRUCTURE_UNIT_TYPE_

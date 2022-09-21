@@ -34,7 +34,7 @@ Horizontal:     EXX                                                             
                 ADD A, #08                                                      ; A += 8 (можно объеденить с значением 8 в данных спрайта)
 
                 EXX                                                             ; сохраним 
-                                                                                ; HL = FSprite.Dummy
+                                                                                ; HL = FSprite.Offset
                                                                                 ; DE = FSpriteLocation.OffsetByPixel.X
                 POP BC
 

@@ -5,7 +5,7 @@
 ; рисовани спрайта, по ранне настроенным значениям
 ; смотрите FastClipping и PixelClipping
 ; In:
-;   HL' - FSprite.Dummy
+;   HL' - FSprite.Offset
 ;   D'  - старший байт таблицы сдвига
 ; Out:
 ; Corrupt:
@@ -18,9 +18,9 @@
 ; -----------------------------------------
 Draw:           ; ---------------------------------------------
                 EXX                                                             ; сохраним 
-                                                                                ; HL = FSprite.Dummy
+                                                                                ; HL = FSprite.Offset
                                                                                 ; D  = старший байт таблицы сдвига
-                LD E, (HL)                                                      ; E = FSprite.Dummy (смещение + Data = адрес маски)
+                LD E, (HL)                                                      ; E = FSprite.Offset (смещение + Data = адрес маски)
                 INC HL
 
                 ; переключение страницы
@@ -53,7 +53,7 @@ Draw:           ; ---------------------------------------------
                 LD BC, #0000
 
                 EXX
-                LD A, L                                                         ; FSprite.Dummy
+                LD A, L                                                         ; FSprite.Offset
                 EX AF, AF'
                 LD A, C                                                         ; FSprite.Page
                 EXX
