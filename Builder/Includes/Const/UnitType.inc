@@ -13,10 +13,11 @@ UNIT_HEAVY_GUNNER           EQU 0x03 << 1
 UNIT_SNIPER                 EQU 0x04 << 1
 UNIT_ENGINEER               EQU 0x05 << 1
 UNIT_ARMORED_CARRIER        EQU 0x06 << 1
+UNIT_COMBAT_SHUTTLE         EQU 0x07 << 1
 
 FACTION_TYPE_BIT            EQU 0x07                                            ; тип фракции (0 - нейтральная, 1 - враждебная)
 FACTION_SUBTYPE_BIT         EQU 0x06
-COMPOSITE_UNIT_BIT          EQU 0x00                                            ; флаг композитный юнит
+COMPOSITE_UNIT_BIT          EQU 0x00                                            ; флаг, композитный юнит
 
 PLAYER_FACTION              EQU 0x00 << FACTION_SUBTYPE_BIT                     ; фракция игрока
 NEUTRAL_FACTION             EQU 0x01 << FACTION_SUBTYPE_BIT                     ; нейтральная фракция
@@ -30,29 +31,36 @@ COMPOSITE_UNIT              EQU 1 << COMPOSITE_UNIT_BIT
 IDX_UNIT_TYPE               EQU %00111110
 
 
-
-
-
 ; FUnit.State
-UNIT_STATE_IDLE             EQU 0x00 << 1
-UNIT_STATE_MOVE             EQU 0x01 << 1
-UNIT_STATE_ATTACK           EQU 0x02 << 1
-UNIT_STATE_DEAD             EQU 0x03 << 1
-UNIT_STATE_MOVE_ATTACK      EQU 0x04 << 1                                       ; состояние для 2х уровневых юнитов
+UNIT_RECONNAISSANCE_BIT     EQU 0x07                                            ; объект провёл разведку
+UNIT_STATE_ATTACK_BIT       EQU 0x02                                            ; объект атакует
+UNIT_STATE_MOVE_FLY_BIT     EQU 0x01                                            ; объект перемещается
+UNIT_SELECTED_BIT           EQU 0x00                                            ; объект выбран
 
-UNIT_STATE_MASK             EQU %00001110
-UNIT_STATE_INV_MASK         EQU (~UNIT_STATE_MASK) & 0xFF
-UNIT_STATE_MASK_EXTENDED    EQU %00001111
+UNIT_RECONNAISSANCE         EQU 1 << UNIT_RECONNAISSANCE_BIT                    ; объект провёл разведку
+UNIT_STATE_ATTACK           EQU 1 << UNIT_STATE_ATTACK_BIT                      ; объект атакует
+UNIT_STATE_MOVE_FLY         EQU 1 << UNIT_STATE_MOVE_FLY_BIT                    ; объект перемещается
+UNIT_SELECTED               EQU 1 << UNIT_SELECTED_BIT                          ; объект выбран
+UNIT_STATE_MASK             EQU UNIT_STATE_MOVE_FLY | UNIT_STATE_ATTACK
+
+; UNIT_STATE_IDLE             EQU 0x00 << 1
+; UNIT_STATE_MOVE             EQU 0x01 << 1
+; UNIT_STATE_ATTACK           EQU 0x02 << 1
+; UNIT_STATE_DEAD             EQU 0x03 << 1
+; UNIT_STATE_MOVE_ATTACK      EQU 0x04 << 1                                       ; состояние для 2х уровневых юнитов
+; UNIT_STATE_MASK             EQU %00001110
+; UNIT_STATE_INV_MASK         EQU (~UNIT_STATE_MASK) & 0xFF
+; UNIT_STATE_MASK_EXTENDED    EQU %00001111
+; FUSF_SELECTED_BIT           EQU 0x00                                            ; объект выбран
+; FUSF_REGENERATION_BIT       EQU 0x04                                            ; объект в состоянии регенерации
+; FUSE_RECONNAISSANCE_BIT     EQU 0x05                                            ; объект провёл разведку
+; FUSF_SELECTED               EQU 1 << FUSF_SELECTED_BIT
+; FUSF_REGENERATION           EQU 1 << FUSF_REGENERATION_BIT
+; FUSE_RECONNAISSANCE         EQU 1 << FUSE_RECONNAISSANCE_BIT
 
 
-FUSF_SELECTED_BIT           EQU 0x00                                            ; объект выбран
-FUSF_REGENERATION_BIT       EQU 0x04                                            ; объект в состоянии регенерации
-FUSE_RECONNAISSANCE_BIT     EQU 0x05                                            ; объект провёл разведку
-
-FUSF_SELECTED               EQU 1 << FUSF_SELECTED_BIT
-FUSF_REGENERATION           EQU 1 << FUSF_REGENERATION_BIT
-FUSE_RECONNAISSANCE         EQU 1 << FUSE_RECONNAISSANCE_BIT
-
+; FUnit.Rank
+UNIT_RANK_MASK              EQU %00000111
 
 ; FUnit.Direction
 DF_UP                       EQU %000                                            ; направление вверх

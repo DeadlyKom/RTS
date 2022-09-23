@@ -25,7 +25,7 @@ GetAdrInTable:  LD A, (IX + FUnit.Type)                                         
                 LD D, (HL)
                 DEC HL
                 ADD HL, DE
-                
+
                 RET
 
                 endif ; ~ _CORE_MODULE_UTILS_ADD_OFFSET_BY_UNIT_TYPE_

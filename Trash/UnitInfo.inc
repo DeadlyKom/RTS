@@ -74,7 +74,7 @@ FAIF_NOT_INTERRUPT          EQU 0x00                                            
 FAIF_END                    EQU 0x07                                            ; бит последний кадр
 
 
-                            struct FUnit                                        ; (0)
+                            struct FUnit_                                        ; (0)
 Health                      DB #00                                              ; 1 byte (количество жизни)
 Armor                       DB #00                                              ; 1 byte (количество брони)
 Rank                        DB #00                                              ; 1 byte (ранг)

@@ -5,8 +5,8 @@
 ; axis aligned bounding box
 
                 struct FAABB
-MIN             FLocation
-MAX             FLocation
+Y               FValue                                                          ; maxY (L), minY (H)
+X               FValue                                                          ; maxX (L), minX (H)
                 ends
 
                 endif ; ~_STRUCTURE_AABB_

@@ -24,6 +24,7 @@
                 include "TilemapBuffer.inc"
 
                 include "UnitType.inc"
+                include "UnitRank.inc"
 
                 include "Language.inc"
                 include "Tilemap.inc"

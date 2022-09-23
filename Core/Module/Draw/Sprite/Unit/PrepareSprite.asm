@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_DRAW_SPRITE_PIXEL_PREPARE_SPRITE_
-                define _CORE_MODULE_DRAW_SPRITE_PIXEL_PREPARE_SPRITE_
+                ifndef _CORE_MODULE_DRAW_SPRITE_UNIT_PREPARE_SPRITE_
+                define _CORE_MODULE_DRAW_SPRITE_UNIT_PREPARE_SPRITE_
 
 ; -----------------------------------------
 ; подготовка спрайта перед выводм на экран
@@ -33,6 +33,6 @@ Prepare:        EXX
 .ClipBottom
                 RET
 
-                display " - Prepare Sprite : \t\t\t", /A, Prepare, " = busy [ ", /D, $ - Prepare, " bytes  ]"
+                display " - Prepare Sprite Unit : \t\t", /A, Prepare, " = busy [ ", /D, $ - Prepare, " bytes  ]"
 
-                endif ; ~ _CORE_MODULE_DRAW_SPRITE_PIXEL_PREPARE_SPRITE_
+                endif ; ~ _CORE_MODULE_DRAW_SPRITE_UNIT_PREPARE_SPRITE_

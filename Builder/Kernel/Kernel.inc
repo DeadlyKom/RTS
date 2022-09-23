@@ -67,7 +67,6 @@ Cursor
 Math
 .Rand8          EQU Kernel.Math.Rand8
 .Div8x8         EQU Kernel.Math.Div8x8
-.IntersectScr   EQU Kernel.Math.IntersectScr 
 
 ; decompressor
 Decompressor
