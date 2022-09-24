@@ -3,7 +3,7 @@
                 define _CONST_RENDER_BUFFER_
 RenderBuffer    EQU #BE00                                                       ; адрес буфера обновлений   [64] заняты буфером выбора и WayPoint'ами
 RenderBufSize   EQU 192                                                         ; размер рендер буфера
-RenderBufPage   EQU 0x06                                                        ; страница
+RenderBufPage   EQU PAGE_2                                                      ; страница
 
 ; структура данных рендер буфера
 ;

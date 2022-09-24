@@ -1,6 +1,6 @@
 
-                ifndef _CONST_STRUCTURE_UNIT_RANK_
-                define _CONST_STRUCTURE_UNIT_RANK_
+                ifndef _CONST_UNIT_RANK_
+                define _CONST_UNIT_RANK_
 
 RANK_ROOKIE         EQU 0x00                                                    ; новобранец
 RANK_TRAINED        EQU 0x01                                                    ; тренированный
@@ -11,4 +11,4 @@ RANK_ELITE          EQU 0x05                                                    
 RANK_SPECIAL        EQU 0x06                                                    ; специалист
 RANK_HERO           EQU 0x07                                                    ; герой
 
-                endif ; ~_CONST_STRUCTURE_UNIT_RANK_
+                endif ; ~_CONST_UNIT_RANK_

@@ -4,27 +4,36 @@
 
                 module Page
                 module Module
-GameFirst       EQU 0x05                                                        ; модуль "основной блок"
-GameSecond      EQU 0x01                                                        ; модуль "работа с тайлами"
-GameThird       EQU 0x07                                                        ; модуль "таблица"
+GameMain        EQU PAGE_5                                                      ; модуль "основной блок"
+GameUnit        EQU PAGE_0                                                      ; модуль "работы с юнитами"
+GameTilemap     EQU PAGE_1                                                      ; модуль "работа с тайлами"
+GameTilemapEx   EQU PAGE_7                                                      ; модуль "работа с тайлами расширение"
 
                 endmodule
 Game:
-.First          EQU Module.GameFirst
-.Second         EQU Module.GameSecond
-.Third          EQU Module.GameThird
+.Main           EQU Module.GameMain
+.Unit           EQU Module.GameUnit
+.Tilemap        EQU Module.GameTilemap
+.TilemapEx      EQU Module.GameTilemapEx
 
                 endmodule
 
                 module Adr
 EntryPoint      EQU MemBank_01_DOS
-ModuleTile      EQU Adr.Module.FileSystem - Game.SizeSecond
+Unit:           EQU MemBank_03
+UnitCode:       EQU MemBank_03 + BankSize - Game.SizeUnitCode
+Tilemap:        EQU MemBank_03
+TilemapCode:    EQU Adr.Module.FileSystem - Game.SizeTilemapCode
 
                 module Module
 Game:
-.First          EQU Adr.EntryPoint                                              ; адрес модуля "основной блок"
-.Second         EQU Adr.ModuleTile                                              ; адрес модуля "работы с тайлами"
-.Third          EQU Adr.Tilemap.BypassFOW                                       ; адрес модуля "таблиц"
+.Main           EQU Adr.EntryPoint                                              ; адрес модуля "основной блок"
+.Unit           EQU Adr.Unit
+.UnitCode       EQU Adr.UnitCode
+.Tilemap        EQU Adr.Tilemap
+.TilemapCode    EQU Adr.TilemapCode                                             ; адрес модуля "работы с тайлами"
+.TilemapEx      EQU Adr.Tilemap.BypassFOW                                       ; адрес модуля "работа с тайлами расширение"
+
 
                 endmodule
                 endmodule

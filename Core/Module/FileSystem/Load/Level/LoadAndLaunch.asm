@@ -27,7 +27,7 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
                 ; загрузка данных уровня
                 ; -----------------------------------------
                 ; адрес запуска
-                LD HL, Adr.Module.Game.First
+                LD HL, Adr.Module.Game.Main
                 PUSH HL
 
                 ; адрес запуска инициализации
@@ -54,8 +54,8 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
 .FileArray      ; путь файла "тайловой карты"
                 FFileArea {
                 {{"xxxxxxxx"}, 0x00 },
-                Page.Tilemap.Map | FILE_ARCHIVE,
-                Adr.Tilemap.Map }
+                Page.Game.Tilemap | FILE_ARCHIVE,
+                Adr.Module.Game.Tilemap }
 
                 ; путь файла спрайтов "тайловой карты"
                 FFileArea {
@@ -63,23 +63,29 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
                 Page.Tilemap.Sprite | FILE_ARCHIVE,
                 Adr.Tilemap.SpriteTable }
 
-                ; путь файла модуля "основной блок"     (1)
+                ; путь файла модуля "основной блок"             (1)
                 FFileArea {
-                {{GameFirstName}, CodeExt },
-                Page.Game.First | FILE_ARCHIVE,
-                Adr.Module.Game.First }
+                {{GameMainName}, CodeExt },
+                Page.Game.Main | FILE_ARCHIVE,
+                Adr.Module.Game.Main }
 
-                ; путь файла модуля "работы с тайлами"  (2)
+                ; путь файла модуля "кода работы с юнитами"     (2)
                 FFileArea {
-                {{GameSecondName}, CodeExt },
-                Page.Game.Second | FILE_ARCHIVE,
-                Adr.Module.Game.Second }
+                {{GameUnitCodeName}, CodeExt },
+                Page.Game.Unit | FILE_ARCHIVE,
+                Adr.Module.Game.UnitCode }
 
-                ; путь файла модуля "таблиц"            (3)
+                ; путь файла модуля "кода работы с тайлами"     (3)
                 FFileArea {
-                {{GameThirdName}, CodeExt },
-                Page.Game.Third | FILE_ARCHIVE,
-                Adr.Module.Game.Third }
+                {{GameTilemapCodeName}, CodeExt },
+                Page.Game.Tilemap | FILE_ARCHIVE,
+                Adr.Module.Game.TilemapCode }
+
+                ; путь файла модуля "таблиц"                    (4)
+                FFileArea {
+                {{GameTilemapExName}, CodeExt },
+                Page.Game.TilemapEx | FILE_ARCHIVE,
+                Adr.Module.Game.TilemapEx }
 
 .FileNum        EQU ($-.FileArray) / FFileArea
 

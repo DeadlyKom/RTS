@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_GET_ADDRESS_UNIT_
-                define _CORE_MODULE_UTILS_GET_ADDRESS_UNIT_
+                ifndef _CORE_MODULE_UNIT_UTILS_GET_ADDRESS_UNIT_
+                define _CORE_MODULE_UNIT_UTILS_GET_ADDRESS_UNIT_
 ; -----------------------------------------
 ; получить адрес юнита
 ; In:
@@ -40,4 +40,4 @@ GetAddress:     ; расчёт смещения по индексу юнита
 
 .Value          DB #00
 
-                endif ; ~ _CORE_MODULE_UTILS_GET_ADDRESS_UNIT_
+                endif ; ~ _CORE_MODULE_UNIT_UTILS_GET_ADDRESS_UNIT_

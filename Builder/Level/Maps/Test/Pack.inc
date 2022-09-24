@@ -2,11 +2,11 @@
                 ifndef _BUILDER_LEVEL_MAP_TEST_PACK_
                 define _BUILDER_LEVEL_MAP_TEST_PACK_
 
-                MMU 3, Page.Tilemap.Map                                         ; 3 bank, Page.Tilemap.Map (1) page
-                ORG Adr.Tilemap.Map
+                MMU 3, Page.Game.Tilemap                                        ; 3 bank, Page.Game.Tilemap (1) page
+                ORG Adr.Module.Game.Tilemap
                 module Tilemap
 
-                display "\'Tilemap - Test\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Tilemap.Map, "]\t-------------------------------------------------"
+                display "\'Tilemap - Test\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Game.Tilemap, "]\t-------------------------------------------------"
 
 Begin:          EQU $
 

@@ -16,8 +16,7 @@ BypassFOW       EQU #0300                                                       
 
                 module Page
                 module Tilemap
-Map             EQU 0x01                                                        ; страница тайловой карты
-Sprite          EQU 0x07                                                        ; страница спрайтов тайловой карты
+Sprite          EQU PAGE_7                                                      ; страница спрайтов тайловой карты
                 endmodule
                 endmodule
 

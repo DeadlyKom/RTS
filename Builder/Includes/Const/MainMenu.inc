@@ -4,9 +4,9 @@
 
                 module Page
                 module Module
-Menu            EQU 0x05                                                        ; страница меню
-CaptainBridge   EQU 0x00                                                        ; страница графики "капитанский мостик"
-Graphics_A      EQU 0x01                                                        ; страница графики меню
+Menu            EQU PAGE_5                                                      ; страница меню
+CaptainBridge   EQU PAGE_0                                                      ; страница графики "капитанский мостик"
+Graphics_A      EQU PAGE_1                                                      ; страница графики меню
 
                 endmodule
 Core            EQU Module.Menu

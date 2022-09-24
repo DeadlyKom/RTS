@@ -164,6 +164,117 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 LD E, (HL)
                 INC HL
                 LD D, (HL)
+                EX DE, HL
+
+                ; корректировка адреса спрайта, при наличии анимации
+                LD C, (HL)                                                      ; FCompositeSpriteInfo.Flags
+                INC HL
+                LD E, (HL)                                                      ; FCompositeSpriteInfo.Info.Height
+                INC HL
+                LD A, (HL)                                                      ; FCompositeSpriteInfo.Info.OffsetY
+                INC HL
+                LD D, (HL)                                                      ; FCompositeSpriteInfo.Info.Width
+                INC HL
+                PUSH DE
+                LD E, A
+                LD D, (HL)                                                      ; FCompositeSpriteInfo.Info.OffsetX
+                INC HL
+                PUSH DE
+
+                ; D - FCompositeSpriteInfo.Info.OffsetX
+                ; E - FCompositeSpriteInfo.Info.OffsetY
+                ; B - FCompositeSpriteInfo.Info.Width
+                ; C - FCompositeSpriteInfo.Info.Height
+
+                EXX
+                POP DE
+                POP BC
+                EXX
+
+                LD A, CSIF_ANIM_MASK
+                AND C
+                JR Z, .AnimNone                                                 ; спрайт не анимированный
+
+                ; расчёт номера анимации
+                LD E, A
+                LD A, (#0000)
+                LD D, A
+                CALL Math.Div8x8
+                AND FUAF_ANIM_DOWN_MASK
+                EX AF, AF'                                                      ; сохранение флага Z
+
+                ; расчёт размер спрайта, в зависимости от флагов
+                LD A, CSIF_OR_XOR | CSIF_SIZE_MASK
+                AND C
+                ADD A, A
+                LD C, A
+                JR NC, $+5
+                ADD A, A
+                RL B
+
+                ; проверка первого кадра анимации
+                EX AF, AF'                                                      ; восстановление флага Z
+                JR Z, .CalcNextSpr
+
+                ; расчёт адреса отображаемого кадра анимации
+.SprLoop        ADD HL, BC
+                DEC E
+                DEC A
+                JR NZ, .SprLoop
+
+.CalcNextSpr    ; расчёт адреса следующего спрайта
+                PUSH HL
+                LD A, E
+.NextSprLoop    ADD HL, BC
+                DEC A
+                JR NZ, .NextSprLoop
+
+                ; смена адресов
+                EX (SP), HL                                                     ; адрес следующего спрайта
+                PUSH HL                                                         ; адрес текущего спрайта, с учётом анимации-
+
+.AnimNone       ; инициализация
+                LD HL, GameVar.TilemapOffset
+                LD C, (HL)                                                      ; X
+                INC HL
+                LD B, (HL)                                                      ; Y
+                
+                EXX
+
+                ; D - FCompositeSpriteInfo.Info.OffsetX (SOx)
+                ; E - FCompositeSpriteInfo.Info.OffsetY (SOy)
+                ; B - FCompositeSpriteInfo.Info.Width   (Sx)
+                ; C - FCompositeSpriteInfo.Info.Height  (Sy)
+
+                ; HL = ((Sy + SOy) - 8) << 4
+                LD A, C
+                ADD A, E
+                SUB #08
+                LD L, A
+                SBC A, A
+                LD H, A
+                LD A, L
+                ADD A, A
+                ADD A, A
+                ADD A, A
+                RL H
+                ADD A, A
+                RL H
+
+                ; HL += FUnit.Position.Y - GameVar.TilemapOffset.Y
+                ADD A, (IX + FUnit.Position.Y.Low)
+                LD L, A
+                JR NC, $+3
+                INC H
+                LD A, H
+                ADD A, (IX + FUnit.Position.Y.High)
+                EXX
+                SUB B
+                EXX
+                LD H, A
+
+                
+
 
 
                 RET

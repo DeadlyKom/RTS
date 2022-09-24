@@ -10,8 +10,8 @@
                 include "Flags.inc"
 
                 ; game
-                include "Core/Module/Utils/Unit/State/UnitStateMacro.inc"
-                include "Core/Module/Utils/Unit/State/UnitRankMacro.inc"
+                include "Core/Module/Unit/State/Macro/UnitState.inc"
+                include "Core/Module/Unit/State/Macro/UnitRank.inc"
 
                 include "Debug.inc"
 

@@ -1,6 +1,6 @@
 
-                ifndef _CORE_MODULE_UTILS_GET_INDEX_UNIT_BY_ADDRESS_
-                define _CORE_MODULE_UTILS_GET_INDEX_UNIT_BY_ADDRESS_
+                ifndef _CORE_MODULE_UNIT_UTILS_GET_INDEX_UNIT_BY_ADDRESS_
+                define _CORE_MODULE_UNIT_UTILS_GET_INDEX_UNIT_BY_ADDRESS_
 ; -----------------------------------------
 ; получить индекс юнита используя адрес 
 ; In:
@@ -23,4 +23,4 @@ GetIndex:       EXX
 
                 RET
 
-                endif ; ~ _CORE_MODULE_UTILS_GET_INDEX_UNIT_BY_ADDRESS_
+                endif ; ~ _CORE_MODULE_UNIT_UTILS_GET_INDEX_UNIT_BY_ADDRESS_

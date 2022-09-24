@@ -2,18 +2,18 @@
                 ifndef _BUILDER_GAME_TABLE_PACK_
                 define _BUILDER_GAME_TABLE_PACK_
 
-                MMU 3, Page.Game.Third                                          ; 3 bank, Page.Game.Third (7) page
-                ORG Adr.Module.Game.Third
+                MMU 3, Page.Game.TilemapEx                                      ; 3 bank, Page.Game.Third (7) page
+                ORG Adr.Module.Game.TilemapEx
                 module Game
 
-                display "\'Game Third\' :\t\t\t-------------------- [ ", /D, SizeThird, " bytes / ", /D, SizeInSectorsT, " sector(s) ]  [", /D, Page.Game.Third, "]\t-------------------------------------------------"
+                display "\'Game Tilemap Ex\' :\t\t\t-------------------- [ ", /D, SizeTilemapEx, " bytes / ", /D, SizeInSectorsT, " sector(s) ]  [", /D, Page.Game.TilemapEx, "]\t-------------------------------------------------"
 
-BeginThird:     EQU $
+BeginTilemapEx: EQU $
                 include "Core/Module/Tables/BypassFOW.inc"                      ; таблица обхода FOW
-SizeThird:      EQU $ - BeginThird
-SizeInSectorsT: EQU (SizeThird >> 8) + ((SizeThird % TRDOS.SECTOR_SIZE > 0) & 0x01)
+SizeTilemapEx:  EQU $ - BeginTilemapEx
+SizeInSectorsT: EQU (SizeTilemapEx >> 8) + ((SizeTilemapEx % TRDOS.SECTOR_SIZE > 0) & 0x01)
 
-                savetrd TRD_FILENAME, GameThirdNameTRD, BeginThird, SizeThird
+                savetrd TRD_FILENAME, GameTilemapExNameTRD, BeginTilemapEx, SizeTilemapEx
 
                 endmodule
 

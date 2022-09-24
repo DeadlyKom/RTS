@@ -17,14 +17,17 @@
                 define KernelName                       "Kernel"
                 define KernelNameTRD                    "Kernel.#"
 
-                define GameFirstName                    "GameA"                 ; имя файла модуля "основной блок"
-                define GameFirstNameTRD                 "GameA.C"               ; имя файла с расширением модуля "основной блок" 
+                define GameMainName                     "#05"                   ; имя файла модуля "основной блок"
+                define GameMainNameTRD                  "#05.C"                 ; имя файла с расширением модуля "основной блок"
 
-                define GameSecondName                   "GameB"                 ; имя файла модуля "работы с тайлами"
-                define GameSecondNameTRD                "GameB.C"               ; имя файла с расширением модуля "работы с тайлами"
+                define GameUnitCodeName                 "#00"                   ; имя файла модуля "кода работы с юнитами"
+                define GameUnitCodeNameTRD              "#00.C"                 ; имя файла с расширением модуля "кода работы с юнитами"
 
-                define GameThirdName                    "GameC"                 ; имя файла модуля "таблиц"
-                define GameThirdNameTRD                 "GameC.C"               ; имя файла с расширением модуля "таблиц"
+                define GameTilemapCodeName              "#01"                   ; имя файла модуля "код работы с тайлами"
+                define GameTilemapCodeNameTRD           "#01.C"                 ; имя файла с расширением модуля "код работы с тайлами"
+
+                define GameTilemapExName                "#07"                   ; имя файла модуля "работы с тайлами расширенние"
+                define GameTilemapExNameTRD             "#07.C"                 ; имя файла с расширением модуля "работы с тайлами расширенние"
 
                 define LevelsName                       "Levels"                ; имя файла массива уровней
                 define LevelsNameTRD                    "Levels.M"              ; имя файла массива уровней уровней с расширением

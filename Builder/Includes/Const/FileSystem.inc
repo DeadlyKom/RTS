@@ -13,7 +13,7 @@ FileSystem:     EQU FileSystem.Size                                             
 
                 module Page
                 module Module
-FileSystem      EQU 0x01                                                        ; номер страницы файловой системы
+FileSystem      EQU PAGE_1                                                      ; номер страницы файловой системы
 
                 endmodule
                 endmodule

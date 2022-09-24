@@ -4,8 +4,10 @@
 
                 module Unit
 
-                include "Utils/Include.inc"
-                include "Spawn/Include.inc"
+                include "Handler.asm"
+                include "RenderUpdate.asm"
+                ; include "DrawPath.asm"
+                include "Select/Include.inc"
 
                 endmodule
 

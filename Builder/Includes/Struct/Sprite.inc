@@ -45,19 +45,18 @@ Dummy           DB #00                                                          
                 ends
 
                 struct FCompositeSpriteInfo
-Info            FSpriteInfo                                                     ; информация о спрайте
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+
-;   | S2 | S1 | S0 | OX | .. | .. | A1 | A0 |
+;   | OX | S2 | S1 | S0 | .. | .. | A1 | A0 |
 ;   +----+----+----+----+----+----+----+----+
 ;
-;   S2-S0   [7..5]  - размер спрайта
+;   OX      [7]     - если 0, то OR иначе OR & XOR вывод спрайта
+;   S2-S0   [6..4]  - размер спрайта
 ;                    000 - 0х0
 ;                    001 - 16x16
 ;                    010 - 16x32|32x16
 ;                    100 - 32x32
-;   OX      [4]     - если 0, то OR иначе OR & XOR вывод спрайта
 ;   A1,A0   [1,0]   - количество анимаций
 ;                    00 - 0 анимаций
 ;                    01 - 1 анимация
@@ -65,20 +64,24 @@ Info            FSpriteInfo                                                     
 ;                    11 - 3 анимации
 ; -----------------------------------------
 Flags           DB #00
+Info            FSpriteInfo                                                     ; информация о спрайте
 
                 ends
 
-CSIF_OR_XOR_BIT EQU 0x04   
+CSIF_OR_XOR_BIT EQU 0x07   
 CSIF_OR_XOR     EQU 1 << CSIF_OR_XOR_BIT
 CSIF_OR         EQU 0 << CSIF_OR_XOR_BIT
 CSIF_ANIM_NONE  EQU 0x00 << 0
 CSIF_ANIM_1     EQU 0x01 << 0
 CSIF_ANIM_2     EQU 0x02 << 0
 CSIF_ANIM_3     EQU 0x03 << 0
-CSIF_SIZE_NONE  EQU 0x00 << 5
-CSIF_SIZE_32    EQU 0x01 << 5                                                   ; 16x16
-CSIF_SIZE_64    EQU 0x02 << 5                                                   ; 16x32|32x16
-CSIF_SIZE_128   EQU 0x04 << 5                                                   ; 32x32
+CSIF_SIZE_NONE  EQU 0x00 << 4
+CSIF_SIZE_32    EQU 0x01 << 4                                                   ; 16x16
+CSIF_SIZE_64    EQU 0x02 << 4                                                   ; 16x32|32x16
+CSIF_SIZE_128   EQU 0x04 << 4                                                   ; 32x32
+CSIF_ANIM_MASK  EQU %00000011
+CSIF_SIZE_MASK  EQU %01110000
+
 
                 struct FAnimation
 Possability_A   DB #00                                                          ; проходимость А (100%)

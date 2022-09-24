@@ -1,21 +1,21 @@
 
-                ifndef _BUILDER_GAME_TILE_PACK_
-                define _BUILDER_GAME_TILE_PACK_
+                ifndef _BUILDER_GAME_TILE_CODE_PACK_
+                define _BUILDER_GAME_TILE_CODE_PACK_
 
-                MMU 3, Page.Game.Second                                         ; 3 bank, Page.Game.Second (1) page
-                ORG Adr.Module.Game.Second
+                MMU 3, Page.Game.Tilemap                                        ; 3 bank, Page.Game.Tilemap (1) page
+                ORG Adr.Module.Game.TilemapCode
                 module Game
 
-                display "\'Game Second\' :\t\t\t-------------------- [ ", /D, SizeSecond, " bytes / ", /D, SizeInSectorsS, " sector(s) ]  [", /D, Page.Game.Second, "]\t-------------------------------------------------"
+                display "\'Game Tilemap Code\' :\t\t\t-------------------- [ ", /D, SizeTilemapCode, " bytes / ", /D, SizeInSectorsTilemapCode, " sector(s) ]  [", /D, Page.Game.Tilemap, "]\t-------------------------------------------------"
 
-BeginSecond:    EQU $
-                include "Core/Module/Tilemap/include.inc"
-SizeSecond:     EQU $ - BeginSecond
-SizeInSectorsS: EQU (SizeSecond >> 8) + ((SizeSecond % TRDOS.SECTOR_SIZE > 0) & 0x01)
+BeginTilemapCode:   EQU $
+                include "Core/Module/Tilemap/Include.inc"
+SizeTilemapCode:    EQU $ - BeginTilemapCode
+SizeInSectorsTilemapCode:   EQU (SizeTilemapCode >> 8) + ((SizeTilemapCode % TRDOS.SECTOR_SIZE > 0) & 0x01)
 
-                savetrd TRD_FILENAME, GameSecondNameTRD, BeginSecond, SizeSecond
+                savetrd TRD_FILENAME, GameTilemapCodeNameTRD, BeginTilemapCode, SizeTilemapCode
 
                 endmodule
 
-                endif ; ~ _BUILDER_GAME_TILE_PACK_
+                endif ; ~ _BUILDER_GAME_TILE_CODE_PACK_
 

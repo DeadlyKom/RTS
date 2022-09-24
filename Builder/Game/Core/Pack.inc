@@ -2,18 +2,18 @@
                 ifndef _BUILDER_GAME_PACK_
                 define _BUILDER_GAME_PACK_
 
-                MMU 1, Page.Game.First                                          ; 1 bank, Page.Game.First (5) page
-                ORG Adr.Module.Game.First
+                MMU 1, Page.Game.Main                                          ; 1 bank, Page.Game.Main (5) page
+                ORG Adr.Module.Game.Main
                 module Game
 
-                display "\'Game First\' :\t\t\t-------------------- [ ", /D, SizeFirst, " bytes / ", /D, SizeInSectorsF, " sector(s) ]  [", /D, Page.Game.First, "]\t-------------------------------------------------"
+                display "\'Game Main\' :\t\t\t-------------------- [ ", /D, SizeMain, " bytes / ", /D, SizeInSectorsF, " sector(s) ]  [", /D, Page.Game.Main, "]\t-------------------------------------------------"
 
-BeginFirst:     EQU $
+BeginMain:      EQU $
                 include "Core/Module/Game/include.inc"
-SizeFirst:      EQU $ - BeginFirst
-SizeInSectorsF: EQU (SizeFirst >> 8) + ((SizeFirst % TRDOS.SECTOR_SIZE > 0) & 0x01)
+SizeMain:       EQU $ - BeginMain
+SizeInSectorsF: EQU (SizeMain >> 8) + ((SizeMain % TRDOS.SECTOR_SIZE > 0) & 0x01)
 
-                savetrd TRD_FILENAME, GameFirstNameTRD, BeginFirst, SizeFirst
+                savetrd TRD_FILENAME, GameMainNameTRD, BeginMain, SizeMain
 
                 endmodule
 
