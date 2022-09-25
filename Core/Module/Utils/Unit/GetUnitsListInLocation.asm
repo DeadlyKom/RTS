@@ -34,8 +34,9 @@ GetUnitsInLoc:  ; драфтово формируем список юнитов
                 LD A, E
                 ADD A, UNIT_SIZE
                 LD E, A
-                JR NC, $+3
-                INC D
+                ADC A, D
+                SUB E
+                LD D, A
 
                 ; проверка что юнит жив
                 DEC E

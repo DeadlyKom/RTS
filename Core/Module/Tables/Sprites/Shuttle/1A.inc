@@ -18,3 +18,5 @@
 
                 FCompositeSpriteInfo CSIF_SIZE_64 | CSIF_OR | CSIF_ANIM_NONE,       32,   0,  16,  16
                 incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Dracunculus_4.spr"
+
+                DB #00                                                          ; завершение

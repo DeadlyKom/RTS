@@ -19,8 +19,9 @@ MoveDown:       ; получение адреса анимации переме�
                 CALL Utils.Tilemap.Surface.GetPassability
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
 
                 ; HL - указывает на текущий FAnimation
                 LD D, (HL)

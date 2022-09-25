@@ -72,8 +72,9 @@ Draw:           ; копирование смещение юнита в тайл
                 LD HL, .HP_Table
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
 
                 ; HL - адрес таблицы
                 ; DE - адрес спрайта

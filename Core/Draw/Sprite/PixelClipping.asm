@@ -359,8 +359,9 @@ PixelClipping:  ; ---------------------------------------------
                 ADD A, A     
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
 
                 ; получим адрес метода отрисовки
                 LD A, (HL)
@@ -428,8 +429,9 @@ PixelClipping:  ; ---------------------------------------------
                 LD HL, TableLSJumpDraw
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
                 
                 ; получим адрес метода отрисовки
                 LD A, (HL)
@@ -505,8 +507,9 @@ PixelClipping:  ; ---------------------------------------------
                 LD HL, TableRSJumpDraw
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
 
                 ; получим адрес метода отрисовки
                 LD A, (HL)

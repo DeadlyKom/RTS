@@ -16,8 +16,9 @@ GetAdrInTable:  LD A, (IX + FUnit.Type)                                         
                 AND IDX_UNIT_TYPE
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
 
                 ; получение адреса из таблицы
                 LD E, (HL)

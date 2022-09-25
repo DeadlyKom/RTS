@@ -24,8 +24,9 @@ Fadein:         ; расчёт адреса вывода
                 LD A, L
                 ADD A, #20
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
                 DJNZ .Loop
                 RET
 

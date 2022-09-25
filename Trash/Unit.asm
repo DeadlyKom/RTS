@@ -227,8 +227,9 @@ HandlerUnits:           ;
                         LD HL, .TableJumpDraw
                         ADD A, L
                         LD L, A
-                        JR NC, $+3
-                        INC H
+                        ADC A, H
+                        SUB L
+                        LD H, A
                         LD A, (HL)
                         LD IXL, A
                         INC HL
@@ -253,8 +254,9 @@ HandlerUnits:           ;
                         LD HL, .TableShiftJumpDraw
                         ADD A, L
                         LD L, A
-                        JR NC, $+3
-                        INC H
+                        ADC A, H
+                        SUB L
+                        LD H, A
                         LD A, (HL)
                         LD IXL, A
                         INC HL
@@ -291,8 +293,9 @@ HandlerUnits:           ;
                         LD HL, .TableLSJumpDraw
                         ADD A, L
                         LD L, A
-                        JR NC, $+3
-                        INC H
+                        ADC A, H
+                        SUB L
+                        LD H, A
                         LD A, (HL)
                         LD IXL, A
                         INC HL
@@ -345,8 +348,9 @@ HandlerUnits:           ;
                         LD HL, .TableRSJumpDraw
                         ADD A, L
                         LD L, A
-                        JR NC, $+3
-                        INC H
+                        ADC A, H
+                        SUB L
+                        LD H, A
                         LD A, (HL)
                         LD IXL, A
                         INC HL

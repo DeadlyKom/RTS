@@ -39,8 +39,9 @@
                 ADD A, A
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
                 LD E, (HL)
                 INC HL
                 LD D, (HL)

@@ -42,8 +42,9 @@ ReconRadius:    LD HL, Table
                 ADD A, A
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
                 LD A, (HL)
                 INC HL
                 LD H, (HL)

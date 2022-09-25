@@ -220,8 +220,9 @@ Draw:           LD (.CurrentScreen), A
                 LD HL, TableRLSJumpDraw
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
                 LD A, (HL)
                 LD IXL, A
                 INC HL

@@ -142,8 +142,9 @@ TurnDown:       EX AF, AF'                                                      
                 CALL Utils.Tilemap.Surface.GetPassability
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
 
                 ; обновим счётчик
                 LD A, (IX + FUnit.CounterDown)                                  ; получим значение верхнего счётчика

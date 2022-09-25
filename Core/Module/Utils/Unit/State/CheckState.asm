@@ -32,8 +32,9 @@ GetState:       ; конверсия состояния для нижнего/в
                 LD HL, .StateTable
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
                 LD C, (HL)
 
                 RET

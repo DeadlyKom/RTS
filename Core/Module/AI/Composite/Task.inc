@@ -59,8 +59,9 @@ Task:           LD A, C
                 ADD A, A
                 ADD A, L
                 LD L, A
-                JR NC, $+3
-                INC H
+                ADC A, H
+                SUB L
+                LD H, A
 
                 ; чтение адреса задачи
                 LD A, (HL)
