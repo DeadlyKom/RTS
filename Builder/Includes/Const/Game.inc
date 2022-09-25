@@ -5,11 +5,15 @@
 FGameAdr            EQU GameConfigRef + FConfig
 
 GameVar
-.TilemapSize:       EQU FGameAdr + FGame.Size                                   ; размер карты
+.TilemapSize        EQU FGameAdr + FGame.Size                                   ; размер карты
 .TilemapSizeNEG     EQU FGameAdr + FGame.SizeNEG                                ; размер карты (отрицательные значения)
-.TilemapOffset:     EQU FGameAdr + FGame.Offset                                 ; смещения тайловой карты
-.TilemapCachedAdr:  EQU FGameAdr + FGame.CachedAddress                          ; кешированное значение адрес тайловой карты
-.TilemapCountdown:  EQU FGameAdr + FGame.Countdown                              ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
+.TilemapOffset      EQU FGameAdr + FGame.Offset                                 ; смещения тайловой карты
+.TilemapCachedAdr   EQU FGameAdr + FGame.CachedAddress                          ; кешированное значение адрес тайловой карты
+.TilemapCountdown   EQU FGameAdr + FGame.Countdown                              ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
+
+GameAI:
+.UnitArraySize      EQU FGameAdr + FGame.UnitArraySize                          ; размер массива юнитов
+.AI_UpdateRate      EQU FGameAdr + FGame.AI_UpdateRate                          ; частота обновления ИИ
 
 GameFlags:
 .RenderRef          EQU FGameAdr + FGame.Render                                 ; флаги отрисовки

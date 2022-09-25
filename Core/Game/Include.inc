@@ -28,12 +28,12 @@ UnitsChar           DW #0000                                                    
 WaypointCounter:    DB #00
 WaypointArray:      DW #0000
 TilemapPtr:         DW #0000
-UnitArrayPtr:       DW #0000
+; UnitArrayPtr:       DW #0000
 TilemapOffset:      FLocation 0, 0
 
 
-AI_UpdateFreq:      DB #00
-AI_NumUnits:        DB #00
+; AI_UpdateFreq:      DB #00
+; AI_NumUnits:        DB #00
 BehaviorTable:      DW #0000
 
 ; UnitArray:          DW #0000

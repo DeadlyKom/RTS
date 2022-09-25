@@ -8,6 +8,7 @@
 ; Out:
 ;   IX - адрес юнита в массиве
 ; Corrupt:
+;   HL, AF, IX
 ; Note:
 ; -----------------------------------------
 GetAddress:     ; расчёт смещения по индексу юнита
@@ -17,7 +18,7 @@ GetAddress:     ; расчёт смещения по индексу юнита
                 RLD
                 RL (HL)
                 ADC A, A
-                OR #C0
+                OR HIGH Adr.Unit
                 LD IXH, A
                 LD A, (HL)
                 LD IXL, A
@@ -39,5 +40,7 @@ GetAddress:     ; расчёт смещения по индексу юнита
                 RET
 
 .Value          DB #00
+
+                display " - Get Address Unit by Index : \t", /A, GetAddress, " = busy [ ", /D, $ - GetAddress, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_UNIT_UTILS_GET_ADDRESS_UNIT_

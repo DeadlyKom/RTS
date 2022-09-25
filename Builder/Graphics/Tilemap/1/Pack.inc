@@ -14,7 +14,7 @@ Size:           EQU $ - Begin
 SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 
                 OPT -Wno-trdext                                                 ; disable "trdext"
-                savetrd TRD_FILENAME, TilemapPack_1_NameTRD, Begin, Size
+                savetrd TRD_FILENAME, TilemapPack_1_1_NameTRD, Begin, Size
                 OPT -Wtrdext                                                    ; re-enable "trdext"
 
                 endmodule

@@ -55,7 +55,6 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 ; приведение к форме хранения позиции юнита (12.4)
                 EXX
                 LD A, (HL)                                                      ; a.maxY
-                INC HL
                 EXX
                 ADD A, A
                 ADD A, A
@@ -78,11 +77,13 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 ; приведение к форме хранения позиции юнита (12.4)
                 LD H, C
                 EXX
-                LD A, (HL)                                                      ; a.minY
                 INC HL
+                LD A, (HL)                                                      ; a.minY
                 EXX
                 ADD A, A
                 ADD A, A
+                ADD A, A
+                RL H
                 ADD A, A
                 RL H
                 LD L, A
@@ -95,8 +96,9 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 EX DE, HL
                 LD A, SCREEN_TILE_Y
                 ADD A, B
-                LD B, A
-                SBC HL, BC
+                LD H, A
+                LD L, C
+                SBC HL, DE
                 RET C                                                           ; выход, если a.minY > b.maxY
 
                 ; инициализация
@@ -110,11 +112,13 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 ; приведение к форме хранения позиции юнита (12.4)
                 LD H, C
                 EXX
-                LD A, (HL)                                                      ; a.maxX
                 INC HL
+                LD A, (HL)                                                      ; a.maxX
                 EXX
                 ADD A, A
                 ADD A, A
+                ADD A, A
+                RL H
                 ADD A, A
                 RL H
                 LD L, A
@@ -134,11 +138,13 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 ; приведение к форме хранения позиции юнита (12.4)
                 LD H, C
                 EXX
+                INC HL
                 LD A, (HL)                                                      ; a.minX
-                ; INC HL
                 EXX
                 ADD A, A
                 ADD A, A
+                ADD A, A
+                RL H
                 ADD A, A
                 RL H
                 LD L, A
@@ -151,8 +157,9 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 EX DE, HL
                 LD A, SCREEN_TILE_X
                 ADD A, B
-                LD B, A
-                SBC HL, BC
+                LD H, A
+                LD L, C
+                SBC HL, DE
                 RET C                                                           ; выход, если a.minX > b.maxX
 
                 ; переключение страницы хранения композитного спрайта
@@ -200,17 +207,17 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 LD A, (#0000)
                 LD D, A
                 CALL Math.Div8x8
-                AND FUAF_ANIM_DOWN_MASK
+                ; AND FUAF_ANIM_DOWN_MASK
                 EX AF, AF'                                                      ; сохранение флага Z
 
                 ; расчёт размер спрайта, в зависимости от флагов
                 LD A, CSIF_OR_XOR | CSIF_SIZE_MASK
                 AND C
                 ADD A, A
-                LD C, A
                 JR NC, $+5
                 ADD A, A
                 RL B
+                LD C, A
 
                 ; проверка первого кадра анимации
                 EX AF, AF'                                                      ; восстановление флага Z
@@ -246,14 +253,17 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 ; B - FCompositeSpriteInfo.Info.Width   (Sx)
                 ; C - FCompositeSpriteInfo.Info.Height  (Sy)
 
-                ; HL = ((Sy + SOy) - 8) << 4
-                LD A, C
-                ADD A, E
-                SUB #08
-                LD L, A
+                ; -----------------------------------------
+                ; расчёт положения спрайта по вертикали,
+                ; относительно верхней границы видимой области
+                ; -----------------------------------------
+
+                ; HL = SOy << 4
+                LD A, E
+                ADD A, A
                 SBC A, A
                 LD H, A
-                LD A, L
+                LD A, E
                 ADD A, A
                 ADD A, A
                 ADD A, A
@@ -262,18 +272,72 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 RL H
 
                 ; HL += FUnit.Position.Y - GameVar.TilemapOffset.Y
-                ADD A, (IX + FUnit.Position.Y.Low)
+                ADD A, (IX + FUnit.Position.Y.Low)                              ; ToDo вкл страница спрайта
                 LD L, A
                 JR NC, $+3
                 INC H
                 LD A, H
                 ADD A, (IX + FUnit.Position.Y.High)
+                ; вычесть положение видимой области по вертикали
                 EXX
-                SUB B
+                SUB B                                                           ; GameVar.TilemapOffset.Y
                 EXX
-                LD H, A
+                LD H, A                                                         ; HL - хранит положение спрайта, относительно верхней границы видимой области
+                JP P, .BelowTop                                                 ; переход, если спрайт находится ниже верхней границы видимой области
 
-                
+                ; ---------------------------------------------
+                ; спрайт выше границы видимой области
+                ; ---------------------------------------------
+
+                ; преобразование высоты спрайта в 16-битное число
+                LD B, #00
+                LD A, C
+                ADD A, A
+                ADD A, A
+                ADD A, A
+                RL B
+                ADD A, A
+                RL B
+
+                ; добавить к относительному расположению спрайта по вертикали,
+                ; относительно верхней границы видимой области размер спрайта
+                ADD HL, BC
+                RET NC                                                          ; выход, если при добавлении размера спрайта по вертикали,
+                                                                                ; не произошло переполненеи. значение осталось отрицательным
+                                                                                ; и спрайт полностью находится выше видимой области
+
+.ClipTop        ; ---------------------------------------------
+                ; спрайт урезан верхней частью видимой области
+                ; ---------------------------------------------
+        
+
+.BelowTop       ; ---------------------------------------------
+                ; спрайт находится ниже верхней границы видимой области
+                ; ---------------------------------------------
+
+
+
+.ClipBottom     ; ---------------------------------------------
+                ; спрайт урезан нижней частью видимой области
+                ; ---------------------------------------------
+
+
+
+                ; приведение к 8 битному значению по вертикали HL << 4
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, HL
+                ADD HL, HL
+
+                ; проверка позиции спрайта в пределах от 0 до 191
+                LD A, H
+                CP SCREEN_PIXEL_Y
+                JR C, .ClipBottom                                               ; переход, если позиция в пределах от 0 до 191
+
+                ; проверка позиции спрайта выше экрана
+                NEG
+                CP C
+                RET NC                                                          ; выход, если спрайт выше экрана
 
 
 

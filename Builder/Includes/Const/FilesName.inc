@@ -87,10 +87,13 @@
                 define TilemapTutorialNameTRD           "Tutorial.I"            ; имя файла с расширением тайловой карты "Tutorial"
 
                 ; Graphics
-                define TilemapPack_1_Name               "Pack1"                 ; имя файла графики тайловой карты "Пакет 1"
-                define TilemapPack_1_NameTRD            "Pack1.G"               ; имя файла с расширением графики тайловой карты "Пакет 1"
+                define TilemapPack_1_1_Name             "Pack1.1"               ; имя файла графики тайловой карты "Пакет 1.1"
+                define TilemapPack_1_1_NameTRD          "Pack1.1.G"             ; имя файла с расширением графики тайловой карты "Пакет 1.1"
 
-                define TilemapPack_2_Name               "Pack2"                 ; имя файла графики тайловой карты "Пакет 2"
-                define TilemapPack_2_NameTRD            "Pack2.G"               ; имя файла с расширением графики тайловой карты "Пакет 2"
+                define TilemapPack_1_2_Name             "Pack1.2"               ; имя файла графики тайловой карты "Пакет 1.2"
+                define TilemapPack_1_2_NameTRD          "Pack1.2.G"             ; имя файла с расширением графики тайловой карты "Пакет 1.2"
+
+                define GraphicsPack_1_Name              "Pack1"                 ; имя файла графики "Пакет 1"
+                define GraphicsPack_1_NameTRD           "Pack1.G"               ; имя файла с расширением графики "Пакет 1"
 
                 endif ; ~_CONST_FILES_NAME_

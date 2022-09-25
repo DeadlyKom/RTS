@@ -67,8 +67,8 @@ DebugStateRef               EQU Game.DebugFlags                                 
 
                             endif
 ; AI
-AI_UpdateFrequencyRef       EQU Game.AI_UpdateFreq                              ; частота обновления AI
-AI_NumUnitsRef              EQU Game.AI_NumUnits                                ; число юнитов
+; AI_UpdateFrequencyRef       EQU Game.AI_UpdateFreq                              ; частота обновления AI
+; AI_NumUnitsRef              EQU Game.AI_NumUnits                                ; число юнитов
 
 ; Tilemap
 ; TilemapPtr                  EQU #C000                                           ; адрес тайловой карты
@@ -147,11 +147,11 @@ SelectRectStartRef          EQU DrawRectangle.Start                             
 SelectRectEndRef            EQU DrawRectangle.End                               ; адрес правой-нижней точки выбора рамкой (в пикселях)
 NumberSelectedUnitRef       EQU Unit.Select.ScanRectSelect.NumSelected          ; адрес переменной, сколько элементов в буфере выбора
 
-; units
-UnitArrayPtr                EQU Page_1.UnitArray                                ; адрес массива юнитов
-MAX_UNIT_ARRAY              EQU 128                                             ; максимальное количество юнитов в массиве
-UNITS_STRUCTURE_SIZE        EQU MAX_UNIT_ARRAY * UNIT_SIZE                      ; размер массива всех доступных юнитов
-UnitsCharRef                EQU Game.UnitsChar                                  ; адрес таблицы характеристик юнитов
+; ; units
+; UnitArrayPtr                EQU Page_1.UnitArray                                ; адрес массива юнитов
+; MAX_UNIT_ARRAY              EQU 128                                             ; максимальное количество юнитов в массиве
+; UNITS_STRUCTURE_SIZE        EQU MAX_UNIT_ARRAY * UNIT_SIZE                      ; размер массива всех доступных юнитов
+; UnitsCharRef                EQU Game.UnitsChar                                  ; адрес таблицы характеристик юнитов
 
 ; array of chunks for units
 ARRAY_CHUNKS

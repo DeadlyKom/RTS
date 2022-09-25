@@ -9,6 +9,11 @@ Offset:         FLocation 0, 0                                                  
 CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты
 Countdown:      DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
 
+; ИИ
+UnitArraySize:  DB #00                                                          ; размер массива юнитов
+AI_UpdateRate:  DB #00                                                          ; частота обновления ИИ
+
+; флаги
 Render          FFlags 0                                                        ; флаги отрисовки
 
                 ends

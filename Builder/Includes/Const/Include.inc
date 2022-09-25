@@ -34,4 +34,6 @@
 
                 include "FilesName.inc"
 
+                include "Graphics.inc"
+
                 endif ; ~_CONST_INCLUDES_

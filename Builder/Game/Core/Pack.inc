@@ -2,11 +2,11 @@
                 ifndef _BUILDER_GAME_PACK_
                 define _BUILDER_GAME_PACK_
 
-                MMU 1, Page.Game.Main                                          ; 1 bank, Page.Game.Main (5) page
+                MMU 1, Page.Game.Main                                           ; 1 bank, Page.Game.Main (5) page
                 ORG Adr.Module.Game.Main
                 module Game
 
-                display "\'Game Main\' :\t\t\t-------------------- [ ", /D, SizeMain, " bytes / ", /D, SizeInSectorsF, " sector(s) ]  [", /D, Page.Game.Main, "]\t-------------------------------------------------"
+                display "\'Game Main\' :\t\t\t\t-------------------- [ ", /D, SizeMain, " bytes / ", /D, SizeInSectorsF, " sector(s) ]  [", /D, Page.Game.Main, "]\t-------------------------------------------------"
 
 BeginMain:      EQU $
                 include "Core/Module/Game/include.inc"

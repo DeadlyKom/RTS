@@ -4,8 +4,9 @@
 
                 include "EntryPoint.asm"
                 include "Initialize.asm"
+                include "InitializeLevel.asm"
                 include "Loop.asm"
-                include "Render.asm"
                 include "Interrupt.asm"
+                include "Render/Include.inc"
 
                 endif ; ~_MODULE_GAME_INCLUDE_

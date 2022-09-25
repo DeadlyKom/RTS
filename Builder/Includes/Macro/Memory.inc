@@ -17,7 +17,7 @@ SetPage:        macro Page?
                 OUT (C), A
                 endm
 ; включение страницы масива юнитов
-SET_PAGE_UNITS_ARRAY macro
+SET_PAGE_UNIT   macro
                 CALL SetPage0
                 endm
 ; включение страницы тайловой карты

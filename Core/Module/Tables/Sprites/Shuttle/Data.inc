@@ -22,9 +22,9 @@ Shuttles:
                 FCompositeSprite {
                 {{32,16},                                                       ; maxY, minY
                  {32,16}},                                                      ; maxX, minX
-                0,                                                              ; смещение
-                0,                                                              ; страница памяти
-                0}                                                              ; адрес хранения
+                Page.Graphics.Pack1,                                            ; страница памяти
+                Graphics.Spite.Shuttle_1A,                                      ; адрес спрайта
+                0}                                                              ; dummy
 
                 ;   001 - 1B (первый тир, враждебного шатла)
                 FCompositeSprite {

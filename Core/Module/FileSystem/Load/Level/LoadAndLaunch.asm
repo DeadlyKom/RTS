@@ -63,6 +63,12 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
                 Page.Tilemap.Sprite | FILE_ARCHIVE,
                 Adr.Tilemap.SpriteTable }
 
+                ; путь файла спрайтов "Pack1"
+                FFileArea {
+                {{GraphicsPack_1_Name}, GraphicsExt },
+                Page.Graphics.Pack1 | FILE_ARCHIVE,
+                Adr.Graphics.Pack1 }
+
                 ; путь файла модуля "основной блок"             (1)
                 FFileArea {
                 {{GameMainName}, CodeExt },

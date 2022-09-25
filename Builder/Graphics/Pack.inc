@@ -5,6 +5,7 @@
                 module Graphics
 
                 include "Tilemap/Pack.inc"
+                include "Sprite/Pack.inc"
 
                 endmodule
 

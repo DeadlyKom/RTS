@@ -4,6 +4,7 @@
 
                 module Spawn
 
+                include "SpawnUnit.asm"
 
                 endmodule
 

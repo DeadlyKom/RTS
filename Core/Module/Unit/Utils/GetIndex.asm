@@ -23,4 +23,6 @@ GetIndex:       EXX
 
                 RET
 
+                display " - Get Index Unit by Address : \t", /A, GetIndex, " = busy [ ", /D, $ - GetIndex, " bytes  ]"
+
                 endif ; ~ _CORE_MODULE_UNIT_UTILS_GET_INDEX_UNIT_BY_ADDRESS_

@@ -89,6 +89,7 @@ DrawSpriteOR    EQU Kernel.Monochrome.DrawSpriteOR
 DrawSpriteORXOR EQU Kernel.Monochrome.DrawSpriteORXOR
 
 DrawTileRows    EQU Kernel.Tilemap.DrawTileRows
+DrawUnit        EQU Kernel.Sprite.Draw
 
 ShiftTable      EQU Kernel.Tables.ShiftTable
 
@@ -109,6 +110,8 @@ Functions
 .WordLength     EQU Kernel.Functions.WordLength
 .StringToBuffer EQU Kernel.Functions.StringToBuffer
 .DrawCharToScr  EQU Kernel.Functions.DrawCharToScr
+
+.SpawnUnit      EQU Kernel.Functions.SpawnUnit                                  ; спавн юнита
 
 ; debug
                 ifdef _DEBUG
