@@ -141,7 +141,7 @@ SequentialRead: ; подготовка чтения данных
                 LD A, #00
                 EX AF, AF'
                 LD A, Page.Module.FileSystem
-                JP MemcpyPages
+                JP Memcpy.Pages
 ; -----------------------------------------
 ; чтение текущего сектора во временный буфер
 ; In:

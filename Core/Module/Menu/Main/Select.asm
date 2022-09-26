@@ -24,7 +24,7 @@ Selected:       CALL WaitEvent
                 LD DE, Adr.Module.CaptainBridge
                 LD BC, Menu.CaptainBridge.Size + Language.Text.Message.Size
                 PUSH DE
-                JP FastLDIR
+                JP Memcpy.FastLDIR
 
                 display " - Select : \t\t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 

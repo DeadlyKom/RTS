@@ -32,8 +32,8 @@ FastLDIR:       LD A, B
 
                 RET
 
-                endmodule
-
                 display " - Memcpy Fast LDIR : \t\t", /A, FastLDIR, " = busy [ ", /D, $ - FastLDIR, " bytes  ]"
+                
+                endmodule
 
                 endif ; ~_MEMORY_COPY_FAST_LDIR_

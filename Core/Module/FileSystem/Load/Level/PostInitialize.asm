@@ -15,7 +15,7 @@ PostInitialize: ; -----------------------------------------
                 LD HL, #0000
                 LD DE, Adr.Tilemap.Surface
                 LD BC, Size.Tilemap.Surface
-                CALL FastLDIR
+                CALL Memcpy.FastLDIR
 
                 ; -----------------------------------------
                 ; инициализация размера карты

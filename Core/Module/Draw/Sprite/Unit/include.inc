@@ -7,8 +7,9 @@
                 include "DrawInfantry.asm"
                 include "DrawTank.asm"
                 include "DrawShuttle.asm"
-                include "DrawSpriteUnit.asm"
-                include "PrepareSprite.asm"
+                include "DrawUnit.asm"
+                include "Prepare.asm"
+                include "Draw.asm"
 
                 endmodule
 

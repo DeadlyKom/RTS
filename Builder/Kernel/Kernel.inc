@@ -17,8 +17,10 @@ ScrPageToC000_  EQU Kernel.Memory.ScrPageToC000_
 SwapScreens     EQU Kernel.Memory.SwapScreens
 ShowBaseScreen  EQU Kernel.Memory.ShowBaseScreen
 ShowShadowScreen EQU Kernel.Memory.ShowShadowScreen
-MemcpyPages     EQU Kernel.Memcpy.Pages
-FastLDIR        EQU Kernel.Memcpy.FastLDIR
+Memcpy:
+.Pages          EQU Kernel.Memcpy.Pages
+.FastLDIR       EQU Kernel.Memcpy.FastLDIR
+.Sprite         EQU Kernel.Memcpy.Sprite
 
 ; memory set
 SafeFill_Screen EQU Kernel.Memset.SafeFill_Screen
@@ -89,7 +91,7 @@ DrawSpriteOR    EQU Kernel.Monochrome.DrawSpriteOR
 DrawSpriteORXOR EQU Kernel.Monochrome.DrawSpriteORXOR
 
 DrawTileRows    EQU Kernel.Tilemap.DrawTileRows
-DrawUnit        EQU Kernel.Sprite.Draw
+DrawUnit        EQU Kernel.Sprite.DrawUnit
 
 
 ; load modules
@@ -114,8 +116,9 @@ Functions
 
 ; tables
 Table:
-.MultiplySprite EQU Kernel.MultiplySprite
-.ShiftTable     EQU Kernel.Tables.ShiftTable
+.MultiplySprite EQU Kernel.Tables.MultiplySprite
+.Shift          EQU Kernel.Tables.ShiftTable
+.ScreenAddress  EQU Kernel.Tables.ScreenAddress
 
 ; debug
                 ifdef _DEBUG

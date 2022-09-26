@@ -20,7 +20,8 @@ Begin:          EQU $
                 include "Core/Module/Memory/Switch.asm"
                 include "Core/Module/Memory/MemSet.asm"
                 include "Core/Module/Memory/MemcpyPages.asm"
-                include "Core/Module/Memory/MemCopyFastLDIR.asm"
+                include "Core/Module/Memory/MemcpyFastLDIR.asm"
+                include "Core/Module/Memory/MemcpySprite.asm"
                 ; utils
                 include "Core/Module/Draw/Utils/PixelAddress.asm"
                 include "Core/Module/Draw/Utils/PixelAttribute.asm"
@@ -46,8 +47,9 @@ Begin:          EQU $
                 include "Functions/Include.inc"
                 include "Modules/Include.inc"
 
-                include "Core/Module/Tables/ShiftTable.inc"                     ; таблица сдвигов (3584 байт)
-                include "Core/Module/Tables/MultiplySprite.inc"                 ; таблица умножения, применение для пропуска байт спрайтов (128 байт)
+                include "Core/Module/Tables/ShiftTable.inc"                     ; таблица сдвигов                                           (3584 байт)
+                include "Core/Module/Tables/ScreenAddressTable.inc"             ; таблица предрасчитаных адресов экрана                     (512 байт)  есть свободные 64 байта х2
+                include "Core/Module/Tables/MultiplySprite.inc"                 ; таблица умножения, применение для пропуска байт спрайтов  (128 байт)  есть свободные 128 байт
 
                 ; отладочная
                 ifdef _DEBUG

@@ -15,9 +15,9 @@ Initialize:     ; **** INITIALIZE HANDLER IM 2 ****
                 OffUserHendler                                                  ; отключение пользовательского обработчика
 
                 ; формирование таблицы прерывания
-                LD HL, IntTable
-                LD DE, IntTable + 1
-                LD BC, IntTableSize - 1
+                LD HL, Int.Table
+                LD DE, Int.Table + 1
+                LD BC, Int.TableSize - 1
                 LD (HL), HIGH Adr.Interrupt
                 LDIR
                 
@@ -25,7 +25,7 @@ Initialize:     ; **** INITIALIZE HANDLER IM 2 ****
                 INC L
                 INC E
                 LD (HL), C
-                LD BC, IntStackSize - 1
+                LD BC, Int.StackSize - 1
                 LDIR
 
                 ; задание вектора прерывания

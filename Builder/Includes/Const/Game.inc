@@ -17,5 +17,8 @@ GameAI:
 
 GameFlags:
 .RenderRef          EQU FGameAdr + FGame.Render                                 ; флаги отрисовки
+.SpriteRef          EQU FGameAdr + FGame.Sprite                                 ; данные спрайта
+.SpriteOffsetRef    EQU FGameAdr + FGame.Sprite.Data.Low                        ; флаги спрайта
+.SpriteFlagRef      EQU FGameAdr + FGame.Sprite.Data.High                       ; флаги спрайта
 
                     endif ; ~_CONST_GAME_

@@ -42,6 +42,6 @@ DrawFrame:      ; расчёт адреса фрейма
                 LD HL, MemBank_01_SCR
                 LD DE, MemBank_03
                 LD BC, ScreenSize
-                JP FastLDIR
+                JP Memcpy.FastLDIR
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_ROOM_DRAW_FRAME_

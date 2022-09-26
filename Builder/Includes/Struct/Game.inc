@@ -15,6 +15,9 @@ AI_UpdateRate:  DB #00                                                          
 
 ; флаги
 Render          FFlags 0                                                        ; флаги отрисовки
+Sprite          FWFlags 0                                                       ; флаги работы с спрайтами 
+                                                                                ; младший байт (offset) - FSprite.Offset
+                                                                                ; старший байт (flags)  - FSprite.Data.Page / FCompositeSpriteInfo.Flags
 
                 ends
 

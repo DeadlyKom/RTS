@@ -33,7 +33,7 @@
                 LD B, D
                 LD C, (IX + FStaticAnimation.SpriteSize)
                 LD DE, SharedBuffer
-                CALL FastLDIR
+                CALL Memcpy.FastLDIR
 
                 SET_SCREEN_SHADOW
 

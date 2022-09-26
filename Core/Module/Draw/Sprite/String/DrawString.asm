@@ -91,7 +91,7 @@ DrawString:     ; очистка общего буфера
                 EXX
                 DEC A
                 ADD A, A
-                ADD A, HIGH Table.ShiftTable
+                ADD A, HIGH Table.Shift
                 LD H, A
                 EXX
 

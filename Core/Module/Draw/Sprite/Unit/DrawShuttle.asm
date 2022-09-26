@@ -208,9 +208,11 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 EX AF, AF'                                                      ; сохранение флага Z
 
                 ; расчёт размер спрайта, в зависимости от флагов
+                ; обрежется флаг CSIF_MASK_BIT,
+                ; т.к. для данного типа спрайта она не допустима
                 LD A, CSIF_OR_XOR | CSIF_SIZE_MASK
                 AND C
-                LD (Prepare.SpriteFlags), A                                     ; сохранение флагов спрайта
+                LD (GameFlags.SpriteFlagRef), A                                 ; сохранение флагов спрайта
                 ADD A, A
                 JR NC, $+5
                 ADD A, A
@@ -238,6 +240,7 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 EX (SP), HL
 
 .AnimNone       CALL Prepare
+                CALL C, Draw
 
                 POP HL
                 LD A, (HL)

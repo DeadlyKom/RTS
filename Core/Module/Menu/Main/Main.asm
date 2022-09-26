@@ -25,7 +25,7 @@ Main:           ; -----------------------------------------
                 LD HL, #C000
                 LD DE, Adr.Module.CaptainBridge
                 LD BC, Menu.CaptainBridge.Size + Language.Text.Message.Size
-                JP FastLDIR
+                JP Memcpy.FastLDIR
                 endif
                 ; -----------------------------------------
 

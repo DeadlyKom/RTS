@@ -46,4 +46,8 @@ Location        FLocation 0, 0                                              	; Ð
 				DB #00
 				ends
 
+				struct FWFlags
+Data			FValue
+				ends
+
 				endif ; ~_STRUCT_BASE_

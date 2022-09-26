@@ -15,7 +15,7 @@ Handler:        ; ********** HANDLER IM 2 *********
                 LD (.Container_SP), SP                                          ; сохранить исходный указатель стека
 .RestoreRegister EQU $
                 NOP                                                             ; восстановить поврежденные байты ниже SP (PUSH HL/DE/BC)
-                LD SP, IntStackTop                                              ; использовать стек прерывания
+                LD SP, Int.StackTop                                             ; использовать стек прерывания
 
 .SaveRegs       ; ********* SAVE REGISTERS ********
                 PUSH HL
