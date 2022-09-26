@@ -11,26 +11,30 @@ SetPage5        EQU Kernel.Memory.SetPage5
 SetPage6        EQU Kernel.Memory.SetPage6
 SetPage7        EQU Kernel.Memory.SetPage7
 ; ReadByteToPage  EQU Kernel.Memory.ReadByteToPage
-ScrPageToC000   EQU Kernel.Memory.ScrPageToC000
-ScrFromPageC000 EQU Kernel.Memory.ScrFromPageC000
-ScrPageToC000_  EQU Kernel.Memory.ScrPageToC000_
-SwapScreens     EQU Kernel.Memory.SwapScreens
-ShowBaseScreen  EQU Kernel.Memory.ShowBaseScreen
-ShowShadowScreen EQU Kernel.Memory.ShowShadowScreen
+
+Screen:
+.PageToC000     EQU Kernel.Memory.ScrPageToC000                                 ; установка страницы видимого экрана
+.FromPageC000   EQU Kernel.Memory.ScrFromPageC000                               ; установка экрана расположенного в #C000
+.PageToC000_    EQU Kernel.Memory.ScrPageToC000_                                ; установка страницы невидимого экрана
+.Swap           EQU Kernel.Memory.SwapScreens                                   ; переключение экранов
+.ShowBase       EQU Kernel.Memory.ShowBaseScreen                                ; отображение базового экрана
+.ShowShadow     EQU Kernel.Memory.ShowShadowScreen                              ; отображение теневого экрана
+
 Memcpy:
 .Pages          EQU Kernel.Memcpy.Pages
 .FastLDIR       EQU Kernel.Memcpy.FastLDIR
 .Sprite         EQU Kernel.Memcpy.Sprite
 
 ; memory set
-SafeFill_Screen EQU Kernel.Memset.SafeFill_Screen
-SafeFill_4096   EQU Kernel.Memset.SafeFill_4096
-SafeFill_2048   EQU Kernel.Memset.SafeFill_2048
-SafeFill_768    EQU Kernel.Memset.SafeFill_768
-SafeFill_256    EQU Kernel.Memset.SafeFill_256
-SafeFill_192    EQU Kernel.Memset.SafeFill_192
-SafeFill_128    EQU Kernel.Memset.SafeFill_128
-SafeFill_32     EQU Kernel.Memset.SafeFill_32
+SafeFill:
+.Screen         EQU Kernel.Memset.SafeFill_Screen
+.b4096          EQU Kernel.Memset.SafeFill_4096
+.b2048          EQU Kernel.Memset.SafeFill_2048
+.b768           EQU Kernel.Memset.SafeFill_768
+.b256           EQU Kernel.Memset.SafeFill_256
+.b192           EQU Kernel.Memset.SafeFill_192
+.b128           EQU Kernel.Memset.SafeFill_128
+.b32            EQU Kernel.Memset.SafeFill_32
 
 ; interrupt
 RestoreRegister EQU Kernel.Interrupt.Handler.RestoreRegister
@@ -76,9 +80,10 @@ Decompressor
 .Backward       EQU Kernel.Decompressor.Backward
 
 ; draw 
-PixelAddressC   EQU Kernel.Utils.PixelAddressC
-PixelAddressP   EQU Kernel.Utils.PixelAddressP
-PixelAttribute  EQU Kernel.Utils.PixelAttribute
+Convert:
+.CharToScreen   EQU Kernel.Utils.PixelAddressC
+.PixelToScreen  EQU Kernel.Utils.PixelAddressP
+.ToAttribute    EQU Kernel.Utils.PixelAttribute
 
 DrawSpriteOne   EQU Kernel.Charboundary.DrawSpriteOne
 DrawSpriteTwo   EQU Kernel.Charboundary.DrawSpriteTwo
@@ -116,9 +121,9 @@ Functions
 
 ; tables
 Table:
-.MultiplySprite EQU Kernel.Tables.MultiplySprite
 .Shift          EQU Kernel.Tables.ShiftTable
 .ScreenAddress  EQU Kernel.Tables.ScreenAddress
+.MultiplySprite EQU Kernel.Tables.MultiplySprite
 
 ; debug
                 ifdef _DEBUG

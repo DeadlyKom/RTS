@@ -8,37 +8,37 @@ BORDER          macro Color?
 CLS_4000        macro
                 LD HL, #4000 + #1800
                 LD DE, #0000
-                CALL SafeFill_Screen
+                CALL SafeFill.Screen
                 endm
 ATTR_4000_IP    macro Inc?, Paper?
                 LD HL, #4000 + #1800 + #0300
                 LD DE, (((Paper? << 3) | Inc?) << 8) | ((Paper? << 3) | Inc?)
-                CALL SafeFill_768
+                CALL SafeFill.b768
                 endm
 ATTR_4000_IPB   macro Inc?, Paper?,  Bright?
                 LD HL, #4000 + #1800 + #0300
                 LD DE, ((((0 << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)) << 8) | (((0 << 7) | (Bright? << 6) | (Paper? << 3) | Inc?))
-                CALL SafeFill_768
+                CALL SafeFill.b768
                 endm
 ATTR_C000_IP    macro Inc?, Paper?
                 LD HL, #C000 + #1800 + #0300
                 LD DE, (((Paper? << 3) | Inc?) << 8) | ((Paper? << 3) | Inc?)
-                CALL SafeFill_768
+                CALL SafeFill.b768
                 endm
 ATTR_C000_IPB   macro Inc?, Paper?,  Bright?
                 LD HL, #C000 + #1800 + #0300
                 LD DE, ((((0 << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)) << 8) | (((0 << 7) | (Bright? << 6) | (Paper? << 3) | Inc?))
-                CALL SafeFill_768
+                CALL SafeFill.b768
                 endm
 CLS_C000        macro
                 LD HL, #C000 + #1800
                 LD DE, #0000
-                CALL SafeFill_Screen
+                CALL SafeFill.Screen
                 endm
 ATTR_C000       macro Color?
                 LD HL, #C000 + #1800 + #0300
                 LD DE, (Color? << 8) | Color?
-                CALL SafeFill_768
+                CALL SafeFill.b768
                 endm
 
 DrawSpriteOneATTR  macro Sprite?, X?, Y?, Width?, Height?

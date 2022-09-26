@@ -13,7 +13,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawSpriteOne:  CALL PixelAddressC
+DrawSpriteOne:  CALL Convert.CharToScreen
     
 .Box_0          PUSH DE
                 PUSH BC
@@ -50,7 +50,7 @@ DrawSpriteOne:  CALL PixelAddressC
 ; Note:
 ;   теневое окно должно находится в 3 банке
 ; -----------------------------------------
-DrawSpriteTwo:  CALL PixelAddressC
+DrawSpriteTwo:  CALL Convert.CharToScreen
     
 .Box_0          PUSH DE
                 PUSH BC

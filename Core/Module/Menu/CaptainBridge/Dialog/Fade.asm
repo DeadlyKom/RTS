@@ -15,7 +15,7 @@ Fadein:         ; расчёт адреса вывода
                 DEC A
                 ADD A, LOW SCREEN_CALLOUT
                 LD E, A
-                CALL PixelAttribute
+                CALL Convert.ToAttribute
                 EX DE, HL
                 LD B, NUMBER_ROWS+1
 .Loop           LD (HL), BACKGROUND_DLG
@@ -60,7 +60,7 @@ Fadeout:        ; расчёт адреса вывода
 
                 ; копирование атрибута
                 DEC D
-                CALL PixelAttribute
+                CALL Convert.ToAttribute
                 SET 7, D
                 LD A, (DE)
                 RES 7, D

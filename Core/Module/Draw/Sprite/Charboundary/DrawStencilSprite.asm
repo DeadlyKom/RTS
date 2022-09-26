@@ -26,7 +26,7 @@ DrawStencilSpr: LD E, (HL)
                 LD B, (HL)
                 INC HL
 
-                CALL PixelAddressC
+                CALL Convert.CharToScreen
     
 .Box_0          PUSH DE
                 PUSH BC

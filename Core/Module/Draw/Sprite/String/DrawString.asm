@@ -16,7 +16,7 @@ DrawString:     ; очистка общего буфера
                 EXX
                 LD HL, SharedBuffer + 0x100
                 LD DE, #0000
-                CALL SafeFill_256
+                CALL SafeFill.b256
                 EXX
 
                 ; смещение в буфере (попиксельно)

@@ -18,7 +18,7 @@ Initialize:     ; -----------------------------------------
                 ; ; set update all visible screen
                 LD HL, RenderBuffer + 0xC0
                 LD DE, #8383
-                CALL SafeFill_192
+                CALL SafeFill.b192
 
                 ; -----------------------------------------
                 ; очистка экранов

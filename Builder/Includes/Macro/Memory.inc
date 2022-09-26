@@ -45,18 +45,18 @@ SET_SCREEN_SHADOW macro
                 endm
 ; включить экран находящийся в 3 банке (5 или 7 страница)
 SET_SCREEN_C000 macro
-                CALL ScrFromPageC000
+                CALL Screen.FromPageC000
                 endm
 ; переключение страницы экрана
 SWAP_SCREEN     macro
-                CALL SwapScreens
+                CALL Screen.Swap
                 endm
-; отображение первого экрана
+; отображение базового экрана
 SHOW_BASE_SCREEN macro
-                CALL ShowBaseScreen
+                CALL Screen.ShowBase
                 endm
 ; отображение теневого экрана
 SHOW_SHADOW_SCREEN macro
-                CALL ShowShadowScreen
+                CALL Screen.ShowShadow
                 endm
                 endif ; ~_MACRO_MEMORY_

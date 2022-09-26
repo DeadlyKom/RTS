@@ -94,7 +94,7 @@ Generate:       ; генерация скорости звезды
 
                 LD D, A
                 LD E, #00
-                CALL PixelAddressP
+                CALL Convert.PixelToScreen
                 RES 7, D
 
                 LD (HL), E

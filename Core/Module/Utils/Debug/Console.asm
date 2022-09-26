@@ -45,7 +45,7 @@ DrawChar:       ; расчёт адреса символа
                 LD (DE), A
 
                 ; преобразование адреса пикселей в адрес атрибутов
-                CALL PixelAttribute
+                CALL Convert.ToAttribute
                 EX DE, HL
 .Attribute      EQU $+1
                 LD (HL), #00
@@ -99,7 +99,7 @@ DrawByte:       LD C, A
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-SetCursor:      CALL PixelAddressC
+SetCursor:      CALL Convert.CharToScreen
                 LD (DrawChar.ScreenAdr), DE
                 RET
 ; -----------------------------------------

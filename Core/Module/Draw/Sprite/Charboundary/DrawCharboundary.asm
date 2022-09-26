@@ -22,7 +22,7 @@ DrawCharOne:    dup 7
                 LD A, (HL)
                 LD (DE), A
                 INC HL
-                CALL PixelAttribute
+                CALL Convert.ToAttribute
                 LD A, (HL)
                 LD (DE), A
                 RET
@@ -43,7 +43,7 @@ DrawCharTwo:    PUSH BC
                 LD (DE), A
                 LD (BC), A
                 INC HL
-                CALL PixelAttribute
+                CALL Convert.ToAttribute
                 LD A, (HL)
                 LD (DE), A
                 RES 7, D

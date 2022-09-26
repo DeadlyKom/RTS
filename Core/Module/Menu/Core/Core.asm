@@ -17,7 +17,7 @@
 .OldCoord       EQU $+1
                 LD DE, #0000
                 DEC E
-                CALL PixelAddressC
+                CALL Convert.CharToScreen
                 XOR A
                 dup  7
                 LD (DE), A
@@ -28,7 +28,7 @@
                 ; вывод курсора
                 LD DE, (.Coord)
                 DEC E
-                CALL PixelAddressC
+                CALL Convert.CharToScreen
                 LD HL, SelectCursor
                 JP DrawCharOne
 

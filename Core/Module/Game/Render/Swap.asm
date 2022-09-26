@@ -12,6 +12,6 @@ Swap:           ifdef _DEBUG
                 CALL FPS_Counter.Render
                 endif
 
-                JP SwapScreens
+                JP Screen.Swap
  
                 endif ; ~_MODULE_GAME_RENDER_SWAP_SCREEN_
