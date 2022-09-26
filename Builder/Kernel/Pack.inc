@@ -47,6 +47,7 @@ Begin:          EQU $
                 include "Modules/Include.inc"
 
                 include "Core/Module/Tables/ShiftTable.inc"                     ; таблица сдвигов (3584 байт)
+                include "Core/Module/Tables/MultiplySprite.inc"                 ; таблица умножения, применение для пропуска байт спрайтов (128 байт)
 
                 ; отладочная
                 ifdef _DEBUG

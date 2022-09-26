@@ -91,7 +91,6 @@ DrawSpriteORXOR EQU Kernel.Monochrome.DrawSpriteORXOR
 DrawTileRows    EQU Kernel.Tilemap.DrawTileRows
 DrawUnit        EQU Kernel.Sprite.Draw
 
-ShiftTable      EQU Kernel.Tables.ShiftTable
 
 ; load modules
 LoadModule
@@ -112,6 +111,11 @@ Functions
 .DrawCharToScr  EQU Kernel.Functions.DrawCharToScr
 
 .SpawnUnit      EQU Kernel.Functions.SpawnUnit                                  ; спавн юнита
+
+; tables
+Table:
+.MultiplySprite EQU Kernel.MultiplySprite
+.ShiftTable     EQU Kernel.Tables.ShiftTable
 
 ; debug
                 ifdef _DEBUG

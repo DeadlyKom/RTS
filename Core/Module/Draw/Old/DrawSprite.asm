@@ -98,7 +98,7 @@ DrawSpriteMono: ; -----------------------------------------
                 ; -----------------------------------------
                 DEC A
                 ADD A, A
-                ADD A, HIGH ShiftTable
+                ADD A, HIGH Table.ShiftTable
                 LD H, A
                 EXX
 
