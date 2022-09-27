@@ -76,6 +76,27 @@ NoShift_OX_1    LD A, (DE)
 .NextRow        LD E, L                                                         ; восстановление младший байт фдреса экрана
                 JP (IY)
 
+TableNoShift:
+.OX_8           DW NoShift_OX_1, NoShift_OX_1
+
+                DW 0, 0
+.OX_16          DW NoShift_OX_2, NoShift_OX_2
+                DW 0, 0
+
+                DW 0, 0
+                DW 0, 0
+.OX_24          DW NoShift_OX_3, NoShift_OX_3
+                DW 0, 0
+                DW 0, 0
+
+                DW 0, 0
+                DW 0, 0
+                DW 0, 0
+.OX_32          DW NoShift_OX_4, NoShift_OX_4
+                DW 0, 0
+                DW 0, 0
+                DW 0, 0
+
                 display " - Draw Function 'No Shift OR & XOR':\t", /A, Begin_NoShift, " = busy [ ", /D, $ - Begin_NoShift, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_NO_SHIFT_

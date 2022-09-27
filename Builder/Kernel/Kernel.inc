@@ -124,6 +124,16 @@ Table:
 .Shift          EQU Kernel.Tables.ShiftTable
 .ScreenAddress  EQU Kernel.Tables.ScreenAddress
 .MultiplySprite EQU Kernel.Tables.MultiplySprite
+.TableShift     EQU Kernel.Function.TableShift
+.Shift.OX_8     EQU Kernel.Function.TableShift.OX_8
+.Shift.OX_16    EQU Kernel.Function.TableShift.OX_16
+.Shift.OX_24    EQU Kernel.Function.TableShift.OX_24
+.Shift.OX_32    EQU Kernel.Function.TableShift.OX_32
+.Shift.OX_40    EQU Kernel.Function.TableShift.OX_40
+.NoShift.OX_8   EQU Kernel.Function.TableNoShift.OX_8
+.NoShift.OX_16  EQU Kernel.Function.TableNoShift.OX_16
+.NoShift.OX_24  EQU Kernel.Function.TableNoShift.OX_24
+.NoShift.OX_32  EQU Kernel.Function.TableNoShift.OX_32
 
 ; debug
                 ifdef _DEBUG

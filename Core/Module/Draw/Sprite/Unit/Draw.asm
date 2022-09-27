@@ -23,8 +23,8 @@ Draw:           ; подготовка
                 POP DE
                 PUSH BC                                                         ; сохранение размера спрайта
 
-                LD IX, Kernel.Function.NoShift_OX_4
-                LD IY, Kernel.Function.NoShift_OX_4
+                ; LD IX, Kernel.Function.NoShift_OX_4
+                ; LD IY, Kernel.Function.NoShift_OX_4
 
                 CALL Memcpy.Sprite                                              ; копирование спрайта в буфер
                 SET_PAGE_SHADOW_SCREEN                                          ; установка страницы не видимого экрана

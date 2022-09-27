@@ -4,8 +4,8 @@
 
                 module Function
 
-                include "NoShift_OR_XOR.asm"
                 include "Shift_OR_XOR.asm"
+                include "NoShift_OR_XOR.asm"
 
                 endmodule
 

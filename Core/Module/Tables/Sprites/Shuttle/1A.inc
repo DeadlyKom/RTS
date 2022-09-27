@@ -1,5 +1,5 @@
 ;   000 - 1A (первый тир, нейтрального шаттла)
-                FCompositeSpriteInfo CSIF_SIZE_32 | CSIF_OR_XOR | CSIF_ANIM_NONE,      16, -16,  16, -16
+                FCompositeSpriteInfo CSIF_SIZE_32 | CSIF_OR_XOR | CSIF_ANIM_NONE,      16, -16,  16, -15
                 ; incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Dracunculus_0.spr"
                 ; incbin "Core/Module/Sprites/Tilemap/Pack 1/Foliage/Dracunculus_1.spr"
 
