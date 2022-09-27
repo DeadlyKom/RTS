@@ -59,7 +59,7 @@ NoShift_OX_1    LD A, (DE)
 
 ; NextRow:      ; новая строка
                 DEC C
-                JR Z, Kernel.Sprite.Draw.Exit
+                JP Z, Kernel.Sprite.Draw.Exit                                   ; JP для этого типа вывода
                 INC D
                 DJNZ .NextRow
 
