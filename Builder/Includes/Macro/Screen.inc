@@ -79,13 +79,13 @@ ZX_COLOR_IPB    macro Inc?, Paper?, Bright?
 ZX_COLOR_IP     macro Inc?, Paper?
                 DB ((0 << 7) | (0 << 6) | (Paper? << 3) | Inc?)
                 endm
-
+; установка страницы видимого экрана
 SET_PAGE_VISIBLE_SCREEN macro
-                CALL ScrPageToC000
+                CALL Screen.SetPageBase
                 endm
-
+; установка страницы невидимого экран
 SET_PAGE_SHADOW_SCREEN macro
-                CALL ScrPageToC000_
+                CALL Screen.SetPageShadow
                 endm
 
                 endif ; ~_MACRO_SCREEN_

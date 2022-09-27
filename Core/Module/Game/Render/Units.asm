@@ -8,11 +8,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawUnits:      ; сохранеие текущей страницы
-                LD A, (MemoryPageRef)
-                LD (.RestoreMemPage), A
-                
-                ; инициализация
+DrawUnits:      ; инициализация
                 SET_PAGE_UNIT                                                   ; включить страницу работы с юнитами
                 LD IX, Adr.Unit
 
@@ -22,7 +18,6 @@ DrawUnits:      ; сохранеие текущей страницы
                 JR Z, .Exit
                 
 .Loop           LD (.ProcessedUnits), A
-
                 CALL DrawUnit
 
 .ProcessedUnits EQU $+1
@@ -30,9 +25,6 @@ DrawUnits:      ; сохранеие текущей страницы
                 DEC A
                 JR NZ, .Loop
 
-.Exit           ; востановление страницы
-.RestoreMemPage EQU $+1
-                LD A, #00
-                JP SetPage
+.Exit           RET
 
                 endif ; ~_MODULE_GAME_RENDER_UNITS_

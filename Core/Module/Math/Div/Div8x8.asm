@@ -12,20 +12,25 @@
 ;   D - division result
 ;   A - remainder
 ; Corrupt :
-;   B, AF
+;   D, AF
 ; Note:
 ;   https://www.smspower.org/Development/DivMod
 ; -----------------------------------------
 Div8x8:         XOR A
-                LD B, #08
-.Loop           SLA D
+                rept 7
+                SLA D
                 RLA
                 CP E
-                JR C, .Less
+                JR C, $+4
                 SUB E
                 INC D
-.Less           DJNZ .Loop
-
+                endr
+                SLA D
+                RLA
+                CP E
+                RET C
+                SUB E
+                INC D
                 RET
 
                 display " - Divide 8x8 : \t\t\t", /A, Div8x8, " = busy [ ", /D, $ - Div8x8, " bytes  ]"

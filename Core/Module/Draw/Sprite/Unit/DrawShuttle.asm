@@ -100,7 +100,7 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 ; сравнение a.minY, b.maxY
                 EX DE, HL
                 LD A, SCREEN_TILE_Y
-                ADD A, B
+                ADD A, B                                                        ; b.minY
                 LD H, A
                 LD L, C
                 SBC HL, DE
@@ -108,7 +108,7 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
 
                 ; инициализация
                 EX AF, AF'
-                LD B, A
+                LD B, A                                                         ; b.minX
 
                 ; -----------------------------------------
                 ; a.maxX < b.minX
@@ -168,10 +168,14 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 SBC HL, DE
                 RET C                                                           ; выход, если a.minX > b.maxX
 
+                ;
+                PUSH IX
+
                 ; переключение страницы хранения композитного спрайта
                 EXX
                 INC HL
                 LD A, (HL)                                                      ; FCompositeSprite.Data.Page
+                LD (.RestoreMemPage), A                                         ; сохранение страницы спрайта
                 CALL SetPage
                 INC HL
                 LD E, (HL)
@@ -194,33 +198,37 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 LD (Prepare.SOx), A
                 INC HL
 
+                ; сохранение флагов спрайта
+                LD B, #00
+                LD E, C
+                LD A, E
+                LD (GameFlags.SpriteFlagRef), A
+
+                ; расчёт размер спрайта, в зависимости от флагов
+                AND CSIF_SIZE_MASK
+                ADD A, A
+                BIT CSIF_OR_XOR_BIT, E
+                JR Z, $+5
+                ADD A, A
+                RL B
+                LD C, A                                                         ; BC - размер спрайта
+
                 ; проверка наличия анимации у спрайта
                 LD A, CSIF_ANIM_MASK
-                AND C
-                JR Z, .AnimNone                                                 ; спрайт не анимированный
+                AND E
+                JR NZ, .CalcAnim                                                ; переход, если спрайт анимируемый
 
-                ; расчёт номера анимации
+.NoAnim         ; расчёт адреса следующего спрайта
+                PUSH HL
+                ADD HL, BC
+                JR .SwapAddress
+
+.CalcAnim       ; расчёт номера анимации
                 LD E, A
                 LD A, (#0000)
                 LD D, A
                 CALL Math.Div8x8
                 AND FUAF_ANIM_DOWN_MASK
-                EX AF, AF'                                                      ; сохранение флага Z
-
-                ; расчёт размер спрайта, в зависимости от флагов
-                ; обрежется флаг CSIF_MASK_BIT,
-                ; т.к. для данного типа спрайта она не допустима
-                LD A, CSIF_OR_XOR | CSIF_SIZE_MASK
-                AND C
-                LD (GameFlags.SpriteFlagRef), A                                 ; сохранение флагов спрайта
-                ADD A, A
-                JR NC, $+5
-                ADD A, A
-                RL B
-                LD C, A
-
-                ; проверка первого кадра анимации
-                EX AF, AF'                                                      ; восстановление флага Z
                 JR Z, .CalcNextSpr
 
                 ; расчёт адреса отображаемого кадра анимации
@@ -236,17 +244,26 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 DEC A
                 JR NZ, .NextSprLoop
 
-                ; сохранение адреса следующего спрайта
+.SwapAddress    ; сохранение адреса следующего спрайта
                 EX (SP), HL
 
-.AnimNone       CALL Prepare
-                CALL C, Draw
+                CALL Prepare                                                    ; проверка и подготовка спрайта перед отрисовкой
+                CALL C, Draw                                                    ; если все проверки успешны, отрисовка спрайта
 
+                ; востановление страницы
+.RestoreMemPage EQU $+1
+                LD A, #00
+                CALL SetPage
+
+                ; следующий спрайт
                 POP HL
                 LD A, (HL)
                 OR A
-                RET Z
-                JR .Loop
+                JR NZ, .Loop
+                
+                ; выход
+                POP IX
+                RET
 .Table
                 include "Core/Module/Tables/Sprites/Shuttle/Data.inc"
 

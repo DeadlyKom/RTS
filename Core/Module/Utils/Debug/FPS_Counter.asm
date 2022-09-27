@@ -56,7 +56,9 @@ Frame:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Render:         ; установка атрибут
+Render:         SET_PAGE_SHADOW_SCREEN                                          ; установка страницы не видимого экрана
+
+                ; установка атрибут
                 LD A, COLOR_FPS
                 CALL Console.SetAttribute
                 

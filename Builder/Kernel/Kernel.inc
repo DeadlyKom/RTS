@@ -13,9 +13,9 @@ SetPage7        EQU Kernel.Memory.SetPage7
 ; ReadByteToPage  EQU Kernel.Memory.ReadByteToPage
 
 Screen:
-.PageToC000     EQU Kernel.Memory.ScrPageToC000                                 ; установка страницы видимого экрана
 .FromPageC000   EQU Kernel.Memory.ScrFromPageC000                               ; установка экрана расположенного в #C000
-.PageToC000_    EQU Kernel.Memory.ScrPageToC000_                                ; установка страницы невидимого экрана
+.SetPageBase    EQU Kernel.Memory.ScrPageToC000                                 ; установка страницы видимого экрана
+.SetPageShadow  EQU Kernel.Memory.ScrPageToC000_                                ; установка страницы невидимого экрана
 .Swap           EQU Kernel.Memory.SwapScreens                                   ; переключение экранов
 .ShowBase       EQU Kernel.Memory.ShowBaseScreen                                ; отображение базового экрана
 .ShowShadow     EQU Kernel.Memory.ShowShadowScreen                              ; отображение теневого экрана

@@ -21,7 +21,6 @@ Interrupt:
                 ifdef _DEBUG
 .Debug_FPS      ; ********** Swap Screens **********
                 CALL FPS_Counter.Tick
-                
                 endif
 
                 RET

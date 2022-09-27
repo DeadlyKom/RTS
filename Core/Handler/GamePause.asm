@@ -43,14 +43,14 @@ MenuGamePause:      CALL Hide
                     RET
 ToggleKemMouse:     SwapHardwareFlag KEMPSTON_MOUSE_FLAG
                     ; CALL Console.SwitchScreen       ; switch screen log
-                    CALL Memory.ScrPageToC000
+                    SET_PAGE_VISIBLE_SCREEN                                     ; установка страницы видимого экрана
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
                     RET
 ToggleKemJoystick:  SwapHardwareFlag KEMPSTON_JOY_BUTTON_3
                     ; CALL Console.SwitchScreen       ; switch screen log
-                    CALL Memory.ScrPageToC000
+                    SET_PAGE_VISIBLE_SCREEN                                     ; установка страницы видимого экрана
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
@@ -58,7 +58,7 @@ ToggleKemJoystick:  SwapHardwareFlag KEMPSTON_JOY_BUTTON_3
 ToggleMoveKeys:     SwapHardwareFlag KEYBOARD_WASD_QAOP
                     CALL Game.ChangeKeyboardLayout 
                     ; CALL Console.SwitchScreen       ; switch screen log
-                    CALL Memory.ScrPageToC000
+                    SET_PAGE_VISIBLE_SCREEN                                     ; установка страницы видимого экрана
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
@@ -67,7 +67,7 @@ DecCursorSpeed:     LD HL, MinCursorSpeedRef
                     DEC (HL)
                     CALL Input.Cursor.InitAcceleration
                     ; CALL Console.SwitchScreen       ; switch screen log
-                    CALL Memory.ScrPageToC000
+                    SET_PAGE_VISIBLE_SCREEN                                     ; установка страницы видимого экрана
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
@@ -76,7 +76,7 @@ IncCursorSpeed:     LD HL, MinCursorSpeedRef
                     INC (HL)
                     CALL Input.Cursor.InitAcceleration
                     ; CALL Console.SwitchScreen       ; switch screen log
-                    CALL Memory.ScrPageToC000
+                    SET_PAGE_VISIBLE_SCREEN                                     ; установка страницы видимого экрана
                     CALL DrawGamePause
                     ; exit, processed
                     OR A
