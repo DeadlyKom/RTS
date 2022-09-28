@@ -84,7 +84,7 @@ TableNoShift:
 
                 DW NoShift_OX_X_X,  NoShift_OX_X_X                              ; -1.0
 .OX_16          DW NoShift_OX_XX,   NoShift_OX_XX                               ;  2.0
-                DW 0, 0
+                DW NoShift_OX_X,    NoShift_OX_X_X                              ; +1.0
 
                 DW 0, 0
                 DW 0, 0
