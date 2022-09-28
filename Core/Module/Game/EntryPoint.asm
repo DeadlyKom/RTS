@@ -9,7 +9,10 @@
 ; Note:
 ; -----------------------------------------
 EntryPoint:     HALT
-                CALL Initialize
+                CALL Initialize.Core                                            ; инициализация ядра
+                CALL Initialize.Level                                           ; инициализация загруженного уровня
+                CALL Initialize.Input                                           ; инициализация управления
+
                 JP GameLoop
 
                 endif ; ~_MODULE_GAME_ENTRY_POINT_

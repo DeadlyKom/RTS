@@ -9,7 +9,7 @@
                 display "\'Game Main\' :\t\t\t\t-------------------- [ ", /D, SizeMain, " bytes / ", /D, SizeInSectorsF, " sector(s) ]  [", /D, Page.Game.Main, "]\t-------------------------------------------------"
 
 BeginMain:      EQU $
-                include "Core/Module/Game/include.inc"
+                include "Core/Module/Game/Include.inc"
 SizeMain:       EQU $ - BeginMain
 SizeInSectorsF: EQU (SizeMain >> 8) + ((SizeMain % TRDOS.SECTOR_SIZE > 0) & 0x01)
 

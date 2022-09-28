@@ -16,24 +16,32 @@ Begin_Shift:    EQU $
 ; Note:
 ; -----------------------------------------
 
-Shift_OX_1_P:   ; подготовка для правого полубайта
+
+Shift_OX_xx     ;  1.0 байт
+                LD A, (DE)
+                EXX
+                JP Shift_OX_oOO_Xx.R
+Shift_OX_x_Xx   ; -0.5 байт
                 EXX
                 POP BC
                 EXX
-                JP Shift_OX_1_R
-Shift_OX_2_P:   ; подготовка для 1 полного байта
+                JP Shift_OX_oOO_Xx
+Shift_OX_xX_x   ; -1.5 байт
+                POP AF
+Shift_OX_x_x    ; -0.5 байт
+                EXX
+                POP BC
+                EXX
+                JP Shift_OX_oOOO_x
+Shift_OX_xXx    ;  2.0 байт
                 LD A, (DE)
                 EXX
-                JP Shift_OX_2.R
-Shift_OX_3_P:   ; подготовка для 2 полных байтов
+                JP Shift_OX_oO_XXx.R
+Shift_OX_xXXx   ;  3.0 байт
                 LD A, (DE)
                 EXX
-                JP Shift_OX_3.R
-Shift_OX_4_P:   ; подготовка для 3 полных байтов
-                LD A, (DE)
-                EXX
-                JP Shift_OX_4.R
-Shift_OX_5:     ; 4 полных байта
+                JP Shift_OX_o_XXXx.R
+Shift_OX_xXXXx  ;  4.0 байт
                 LD A, (DE)
 
                 EXX
@@ -46,7 +54,8 @@ Shift_OX_5:     ; 4 полных байта
 
                 LD (DE), A
                 INC E
-Shift_OX_4:     LD A, (DE)
+Shift_OX_o_XXXx ;
+                LD A, (DE)
 
                 EXX
                 INC H
@@ -65,7 +74,8 @@ Shift_OX_4:     LD A, (DE)
 
                 LD (DE), A
                 INC E
-Shift_OX_3:     LD A, (DE)
+Shift_OX_oO_XXx ;
+                LD A, (DE)
 
                 EXX
                 INC H
@@ -84,7 +94,7 @@ Shift_OX_3:     LD A, (DE)
 
                 LD (DE), A
                 INC E
-Shift_OX_2:     LD A, (DE)
+Shift_OX_oOO_Xx LD A, (DE)
 
                 EXX
                 INC H
@@ -103,7 +113,7 @@ Shift_OX_2:     LD A, (DE)
 
                 LD (DE), A
                 INC E
-Shift_OX_1_R:   ; правая половина байта
+Shift_OX_oOOO_x ; правая половина байта
                 LD A, (DE)
 
                 EXX
@@ -137,30 +147,29 @@ Shift_OX_1_R:   ; правая половина байта
                 JP (IY)
 
 TableShift:
-.OX_8           DW Shift_OX_1_P, Shift_OX_1_P                                   ; правый полубайт
-                ; DW общий c OX_8
-.OX_16          DW Shift_OX_2_P, Shift_OX_2_P                                   ; 1 полный байт
+                DW Shift_OX_x_x,    Shift_OX_x_x                                ; -0.5 байт
+.OX_8           DW Shift_OX_xx,     Shift_OX_xx                                 ;  1.0 байт
                 DW 0, 0
 
-                DW 0, 0
-                DW 0, 0
-.OX_24          DW Shift_OX_3_P, Shift_OX_3_P                                   ; 2 полных байта
-                DW 0, 0
-                DW 0, 0
-
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
-.OX_32          DW Shift_OX_4_P, Shift_OX_4_P                                   ; 3 полных байта
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
+                DW Shift_OX_xX_x,   Shift_OX_xX_x                               ; -1.5 байт
+                DW Shift_OX_x_Xx,   Shift_OX_x_Xx                               ; -0.5 байт
+.OX_16          DW Shift_OX_xXx,    Shift_OX_xXx                                ;  2.0 байт
+                DW 0, 0                                                         ;               OX_2_Xx_x
+                DW 0, 0                                                         ;               OX_2_x_xX
 
                 DW 0, 0
                 DW 0, 0
                 DW 0, 0
+.OX_24          DW Shift_OX_xXXx,   Shift_OX_xXXx                               ;  3.0 байт
                 DW 0, 0
-.OX_40          DW Shift_OX_5, Shift_OX_5                                       ; 4 полных байта
+                DW 0, 0
+                DW 0, 0
+
+                DW 0, 0
+                DW 0, 0
+                DW 0, 0
+                DW 0, 0
+.OX_32          DW Shift_OX_xXXXx,  Shift_OX_xXXXx                              ;  4.0 байт
                 DW 0, 0
                 DW 0, 0
                 DW 0, 0

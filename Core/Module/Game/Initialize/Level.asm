@@ -8,7 +8,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-InitializeLevel:
+Level:
                 LD DE, #0608
                 LD BC, UNIT_COMBAT_SHUTTLE | PLAYER_FACTION
                 CALL Functions.SpawnUnit

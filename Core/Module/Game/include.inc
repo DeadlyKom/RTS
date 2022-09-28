@@ -3,10 +3,9 @@
                 define _MODULE_GAME_INCLUDE_
 
                 include "EntryPoint.asm"
-                include "Initialize.asm"
-                include "InitializeLevel.asm"
                 include "Loop.asm"
                 include "Interrupt.asm"
+                include "Initialize/Include.inc"
                 include "Render/Include.inc"
 
                 endif ; ~_MODULE_GAME_INCLUDE_

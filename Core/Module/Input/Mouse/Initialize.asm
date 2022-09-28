@@ -1,11 +1,18 @@
 
-                ifndef _MOUSE_INIT_
-                define _MOUSE_INIT_
-Initialize:     ; set default value cursor position
-                LD HL, 128 + 10 | (96 - 20) <<8;(192 >> 1) << 8 | (256 >> 1)
+                ifndef _INPUT_MOUSE_INITIALIZE_
+                define _INPUT_MOUSE_INITIALIZE_
+; -----------------------------------------
+; инициализация кемпстон мыши
+; In :
+; Out :
+; Corrupt :
+;   HL, E, BC, AF
+; -----------------------------------------
+Initialize:     ; установке значений по умолчанию (центр экрана)
+                LD HL, (96 << 8) | 128
                 LD (Position), HL
 
-                ; detected kempston mouse
+                ;проверка наличия мыши
                 CALL GetMouseXY
                 INC E
                 JR Z, .Error
@@ -13,7 +20,7 @@ Initialize:     ; set default value cursor position
                 JR Z, .Error
 
                 CALL GetMouseXY
-                LD HL, LastValueFromMousePortX
+                LD HL, LastValue.FromMousePortX
                 LD (HL), E
                 INC HL
                 LD (HL), D
@@ -24,4 +31,4 @@ Initialize:     ; set default value cursor position
 .Error          SCF
                 RET
                 
-                endif ; ~_MOUSE_INIT_
+                endif ; ~_INPUT_MOUSE_INITIALIZE_

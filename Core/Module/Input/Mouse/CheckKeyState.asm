@@ -1,7 +1,6 @@
                         
-                    ifndef _MOUSE_GET_KEY_STATE__
-                    define _MOUSE_GET_KEY_STATE__
-
+                    ifndef _INPUT_MOUSE_GET_KEY_STATE_
+                    define _INPUT_MOUSE_GET_KEY_STATE_
 ; -----------------------------------------
 ; In :
 ;   A  - virtual code
@@ -33,4 +32,4 @@ MouseWheelCounter:  LD BC, #FADF
                     RRCA
                     RET
 
-                    endif ; ~_MOUSE_GET_KEY_STATE__
+                    endif ; ~_INPUT_MOUSE_GET_KEY_STATE_

@@ -9,6 +9,9 @@
 ; Note:
 ; -----------------------------------------
 Interrupt:      
+.Mouse          ; ToDo: вынести в отдельную обновлениея инпута
+                CALL Mouse.UpdateCursor
+
 .AnimTiles      ; ********** Animation Tiles **********
                 LD HL, GameVar.TilemapCountdown
                 DEC (HL)

@@ -12,7 +12,7 @@ SVK_BUTTON_MASK EQU SVK_LBUTTON | SVK_RBUTTON | SVK_MBUTTON
                 include "Initialize.asm"
                 include "CheckKeyState.asm"
                 include "GetMouseCursorPosition.asm"
-                include "UpdateMouseState.asm"
+                include "UpdateCursor.asm"
 
                 display "\t - Mouse : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 

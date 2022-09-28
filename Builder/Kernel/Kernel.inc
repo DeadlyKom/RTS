@@ -56,6 +56,8 @@ Keyboard
 .WaitReleasedKey EQU Kernel.Keyboard.WaitReleasedKey                            ; ожидание отпускание ранее нажатой клавиши
 .AnyKeyPressed  EQU Kernel.Keyboard.AnyKeyPressed                               ; проверка нажатия какая либо клавиши
 Mouse
+.Initialize     EQU Kernel.Mouse.Initialize
+.UpdateCursor   EQU Kernel.Mouse.UpdateCursor
 .CheckKeyState  EQU Kernel.Mouse.CheckKeyState
 .PositionX      EQU Kernel.Mouse.PositionX
 .PositionY      EQU Kernel.Mouse.PositionY
@@ -129,7 +131,6 @@ Table:
 .Shift.OX_16    EQU Kernel.Function.TableShift.OX_16
 .Shift.OX_24    EQU Kernel.Function.TableShift.OX_24
 .Shift.OX_32    EQU Kernel.Function.TableShift.OX_32
-.Shift.OX_40    EQU Kernel.Function.TableShift.OX_40
 .NoShift.OX_8   EQU Kernel.Function.TableNoShift.OX_8
 .NoShift.OX_16  EQU Kernel.Function.TableNoShift.OX_16
 .NoShift.OX_24  EQU Kernel.Function.TableNoShift.OX_24

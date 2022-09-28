@@ -1,6 +1,6 @@
                         
-                ifndef _MOUSE_GET_CURSOR_POSITION_
-                define _MOUSE_GET_CURSOR_POSITION_
+                ifndef _INPUT_MOUSE_GET_CURSOR_POSITION_
+                define _INPUT_MOUSE_GET_CURSOR_POSITION_
                         
 ; -----------------------------------------
 ; In :
@@ -37,4 +37,4 @@ GetMouseXY:     LD BC, #FBDF
                 IN D, (C)
                 RET
 
-                endif ; ~_MOUSE_GET_CURSOR_POSITION_
+                endif ; ~_INPUT_MOUSE_GET_CURSOR_POSITION_

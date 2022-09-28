@@ -40,14 +40,14 @@ Begin:          EQU $
                 ; decompressor
                 include "Core/Module/Decompressor/Forward.asm"
                 include "Core/Module/Decompressor/Backward.asm"
+                ; input
+                include "Core/Module/Input/Include.inc"
 
                 include "Core/Module/Draw/Old/DrawSprite.asm"                   ; ??
-        
-                include "Core/Module/Input/Include.inc"
                 
                 include "Functions/Include.inc"
                 include "Modules/Include.inc"
-
+                ; tables
                 include "Core/Module/Tables/ShiftTable.inc"                     ; таблица сдвигов                                           (3584 байт)
                 include "Core/Module/Tables/ScreenAddressTable.inc"             ; таблица предрасчитаных адресов экрана                     (512 байт)  есть свободные 64 байта х2
                 include "Core/Module/Tables/MultiplySprite.inc"                 ; таблица умножения, применение для пропуска байт спрайтов  (128 байт)  есть свободные 128 байт

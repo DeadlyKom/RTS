@@ -16,6 +16,9 @@ Begin_NoShift:  EQU $
 ; Note:
 ; -----------------------------------------
 
+NoShift_OX_X_X  POP AF
+                JP NoShift_OX_X
+
 NoShift_OX_4    LD A, (DE)
 
                 EXX
@@ -36,7 +39,7 @@ NoShift_OX_3    LD A, (DE)
 
                 LD (DE), A
                 INC E
-NoShift_OX_2    LD A, (DE)
+NoShift_OX_XX   LD A, (DE)
 
                 EXX
                 POP BC
@@ -46,7 +49,7 @@ NoShift_OX_2    LD A, (DE)
 
                 LD (DE), A
                 INC E
-NoShift_OX_1    LD A, (DE)
+NoShift_OX_X    LD A, (DE)
 
                 EXX
                 POP BC
@@ -77,10 +80,10 @@ NoShift_OX_1    LD A, (DE)
                 JP (IY)
 
 TableNoShift:
-.OX_8           DW NoShift_OX_1, NoShift_OX_1
+.OX_8           DW NoShift_OX_X,    NoShift_OX_X                                ;  1.0
 
-                DW 0, 0
-.OX_16          DW NoShift_OX_2, NoShift_OX_2
+                DW NoShift_OX_X_X,  NoShift_OX_X_X                              ; -1.0
+.OX_16          DW NoShift_OX_XX,   NoShift_OX_XX                               ;  2.0
                 DW 0, 0
 
                 DW 0, 0
