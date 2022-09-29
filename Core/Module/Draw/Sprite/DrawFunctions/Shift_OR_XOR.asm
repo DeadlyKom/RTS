@@ -30,11 +30,31 @@ Shift_OX:
                 EXX
                 JP Shift_OX_o_XXXx.R
 Shift_OX_Left:
+._x_XXXx        ; -0.5 байт
+                EXX
+                POP BC
+                EXX
+                JP Shift_OX_o_XXXx
+._xX_XXx        ; -1.5 байт
+                POP AF
+._x_XXx         ; -0.5 байт
+                EXX
+                POP BC
+                EXX
+                JP Shift_OX_oO_XXx
+._xXX_Xx        ; -2.5 байт
+                POP AF
+._xX_Xx         ; -1.5 байт
+                POP AF
 ._x_Xx          ; -0.5 байт
                 EXX
                 POP BC
                 EXX
                 JP Shift_OX_oOO_Xx
+._xXXX_x        ; -3.5 байт
+                POP AF
+._xXX_x         ; -2.5 байт
+                POP AF
 ._xX_x          ; -1.5 байт
                 POP AF
 ._x_x           ; -0.5 байт
@@ -127,7 +147,6 @@ Shift_OX_oOOO_x ; правая половина байта
                 EXX
 
                 LD (DE), A
-
 NextRow:        ; новая строка
                 DEC C
                 JR Z, Kernel.Sprite.Draw.Exit                                   ; JR для этого типа вывода
@@ -148,6 +167,29 @@ NextRow:        ; новая строка
                 JP (IY)
 
 Shift_OX_Right:
+._xXX_Xx_       ; +1.5 байт
+                POP AF
+._xXX_Xx        ; +1.5 байт
+._xXX_x         ; +1.5 байт
+                LD A, (DE)
+
+                EXX
+                POP BC
+                LD L, C
+                OR (HL)
+                LD L, B
+                XOR (HL)
+                EXX
+
+                LD (DE), A
+                INC E
+                JP ._xXX_x_
+._xX_XXx_       ; +2.5 байт
+                POP AF
+._xX_Xx_        ; +1.5 байт
+                POP AF
+._xX_XXx        ; +2.5 байт
+._xX_Xx         ; +1.5 байт
 ._xX_x          ; +0.5 байт
                 LD A, (DE)
 
@@ -161,7 +203,21 @@ Shift_OX_Right:
 
                 LD (DE), A
                 INC E
+                JP ._xX_x_
+._xXXX_x        ; +0.5 байт
                 LD A, (DE)
+
+                EXX
+                POP BC
+                LD L, C
+                OR (HL)
+                LD L, B
+                XOR (HL)
+                EXX
+
+                LD (DE), A
+                INC E
+._xXXX_x_       LD A, (DE)
 
                 EXX
                 INC H
@@ -179,12 +235,55 @@ Shift_OX_Right:
                 EXX
 
                 LD (DE), A
+                INC E
+._xXX_x_        LD A, (DE)
 
+                EXX
+                INC H
+                LD L, C
+                OR (HL)
+                LD L, B
+                XOR (HL)
+                DEC H
+
+                POP BC
+                LD L, C 
+                OR (HL)
+                LD L, B
+                XOR (HL)
+                EXX
+
+                LD (DE), A
+                INC E
+._xX_x_         LD A, (DE)
+
+                EXX
+                INC H
+                LD L, C
+                OR (HL)
+                LD L, B
+                XOR (HL)
+                DEC H
+
+                POP BC
+                LD L, C 
+                OR (HL)
+                LD L, B
+                XOR (HL)
+                EXX
+
+                LD (DE), A
                 JP NextRow
+._x_XXXx_       ; +3.5 байт
+                POP AF
+._x_XXx_        ; +2.5 байт
+                POP AF
 ._x_Xx_         ; +1.5 байт
                 POP AF
 ._x_x           ; +0.5 байт
 ._x_Xx          ; +1.5 байт
+._x_XXx         ; +2.5 байт
+._x_XXXx        ; +3.5 байт
                 LD A, (DE)
 
                 EXX
@@ -208,23 +307,23 @@ TableShift:
                 DW Shift_OX_Right._xX_x,    Shift_OX_Right._xX_x                ; +0.5 байт
                 DW Shift_OX_Right._x_Xx,    Shift_OX_Right._x_Xx_               ; +1.5 байт
 
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
+                DW Shift_OX_Left._xXX_x,    Shift_OX_Left._xXX_x                ; -2.5 байт
+                DW Shift_OX_Left._xX_Xx,    Shift_OX_Left._xX_Xx                ; -1.5 байт
+                DW Shift_OX_Left._x_XXx,    Shift_OX_Left._x_XXx                ; -0.5 байт
 .OX_24          DW Shift_OX._xXXx,          Shift_OX._xXXx                      ;  3.0 байт
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
+                DW Shift_OX_Right._xXX_x,   Shift_OX_Right._xXX_x               ; +0.5 байт
+                DW Shift_OX_Right._xX_Xx,   Shift_OX_Right._xX_Xx_              ; +1.5 байт
+                DW Shift_OX_Right._x_XXx,   Shift_OX_Right._x_XXx_              ; +2.5 байт
 
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
+                DW Shift_OX_Left._xXXX_x,   Shift_OX_Left._xXXX_x               ; -3.5 байт
+                DW Shift_OX_Left._xXX_Xx,   Shift_OX_Left._xXX_Xx               ; -2.5 байт
+                DW Shift_OX_Left._xX_XXx,   Shift_OX_Left._xX_XXx               ; -1.5 байт
+                DW Shift_OX_Left._x_XXXx,   Shift_OX_Left._x_XXXx               ; -0.5 байт
 .OX_32          DW Shift_OX_xXXXx,          Shift_OX_xXXXx                      ;  4.0 байт
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
+                DW Shift_OX_Right._xXXX_x,  Shift_OX_Right._xXXX_x              ; +0.5 байт
+                DW Shift_OX_Right._xXX_Xx,  Shift_OX_Right._xXX_Xx_             ; +1.5 байт
+                DW Shift_OX_Right._xX_XXx,  Shift_OX_Right._xX_XXx_             ; +2.5 байт
+                DW Shift_OX_Right._x_XXXx,  Shift_OX_Right._x_XXXx_             ; +3.5 байт
 
                 display " - Draw Function 'Shift OR & XOR': \t", /A, Begin_Shift, " = busy [ ", /D, $ - Begin_Shift, " bytes  ]"
 

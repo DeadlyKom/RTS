@@ -16,20 +16,18 @@ Begin_NoShift:  EQU $
 ; Note:
 ; -----------------------------------------
 
-NoShift_OX_X_X  POP AF
-                JP NoShift_OX_X
-
-NoShift_OX_4    LD A, (DE)
-
-                EXX
-                POP BC
-                OR C
-                XOR B
-                EXX
-
-                LD (DE), A
-                INC E
-NoShift_OX_3    LD A, (DE)
+NoShiftLR:
+._OX_XXX_X      POP AF
+._OX_XX_X       POP AF
+._OX_X_X        POP AF
+                JP NoShift._OX_X
+._OX_XX_XX      POP AF
+._OX_X_XX       POP AF
+                JP NoShift._OX_XX
+._OX_X_XXX      POP AF
+                JP NoShift._OX_XXX
+NoShift:
+._OX_XXXX       LD A, (DE)
 
                 EXX
                 POP BC
@@ -39,7 +37,8 @@ NoShift_OX_3    LD A, (DE)
 
                 LD (DE), A
                 INC E
-NoShift_OX_XX   LD A, (DE)
+
+._OX_XXX        LD A, (DE)
 
                 EXX
                 POP BC
@@ -49,7 +48,8 @@ NoShift_OX_XX   LD A, (DE)
 
                 LD (DE), A
                 INC E
-NoShift_OX_X    LD A, (DE)
+
+._OX_XX         LD A, (DE)
 
                 EXX
                 POP BC
@@ -58,9 +58,18 @@ NoShift_OX_X    LD A, (DE)
                 EXX
 
                 LD (DE), A
+                INC E
 
+._OX_X          LD A, (DE)
 
-; NextRow:      ; новая строка
+                EXX
+                POP BC
+                OR C
+                XOR B
+                EXX
+
+                LD (DE), A
+; NextRow:        ; новая строка
                 DEC C
                 JP Z, Kernel.Sprite.Draw.Exit                                   ; JP для этого типа вывода
                 INC D
@@ -80,25 +89,25 @@ NoShift_OX_X    LD A, (DE)
                 JP (IY)
 
 TableNoShift:
-.OX_8           DW NoShift_OX_X,    NoShift_OX_X                                ;  1.0
+.OX_8           DW NoShift._OX_X,       NoShift._OX_X                           ;  1.0
 
-                DW NoShift_OX_X_X,  NoShift_OX_X_X                              ; -1.0
-.OX_16          DW NoShift_OX_XX,   NoShift_OX_XX                               ;  2.0
-                DW NoShift_OX_X,    NoShift_OX_X_X                              ; +1.0
+                DW NoShiftLR._OX_X_X,   NoShiftLR._OX_X_X                       ; -1.0
+.OX_16          DW NoShift._OX_XX,      NoShift._OX_XX                          ;  2.0
+                DW NoShift._OX_X,       NoShiftLR._OX_X_X                       ; +1.0
 
-                DW 0, 0
-                DW 0, 0
-.OX_24          DW NoShift_OX_3, NoShift_OX_3
-                DW 0, 0
-                DW 0, 0
+                DW NoShiftLR._OX_XX_X,  NoShiftLR._OX_XX_X                      ; -2.0
+                DW NoShiftLR._OX_X_XX,  NoShiftLR._OX_X_XX                      ; -1.0
+.OX_24          DW NoShift._OX_XXX,     NoShift._OX_XXX
+                DW NoShift._OX_XX,      NoShiftLR._OX_X_XX                      ; +1.0
+                DW NoShift._OX_X,       NoShiftLR._OX_XX_X                      ; +2.0
 
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
-.OX_32          DW NoShift_OX_4, NoShift_OX_4
-                DW 0, 0
-                DW 0, 0
-                DW 0, 0
+                DW NoShiftLR._OX_XXX_X, NoShiftLR._OX_XXX_X                     ; -3.0
+                DW NoShiftLR._OX_XX_XX, NoShiftLR._OX_XX_XX                     ; -2.0
+                DW NoShiftLR._OX_X_XXX, NoShiftLR._OX_X_XXX                     ; -1.0
+.OX_32          DW NoShift._OX_XXXX,    NoShift._OX_XXXX
+                DW NoShift._OX_XXX,     NoShiftLR._OX_X_XXX                     ; +1.0
+                DW NoShift._OX_XX,      NoShiftLR._OX_XX_XX                     ; +2.0
+                DW NoShift._OX_X,       NoShiftLR._OX_XXX_X                     ; +3.0
 
                 display " - Draw Function 'No Shift OR & XOR':\t", /A, Begin_NoShift, " = busy [ ", /D, $ - Begin_NoShift, " bytes  ]"
 
