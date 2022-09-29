@@ -1,8 +1,8 @@
 
-                ifndef _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_SHIFT_OR_XOR_
-                define _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_SHIFT_OR_XOR_
+                ifndef _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_SHIFT_LD_
+                define _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_SHIFT_LD_
 
-                module OR_XOR
+                module LD
 Begin_Shift:    EQU $
 ; -----------------------------------------
 ;
@@ -22,136 +22,139 @@ Shift_OX:
 ._xx            ;  1.0 байт
                 LD A, (DE)
                 EXX
-                JP Shift_OX_oOO_Xx.R
+                DEC SP
+                POP BC
+                LD L, #FF
+                INC H
+                AND (HL)
+                DEC H
+                LD L, B
+                OR (HL)
+                EXX
+                LD (DE), A
+                INC E
+                JP Shift_OX_oOOO_x
 ._xXx           ;  2.0 байт
                 LD A, (DE)
                 EXX
-                JP Shift_OX_oO_XXx.R
+                POP BC
+                LD L, #FF
+                INC H
+                AND (HL)
+                DEC H
+                LD L, C
+                OR (HL)
+                EXX
+                LD (DE), A
+                INC E
+                JP Shift_OX_oOO_Xx
 ._xXXx          ;  3.0 байт
                 LD A, (DE)
                 EXX
-                JP Shift_OX_o_XXXx.R
+                DEC SP
+                POP BC
+                LD L, #FF
+                INC H
+                AND (HL)
+                DEC H
+                LD L, B
+                OR (HL)
+                EXX
+                LD (DE), A
+                INC E
+                JP Shift_OX_oO_XXx
 Shift_OX_Left:
 ._x_XXXx        ; -0.5 байт
                 EXX
                 POP BC
+                LD L, C
                 EXX
                 JP Shift_OX_o_XXXx
 ._xX_XXx        ; -1.5 байт
-                POP AF
+                INC SP
 ._x_XXx         ; -0.5 байт
                 EXX
+                DEC SP
                 POP BC
+                LD L, B
                 EXX
                 JP Shift_OX_oO_XXx
 ._xXX_Xx        ; -2.5 байт
-                POP AF
+                INC SP
 ._xX_Xx         ; -1.5 байт
-                POP AF
+                INC SP
 ._x_Xx          ; -0.5 байт
                 EXX
                 POP BC
+                LD L, C
                 EXX
                 JP Shift_OX_oOO_Xx
 ._xXXX_x        ; -3.5 байт
-                POP AF
+                INC SP
 ._xXX_x         ; -2.5 байт
-                POP AF
+                INC SP
 ._xX_x          ; -1.5 байт
-                POP AF
+                INC SP
 ._x_x           ; -0.5 байт
                 EXX
+                DEC SP
                 POP BC
                 EXX
                 JP Shift_OX_oOOO_x
 Shift_OX_xXXXx  ;  4.0 байт
                 LD A, (DE)
-
                 EXX
                 POP BC
-                LD L, C 
-                OR (HL)
-                LD L, B
-                XOR (HL)
-                EXX
-
-                LD (DE), A
-                INC E
-Shift_OX_o_XXXx ;
-                LD A, (DE)
-
-                EXX
+                LD L, #FF
                 INC H
+                AND (HL)
+                DEC H
                 LD L, C
                 OR (HL)
-                LD L, B
-                XOR (HL)
-                DEC H
-
-.R              POP BC
-                LD L, C 
-                OR (HL)
-                LD L, B
-                XOR (HL)
                 EXX
-
                 LD (DE), A
                 INC E
-Shift_OX_oO_XXx ;
-                LD A, (DE)
-
-                EXX
+Shift_OX_o_XXXx EXX
                 INC H
-                LD L, C
-                OR (HL)
-                LD L, B
-                XOR (HL)
+                LD A, (HL)
                 DEC H
-
-.R              POP BC
-                LD L, C 
-                OR (HL)
                 LD L, B
-                XOR (HL)
+                OR (HL)
                 EXX
-
                 LD (DE), A
                 INC E
-Shift_OX_oOO_Xx LD A, (DE)
-
-                EXX
+Shift_OX_oO_XXx EXX
                 INC H
+                LD A, (HL)
+                DEC H
+                POP BC
                 LD L, C
                 OR (HL)
-                LD L, B
-                XOR (HL)
-                DEC H
-
-.R              POP BC
-                LD L, C 
-                OR (HL)
-                LD L, B
-                XOR (HL)
                 EXX
-
                 LD (DE), A
                 INC E
-Shift_OX_oOOO_x ; правая половина байта
-                LD A, (DE)
-
-                EXX
+Shift_OX_oOO_Xx EXX
                 INC H
-                LD L, C
-                OR (HL)
+                LD A, (HL)
+                DEC H
                 LD L, B
-                XOR (HL)
+                OR (HL)
+                EXX
+                LD (DE), A
+                INC E
+Shift_OX_oOOO_x LD A, (DE)
+                EXX
+                LD L, #FF
+                AND (HL)
+                INC H
+                LD L, B
+                OR (HL)
                 DEC H
                 EXX
-
                 LD (DE), A
 NextRow:        ; новая строка
                 DEC C
-                JR Z, Kernel.Sprite.Draw.Exit                                   ; JR для этого типа вывода
+                JP Z, Kernel.Sprite.Draw.Exit                                   ; JR для этого типа вывода
                 INC D
                 DJNZ .NextRow
 
@@ -170,132 +173,108 @@ NextRow:        ; новая строка
 
 Shift_OX_Right:
 ._xXX_Xx_       ; +1.5 байт
-                POP AF
+                INC SP
 ._xXX_Xx        ; +1.5 байт
 ._xXX_x         ; +1.5 байт
                 LD A, (DE)
-
                 EXX
+                DEC SP
                 POP BC
-                LD L, C
-                OR (HL)
+                LD L, #FF
+                INC H
+                AND (HL)
+                DEC H
                 LD L, B
-                XOR (HL)
+                OR (HL)
                 EXX
-
                 LD (DE), A
                 INC E
                 JP ._xXX_x_
 ._xX_XXx_       ; +2.5 байт
-                POP AF
+                INC SP
 ._xX_Xx_        ; +1.5 байт
-                POP AF
+                INC SP
 ._xX_XXx        ; +2.5 байт
 ._xX_Xx         ; +1.5 байт
 ._xX_x          ; +0.5 байт
                 LD A, (DE)
-
                 EXX
                 POP BC
+                LD L, #FF
+                INC H
+                AND (HL)
+                DEC H
                 LD L, C
                 OR (HL)
-                LD L, B
-                XOR (HL)
                 EXX
-
                 LD (DE), A
                 INC E
                 JP ._xX_x_
 ._xXXX_x        ; +0.5 байт
                 LD A, (DE)
-
                 EXX
                 POP BC
+                LD L, #FF
+                INC H
+                AND (HL)
+                DEC H
                 LD L, C
                 OR (HL)
-                LD L, B
-                XOR (HL)
                 EXX
-
                 LD (DE), A
                 INC E
-._xXXX_x_       LD A, (DE)
 
-                EXX
+._xXXX_x_       EXX
                 INC H
-                LD L, C
-                OR (HL)
-                LD L, B
-                XOR (HL)
+                LD A, (HL)
                 DEC H
-
-                POP BC
-                LD L, C 
-                OR (HL)
                 LD L, B
-                XOR (HL)
+                OR (HL)
                 EXX
-
                 LD (DE), A
                 INC E
-._xXX_x_        LD A, (DE)
 
-                EXX
+._xXX_x_        EXX
                 INC H
+                LD A, (HL)
+                DEC H
+                POP BC
                 LD L, C
                 OR (HL)
-                LD L, B
-                XOR (HL)
-                DEC H
-
-                POP BC
-                LD L, C 
-                OR (HL)
-                LD L, B
-                XOR (HL)
                 EXX
-
                 LD (DE), A
                 INC E
-._xX_x_         LD A, (DE)
 
-                EXX
+._xX_x_         EXX
                 INC H
-                LD L, C
-                OR (HL)
-                LD L, B
-                XOR (HL)
+                LD A, (HL)
                 DEC H
-
-                POP BC
-                LD L, C 
-                OR (HL)
                 LD L, B
-                XOR (HL)
+                OR (HL)
                 EXX
-
                 LD (DE), A
                 JP NextRow
 ._x_XXXx_       ; +3.5 байт
-                POP AF
+                INC SP
 ._x_XXx_        ; +2.5 байт
-                POP AF
+                INC SP
 ._x_Xx_         ; +1.5 байт
-                POP AF
+                INC SP
 ._x_x           ; +0.5 байт
 ._x_Xx          ; +1.5 байт
 ._x_XXx         ; +2.5 байт
 ._x_XXXx        ; +3.5 байт
                 LD A, (DE)
-
                 EXX
+                DEC SP
                 POP BC
-                LD L, C
-                OR (HL)
+                LD L, #FF
+                INC H
+                AND (HL)
+                DEC H
                 LD L, B
-                XOR (HL)
+                OR (HL)
                 EXX
-                
                 LD (DE), A
                 JP NextRow
 TableShift:
@@ -327,8 +306,8 @@ TableShift:
                 DW Shift_OX_Right._xX_XXx,  Shift_OX_Right._xX_XXx_             ; +2.5 байт
                 DW Shift_OX_Right._x_XXXx,  Shift_OX_Right._x_XXXx_             ; +3.5 байт
 
-                display " - Draw Function 'Shift OR & XOR': \t", /A, Begin_Shift, " = busy [ ", /D, $ - Begin_Shift, " bytes  ]"
+                display " - Draw Function 'Shift LD': \t", /A, Begin_Shift, " = busy [ ", /D, $ - Begin_Shift, " bytes  ]"
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_SHIFT_OR_XOR_
+                endif ; ~ _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_SHIFT_LD_

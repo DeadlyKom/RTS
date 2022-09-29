@@ -476,7 +476,7 @@ Prepare:        EX DE, HL
                 EXX
 
                 ; адрес таблицы спрайта без маски и без сдвига
-                LD DE, Table.NoShift_OR-2
+                LD DE, Table.NoShift_LD-2
                 
                 ; расчёт адреса таблицы смещения
                 LD A, H
@@ -484,7 +484,7 @@ Prepare:        EX DE, HL
                 JR Z, .NotShift                                                 ; переход, если сдвиг отсутствует
 
                 ; адрес таблицы спрайта без маски и сдвигом
-                LD DE, Table.Shift_OR-2
+                LD DE, Table.Shift_LD-2
 
                 ; расчёт адреса таблицы, в зависимости от младших 3 бит
                 EXX
@@ -510,14 +510,16 @@ Prepare:        EX DE, HL
                 ; выбор таблицы от типа спрайта
                 LD HL, GameFlags.SpriteFlagRef
                 BIT CSIF_OR_XOR_BIT, (HL)
-                JR Z, $+7
-                LD HL, #0008
                 EX DE, HL
+                LD D, #00
+                JR Z, $+5
+                LD E, #08
                 ADD HL, DE
 
                 LD E, A                                                         ; сохранение смещение в таблице    
 
                 ; округление
+                OR A
                 LD A, B
                 RRA
                 ADC A, D
@@ -566,29 +568,10 @@ Prepare:        EX DE, HL
                 SCF
                 RET
 
-; NextRow:        ; новая строка
-;                 DEC C
-;                 JR Z, Kernel.Sprite.Draw.Exit                                   ; JR для этого типа вывода
-;                 INC D
-;                 DJNZ .NextRow
-
-;                 LD B, #08
-;                 LD A, L
-;                 ADD A, #20
-;                 LD L, A
-;                 JR C, .NextBoundary
-;                 LD D, H                                                         ; восстановление адреса экрана
-;                 LD E, L
-;                 JP (IY)
-
-; .NextBoundary   LD H, D                                                         ; сохранение старший байт адреса экрана
-; .NextRow        LD E, L                                                         ; восстановление младший байт фдреса экрана
-;                 JP (IY)
-
 Table:          ; таблица функций (горионталь, ширина спрайта в знакоместах)
-.NoShift_OR     DW #0000, #0000, #0000, #0000
+.NoShift_LD     DW Table.NoShift.LD_8,  Table.NoShift.LD_16,    Table.NoShift.LD_24,    Table.NoShift.LD_32
 .NoShift_OR_XOR DW Table.NoShift.OX_8,  Table.NoShift.OX_16,    Table.NoShift.OX_24,    Table.NoShift.OX_32
-.Shift_OR       DW #0000, #0000, #0000, #0000
+.Shift_LD       DW Table.Shift.LD_8,    Table.Shift.LD_16,      Table.Shift.LD_24,      Table.Shift.LD_32
 .Shift_OR_XOR   DW Table.Shift.OX_8,    Table.Shift.OX_16,      Table.Shift.OX_24,      Table.Shift.OX_32
 
                 display " - Prepare Sprite Unit : \t\t", /A, Prepare, " = busy [ ", /D, $ - Prepare, " bytes  ]"

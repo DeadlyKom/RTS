@@ -1,6 +1,8 @@
 
-                ifndef _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_NO_SHIFT_
-                define _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_NO_SHIFT_
+                ifndef _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_NO_SHIFT_OR_XOR_
+                define _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_NO_SHIFT_OR_XOR_
+
+                module OR_XOR
 Begin_NoShift:  EQU $
 ; -----------------------------------------
 ;
@@ -111,4 +113,6 @@ TableNoShift:
 
                 display " - Draw Function 'No Shift OR & XOR':\t", /A, Begin_NoShift, " = busy [ ", /D, $ - Begin_NoShift, " bytes  ]"
 
-                endif ; ~ _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_NO_SHIFT_
+                endmodule
+
+                endif ; ~ _CORE_MODULE_DRAW_SPRITE_DRAW_FUNCTION_NO_SHIFT_OR_XOR_
