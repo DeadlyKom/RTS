@@ -209,12 +209,12 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
 .Loop           ; корректировка адреса спрайта, при наличии анимации
                 LD C, (HL)                                                      ; FCompositeSpriteInfo.Flags
                 INC HL
-                LD E, (HL)                                                      ; FCompositeSpriteInfo.Info.Height
+                LD D, (HL)                                                      ; FCompositeSpriteInfo.Info.Height
                 INC HL
                 LD A, (HL)                                                      ; FCompositeSpriteInfo.Info.OffsetY
                 LD (Prepare.SOy), A
                 INC HL
-                LD D, (HL)                                                      ; FCompositeSpriteInfo.Info.Width
+                LD E, (HL)                                                      ; FCompositeSpriteInfo.Info.Width
                 LD (Prepare.SpriteSize), DE
                 INC HL
                 LD A, (HL)                                                      ; FCompositeSpriteInfo.Info.OffsetX
@@ -248,7 +248,10 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
 
 .CalcAnim       ; расчёт номера анимации
                 LD E, A
-                LD A, (#0000)
+                LD A, (TickCounterRef)
+                RRA
+                RRA
+                AND 1
                 LD D, A
                 CALL Math.Div8x8
                 AND FUAF_ANIM_DOWN_MASK
