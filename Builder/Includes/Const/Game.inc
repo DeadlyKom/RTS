@@ -21,4 +21,19 @@ GameFlags:
 .SpriteOffsetRef    EQU FGameAdr + FGame.Sprite.Data.Low                        ; флаги спрайта
 .SpriteFlagRef      EQU FGameAdr + FGame.Sprite.Data.High                       ; флаги спрайта
 
+
+ANIM_INDEX_NONE     EQU 0xFF
+ANIM_INDEX_0        EQU 0x00
+ANIM_INDEX_1        EQU 0x01
+ANIM_INDEX_2        EQU 0x02
+ANIM_INDEX_3        EQU 0x03
+
+GameAnim:
+.OffsetY            EQU FGameAdr + FGame.CompositeY                             ; смещение по вертикали для композитного спрайта
+.Array              EQU FGameAdr + FGame.Animation                              ; массив анимаций
+.Element_0          EQU FGameAdr + FGame.Animation + 0                          ; 1 элемент массив анимаций
+.Element_1          EQU FGameAdr + FGame.Animation + 1                          ; 2 элемент массив анимаций
+.Element_2          EQU FGameAdr + FGame.Animation + 2                          ; 3 элемент массив анимаций
+.Element_3          EQU FGameAdr + FGame.Animation + 3                          ; 4 элемент массив анимаций
+
                     endif ; ~_CONST_GAME_

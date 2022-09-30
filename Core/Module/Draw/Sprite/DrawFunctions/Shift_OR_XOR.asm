@@ -151,7 +151,7 @@ Shift_OX_oOOO_x ; правая половина байта
                 LD (DE), A
 NextRow:        ; новая строка
                 DEC C
-                JR Z, Kernel.Sprite.Draw.Exit                                   ; JR для этого типа вывода
+                JP Z, Kernel.Sprite.Draw.Exit                                   ; JR для этого типа вывода
                 INC D
                 DJNZ .NextRow
 

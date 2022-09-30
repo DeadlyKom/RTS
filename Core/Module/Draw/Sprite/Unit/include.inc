@@ -10,6 +10,7 @@
                 include "DrawUnit.asm"
                 include "Prepare.asm"
                 include "Draw.asm"
+                include "DrawComposite.asm"
 
                 endmodule
 

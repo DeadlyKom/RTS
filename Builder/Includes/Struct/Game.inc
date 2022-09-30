@@ -18,6 +18,8 @@ Render          FFlags 0                                                        
 Sprite          FWFlags 0                                                       ; флаги работы с спрайтами 
                                                                                 ; младший байт (offset) - FSprite.Offset
                                                                                 ; старший байт (flags)  - FSprite.Data.Page / FCompositeSpriteInfo.Flags
+CompositeY      DB #00                                                          ; смещение по вертикали для композитного спрайта
+Animation       DS 4, 0                                                         ; массив анимация для композитного спрайта
 
                 ends
 
