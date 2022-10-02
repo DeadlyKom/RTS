@@ -18,17 +18,9 @@ PostInitialize: ; -----------------------------------------
                 CALL Memcpy.FastLDIR
 
                 ; -----------------------------------------
-                ; инициализация размера карты
-                ; -----------------------------------------
-.TilmapSize     EQU $+1
-                LD HL, #0000
-                LD (GameVar.TilemapSize), HL
-
-                ; -----------------------------------------
                 ; расчёт адрес расположения стартовой локации
                 ; -----------------------------------------
-.StartLocation  EQU $+1
-                LD DE, #0000
+                LD DE, (GameVar.TilemapOffset)
                 CALL Game.Tilemap.GetAdrTilemap
                 LD (GameVar.TilemapCachedAdr), HL
 

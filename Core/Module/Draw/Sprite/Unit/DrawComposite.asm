@@ -280,6 +280,6 @@ DrawComposite:  EXX
                 LD A, #00
                 JP SetPage
 
-                display " - Draw Composite : \t\t", /A, DrawComposite, " = busy [ ", /D, $ - DrawComposite, " bytes  ]"
+                display " - Draw Composite : \t\t\t", /A, DrawComposite, " = busy [ ", /D, $ - DrawComposite, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_DRAW_SPRITE_UNIT_COMPOSITE_

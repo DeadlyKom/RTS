@@ -76,16 +76,16 @@ DebugStateRef               EQU Game.DebugFlags                                 
 ; TilesOnScreenX              EQU 16                                              ; количество тайлов на экране по горизонтали
 ; TilesOnScreenY              EQU 12                                              ; количество тайлов на экране по вертикали
 ; TilemapRef                  EQU Game.TilemapPtr                                 ; указатель на адрес тайловой карты
-TilemapSizeRef              EQU Game.TilemapSize                                ; указатель на адрес размера карты
-TilemapWidth                EQU Game.TilemapSize.X                              ; ширина тайловой карты (структура FMapSize)
-TilemapWidth_NEG            EQU Game.TilemapSize_NEG.X                          ; ширина тайловой карты (отрецательное значение)
-TilemapHeight               EQU Game.TilemapSize.Y                              ; высота тайловой карты (структура FMapSize)
-TilemapHeight_NEG           EQU Game.TilemapSize_NEG.Y                          ; высота тайловой карты (отрецательное значение)
-TilemapOffsetRef            EQU Game.TilemapOffset                              ; указатель смещения тайловой карты
+; TilemapSizeRef              EQU Game.TilemapSize                                ; указатель на адрес размера карты
+; TilemapWidth                EQU Game.TilemapSize.X                              ; ширина тайловой карты (структура FMapSize)
+; TilemapWidth_NEG            EQU Game.TilemapSize_NEG.X                          ; ширина тайловой карты (отрецательное значение)
+; TilemapHeight               EQU Game.TilemapSize.Y                              ; высота тайловой карты (структура FMapSize)
+; TilemapHeight_NEG           EQU Game.TilemapSize_NEG.Y                          ; высота тайловой карты (отрецательное значение)
+; TilemapOffsetRef            EQU Game.TilemapOffset                              ; указатель смещения тайловой карты
 ; TilemapOffsetWidth          EQU Game.TilemapOffset.X                            ; смещение в тайловой карте по горизонтали (структура FLocation)
 ; TilemapOffsetHeight         EQU Game.TilemapOffset.Y                            ; смещение в тайловой карте по вертикали (структура FLocation)
-TilemapTableAddress         EQU Page_1.TilemapTableAdr                          ; адрес таблицы тайловой карты, для расчёта адреса используя пизиции тайла X и Y (не использовать умножение)
-TilemapTableSize            EQU 512                                             ; размер таблицы тайлов карты для расчёта адреса используя пизиции тайла X и Y (не использовать умножение)
+; TilemapTableAddress         EQU Page_1.TilemapTableAdr                          ; адрес таблицы тайловой карты, для расчёта адреса используя пизиции тайла X и Y (не использовать умножение)
+; TilemapTableSize            EQU 512                                             ; размер таблицы тайлов карты для расчёта адреса используя пизиции тайла X и Y (не использовать умножение)
 
 ; surface
 SurfacePropertyPtr          EQU Page_1.SurfaceProperty                          ; адрес свойст тайлов (128 байт)

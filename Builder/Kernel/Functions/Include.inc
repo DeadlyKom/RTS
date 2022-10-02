@@ -13,7 +13,7 @@ Begin:          EQU $
                 include "ShiftRenderBuffer.asm"
                 include "MemcpyTilemap.asm"
 
-                include "Unit.asm"
+                include "Unit/Include.inc"
 Size:           EQU $ - Begin
 
                 endmodule

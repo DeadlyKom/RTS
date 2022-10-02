@@ -75,6 +75,9 @@ Cursor
 Math
 .Rand8          EQU Kernel.Math.Rand8
 .Div8x8         EQU Kernel.Math.Div8x8
+.Mul16x8_24     EQU Kernel.Math.Mul16x8_24
+.Lerp           EQU Kernel.Math.Lerp
+.BezierCurve    EQU Kernel.Math.BezierCurve
 
 ; decompressor
 Decompressor
@@ -120,6 +123,7 @@ Functions
 .DrawCharToScr  EQU Kernel.Functions.DrawCharToScr
 
 .SpawnUnit      EQU Kernel.Functions.SpawnUnit                                  ; спавн юнита
+.FlyToUnit      EQU Kernel.Functions.FlyToUnit                                  ; перелёт юнита в назначенную точку
 
 ; tables
 Table:

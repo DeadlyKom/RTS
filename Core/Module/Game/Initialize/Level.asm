@@ -13,6 +13,15 @@ Level:
                 LD BC, UNIT_COMBAT_SHUTTLE | PLAYER_FACTION
                 CALL Functions.SpawnUnit
 
+                ;   HL - начальная позици (H - y, L - x)
+                ;   DE - конечная позиция (D - y, E - x)
+                ;   A' - номер юнита
+                XOR A
+                EX AF, AF'
+                LD HL, #0310
+                LD DE, #0704
+                CALL Functions.FlyToUnit
+                
                 RET
 
                 endif ; ~_MODULE_GAME_INITIALIZE_LEVEL_

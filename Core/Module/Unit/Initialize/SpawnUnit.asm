@@ -12,38 +12,36 @@
 ;   IX
 ; Note:
 ; -----------------------------------------
-Unit:           ; определение адреса добавления нового юнита
+Spawn:          ; определение адреса добавления нового юнита
                 LD HL, GameAI.UnitArraySize
                 LD A, (HL)
                 INC (HL)
                 CALL Game.Unit.Utils.GetAddress
                 
                 XOR A
-                ;
-                LD (IX + FUnit.Type), C
-                LD (IX + FUnit.State), A
+
+                LD (IX + FUnit.Type), C                                         ; тип юнита
+                LD (IX + FUnit.State), A                                        ; сброс состояний юнта
                 
-                ;
+                ; установка начальной позиции юнита
                 LD (IX + FUnit.Position.X.Low), A
                 LD (IX + FUnit.Position.X.High), E
                 LD (IX + FUnit.Position.Y.Low), A
                 LD (IX + FUnit.Position.Y.High), D
 
-                ;
+                ; сброс позиции цели
                 LD (IX + FUnit.Target.X), A
                 LD (IX + FUnit.Target.Y), A
 
-                ;
-                LD (IX + FUnit.Data), A
-                LD (IX + FUnit.Idx), A
-
-                ;
-                LD (IX + FUnit.CounterDown), A
-                LD (IX + FUnit.CounterUp), A
-                LD (IX + FUnit.Delta), A
-                LD (IX + FUnit.Flags), A
-                LD (IX + FUnit.Rank), RANK_ROOKIE
-                LD (IX + FUnit.Killed), A
+                ; сброс данных
+                LD (IX + FUnit.Data), A                                         ; данные WayPoint'а
+                LD (IX + FUnit.Idx), A                                          ; данные WayPoint'а
+                LD (IX + FUnit.CounterDown), A                                  ; счётчик повороов
+                LD (IX + FUnit.CounterUp), A                                    ; счётчик повороов
+                LD (IX + FUnit.Delta), A                                        ;
+                LD (IX + FUnit.Flags), A                                        ; флаги
+                LD (IX + FUnit.Rank), RANK_ROOKIE                               ; начальный ранг
+                LD (IX + FUnit.Killed), A                                       ; количество убитых
 
                 ; установка дефолтной брони и уровня HP
                 LD (IX + FUnit.Armor), #20
@@ -58,12 +56,12 @@ Unit:           ; определение адреса добавления но�
                 LD (IX + FUnit.Animation), A
                 LD (IX + FUnit.CooldownShot), #01
 
-                ; рандом направления
+                ; рандом направление
                 CALL Math.Rand8
                 LD (IX + FUnit.Direction), A
  
                 RET
 
-                display " - Spawn Unit in World : \t\t", /A, Unit, " = busy [ ", /D, $ - Unit, " bytes  ]"
+                display " - Spawn Unit in World : \t\t", /A, Spawn, " = busy [ ", /D, $ - Spawn, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_UNIT_SPAWN_UNIT_

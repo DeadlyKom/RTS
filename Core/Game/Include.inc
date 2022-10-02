@@ -11,8 +11,8 @@
                     include "Music.asm"
 
 ; tilemap
-TilemapSize:        FMapSize 64, 64
-TilemapSize_NEG:    FMapSize -64, -64
+; TilemapSize:        FMapSize 64, 64
+; TilemapSize_NEG:    FMapSize -64, -64
 
 ; animation
 AnimTurnUpTable:    DW #0000                                                    ; адрес таблицы анимации поворотов (вверх)
@@ -29,7 +29,7 @@ WaypointCounter:    DB #00
 WaypointArray:      DW #0000
 TilemapPtr:         DW #0000
 ; UnitArrayPtr:       DW #0000
-TilemapOffset:      FLocation 0, 0
+; TilemapOffset:      FLocation 0, 0
 
 
 ; AI_UpdateFreq:      DB #00

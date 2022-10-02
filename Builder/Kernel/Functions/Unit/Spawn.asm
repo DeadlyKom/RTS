@@ -1,6 +1,6 @@
 
-                ifndef _BUILDER_KERNEL_MODULE_UNIT_
-                define _BUILDER_KERNEL_MODULE_UNIT_
+                ifndef _BUILDER_KERNEL_MODULE_UNIT_SPAWN_
+                define _BUILDER_KERNEL_MODULE_UNIT_SPAWN_
 ; -----------------------------------------
 ; спавн юнита
 ; In:
@@ -18,13 +18,13 @@ SpawnUnit:      ; сохранеие текущей страницы
                 PUSH BC
                 SET_PAGE_UNIT                                                   ; включить страницу работы с юнитами
                 POP BC
-                CALL Game.Unit.Spawn.Unit
+                CALL Game.Unit.Initialize.Spawn
 
                 ; востановление страницы
 .RestoreMemPage EQU $+1
                 LD A, #00
                 JP SetPage
 
-                display "\t - Spawn Unit : \t\t", /A, SpawnUnit, " = busy [ ", /D, $ - SpawnUnit, " bytes  ]"
+                display "\t - Init Unit : \t\t\t", /A, SpawnUnit, " = busy [ ", /D, $ - SpawnUnit, " bytes  ]"
 
-                endif ; ~ _BUILDER_KERNEL_MODULE_UNIT_
+                endif ; ~ _BUILDER_KERNEL_MODULE_UNIT_SPAWN_

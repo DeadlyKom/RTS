@@ -10,16 +10,15 @@
 ; Note:
 ; -----------------------------------------
 DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
-                RET NZ                                                          ; выход, если шаттл не движется
+                JR Z, .L1                                                           ; выход, если шаттл не движется
 
                 ; -----------------------------------------
                 ; первая фаза (тень)
                 ; -----------------------------------------
 
-                
-
                 LD DE, (IX + FUnit.Position.Y)
-                LD HL, #0700                                                    ; LD A, (IX + FUnit.Target)
+                LD H, (IX + FUnit.Target.Y)
+                LD L, #00
                 OR A
                 DEC HL
                 SBC HL, DE
@@ -32,7 +31,7 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 ; проверка фазы раскрытия посдочных лап
                 LD A, H
                 CP #05
-                JR NC, .Landing
+                JR NC, .L1
 
                 ; кламп 0
                 LD A, H
@@ -43,19 +42,20 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
 
                 ; дополнительное смещение тени
                 ADD HL, HL
+                ADD HL, HL
+                ADD HL, HL
                 LD A, H
-                AND #0F
-                ADD A, A
-                ADD A, A
-                SUB 31
-                ADC A, 30
-                AND #F8
+                SUB 45
+                ADC A, 44
                 LD (GameAnim.OffsetY), A
 
                 LD HL, Shadow
-                CALL DrawComposite                                              ; отображение шаттла
+                CALL DrawComposite                                              ; отображение тени
+                JR .L1          
 
-.Landing        ; -----------------------------------------
+.Landing        UNIT_ResMoveTo (IX + FUnit.State)
+
+.L1             ; -----------------------------------------
                 ; вторая фаза (посадка)
                 ; -----------------------------------------
 

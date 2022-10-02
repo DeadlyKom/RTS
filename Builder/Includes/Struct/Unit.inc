@@ -56,6 +56,7 @@ State           DB #00                                                          
 Position        FLocation16                                                     ; 4 bytes (позиция юнита)
 
 Target          FLocation                                                       ; 2 bytes (позиция цели в тайлах)
+Start                                                                           ; 2 байта (начальная позиция Data и Idx)
 
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0

@@ -37,7 +37,7 @@ Data:           ; -----------------------------------------
                 INC HL
                 LD B, (HL)
                 INC HL
-                LD (PostInitialize.TilmapSize), BC
+                LD (GameVar.TilemapSize), BC
 
                 ; -----------------------------------------
                 ; расчёт адрес расположения стартовой локации FLevelInfo.StartFaction_A
@@ -46,7 +46,7 @@ Data:           ; -----------------------------------------
                 INC HL
                 LD D, (HL)
                 INC HL
-                LD (PostInitialize.StartLocation), DE
+                LD (GameVar.TilemapOffset), DE
 
                 PUSH HL                                                         ; сохранение
 
