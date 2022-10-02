@@ -17,6 +17,11 @@ Interrupt:
                 DEC (HL)
                 CALL Z, Functions.AnimTile
 
+.AnimFlying     ; ********** Animation Flying **********
+                LD HL, GameVar.FlyingCountdown
+                DEC (HL)
+                CALL Z, Functions.MoveUnitsCurve
+
 .SwapScreens    ; ********** Swap Screens **********
                 POP_RENDER_FLAG FINISHED_BIT
                 CALL NZ, Render.Swap

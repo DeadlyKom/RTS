@@ -7,7 +7,8 @@ Size:           FMapSize 0, 0                                                   
 SizeNEG:        FMapSize 0, 0                                                   ; размер карты (отрицательные значения)
 Offset:         FLocation 0, 0                                                  ; смещения тайловой карты
 CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты
-Countdown:      DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
+TileCountdown:  DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
+FlyCountdown:   DB DURATION_FLY_ANIM                                            ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
 
 ; ИИ
 UnitArraySize:  DB #00                                                          ; размер массива юнитов

@@ -1,7 +1,8 @@
 
                 ifndef _CONST_GAME_PLAY_FLAGS_
                 define _CONST_GAME_PLAY_FLAGS_
-DURATION_TILE_ANIM  EQU 0x09                                                    ; период одновления тайловой анимаций (1/50)
+DURATION_TILE_ANIM  EQU 0x09                                                    ; период обновления тайловой анимаций (1/50)
+DURATION_FLY_ANIM   EQU 0x03                                                    ; период обновления анимаций полёта (1/50)
 
                                 ; активный false
 ; PATHFINDING_QUERY_FLAG          EQU 0x80                                        ; запрос начать поиск пути

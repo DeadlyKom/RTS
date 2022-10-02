@@ -21,6 +21,14 @@ Level:
                 LD HL, #0310
                 LD DE, #0704
                 CALL Functions.FlyToUnit
+
+                ; -----------------------------------------
+                ; инициализация структуры FGame
+                ; -----------------------------------------
+                LD HL, GameVar.TilemapCountdown
+                LD (HL), DURATION_TILE_ANIM                                     ; GameVar.TilemapCountdown
+                INC L
+                LD (HL), DURATION_FLY_ANIM                                      ; GameVar.FlyingCountdown
                 
                 RET
 

@@ -24,6 +24,6 @@ FlyToUnit:      ; сохранеие текущей страницы
                 LD A, #00
                 JP SetPage
 
-                display "\t - FlyTo Unit : \t\t\t", /A, FlyToUnit, " = busy [ ", /D, $ - FlyToUnit, " bytes  ]"
+                display "\t - FlyTo Unit : \t\t", /A, FlyToUnit, " = busy [ ", /D, $ - FlyToUnit, " bytes  ]"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_UNIT_FLY_TO_

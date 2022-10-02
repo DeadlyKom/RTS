@@ -1,8 +1,6 @@
 
                 ifndef _MATH_LERP_
                 define _MATH_LERP_
-
-                module Math
 ; -----------------------------------------
 ; интерполяция двух 16-битных значений
 ; In :
@@ -38,7 +36,7 @@ Lerp:           ; B - A
                 LD A, E
                 EXX
                 EX DE, HL
-                CALL Math.Mul16x8_24                                            ; A:HL
+                CALL Mul16x8_24                                                 ; A:HL
 
                 ; HL == A:HL (остаток отбросить)
                 LD L, H
@@ -61,7 +59,5 @@ Lerp:           ; B - A
                 RET
 
                 display " - Lerp 16 : \t\t\t\t", /A, Lerp, " = busy [ ", /D, $ - Lerp, " bytes  ]"
-
-                endmodule
 
                 endif ; ~_MATH_LERP_

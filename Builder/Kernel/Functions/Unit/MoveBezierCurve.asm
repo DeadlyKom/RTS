@@ -2,26 +2,25 @@
                 ifndef _BUILDER_KERNEL_MODULE_UNIT_MOVE_BEZIER_CURVE_
                 define _BUILDER_KERNEL_MODULE_UNIT_MOVE_BEZIER_CURVE_
 ; -----------------------------------------
-; перемещение юнита
+; перемещение юнитов по кривой Безье
 ; In:
-;   A' - номер юнита
 ; Out:
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-MoveCurveUnit:  ; сохранеие текущей страницы
+MoveUnitsCurve: ; сохранеие текущей страницы
                 LD A, (MemoryPageRef)
                 LD (.RestoreMemPage), A
 
                 ; инициализация
                 SET_PAGE_UNIT                                                   ; включить страницу работы с юнитами
-                CALL Game.Unit.Initialize.FlyTo
+                CALL Game.Unit.Move.BezierCurve
                 
                 ; востановление страницы
 .RestoreMemPage EQU $+1
                 LD A, #00
                 JP SetPage
 
-                display "\t - Move Bezier Curve : \t\t", /A, FlyToUnit, " = busy [ ", /D, $ - FlyToUnit, " bytes  ]"
+                display "\t - Move Units along curve : \t", /A, MoveUnitsCurve, " = busy [ ", /D, $ - MoveUnitsCurve, " bytes  ]"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_UNIT_MOVE_BEZIER_CURVE_

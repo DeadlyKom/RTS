@@ -23,6 +23,7 @@
                 include "RenderBuffer.inc"
                 include "TilemapBuffer.inc"
 
+                include "Unit.inc"
                 include "UnitType.inc"
                 include "UnitRank.inc"
 

@@ -3,6 +3,11 @@
                 define _MATH_BEZIER_CURVE_
 
                 module Math
+
+                ; мат блок работы с кривыми
+                include "Core/Module/Math/Mul/16x8_24.asm"
+                include "Core/Module/Math/Lerp.asm"
+                
 ; -----------------------------------------
 ; расчёт положения объекта по кривой Безье
 ; In :
@@ -84,14 +89,14 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 LD C, #00
                 LD H, L                         ; B.X
                 LD L, C
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_CX), HL
 
 .P2_Y           EQU $+2
                 LD BC, #0000                    ; A.Y
                 LD H, (IX + FUnit.Target.Y)     ; B.Y
                 LD L, C
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_CY), HL
 
 .B              ; -----------------------------------------
@@ -105,14 +110,14 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 LD BC, #0000    ; A.X
 .P2_X_          EQU $+2
                 LD HL, #0000    ; B.X
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_BX), HL
 
 .P1_Y           EQU $+2
                 LD BC, #0000    ; A.X
 .P2_Y_          EQU $+2
                 LD HL, #0000    ; B.Y
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_BY), HL
 
 .A              ; -----------------------------------------
@@ -126,14 +131,14 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
 .P1_X_          EQU $+2
                 LD HL, #0000                ; B.X
                 LD C, L
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_AX), HL
 
                 LD B, (IX + FUnit.Start+1)  ; A.Y
 .P1_Y_          EQU $+2
                 LD HL, #0000                ; B.X
                 LD C, L
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_AY), HL
 
                 ; -----------------------------------------
@@ -145,7 +150,7 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
 .Lerp_BX        EQU $+1
                 LD HL, #0000    ; B.X
                 PUSH HL
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_DX), HL
 
 .Lerp_AY        EQU $+1
@@ -155,7 +160,7 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 POP DE
                 PUSH HL
                 PUSH DE
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_DY), HL
 
                 ; -----------------------------------------
@@ -165,13 +170,13 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 POP BC          ; A.X
 .Lerp_CX        EQU $+1
                 LD HL, #0000    ; B.X
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_EX), HL
 
                 POP BC          ; A.Y
 .Lerp_CY        EQU $+1
                 LD HL, #0000    ; B.Y
-                CALL Math.Lerp
+                CALL Lerp
                 LD (.Lerp_EY), HL
 
                 ; -----------------------------------------
@@ -182,14 +187,14 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 LD BC, #0000    ; A.X
 .Lerp_EX        EQU $+1
                 LD HL, #0000    ; B.X
-                CALL Math.Lerp
+                CALL Lerp
                 LD (IX + FUnit.Position.X), HL
 
 .Lerp_DY        EQU $+1
                 LD BC, #0000    ; A.Y
 .Lerp_EY        EQU $+1
                 LD HL, #0000    ; B.Y
-                CALL Math.Lerp
+                CALL Lerp
                 LD (IX + FUnit.Position.Y), HL
 
                 RET

@@ -33,11 +33,13 @@ IDX_UNIT_TYPE               EQU %00111110
 
 ; FUnit.State
 UNIT_RECONNAISSANCE_BIT     EQU 0x07                                            ; объект провёл разведку
+UNIT_BELONG_BIT             EQU 0x06                                            ; объект пренадлежит чему либо (находится внутри)
 UNIT_STATE_ATTACK_BIT       EQU 0x02                                            ; объект атакует
 UNIT_STATE_MOVE_FLY_BIT     EQU 0x01                                            ; объект перемещается
 UNIT_SELECTED_BIT           EQU 0x00                                            ; объект выбран
 
 UNIT_RECONNAISSANCE         EQU 1 << UNIT_RECONNAISSANCE_BIT                    ; объект провёл разведку
+UNIT_BELONG                 EQU 1 << UNIT_BELONG_BIT                            ; объект пренадлежит чему либо (находится внутри)
 UNIT_STATE_ATTACK           EQU 1 << UNIT_STATE_ATTACK_BIT                      ; объект атакует
 UNIT_STATE_MOVE_FLY         EQU 1 << UNIT_STATE_MOVE_FLY_BIT                    ; объект перемещается
 UNIT_SELECTED               EQU 1 << UNIT_SELECTED_BIT                          ; объект выбран

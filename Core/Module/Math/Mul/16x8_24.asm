@@ -1,8 +1,6 @@
 
                 ifndef _MATH_MULTIPLY_INTEGER_16x8_24
                 define _MATH_MULTIPLY_INTEGER_16x8_24
-
-                module Math
 ; -----------------------------------------
 ; integer multiplies DE by A
 ; In :
@@ -33,7 +31,5 @@ Mul16x8_24:     LD HL, #0000
                 RET
 
                 display " - Multiply 16x8 : \t\t\t", /A, Mul16x8_24, " = busy [ ", /D, $ - Mul16x8_24, " bytes  ]"
-
-                endmodule
 
                 endif ; ~_MATH_MULTIPLY_INTEGER_16x8_24

@@ -9,7 +9,8 @@ GameVar
 .TilemapSizeNEG     EQU FGameAdr + FGame.SizeNEG                                ; размер карты (отрицательные значения)
 .TilemapOffset      EQU FGameAdr + FGame.Offset                                 ; смещения тайловой карты
 .TilemapCachedAdr   EQU FGameAdr + FGame.CachedAddress                          ; кешированное значение адрес тайловой карты
-.TilemapCountdown   EQU FGameAdr + FGame.Countdown                              ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
+.TilemapCountdown   EQU FGameAdr + FGame.TileCountdown                          ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
+.FlyingCountdown    EQU FGameAdr + FGame.FlyCountdown                           ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
 
 GameAI:
 .UnitArraySize      EQU FGameAdr + FGame.UnitArraySize                          ; размер массива юнитов
