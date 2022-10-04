@@ -17,20 +17,21 @@
 Lerp:           ; B - A
                 XOR A
                 SBC HL, BC
+                EX DE, HL
                 JP P, .IsPositive
 
                 ; NEG HL
-                SUB L
-                LD L, A
+                SUB E
+                LD E, A
                 SBC A, A
-                SUB H
-                LD H, A
+                SUB D
+                LD D, A
 
                 ; Alpha * (B - A)
                 EXX
                 LD A, E
                 EXX
-                EX DE, HL
+
                 CALL Mul16x8_24                                                 ; A:HL
 
                 ; HL == A:HL (остаток отбросить)
@@ -53,7 +54,7 @@ Lerp:           ; B - A
                 EXX
                 LD A, E
                 EXX
-                EX DE, HL
+
                 CALL Mul16x8_24                                                 ; A:HL
 
                 ; HL == A:HL (остаток отбросить)

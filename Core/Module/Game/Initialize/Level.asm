@@ -35,7 +35,6 @@ Level:          ; -----------------------------------------
                 LD HL, #FAF0
                 LD DE, #0A0A
                 CALL Functions.FlyToUnit
-
                 
                 RET
 
