@@ -64,10 +64,10 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 ; BC - дельта (B - y, C - x)
                 ; -----------------------------------------
 
-                ; SRA C
+                SRA C
                 LD A, L
                 SUB C
-                SUB #08
+                ; SUB #08
                 LD E, A
                 LD (.P2_X_), A
 

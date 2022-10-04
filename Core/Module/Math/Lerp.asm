@@ -17,7 +17,7 @@
 Lerp:           ; B - A
                 OR A
                 SBC HL, BC
-                JR NC, .IsPositive
+                JP P, .IsPositive
 
                 ; NEG HL
                 XOR A
@@ -27,10 +27,6 @@ Lerp:           ; B - A
                 SUB H
                 LD H, A
 
-                SCF
-
-.IsPositive     EX AF, AF'
-                
                 ; Alpha * (B - A)
                 EXX
                 LD A, E
@@ -42,9 +38,6 @@ Lerp:           ; B - A
                 LD L, H
                 LD H, A
 
-                EX AF, AF'
-                JR NC, .SkipNegative
-
                 ; NEG HL
                 XOR A
                 SUB L
@@ -53,7 +46,22 @@ Lerp:           ; B - A
                 SUB H
                 LD H, A
 
-.SkipNegative   ; A + Alpha * (B - A)
+                ; A + Alpha * (B - A)
+                ADD HL, BC
+                RET
+
+.IsPositive     ; Alpha * (B - A)
+                EXX
+                LD A, E
+                EXX
+                EX DE, HL
+                CALL Mul16x8_24                                                 ; A:HL
+
+                ; HL == A:HL (остаток отбросить)
+                LD L, H
+                LD H, A
+
+                ; A + Alpha * (B - A)
                 ADD HL, BC
 
                 RET

@@ -9,53 +9,53 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
-                JR Z, .L1                                                           ; выход, если шаттл не движется
+DrawShuttle:    ; ToDo организовать более правильную логику работу
+
+                UNIT_IsMove (IX + FUnit.State)
+                JR Z, .Landing                                                  ; выход, если шаттл не движется
 
                 ; -----------------------------------------
                 ; первая фаза (тень)
                 ; -----------------------------------------
 
-                LD DE, (IX + FUnit.Position.Y)
-                LD H, (IX + FUnit.Target.Y)
-                LD L, #00
-                OR A
-                DEC HL
-                SBC HL, DE
-                JR C, .Landing
+                ; разбивка полёта на 4 части
+                LD A, (IX + FUnit.Animation)
+                SUB #40
+                JR C, .FirstQuarter                                             ; первая четверть полёта
+                SUB #80
+                JR C, .Landing                                                  ; свободный полёт, без тени
 
-                ; ограничение анимации (слишком высоко)
-                LD A, #04
-                LD (GameAnim.Element_1), A
+.FourthQuarter  ; последняя четверть полёта
+                INC A
+                NEG
 
-                ; проверка фазы раскрытия посдочных лап
-                LD A, H
-                CP #05
-                JR NC, .L1
-
-                ; кламп 0
-                LD A, H
-                SUB 1
-                ADC A, #00
-                LD (GameAnim.Element_1), A
-                LD (GameAnim.Element_2), A
-
-                ; дополнительное смещение тени
-                ADD HL, HL
-                ADD HL, HL
-                ADD HL, HL
-                LD A, H
-                SUB 45
-                ADC A, 44
+.FirstQuarter   ; первая четверть полёта
+                LD L, A
+                AND #3F
                 LD (GameAnim.OffsetY), A
 
+                ; расчёт кадра анимации шасси
+                LD A, L
+                RRA
+                RRA
+                RRA
+                AND 7
+                ADD A, -5                                                       ; \
+                JR NC, $+3                                                      ;  \  max clamp 5
+                SBC A, A                                                        ;  /
+                ADD A, 5                                                        ; /
+                LD (GameAnim.Element_1), A
+                
+                ; расчёт кадра анимации тени
+                SUB 1
+                ADC A, #00
+                LD (GameAnim.Element_2), A
+
+                ; отображение тени
                 LD HL, Shadow
-                CALL DrawComposite                                              ; отображение тени
-                JR .L1          
+                CALL DrawComposite
 
-.Landing        UNIT_ResMoveTo (IX + FUnit.State)
-
-.L1             ; -----------------------------------------
+.Landing        ; -----------------------------------------
                 ; вторая фаза (посадка)
                 ; -----------------------------------------
 
@@ -99,6 +99,7 @@ DrawShuttle:    UNIT_IsMove (IX + FUnit.State)
                 CALL DrawComposite                                              ; отображение шаттла
 
                 RET
+
 .Table
                 include "Core/Module/Tables/Sprites/Shuttle/Data.inc"
 
