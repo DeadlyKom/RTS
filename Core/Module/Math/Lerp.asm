@@ -15,12 +15,11 @@
 ;   A + Alpha * (B - A)
 ; -----------------------------------------
 Lerp:           ; B - A
-                OR A
+                XOR A
                 SBC HL, BC
                 JP P, .IsPositive
 
                 ; NEG HL
-                XOR A
                 SUB L
                 LD L, A
                 SBC A, A
