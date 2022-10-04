@@ -91,7 +91,7 @@ DrawComposite:  EXX
                 LD H, A
                 LD L, C
                 SBC HL, DE
-                RET C                                                           ; выход, если a.minY > b.maxY
+                RET M                                                           ; выход, если a.minY > b.maxY
 
 .SkipCheckY     ; инициализация
                 EX AF, AF'
@@ -157,7 +157,7 @@ DrawComposite:  EXX
                 LD H, A
                 LD L, C
                 SBC HL, DE
-                RET C                                                           ; выход, если a.minX > b.maxX
+                RET M                                                           ; выход, если a.minX > b.maxX
 
 .SkipCheckX     ; -----------------------------------------
                 ; спрайт частично или полностью виден на экране
