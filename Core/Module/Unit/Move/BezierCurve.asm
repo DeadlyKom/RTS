@@ -16,12 +16,12 @@ BezierCurve:    ; установка обратного счётчика
                 ; шаттл игрока
                 ; -----------------------------------------
                 LD IX, PLAYER_SHUTTLE
-                CALL .MoveShuttle
+;                 CALL .MoveShuttle
 
-.EnemyShuttle   ; -----------------------------------------
-                ; шаттл противника
-                ; -----------------------------------------
-                LD IXL, LOW ENEMY_SHUTTLE
+; .EnemyShuttle   ; -----------------------------------------
+;                 ; шаттл противника
+;                 ; -----------------------------------------
+;                 LD IXL, LOW ENEMY_SHUTTLE
 
 .MoveShuttle     ; проверка что шаттл перемещается 
                 UNIT_IsMove (IX + FUnit.State)
@@ -41,6 +41,27 @@ BezierCurve:    ; установка обратного счётчика
                 XOR A
                 LD (IX + FUnit.Position.X.Low), A
                 LD (IX + FUnit.Position.Y.Low), A
+
+                ;   HL - начальная позици (H - y, L - x)
+                ;   DE - конечная позиция (D - y, E - x)
+                ;   A' - номер юнита
+                
+                LD L, (IX + FUnit.Position.X.High)
+                LD H, (IX + FUnit.Position.Y.High)
+                EXX
+                CALL Math.Rand8
+                EXX
+                AND #0F
+                LD D, A
+                EXX
+                CALL Math.Rand8
+                EXX
+                AND #0F
+                LD E, A
+
+                XOR A
+                EX AF, AF'
+                CALL Functions.FlyToUnit
 
                 RET
 

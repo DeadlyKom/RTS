@@ -8,12 +8,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Swap:           ; set update all visible screen
-                LD HL, RenderBuffer + 0xC0
-                LD DE, #8383
-                CALL SafeFill.b192
-                
-                ifdef _DEBUG
+Swap:           ifdef _DEBUG
                 CALL FPS_Counter.Render
                 endif
 
