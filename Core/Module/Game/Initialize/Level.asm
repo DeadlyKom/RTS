@@ -19,10 +19,12 @@ Level:          ; -----------------------------------------
                 LD (HL), #00                                                    ; обновление массива юнитов
                 INC L                                                           ; GameAI.AI_UpdateRate
                 LD (HL), #04                                                    ; обновление массива юнитов
-                
+
                 ; -----------------------------------------
                 ; инициализация
                 ; -----------------------------------------
+                CALL Functions.InitializeUnit                                   ; инициализация ядра работы с юнитами
+
                 LD DE, #0608
                 LD BC, UNIT_COMBAT_SHUTTLE | PLAYER_FACTION
                 CALL Functions.SpawnUnit

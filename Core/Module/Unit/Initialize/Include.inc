@@ -4,6 +4,7 @@
 
                 module Initialize
 
+                include "Initialize.asm"
                 include "SpawnUnit.asm"
                 include "FlyTo.asm"
 

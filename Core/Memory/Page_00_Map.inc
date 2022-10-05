@@ -2,13 +2,13 @@
                             define _CORE_MEMORY_PAGE_MAP_00_
 
 ; unit
-UnitsArrayPtr               EQU Page_0                                          ; адрес масива юнитов
+; UnitsArrayPtr               EQU Page_0                                          ; адрес масива юнитов
 
 ; chunk array
-UnitsObjectArrayPtr         EQU UnitsArrayPtr + UNITS_STRUCTURE_SIZE            ; адрес массива чанков для юнитов
-UnitsObjectArraySize        EQU 256                                             ; размер массива
-DynamicObjectArrayPtr       EQU UnitsObjectArrayPtr + UnitsObjectArraySize      ; адрес массива чанков для динамических объектов
-DynamicObjectArraySize      EQU 256                                             ; размер массива
+; UnitsObjectArrayPtr         EQU UnitsArrayPtr + UNITS_STRUCTURE_SIZE            ; адрес массива чанков для юнитов
+; UnitsObjectArraySize        EQU 256                                             ; размер массива
+; DynamicObjectArrayPtr       EQU UnitsObjectArrayPtr + UnitsObjectArraySize      ; адрес массива чанков для динамических объектов
+; DynamicObjectArraySize      EQU 256                                             ; размер массива
 
 ; way point
 WaypointsSequencePtr        EQU DynamicObjectArrayPtr + DynamicObjectArraySize  ; адрес последовательностей Way Point'ов

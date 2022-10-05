@@ -17,7 +17,9 @@
 
                 include "Memory.inc"
                 include "MemoryMap.inc"
-                include "GameMM.inc"
+                include "GameMemMap.inc"
+                include "UnitMemMap.inc"
+                include "TilemapMemMap.inc"
 
                 include "SharedBuffer.inc"
                 include "RenderBuffer.inc"
@@ -28,7 +30,6 @@
                 include "UnitRank.inc"
 
                 include "Language.inc"
-                include "Tilemap.inc"
 
                 include "MainMenu.inc"
                 include "Dialog.inc"

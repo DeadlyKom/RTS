@@ -31,49 +31,51 @@ GetChunkAdr:    ; A = (127 - A) << 1 (обратный)
                 endr
 
                 RET
-; ; -----------------------------------------
-; ; перемещение данных (расширение)
-; ; In:
-; ;   A  - количество элементов в массиве
-; ;   HL - начальный адрес буфера перемещения
-; ;   B  - обнулён
-; ; Out:
-; ;   HL - адрес счётчика элементов
-; ;   DE - адрес пустого элемента 
-; ; Corrupt:
-; ;   
-; ; Note:
-; ; -----------------------------------------
-; MemCopyExpend:  ;
-;                 INC L
-; .MapSizeChunks  EQU $+1
-;                 ADD A, #00
-;                 SUB L
-;                 LD C, A
-;                 ; LD B, #00
-;                 ADD HL, BC
-;                 LD D, H
-;                 LD E, L
-;                 DEC L
-;                 LDDR
-
-;                 RET
-
 ; -----------------------------------------
-; поиск адреса 
+; получение номера чанка 
 ; In:
+;   DE - координаты в тайлах (D - y, E - x)
 ; Out:
+;   A  - порядковый номер чанка [0..127]
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-; FindAddress:    ; конверсия координат в зависимости от размера чанка
+GetChunkIdx:    LD A, D
+.Operation      EQU $
+                NOP
+                NOP
+                DEC A
+                LD D, A
+                LD A, E
+                RRA
+                RRA
+                RRA
+                DEC A
+                XOR D
+.Mask           EQU $+1
+                AND 0
+                XOR D
+                AND UNIT_CHUNK_INDEX_MASK
+
+                RET
+; -----------------------------------------
+; поиск адреса 
+; In:
+;   DE - координаты в тайлах (D - y, E - x)
+; Out:
+;   HL - начальный адрес чанка 
+; Corrupt:
+; Note:
+; -----------------------------------------
+; FindAddress:    ; инициализация
+;                 LD HL, Adr.Unit.UnitChank
+;                 XOR A
+;                 ; конверсия Y в зависимости от размера чанка
 ;                 rept CHUNK_SHIFT
 ;                 SRL D
 ;                 endr
-;                 LD HL, ChunksArrayForUnitsPtr
-;                 JR Z, .ColumnOffset
-;                 XOR A
-; .NextLine       ;
+;                 JR Z, .Column                                                   ; переход, если певоя строка
+; .Row            ; проход строки
 ; .Jump           EQU $+1
 ;                 JR $
 ;                 rept 16
@@ -81,17 +83,17 @@ GetChunkAdr:    ; A = (127 - A) << 1 (обратный)
 ;                 LD L, A
 ;                 endr
 ;                 DEC D
-;                 JR NZ, .NextLine
-; .ColumnOffset   ;
+;                 JR NZ, .Row
+; .Column         ; конверсия X в зависимости от размера чанка
 ;                 rept CHUNK_SHIFT
 ;                 SRL E
 ;                 endr
-;                 RET Z
+;                 RET Z                                                           ; выход, если первоя колонка
 ;                 LD B, E
-; .Column         ;
+; .ColumnLoop     ; цикл прохода по строке
 ;                 ADD A, (HL)
 ;                 LD L, A
-;                 DJNZ .Column
+;                 DJNZ .ColumnLoop
 ;                 ADD A, (HL)
 ;                 LD L, A
 ;                 RET
@@ -113,6 +115,32 @@ GetChunkAdr:    ; A = (127 - A) << 1 (обратный)
 ;                 DEC A
 ;                 LD C, A
 ;                 LD B, #00
+;                 ADD HL, BC
+;                 LD D, H
+;                 LD E, L
+;                 DEC L
+;                 LDDR
+;                 RET
+; -----------------------------------------
+; перемещение данных (расширение)
+; In:
+;   A  - количество элементов в массиве
+;   HL - начальный адрес буфера перемещения
+;   B  - обнулён
+; Out:
+;   HL - адрес счётчика элементов
+;   DE - адрес пустого элемента 
+; Corrupt:
+;   
+; Note:
+; -----------------------------------------
+; MemCopyExpend:  ;
+;                 INC L
+; .MapSizeChunks  EQU $+1
+;                 ADD A, #00
+;                 SUB L
+;                 LD C, A
+;                 ; LD B, #00
 ;                 ADD HL, BC
 ;                 LD D, H
 ;                 LD E, L

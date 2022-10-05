@@ -18,7 +18,7 @@ GetAddress:     ; расчёт смещения по индексу юнита
                 RLD
                 RL (HL)
                 ADC A, A
-                OR HIGH Adr.Unit
+                OR HIGH Adr.Unit.Array
                 LD IXH, A
                 LD A, (HL)
                 LD IXL, A

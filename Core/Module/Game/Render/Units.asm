@@ -10,7 +10,7 @@
 ; -----------------------------------------
 DrawUnits:      ; инициализация
                 SET_PAGE_UNIT                                                   ; включить страницу работы с юнитами
-                LD IX, Adr.Unit
+                LD IX, Adr.Unit.Array
 
                 ; проверка на наличие юнитов в массиве
                 LD A, (GameAI.UnitArraySize)

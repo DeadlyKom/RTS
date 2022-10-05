@@ -3,6 +3,10 @@
                             define _CONST_STRUCTURE_UNIT_TYPE_
 UNITS_TYPE_NUM              EQU 2                                               ; количество типов юнитов
 
+; FUnit.Chunk
+UNIT_CHUNK_INDEX_MASK       EQU %01111111
+UNIT_EMPTY_ELEMENT          EQU #FF                                             ; свобдная ячейка
+
 ; FUnit.Type
 
 ; сдвиг необходим для быстрого получить адрес из таблице по типу юнита (GetAdrInTable)

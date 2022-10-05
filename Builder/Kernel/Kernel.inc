@@ -119,6 +119,7 @@ Functions
 .StringToBuffer EQU Kernel.Functions.StringToBuffer
 .DrawCharToScr  EQU Kernel.Functions.DrawCharToScr
 
+.InitializeUnit EQU Kernel.Functions.InitializeUnit                             ; инициализация ядра работы с юнитами
 .SpawnUnit      EQU Kernel.Functions.SpawnUnit                                  ; спавн юнита
 .FlyToUnit      EQU Kernel.Functions.FlyToUnit                                  ; перелёт юнита в назначенную точку
 .MoveUnitsCurve EQU Kernel.Functions.MoveUnitsCurve                             ; перемещение юнитов по кривой Безье
