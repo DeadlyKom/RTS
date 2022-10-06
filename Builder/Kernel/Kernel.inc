@@ -123,6 +123,7 @@ Functions
 .SpawnUnit      EQU Kernel.Functions.SpawnUnit                                  ; спавн юнита
 .FlyToUnit      EQU Kernel.Functions.FlyToUnit                                  ; перелёт юнита в назначенную точку
 .MoveUnitsCurve EQU Kernel.Functions.MoveUnitsCurve                             ; перемещение юнитов по кривой Безье
+.VisibleUnits   EQU Kernel.Functions.VisibleUnits                               ; получение массив видимых юнитов (отсортерован по вертикали)
 
 ; tables
 Table:

@@ -23,23 +23,31 @@ GetAddress:     ; расчёт смещения по индексу юнита
                 LD A, (HL)
                 LD IXL, A
 
-                ; портит регистр E
-                ; OR A
-                ; RRA
-                ; LD E, #00
-                ; RR E
-                ; RRA
-                ; RR E
-                ; RRA
-                ; RR E
-                ; OR #C0
-                ; LD IXH, A
-                ; LD A, E
-                ; LD IXL, A
-
                 RET
 
 .Value          DB #00
+
+; -----------------------------------------
+; конверсия индекса юнита в адрес юнита
+; In:
+;   A   - индекс юнита
+; Out:
+;   Reg - адрес юнита в массиве + Offset
+; Corrupt:
+;   AF
+; Note:
+; -----------------------------------------
+UNIT_Address:   macro HReg?, LReg?, Offset?
+                SRL A
+                LD LReg?, Offset?
+                RR LReg?
+                RRA
+                RR LReg?
+                RRA
+                RR LReg?
+                OR #C0
+                LD HReg?, A
+                endm
 
                 display " - Get Address Unit by Index : \t\t\t", /A, GetAddress, " = busy [ ", /D, $ - GetAddress, " bytes  ]"
 

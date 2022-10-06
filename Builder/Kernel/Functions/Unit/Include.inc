@@ -6,5 +6,6 @@
                 include "Spawn.asm"
                 include "FlyTo.asm"
                 include "MoveBezierCurve.asm"
+                include "VisibleUnits_Sorted.asm"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_UNIT_INCLUDE_

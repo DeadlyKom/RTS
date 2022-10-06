@@ -48,19 +48,17 @@ Initialize:     ; очистка массива чанков для юнита
                 ADC A, C
                 endr
 
-                RRA
-
-                LD HL, #1F1F    ; x2
-                RRA
-                JR C, .SetOperation
-                LD H, C         ; x4
+                RRA                                                             ; пропуск 1 бита
+                LD HL, #1F1F                                                    ; x2 (RRA : RRA)
                 RRA
                 JR C, .SetOperation
-                LD L, C         ; x4
+                LD H, C                                                         ; x4
                 RRA
                 JR C, .SetOperation
-                LD L, #17       ; x16
-
+                LD L, C                                                         ; x8
+                RRA
+                JR C, .SetOperation
+                LD L, #87                                                       ; x16 (ADD A, A)
 .SetOperation   LD (GetChunkIdx.Operation), HL
 
                 RET
