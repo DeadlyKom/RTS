@@ -11,7 +11,7 @@ Begin:          EQU $
 ;   DE  - значение для заполнения
 ; Out:
 ; Corrupt:
-;   AF
+;   HL, DE, AF, IX
 ; Note:
 ;   адрес блока должен учитываться с размером заполняемой области
 ;   т.к. заполнение происходит используя стек и PUSH
@@ -91,22 +91,22 @@ SafeFill_768:   ; 768
                 LD (MS_ContainerSP), SP
                 LD SP, HL
 
-MemSet_768:     dup	128                                                         ; 128 * 2 = 256 bytes
+MemSet_768:     dup 128                                                         ; 128 * 2 = 256 bytes
                 PUSH DE
                 edup
-MemSet_512:     dup	128                                                         ; 128 * 2 = 256 bytes
+MemSet_512:     dup 128                                                         ; 128 * 2 = 256 bytes
                 PUSH DE
                 edup
-MemSet_256:     dup	32                                                          ; 32 * 2  = 64 bytes
+MemSet_256:     dup 32                                                          ; 32 * 2  = 64 bytes
                 PUSH DE
                 edup
-MemSet_192:     dup	32                                                          ; 32 * 2  = 64 bytes
+MemSet_192:     dup 32                                                          ; 32 * 2  = 64 bytes
                 PUSH DE
                 edup
 MemSet_128:     dup 48                                                          ; 48 * 2  = 96 bytes
                 PUSH DE
                 edup
-MemSet_32:      dup	16                                                          ; 16 * 2  = 32 bytes
+MemSet_32:      dup 16                                                          ; 16 * 2  = 32 bytes
                 PUSH DE
                 edup
 MS_ContainerSP: EQU $+1
