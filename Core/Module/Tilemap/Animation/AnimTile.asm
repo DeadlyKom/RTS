@@ -104,6 +104,6 @@ Sampling:       ; выборка тайла для анимации
 
                 RET
 
-                display " - Anim Tile : \t\t\t", /A, AnimTile, " = busy [ ", /D, $ - AnimTile, " bytes  ]"
+                display " - Anim Tile : \t\t\t\t\t", /A, AnimTile, " = busy [ ", /D, $ - AnimTile, " bytes  ]"
 
                 endif ; ~_MODULE_TILEMAP_ANIMATION_UPDATE_RENDER_BUFFER_

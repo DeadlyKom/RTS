@@ -6,20 +6,13 @@
 ; In:
 ;   HL - начальная позици (H - y, L - x)
 ;   DE - конечная позиция (D - y, E - x)
-;   A' - номер юнита
-; Out:
 ;   IX - адрес юнита
+; Out:
 ; Corrupt:
 ;   IX
 ; Note:
 ; -----------------------------------------
-FlyTo:          PUSH HL
-                ; определение адреса юнита
-                EX AF, AF'
-                CALL Game.Unit.Utils.GetAddress
-                POP HL
-                
-                UNIT_SetMoveTo (IX + FUnit.State)
+FlyTo:          UNIT_SetMoveTo (IX + FUnit.State)
 
                 ; установка позиции юнита
                 XOR A
@@ -39,6 +32,6 @@ FlyTo:          PUSH HL
  
                 RET
 
-                display " - Unit Fly To : \t\t\t", /A, FlyTo, " = busy [ ", /D, $ - FlyTo, " bytes  ]"
+                display " - Unit Fly To : \t\t\t\t\t", /A, FlyTo, " = busy [ ", /D, $ - FlyTo, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_UNIT_FLY_TO_

@@ -84,7 +84,7 @@ Update:         ; -----------------------------------------
 
                 JP FileSystemFunc                                               ; включение страницы файловой системы
 
-                display " - Progress : \t\t\t", /A, Update, " = busy [ ", /D, $ - Update, " bytes  ]"
+                display " - Progress : \t\t\t\t\t", /A, Update, " = busy [ ", /D, $ - Update, " bytes  ]"
 
                 endmodule
 

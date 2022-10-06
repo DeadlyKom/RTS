@@ -13,7 +13,7 @@
 
                 assert SizeInSectors <= 0x4000, page overflow
 
-                display "\'Kernel\' :\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [2]\t-------------------------------------------------"
+                display "\'Kernel\' :\t\t\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [2]\t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/Interrupt/Include.inc"
                 ; memory

@@ -6,7 +6,7 @@
                 ORG Adr.Module.Game.Tilemap
                 module Tilemap
 
-                display "\'Tilemap - Test\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Game.Tilemap, "]\t-------------------------------------------------"
+                display "\'Tilemap - Test\' :\t\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Game.Tilemap, "]\t-------------------------------------------------"
 
 Begin:          EQU $
 

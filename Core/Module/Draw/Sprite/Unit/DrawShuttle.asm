@@ -103,6 +103,6 @@ DrawShuttle:    ; ToDo организовать более правильную 
 .Table
                 include "Core/Module/Tables/Sprites/Shuttle/Data.inc"
 
-                display " - Draw Unit Shuttle : \t\t", /A, DrawShuttle, " = busy [ ", /D, $ - DrawShuttle, " bytes  ]"
+                display " - Draw Unit Shuttle : \t\t\t\t", /A, DrawShuttle, " = busy [ ", /D, $ - DrawShuttle, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_DRAW_SPRITE_UNIT_SHUTTLE_

@@ -140,6 +140,6 @@ Draw:           ; подготовка
 
                 RET
 
-                display " - Draw Sprite: \t\t\t", /A, Draw, " = busy [ ", /D, $ - Draw, " bytes  ]"
+                display " - Draw Sprite: \t\t\t\t\t", /A, Draw, " = busy [ ", /D, $ - Draw, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_DRAW_SPRITE_UNIT_DRAW_SPRITE_

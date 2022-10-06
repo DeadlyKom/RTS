@@ -6,6 +6,7 @@
 
                 include "GetAddress.asm"
                 include "GetIndex.asm"
+                include "GetVisible.asm"
                 include "ChunkArray/Include.inc"
 
                 endmodule

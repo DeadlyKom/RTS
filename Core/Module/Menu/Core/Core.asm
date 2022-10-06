@@ -324,6 +324,6 @@ Jump:           LD E, (HL)
                 JP Z, WaitVFX
                 RET
     
-                display " - Core : \t\t\t\t", /A, UpdateTextVFX, " = busy [ ", /D, $ - UpdateTextVFX, " bytes  ]"
+                display " - Core : \t\t\t\t\t\t", /A, UpdateTextVFX, " = busy [ ", /D, $ - UpdateTextVFX, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_CORE_

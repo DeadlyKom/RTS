@@ -151,6 +151,6 @@ EndBoot:        DB #0D                                                          
                 DB #29                                                          ; )
                 DB #0D                                                          ; конец строки
 
-                display "Basic : \t\t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
+                display "Basic : \t\t\t\t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
 
                 endif ; ~_BUILDER_BOOTLOADER_

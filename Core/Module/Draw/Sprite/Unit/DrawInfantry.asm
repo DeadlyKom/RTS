@@ -11,6 +11,6 @@
 DrawInfantry:   
                 RET
 
-                display " - Draw Unit Infantry : \t\t", /A, DrawInfantry, " = busy [ ", /D, $ - DrawInfantry, " bytes  ]"
+                display " - Draw Unit Infantry : \t\t\t\t", /A, DrawInfantry, " = busy [ ", /D, $ - DrawInfantry, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_DRAW_SPRITE_UNIT_INFANTRY_

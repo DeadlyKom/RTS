@@ -55,6 +55,6 @@ TileSampling:   ; рандомная выборка в пределах буфе
                 LD E, SPE_ANIM_VAL_3 + 1
                 RET                                                             ; SPE_ANIM_KEY_3
 
-                display " - Tile Sampling : \t\t\t", /A, TileSampling, " = busy [ ", /D, $ - TileSampling, " bytes  ]"
+                display " - Tile Sampling : \t\t\t\t\t", /A, TileSampling, " = busy [ ", /D, $ - TileSampling, " bytes  ]"
 
                 endif ; ~_MODULE_TILEMAP_ANIMATION_TILE_SAMPLING_

@@ -16,6 +16,6 @@ Shutdown:
                 LD IY, #0000
                 RET
 
-                display " - Shutdown : \t\t\t", /A, Shutdown, " = busy [ ", /D, $ - Shutdown, " bytes  ]"
+                display " - Shutdown : \t\t\t\t\t", /A, Shutdown, " = busy [ ", /D, $ - Shutdown, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_SHUTDOWN_

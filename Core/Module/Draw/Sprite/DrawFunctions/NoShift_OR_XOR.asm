@@ -111,7 +111,7 @@ TableNoShift:
                 DW NoShift._OX_XX,      NoShiftLR._OX_XX_XX                     ; +2.0
                 DW NoShift._OX_X,       NoShiftLR._OX_XXX_X                     ; +3.0
 
-                display " - Draw Function 'No Shift OR & XOR':\t", /A, Begin_NoShift, " = busy [ ", /D, $ - Begin_NoShift, " bytes  ]"
+                display " - Draw Function 'No Shift OR & XOR' :\t\t", /A, Begin_NoShift, " = busy [ ", /D, $ - Begin_NoShift, " bytes  ]"
 
                 endmodule
 

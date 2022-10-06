@@ -4,7 +4,7 @@
 
                 module Room
 
-                display " - Room : \t\t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
+                display " - Room : \t\t\t\t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
 Begin:          EQU $
 DELAY_FRAME     EQU 0x05                                                        ; продолжительность одного кадра
 

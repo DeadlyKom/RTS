@@ -60,7 +60,7 @@ Forward:        LD BC, #FFFF                                                    
                 RL B
                 JR .EliasLoop
 
-                display " - Decompressor Forward : \t\t", /A, Forward, " = busy [ ", /D, $ - Forward, " bytes  ]"
+                display " - Decompressor Forward : \t\t\t\t", /A, Forward, " = busy [ ", /D, $ - Forward, " bytes  ]"
 
                 endmodule
 

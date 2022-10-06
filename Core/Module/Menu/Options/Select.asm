@@ -104,6 +104,6 @@ ApplyOptions:   ; установка языка
 ;                 SET_LANGUAGE_A
 ;                 JP SetLanguage
 
-                display " - Options Select : \t\t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
+                display " - Options Select : \t\t\t\t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_SELECT_

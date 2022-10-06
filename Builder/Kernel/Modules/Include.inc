@@ -4,7 +4,7 @@
 
                 module Modules
 
-                display " - Modules : \t\t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
+                display " - Modules : \t\t\t\t\t\t", /A, Begin, " = busy [ ", /D, Size, " bytes  ]"
 Begin:          EQU $
                 include "Loader.asm"
 Size:           EQU $ - Begin

@@ -6,7 +6,7 @@
                 ORG Adr.Module.Game.TilemapCode
                 module Game
 
-                display "\'Game Tilemap Code\' :\t\t\t-------------------- [ ", /D, SizeTilemapCode, " bytes / ", /D, SizeInSectorsTilemapCode, " sector(s) ]  [", /D, Page.Game.Tilemap, "]\t-------------------------------------------------"
+                display "\'Game Tilemap Code\' :\t\t\t\t\t-------------------- [ ", /D, SizeTilemapCode, " bytes / ", /D, SizeInSectorsTilemapCode, " sector(s) ]  [", /D, Page.Game.Tilemap, "]\t-------------------------------------------------"
 
 BeginTilemapCode:   EQU $
                 include "Core/Module/Tilemap/Include.inc"

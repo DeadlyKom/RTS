@@ -61,6 +61,6 @@ ControlKeys:    DB .Num-1
                 DB Language.Text.Menu.Up
 .Num            EQU ($-ControlKeys-1) / 3
 
-                display " - Keyboard : \t\t\t", /A, MenuControlKey, " = busy [ ", /D, $ - MenuControlKey, " bytes  ]"
+                display " - Keyboard : \t\t\t\t\t", /A, MenuControlKey, " = busy [ ", /D, $ - MenuControlKey, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_COTROL_KEYBOARD_

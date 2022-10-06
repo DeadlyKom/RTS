@@ -6,7 +6,7 @@
                 ORG Adr.Module.Game.Main
                 module Game
 
-                display "\'Game Main\' :\t\t\t\t-------------------- [ ", /D, SizeMain, " bytes / ", /D, SizeInSectorsF, " sector(s) ]  [", /D, Page.Game.Main, "]\t-------------------------------------------------"
+                display "\'Game Main\' :\t\t\t\t\t\t-------------------- [ ", /D, SizeMain, " bytes / ", /D, SizeInSectorsF, " sector(s) ]  [", /D, Page.Game.Main, "]\t-------------------------------------------------"
 
 BeginMain:      EQU $
                 include "Core/Module/Game/Include.inc"

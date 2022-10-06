@@ -82,6 +82,6 @@ SetInteract:    LD HL, Flags
 ;                 RES INTERACT_BIT, (HL)
 ;                 RET
 
-                display " - Captain Bridge : \t\t\t", /A, CapBridge, " = busy [ ", /D, $ - CapBridge, " bytes  ]"
+                display " - Captain Bridge : \t\t\t\t\t", /A, CapBridge, " = busy [ ", /D, $ - CapBridge, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_

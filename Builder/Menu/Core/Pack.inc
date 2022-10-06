@@ -6,7 +6,7 @@
                 ORG Adr.Module.Core
                 module Core
 
-                display "\'Menu - Core\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Core, "]\t-------------------------------------------------"
+                display "\'Menu - Core\' :\t\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Core, "]\t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/Menu/Core/Include.inc"
 Size:           EQU $ - Begin

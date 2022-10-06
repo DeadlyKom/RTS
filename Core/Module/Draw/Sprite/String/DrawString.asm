@@ -201,7 +201,7 @@ NotShift:       LD A, B
                 LD A, E
                 JP .ColumLoop
 
-                display " - Draw String to Buffer : \t\t", /A, DrawString, " = busy [ ", /D, $ - DrawString, " bytes  ]"
+                display " - Draw String to Buffer : \t\t\t\t", /A, DrawString, " = busy [ ", /D, $ - DrawString, " bytes  ]"
 
                 endmodule
 

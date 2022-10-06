@@ -13,7 +13,7 @@
 PointInsideAABB:
                 RET
 
-                display " - Point Inside AABB : \t\t\t", /A, PointInsideAABB, " = busy [ ", /D, $ - PointInsideAABB, " bytes  ]"
+                display " - Point Inside AABB : \t\t\t\t\t", /A, PointInsideAABB, " = busy [ ", /D, $ - PointInsideAABB, " bytes  ]"
 
                 endmodule
 

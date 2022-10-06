@@ -23,6 +23,6 @@ LocalVariableST.Shift = LocalVariableST.Shift - 1
 
                         align
 
-                        display " - Shift Table : \t\t\t", /A, ShiftTable, " = busy [ ", /D, $ - ShiftTable, " bytes  ]"
+                        display " - Shift Table : \t\t\t\t\t", /A, ShiftTable, " = busy [ ", /D, $ - ShiftTable, " bytes  ]"
 
                         endmodule

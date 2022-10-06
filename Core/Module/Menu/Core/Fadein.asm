@@ -25,6 +25,6 @@
 .NotAllFadein   SET NEXT_FADE_BIT, (HL)
                 JP SetOption.NotUpdate
 
-                display " - Fadein Text : \t\t\t", /A, PreFadeinText, " = busy [ ", /D, $ - PreFadeinText, " bytes  ]"
+                display " - Fadein Text : \t\t\t\t\t", /A, PreFadeinText, " = busy [ ", /D, $ - PreFadeinText, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_FADEIN_

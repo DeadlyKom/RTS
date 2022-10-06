@@ -173,6 +173,6 @@
 Buffer          DS 20, 0
 BufferSize      EQU 19
 
-                display " - Core Suboption : \t\t\t", /A, Suboption, " = busy [ ", /D, $ - Suboption, " bytes  ]"
+                display " - Core Suboption : \t\t\t\t\t", /A, Suboption, " = busy [ ", /D, $ - Suboption, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_CORE_SUBOPTION_

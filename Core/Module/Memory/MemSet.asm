@@ -113,7 +113,7 @@ MS_ContainerSP: EQU $+1
                 LD SP, #0000
                 RET
 
-                display " - Memory Set : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                display " - Memory Set : \t\t\t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                 endmodule
 

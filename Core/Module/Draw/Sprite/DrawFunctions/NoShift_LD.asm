@@ -88,7 +88,7 @@ TableNoShift:
                 DW NoShift._LD_XX,      NoShiftLR._LD_XX_XX                     ; +2.0
                 DW NoShift._LD_X,       NoShiftLR._LD_XXX_X                     ; +3.0
 
-                display " - Draw Function 'No Shift LD':\t", /A, Begin_NoShift, " = busy [ ", /D, $ - Begin_NoShift, " bytes  ]"
+                display " - Draw Function 'No Shift LD' : \t\t\t", /A, Begin_NoShift, " = busy [ ", /D, $ - Begin_NoShift, " bytes  ]"
 
                 endmodule
 

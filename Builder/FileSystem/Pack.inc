@@ -6,7 +6,7 @@
                 ORG Adr.Module.FileSystem
                 module FileSystem
 
-                display "\'FileSystem\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Module.FileSystem, "]\t-------------------------------------------------"
+                display "\'FileSystem\' :\t\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Module.FileSystem, "]\t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/FileSystem/Base/Include.inc"
                 include "Core/Module/FileSystem/Load/Level/Include.inc"

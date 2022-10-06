@@ -96,6 +96,6 @@ PressSelect:    ; проверка ранее установленного фл�
                 OR A                                                            ; сброс флага переполнения (произведена обработка клавиши)
                 RET
 
-                display " - Input Default : \t\t\t", /A, InputDefault, " = busy [ ", /D, $ - InputDefault, " bytes  ]"
+                display " - Input Default : \t\t\t\t\t", /A, InputDefault, " = busy [ ", /D, $ - InputDefault, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_CORE_INPUT_

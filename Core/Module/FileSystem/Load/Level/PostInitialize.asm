@@ -26,6 +26,6 @@ PostInitialize: ; -----------------------------------------
 
                 RET          
 
-                display " - Load Level Post : \t\t\t", /A, PostInitialize, " = busy [ ", /D, $ - PostInitialize, " bytes  ]"
+                display " - Load Level Post : \t\t\t\t\t", /A, PostInitialize, " = busy [ ", /D, $ - PostInitialize, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_LOAD_LEVEL_POST_

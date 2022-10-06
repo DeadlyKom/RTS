@@ -327,7 +327,7 @@ TableShift:
                 DW Shift_OX_Right._xX_XXx,  Shift_OX_Right._xX_XXx_             ; +2.5 байт
                 DW Shift_OX_Right._x_XXXx,  Shift_OX_Right._x_XXXx_             ; +3.5 байт
 
-                display " - Draw Function 'Shift OR & XOR': \t", /A, Begin_Shift, " = busy [ ", /D, $ - Begin_Shift, " bytes  ]"
+                display " - Draw Function 'Shift OR & XOR' : \t\t\t", /A, Begin_Shift, " = busy [ ", /D, $ - Begin_Shift, " bytes  ]"
 
                 endmodule
 

@@ -53,7 +53,7 @@ DrawStencilSpr: LD E, (HL)
 .Box_2          DJNZ .Box_0
                 JR DrawStencilSpr
 
-                display " - Draw Stencil Sprite : \t\t", /A, DrawStencilSpr, " = busy [ ", /D, $ - DrawStencilSpr, " bytes  ]"
+                display " - Draw Stencil Sprite : \t\t\t\t", /A, DrawStencilSpr, " = busy [ ", /D, $ - DrawStencilSpr, " bytes  ]"
 
                 endmodule
 

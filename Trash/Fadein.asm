@@ -532,7 +532,7 @@ Roll_B:         ; 1.1 (roll)
                 DB #03
                 DB #0F, #05
  
-                display " - Text Fadein VFX : \t\t\t", /A, Fade, " = busy [ ", /D, $ - Fade, " bytes  ]"
+                display " - Text Fadein VFX : \t\t\t\t\t", /A, Fade, " = busy [ ", /D, $ - Fade, " bytes  ]"
 
                 endmodule
 

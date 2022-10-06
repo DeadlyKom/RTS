@@ -83,6 +83,6 @@ MainMenu:       DB .Num-1
 Planet:         incbin "Core/Module/Sprites/Main/Planet.spr"
                 DW #0000
 
-                display " - Main : \t\t\t\t", /A, Main, " = busy [ ", /D, $ - Main, " bytes  ]"
+                display " - Main : \t\t\t\t\t\t", /A, Main, " = busy [ ", /D, $ - Main, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_

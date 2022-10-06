@@ -6,7 +6,7 @@
                 ORG Adr.Module.Game.TilemapEx
                 module Game
 
-                display "\'Game Tilemap Ex\' :\t\t\t-------------------- [ ", /D, SizeTilemapEx, " bytes / ", /D, SizeInSectorsT, " sector(s) ]  [", /D, Page.Game.TilemapEx, "]\t-------------------------------------------------"
+                display "\'Game Tilemap Ex\' :\t\t\t\t\t-------------------- [ ", /D, SizeTilemapEx, " bytes / ", /D, SizeInSectorsT, " sector(s) ]  [", /D, Page.Game.TilemapEx, "]\t-------------------------------------------------"
 
 BeginTilemapEx: EQU $
                 include "Core/Module/Tables/BypassFOW.inc"                      ; таблица обхода FOW

@@ -6,7 +6,7 @@
                 ORG Adr.Graphics.Pack1
                 module Spite
 
-                display "\'Sprite Pack 1\' :\t\t\t-------------------- [ ", /D, GraphSP1Size, " bytes / ", /D, SizeInSectorsGraphSP1, " sector(s) ] \t-------------------------------------------------"
+                display "\'Sprite Pack 1\' :\t\t\t\t\t-------------------- [ ", /D, GraphSP1Size, " bytes / ", /D, SizeInSectorsGraphSP1, " sector(s) ] \t-------------------------------------------------"
 BeginGraphSP1:  EQU $
                 include "Shuttle/Include.inc"
 GraphSP1Size:   EQU $ - BeginGraphSP1

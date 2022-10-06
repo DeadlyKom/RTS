@@ -41,6 +41,6 @@ GetAddress:     ; расчёт смещения по индексу юнита
 
 .Value          DB #00
 
-                display " - Get Address Unit by Index : \t", /A, GetAddress, " = busy [ ", /D, $ - GetAddress, " bytes  ]"
+                display " - Get Address Unit by Index : \t\t\t", /A, GetAddress, " = busy [ ", /D, $ - GetAddress, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_UNIT_UTILS_GET_ADDRESS_UNIT_

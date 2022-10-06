@@ -21,6 +21,6 @@ ShiftRenderBuf: ; сохранеие текущей страницы
                 LD A, #00
                 JP SetPage
 
-                display "\t - Shift Render Buf : \t\t", /A, ShiftRenderBuf, " = busy [ ", /D, $ - ShiftRenderBuf, " bytes  ]"
+                display "\t - Shift Render Buf : \t\t\t\t", /A, ShiftRenderBuf, " = busy [ ", /D, $ - ShiftRenderBuf, " bytes  ]"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_SHIFT_RENDER_BUFFER_

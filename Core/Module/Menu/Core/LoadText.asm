@@ -93,6 +93,6 @@ CapBridge:      ; -----------------------------------------
                 CALL FileSystem.Base.FindFile
                 RET
 
-                display " - Load Text : \t\t\t", /A, SetLanguage, " = busy [ ", /D, $ - SetLanguage, " bytes  ]"
+                display " - Load Text : \t\t\t\t\t", /A, SetLanguage, " = busy [ ", /D, $ - SetLanguage, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_MAIN_LOAD_TEXT_

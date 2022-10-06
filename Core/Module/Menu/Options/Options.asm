@@ -72,6 +72,6 @@ OptionsMenu:    DB .Num-1
                 DB Language.Text.Menu.Language
 .Num            EQU ($-OptionsMenu-1) / 3
 
-                display " - Options : \t\t\t\t", /A, MenuOptions, " = busy [ ", /D, $ - MenuOptions, " bytes  ]"
+                display " - Options : \t\t\t\t\t\t", /A, MenuOptions, " = busy [ ", /D, $ - MenuOptions, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_

@@ -84,6 +84,6 @@ ApplyControl:   ; установка языка
 
                 JP @MenuOptions
 
-                display " - Control Select : \t\t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
+                display " - Control Select : \t\t\t\t\t", /A, Changed, " = busy [ ", /D, $ - Changed, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_MENU_OPTIONS_CONTROL_SELECT_

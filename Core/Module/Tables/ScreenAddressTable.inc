@@ -44,6 +44,6 @@ ScreenAddress:
 ; .Count          = .Count + 1
 ;                 edup
 
-                display " - Screen Address Table : \t\t", /A, ScreenAddress, " = busy [ ", /D, $ - ScreenAddress, " bytes  ]"
+                display " - Screen Address Table : \t\t\t\t", /A, ScreenAddress, " = busy [ ", /D, $ - ScreenAddress, " bytes  ]"
 
                 endmodule

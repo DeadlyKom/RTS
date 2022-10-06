@@ -29,6 +29,6 @@ MultiplySprite:
 .Row            = .Row + 1
                 edup
                 
-                display " - Multiply Sprite Table : \t\t", /A, MultiplySprite, " = busy [ ", /D, $ - MultiplySprite, " bytes  ]"
+                display " - Multiply Sprite Table : \t\t\t\t", /A, MultiplySprite, " = busy [ ", /D, $ - MultiplySprite, " bytes  ]"
 
                 endmodule

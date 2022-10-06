@@ -56,7 +56,7 @@ VirtualKeysTable:   DB (SVK_CAPS_SHIFT << 3) | INSTRUCTION_BIT, HalfRow_CS_V
                     DB (SVK_N << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
                     DB (SVK_B << 3) | INSTRUCTION_BIT, HalfRow_B_SPC
 
-                    display "\t - Keybord : \t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
+                    display "\t - Keybord : \t\t\t\t\t", /A, Begin, " = busy [ ", /D, $ - Begin, " bytes  ]"
 
                     endmodule
 

@@ -21,6 +21,6 @@ InitializeUnit: ; сохранеие текущей страницы
                 LD A, #00
                 JP SetPage
 
-                display "\t - Initialize Core Units : \t\t", /A, InitializeUnit, " = busy [ ", /D, $ - InitializeUnit, " bytes  ]"
+                display "\t - Initialize Core Units : \t\t\t", /A, InitializeUnit, " = busy [ ", /D, $ - InitializeUnit, " bytes  ]"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_UNIT_INITIALIZE_

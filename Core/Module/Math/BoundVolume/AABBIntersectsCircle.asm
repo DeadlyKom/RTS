@@ -13,7 +13,7 @@
 AABBIntersectCircle:
                 RET
 
-                display " - AABB Intersects Circle : \t\t\t", /A, AABBIntersectCircle, " = busy [ ", /D, $ - AABBIntersectCircle, " bytes  ]"
+                display " - AABB Intersects Circle : \t\t\t\t\t", /A, AABBIntersectCircle, " = busy [ ", /D, $ - AABBIntersectCircle, " bytes  ]"
 
                 endmodule
 

@@ -41,6 +41,6 @@ DrawUnit:       ; переход в зависимости от типа юни�
                 ; 7
                 JP DrawShuttle
 
-                display " - Draw Unit: \t\t\t", /A, DrawUnit, " = busy [ ", /D, $ - DrawUnit, " bytes  ]"
+                display " - Draw Unit: \t\t\t\t\t", /A, DrawUnit, " = busy [ ", /D, $ - DrawUnit, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_DRAW_SPRITE_UNIT_DRAW_SPRITE_UNIT_

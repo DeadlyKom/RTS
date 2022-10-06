@@ -40,6 +40,6 @@ AnimTile:       ; сохранеие текущей страницы
 ;                 LD A, #00
 ;                 JP SetPage
 
-                display "\t - Anim Tile : \t\t\t", /A, AnimTile, " = busy [ ", /D, $ - AnimTile, " bytes  ]"
+                display "\t - Anim Tile : \t\t\t\t\t", /A, AnimTile, " = busy [ ", /D, $ - AnimTile, " bytes  ]"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_ANIM_TILE_

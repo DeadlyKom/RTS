@@ -586,6 +586,6 @@ Table:          ; таблица функций (горионталь, шири�
 .Shift_LD       DW Table.Shift.LD_8,    Table.Shift.LD_16,      Table.Shift.LD_24,      Table.Shift.LD_32
 .Shift_OR_XOR   DW Table.Shift.OX_8,    Table.Shift.OX_16,      Table.Shift.OX_24,      Table.Shift.OX_32
 
-                display " - Prepare Sprite Unit : \t\t", /A, Prepare, " = busy [ ", /D, $ - Prepare, " bytes  ]"
+                display " - Prepare Sprite Unit : \t\t\t\t", /A, Prepare, " = busy [ ", /D, $ - Prepare, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_DRAW_SPRITE_UNIT_PREPARE_SPRITE_

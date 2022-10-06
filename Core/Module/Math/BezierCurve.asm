@@ -199,7 +199,7 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
 
                 RET
 
-                display " - Bezier Curve : \t\t\t", /A, BezierCurve, " = busy [ ", /D, $ - BezierCurve, " bytes  ]"
+                display " - Bezier Curve : \t\t\t\t\t", /A, BezierCurve, " = busy [ ", /D, $ - BezierCurve, " bytes  ]"
 
                 endmodule
 

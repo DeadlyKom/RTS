@@ -13,7 +13,7 @@
 PointInsideCircle:
                 RET
 
-                display " - Point Inside Circle : \t\t\t", /A, PointInsideCircle, " = busy [ ", /D, $ - PointInsideCircle, " bytes  ]"
+                display " - Point Inside Circle : \t\t\t\t\t", /A, PointInsideCircle, " = busy [ ", /D, $ - PointInsideCircle, " bytes  ]"
 
                 endmodule
 

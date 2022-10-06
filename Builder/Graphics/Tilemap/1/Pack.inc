@@ -6,7 +6,7 @@
                 ORG Adr.Tilemap.SpriteTable
                 module GraphicsA
 
-                display "\'Tilemap Pack 1\' :\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
+                display "\'Tilemap Pack 1\' :\t\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 Begin:          EQU $
                 include "Core/Module/Tables/Sprites/Tilemap/Pack_1.inc"
                 include "Core/Module/Tables/Sprites/Graphics/Pack_1.inc"

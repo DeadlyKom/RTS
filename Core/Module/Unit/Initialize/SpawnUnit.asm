@@ -26,7 +26,7 @@ Spawn:          ; поиск свободной ячейки
 .Loop           CPI
                 JR Z, .Spawn
                 ADD HL, DE
-                JP PO, .Loop
+                JP PE, .Loop
                 RET
 
 .Spawn          ; адрес свободного элемента найден
@@ -105,6 +105,6 @@ Spawn:          ; поиск свободной ячейки
                 POP DE                                                          ; восстановление, D - индекс элемента, E - количество элементов в массиве
                 JP Game.Unit.Utils.ChunkArray.Insert                            ; вставка юнита
 
-                display " - Spawn Unit in World : \t\t", /A, Spawn, " = busy [ ", /D, $ - Spawn, " bytes  ]"
+                display " - Spawn Unit in World : \t\t\t\t", /A, Spawn, " = busy [ ", /D, $ - Spawn, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_UNIT_SPAWN_UNIT_

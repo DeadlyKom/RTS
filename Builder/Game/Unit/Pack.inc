@@ -6,7 +6,7 @@
                 ORG Adr.Module.Game.UnitCode
                 module Game
 
-                display "\'Game Unit Code\' :\t\t\t-------------------- [ ", /D, SizeUnitCode, " bytes / ", /D, SizeInSectorsUnitCode, " sector(s) ]  [", /D, Page.Game.Unit, "]\t-------------------------------------------------"
+                display "\'Game Unit Code\' :\t\t\t\t\t-------------------- [ ", /D, SizeUnitCode, " bytes / ", /D, SizeInSectorsUnitCode, " sector(s) ]  [", /D, Page.Game.Unit, "]\t-------------------------------------------------"
 
 BeginUnitCode:   EQU $
                 include "Core/Module/Unit/Include.inc"

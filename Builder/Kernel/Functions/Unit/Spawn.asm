@@ -25,6 +25,6 @@ SpawnUnit:      ; сохранеие текущей страницы
                 LD A, #00
                 JP SetPage
 
-                display "\t - Init Unit : \t\t\t", /A, SpawnUnit, " = busy [ ", /D, $ - SpawnUnit, " bytes  ]"
+                display "\t - Init Unit : \t\t\t\t\t", /A, SpawnUnit, " = busy [ ", /D, $ - SpawnUnit, " bytes  ]"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_UNIT_SPAWN_

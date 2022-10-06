@@ -63,7 +63,7 @@ Backward:       LD BC, #0001                                                    
 .Elias_skip     JR C, .EliasBacktrack
                 RET
 
-                display " - Decompressor Backward : \t\t", /A, Backward, " = busy [ ", /D, $ - Backward, " bytes  ]"
+                display " - Decompressor Backward : \t\t\t\t", /A, Backward, " = busy [ ", /D, $ - Backward, " bytes  ]"
 
                 endmodule
 

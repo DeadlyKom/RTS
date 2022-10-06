@@ -223,7 +223,7 @@ NotShift_OR_XOR:
                 INC E
                 JP DrawSpriteMono.Continue
 
-                display " - Draw Sprite Monochrome: \t\t", /A, DrawSpriteMono, " = busy [ ", /D, $ - DrawSpriteMono, " bytes  ]"
+                display " - Draw Sprite Monochrome: \t\t\t\t", /A, DrawSpriteMono, " = busy [ ", /D, $ - DrawSpriteMono, " bytes  ]"
 
                 endmodule
 

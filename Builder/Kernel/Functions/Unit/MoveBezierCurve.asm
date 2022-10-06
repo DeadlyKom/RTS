@@ -21,6 +21,6 @@ MoveUnitsCurve: ; сохранеие текущей страницы
                 LD A, #00
                 JP SetPage
 
-                display "\t - Move Units along curve : \t", /A, MoveUnitsCurve, " = busy [ ", /D, $ - MoveUnitsCurve, " bytes  ]"
+                display "\t - Move Units along curve : \t\t\t", /A, MoveUnitsCurve, " = busy [ ", /D, $ - MoveUnitsCurve, " bytes  ]"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_UNIT_MOVE_BEZIER_CURVE_

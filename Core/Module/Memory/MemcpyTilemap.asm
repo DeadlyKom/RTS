@@ -259,7 +259,7 @@ Buffer:             ;
                     LD (TilemapBuffer + Game.FOW.ROW_B + 1), A
                     JP .Exit
 
-                    display " - Memory Copy Tilemap : \t\t", /A, Buffer, " = busy [ ", /D, $ - Buffer, " bytes  ]"
+                    display " - Memory Copy Tilemap : \t\t\t\t", /A, Buffer, " = busy [ ", /D, $ - Buffer, " bytes  ]"
 
                     endmodule
 

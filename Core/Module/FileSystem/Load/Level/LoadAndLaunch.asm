@@ -95,6 +95,6 @@ LaunchLevel:    CALL FileSystem.Base.Setup                                      
 
 .FileNum        EQU ($-.FileArray) / FFileArea
 
-                display " - Load Level : \t\t\t", /A, Data, " = busy [ ", /D, $ - Data, " bytes  ]"
+                display " - Load Level : \t\t\t\t\t", /A, Data, " = busy [ ", /D, $ - Data, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_LOAD_AND_LAUNCH_LEVEL_

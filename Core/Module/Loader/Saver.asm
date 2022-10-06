@@ -187,7 +187,7 @@ DrawExtension:  EX AF, AF'
 .Levels         BYTE " Levels \0"
 .Tilemap        BYTE "Tilemap \0"
 
-                display " - Saver : \t\t\t\t", /A, Saver, " = busy [ ", /D, $ - Saver, " bytes  ]"
+                display " - Saver : \t\t\t\t\t\t", /A, Saver, " = busy [ ", /D, $ - Saver, " bytes  ]"
 
                 endmodule
 

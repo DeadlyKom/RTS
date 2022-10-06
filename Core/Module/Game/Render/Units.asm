@@ -20,6 +20,10 @@ DrawUnits:      ; инициализация
 .Loop           LD (.ProcessedUnits), A
                 CALL DrawUnit
 
+                ; следующий элемент
+                LD DE, UNIT_SIZE
+                ADD IX, DE
+
 .ProcessedUnits EQU $+1
                 LD A, #00
                 DEC A

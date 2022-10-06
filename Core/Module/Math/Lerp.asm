@@ -66,6 +66,6 @@ Lerp:           ; B - A
 
                 RET
 
-                display " - Lerp 16 : \t\t\t\t", /A, Lerp, " = busy [ ", /D, $ - Lerp, " bytes  ]"
+                display " - Lerp 16 : \t\t\t\t\t\t", /A, Lerp, " = busy [ ", /D, $ - Lerp, " bytes  ]"
 
                 endif ; ~_MATH_LERP_

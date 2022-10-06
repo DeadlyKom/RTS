@@ -205,7 +205,7 @@ SharedMask:     ; получение значения смещения FSprite.O
 
                 RET
 
-                display " - Memcpy Sprite : \t\t\t", /A, Sprite, " = busy [ ", /D, $ - Sprite, " bytes  ]"
+                display " - Memcpy Sprite : \t\t\t\t\t", /A, Sprite, " = busy [ ", /D, $ - Sprite, " bytes  ]"
 
                 endmodule
 

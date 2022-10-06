@@ -16,12 +16,16 @@ BezierCurve:    ; установка обратного счётчика
                 ; шаттл игрока
                 ; -----------------------------------------
                 LD IX, PLAYER_SHUTTLE
-;                 CALL .MoveShuttle
+                XOR A
+                EX AF, AF'
+                CALL .MoveShuttle
 
-; .EnemyShuttle   ; -----------------------------------------
-;                 ; шаттл противника
-;                 ; -----------------------------------------
-;                 LD IXL, LOW ENEMY_SHUTTLE
+.EnemyShuttle   ; -----------------------------------------
+                ; шаттл противника
+                ; -----------------------------------------
+                LD IXL, LOW ENEMY_SHUTTLE
+                LD A, #01
+                EX AF, AF'
 
 .MoveShuttle     ; проверка что шаттл перемещается 
                 UNIT_IsMove (IX + FUnit.State)
@@ -51,20 +55,18 @@ BezierCurve:    ; установка обратного счётчика
                 EXX
                 CALL Math.Rand8
                 EXX
-                AND #0F
+                AND #07
+                ADD A, 4
                 LD D, A
                 EXX
                 CALL Math.Rand8
                 EXX
-                AND #0F
+                AND #07
+                ADD A, 4
                 LD E, A
 
-                XOR A
-                EX AF, AF'
-                CALL Functions.FlyToUnit
+                JP Functions.FlyToUnit
 
-                RET
-
-                display " - Moving units along a bezier curve : \t", /A, BezierCurve, " = busy [ ", /D, $ - BezierCurve, " bytes  ]"
+                display " - Moving units along a bezier curve : \t\t", /A, BezierCurve, " = busy [ ", /D, $ - BezierCurve, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_UNIT_MOVE_BEZIER_CURVE_

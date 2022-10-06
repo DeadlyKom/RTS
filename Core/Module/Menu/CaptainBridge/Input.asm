@@ -141,6 +141,6 @@ DialogWaitDown: ; -----------------------------------------
                 CALL Dialog.ClearArrowDown
                 JP Dialog.InvokeCallbakWait
 
-                display " - Input : \t\t\t\t", /A, InputCapBridge, " = busy [ ", /D, $ - InputCapBridge, " bytes  ]"
+                display " - Input : \t\t\t\t\t\t", /A, InputCapBridge, " = busy [ ", /D, $ - InputCapBridge, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_CAPTAIN_BRIDGE_INPUT_

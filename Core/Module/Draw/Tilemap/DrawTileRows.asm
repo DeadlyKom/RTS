@@ -84,7 +84,7 @@ DrawTileRows:   ; инициализация
 
                 RET
 
-                display " - Draw Tile Rows: \t\t\t", /A, DrawTileRows, " = busy [ ", /D, $ - DrawTileRows, " bytes  ]"
+                display " - Draw Tile Rows: \t\t\t\t\t", /A, DrawTileRows, " = busy [ ", /D, $ - DrawTileRows, " bytes  ]"
 
                 endmodule
 

@@ -30,6 +30,6 @@ Mul16x8_24:     LD HL, #0000
                 
                 RET
 
-                display " - Multiply 16x8 : \t\t\t", /A, Mul16x8_24, " = busy [ ", /D, $ - Mul16x8_24, " bytes  ]"
+                display " - Multiply 16x8 : \t\t\t\t\t", /A, Mul16x8_24, " = busy [ ", /D, $ - Mul16x8_24, " bytes  ]"
 
                 endif ; ~_MATH_MULTIPLY_INTEGER_16x8_24

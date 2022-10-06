@@ -18,6 +18,6 @@ Core:           ; очистка массива юнитов
  
                 RET
 
-                display " - Initialize Core Units: \t\t\t", /A, Core, " = busy [ ", /D, $ - Core, " bytes  ]"
+                display " - Initialize Core Units : \t\t\t\t", /A, Core, " = busy [ ", /D, $ - Core, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_UNIT_INITIALIZE_CORE_

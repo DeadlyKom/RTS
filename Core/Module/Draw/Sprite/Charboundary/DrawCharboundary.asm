@@ -52,7 +52,7 @@ DrawCharTwo:    PUSH BC
                 POP BC
                 RET
 
-                display " - Draw Char : \t\t\t", /A, DrawCharOne, " = busy [ ", /D, $ - DrawCharOne, " bytes  ]"
+                display " - Draw Char : \t\t\t\t\t", /A, DrawCharOne, " = busy [ ", /D, $ - DrawCharOne, " bytes  ]"
 
                 endmodule
 

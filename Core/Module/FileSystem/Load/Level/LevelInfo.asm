@@ -42,6 +42,6 @@ Info:           ; поиск файла списка уровней в ката�
 
 .FileName       FFile { {LevelsName}, LevelsExt }                               ; имя файла хранящий имена всех уровнях
 
-                display " - Load Level Info : \t\t\t", /A, Info, " = busy [ ", /D, $ - Info, " bytes  ]"
+                display " - Load Level Info : \t\t\t\t\t", /A, Info, " = busy [ ", /D, $ - Info, " bytes  ]"
 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_LOAD_LEVEL_INFO_

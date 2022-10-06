@@ -34,6 +34,6 @@ FindFile:       ; копирование данных в область пере
                 OR A
                 RET
 
-                display " - FindFile : \t\t\t", /A, FindFile, " = busy [ ", /D, $ - FindFile, " bytes  ]"
+                display " - FindFile : \t\t\t\t\t", /A, FindFile, " = busy [ ", /D, $ - FindFile, " bytes  ]"
                 
                 endif ; ~ _CORE_MODULE_FILE_SYSTEM_BASE_FIND_FILE_
