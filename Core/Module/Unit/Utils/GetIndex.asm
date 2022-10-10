@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_UNIT_UTILS_GET_INDEX_UNIT_BY_ADDRESS_
                 define _CORE_MODULE_UNIT_UTILS_GET_INDEX_UNIT_BY_ADDRESS_
 ; -----------------------------------------
-; получить индекс юнита используя адрес 
+; получить индекс юнита используя адрес
 ; In:
 ;   IX - адрес юнита в массиве
 ; Out:

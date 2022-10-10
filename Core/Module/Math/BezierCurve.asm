@@ -197,7 +197,32 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 CALL Lerp
                 LD (IX + FUnit.Position.Y), HL
 
-                RET
+                ; детект перехода в другой чанк
+                LD A, H
+                OR A
+                RET M
+                LD A, (IX + FUnit.Position.X.High)
+                OR A
+                RET M
+
+                LD D, H
+                LD E, A
+                CALL Game.Unit.Utils.ChunkArray.GetChunkIdx                     ; новый чанк
+                LD B, (IX + FUnit.Chunk)
+                CP B
+                RET Z                                                           ; выход, чанк не изменился
+
+                EX AF, AF'                                                      ; сохранение флагов относительно текущего чанка и номер чанка
+                CALL Game.Unit.Utils.GetIndex                                   ; индекс юнита
+                LD D, A
+                LD HL, Adr.Unit.UnitChank
+                ; LD A, C
+
+                ; HL - адрес массива чанков
+                ; D  - перемещяемое значение
+                ; B  - порядковый номер чанка [0..127]
+                ; A' - чанк в который перемещается [0..127]
+                JP Game.Unit.Utils.ChunkArray.Move
 
                 display " - Bezier Curve : \t\t\t\t\t", /A, BezierCurve, " = busy [ ", /D, $ - BezierCurve, " bytes  ]"
 

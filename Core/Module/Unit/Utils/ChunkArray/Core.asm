@@ -38,19 +38,18 @@ GetChunkAdr:    ; A = (127 - A) << 1 (обратный)
 ; Out:
 ;   A  - порядковый номер чанка [0..127]
 ; Corrupt:
+;   D, AF
 ; Note:
 ; -----------------------------------------
 GetChunkIdx:    LD A, D
 .Operation      EQU $
                 NOP
                 NOP
-                DEC A
                 LD D, A
                 LD A, E
                 RRA
                 RRA
                 RRA
-                DEC A
                 XOR D
 .Mask           EQU $+1
                 AND 0

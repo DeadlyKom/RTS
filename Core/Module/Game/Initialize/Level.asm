@@ -31,9 +31,6 @@ Level:          ; -----------------------------------------
 
                 ;   HL - начальная позици (H - y, L - x)
                 ;   DE - конечная позиция (D - y, E - x)
-                ;   A' - номер юнита
-                ; XOR A
-                ; EX AF, AF'
                 LD HL, #FAF0
                 LD DE, #0A0A
                 CALL Functions.FlyToUnit
@@ -44,9 +41,6 @@ Level:          ; -----------------------------------------
 
                 ;   HL - начальная позици (H - y, L - x)
                 ;   DE - конечная позиция (D - y, E - x)
-                ;   A' - номер юнита
-                ; LD A, #01
-                ; EX AF, AF'
                 LD HL, #0608
                 LD DE, #0A0A
                 CALL Functions.FlyToUnit

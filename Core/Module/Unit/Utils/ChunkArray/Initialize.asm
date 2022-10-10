@@ -40,6 +40,7 @@ Initialize:     ; очистка массива чанков для юнита
                 endr
                 DEC A
                 LD (GetChunkIdx.Mask), A
+                ; LD (GameVar.TilemapSizeChunk.X), A
 
                 ; округление
                 LD A, 64                                                        ; размер карты по вертикали
@@ -47,6 +48,7 @@ Initialize:     ; очистка массива чанков для юнита
                 RRA
                 ADC A, C
                 endr
+                ; LD (GameVar.TilemapSizeChunk.Y), A
 
                 RRA                                                             ; пропуск 1 бита
                 LD HL, #1F1F                                                    ; x2 (RRA : RRA)

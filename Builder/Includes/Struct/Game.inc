@@ -4,6 +4,7 @@
 
                 struct FGame
 Size:           FMapSize 0, 0                                                   ; размер карты
+SizeChank:      FMapSize 0, 0                                                   ; размер карты (в чанках)
 SizeNEG:        FMapSize 0, 0                                                   ; размер карты (отрицательные значения)
 Offset:         FLocation 0, 0                                                  ; смещения тайловой карты
 CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты

@@ -90,7 +90,7 @@ Spawn:          ; поиск свободной ячейки
                 EXX
                 LD (IX + FUnit.Direction), A
 
-                ;
+                ; расчёт индекса чанка
                 CALL Game.Unit.Utils.ChunkArray.GetChunkIdx
                 LD (IX + FUnit.Chunk), A
 
