@@ -11,23 +11,9 @@
 Initialize:     ; очистка массива чанков для юнита
                 LD HL, Adr.Unit.UnitChank + Size.Unit.UnitChank
                 LD DE, #0000
-                CALL SafeFill.b128
-                LD HL, Adr.Unit.UnitChank + (Size.Unit.UnitChank >> 1)
-                LD DE, #0101
-                CALL SafeFill.b128
+                CALL SafeFill.b256
                 
                 ; ToDo сделать инициализацию на основе размера карты
-
-                ; ; расчёт перехода по размеру карты по горизонтали
-                ; LD A, #10                                                       ; макс количество чанков по горизонтали
-                ; SUB #08                                                         ; размер карты по горизонтали
-                ; ADD A, A
-                ; LD (FindAddress.Jump), A
-
-                ; расчёт размера пустого буфера по размеру карты (в чанках)
-                LD A, 0x08 * 0x08
-                LD (Insert.MapSizeChunks), A
-                LD (Remove.MapSizeChunks), A
 
                 ; подготовка
                 LD C, #00
@@ -40,7 +26,6 @@ Initialize:     ; очистка массива чанков для юнита
                 endr
                 DEC A
                 LD (GetChunkIdx.Mask), A
-                ; LD (GameVar.TilemapSizeChunk.X), A
 
                 ; округление
                 LD A, 64                                                        ; размер карты по вертикали
@@ -48,7 +33,6 @@ Initialize:     ; очистка массива чанков для юнита
                 RRA
                 ADC A, C
                 endr
-                ; LD (GameVar.TilemapSizeChunk.Y), A
 
                 RRA                                                             ; пропуск 1 бита
                 LD HL, #1F1F                                                    ; x2 (RRA : RRA)
