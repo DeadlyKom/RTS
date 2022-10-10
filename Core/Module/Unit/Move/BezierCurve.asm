@@ -50,8 +50,8 @@ BezierCurve:    ; установка обратного счётчика
                 ;   DE - конечная позиция (D - y, E - x)
                 ;   A' - номер юнита
                 
-                LD L, (IX + FUnit.Position.X.High)
                 LD H, (IX + FUnit.Position.Y.High)
+                LD L, (IX + FUnit.Position.X.High)
                 EXX
                 CALL Math.Rand8
                 EXX

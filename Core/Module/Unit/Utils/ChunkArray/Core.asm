@@ -19,7 +19,7 @@ GetAdrUnits:    ; A = (127 - A) << 1 (обратный)
                 ADD A, A
                 LD C, A
 
-                ; прирощение адреса перехода
+.Current        ; прирощение адреса перехода
                 XOR A
                 LD B, A
                 LD IY, .Rows

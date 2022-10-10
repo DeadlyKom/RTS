@@ -12,6 +12,11 @@ Swap:           ifdef _DEBUG
                 CALL FPS_Counter.Render
                 endif
 
+                LD DE, DrawUnits.Buffer
+                CALL Functions.VisibleUnits                                     ; получение массив видимых юнитов (отсортерован по вертикали)
+                LD A, D
+                LD (DrawUnits.Array), A
+
                 JP Screen.Swap
  
                 endif ; ~_MODULE_GAME_RENDER_SWAP_SCREEN_

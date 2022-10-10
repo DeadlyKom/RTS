@@ -197,6 +197,8 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 CALL Lerp
                 LD (IX + FUnit.Position.Y), HL
 
+                RET
+
                 ; детект перехода в другой чанк
                 LD A, H
                 OR A
@@ -212,13 +214,13 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 CP B
                 RET Z                                                           ; выход, чанк не изменился
 
+                LD (IX + FUnit.Chunk), A                                        ; сохранение нового чанка
                 EX AF, AF'                                                      ; сохранение флагов относительно текущего чанка и номер чанка
                 CALL Game.Unit.Utils.GetIndex                                   ; индекс юнита
                 LD D, A
-                LD HL, Adr.Unit.UnitChank
-                ; LD A, C
+                LD H, HIGH Adr.Unit.UnitChank
 
-                ; HL - адрес массива чанков
+                ; H  - старший байт адрес массива чанков
                 ; D  - перемещяемое значение
                 ; B  - порядковый номер чанка [0..127]
                 ; A' - чанк в который перемещается [0..127]

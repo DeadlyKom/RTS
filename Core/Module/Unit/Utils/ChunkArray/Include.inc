@@ -16,7 +16,6 @@ CHUNK_SIZE_MASK EQU (CHUNK_SIZE - 1) & 0xFF
                 include "Insert.asm"
                 include "Remove.asm"
                 include "Move.asm"
-                include "Request.asm"
 
                 endmodule
 

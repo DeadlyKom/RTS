@@ -11,14 +11,13 @@
 DrawUnits:      ; инициализация
                 SET_PAGE_UNIT                                                   ; включить страницу работы с юнитами
 
-                LD DE, .Buffer
-                CALL Functions.VisibleUnits                                     ; получение массив видимых юнитов (отсортерован по вертикали)
-                LD A, D
+.Array          EQU $+1
+                LD A, #00
                 OR A
                 RET Z                                                           ; выход, если массив пуст
 
                 LD HL, .Buffer
-                LD B, D
+                LD B, A
 
 .Loop           PUSH BC
                 LD A, (HL)
