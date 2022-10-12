@@ -197,7 +197,7 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 CALL Lerp
                 LD (IX + FUnit.Position.Y), HL
 
-                RET
+                ; RET
 
                 ; детект перехода в другой чанк
                 LD A, H

@@ -136,7 +136,9 @@ Sort:           ; HL - начальный адрес расположения э
                 LD A, B
                 ADD A, C
                 DEC A
+                EX DE, HL
                 RET Z                                                           ; выход, если 1 элемент (B - количество элементов)
+                EX DE, HL
                 INC A
                 LD B, A
 
