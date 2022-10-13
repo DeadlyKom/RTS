@@ -142,16 +142,19 @@ Sort:           ; HL - начальный адрес расположения э
 
                 ; HL - адрес на первый неотсортированный элемент
                 ; С  - количествой элементов в массиве
+                LD A, C
+                INC C
+                OR A
+                JR Z, .FirstSort                                                  ; переход, если это первые элементы в массиве
+                DEC L
+                DEC L
                 DEC C
-                JP M, .FirstSort                                                  ; переход, если это первые элементы в массиве
-                DEC HL
-                DEC HL
 
 .FirstSort      ; инициализация
                 LD (.ContainerSP), SP
                 LD SP, HL
-                LD C, #01
-                LD A, #02
+                LD A, C
+                INC A
                 EX AF, AF'
 
                 ; s     = B  - размер массива
@@ -203,6 +206,8 @@ Sort:           ; HL - начальный адрес расположения э
                 POP HL
                 EX (SP), HL
                 PUSH HL
+                DEC SP
+                DEC SP
 
                 ; i--; if (i == 0)
                 DEC C
@@ -215,8 +220,13 @@ Sort:           ; HL - начальный адрес расположения э
                 EX AF, AF'
 
                 ; 
-                INC SP
-                INC SP
+                LD L, C
+                DEC L
+                LD H, #00
+                ADD HL, HL
+                LD DE, SortBuffer
+                ADD HL, DE
+                LD SP, HL
 
                 ; i < size
                 LD A, C
@@ -224,8 +234,8 @@ Sort:           ; HL - начальный адрес расположения э
                 JR C, .Loop
 
                 ; -1
-                LD HL, 0;-2
-                ADD HL, SP
+                INC HL
+                INC HL
                 EX DE, HL
 
 .ContainerSP    EQU $+1

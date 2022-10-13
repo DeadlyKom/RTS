@@ -21,6 +21,7 @@
                 include "UnitMemMap.inc"
                 include "TilemapMemMap.inc"
 
+                include "SortBuffer.inc"
                 include "SharedBuffer.inc"
                 include "RenderBuffer.inc"
                 include "TilemapBuffer.inc"

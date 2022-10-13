@@ -12,7 +12,7 @@ Swap:           ifdef _DEBUG
                 CALL FPS_Counter.Render
                 endif
 
-                LD DE, DrawUnits.Buffer
+                LD DE, SortBuffer
                 CALL Functions.VisibleUnits                                     ; получение массив видимых юнитов (отсортерован по вертикали)
                 LD A, D
                 LD (DrawUnits.Array), A

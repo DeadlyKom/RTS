@@ -64,7 +64,7 @@ Move:           ; определения прямой или обратное п
 
                 ; поиск перемещяемого значения
                 EX AF, AF'
-                EX DE, HL
+                ; EX DE, HL
                 CPIR
                 DEBUG_BREAK_POINT_NZ                                            ; ошибка поиска!
                 DEC L
@@ -86,12 +86,14 @@ Move:           ; определения прямой или обратное п
                 RET M
                 LD C, A
                 EX AF, AF'                                                      ; восстановление
+                LD E, L
+                DEC E
                 EX DE, HL
                 LDDR
 
                 ; сохранение перемещаемого значения
-                INC HL
-                LD (HL), A
+                ; INC HL
+                LD (DE), A
                 RET
 
 .IsForward      ; прямое перемещение в массиве
@@ -151,7 +153,7 @@ Move:           ; определения прямой или обратное п
                 EX (SP), HL
                 POP HL
                 INC (HL)                                                        ; увеличение счётчика элементов в старом чанке
-                LD L, A
+                ; LD L, A
 
                 ; HL - адрес назначения перемещения
                 ; DE - адрес перемещаемого элемента
@@ -162,12 +164,13 @@ Move:           ; определения прямой или обратное п
                 RET Z
                 RET M
                 LD C, A
+                LD L, E
+                INC L
                 LDIR
 
                 ; сохранение перемещаемого значения
-                DEC L
                 EX AF, AF'
-                LD (HL), A
+                LD (DE), A
                 RET
 
                 endif ; ~ _CORE_MODULE_UTILS_CHUNK_ARRAY_MOVE_

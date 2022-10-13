@@ -16,7 +16,7 @@ DrawUnits:      ; инициализация
                 OR A
                 RET Z                                                           ; выход, если массив пуст
 
-                LD HL, .Buffer
+                LD HL, SortBuffer
                 LD B, A
 
 .Loop           PUSH BC
@@ -36,7 +36,5 @@ DrawUnits:      ; инициализация
                 DJNZ .Loop
 
                 RET
-
-.Buffer         DS 10, 0
 
                 endif ; ~_MODULE_GAME_RENDER_UNITS_
