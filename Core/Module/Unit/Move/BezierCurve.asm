@@ -16,16 +16,15 @@ BezierCurve:    ; установка обратного счётчика
                 ; шаттл игрока
                 ; -----------------------------------------
                 LD IX, PLAYER_SHUTTLE
-                XOR A
-                EX AF, AF'
                 CALL .MoveShuttle
 
 .EnemyShuttle   ; -----------------------------------------
                 ; шаттл противника
                 ; -----------------------------------------
                 LD IXL, LOW ENEMY_SHUTTLE
-                LD A, #01
-                EX AF, AF'
+                ; CALL .MoveShuttle
+
+                ; LD IXL, LOW (#C000 + UNIT_SIZE * 2)
 
 .MoveShuttle     ; проверка что шаттл перемещается 
                 UNIT_IsMove (IX + FUnit.State)
