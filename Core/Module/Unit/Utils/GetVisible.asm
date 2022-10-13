@@ -45,7 +45,7 @@ GetVisible:     EXX
 
                 EXX                                                             ; скрытие
                 LD HL, Adr.Unit.UnitChank | 0x80
-                CALL ChunkArray.GetAdrUnits
+                CALL ChunkArray.GetAddress
                 LD B, A
 
                 ; HL - начальный адрес счётчиков юнитов в указанном чанке
