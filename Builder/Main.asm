@@ -6,6 +6,7 @@
 
                 ; define _REBUILD                                                 ; полная пересборка
                 define _DEBUG                                                   ; включить отладочный код
+                ; define _OPTIMIZE                                                ; включить оптимизацию (ускорение)
                 define SHOW_DEBUG                                               ; отображение дебажной информации
 
                 ; define ENABLE_SCREENSAVER                                       ; включить заставку

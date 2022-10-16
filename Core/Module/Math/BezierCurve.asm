@@ -197,8 +197,6 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 CALL Lerp
                 LD (IX + FUnit.Position.Y), HL
 
-                RET
-
                 ; детект перехода в другой чанк
                 LD A, H
                 OR A
@@ -210,20 +208,23 @@ BezierCurve:    LD DE, (IX + FUnit.Start)
                 LD D, H
                 LD E, A
                 CALL Game.Unit.Utils.ChunkArray.GetChunkIdx                     ; новый чанк
-                LD B, (IX + FUnit.Chunk)
-                CP B
+                LD D, A                                                         ; сохранение флагов относительно текущего чанка и номер чанка
+                LD E, (IX + FUnit.Chunk)
+                CP E
                 RET Z                                                           ; выход, чанк не изменился
 
                 LD (IX + FUnit.Chunk), A                                        ; сохранение нового чанка
-                EX AF, AF'                                                      ; сохранение флагов относительно текущего чанка и номер чанка
+                LD HL, GameAI.UnitArraySize
+                LD C, (HL)
+                LD B, #00
                 CALL Game.Unit.Utils.GetIndex                                   ; индекс юнита
-                LD D, A
-                LD H, HIGH Adr.Unit.UnitChank
+                LD HL, Adr.Unit.UnitChank
 
-                ; H  - старший байт адрес массива чанков
-                ; D  - перемещяемое значение
-                ; B  - порядковый номер чанка [0..127]
-                ; A' - чанк в который перемещается [0..127]
+                ; HL - адрес массива чанков
+                ; A  - перемещяемое значение
+                ; D  - номер чанка назначения [0..127]
+                ; E  - номер чанка источника  [0..127]
+                ; BC - размер массива чанков
                 JP Game.Unit.Utils.ChunkArray.Move
 
                 display " - Bezier Curve : \t\t\t\t\t", /A, BezierCurve, " = busy [ ", /D, $ - BezierCurve, " bytes  ]"
