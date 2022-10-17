@@ -6,6 +6,16 @@ DEBUG_BREAK_POINT_C: macro
                 JR C, $                                                         ; произошла ошибка
                 endif
                 endm
+DEBUG_BREAK_POINT_NC: macro
+                ifdef _DEBUG
+                JR NC, $                                                        ; произошла ошибка
+                endif
+                endm
+DEBUG_BREAK_POINT_Z: macro
+                ifdef _DEBUG
+                JR Z, $                                                         ; произошла ошибка
+                endif
+                endm
 DEBUG_BREAK_POINT_NZ: macro
                 ifdef _DEBUG
                 JR NZ, $                                                        ; произошла ошибка
