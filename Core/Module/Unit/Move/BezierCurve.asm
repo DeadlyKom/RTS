@@ -22,12 +22,6 @@ BezierCurve:    ; установка обратного счётчика
                 ; шаттл противника
                 ; -----------------------------------------
                 LD IXL, LOW ENEMY_SHUTTLE
-                CALL .MoveShuttle
-
-                LD IXL, LOW (#C000 + UNIT_SIZE * 2)
-                CALL .MoveShuttle
-
-                LD IXL, LOW (#C000 + UNIT_SIZE * 3)
 
 .MoveShuttle    ; проверка что шаттл перемещается 
                 UNIT_IsMove (IX + FUnit.State)

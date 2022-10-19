@@ -94,5 +94,27 @@ POP_RENDER_FLAG macro FlagBit?
                 RENDER_FLAGS
                 POP_FLAG FlagBit?
                 endm
+; -----------------------------------------
+; определение стартовой локации игрока
+; In:
+; Out:
+;   DE - позиция старта игрока (D - y, E - x)
+; Corrupt:
+;   DE, F
+; -----------------------------------------
+START_PLAYER    macro
+                PUSH HL
+                LD HL, GameFlags.Gameplay
+                BIT GAMEPLAY_BIT, (HL)                                          ; флаг базового старта миссии
+                                                                                ; 0 - нормальный старт со слота StartSlotA
+                                                                                ; 1 - режим защиты старт со слота StartSlotB
+                LD HL, GameVar.StartSlotA
+                JR Z, .Base
+                LD HL, GameVar.StartSlotB
+.Base           LD E, (HL)
+                INC HL
+                LD D, (HL)
+                POP HL
+                endm
 
                 endif ; ~_MACRO_FLAGS_

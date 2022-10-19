@@ -26,6 +26,8 @@
                 include "RenderBuffer.inc"
                 include "TilemapBuffer.inc"
 
+                include "Level.inc"
+
                 include "Unit.inc"
                 include "UnitType.inc"
                 include "UnitRank.inc"

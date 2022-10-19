@@ -3,10 +3,13 @@
                 define _STRUCT_GAME_
 
                 struct FGame
+StartSlotA:     FLocation 0, 0                                                  ; координаты старта для фракции (слот A)
+StartSlotB:     FLocation 0, 0                                                  ; координаты старта для фракции (слот B)
+StartSlotC:     FLocation 0, 0                                                  ; координаты старта для фракции (слот C)
 Size:           FMapSize 0, 0                                                   ; размер карты
 SizeChank:      FMapSize 0, 0                                                   ; размер карты (в чанках)
 SizeNEG:        FMapSize 0, 0                                                   ; размер карты (отрицательные значения)
-Offset:         FLocation 0, 0                                                  ; смещения тайловой карты
+Offset:         FLocation 0, 0                                                  ; смещения тайловой карты (текущая)
 CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты
 TileCountdown:  DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
 FlyCountdown:   DB DURATION_FLY_ANIM                                            ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
@@ -20,6 +23,17 @@ Render          FFlags 0                                                        
 Sprite          FWFlags 0                                                       ; флаги работы с спрайтами 
                                                                                 ; младший байт (offset) - FSprite.Offset
                                                                                 ; старший байт (flags)  - FSprite.Data.Page / FCompositeSpriteInfo.Flags
+; -----------------------------------------
+;      7    6    5    4    3    2    1    0
+;   +----+----+----+----+----+----+----+----+
+;   | .. | .. | .. | .. | .. | .. | .. | BS |
+;   +----+----+----+----+----+----+----+----+
+;
+;   BS      [0]     - флаг базового старта миссии
+;                     0 - нормальный старт со слота StartSlotA
+;                     1 - режим защиты старт со слота StartSlotB
+; -----------------------------------------
+Gameplay        FFlags 0                                                        ; флаги геймплея
 CompositeY      DB #00                                                          ; смещение по вертикали для композитного спрайта
 Animation       DS 4, 0                                                         ; массив анимация для композитного спрайта
 

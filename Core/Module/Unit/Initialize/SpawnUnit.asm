@@ -4,12 +4,13 @@
 ; -----------------------------------------
 ; спавн юнита в мире
 ; In:
+;   ToDo - HL - информация о Way Points (L - FUnit.Data, H - FUnit.Idx)
 ;   DE - позиция юнита  (D - y, E - x)
-;   BC - параметры      (B -  , C - тип юнита)
+;   BC - параметры      (B - ранг , C - тип юнита)
 ; Out:
 ;   IX - адрес юнита
 ; Corrupt:
-;   IX
+;   HL, DE, BC, AF, HL', DE', BC', AF', IX
 ; Note:
 ; -----------------------------------------
 Spawn:          ; поиск свободной ячейки
@@ -68,7 +69,7 @@ Spawn:          ; поиск свободной ячейки
                 LD (IX + FUnit.CounterUp), A                                    ; счётчик повороов
                 LD (IX + FUnit.Delta), A                                        ;
                 LD (IX + FUnit.Flags), A                                        ; флаги
-                LD (IX + FUnit.Rank), RANK_ROOKIE                               ; начальный ранг
+                LD (IX + FUnit.Rank), B                                         ; начальный ранг
                 LD (IX + FUnit.Killed), A                                       ; количество убитых
 
                 ; установка дефолтной брони и уровня HP

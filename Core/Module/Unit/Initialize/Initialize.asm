@@ -13,8 +13,11 @@ Core:           ; очистка массива юнитов
                 LD DE, #FFFF
                 CALL SafeFill.b4096
                 
-                ; инициализация дополнительных массива
+                ; инициализация массива чанков
                 CALL Game.Unit.Utils.ChunkArray.Initialize
+
+                ; инициализация юнитов из блока метаданных карты о юнитов
+                CALL LevelUnits
  
                 RET
 
