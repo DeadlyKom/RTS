@@ -24,4 +24,3 @@ SizeInSectors:  EQU (Size >> 8) + ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01)
                 endmodule
 
                 endif ; ~ _BUILDER_LEVEL_MAP_TEST_PACK_
-

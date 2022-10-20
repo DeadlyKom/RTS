@@ -8,7 +8,8 @@
 
                 display "\'Tilemap Pack 2\' :\t\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ] \t-------------------------------------------------"
 Begin:          EQU $
-                include "Core/Module/Tables/Sprites/Tilemap/Pack_2.inc"
+                include "Core/Module/Tables/Tilemap/Pack_2.inc"                 ; таблица (0)
+                                                                                ; графика (1)
 Size:           EQU $ - Begin
 SizeInSectors:  EQU ((Size % TRDOS.SECTOR_SIZE > 0) & 0x01) + (Size >> 8)
 

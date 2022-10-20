@@ -1,4 +1,4 @@
 Shuttle_1A:     ; тестовый
-                include "Core/Module/Tables/Sprites/Shuttle/1A.inc"
+                include "Core/Module/Tables/Graphics/Shuttle/1A.inc"
 Shadow:         ; тень от шаттлов
-                include "Core/Module/Tables/Sprites/Shuttle/Shadow.inc"
+                include "Core/Module/Tables/Graphics/Shuttle/Shadow.inc"

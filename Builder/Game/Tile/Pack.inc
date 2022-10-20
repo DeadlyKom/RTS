@@ -8,9 +8,9 @@
 
                 display "\'Game Tilemap Code\' :\t\t\t\t\t-------------------- [ ", /D, SizeTilemapCode, " bytes / ", /D, SizeInSectorsTilemapCode, " sector(s) ]  [", /D, Page.Game.Tilemap, "]\t-------------------------------------------------"
 
-BeginTilemapCode:   EQU $
+BeginTilemapCode:           EQU $
                 include "Core/Module/Tilemap/Include.inc"
-SizeTilemapCode:    EQU $ - BeginTilemapCode
+SizeTilemapCode:            EQU $ - BeginTilemapCode
 SizeInSectorsTilemapCode:   EQU (SizeTilemapCode >> 8) + ((SizeTilemapCode % TRDOS.SECTOR_SIZE > 0) & 0x01)
 
                 savetrd TRD_FILENAME, GameTilemapCodeNameTRD, BeginTilemapCode, SizeTilemapCode

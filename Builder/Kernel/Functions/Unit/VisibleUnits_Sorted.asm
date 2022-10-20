@@ -21,6 +21,6 @@ VisibleUnits:   ; сохранеие текущей страницы
                 LD A, #00
                 JP SetPage
 
-                display "\t - Visible Unit (SORTED) : \t\t\t\t", /A, FlyToUnit, " = busy [ ", /D, $ - FlyToUnit, " bytes  ]"
+                display "\t - Visible Unit (SORTED) : \t\t\t", /A, FlyToUnit, " = busy [ ", /D, $ - FlyToUnit, " bytes  ]"
 
                 endif ; ~ _BUILDER_KERNEL_MODULE_UNIT_VISIBLE_UNITS_SORTED_
