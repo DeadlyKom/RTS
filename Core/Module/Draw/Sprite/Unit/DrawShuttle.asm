@@ -96,9 +96,7 @@ DrawShuttle:    ; ToDo организовать более правильную 
                 XOR A
                 LD (GameAnim.OffsetY), A
 
-                CALL DrawComposite                                              ; отображение шаттла
-
-                RET
+                JP DrawComposite                                                ; отображение шаттла
 
 .Table          include "Core/Module/Tables/Graphics/Shuttle/Data.inc"
 

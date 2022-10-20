@@ -40,12 +40,54 @@ Metadata:
                 ; -----------------------------------------
                 FLevelUnitInfo {
                 PLAYER_FACTION,                                                 ; принадлежность к фракции
-                1                                                               ; количество
+                8                                                               ; количество
                 }
                 FLevelUnitData {
                 LVL_NONE_FLAGS,                                                 ; флаги
                 UNIT_INFANTRY,                                                  ; тип юнита
-                { #02, #02 },                                                   ; начальная позиция шаттла, конечная позиция берётся из FLevelInfo.StartFaction
+                { #05, #06 },                                                   ; начальная позиция шаттла, конечная позиция берётся из FLevelInfo.StartFaction
+                RANK_ROOKIE                                                     ; ранг
+                }
+                FLevelUnitData {
+                LVL_NONE_FLAGS,                                                 ; флаги
+                UNIT_INFANTRY,                                                  ; тип юнита
+                { #03, #07 },                                                   ; начальная позиция шаттла, конечная позиция берётся из FLevelInfo.StartFaction
+                RANK_ROOKIE                                                     ; ранг
+                }
+                FLevelUnitData {
+                LVL_NONE_FLAGS,                                                 ; флаги
+                UNIT_INFANTRY,                                                  ; тип юнита
+                { #06, #08 },                                                   ; начальная позиция шаттла, конечная позиция берётся из FLevelInfo.StartFaction
+                RANK_ROOKIE                                                     ; ранг
+                }
+                FLevelUnitData {
+                LVL_NONE_FLAGS,                                                 ; флаги
+                UNIT_INFANTRY,                                                  ; тип юнита
+                { #01, #02 },                                                   ; начальная позиция шаттла, конечная позиция берётся из FLevelInfo.StartFaction
+                RANK_ROOKIE                                                     ; ранг
+                }
+                FLevelUnitData {
+                LVL_NONE_FLAGS,                                                 ; флаги
+                UNIT_INFANTRY,                                                  ; тип юнита
+                { #08, #09 },                                                   ; начальная позиция шаттла, конечная позиция берётся из FLevelInfo.StartFaction
+                RANK_ROOKIE                                                     ; ранг
+                }
+                FLevelUnitData {
+                LVL_NONE_FLAGS,                                                 ; флаги
+                UNIT_INFANTRY,                                                  ; тип юнита
+                { #0A, #08 },                                                   ; начальная позиция шаттла, конечная позиция берётся из FLevelInfo.StartFaction
+                RANK_ROOKIE                                                     ; ранг
+                }
+                FLevelUnitData {
+                LVL_NONE_FLAGS,                                                 ; флаги
+                UNIT_INFANTRY,                                                  ; тип юнита
+                { #07, #0A },                                                   ; начальная позиция шаттла, конечная позиция берётся из FLevelInfo.StartFaction
+                RANK_ROOKIE                                                     ; ранг
+                }
+                FLevelUnitData {
+                LVL_NONE_FLAGS,                                                 ; флаги
+                UNIT_INFANTRY,                                                  ; тип юнита
+                { #0A, #0A },                                                   ; начальная позиция шаттла, конечная позиция берётся из FLevelInfo.StartFaction
                 RANK_ROOKIE                                                     ; ранг
                 }
 

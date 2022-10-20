@@ -23,7 +23,7 @@ Shuttles:
                 {{32,16},                                                       ; maxY, minY
                  {32,16}},                                                      ; maxX, minX
                 Page.Graphics.Pack1,                                            ; страница памяти
-                Graphics.Spite.Shuttle_1A,                                      ; адрес спрайта
+                Graphics.Spites.Shuttle_1A,                                     ; адрес спрайта
                 0}                                                              ; dummy
 
                 ;   001 - 1B (первый тир, враждебного шаттла)
@@ -70,5 +70,5 @@ Shadow:         ;   тень от шаттла
                 {{ 8, 8},                                                       ; maxY, minY
                  {24,24}},                                                      ; maxX, minX
                 Page.Graphics.Pack1,                                            ; страница памяти
-                Graphics.Spite.Shadow,                                          ; адрес спрайта
+                Graphics.Spites.Shadow,                                         ; адрес спрайта
                 0}                                                              ; dummy
