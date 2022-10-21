@@ -12,6 +12,12 @@
 BezierCurve:    ; установка обратного счётчика
                 LD (HL), DURATION_FLY_ANIM
 
+                LD IX, #C040
+                LD A, (IX + FUnit.Direction)
+                ADD A, %00001000
+                AND DF_DOWN_MASK
+                LD (IX + FUnit.Direction), A
+
 .PlayerShuttle  ; -----------------------------------------
                 ; шаттл игрока
                 ; -----------------------------------------

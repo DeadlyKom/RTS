@@ -67,11 +67,23 @@ Draw:           ; подготовка
                 XOR L
                 AND %11011111
                 XOR L
-                JR Z, $+3
+                JR Z, $+12
+                LD A, C
                 INC C
+                AND #0F
+                JR Z, $+6
+                LD A, C
+                ADD A, #0F
+                LD C, A
 
                 ; корректировка высоты, если спрайт не выровнен знакоместу по горизонтали   (грубая)
+                LD A, B
                 INC B
+                AND #0F
+                JR Z, $+6
+                LD A, B
+                ADD A, #0F
+                LD B, A
 
                 ; расчёт адреса буфера рендера
                 LD A, L

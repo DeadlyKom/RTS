@@ -193,14 +193,14 @@ Sort:           ; HL - начальный адрес расположения э
                 ifdef _IMPROVE
                 ; лайтовый костыль, добавление смещение для шаттлов,
                 ; чтобы добавить максимальное значение к оси Y
-                ; когда шаттл в полёте
+                ; когда шаттлв полёте
                 INC L
                 LD A, (HL)
                 OR A
-                JR Z, $+8
+                JR Z, $+9
                 RRA
-                RRA
-                AND #1F
+                ADC A, #00
+                AND #0F
                 ADD A, D
                 LD D, A
                 endif
@@ -214,10 +214,10 @@ Sort:           ; HL - начальный адрес расположения э
                 INC L
                 LD A, (HL)
                 OR A
-                JR Z, $+6
+                JR Z, $+7
                 RRA
-                RRA
-                AND #1F
+                ADC A, #00
+                AND #0F
                 DEC L
                 ADD A, (HL)
                 DEC L
