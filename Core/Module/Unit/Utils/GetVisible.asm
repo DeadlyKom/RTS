@@ -1,6 +1,8 @@
 
                 ifndef _CORE_MODULE_UNIT_UTILS_GET_VISIBLE_SORTED_
                 define _CORE_MODULE_UNIT_UTILS_GET_VISIBLE_SORTED_
+
+                define _IMPROVE                                                 ; улучшить сортировку для объектов в воздухе и на земле
 ; -----------------------------------------
 ; получить массив отсортированных юнитов по вертикали
 ; In:
@@ -182,6 +184,115 @@ Sort:           ; HL - начальный адрес расположения э
 
 .Loop           ; SP - [i-1]
 
+                ifdef _IMPROVE
+                POP HL
+                LD E, (HL)
+                INC L
+                LD D, (HL)
+                INC L
+                LD A, (HL)
+                ADD A, A
+                XOR (HL)
+                JR C, .Fly
+
+                ; 0
+                LD A, (HL)
+                RLCA
+                RLCA
+                AND %1100000
+                NEG
+                ; корректировка начального адреса спрайта
+                ADD A, E
+                LD E, A
+                ADC A, D
+                SUB E
+                LD D, A
+                LD A, (HL)
+                RRA
+                RRA
+                AND #0F
+                ADD A, D
+                LD D, A
+                JR .NextY
+
+.Fly            ; 1
+                LD A, (HL)
+                RLCA
+                RLCA
+                AND %1100000
+                ; корректировка начального адреса спрайта
+                ADD A, E
+                LD E, A
+                ADC A, D
+                SUB E
+                LD D, A
+                LD A, (HL)
+                RRA
+                RRA
+                AND #0F
+                OR #30
+                ADD A, D
+                LD D, A
+.NextY          LD (.LeftY), DE
+
+                ; элемент [i]
+                POP HL
+                PUSH HL
+
+                LD E, (HL)
+                INC L
+                LD D, (HL)
+                INC L
+                LD A, (HL)
+                ADD A, A
+                XOR (HL)
+                JR C, .Fly_
+
+                ; 0
+                LD A, (HL)
+                RLCA
+                RLCA
+                AND %1100000
+                NEG
+                ; корректировка начального адреса спрайта
+                ADD A, E
+                LD E, A
+                ADC A, D
+                SUB E
+                LD D, A
+                LD A, (HL)
+                RRA
+                RRA
+                AND #0F
+                ADD A, D
+                LD D, A
+                JR .NextY_
+
+.Fly_           ; 1
+                LD A, (HL)
+                RLCA
+                RLCA
+                AND %1100000
+                ; корректировка начального адреса спрайта
+                ADD A, E
+                LD E, A
+                ADC A, D
+                SUB E
+                LD D, A
+                LD A, (HL)
+                RRA
+                RRA
+                AND #0F
+                OR #30
+                ADD A, D
+                LD D, A
+.NextY_         ;
+.LeftY          EQU $+1
+                LD HL, #0000
+                EX DE, HL
+
+                else
+
                 ; элемент [i-1]
                 POP HL
                 LD E, (HL)
@@ -207,7 +318,10 @@ Sort:           ; HL - начальный адрес расположения э
                 LD H, (HL)
                 LD L, A
 
+                endif
+
                 ; проверка [i] >= [i-1]
+                OR A
                 SBC HL, DE
                 JR NC, .Next    ; i = j; j++
 
@@ -242,7 +356,7 @@ Sort:           ; HL - начальный адрес расположения э
                 ; i < size
                 LD A, C
                 CP B
-                JR C, .Loop
+                JP C, .Loop
 
                 ; -1
                 INC HL
