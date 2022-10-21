@@ -184,140 +184,50 @@ Sort:           ; HL - начальный адрес расположения э
 
 .Loop           ; SP - [i-1]
 
-                ifdef _IMPROVE
-                POP HL
-                LD E, (HL)
-                INC L
-                LD D, (HL)
-                INC L
-                LD A, (HL)
-                ADD A, A
-                XOR (HL)
-                JR C, .Fly
-
-                ; 0
-                LD A, (HL)
-                RLCA
-                RLCA
-                AND %1100000
-                NEG
-                ; корректировка начального адреса спрайта
-                ADD A, E
-                LD E, A
-                ADC A, D
-                SUB E
-                LD D, A
-                LD A, (HL)
-                RRA
-                RRA
-                AND #0F
-                ADD A, D
-                LD D, A
-                JR .NextY
-
-.Fly            ; 1
-                LD A, (HL)
-                RLCA
-                RLCA
-                AND %1100000
-                ; корректировка начального адреса спрайта
-                ADD A, E
-                LD E, A
-                ADC A, D
-                SUB E
-                LD D, A
-                LD A, (HL)
-                RRA
-                RRA
-                AND #0F
-                OR #30
-                ADD A, D
-                LD D, A
-.NextY          LD (.LeftY), DE
-
-                ; элемент [i]
-                POP HL
-                PUSH HL
-
-                LD E, (HL)
-                INC L
-                LD D, (HL)
-                INC L
-                LD A, (HL)
-                ADD A, A
-                XOR (HL)
-                JR C, .Fly_
-
-                ; 0
-                LD A, (HL)
-                RLCA
-                RLCA
-                AND %1100000
-                NEG
-                ; корректировка начального адреса спрайта
-                ADD A, E
-                LD E, A
-                ADC A, D
-                SUB E
-                LD D, A
-                LD A, (HL)
-                RRA
-                RRA
-                AND #0F
-                ADD A, D
-                LD D, A
-                JR .NextY_
-
-.Fly_           ; 1
-                LD A, (HL)
-                RLCA
-                RLCA
-                AND %1100000
-                ; корректировка начального адреса спрайта
-                ADD A, E
-                LD E, A
-                ADC A, D
-                SUB E
-                LD D, A
-                LD A, (HL)
-                RRA
-                RRA
-                AND #0F
-                OR #30
-                ADD A, D
-                LD D, A
-.NextY_         ;
-.LeftY          EQU $+1
-                LD HL, #0000
-                EX DE, HL
-
-                else
-
                 ; элемент [i-1]
                 POP HL
                 LD E, (HL)
                 INC L
                 LD D, (HL)
 
+                ifdef _IMPROVE
                 ; лайтовый костыль, добавление смещение для шаттлов,
                 ; чтобы добавить максимальное значение к оси Y
-                ; когда шаттлв полёте
+                ; когда шаттл в полёте
                 INC L
                 LD A, (HL)
-                NEG
-                ADD A, E
-                JR NC, $+3
-                INC D
-                LD E, A
+                OR A
+                JR Z, $+8
+                RRA
+                RRA
+                AND #1F
+                ADD A, D
+                LD D, A
+                endif
 
                 ; элемент [i]
                 POP HL
                 PUSH HL
+
+                ifdef _IMPROVE
+                INC L
+                INC L
+                LD A, (HL)
+                OR A
+                JR Z, $+6
+                RRA
+                RRA
+                AND #1F
+                DEC L
+                ADD A, (HL)
+                DEC L
+                LD L, (HL)
+                LD H, A
+                else
                 LD A, (HL)
                 INC L
                 LD H, (HL)
                 LD L, A
-
                 endif
 
                 ; проверка [i] >= [i-1]
