@@ -12,11 +12,30 @@
 BezierCurve:    ; установка обратного счётчика
                 LD (HL), DURATION_FLY_ANIM
 
+                LD B, 16
                 LD IX, #C040
-                LD A, (IX + FUnit.Direction)
+.L1             LD A, (IX + FUnit.Animation)
+                SUB UNIT_ANIM_DOWN_DECREMENT
+                LD (IX + FUnit.Animation), A
+                LD DE, UNIT_SIZE
+                ADD IX, DE
+                DJNZ .L1
+
+.L11            EQU $+1
+                LD A, #09
+                DEC A
+                JR NZ, .L3
+                LD B, 16
+                LD IX, #C040
+.L2             LD A, (IX + FUnit.Direction)
                 ADD A, %00001000
                 AND DF_DOWN_MASK
                 LD (IX + FUnit.Direction), A
+                LD DE, UNIT_SIZE
+                ADD IX, DE
+                DJNZ .L2
+                LD A, #09
+.L3             LD (.L11), A
 
 .PlayerShuttle  ; -----------------------------------------
                 ; шаттл игрока

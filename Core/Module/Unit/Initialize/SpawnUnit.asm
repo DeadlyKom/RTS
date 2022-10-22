@@ -89,6 +89,7 @@ Spawn:          ; поиск свободной ячейки
                 EXX
                 CALL Math.Rand8
                 EXX
+                AND DF_DOWN_MASK | DF_UP_MASK
                 LD (IX + FUnit.Direction), A
 
                 ; расчёт индекса чанка
