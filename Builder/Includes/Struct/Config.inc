@@ -4,9 +4,9 @@
 
                 struct FConfig
 KeyMenu         DB VK_ENTER                                                     ; клавиша по умолчанию "меню/пауза" (0)
-KeyAcceleration DB VK_CAPS_SHIFT                                                ; клавиша по умолчанию "Усклорить"
-KeyDeselect     DB VK_SYMBOL_SHIFT                                              ; клавиша по умолчанию "Отмена"
-KeySelect       DB VK_SPACE                                                     ; клавиша по умолчанию "Выбор"
+KeyAcceleration DB VK_CAPS_SHIFT                                                ; клавиша по умолчанию "ускорить"
+KeyBack         DB VK_SYMBOL_SHIFT                                              ; клавиша по умолчанию "Отмена"
+KeySelect       DB VK_SPACE                                                     ; клавиша по умолчанию "выбор"
 KeyRight        DB VK_D                                                         ; клавиша по умолчанию "Вправо"
 KeyLeft         DB VK_A                                                         ; клавиша по умолчанию "Влево"
 KeyDown         DB VK_S                                                         ; клавиша по умолчанию "Вниз"

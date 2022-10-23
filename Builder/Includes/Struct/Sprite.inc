@@ -81,7 +81,7 @@ Info            FSpriteInfo                                                     
                 ends
 CSIF_MASK_BIT   EQU 0x07                                                    	; используется общая маска (берётся из Offset)
 CSIF_MASK       EQU 1 << CSIF_MASK_BIT
-CSIF_OR_XOR_BIT EQU 0x03   
+CSIF_OR_XOR_BIT EQU 0x03                                                        ; если 0, то OR иначе OR & XOR вывод спрайта
 CSIF_OR_XOR     EQU 1 << CSIF_OR_XOR_BIT
 CSIF_OR         EQU 0 << CSIF_OR_XOR_BIT
 CSIF_ANIM_NONE  EQU 0x00 << 0

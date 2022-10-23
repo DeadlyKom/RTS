@@ -2,13 +2,14 @@
                 ifndef _MODULE_INPUT_
                 define _MODULE_INPUT_
 ; -----------------------------------------
+; проверка нажатия/отпускания виртуальной клавиши
 ; In :
-;   A  - virtual code
-;   HL - address key last state
-;   DE - address key handlerKey
+;   A  - виртуальная клавиша
+;   HL - адрес массива состояний виртуальных клавиш
+;   DE - адрес обработчика виртуальных клавиш
 ; Out :
-;   if the specified key is pressed/released jump yo handler
-;   if flag Z is reset, the button is released, otherwise it is pressed
+;   если указанная виртуальная клавиша нажата/отпущена то вызовется обрабочик
+;   флаг Z сброшен, если виртуальная клавиша отжата
 ; Corrupt :
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
@@ -28,61 +29,91 @@ JumpHandlerKey:     CALL Input.CheckKeyState
 .NotProcessed       SCF
                     RET
 ; -----------------------------------------
-; jump to hendler keys
+; обработчик нажатия клавиш
 ; In :
-;   HL  - address key last state
-;   DE' - address array VK
-;   B'  - count array keys VK
+;   DE - адрес обработчика виртуальных клавиш
 ; Out :
-;   if the specified key is pressed/released jump yo handler
-;   if flag Z is reset, the button is released, otherwise it is pressed
-;   if the handler is processing should return a reset Carry flag
+;   если указанная виртуальная клавиша нажата/отпущена то вызовется обрабочик
+;   флаг Z сброшен, если виртуальная клавиша отжата
+;   если обработчик обработал клавишу и не требуется дальнейший проод по виртуальным клавишам, флаг переполнения C должен быть сброшен
 ;   C - value
 ; Corrupt :
 ;   HL, DE, BC, AF, AF'
 ; -----------------------------------------
-JumpHandlerKeys:    ;
-.Loop               LD A, (DE)
-                    INC DE
-                    EX AF, AF'
-                    LD A, (DE)
-                    INC DE
-                    EXX
-                    LD C, A
-                    EX AF, AF'
-                    PUSH HL
-                    PUSH DE
-                    CALL JumpHandlerKey
-                    POP DE
-                    POP HL
-                    RET NC
-                    INC HL
-                    EXX
-                    DJNZ .Loop
-                    RET
-; -----------------------------------------
-; обработчик нажатия клавиш по умолчанию
-; In :
-;   DE - address key handlerKey
-; Out :
-;   if the specified key is pressed/released jump yo handler
-;   if flag Z is reset, the button is released, otherwise it is pressed
-;   if the handler is processing should return a reset Carry flag
-;   C - value
-; Corrupt :
-;   HL, DE, BC, AF, AF'
-; -----------------------------------------
-JumpDefaulKeys: LD HL, .KeyLastState
+JumpKeys:       LD HL, .KeyLastState
                 EXX
                 LD DE, .ArrayVKNum
                 LD B, .Num
-                JP JumpHandlerKeys
-.KeyLastState   DS 5, 0
-.ArrayVKNum     DB VK_W,     DEFAULT_UP                                         ; KeyUp     - клавиша по умолчанию "Вверх"
-                DB VK_A,     DEFAULT_LEFT                                       ; KeyLeft   - клавиша по умолчанию "Влево"
-                DB VK_S,     DEFAULT_DOWN                                       ; KeyDown   - клавиша по умолчанию "Вниз"
-                DB VK_D,     DEFAULT_RIGHT                                      ; KeyRight  - клавиша по умолчанию "Вправо"
-                DB VK_SPACE, DEFAULT_SELECT                                     ; KeySelect - клавиша по умолчанию "Выбор"
+; -----------------------------------------
+; вызов обработчика клавишь при нажатии/отпускания виртуальной клавиши (JumpHandlerKeys)
+; In :
+;   HL  - адрес массива состояний виртуальных клавиш
+;   DE' - адрес массива виртуальных клавиш
+;   B'  - количество виртуальных клавиш в массиве
+; Out :
+;   если указанная виртуальная клавиша нажата/отпущена то вызовется обрабочик
+;   флаг Z сброшен, если виртуальная клавиша отжата
+;   если обработчик обработал клавишу и не требуется дальнейший проод по виртуальным клавишам, флаг переполнения C должен быть сброшен
+;   C - value
+; Corrupt :
+;   HL, DE, BC, AF, AF'
+; -----------------------------------------
+.Loop           LD A, (DE)
+                INC DE
+                EX AF, AF'
+                LD A, (DE)
+                INC DE
+                EXX
+                LD C, A
+                EX AF, AF'
+                PUSH HL
+                PUSH DE
+; -----------------------------------------
+; проверка нажатия/отпускания виртуальной клавиши (JumpHandlerKey)
+; In :
+;   A  - виртуальная клавиша
+;   HL - адрес массива состояний виртуальных клавиш
+;   DE - адрес обработчика виртуальных клавиш
+; Out :
+;   если указанная виртуальная клавиша нажата/отпущена то вызовется обрабочик
+;   флаг Z сброшен, если виртуальная клавиша отжата
+; Corrupt :
+;   HL, DE, BC, AF, AF'
+; -----------------------------------------
+                CALL Input.CheckKeyState
+                LD A, (HL)
+                JR NZ, .IsReleased
+                OR A
+                JR NZ, .NotProcessed
+                INC (HL)
+                EX DE, HL
+                JP (HL)                             ; pressed
+.IsReleased     OR A
+                JR Z, .NotProcessed
+                DEC (HL)
+                EX DE, HL
+                JP (HL)                             ; released
+.NotProcessed   SCF
+; -----------------------------------------
+;  ~(JumpHandlerKey)
+; -----------------------------------------
+
+                POP DE
+                POP HL
+                RET NC
+                INC HL
+                EXX
+                DJNZ .Loop
+                RET
+.KeyLastState   DS NUMBER_KEYS_ID, 0
+.ArrayVKNum     DB VK_ENTER,        KEY_ID_MENU                                 ; клавиша "меню/пауза"
+                DB VK_CAPS_SHIFT,   KEY_ID_ACCELERATION                         ; клавиша "ускорить"
+                DB VK_SYMBOL_SHIFT, KEY_ID_BACK                                 ; клавиша "отмена/назад"
+                DB VK_SPACE,        KEY_ID_SELECT                               ; клавиша "выбор"
+                DB VK_D,            KEY_ID_RIGHT                                ; клавиша "Вправо"
+                DB VK_A,            KEY_ID_LEFT                                 ; клавиша "Влево"
+                DB VK_S,            KEY_ID_DOWN                                 ; клавиша "Вниз"
+.LastKey        DB VK_W,            KEY_ID_UP                                   ; клавиша "Вверх"
 .Num            EQU ($-.ArrayVKNum) / 2
 
                 endif ; ~_MODULE_INPUT_

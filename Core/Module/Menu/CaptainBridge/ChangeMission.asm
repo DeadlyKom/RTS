@@ -48,7 +48,7 @@
 
 .NotInteract    ; 
                 LD DE, InputCapBridge
-                CALL Input.JumpDefaulKeys
+                CALL Input.JumpKeys
                 JR .Loop
 
 .TickFrame      ; обработка вывода сообщений

@@ -116,7 +116,7 @@ GetCoordOption: ; расчёт информации о опции
 
                 ; обработка ввода
                 LD DE, InputDefault
-                CALL Input.JumpDefaulKeys
+                CALL Input.JumpKeys
                 JR .Loop
 
 @RNDTextVFX:    CALL Math.Rand8

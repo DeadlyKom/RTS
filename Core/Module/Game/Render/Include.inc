@@ -4,6 +4,7 @@
 
                 module Render
                 
+                include "Cursor.asm"
                 include "Units.asm"
                 include "Level.asm"
                 include "Swap.asm"

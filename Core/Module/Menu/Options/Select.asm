@@ -84,7 +84,7 @@ ApplyOptions:   ; установка языка
                 LD A, (OptionsLanguage.Current)
                 INC A                                                           ; язык начинается с 1
                 LD C, A
-                LD A, (ConfigOptions)
+                LD A, (GameConfig.Options)
                 AND LANGUAGE_MASK
                 CP C
                 JP Z, @Main.Back

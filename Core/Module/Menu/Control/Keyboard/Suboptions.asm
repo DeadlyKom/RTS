@@ -3,7 +3,7 @@
                 define _CORE_MODULE_MENU_OPTIONS_SUBOPTIONS_CONTROL_KEYBOARD_
 
 SuboptionsControl
-                LD HL, DefaultKeyUpRef
+                LD HL, GameConfig.KeyUp
                 LD BC, (OPTION_KEY_NUM << 8) | OPTION_UP
                 LD A, (MenuVariables.Current)
 

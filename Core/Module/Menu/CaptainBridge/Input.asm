@@ -10,19 +10,19 @@ InputCapBridge: JR NZ, .Processing                                              
 
 .Processing     ; опрос нажатой клавиши
                 EX AF, AF'
-                CP DEFAULT_UP
+                CP KEY_ID_UP
                 JP Z, PressedUp
                 
-                CP DEFAULT_DOWN
+                CP KEY_ID_DOWN
                 JP Z, PressedDown
 
-                CP DEFAULT_LEFT
+                CP KEY_ID_LEFT
                 JP Z, PressedLeft
 
-                CP DEFAULT_RIGHT
+                CP KEY_ID_RIGHT
                 JP Z, PressedRight
 
-                CP DEFAULT_SELECT
+                CP KEY_ID_SELECT
                 JP Z, PressedSelect
 
                 JR .NotProcessing

@@ -46,7 +46,8 @@ TickCounterRef  EQU Kernel.Interrupt.Handler.TickCounterPtr                     
 ; input
 Input
 .CheckKeyState  EQU Kernel.Input.CheckKeyState
-.JumpDefaulKeys EQU Kernel.Input.JumpDefaulKeys
+.JumpKeys       EQU Kernel.Input.JumpKeys
+.ArrayKeys      EQU Kernel.Input.JumpKeys.LastKey
 Kempston
 .CheckKeyState  EQU Kernel.Kempston.CheckKeyState
 Keyboard
@@ -128,6 +129,8 @@ Functions
 ; tables
 Table:
 .Shift          EQU Kernel.Tables.ShiftTable
+.Table_LD_OX    EQU Kernel.Sprite.Table.LD_OX
+.Table_S_R      EQU Kernel.Sprite.Table.SR
 .ScreenAddress  EQU Kernel.Tables.ScreenAddress
 .MultiplySprite EQU Kernel.Tables.MultiplySprite
 .Shift.LD_8     EQU Kernel.Function.LD.TableShift.OX_8

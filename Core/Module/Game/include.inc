@@ -7,5 +7,6 @@
                 include "Interrupt.asm"
                 include "Initialize/Include.inc"
                 include "Render/Include.inc"
+                include "Input/Include.inc"
 
                 endif ; ~_MODULE_GAME_INCLUDE_

@@ -9,8 +9,12 @@
 ; Note:
 ; -----------------------------------------
 Interrupt:      
-.Mouse          ; ToDo: вынести в отдельную обновлениея инпута
-                CALL Mouse.UpdateCursor
+.RestoreCursor  ;  ********** Restore Cursor **********
+                CHECK_RENDER_FLAG RESTORE_CURSOR_BIT
+                CALL NZ, Render.RestoreCursor
+
+.Input          ; ************ Scan Input ************
+                CALL Input.Gameplay.Scan
 
 .AnimTiles      ; ********** Animation Tiles **********
                 LD HL, GameVar.TilemapCountdown
@@ -22,12 +26,16 @@ Interrupt:
                 DEC (HL)
                 CALL Z, Functions.MoveUnitsCurve
 
-.SwapScreens    ; ********** Swap Screens **********
+.SwapScreens    ; ************ Swap Screens ************
                 POP_RENDER_FLAG FINISHED_BIT
                 CALL NZ, Render.Swap
 
+.DrawCursor     ; ************ Draw Cursor ************
+                CALL Render.DrawCursor                                          ; ВАЖНО: отображение курсора всегда должен вызываться после функции SwapScreens
+                                                                                ;        и в текущем видимом окне.
+
                 ifdef _DEBUG
-.Debug_FPS      ; ********** Swap Screens **********
+.Debug_FPS      ; ************** Draw FPS **************
                 CALL FPS_Counter.Tick
                 endif
 

@@ -84,7 +84,7 @@ StartBoot:      DI
                 VK_W,
                 0,
                 0,
-                LANGUAGE_DEFAULT,                                               ; флаги
+                LANGUAGE_DEFAULT | INPUT_MOUSE,                                 ; флаги
                 1                                                               ; слот уровня
                 }
                 

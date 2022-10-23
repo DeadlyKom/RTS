@@ -3,7 +3,7 @@
                 define _CORE_MODULE_MENU_MAIN_LOAD_TEXT_
 
 @SetLanguage:   ; загрузка языка
-                LD A, (ConfigOptions)
+                LD A, (GameConfig.Options)
                 AND LANGUAGE_MASK
                 CALL Functions.LoadFont
 
@@ -78,7 +78,7 @@ CapBridge:      ; -----------------------------------------
                 ADD HL, DE
 
                 ; проверим валидность загружаемого языка
-                LD A, (ConfigOptions)
+                LD A, (GameConfig.Options)
                 AND LANGUAGE_MASK
                 JR NZ, .IsValid
 

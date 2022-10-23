@@ -30,7 +30,7 @@ Info:           ; поиск файла списка уровней в ката�
                 LD HL, LoaderBuffer - FLevelInfo
                 LD DE, FLevelInfo
 .SlotInfo       EQU $+1
-                LD A, (LevelSlotRef)
+                LD A, (GameConfig.LevelSlot)
                 INC A
                 LD B, A
                 ADD HL, DE

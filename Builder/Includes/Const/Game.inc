@@ -15,6 +15,7 @@ GameVar
 ; .TilemapSizeChunk.Y EQU FGameAdr + FGame.SizeChank.Y                            ; размер карты по вертикали (в чанках)
 .TilemapOffset      EQU FGameAdr + FGame.Offset                                 ; смещения тайловой карты (текущая)
 .TilemapCachedAdr   EQU FGameAdr + FGame.CachedAddress                          ; кешированное значение адрес тайловой карты
+.PrepareTable       EQU FGameAdr + FGame.PrepareTable                           ; таблица функций сдвига/без сдвига
 .TilemapCountdown   EQU FGameAdr + FGame.TileCountdown                          ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
 .FlyingCountdown    EQU FGameAdr + FGame.FlyCountdown                           ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
 
@@ -25,9 +26,10 @@ GameAI:
 GameFlags:
 .RenderRef          EQU FGameAdr + FGame.Render                                 ; флаги отрисовки
 .SpriteRef          EQU FGameAdr + FGame.Sprite                                 ; данные спрайта
-.SpriteOffsetRef    EQU FGameAdr + FGame.Sprite.Data.Low                        ; флаги спрайта
+.SpriteOffsetRef    EQU FGameAdr + FGame.Sprite.Data.Low                        ; флаги спрайта (смещение)
 .SpriteFlagRef      EQU FGameAdr + FGame.Sprite.Data.High                       ; флаги спрайта
 .Gameplay           EQU FGameAdr + FGame.Gameplay                               ; флаги геймплея
+.Hardware           EQU FGameAdr + FGame.Hardware                               ; флаги ограничения железа
 
 
 ANIM_INDEX_NONE     EQU 0xFF

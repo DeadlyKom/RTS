@@ -13,7 +13,7 @@ ReqChangeLang:  LD DE, OptionsLanguage.Current
 
 ; сравнение изменений
 Compare:        EX DE, HL
-                LD A, (ConfigOptions)
+                LD A, (GameConfig.Options)
                 AND LANGUAGE_MASK
                 DEC A
                 CP (HL)
