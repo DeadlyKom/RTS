@@ -60,6 +60,7 @@ Mouse
 .Initialize     EQU Kernel.Mouse.Initialize
 .UpdateCursor   EQU Kernel.Mouse.UpdateCursor
 .CheckKeyState  EQU Kernel.Mouse.CheckKeyState
+.Position       EQU Kernel.Mouse.Position
 .PositionX      EQU Kernel.Mouse.PositionX
 .PositionY      EQU Kernel.Mouse.PositionY
 .PositionFlag   EQU Kernel.Mouse.PositionFlag
@@ -109,6 +110,8 @@ Draw:
 .PositionX      EQU Kernel.Sprite.Prepare.PositionX
 .PositionY      EQU Kernel.Sprite.Prepare.PositionY
 .Render         EQU Kernel.Sprite.Draw
+
+.Cursor         EQU Kernel.Cursor.Draw
 
 ; load modules
 LoadModule

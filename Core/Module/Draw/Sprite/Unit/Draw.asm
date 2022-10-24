@@ -134,6 +134,28 @@ Draw:           ; подготовка
                 ; инициализация
                 LD D, B                                                         ; сохранение ширины
 
+                ; clamp по горизонтали
+                LD A, L
+                AND #0F
+                NEG
+                ADD A, #10
+                CP B
+                JR NC, $+3
+                LD B, A
+
+                ; clamp по вертикали
+                LD A, L
+                RRA
+                RRA
+                RRA
+                RRA
+                AND #0F
+                NEG
+                ADD A, #0C
+                CP C
+                JR NC, $+3
+                LD C, A
+
 .Loop           ; основной цикл отмечания грязных тайлов
                 SET FIRST_QUEUE_BIT, (HL)
                 INC L

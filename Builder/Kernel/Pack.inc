@@ -29,14 +29,15 @@ Begin:          EQU $
                 include "Core/Module/Draw/Sprite/Charboundary/DrawCharboundary.asm"
                 include "Core/Module/Draw/Sprite/Charboundary/DrawSprite.asm"
                 include "Core/Module/Draw/Sprite/Charboundary/DrawStencilSprite.asm"
+                include "Core/Module/Draw/Sprite/Cursor/Draw.asm"
                 include "Core/Module/Draw/Sprite/Unit/Include.inc"
                 include "Core/Module/Draw/Sprite/DrawFunctions/Include.inc"
                 ; tilemap
                 include "Core/Module/Draw/Tilemap/DrawRow.asm"                  ; Game
                 include "Core/Module/Draw/Tilemap/DrawTileRows.asm"             ; Game
                 ; math
-                include "Core/Module/Math/RNG/Rand8.asm"
                 include "Core/Module/Math/Div/Div8x8.asm"
+                include "Core/Module/Math/RNG/Rand8.asm"
                 ; decompressor
                 include "Core/Module/Decompressor/Forward.asm"
                 include "Core/Module/Decompressor/Backward.asm"

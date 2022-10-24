@@ -1,10 +1,10 @@
 
-                ifndef _CORE_MODULE_DRAW_MONOCHROME_DRAW_SPRITE_
-                define _CORE_MODULE_DRAW_MONOCHROME_DRAW_SPRITE_
+                ifndef _CORE_MODULE_DRAW_SPRITE_CURSOR_DRAW_
+                define _CORE_MODULE_DRAW_SPRITE_CURSOR_DRAW_
 
-                module Monochrome
+                module Cursor
 ; -----------------------------------------
-; отрисовка спрайта без атрибутами (OR)
+; отрисовка курсора
 ; In:
 ;   HL - адрес спрайта
 ;   DE - координаты в пикселях (D - y, E - x)
@@ -13,47 +13,7 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawSpriteOR:   ; -----------------------------------------
-                ; инициализация
-                ; ----------------------------------------
-                EXX
-                LD HL, Shift_OR
-                LD (DrawSpriteMono.Shift), HL
-                LD HL, NotShift_OR
-                LD (DrawSpriteMono.NotShift), HL
-                EXX
-                JR DrawSpriteMono
-; -----------------------------------------
-; отрисовка спрайта без атрибутами (OR & XOR)
-; In:
-;   HL - адрес спрайта
-;   DE - координаты в пикселях (D - y, E - x)
-;   BC - размер (B - y, C - x)
-; Out:
-; Corrupt:
-; Note:
-; -----------------------------------------
-DrawSpriteORXOR:; -----------------------------------------
-                ; инициализация
-                ; ---------------------------------------- 
-                EXX
-                LD HL, Shift_OR_XOR
-                LD (DrawSpriteMono.Shift), HL
-                LD HL, NotShift_OR_XOR
-                LD (DrawSpriteMono.NotShift), HL
-                EXX
-                JR DrawSpriteMono
-; -----------------------------------------
-; отрисовка спрайта без атрибутами
-; In:
-;   HL - адрес спрайта
-;   DE - координаты в пикселях (D - y, E - x)
-;   BC - размер (B - y, C - x)
-; Out:
-; Corrupt:
-; Note:
-; -----------------------------------------
-DrawSpriteMono: ; -----------------------------------------
+Draw:           ; -----------------------------------------
                 ; расчёт счётчика по горизонтали
                 ; -----------------------------------------
                 ; округление ширины до знакоместа
@@ -80,19 +40,15 @@ DrawSpriteMono: ; -----------------------------------------
                 ;   A  - номер бита (CPL)/ смещение от левого края
                 CALL Convert.PixelToScreen                                      ; DE - адрес экрана
                 LD C, E                                                         ; сохранение смещения по горизонтали
-                RES 7, D                                                        ; коррекция адреса основного экрана
 
                 ; -----------------------------------------
-                ; определение функтора вывода
+                ; определение функции вывода
                 ; -----------------------------------------
                 EXX
-.Shift          EQU $+1
-                LD DE, #0000
+                LD DE, Shift_OR_XOR
                 JR NZ, .IsShift
-.NotShift       EQU $+1
-                LD DE, #0000
+                LD DE, NotShift_OR_XOR
 .IsShift        EXX
-
                 ; -----------------------------------------
                 ; расчёт адреса таблицы смещения
                 ; -----------------------------------------
@@ -100,6 +56,7 @@ DrawSpriteMono: ; -----------------------------------------
                 ADD A, A
                 ADD A, HIGH Table.Shift
                 LD H, A
+                VisibleScrAdr_ D                                                ; коррекция адреса на видимый экран
                 EXX
 
 .ColumLoop      ; -----------------------------------------
@@ -140,31 +97,6 @@ DrawSpriteMono: ; -----------------------------------------
                 DJNZ .ColumLoop
 
                 RET
-Shift_OR:       EX DE, HL
-                EXX
-                LD L, A
-                LD A, (DE)
-                OR (HL)
-                LD (DE), A
-
-                INC H
-                INC E
-
-                LD A, (DE)
-                OR (HL)
-                LD (DE), A
-                
-                DEC H
-                JP DrawSpriteMono.Continue
-NotShift_OR:    EX DE, HL
-                EXX
-                LD L, A
-                LD A, (DE)
-                OR L
-                LD (DE), A
-
-                INC E
-                JP DrawSpriteMono.Continue
 Shift_OR_XOR:   EX DE, HL
                 EXX
                 LD L, A
@@ -205,7 +137,7 @@ Shift_OR_XOR:   EX DE, HL
                 LD (DE), A
                 
                 DEC H
-                JP DrawSpriteMono.Continue
+                JP Draw.Continue
 NotShift_OR_XOR: 
                 EX DE, HL
                 EXX
@@ -221,10 +153,10 @@ NotShift_OR_XOR:
                 LD (DE), A
 
                 INC E
-                JP DrawSpriteMono.Continue
+                JP Draw.Continue
 
-                display " - Draw Sprite Monochrome: \t\t\t\t", /A, DrawSpriteMono, " = busy [ ", /D, $ - DrawSpriteMono, " bytes  ]"
+                display " - Draw Cursor : \t\t\t\t\t", /A, Draw, " = busy [ ", /D, $ - Draw, " bytes  ]"
 
                 endmodule
 
-                endif ; ~ _CORE_MODULE_DRAW_MONOCHROME_DRAW_SPRITE_
+                endif ; ~ _CORE_MODULE_DRAW_SPRITE_CURSOR_DRAW_

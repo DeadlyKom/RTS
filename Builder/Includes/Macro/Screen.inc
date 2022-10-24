@@ -70,6 +70,22 @@ HiddenScreenAdr_ macro Reg?
                 JR Z, $+4
                 RES 7, Reg?
                 endm
+; -----------------------------------------
+; корректировка адреса видимого экрана
+; In:
+;   Reg? - модифицируемый регистр
+; Out:
+; Corrupt:
+;   AF
+; Note:
+;   после функции PixelAddressP
+; -----------------------------------------
+VisibleScrAdr_  macro Reg?
+                LD A, (MemoryPageRef)
+                AND SCREEN_MASK
+                JR NZ, $+4
+                RES 7, Reg?
+                endm
 ZX_COLOR_IPBF   macro Inc?, Paper?, Bright?, Flash?
                 DB ((Flash? << 7) | (Bright? << 6) | (Paper? << 3) | Inc?)
                 endm
