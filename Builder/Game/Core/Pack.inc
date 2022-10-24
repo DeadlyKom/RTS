@@ -10,6 +10,7 @@
 
 BeginMain:      EQU $
                 include "Core/Module/Game/Include.inc"
+                include "Core/Module/Tables/Graphics/Cursor/CursorInfo.inc"     ; пока это тут табличка
                 include "Core/Module/Tables/Graphics/Infantry/MoveInfo.inc"     ; пока это тут табличка
 SizeMain:       EQU $ - BeginMain
 SizeInSectorsF: EQU (SizeMain >> 8) + ((SizeMain % TRDOS.SECTOR_SIZE > 0) & 0x01)

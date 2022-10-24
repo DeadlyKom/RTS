@@ -8,6 +8,7 @@
 
                 display "\'Sprite Pack 1\' :\t\t\t\t\t-------------------- [ ", /D, GraphSP1Size, " bytes / ", /D, SizeInSectorsGraphSP1, " sector(s) ] \t-------------------------------------------------"
 BeginGraphSP1:  EQU $
+                include "Core/Module/Tables/Graphics/Cursor/Cursor.inc"
                 include "Shuttle/Include.inc"
                 include "Core/Module/Tables/Graphics/Infantry/Move.inc"
 GraphSP1Size:   EQU $ - BeginGraphSP1

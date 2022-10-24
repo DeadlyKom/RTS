@@ -11,7 +11,6 @@ SizeChank:      FMapSize 0, 0                                                   
 SizeNEG:        FMapSize 0, 0                                                   ; размер карты (отрицательные значения)
 Offset:         FLocation 0, 0                                                  ; смещения тайловой карты (текущая)
 CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты
-PrepareTable:   DW #0000                                                        ; таблица функций сдвига/без сдвига
 TileCountdown:  DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
 FlyCountdown:   DB DURATION_FLY_ANIM                                            ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
 

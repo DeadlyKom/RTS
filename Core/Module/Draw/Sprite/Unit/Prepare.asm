@@ -488,8 +488,7 @@ Prepare:        EX DE, HL
                 EXX
 
                 ; адрес таблицы спрайта без маски и без сдвига
-                ; LD DE, Table.NoShift_LD-2
-                LD DE, (GameVar.PrepareTable)
+                LD DE, Table.NoShift_LD-2
                 
                 ; расчёт адреса таблицы смещения
                 LD A, H
@@ -497,9 +496,7 @@ Prepare:        EX DE, HL
                 JR Z, .NotShift                                                 ; переход, если сдвиг отсутствует
 
                 ; адрес таблицы спрайта без маски и сдвигом
-                ; LD DE, Table.Shift_LD-2
-                INC DE
-                INC DE
+                LD DE, Table.Shift_LD-2
 
                 ; расчёт адреса таблицы, в зависимости от младших 3 бит
                 EXX
@@ -509,14 +506,7 @@ Prepare:        EX DE, HL
                 LD B, A
                 EXX
 
-.NotShift       ; чтение адреса таблицы функций сдвига/без сдвига
-                LD A, L
-                EX DE, HL
-                LD E, (HL)
-                INC HL
-                LD D, (HL)
-
-                ; ---------------------------------------------
+.NotShift       ; ---------------------------------------------
                 ; L   - ширина невидимой части спрайта в знакоместах (-/+)
                 ; DE  - адрес таблицы функций сдвига/без сдвига
                 ; BC  - размер спрайта (B - изначальная ширина, C - изначальная/изменённая высота) в пикселях
@@ -526,6 +516,7 @@ Prepare:        EX DE, HL
                 ; С'  - количество пропускаемых байт, для спрайтов с общей маской
                 ; ---------------------------------------------
 
+                LD A, L
                 ADD A, A
                 ADD A, A
 
@@ -590,20 +581,11 @@ Prepare:        EX DE, HL
                 SCF
                 RET
 
-Table:          ; таблица 
-.LD_OX          DW Table_LD_OX.NoShift_LD-2, Table_LD_OX.Shift_LD-2
-.SR             DW Table_SR.NoShift_Save-2,  Table_SR.Shift_Res-2
-Table_LD_OX:    ; таблица функций (горизонталь, ширина спрайта в знакоместах)
+Table:          ; таблица функций (горизонталь, ширина спрайта в знакоместах)
 .NoShift_LD     DW Table.NoShift.LD_8,  Table.NoShift.LD_16,    Table.NoShift.LD_24,    Table.NoShift.LD_32
 .NoShift_OR_XOR DW Table.NoShift.OX_8,  Table.NoShift.OX_16,    Table.NoShift.OX_24,    Table.NoShift.OX_32
 .Shift_LD       DW Table.Shift.LD_8,    Table.Shift.LD_16,      Table.Shift.LD_24,      Table.Shift.LD_32
 .Shift_OR_XOR   DW Table.Shift.OX_8,    Table.Shift.OX_16,      Table.Shift.OX_24,      Table.Shift.OX_32
-
-Table_SR:       ; таблица функций сохранение/восстановление фона под спрайтом (горизонталь, ширина спрайта в знакоместах)
-.NoShift_Save   DW #0000, #0000, #0000, #0000
-.NoShift_Res    DW #0000, #0000, #0000, #0000
-.Shift_Save     DW #0000, #0000, #0000, #0000
-.Shift_Res      DW #0000, #0000, #0000, #0000
 
                 display " - Prepare Sprite Unit : \t\t\t\t", /A, Prepare, " = busy [ ", /D, $ - Prepare, " bytes  ]"
 

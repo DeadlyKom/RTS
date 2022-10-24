@@ -101,6 +101,14 @@ DrawSpriteORXOR EQU Kernel.Monochrome.DrawSpriteORXOR
 DrawTileRows    EQU Kernel.Tilemap.DrawTileRows
 DrawUnit        EQU Kernel.Sprite.DrawUnit
 
+Draw:
+.Prepare        EQU Kernel.Sprite.Prepare
+.SOx            EQU Kernel.Sprite.Prepare.SOx
+.SOy            EQU Kernel.Sprite.Prepare.SOy
+.SpriteSize     EQU Kernel.Sprite.Prepare.SpriteSize
+.PositionX      EQU Kernel.Sprite.Prepare.PositionX
+.PositionY      EQU Kernel.Sprite.Prepare.PositionY
+.Render         EQU Kernel.Sprite.Draw
 
 ; load modules
 LoadModule
@@ -129,8 +137,6 @@ Functions
 ; tables
 Table:
 .Shift          EQU Kernel.Tables.ShiftTable
-.Table_LD_OX    EQU Kernel.Sprite.Table.LD_OX
-.Table_S_R      EQU Kernel.Sprite.Table.SR
 .ScreenAddress  EQU Kernel.Tables.ScreenAddress
 .MultiplySprite EQU Kernel.Tables.MultiplySprite
 .Shift.LD_8     EQU Kernel.Function.LD.TableShift.OX_8

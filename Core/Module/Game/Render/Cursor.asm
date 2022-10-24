@@ -8,13 +8,20 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawCursor:     ;
-                LD HL, Table.Table_S_R
-                LD (GameVar.PrepareTable), HL
+DrawCursor:     ; -----------------------------------------
+                ; подготовка позиции вывода курсора
+                ; -----------------------------------------
+                LD A, (Mouse.PositionX)  
+                LD A, (Mouse.PositionY)
 
-                ;
-                LD HL, Table.Table_LD_OX
-                LD (GameVar.PrepareTable), HL
+                ; -----------------------------------------
+                ; расчёт адреса
+                ; -----------------------------------------
+                LD HL, Game.Cursor.SpriteInfo
+
+                ; -----------------------------------------
+                ; чтение информации о спрайте
+                ; -----------------------------------------
 
                 ; установка флага порчи фона под курсором
                 SET_RENDER_FLAG RESTORE_CURSOR_BIT
@@ -27,13 +34,9 @@ DrawCursor:     ;
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-RestoreCursor:  ;
-                LD HL, Table.Table_S_R
-                LD (GameVar.PrepareTable), HL
-
-                ;
-                LD HL, Table.Table_LD_OX
-                LD (GameVar.PrepareTable), HL
+RestoreCursor:  ; ---------------------------------------------
+                ; 
+                ; ---------------------------------------------
 
                 ; сброс флага востановления фона под курсором
                 RES_RENDER_FLAG RESTORE_CURSOR_BIT
