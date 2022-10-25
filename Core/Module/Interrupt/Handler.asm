@@ -34,7 +34,7 @@ Handler:        ; ********** HANDLER IM 2 *********
 
 .SaveMemPage    ; ******** SAVE MEMORY PAGE *******
                 LD A, (MemoryPageRef)
-                LD (.RestoreMemPage + 1), A
+                LD (.RestoreMemPage+1), A
                 ; ~ SAVE MEMORY PAGE
 
 .TickCounter    ; ********** TICK COUNTER *********

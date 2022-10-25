@@ -9,7 +9,11 @@
 ; Note:
 ; -----------------------------------------
 DrawCursor:     ;
-                SET_SCREEN_SHADOW                                               ; включение страницы теневого экрана
+                SET_PAGE_VISIBLE_SCREEN                                         ; включение страницы видимого экрана
+
+                ;
+                ; LD HL, GameFlags.SpriteFlagRef
+                ; SET CSIF_OR_XOR_BIT, (HL)
 
                 ; -----------------------------------------
                 ; расчёт адреса
@@ -33,7 +37,12 @@ DrawCursor:     ;
                 LD L, A
 
                 LD DE, (Mouse.Position)                                         ; позиция курсора на экране
-                CALL Draw.Cursor                                                ; отрисовка спрайта
+                XOR A, E
+                AND #07
+                SRL E
+                SRL E
+                SRL E
+                CALL Draw.Sprite                                                ; отрисовка спрайта
 
                 ; установка флага порчи фона под курсором
                 SET_RENDER_FLAG RESTORE_CURSOR_BIT

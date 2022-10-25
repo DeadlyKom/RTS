@@ -110,8 +110,7 @@ Draw:
 .PositionX      EQU Kernel.Sprite.Prepare.PositionX
 .PositionY      EQU Kernel.Sprite.Prepare.PositionY
 .Render         EQU Kernel.Sprite.Draw
-
-.Cursor         EQU Kernel.Cursor.Draw
+.Sprite         EQU Kernel.DrawSprite
 
 ; load modules
 LoadModule
@@ -142,22 +141,8 @@ Table:
 .Shift          EQU Kernel.Tables.ShiftTable
 .ScreenAddress  EQU Kernel.Tables.ScreenAddress
 .MultiplySprite EQU Kernel.Tables.MultiplySprite
-.Shift.LD_8     EQU Kernel.Function.LD.TableShift.OX_8
-.Shift.LD_16    EQU Kernel.Function.LD.TableShift.OX_16
-.Shift.LD_24    EQU Kernel.Function.LD.TableShift.OX_24
-.Shift.LD_32    EQU Kernel.Function.LD.TableShift.OX_32
-.Shift.OX_8     EQU Kernel.Function.OR_XOR.TableShift.OX_8
-.Shift.OX_16    EQU Kernel.Function.OR_XOR.TableShift.OX_16
-.Shift.OX_24    EQU Kernel.Function.OR_XOR.TableShift.OX_24
-.Shift.OX_32    EQU Kernel.Function.OR_XOR.TableShift.OX_32
-.NoShift.LD_8   EQU Kernel.Function.LD.TableNoShift.LD_8
-.NoShift.LD_16  EQU Kernel.Function.LD.TableNoShift.LD_16
-.NoShift.LD_24  EQU Kernel.Function.LD.TableNoShift.LD_24
-.NoShift.LD_32  EQU Kernel.Function.LD.TableNoShift.LD_32
-.NoShift.OX_8   EQU Kernel.Function.OR_XOR.TableNoShift.OX_8
-.NoShift.OX_16  EQU Kernel.Function.OR_XOR.TableNoShift.OX_16
-.NoShift.OX_24  EQU Kernel.Function.OR_XOR.TableNoShift.OX_24
-.NoShift.OX_32  EQU Kernel.Function.OR_XOR.TableNoShift.OX_32
+.ShiftFunc      EQU Kernel.Function.Table.Shift_LD
+.NoShiftFunc    EQU Kernel.Function.Table.NoShift_LD
 
 ; debug
                 ifdef _DEBUG

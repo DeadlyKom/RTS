@@ -50,7 +50,7 @@ NoShift:
 
 ; NextRow:        ; новая строка
                 DEC C
-                JP Z, Kernel.Sprite.Draw.Exit                                   ; JP для этого типа вывода
+                JP Z, Kernel.Function.Exit
                 INC D
                 DJNZ .NextRow
 
