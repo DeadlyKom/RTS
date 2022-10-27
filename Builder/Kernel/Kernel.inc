@@ -111,6 +111,7 @@ Draw:
 .PositionY      EQU Kernel.Sprite.Prepare.PositionY
 .Render         EQU Kernel.Sprite.Draw
 .Sprite         EQU Kernel.DrawSprite
+.Restore        EQU Kernel.DrawRestore                                          ; восстановление фона под спрайтом
 
 ; load modules
 LoadModule
@@ -143,6 +144,8 @@ Table:
 .MultiplySprite EQU Kernel.Tables.MultiplySprite
 .ShiftFunc      EQU Kernel.Function.Table.Shift_LD
 .NoShiftFunc    EQU Kernel.Function.Table.NoShift_LD
+.ShiftOXRFunc   EQU Kernel.Function.Table_SR.Shift_OR_XOR
+.NoShiftOXRFunc EQU Kernel.Function.Table_SR.NoShift_OR_XOR
 
 ; debug
                 ifdef _DEBUG

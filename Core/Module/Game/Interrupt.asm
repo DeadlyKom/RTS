@@ -9,9 +9,12 @@
 ; Note:
 ; -----------------------------------------
 Interrupt:      
-.RestoreCursor  ;  ********** Restore Cursor **********
-                CHECK_RENDER_FLAG RESTORE_CURSOR_BIT
-                CALL NZ, Render.RestoreCursor
+.DrawCursor     ; ************ Draw Cursor ************
+                CALL Render.DrawCursor
+
+.SwapScreens    ; ************ Swap Screens ************
+                POP_RENDER_FLAG FINISHED_BIT
+                CALL NZ, Render.Swap
 
 .Input          ; ************ Scan Input ************
                 CALL Input.Gameplay.Scan
@@ -25,14 +28,6 @@ Interrupt:
                 LD HL, GameVar.FlyingCountdown
                 DEC (HL)
                 CALL Z, Functions.MoveUnitsCurve
-
-.SwapScreens    ; ************ Swap Screens ************
-                POP_RENDER_FLAG FINISHED_BIT
-                CALL NZ, Render.Swap
-
-.DrawCursor     ; ************ Draw Cursor ************
-                CALL Render.DrawCursor                                          ; ВАЖНО: отображение курсора всегда должен вызываться после функции SwapScreens
-                                                                                ;        и в текущем видимом окне.
 
                 ifdef _DEBUG
 .Debug_FPS      ; ************** Draw FPS **************

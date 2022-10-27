@@ -87,7 +87,7 @@ NoShift:
                 JP (IY)
 
 .NextBoundary   LD H, D                                                         ; сохранение старший байт адреса экрана
-.NextRow        LD E, L                                                         ; восстановление младший байт фдреса экрана
+.NextRow        LD E, L                                                         ; восстановление младший байт адреса экрана
                 JP (IY)
 
 TableNoShift:

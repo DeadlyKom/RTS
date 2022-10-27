@@ -17,6 +17,9 @@ GameVar
 .TilemapCachedAdr   EQU FGameAdr + FGame.CachedAddress                          ; кешированное значение адрес тайловой карты
 .TilemapCountdown   EQU FGameAdr + FGame.TileCountdown                          ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
 .FlyingCountdown    EQU FGameAdr + FGame.FlyCountdown                           ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
+.RestoreScr         EQU FGameAdr + FGame.RestoreScr                             ; адрес экрана для функции восстановления фона
+.RestoreSize        EQU FGameAdr + FGame.RestoreSize                            ; размер восстанвливаемой области для функции восстановление фона
+.RestorePage        EQU FGameAdr + FGame.RestorePage                            ; страница для функции восстановление фона
 
 GameAI:
 .UnitArraySize      EQU FGameAdr + FGame.UnitArraySize                          ; размер массива юнитов

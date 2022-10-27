@@ -4,7 +4,9 @@
 
 ; bank 01 (#4000 - #7FFF)
 StackTop        EQU MemBank_01_DOS                                              ; расположение стека
-GameConfigRef   EQU #5B00                                                       ; адрес хранения FConfig
+CursorBuf       EQU #5B00                                                       ; адрес буфера для сохранения фона под курсором
+CursorBufSize   EQU 3 * 16                                                      ; размер буфера для сохранения фона под курсором 48 байт
+GameConfigRef   EQU CursorBuf + CursorBufSize                                   ; адрес хранения FConfig
 MemoryPageRef   EQU PORT_7FFD                                                   ; адрес хранения номера странички
 LocalizationRef EQU #7FFE                                                       ; адрес хранения указателя таблицы текста локализации
 LoaderBuffer    EQU Adr.Loader + Adr.Loader.Size                                ; адрес буфера загрузчика

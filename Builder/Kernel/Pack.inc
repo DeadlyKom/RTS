@@ -30,6 +30,7 @@ Begin:          EQU $
                 include "Core/Module/Draw/Sprite/Charboundary/DrawSprite.asm"
                 include "Core/Module/Draw/Sprite/Charboundary/DrawStencilSprite.asm"
                 include "Core/Module/Draw/Sprite/Draw/Sprite.asm"
+                include "Core/Module/Draw/Sprite/Draw/Restore.asm"
                 include "Core/Module/Draw/Sprite/Unit/Include.inc"
                 include "Core/Module/Draw/Sprite/DrawFunctions/Include.inc"
                 ; tilemap

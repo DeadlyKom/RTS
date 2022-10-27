@@ -8,7 +8,9 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Swap:           ifdef _DEBUG
+Swap:           CALL Screen.Swap
+                
+                ifdef _DEBUG
                 CALL FPS_Counter.Render
                 endif
 
@@ -17,6 +19,6 @@ Swap:           ifdef _DEBUG
                 LD A, D
                 LD (DrawUnits.Array), A
 
-                JP Screen.Swap
+                RET
  
                 endif ; ~_MODULE_GAME_RENDER_SWAP_SCREEN_

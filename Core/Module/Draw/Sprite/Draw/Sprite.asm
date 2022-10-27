@@ -14,8 +14,11 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-DrawSprite:     ;
+DrawSprite:     ; инициализация
                 EX AF, AF'                                                      ; сохранить смещение
+                LD A, (MemoryPageRef)
+                LD (GameVar.RestorePage), A
+
 .ClipVertical   ; -----------------------------------------
                 ; вертикальный клипинг
                 ; -----------------------------------------
@@ -80,17 +83,11 @@ DrawSprite:     ;
                 ; -----------------------------------------
                 ; определение функции вывода
                 ; -----------------------------------------
-                ; выбор таблицы от типа спрайта
-                ; LD HL, GameFlags.SpriteFlagRef
-                ; BIT CSIF_OR_XOR_BIT, (HL)
-                ; LD HL, Table.NoShiftFunc-2
-                ; JR Z, $+5
-                LD HL, Table.NoShiftFunc-2+8
-
-                ; 
+                LD HL, Table.NoShiftOXRFunc-2
                 EX AF, AF'                                                      ; восстановление смещение
                 OR A
                 JR Z, .IsNotShift
+
                 ; -----------------------------------------
                 ; расчёт адреса таблицы смещения
                 ; -----------------------------------------
@@ -102,12 +99,17 @@ DrawSprite:     ;
                 EXX
 
                 ; смещение таблицы
-                LD A, #10
+                LD A, #08
                 ADD A, L
                 LD L, A
                 ADC A, H
                 SUB L
                 LD H, A
+
+                ; корректировка (+1 знакоместо, т.к. сдвинут)
+                LD A, C
+                ADD A, #08
+                LD C, A
 
 .IsNotShift     ; ---------------------------------------------
                 ;   HL  - адрес таблицы функций сдвига/без сдвига
@@ -121,6 +123,7 @@ DrawSprite:     ;
                 ; ---------------------------------------------
 
                 ; округление ширины спрайта до знакоместа
+                OR A
                 LD A, C
                 LD C, #00
                 RRA
@@ -167,16 +170,18 @@ DrawSprite:     ;
                 RET Z                                                           ; выход, если спрайт расположен на границе левого края экрана
                 CP SCREEN_CHAR_X
                 RET NC                                                          ; выход, если спрайт расположен полностью левее края экрана
+                NEG
+                ADD A, C
                 LD C, A
 
                 ; смещение адреса внутри таблицы
-                LD A, B
+                LD A, E
                 NEG
                 ADD A, A
                 ADD A, A
-                LD B, A
+                LD E, A
                 LD A, L
-                SUB B
+                SUB E
                 LD L, A
                 JR NC, $+3
                 DEC H
@@ -190,7 +195,14 @@ DrawSprite:     ;
                 JR C, .AdjustScrAdr                                             ; спрайт виден полностью
 
                 ; спрайт обрезан правой частью экрана
-                SUB SCREEN_CHAR_X-1
+                SUB SCREEN_CHAR_X
+
+                ; расчёт размера видимой части спрайта в знакоместах
+                PUSH AF
+                NEG
+                ADD A, C
+                LD C, A
+                POP AF
 
                 ; смещение в таблице
                 ADD A, A
@@ -240,8 +252,10 @@ DrawSprite:     ;
                 PUSH HL
 
                 EXX
+                LD (GameVar.RestoreScr), DE
                 PUSH DE
                 EXX
+                LD (GameVar.RestoreSize), BC
                 POP HL
 
                 ; защитная от порчи данных с разрешённым прерыванием
@@ -249,6 +263,7 @@ DrawSprite:     ;
                 RestoreBC
                 LD (Kernel.Function.Exit.ContainerSP), SP
                 LD SP, HL
+                LD DE, CursorBuf
                 LD H, B
                 EXX
 

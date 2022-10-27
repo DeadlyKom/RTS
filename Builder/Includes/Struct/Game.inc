@@ -56,6 +56,9 @@ Gameplay        FFlags 0                                                        
 Hardware        FFlags 0                                                        ; флаги ограничения железа
 CompositeY      DB #00                                                          ; смещение по вертикали для композитного спрайта
 Animation       DS 4, 0                                                         ; массив анимация для композитного спрайта
+RestoreScr      DW #0000
+RestoreSize     DW #0000
+RestorePage     DB #00
 
                 ends
 
