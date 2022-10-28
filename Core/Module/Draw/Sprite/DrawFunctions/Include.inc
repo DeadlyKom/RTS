@@ -18,7 +18,7 @@ Table:          ; таблица функций (горизонталь, шир�
 
 Table_SR:       ; таблица функций сохранение (горизонталь, ширина спрайта в знакоместах)
 .NoShift_OR_XOR DW OR_XOR_Save.TableNoShift.OX_8,           OR_XOR_Save.TableNoShift.OX_16,             #0000,                                      #0000
-.Shift_OR_XOR   DW OR_XOR_Save.TableShift.OX_8,             OR_XOR_Save.TableShift.OX_16,               OR_XOR_Save.TableShift.OX_16,               #0000                       ; (3 значени О_о, странно но работает )
+.Shift_OR_XOR   DW OR_XOR_Save.TableShift.OX_8_,             OR_XOR_Save.TableShift.OX_8,               OR_XOR_Save.TableShift.OX_16,               #0000
 
 Exit:           ; точка возврата из функций
 .ContainerSP    EQU $+1

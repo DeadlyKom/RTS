@@ -63,7 +63,7 @@ Mouse
 .Position       EQU Kernel.Mouse.Position
 .PositionX      EQU Kernel.Mouse.PositionX
 .PositionY      EQU Kernel.Mouse.PositionY
-.PositionFlag   EQU Kernel.Mouse.PositionFlag
+.PositionFlag   EQU Kernel.Mouse.PositionFlag                                   ; если курсор не поменяет позицию, хранит #FF
 .SVK_LBUTTON    EQU Kernel.Mouse.SVK_LBUTTON
 .SVK_RBUTTON    EQU Kernel.Mouse.SVK_RBUTTON
 .SVK_MBUTTON    EQU Kernel.Mouse.SVK_MBUTTON

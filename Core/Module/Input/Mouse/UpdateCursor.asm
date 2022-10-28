@@ -8,7 +8,7 @@
 ; Corrupt :
 ;   HL, E, BC, AF
 ; -----------------------------------------
-UpdateCursor:   XOR A
+UpdateCursor:   LD A, #FF
                 LD (PositionFlag), A
                 
                 CALL GetMouseX                                                  ; получить текущее значение позиции мыши по оси X
@@ -30,7 +30,7 @@ UpdateCursor:   XOR A
 
                 LD A, #FF                                                       ; фиксируем значение
 .SetMouseX      LD (HL), A                                                      ; изменить значение положение мыши по оси X
-                LD A, #FF
+                XOR A
                 LD (PositionFlag), A                                            ; установка флага изменения позиции мыши
 
 .SkipChangeX    CALL GetMouseY                                                  ; получить текущее значение позиции мыши по оси Y
@@ -56,7 +56,7 @@ UpdateCursor:   XOR A
 
 .SetMaxY        LD A, #BF                                                       ; фиксируем значение
 .SetMouseY      LD (HL), A
-                LD A, #FF
+                XOR A
                 LD (PositionFlag), A                                            ; установка флага изменения позиции мыши
                 RET
 Position:       EQU $
@@ -65,6 +65,6 @@ PositionY:      DB #60
 LastValue:
 .FromMousePortX DB #80
 .FromMousePortY DB #60
-PositionFlag:   DB #FF                                                          ; если #FF - поменялась позиция
+PositionFlag:   DB #FF                                                          ; если курсор не поменяет позицию, хранит #FF
 
-                            endif ; ~_INPUT_MOUSE_UPDATE_STATES_
+                endif ; ~_INPUT_MOUSE_UPDATE_STATES_
