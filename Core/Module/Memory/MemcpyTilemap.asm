@@ -17,7 +17,7 @@ EDGE_WORD_VALUE     EQU #0000
 ; -----------------------------------------
 Buffer:             ;
                     LD (.ContainerSP), SP
-                    LD A, (GameVar.TilemapSize + FMapSize.X)
+                    LD A, (GameVar.TilemapSize.Width)
                     LD E, A
                     LD D, #00
                     
@@ -52,7 +52,7 @@ Buffer:             ;
                     edup
 
 .Top                ; top
-                    LD A, (GameVar.TilemapOffset + FLocation.Y)
+                    LD A, (GameVar.TilemapOffset.Y)
                     OR A
                     JP Z, .TopEdge
 
@@ -85,7 +85,7 @@ Buffer:             ;
                     PUSH HL
                     
 .Bottom             ; bottom
-                    LD HL, GameVar.TilemapOffset + FLocation.Y
+                    LD HL, GameVar.TilemapOffset.Y
 .BottomClamp        EQU $+1
                     LD A, #00
                     ADD A, (HL)
@@ -122,7 +122,7 @@ Buffer:             ;
                     PUSH HL
 
 .Left               ; left
-                    LD A, (GameVar.TilemapOffset + FLocation.Y)
+                    LD A, (GameVar.TilemapOffset.Y)
                     OR A
                     JP Z, .LeftEdge
 
@@ -165,7 +165,7 @@ Buffer:             ;
                     LD (TilemapBuffer + Game.FOW.ROW_B + 0), A
 
 .Right              ; right
-                    LD HL, GameVar.TilemapOffset + FLocation.Y
+                    LD HL, GameVar.TilemapOffset.Y
 .RightClamp         EQU $+1
                     LD A, #00
                     ADD A, (HL)

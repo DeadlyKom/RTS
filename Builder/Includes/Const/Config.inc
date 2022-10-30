@@ -33,6 +33,7 @@ GameConfig:
 .KeyMenu            EQU GameConfigRef + FConfig.KeyMenu                         ; клавиша по умолчанию "меню/пауза"
 .CursorSpeedMin     EQU GameConfigRef + FConfig.SpeedCursorMin                  ; минимальная скорость курсора
 .CursorSpeedMax     EQU GameConfigRef + FConfig.SpeedCursorMax                  ; максимальная скорость курсора
+.SpeedTilemapScroll EQU GameConfigRef + FConfig.SpeedScroll                     ; скорость скрола тайловой карты
 ; -----------------------------------------
 ;      7    6    5    4    3    2    1    0
 ;   +----+----+----+----+----+----+----+----+

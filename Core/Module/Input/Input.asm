@@ -110,10 +110,10 @@ JumpKeys:       LD HL, .KeyLastState
                 DB VK_CAPS_SHIFT,   KEY_ID_ACCELERATION                         ; клавиша "ускорить"
                 DB VK_SYMBOL_SHIFT, KEY_ID_BACK                                 ; клавиша "отмена/назад"
                 DB VK_SPACE,        KEY_ID_SELECT                               ; клавиша "выбор"
-                DB VK_D,            KEY_ID_RIGHT                                ; клавиша "Вправо"
-                DB VK_A,            KEY_ID_LEFT                                 ; клавиша "Влево"
-                DB VK_S,            KEY_ID_DOWN                                 ; клавиша "Вниз"
-.LastKey        DB VK_W,            KEY_ID_UP                                   ; клавиша "Вверх"
+                DB VK_D,            KEY_ID_RIGHT                                ; клавиша "вправо"
+                DB VK_A,            KEY_ID_LEFT                                 ; клавиша "влево"
+                DB VK_S,            KEY_ID_DOWN                                 ; клавиша "вниз"
+.LastKey        DB VK_W,            KEY_ID_UP                                   ; клавиша "вверх"
 .Num            EQU ($-.ArrayVKNum) / 2
 
                 endif ; ~_MODULE_INPUT_

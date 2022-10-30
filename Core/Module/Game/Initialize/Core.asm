@@ -12,8 +12,8 @@ Core:           ; -----------------------------------------
                 ; инициализация флагов
                 ; -----------------------------------------
                 ; ToDo загружаться из сохранения
-                LD HL, GameFlags
-                LD DE, GameFlags+1
+                LD HL, GameFlags.RenderRef
+                LD DE, GameFlags.RenderRef+1
                 LD BC, 5
                 LD (HL), #00
                 LDIR
@@ -25,7 +25,7 @@ Core:           ; -----------------------------------------
                 LD HL, (GameVar.TilemapCachedAdr)
                 CALL Functions.MemcpyTilemap
 
-                ; ; set update all visible screen
+                ; принудительное обновление всего экрана
                 LD HL, RenderBuffer + 0xC0
                 LD DE, #8383
                 CALL SafeFill.b192

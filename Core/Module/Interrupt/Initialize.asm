@@ -16,8 +16,8 @@ Initialize:     ; **** INITIALIZE HANDLER IM 2 ****
 
                 ; формирование таблицы прерывания
                 LD HL, Int.Table
-                LD DE, Int.Table + 1
-                LD BC, Int.TableSize - 1
+                LD DE, Int.Table+1
+                LD BC, Int.TableSize-1
                 LD (HL), HIGH Adr.Interrupt
                 LDIR
                 
@@ -25,11 +25,11 @@ Initialize:     ; **** INITIALIZE HANDLER IM 2 ****
                 INC L
                 INC E
                 LD (HL), C
-                LD BC, Int.StackSize - 1
+                LD BC, Int.StackSize-1
                 LDIR
 
                 ; задание вектора прерывания
-                LD A, HIGH Adr.Interrupt - 1
+                LD A, HIGH Adr.Interrupt-1
                 LD I, A
                 IM 2
 

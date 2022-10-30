@@ -47,6 +47,40 @@ PostInitialize: ; инициализация
                 CALL Game.Tilemap.GetAdrTilemap
                 LD (GameVar.TilemapCachedAdr), HL
 
+                ; -----------------------------------------
+                ; инициализация значений для работы с тайловой картой
+                ; -----------------------------------------
+                LD HL, GameVar.TilemapSize
+  
+                ; расчёт ограничения по горизонтали
+                LD A, (HL)                                                      ; размер карты по горизонтали
+                LD (Game.Tilemap.Move.Down.Increment), A                              
+                NEG                                                             ; X = -X
+                LD (Game.Tilemap.Move.Up.Decrement), A
+                ADD A, SCREEN_TILE_X
+                LD (Game.Tilemap.Move.Right.Clamp), A
+                LD (Game.Tilemap.Memcpy.Buffer.RightClamp), A
+
+                INC HL
+
+                ; расчёт ограничений по вертикали
+                LD A, (HL)                                                      ; размер карты по вертикали
+                ; LD ( Utils.Tilemap.IsVisibleUnit.BottomClamp), A
+                ADD A, -SCREEN_TILE_Y
+                NEG
+                LD (Game.Tilemap.Move.Down.Clamp), A
+                LD (Game.Tilemap.Memcpy.Buffer.BottomClamp), A
+
+                ; расчёт количество тайлов на экране TilemapWidth * TilesOnScreenY
+                LD HL, #0000
+                LD A, (GameVar.TilemapSize.Width)
+                LD E, A
+                LD D, #00
+                LD B, SCREEN_TILE_Y
+                ADD HL, DE
+                DJNZ $-1
+                LD (Game.Tilemap.Memcpy.Buffer.BottomOffset), HL
+
                 RET          
 
                 display " - Load Level Post : \t\t\t\t\t", /A, PostInitialize, " = busy [ ", /D, $ - PostInitialize, " bytes  ]"

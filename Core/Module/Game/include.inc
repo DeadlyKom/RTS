@@ -8,5 +8,6 @@
                 include "Initialize/Include.inc"
                 include "Render/Include.inc"
                 include "Input/Include.inc"
+                include "Tilemap/Include.inc"
 
                 endif ; ~_MODULE_GAME_INCLUDE_

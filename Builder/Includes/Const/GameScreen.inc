@@ -7,5 +7,6 @@ SCREEN_CHAR_X   EQU SCREEN_TILE_X * 2                                           
 SCREEN_CHAR_Y   EQU SCREEN_TILE_Y * 2                                           ; количество знакомест на экране по вертикали
 SCREEN_PIXEL_X  EQU SCREEN_TILE_X * 16                                          ; количество пикселей на экране по горизонтали
 SCREEN_PIXEL_Y  EQU SCREEN_TILE_Y * 16                                          ; количество пикселей на экране по вертикали
+SCREEN_EDGE     EQU 4                                                           ; ширина границы скрола карты
 
                 endif ; ~_CONST_GAME_SCREEN_

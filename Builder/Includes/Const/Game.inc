@@ -9,18 +9,22 @@ GameVar
 .StartSlotB         EQU FGameAdr + FGame.StartSlotB                             ; координаты старта слот B
 .StartSlotC         EQU FGameAdr + FGame.StartSlotC                             ; координаты старта слот C
 .TilemapSize        EQU FGameAdr + FGame.Size                                   ; размер карты
+.TilemapSize.Width  EQU FGameAdr + FGame.Size.X                                 ; размер карты по горизонтали
+.TilemapSize.Height EQU FGameAdr + FGame.Size.Y                                 ; размер карты по вертикали
 .TilemapSizeNEG     EQU FGameAdr + FGame.SizeNEG                                ; размер карты (отрицательные значения)
 ; .TilemapSizeChunk   EQU FGameAdr + FGame.SizeChank                              ; размер карты (в чанках)
 ; .TilemapSizeChunk.X EQU FGameAdr + FGame.SizeChank.X                            ; размер карты по горизонтали (в чанках)
 ; .TilemapSizeChunk.Y EQU FGameAdr + FGame.SizeChank.Y                            ; размер карты по вертикали (в чанках)
 .TilemapOffset      EQU FGameAdr + FGame.Offset                                 ; смещения тайловой карты (текущая)
+.TilemapOffset.X    EQU FGameAdr + FGame.Offset.X                               ; смещения тайловой карты (текущая) по горизонтали
+.TilemapOffset.Y    EQU FGameAdr + FGame.Offset.Y                               ; смещения тайловой карты (текущая) по вертикали
 .TilemapCachedAdr   EQU FGameAdr + FGame.CachedAddress                          ; кешированное значение адрес тайловой карты
 .TilemapCountdown   EQU FGameAdr + FGame.TileCountdown                          ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
 .FlyingCountdown    EQU FGameAdr + FGame.FlyCountdown                           ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
 .RestoreScr         EQU FGameAdr + FGame.RestoreScr                             ; адрес экрана для функции восстановления фона
 .RestoreSize        EQU FGameAdr + FGame.RestoreSize                            ; размер восстанвливаемой области для функции восстановление фона
 .RestorePage        EQU FGameAdr + FGame.RestorePage                            ; страница для функции восстановление фона
-
+.DeltaTime          EQU FGameAdr + FGame.DeltaTime                              ; время между кадрами отрисовки (значение отрицательное)
 GameAI:
 .UnitArraySize      EQU FGameAdr + FGame.UnitArraySize                          ; размер массива юнитов
 .AI_UpdateRate      EQU FGameAdr + FGame.AI_UpdateRate                          ; частота обновления ИИ
@@ -33,13 +37,6 @@ GameFlags:
 .Gameplay           EQU FGameAdr + FGame.Gameplay                               ; флаги геймплея
 .Hardware           EQU FGameAdr + FGame.Hardware                               ; флаги ограничения железа
 
-
-ANIM_INDEX_NONE     EQU 0xFF
-ANIM_INDEX_0        EQU 0x00
-ANIM_INDEX_1        EQU 0x01
-ANIM_INDEX_2        EQU 0x02
-ANIM_INDEX_3        EQU 0x03
-
 GameAnim:
 .OffsetY            EQU FGameAdr + FGame.CompositeY                             ; смещение по вертикали для композитного спрайта
 .Array              EQU FGameAdr + FGame.Animation                              ; массив анимаций
@@ -48,11 +45,6 @@ GameAnim:
 .Element_2          EQU FGameAdr + FGame.Animation + 2                          ; 3 элемент массив анимаций
 .Element_3          EQU FGameAdr + FGame.Animation + 3                          ; 4 элемент массив анимаций
 
-
-GAMEPLAY_BIT        EQU 0x01                                                    ; флаг базового старта миссии
-                                                                                ; 0 - нормальный старт со слота StartSlotA
-                                                                                ; 1 - режим защиты старт со слота StartSlotB
-GAMEPLAY_BASE       EQU 0x00
-GAMEPLAY_PROTECT    EQU 1 << GAMEPLAY_BIT
+                    include "GameConst.inc"
 
                     endif ; ~_CONST_GAME_

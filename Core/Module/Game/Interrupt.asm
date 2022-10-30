@@ -13,7 +13,7 @@ Interrupt:
                 CALL Render.DrawCursor
 
 .SwapScreens    ; ************ Swap Screens ************
-                POP_RENDER_FLAG FINISHED_BIT
+                CHECK_RENDER_FLAG FINISHED_BIT
                 CALL NZ, Render.Swap
 
 .Input          ; ************ Scan Input ************
@@ -33,6 +33,8 @@ Interrupt:
 .Debug_FPS      ; ************** Draw FPS **************
                 CALL FPS_Counter.Tick
                 endif
+
+                RES_RENDER_FLAG FINISHED_BIT                                    ; обнуление флага FINISHED_BIT (вместо POP_RENDER_FLAG)
 
                 RET
 

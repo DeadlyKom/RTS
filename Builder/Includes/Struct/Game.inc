@@ -11,12 +11,15 @@ SizeChank:      FMapSize 0, 0                                                   
 SizeNEG:        FMapSize 0, 0                                                   ; размер карты (отрицательные значения)
 Offset:         FLocation 0, 0                                                  ; смещения тайловой карты (текущая)
 CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты
+DeltaTime:      DB #00                                                          ; время между кадрами отрисовки (значение отрицательное)
 TileCountdown:  DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
 FlyCountdown:   DB DURATION_FLY_ANIM                                            ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
 
 ; ИИ
 UnitArraySize:  DB #00                                                          ; размер массива юнитов
 AI_UpdateRate:  DB #00                                                          ; частота обновления ИИ
+
+; delta time
 
 ; флаги
 ; -----------------------------------------
@@ -54,8 +57,12 @@ Sprite          FWFlags 0                                                       
 ; -----------------------------------------
 Gameplay        FFlags 0                                                        ; флаги геймплея
 Hardware        FFlags 0                                                        ; флаги ограничения железа
+
+; работа со спрайтами
 CompositeY      DB #00                                                          ; смещение по вертикали для композитного спрайта
 Animation       DS 4, 0                                                         ; массив анимация для композитного спрайта
+
+; работа с курсором
 RestoreScr      DW #0000
 RestoreSize     DW #0000
 RestorePage     DB #00

@@ -58,7 +58,7 @@ MapInfo:        ; инициализация перменных (из загру
                 ADD A, #F4                                                      ; -(Y - 12)
                 NEG
                 LD (TilemapMoveBottomClampRef), A
-                LD (TilemapMEMCPYBottomClampRef), A
+                LD (MEMCPY.Tilemap.BottomClamp), A
 
                 ; расчёт количество тайлов на экране TilemapWidth * TilesOnScreenY
                 LD HL, #0000
@@ -68,7 +68,7 @@ MapInfo:        ; инициализация перменных (из загру
                 LD B, TilesOnScreenY
                 ADD HL, DE
                 DJNZ $-1
-                LD (TilemapBottomOffsetRef), HL
+                LD (MEMCPY.Tilemap.BottomOffset), HL
                 ; ***** ~CALCULATE MAP MOVE ****
                 
 .SurfPropSize   ; ****** SURFACE PROPERTY ******

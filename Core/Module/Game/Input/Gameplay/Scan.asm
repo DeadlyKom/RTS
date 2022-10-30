@@ -23,6 +23,9 @@ Scan:           ; опрос виртуальных клавиш
                 BIT HW_MOUSE_BIT, (HL)
                 CALL Z, Mouse.UpdateCursor                                      ; обновить положение курсора, если мышь доступна
                 
+                ; обновление скрола карты
+                CALL TilemapScroll
+
                 RET
 
                 endif ; ~_MODULE_GAME_INPUT_GAMEPLAY_SCAN_

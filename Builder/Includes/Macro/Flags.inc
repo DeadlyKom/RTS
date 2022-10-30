@@ -11,6 +11,16 @@ CHECK_FLAG      macro FlagBit?
                 BIT FlagBit?, (HL)
                 endm
 ; -----------------------------------------
+; проверка флага
+; In:
+;   A  - значения флагов
+; Out:
+; Corrupt:
+; -----------------------------------------
+CHECK_FLAG_A    macro FlagBit?
+                BIT FlagBit?, A
+                endm
+; -----------------------------------------
 ; установка флага
 ; In:
 ;   HL - адрес хранения флагов
@@ -53,6 +63,15 @@ POP_FLAG        macro FlagBit?
 RENDER_FLAGS    macro
                 LD HL, GameFlags.RenderRef
                 endm
+; -----------------------------------------
+; прочитать значения Render флагов в аккумулятор
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+RENDER_FLAGS_A  macro
+                LD A, (GameFlags.RenderRef)
+                endm
 
 ; -----------------------------------------
 ; проверка Render флага
@@ -63,6 +82,16 @@ RENDER_FLAGS    macro
 CHECK_RENDER_FLAG macro FlagBit?
                 RENDER_FLAGS
                 CHECK_FLAG FlagBit?
+                endm
+; -----------------------------------------
+; проверка Render флага используя аккумулятор
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+CHECK_RENDER_FLAG_A macro FlagBit?
+                RENDER_FLAGS_A
+                CHECK_FLAG_A FlagBit?
                 endm
 ; -----------------------------------------
 ; установка Render флага

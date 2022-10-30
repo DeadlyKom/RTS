@@ -5,7 +5,8 @@
                 module Gameplay
 
                 include "Scan.asm"
-                include "Handler.asm"
+                include "InputHandler.asm"
+                include "TilemapScroll.asm"
 
                 endmodule
 

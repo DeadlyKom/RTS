@@ -74,20 +74,21 @@ StartBoot:      DI
                 JP LoadModule.Loader
 
 .DefaultConfig  FConfig {
-                VK_ENTER,
-                VK_CAPS_SHIFT,
-                VK_SYMBOL_SHIFT,
-                VK_SPACE,
-                VK_D,
-                VK_A,
-                VK_S,
-                VK_W,
-                0,
-                0,
+                VK_ENTER,                                                       ; клавиша по умолчанию "меню/пауза" (0)
+                VK_CAPS_SHIFT,                                                  ; клавиша по умолчанию "ускорить"
+                VK_SYMBOL_SHIFT,                                                ; клавиша по умолчанию "oтмена"
+                VK_SPACE,                                                       ; клавиша по умолчанию "выбор"
+                VK_D,                                                           ; клавиша по умолчанию "вправо"
+                VK_A,                                                           ; клавиша по умолчанию "влево"
+                VK_S,                                                           ; клавиша по умолчанию "вниз"
+                VK_W,                                                           ; клавиша по умолчанию "вверх"
+                0,                                                              ; минимальная скорость курсора
+                0,                                                              ; максимальная скорость курсора
+                DURATION_TILEMAP_SCROLL,                                        ; скорость скрола тайловой карты
                 LANGUAGE_DEFAULT | INPUT_MOUSE,                                 ; флаги
                 1                                                               ; слот уровня
                 }
-                
+
 .FileArray      ; путь файла модуля языка
                 FFileArea {
                 {{LanguageName}, LanguageExt },
