@@ -143,7 +143,6 @@ Prepare:        EX DE, HL
                 RRCA
                 RRCA
                 RRCA
-                ; AND %01100000
                 DEC H                                                           ; начинается с 1
                 XOR H
                 AND %01100000
@@ -407,6 +406,7 @@ Prepare:        EX DE, HL
 
                 ; откинуть смещение знакомест
                 LD A, H
+                SUB B
                 AND #07
                 LD H, A
 
@@ -532,10 +532,8 @@ Prepare:        EX DE, HL
                 ; В'  - старший байт адреса таблицы сдвига
                 ; С'  - количество пропускаемых байт, для спрайтов с общей маской
                 ; ---------------------------------------------
-
                 LD A, L
-                ADD A, A
-                ADD A, A
+                EX AF, AF'
 
                 ; выбор таблицы от типа спрайта
                 LD HL, GameFlags.SpriteFlagRef
@@ -545,8 +543,6 @@ Prepare:        EX DE, HL
                 JR Z, $+5
                 LD E, #08
                 ADD HL, DE
-
-                LD E, A                                                         ; сохранение смещение в таблице    
 
                 ; округление
                 OR A
@@ -573,8 +569,10 @@ Prepare:        EX DE, HL
                 LD L, A
 
                 ; приведение к 16-битному значению
-                LD A, E
+                EX AF, AF'
                 ADD A, A
+                ADD A, A
+                LD E, A
                 SBC A, A
                 LD D, A
                 ADD HL, DE
