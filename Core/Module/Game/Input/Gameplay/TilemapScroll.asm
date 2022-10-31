@@ -35,7 +35,7 @@ TilemapScroll:  ; -----------------------------------------
                 ; RET Z
 
                 ; сохранить текущий адрес карты тайлов
-                LD HL, (GameVar.TilemapCachedAdr)
+                LD HL, (Tilemap.CachedAddress)
                 PUSH HL
 
                 ; проверка нахожения курсора на границах экрана
@@ -64,14 +64,14 @@ TilemapScroll:  ; -----------------------------------------
                 ; -----------------------------------------
 
                 ; сравнение текущего и предыдущего значений адреса
-                LD HL, (GameVar.TilemapCachedAdr)
+                LD HL, (Tilemap.CachedAddress)
                 POP DE
                 OR A
                 SBC HL, DE
                 RET Z                                                           ; выход, если адрес не изменился
 
                 ; копирование видимой части тайловой карты в буфер
-                LD HL, (GameVar.TilemapCachedAdr)
+                LD HL, (Tilemap.CachedAddress)
                 CALL Functions.MemcpyTilemap
 
                 ; принудительное обновление всего экрана

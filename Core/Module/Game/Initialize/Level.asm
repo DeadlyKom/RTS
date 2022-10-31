@@ -11,9 +11,10 @@
 Level:          ; -----------------------------------------
                 ; инициализация структуры FGame
                 ; -----------------------------------------
-                LD HL, GameVar.TilemapCountdown
+                ; ToDo сделать нормальную инициализацию
+                LD HL, Tilemap.Countdown
                 LD (HL), DURATION_TILE_ANIM                                     
-                INC L                                                           ; GameVar.FlyingCountdown 
+                INC L                                                           ; Tilemap.FlyingCountdown 
                 LD (HL), DURATION_FLY_ANIM                                      
                 INC L                                                           ; GameAI.UnitArraySize
                 LD (HL), #00                                                    ; обновление массива юнитов

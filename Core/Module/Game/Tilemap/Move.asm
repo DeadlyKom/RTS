@@ -10,16 +10,16 @@
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Up:             LD HL, GameVar.TilemapOffset.Y
+Up:             LD HL, Tilemap.Offset.Y
                 XOR A
                 OR (HL)
                 RET Z
                 DEC (HL)
-                LD HL, (GameVar.TilemapCachedAdr)
+                LD HL, (Tilemap.CachedAddress)
 .Decrement      EQU $+1
                 LD DE, #FF00
                 ADD HL, DE
-                LD (GameVar.TilemapCachedAdr), HL
+                LD (Tilemap.CachedAddress), HL
                 RET
 ; -----------------------------------------
 ; 
@@ -28,17 +28,17 @@ Up:             LD HL, GameVar.TilemapOffset.Y
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Down:           LD HL, GameVar.TilemapOffset.Y
+Down:           LD HL, Tilemap.Offset.Y
 .Clamp          EQU $+1
                 LD A, #00
                 ADD A, (HL)
                 RET C
                 INC (HL)
-                LD HL, (GameVar.TilemapCachedAdr)
+                LD HL, (Tilemap.CachedAddress)
 .Increment      EQU $+1
                 LD DE, #0000
                 ADD HL, DE
-                LD (GameVar.TilemapCachedAdr), HL
+                LD (Tilemap.CachedAddress), HL
                 RET
 ; -----------------------------------------
 ; 
@@ -47,14 +47,14 @@ Down:           LD HL, GameVar.TilemapOffset.Y
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Left:           LD HL, GameVar.TilemapOffset.X
+Left:           LD HL, Tilemap.Offset.X
                 XOR A
                 OR (HL)
                 RET Z
                 DEC (HL)
-                LD HL, (GameVar.TilemapCachedAdr)
+                LD HL, (Tilemap.CachedAddress)
                 DEC HL
-                LD (GameVar.TilemapCachedAdr), HL
+                LD (Tilemap.CachedAddress), HL
                 RET
 ; -----------------------------------------
 ; 
@@ -63,15 +63,15 @@ Left:           LD HL, GameVar.TilemapOffset.X
 ; Corrupt:
 ; Note:
 ; -----------------------------------------
-Right:          LD HL, GameVar.TilemapOffset.X
+Right:          LD HL, Tilemap.Offset.X
 .Clamp          EQU $+1
                 LD A, #00
                 ADD A, (HL)
                 RET C
                 INC (HL)
-                LD HL, (GameVar.TilemapCachedAdr)
+                LD HL, (Tilemap.CachedAddress)
                 INC HL
-                LD (GameVar.TilemapCachedAdr), HL
+                LD (Tilemap.CachedAddress), HL
                 RET
 
                 endmodule

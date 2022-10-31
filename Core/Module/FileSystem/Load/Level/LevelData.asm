@@ -37,7 +37,7 @@ Data:           ; -----------------------------------------
                 INC HL
                 LD B, (HL)
                 INC HL
-                LD (GameVar.TilemapSize), BC
+                LD (Map.Size), BC
 
                 ; -----------------------------------------
                 ; расчёт адрес расположения стартовой локации FLevelInfo.StartSlotA
@@ -46,7 +46,7 @@ Data:           ; -----------------------------------------
                 INC HL
                 LD D, (HL)
                 INC HL
-                LD (GameVar.StartSlotA), DE
+                LD (Map.StartSlotA), DE
 
                 ; -----------------------------------------
                 ; расчёт адрес расположения стартовой локации FLevelInfo.StartSlotB
@@ -55,7 +55,7 @@ Data:           ; -----------------------------------------
                 INC HL
                 LD D, (HL)
                 INC HL
-                LD (GameVar.StartSlotB), DE
+                LD (Map.StartSlotB), DE
 
                 ; -----------------------------------------
                 ; расчёт адрес расположения стартовой локации FLevelInfo.StartSlotC
@@ -64,7 +64,7 @@ Data:           ; -----------------------------------------
                 INC HL
                 LD D, (HL)
                 INC HL
-                LD (GameVar.StartSlotC), DE
+                LD (Map.StartSlotC), DE
 
                 ; -----------------------------------------
                 ; генерация таблицы адресов по позиции тайла (не использовать умножение)
@@ -107,7 +107,7 @@ Data:           ; -----------------------------------------
                 XOR A
                 LD H, A
                 
-                LD (GameVar.TilemapOffset), HL
+                LD (Tilemap.Offset), HL
 
                 RET
 

@@ -43,14 +43,14 @@ PostInitialize: ; инициализация
                 ; -----------------------------------------
                 ; расчёт адрес расположения стартовой локации
                 ; -----------------------------------------
-                LD DE, (GameVar.TilemapOffset)
+                LD DE, (Tilemap.Offset)
                 CALL Game.Tilemap.GetAdrTilemap
-                LD (GameVar.TilemapCachedAdr), HL
+                LD (Tilemap.CachedAddress), HL
 
                 ; -----------------------------------------
                 ; инициализация значений для работы с тайловой картой
                 ; -----------------------------------------
-                LD HL, GameVar.TilemapSize
+                LD HL, Map.Size
   
                 ; расчёт ограничения по горизонтали
                 LD A, (HL)                                                      ; размер карты по горизонтали
@@ -73,7 +73,7 @@ PostInitialize: ; инициализация
 
                 ; расчёт количество тайлов на экране TilemapWidth * TilesOnScreenY
                 LD HL, #0000
-                LD A, (GameVar.TilemapSize.Width)
+                LD A, (Map.Width)
                 LD E, A
                 LD D, #00
                 LD B, SCREEN_TILE_Y

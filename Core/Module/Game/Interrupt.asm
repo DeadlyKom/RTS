@@ -20,12 +20,12 @@ Interrupt:
                 CALL Input.Gameplay.Scan
 
 .AnimTiles      ; ********** Animation Tiles **********
-                LD HL, GameVar.TilemapCountdown
+                LD HL, Tilemap.Countdown
                 DEC (HL)
                 CALL Z, Functions.AnimTile
 
 .AnimFlying     ; ********** Animation Flying **********
-                LD HL, GameVar.FlyingCountdown
+                LD HL, Game.FlyingCountdown
                 DEC (HL)
                 CALL Z, Functions.MoveUnitsCurve
 

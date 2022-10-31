@@ -137,9 +137,9 @@ START_PLAYER    macro
                 BIT GAMEPLAY_BIT, (HL)                                          ; флаг базового старта миссии
                                                                                 ; 0 - нормальный старт со слота StartSlotA
                                                                                 ; 1 - режим защиты старт со слота StartSlotB
-                LD HL, GameVar.StartSlotA
+                LD HL, Map.StartSlotA
                 JR Z, .Base
-                LD HL, GameVar.StartSlotB
+                LD HL, Map.StartSlotB
 .Base           LD E, (HL)
                 INC HL
                 LD D, (HL)

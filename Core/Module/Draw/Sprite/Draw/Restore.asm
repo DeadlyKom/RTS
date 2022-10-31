@@ -16,7 +16,7 @@ DrawRestore:    ; проверка необходимости обновлени
                 RES_FLAG RESTORE_BIT                                            ; RES_RENDER_FLAG
 
                 ; установка экрана востановления
-                LD A, (GameVar.RestorePage)
+                LD A, (Game.RestorePage)
                 CALL SetPage
                 
                 ; инициализация
@@ -24,8 +24,8 @@ DrawRestore:    ; проверка необходимости обновлени
                 LD HL, CursorBuf
                 LD B, #00
                 EXX
-                LD HL, (GameVar.RestoreScr)
-                LD BC, (GameVar.RestoreSize)
+                LD HL, (Game.RestoreScr)
+                LD BC, (Game.RestoreSize)
 
                 ; -----------------------------------------
                 ;   HL  - адрес экрана вывода

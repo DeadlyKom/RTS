@@ -17,7 +17,7 @@ EDGE_WORD_VALUE     EQU #0000
 ; -----------------------------------------
 Buffer:             ;
                     LD (.ContainerSP), SP
-                    LD A, (GameVar.TilemapSize.Width)
+                    LD A, (Map.Width)
                     LD E, A
                     LD D, #00
                     
@@ -52,11 +52,11 @@ Buffer:             ;
                     edup
 
 .Top                ; top
-                    LD A, (GameVar.TilemapOffset.Y)
+                    LD A, (Tilemap.Offset.Y)
                     OR A
                     JP Z, .TopEdge
 
-                    LD HL, (GameVar.TilemapCachedAdr)
+                    LD HL, (Tilemap.CachedAddress)
                     SBC HL, DE
 
                     LD SP, HL
@@ -85,13 +85,13 @@ Buffer:             ;
                     PUSH HL
                     
 .Bottom             ; bottom
-                    LD HL, GameVar.TilemapOffset.Y
+                    LD HL, Tilemap.Offset.Y
 .BottomClamp        EQU $+1
                     LD A, #00
                     ADD A, (HL)
                     JP C, .BottomEdge
 
-                    LD HL, (GameVar.TilemapCachedAdr)
+                    LD HL, (Tilemap.CachedAddress)
 .BottomOffset       EQU $+1
                     LD BC, #0000
                     ADD HL, BC
@@ -122,11 +122,11 @@ Buffer:             ;
                     PUSH HL
 
 .Left               ; left
-                    LD A, (GameVar.TilemapOffset.Y)
+                    LD A, (Tilemap.Offset.Y)
                     OR A
                     JP Z, .LeftEdge
 
-                    LD HL, (GameVar.TilemapCachedAdr)
+                    LD HL, (Tilemap.CachedAddress)
                     DEC HL
                     LD A, (HL)
                     LD (TilemapBuffer + Game.FOW.ROW_0 + 0), A
@@ -165,13 +165,13 @@ Buffer:             ;
                     LD (TilemapBuffer + Game.FOW.ROW_B + 0), A
 
 .Right              ; right
-                    LD HL, GameVar.TilemapOffset.Y
+                    LD HL, Tilemap.Offset.Y
 .RightClamp         EQU $+1
                     LD A, #00
                     ADD A, (HL)
                     JP C, .RightEdge
 
-                    LD HL, (GameVar.TilemapCachedAdr)
+                    LD HL, (Tilemap.CachedAddress)
                     LD BC, SCREEN_TILE_X
                     ADD HL, BC
                     LD A, (HL)

@@ -68,15 +68,15 @@ LevelUnits:     ; инициализация
                 ; определение стартовой локации          
                 PUSH HL
                 BIT FACTION_TYPE_BIT, C                                         ; тип фракции (0 - нейтральная, 1 - враждебная)
-                LD HL, GameVar.StartSlotC
+                LD HL, Map.StartSlotC
                 JR NZ, .ReadLocation
                 LD HL, GameFlags.Gameplay
                 BIT GAMEPLAY_BIT, (HL)                                          ; флаг базового старта миссии
                                                                                 ; 0 - нормальный старт со слота StartSlotA
                                                                                 ; 1 - режим защиты старт со слота StartSlotB
-                LD HL, GameVar.StartSlotA
+                LD HL, Map.StartSlotA
                 JR Z, .ReadLocation
-                LD HL, GameVar.StartSlotB
+                LD HL, Map.StartSlotB
 .ReadLocation   LD E, (HL)
                 INC HL
                 LD D, (HL)

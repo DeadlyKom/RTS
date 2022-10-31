@@ -10,14 +10,15 @@ Size:           FMapSize 0, 0                                                   
 SizeChank:      FMapSize 0, 0                                                   ; размер карты (в чанках)
 SizeNEG:        FMapSize 0, 0                                                   ; размер карты (отрицательные значения)
 Offset:         FLocation 0, 0                                                  ; смещения тайловой карты (текущая)
-CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты
+CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты                    (0)
+MoveTilemap     FFlags 0                                                        ; флаги описывающие смещение тайловой карты при скроле          (1)
 DeltaTime:      DB #00                                                          ; время между кадрами отрисовки (значение отрицательное)
-TileCountdown:  DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
-FlyCountdown:   DB DURATION_FLY_ANIM                                            ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
+TileCountdown:  DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)       (0)
+FlyCountdown:   DB DURATION_FLY_ANIM                                            ; обратный счётчик продолжительности (DURATION_FLY_ANIM)        (1)
 
 ; ИИ
-UnitArraySize:  DB #00                                                          ; размер массива юнитов
-AI_UpdateRate:  DB #00                                                          ; частота обновления ИИ
+UnitArraySize:  DB #00                                                          ; размер массива юнитов                                         (2)
+AI_UpdateRate:  DB #00                                                          ; частота обновления ИИ                                         (3)
 
 ; delta time
 

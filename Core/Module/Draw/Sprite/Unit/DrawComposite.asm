@@ -15,7 +15,7 @@
 DrawComposite:  EXX
 
                 ; инициализация
-                LD HL, GameVar.TilemapOffset
+                LD HL, Tilemap.Offset
                 LD A, (HL)                                                      ; b.minX
                 INC HL
                 LD B, (HL)                                                      ; b.minY

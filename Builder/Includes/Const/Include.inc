@@ -5,6 +5,7 @@
                 include "Game.inc"
                 include "Config.inc"
                 include "Color.inc"
+                include "Cursor.inc"
                 include "GameScreen.inc"
                 include "Render.inc"
                 include "Gameplay.inc"

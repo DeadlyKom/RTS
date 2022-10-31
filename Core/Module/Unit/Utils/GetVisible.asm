@@ -15,7 +15,7 @@
 GetVisible:     EXX
                 
                 ; инициализация
-                LD HL, GameVar.TilemapOffset
+                LD HL, Tilemap.Offset
                 LD BC, #0202                                                    ; минимальный захватываемое окно в чанках
                 LD E, (HL)                                                      ; X
                 INC HL

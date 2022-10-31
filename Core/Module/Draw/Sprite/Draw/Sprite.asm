@@ -17,7 +17,7 @@
 DrawSprite:     ; инициализация
                 EX AF, AF'                                                      ; сохранить смещение
                 LD A, (MemoryPageRef)
-                LD (GameVar.RestorePage), A
+                LD (Game.RestorePage), A
 
 .ClipVertical   ; -----------------------------------------
                 ; вертикальный клипинг
@@ -253,10 +253,10 @@ DrawSprite:     ; инициализация
                 PUSH HL
 
                 EXX
-                LD (GameVar.RestoreScr), DE
+                LD (Game.RestoreScr), DE
                 PUSH DE
                 EXX
-                LD (GameVar.RestoreSize), BC
+                LD (Game.RestoreSize), BC
                 POP HL
 
                 ; защитная от порчи данных с разрешённым прерыванием

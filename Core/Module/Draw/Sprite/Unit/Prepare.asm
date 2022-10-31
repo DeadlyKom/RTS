@@ -19,7 +19,7 @@
 Prepare:        EX DE, HL
                 
                 ; инициализация
-                LD HL, GameVar.TilemapOffset
+                LD HL, Tilemap.Offset
                 LD C, (HL)                                                      ; X
                 INC HL
                 LD B, (HL)                                                      ; Y
