@@ -3,7 +3,7 @@
                 define _CORE_MODULE_CAPTAIN_BRIDGE_INPUT_
 
                 ; ***** InputDefault *****
-InputCapBridge: JR NZ, .Processing                                              ; skip released
+InputCapBridge: JR NZ, .Processing                                              ; переход, если виртуальная клавиша отжата
                 EX AF, AF'
 .NotProcessing  SCF
                 RET

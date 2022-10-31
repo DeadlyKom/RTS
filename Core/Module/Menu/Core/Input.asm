@@ -3,7 +3,7 @@
                 define _CORE_MODULE_MENU_CORE_INPUT_
 
                 ; ***** InputDefault *****
-@InputDefault:  JR NZ, .Processing                                              ; skip released
+@InputDefault:  JR NZ, .Processing                                              ; переход, если виртуальная клавиша отжата
                 EX AF, AF'
 .NotProcessing  SCF
                 RET
