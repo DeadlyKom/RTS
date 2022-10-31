@@ -104,7 +104,7 @@ Tick:           LD A, (IY + FDialogVariable.State)
                 JP DrawArrowSelect
 
 .AnimScroll     ; -----------------------------------------
-                ; анимация скрола
+                ; анимация скролла
                 ; -----------------------------------------
                 ; уменьшение счётчика
                 DEC (IY + FDialogVariable.Scroll.Countdown)
@@ -113,7 +113,7 @@ Tick:           LD A, (IY + FDialogVariable.State)
                 ; установка обратного счётчика
                 LD (IY + FDialogVariable.Scroll.Countdown), DURATION_SCROLL
 
-                ; скролл
+                ; скроллл
                 CALL Scroll
 
                 DEC (IY + FDialogVariable.Scroll.RowCounter)

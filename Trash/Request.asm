@@ -8,7 +8,7 @@ Request:        ; ---------------------------------------------
                 ; ---------------------------------------------
                 SetFrameFlag SWAP_SCREENS_FLAG                                  ; сбросить переключение экрана,
                                                                                 ; с последующим перерисованием первого экрана
-                SetFrameFlag RENDER_FINISHED                                    ; запрещает обновление данных на экране (при скролле)
+                SetFrameFlag RENDER_FINISHED                                    ; запрещает обновление данных на экране (при скроллле)
                 ; включить страницу
                 CALL Memory.SetPage1                       ; SeMemoryPage MemoryPage_Tilemap, PATHFINDING_PLAYER_ID
                 ; очистка экрана #4000 (#FF)

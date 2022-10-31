@@ -76,7 +76,7 @@ InvokeSelect:   ; включить бит обработки выбора
                 LD (IY + FDialogVariable.Scroll.RowCounter), A
                 CALL SetScroll
 
-                ; корректировка курсора по вертикали (после скрола)
+                ; корректировка курсора по вертикали (после скролла)
                 LD C, A
                 LD A, (IY + FDialogVariable.Print.CursorPosition.Y)
                 SUB C

@@ -19,10 +19,8 @@ Interrupt:
 .Input          ; ************ Scan Input ************
                 CALL Input.Gameplay.Scan
 
-.AnimTiles      ; ********** Animation Tiles **********
-                LD HL, Tilemap.Countdown
-                DEC (HL)
-                CALL Z, Functions.AnimTile
+.Tilemap        ; ************** Tilemap **************
+                CALL Functions.UpdateTilemap                                    ; обнуление флага FINISHED_BIT (вместо POP_RENDER_FLAG)
 
 .AnimFlying     ; ********** Animation Flying **********
                 LD HL, Game.FlyingCountdown
@@ -33,8 +31,6 @@ Interrupt:
 .Debug_FPS      ; ************** Draw FPS **************
                 CALL FPS_Counter.Tick
                 endif
-
-                RES_RENDER_FLAG FINISHED_BIT                                    ; обнуление флага FINISHED_BIT (вместо POP_RENDER_FLAG)
 
                 RET
 

@@ -9,9 +9,7 @@ Begin:          EQU $
                 include "LoadFont.asm"
                 include "LoadLevel.asm"
                 include "String.asm"
-                include "AnimTile.asm"
-                include "ShiftRenderBuffer.asm"
-                include "MemcpyTilemap.asm"
+                include "UpdateTilemap.asm"
 
                 include "Unit/Include.inc"
 Size:           EQU $ - Begin

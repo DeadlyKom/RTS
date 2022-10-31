@@ -36,7 +36,7 @@ Initialize:     LD (LocalizationRef), DE
                 ; инициализация продолжительности анимации появления/скрытия
                 LD (IY + FDialogVariable.Fade.Countdown), DURATION_FADE
 
-                ; инициализация скролла
+                ; инициализация скроллла
                 LD (IY + FDialogVariable.Scroll.Countdown), DURATION_SCROLL
                 LD (IY + FDialogVariable.Scroll.RowCounter), SCROLLABLE_LINES
 

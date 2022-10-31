@@ -2,7 +2,7 @@
                 ifndef _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_SCROLL_
                 define _CORE_MODULE_CAPTAIN_BRIDGE_DIALOG_SCROLL_
 ; -----------------------------------------
-; скрол текста вверх
+; скролл текста вверх
 ; In:
 ; Out:
 ; Corrupt:

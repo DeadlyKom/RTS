@@ -35,7 +35,7 @@ Tilemap
 ; .TilemapSizeChunk.Y EQU FGameAdr + FGame.SizeChank.Y                            ; размер карты по вертикали (в чанках)
 GameFlags:
 .RenderRef          EQU FGameAdr + FGame.Render                                 ; флаги отрисовки
-.ScrollFlagsRef     EQU FGameAdr + FGame.ScrollFlags                            ; флаги описывающие смещение тайловой карты при скроле
+.ScrollFlagsRef     EQU FGameAdr + FGame.ScrollFlags                            ; флаги описывающие смещение тайловой карты при скролле
 .SpriteRef          EQU FGameAdr + FGame.Sprite                                 ; данные спрайта
 .SpriteOffsetRef    EQU FGameAdr + FGame.Sprite.Data.Low                        ; флаги спрайта (смещение)
 .SpriteFlagRef      EQU FGameAdr + FGame.Sprite.Data.High                       ; флаги спрайта

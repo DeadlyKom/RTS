@@ -59,7 +59,7 @@ InputStateRef               EQU Game.InputState                                 
 TilemapStateRef             EQU Game.TilemapState                               ; указатель на флаги тайловой карты (tilemap)
 AIStateRef                  EQU Game.AIFlags                                    ; указатель на флаги состояний (AI)
 HardwareStateRef            EQU Game.HardwareFlags                              ; указатель на флаг ограничений железа
-FrameUnitsFlagRef           EQU Game.FrameUnitsFlag                             ; флаг обновления юнитов принудительно (необходим для скролинга)
+FrameUnitsFlagRef           EQU Game.FrameUnitsFlag                             ; флаг обновления юнитов принудительно (необходим для скроллинга)
 
 ; debug
                             ifdef _DEBUG

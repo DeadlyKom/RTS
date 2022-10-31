@@ -4,7 +4,7 @@
 
                 module Move
 ; -----------------------------------------
-; скролл тайловой карты вверх
+; скроллл тайловой карты вверх
 ; In:
 ; Out:
 ; Corrupt:
@@ -25,7 +25,7 @@ Up:             LD HL, Tilemap.Offset.Y
                 SET_SCROLL_FLAG CURSOR.UP_EDGE_BIT
                 RET
 ; -----------------------------------------
-; скролл тайловой карты вниз
+; скроллл тайловой карты вниз
 ; In:
 ; Out:
 ; Corrupt:
@@ -47,7 +47,7 @@ Down:           LD HL, Tilemap.Offset.Y
                 SET_SCROLL_FLAG CURSOR.DOWN_EDGE_BIT
                 RET
 ; -----------------------------------------
-; скролл тайловой карты влево
+; скроллл тайловой карты влево
 ; In:
 ; Out:
 ; Corrupt:
@@ -66,7 +66,7 @@ Left:           LD HL, Tilemap.Offset.X
                 SET_SCROLL_FLAG CURSOR.LEFT_EDGE_BIT
                 RET
 ; -----------------------------------------
-; скролл тайловой карты вправо
+; скроллл тайловой карты вправо
 ; In:
 ; Out:
 ; Corrupt:

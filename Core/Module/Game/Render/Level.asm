@@ -13,7 +13,6 @@ Level:          SET_SCREEN_SHADOW
                 CALL DrawTileRows
                 CALL DrawUnits
 
-                CALL Functions.ShiftRenderBuf
                 SET_RENDER_FLAG FINISHED_BIT                                    ; установка флага завершения отрисовки
 
                 ifdef _DEBUG

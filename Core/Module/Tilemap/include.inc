@@ -12,7 +12,8 @@
 
                 ;
                 include "Convert/GetAddress.asm"
-                include "Control/ShiftRenderBuffer.asm"
+                include "Control/Update.asm"                                    ; (0)   (убран переход ShiftRenderBuf )
+                include "Control/ShiftRenderBuffer.asm"                         ; (1)
 
                 ; memcpy
                 include "Core/Module/Memory/MemcpyTilemap.asm"

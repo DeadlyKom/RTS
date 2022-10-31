@@ -23,7 +23,7 @@ Scan:           ; опрос виртуальных клавиш
                 BIT HW_MOUSE_BIT, (HL)
                 CALL Z, Mouse.UpdateCursor                                      ; обновить положение курсора, если мышь доступна
                 
-                ; обновление скрола карты
+                ; обновление скролла карты
                 CALL TilemapScroll
 
                 RET
