@@ -10,11 +10,10 @@ Size:           FMapSize 0, 0                                                   
 SizeChank:      FMapSize 0, 0                                                   ; размер карты (в чанках)
 SizeNEG:        FMapSize 0, 0                                                   ; размер карты (отрицательные значения)
 Offset:         FLocation 0, 0                                                  ; смещения тайловой карты (текущая)
-CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты                    (0)
-MoveTilemap     FFlags 0                                                        ; флаги описывающие смещение тайловой карты при скроле          (1)
+CachedAddress:  DW #0000                                                        ; кешированное значение адрес тайловой карты
 DeltaTime:      DB #00                                                          ; время между кадрами отрисовки (значение отрицательное)
-TileCountdown:  DB DURATION_TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION_TILE_ANIM)       (0)
-FlyCountdown:   DB DURATION_FLY_ANIM                                            ; обратный счётчик продолжительности (DURATION_FLY_ANIM)        (1)
+TileCountdown:  DB DURATION.TILE_ANIM                                           ; обратный счётчик продолжительности (DURATION.TILE_ANIM)       (0)
+FlyCountdown:   DB DURATION.FLY_ANIM                                            ; обратный счётчик продолжительности (DURATION.FLY_ANIM)        (1)
 
 ; ИИ
 UnitArraySize:  DB #00                                                          ; размер массива юнитов                                         (2)
@@ -33,6 +32,7 @@ AI_UpdateRate:  DB #00                                                          
 ;   FS      [0]     - флаг, рендер завершён
 ; -----------------------------------------
 Render          FFlags 0                                                        ; флаги отрисовки
+ScrollFlags     FFlags 0                                                        ; флаги описывающие смещение тайловой карты при скроле
 Sprite          FWFlags 0                                                       ; флаги работы с спрайтами 
                                                                                 ; младший байт (offset) - FSprite.Offset
 ; -----------------------------------------

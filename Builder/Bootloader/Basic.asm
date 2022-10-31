@@ -82,9 +82,9 @@ StartBoot:      DI
                 VK_A,                                                           ; клавиша по умолчанию "влево"
                 VK_S,                                                           ; клавиша по умолчанию "вниз"
                 VK_W,                                                           ; клавиша по умолчанию "вверх"
-                MIN_CURSOR_SPEED,                                               ; минимальная скорость курсора
-                MAX_CURSOR_SPEED,                                               ; максимальная скорость курсора
-                DURATION_TILEMAP_SCROLL,                                        ; скорость скрола тайловой карты
+                CURSOR.MIN_SPEED,                                               ; минимальная скорость курсора
+                CURSOR.MAX_SPEED,                                               ; максимальная скорость курсора
+                DURATION.TILEMAP_SCROLL,                                        ; скорость скрола тайловой карты
                 LANGUAGE_DEFAULT | INPUT_MOUSE,                                 ; флаги
                 1                                                               ; слот уровня
                 }

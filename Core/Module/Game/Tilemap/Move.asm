@@ -4,10 +4,11 @@
 
                 module Move
 ; -----------------------------------------
-; 
+; скролл тайловой карты вверх
 ; In:
 ; Out:
 ; Corrupt:
+;   HL, DE, AF
 ; Note:
 ; -----------------------------------------
 Up:             LD HL, Tilemap.Offset.Y
@@ -20,12 +21,15 @@ Up:             LD HL, Tilemap.Offset.Y
                 LD DE, #FF00
                 ADD HL, DE
                 LD (Tilemap.CachedAddress), HL
+                ; установка флага
+                SET_SCROLL_FLAG CURSOR.UP_EDGE_BIT
                 RET
 ; -----------------------------------------
-; 
+; скролл тайловой карты вниз
 ; In:
 ; Out:
 ; Corrupt:
+;   HL, DE, AF
 ; Note:
 ; -----------------------------------------
 Down:           LD HL, Tilemap.Offset.Y
@@ -39,12 +43,15 @@ Down:           LD HL, Tilemap.Offset.Y
                 LD DE, #0000
                 ADD HL, DE
                 LD (Tilemap.CachedAddress), HL
+                ; установка флага
+                SET_SCROLL_FLAG CURSOR.DOWN_EDGE_BIT
                 RET
 ; -----------------------------------------
-; 
+; скролл тайловой карты влево
 ; In:
 ; Out:
 ; Corrupt:
+;   HL, AF
 ; Note:
 ; -----------------------------------------
 Left:           LD HL, Tilemap.Offset.X
@@ -55,12 +62,15 @@ Left:           LD HL, Tilemap.Offset.X
                 LD HL, (Tilemap.CachedAddress)
                 DEC HL
                 LD (Tilemap.CachedAddress), HL
+                ; установка флага
+                SET_SCROLL_FLAG CURSOR.LEFT_EDGE_BIT
                 RET
 ; -----------------------------------------
-; 
+; скролл тайловой карты вправо
 ; In:
 ; Out:
 ; Corrupt:
+;   HL, AF
 ; Note:
 ; -----------------------------------------
 Right:          LD HL, Tilemap.Offset.X
@@ -72,6 +82,8 @@ Right:          LD HL, Tilemap.Offset.X
                 LD HL, (Tilemap.CachedAddress)
                 INC HL
                 LD (Tilemap.CachedAddress), HL
+                ; установка флага
+                SET_SCROLL_FLAG CURSOR.RIGHT_EDGE_BIT
                 RET
 
                 endmodule

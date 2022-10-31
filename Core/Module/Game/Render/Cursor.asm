@@ -15,7 +15,7 @@ DrawCursor:     ; проверка бездействия курсора
                 JR NZ, .Counter                                                 ; переход, если курсор не перемещается
 
                 ; сброс анимации и выставление время ожидания бездействия
-                LD (HL), DURATION_IDLE_CURSOR
+                LD (HL), DURATION.IDLE_CURSOR
                 INC HL
                 LD (HL), A                                                      ; SpriteIdx (сброс анимации)
                 JR .Draw

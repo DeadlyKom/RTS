@@ -14,7 +14,7 @@ Core:           ; -----------------------------------------
                 ; ToDo загружаться из сохранения
                 LD HL, GameFlags.RenderRef
                 LD DE, GameFlags.RenderRef+1
-                LD BC, 5
+                LD BC, 6
                 LD (HL), #00
                 LDIR
                 

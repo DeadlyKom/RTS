@@ -72,7 +72,15 @@ RENDER_FLAGS    macro
 RENDER_FLAGS_A  macro
                 LD A, (GameFlags.RenderRef)
                 endm
-
+; -----------------------------------------
+; установка HL на Scroll флаги
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+SCROLL_FLAGS    macro
+                LD HL, GameFlags.ScrollFlagsRef
+                endm
 ; -----------------------------------------
 ; проверка Render флага
 ; In:
@@ -114,14 +122,34 @@ RES_RENDER_FLAG macro FlagBit?
                 RES_FLAG FlagBit?
                 endm
 ; -----------------------------------------
-; изъятие Render флага
+; проверка Scroll флага
 ; In:
 ; Out:
 ; Corrupt:
 ; -----------------------------------------
-POP_RENDER_FLAG macro FlagBit?
-                RENDER_FLAGS
-                POP_FLAG FlagBit?
+CHECK_SCROLL_FLAG macro FlagBit?
+                SCROLL_FLAGS
+                CHECK_FLAG FlagBit?
+                endm
+; -----------------------------------------
+; установка Scroll флага
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+SET_SCROLL_FLAG macro FlagBit?
+                SCROLL_FLAGS
+                SET_FLAG FlagBit?
+                endm
+; -----------------------------------------
+; сброс Scroll флага
+; In:
+; Out:
+; Corrupt:
+; -----------------------------------------
+RES_SCROLL_FLAG macro FlagBit?
+                SCROLL_FLAGS
+                RES_FLAG FlagBit?
                 endm
 ; -----------------------------------------
 ; определение стартовой локации игрока

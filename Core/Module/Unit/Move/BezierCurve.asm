@@ -10,7 +10,7 @@
 ; Note:
 ; -----------------------------------------
 BezierCurve:    ; установка обратного счётчика
-                LD (HL), DURATION_FLY_ANIM
+                LD (HL), DURATION.FLY_ANIM
 
                 LD B, 16
                 LD IX, #C040

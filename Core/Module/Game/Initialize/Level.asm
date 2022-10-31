@@ -13,9 +13,9 @@ Level:          ; -----------------------------------------
                 ; -----------------------------------------
                 ; ToDo сделать нормальную инициализацию
                 LD HL, Tilemap.Countdown
-                LD (HL), DURATION_TILE_ANIM                                     
+                LD (HL), DURATION.TILE_ANIM                                     
                 INC L                                                           ; Tilemap.FlyingCountdown 
-                LD (HL), DURATION_FLY_ANIM                                      
+                LD (HL), DURATION.FLY_ANIM                                      
                 INC L                                                           ; GameAI.UnitArraySize
                 LD (HL), #00                                                    ; обновление массива юнитов
                 INC L                                                           ; GameAI.AI_UpdateRate

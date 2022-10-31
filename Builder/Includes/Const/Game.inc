@@ -14,7 +14,7 @@ Map
 .SizeNEG            EQU FGameAdr + FGame.SizeNEG                                ; размер карты (отрицательные значения)
 
 Game
-.FlyingCountdown    EQU FGameAdr + FGame.FlyCountdown                           ; обратный счётчик продолжительности (DURATION_FLY_ANIM)
+.FlyingCountdown    EQU FGameAdr + FGame.FlyCountdown                           ; обратный счётчик продолжительности (DURATION.FLY_ANIM)
 .RestoreScr         EQU FGameAdr + FGame.RestoreScr                             ; адрес экрана для функции восстановления фона
 .RestoreSize        EQU FGameAdr + FGame.RestoreSize                            ; размер восстанвливаемой области для функции восстановление фона
 .RestorePage        EQU FGameAdr + FGame.RestorePage                            ; страница для функции восстановление фона
@@ -29,12 +29,13 @@ Tilemap
 .Offset.X           EQU FGameAdr + FGame.Offset.X                               ; смещение тайловой карты (текущая) по горизонтали
 .Offset.Y           EQU FGameAdr + FGame.Offset.Y                               ; смещение тайловой карты (текущая) по вертикали
 .CachedAddress      EQU FGameAdr + FGame.CachedAddress                          ; кешированное значение адрес тайловой карты
-.Countdown          EQU FGameAdr + FGame.TileCountdown                          ; обратный счётчик продолжительности (DURATION_TILE_ANIM)
+.Countdown          EQU FGameAdr + FGame.TileCountdown                          ; обратный счётчик продолжительности (DURATION.TILE_ANIM)
 ; .TilemapSizeChunk   EQU FGameAdr + FGame.SizeChank                              ; размер карты (в чанках)
 ; .TilemapSizeChunk.X EQU FGameAdr + FGame.SizeChank.X                            ; размер карты по горизонтали (в чанках)
 ; .TilemapSizeChunk.Y EQU FGameAdr + FGame.SizeChank.Y                            ; размер карты по вертикали (в чанках)
 GameFlags:
 .RenderRef          EQU FGameAdr + FGame.Render                                 ; флаги отрисовки
+.ScrollFlagsRef     EQU FGameAdr + FGame.ScrollFlags                            ; флаги описывающие смещение тайловой карты при скроле
 .SpriteRef          EQU FGameAdr + FGame.Sprite                                 ; данные спрайта
 .SpriteOffsetRef    EQU FGameAdr + FGame.Sprite.Data.Low                        ; флаги спрайта (смещение)
 .SpriteFlagRef      EQU FGameAdr + FGame.Sprite.Data.High                       ; флаги спрайта
