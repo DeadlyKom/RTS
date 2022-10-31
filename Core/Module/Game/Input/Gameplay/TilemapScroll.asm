@@ -34,9 +34,9 @@ TilemapScroll:  ; -----------------------------------------
                 ; CheckTilemapFlag ACCELERATE_CURSOR_FLAG
                 ; RET Z
 
-                ; сохранить текущий адрес карты тайлов
-                LD HL, (Tilemap.CachedAddress)
-                PUSH HL
+                ; сброс флагов скрола
+                XOR A
+                LD (GameFlags.ScrollFlagsRef), A
 
                 ; проверка нахожения курсора на границах экрана
                 LD BC, Mouse.Position
@@ -63,12 +63,10 @@ TilemapScroll:  ; -----------------------------------------
                 ; скролл тайловой карты
                 ; -----------------------------------------
 
-                ; сравнение текущего и предыдущего значений адреса
-                LD HL, (Tilemap.CachedAddress)
-                POP DE
+                ; проверка наличия скрола карты                                     
+                LD A, (GameFlags.ScrollFlagsRef)
                 OR A
-                SBC HL, DE
-                RET Z                                                           ; выход, если адрес не изменился
+                RET Z                                                           ; выход, если скрол не произведён
 
                 ; копирование видимой части тайловой карты в буфер
                 LD HL, (Tilemap.CachedAddress)
@@ -79,7 +77,6 @@ TilemapScroll:  ; -----------------------------------------
                 LD DE, #8383
                 CALL SafeFill.b192
                 RET
-                ; JP Tilemap.TileUpdate
 
 .TickCounter    DB #00
 
