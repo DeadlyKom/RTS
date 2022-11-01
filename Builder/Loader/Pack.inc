@@ -9,7 +9,7 @@
                 display "\'Loader\' :\t\t\t\t\t\t-------------------- [ ", /D, Size, " bytes / ", /D, SizeInSectors, " sector(s) ]  [", /D, Page.Loader, "]\t-------------------------------------------------"
 
                 ifdef _REBUILD
-                include "../../Sprites/Menu/Loader/Compress.inc"
+                include "Core/Module/Sprites/Menu/Loader/Compress.inc"
                 endif
 Begin:          EQU $
                 include "Core/Module/Loader/Include.inc"
