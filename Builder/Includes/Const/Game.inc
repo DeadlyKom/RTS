@@ -39,6 +39,7 @@ GameFlags:
 .SpriteRef          EQU FGameAdr + FGame.Sprite                                 ; данные спрайта
 .SpriteOffsetRef    EQU FGameAdr + FGame.Sprite.Data.Low                        ; флаги спрайта (смещение)
 .SpriteFlagRef      EQU FGameAdr + FGame.Sprite.Data.High                       ; флаги спрайта
+.SpriteCounter      EQU FGameAdr + FGame.SpriteCounter                          ; флаги композитного спрайта/счётчика спрайтов
 .Gameplay           EQU FGameAdr + FGame.Gameplay                               ; флаги геймплея
 .Hardware           EQU FGameAdr + FGame.Hardware                               ; флаги ограничения железа
 

@@ -37,3 +37,4 @@
                 incbin "Core/Module/Sprites/Shuttle/1A/Shuttle_1A_8_0.spr"
 
                 DB #00                                                          ; завершение
+                DB #09                                                          ; общее количество спрайтов

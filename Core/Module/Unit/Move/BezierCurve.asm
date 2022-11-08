@@ -66,27 +66,28 @@ BezierCurve:    ; установка обратного счётчика
                 XOR A
                 LD (IX + FUnit.Position.X.Low), A
                 LD (IX + FUnit.Position.Y.Low), A
+                RET
 
-                ;   HL - начальная позици (H - y, L - x)
-                ;   DE - конечная позиция (D - y, E - x)
-                ;   A' - номер юнита
+                ; ;   HL - начальная позици (H - y, L - x)
+                ; ;   DE - конечная позиция (D - y, E - x)
+                ; ;   A' - номер юнита
                 
-                LD H, (IX + FUnit.Position.Y.High)
-                LD L, (IX + FUnit.Position.X.High)
-                EXX
-                CALL Math.Rand8
-                EXX
-                AND #07
-                ADD A, 4
-                LD D, A
-                EXX
-                CALL Math.Rand8
-                EXX
-                AND #07
-                ADD A, 4
-                LD E, A
+                ; LD H, (IX + FUnit.Position.Y.High)
+                ; LD L, (IX + FUnit.Position.X.High)
+                ; EXX
+                ; CALL Math.Rand8
+                ; EXX
+                ; AND #07
+                ; ADD A, 4
+                ; LD D, A
+                ; EXX
+                ; CALL Math.Rand8
+                ; EXX
+                ; AND #07
+                ; ADD A, 4
+                ; LD E, A
 
-                JP Functions.FlyToUnit
+                ; JP Functions.FlyToUnit
 
                 display " - Moving units along a bezier curve : \t\t", /A, BezierCurve, " = busy [ ", /D, $ - BezierCurve, " bytes  ]"
 

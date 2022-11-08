@@ -184,6 +184,10 @@ DrawComposite:  EXX
                 LD D, (HL)
                 EX DE, HL
 
+                ; сброс счётчика отрисованных спрайтов
+                XOR A
+                LD (GameFlags.SpriteCounter), A
+
 .Loop           ; корректировка адреса спрайта, при наличии анимации
                 LD C, (HL)                                                      ; FCompositeSpriteInfo.Flags
                 INC HL
@@ -274,6 +278,13 @@ DrawComposite:  EXX
                 LD A, (HL)
                 OR A
                 JR NZ, .Loop
+
+                ; установка/сброс флага отрисовки всех спрайтов
+                LD A, (GameFlags.SpriteCounter)
+                INC HL
+                SUB (HL)
+                SBC A, A
+                LD (GameFlags.SpriteCounter), A
 
                 ; выход
                 POP IX
