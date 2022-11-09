@@ -41,6 +41,15 @@ UpdateTilemap   ; -----------------------------------------
                 LD DE, #8383
                 CALL SafeFill.b192
 
+                ; очистка буфера анимации тайлов
+                LD HL, AnimTile.Array
+                LD DE, AnimTile.Array+1
+                LD (HL), #FF
+                rept ANIMATED_TILES
+                LDI
+                endr
+                LD (HL), -ANIMATED_TILES
+
 .Shift          ; -----------------------------------------
                 ; сдвиг очереди отображения в буфере отображения
                 ; -----------------------------------------

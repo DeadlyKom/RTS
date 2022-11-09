@@ -96,7 +96,16 @@ DrawShuttle:    ; ToDo организовать более правильную 
                 XOR A
                 LD (GameAnim.OffsetY), A
 
-                JP DrawComposite                                                ; отображение шаттла
+                CALL DrawComposite                                              ; отображение шаттла
+
+                ; проверка что шаттл приземлился и виден полностью на экране
+                UNIT_IsMove (IX + FUnit.State)
+                RET NZ                                                          ; выход, если шаттл движется
+                LD A, (GameFlags.SpriteCounter)
+                INC A
+                ; JR NZ, $														 ; остановка, если шаттл виден полностью и приземлился
+                RET
+
 
 .Table          include "Core/Module/Tables/Graphics/Shuttle/Data.inc"
 

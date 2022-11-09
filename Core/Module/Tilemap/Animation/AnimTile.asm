@@ -72,7 +72,7 @@ AnimTile:       ; установка обратного счётчика
                 LD (.Size), A
                 JR .NextElement
 
-.Array:         FAnimTile = $
+.Array          FAnimTile = $
                 DS FAnimTile * ANIMATED_TILES, #FF
 .Size:          DB -ANIMATED_TILES                                              ; количество свободных элементов
 
