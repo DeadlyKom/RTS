@@ -2,7 +2,7 @@
                 ifndef _BUILDER_INCLUDES_
                 define _BUILDER_INCLUDES_
 
-                include "Macro/Include.inc"       
+                include "Macro/Include.inc"
                 include "Config/Include.inc"
                 include "Const/Include.inc"
                 include "Struct/Include.inc"

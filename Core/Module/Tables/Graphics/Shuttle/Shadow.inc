@@ -12,3 +12,4 @@
                 incbin "Core/Module/Sprites/Shuttle/Shadow/ShuttleShadow_0_1.spr"
 
                 DB #00                                                          ; завершение
+                DB #02                                                          ; общее количество спрайтов

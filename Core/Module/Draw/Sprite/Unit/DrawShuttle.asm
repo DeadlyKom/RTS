@@ -106,7 +106,6 @@ DrawShuttle:    ; ToDo организовать более правильную 
                 ; JR NZ, $														 ; остановка, если шаттл виден полностью и приземлился
                 RET
 
-
 .Table          include "Core/Module/Tables/Graphics/Shuttle/Data.inc"
 
                 display " - Draw Unit Shuttle : \t\t\t\t", /A, DrawShuttle, " = busy [ ", /D, $ - DrawShuttle, " bytes  ]"
