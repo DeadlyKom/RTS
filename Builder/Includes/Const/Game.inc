@@ -2,7 +2,7 @@
                     ifndef _CONST_GAME_
                     define _CONST_GAME_
 
-FGameAdr            EQU GameConfigRef + FConfig
+FGameAdr            EQU GameConfigRef; + FConfig
 
 Map
 .StartSlotA         EQU FGameAdr + FGame.StartSlotA                             ; координаты старта слот A

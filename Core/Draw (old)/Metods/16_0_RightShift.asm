@@ -21,7 +21,7 @@ SBP_16_0_RS:            EXX
                         LD A, (DE)
 
                         POP BC
-                        LD L, c     ; OR
+                        LD L, C     ; OR
                         OR (HL)
                         LD L, B     ; XOR
                         XOR (HL)

@@ -255,12 +255,17 @@ Sort:           ; HL - начальный адрес расположения э
                 EX AF, AF'
 
                 ; 
-                LD L, C
-                DEC L
-                LD H, #00
-                ADD HL, HL
-                LD DE, SortBuffer
-                ADD HL, DE
+                ; LD L, C
+                ; DEC L
+                ; LD H, #00
+                ; ADD HL, HL
+                ; LD DE, SortBuffer
+                ; ADD HL, DE
+                LD A, C
+                DEC A
+                ADD A, A
+                LD L, A
+                LD H, HIGH SortBuffer
                 LD SP, HL
 
                 ; i < size
@@ -269,8 +274,8 @@ Sort:           ; HL - начальный адрес расположения э
                 JP C, .Loop
 
                 ; -1
-                INC HL
-                INC HL
+                INC L
+                INC L
                 EX DE, HL
 
 .ContainerSP    EQU $+1
